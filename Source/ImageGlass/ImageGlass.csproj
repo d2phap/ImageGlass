@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{97F81263-4825-4C06-A7B6-2E999765FA28}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImageGlass</RootNamespace>
+    <AssemblyName>ImageGlass</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>IG Icon.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://imageglass.com/</UpdateUrl>
+    <MinimumRequiredVersion>1.3.0.7</MinimumRequiredVersion>
+    <WebPage>publish.htm</WebPage>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>38</ApplicationRevision>
+    <ApplicationVersion>1.4.27.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>8145C0B5F2194ED51B5BCFD1E550FF6CCB7D9712</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>imaeg_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Facebook, Version=5.4.1.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\Ver 1.4\ImageGlass 1.4\ImageGlass\bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAbout.designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExtension.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExtension.Designer.cs">
+      <DependentUpon>frmExtension.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFacebook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFacebook.Designer.cs">
+      <DependentUpon>frmFacebook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFaceBookLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFaceBookLogin.Designer.cs">
+      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetting.Designer.cs">
+      <DependentUpon>frmSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenderTheme.cs" />
+    <EmbeddedResource Include="frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExtension.resx">
+      <DependentUpon>frmExtension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFacebook.resx">
+      <DependentUpon>frmFacebook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFaceBookLogin.resx">
+      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoomlock.png" />
+    <None Include="Resources\bottombar.png" />
+    <None Include="Resources\topbar.png" />
+    <None Include="Resources\extension.png" />
+    <None Include="Resources\uploadfb.png" />
+    <None Include="Resources\printer.png" />
+    <None Include="Resources\zoomout.png" />
+    <None Include="Resources\zoomin.png" />
+    <None Include="Resources\thumbnail.png" />
+    <None Include="Resources\slideshow.png" />
+    <None Include="Resources\settings.png" />
+    <None Include="Resources\scaletowidth.png" />
+    <None Include="Resources\scaletoheight.png" />
+    <None Include="Resources\scaletofit.png" />
+    <None Include="Resources\rightrotate.png" />
+    <None Include="Resources\report.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\open.png" />
+    <None Include="Resources\next.png" />
+    <None Include="Resources\like.png" />
+    <None Include="Resources\leftrotate.png" />
+    <None Include="Resources\gotoimage.png" />
+    <None Include="Resources\fullscreen.png" />
+    <None Include="Resources\dislike.png" />
+    <None Include="Resources\convert.png" />
+    <None Include="Resources\caro1.png" />
+    <None Include="Resources\back.png" />
+    <None Include="Resources\autosizewindow.png" />
+    <None Include="Resources\about.png" />
+    <None Include="Resources\noimg.png" />
+    <None Include="Resources\imageerror.png" />
+    <EmbeddedResource Include="frmSetting.resx">
+      <DependentUpon>frmSetting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="IG Icon.ico" />
+    <None Include="Resources\imagetoolarge.png" />
+    <None Include="Resources\Hand_Move.png" />
+    <None Include="Resources\Hand_Down.png" />
+    <None Include="Resources\caro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Commands\igcmd.csproj">
+      <Project>{CC391E3E-9137-4857-85DC-C4CF6DF37584}</Project>
+      <Name>igcmd</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Core\ImageGlass.Core.csproj">
+      <Project>{8540D406-E362-4ECC-9761-F978996354DF}</Project>
+      <Name>ImageGlass.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Feature\ImageGlass.Feature.vbproj">
+      <Project>{1D9CA2DF-866D-45A3-AEF4-88F1D04C8DC8}</Project>
+      <Name>ImageGlass.Feature</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
+      <Project>{3EBDAABB-077B-4308-9D69-93727DFD4554}</Project>
+      <Name>ImageGlass.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Theme\ImageGlass.Theme.csproj">
+      <Project>{76486F88-AA16-4D7D-BBF6-0F1C604D5853}</Project>
+      <Name>ImageGlass.Theme</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.FileList\ImageGlass.FileList.csproj">
+      <Project>{12E1741E-07CD-4658-BFA7-B28E07ED83F2}</Project>
+      <Name>ImageGlass.FileList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.ThumbBar\ImageGlass.ThumbBar.csproj">
+      <Project>{016af008-7238-451c-be25-2e247484543e}</Project>
+      <Name>ImageGlass.ThumbBar</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory />
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>igpacktheme "F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\WindowsFormsApplication1\bin\Debug\Temp\xxxx" "C:\Users\Duong Dieu Phap\Desktop\xxxxxxxxx.igtheme"</StartArguments>
+  </PropertyGroup>
+</Project>

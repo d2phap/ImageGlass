@@ -1,0 +1,36 @@
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ResolveAssemblyReference.cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileList.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\GenerateResource-ResGen.read.1.tlog
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\GenerateResource-ResGen.write.1.tlog
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileListItem.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.Properties.Resources.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ResolveAssemblyReference.cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileList.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileListItem.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.Properties.Resources.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\GenerateResource-ResGen.read.1.tlog
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\GenerateResource-ResGen.write.1.tlog
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileList.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileListItem.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.Properties.Resources.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\imageglass\Ver 1.5\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csproj.GenerateResource.Cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.pdb
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileList.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileListItem.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.Properties.Resources.resources
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csproj.GenerateResource.Cache
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb
