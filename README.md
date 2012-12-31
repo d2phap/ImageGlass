@@ -3,7 +3,7 @@ ImageGlass
 http://www.imageglass.org/ <br/>
 Free and open source image viewer
 <h3>Share ImageGlass</h3>
-<a href="http://www.facebook.com/sharer.php?u=http://www.imageglass.org&t=ImageGlass - Free and open source image viewer">
+<a target="_blank" href="http://www.facebook.com/sharer.php?u=http://www.imageglass.org&t=ImageGlass - Free and open source image viewer">
 <img src="http://png.findicons.com/files/icons/2155/social_media_bookmark/122/facebook_button.png" alt="Share ImageGlass on Facebook" />
 </a>
 
