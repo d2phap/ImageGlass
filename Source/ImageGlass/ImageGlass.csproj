@@ -89,6 +89,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Facebook.dll</HintPath>
     </Reference>
+    <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\IconLib.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\..\Ver 1.4\ImageGlass 1.4\ImageGlass\bin\Debug\Ionic.Zip.dll</HintPath>
     </Reference>

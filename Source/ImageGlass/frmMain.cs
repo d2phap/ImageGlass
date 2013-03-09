@@ -33,6 +33,9 @@ using Microsoft.Win32;
 using System.Threading;
 using ImageGlass.ThumbBar;
 using System.Drawing.Printing;
+using System.Drawing.Imaging;
+using System.Drawing.IconLib;
+using System.Drawing.IconLib.ColorProcessing;
 
 namespace ImageGlass
 {
@@ -324,10 +327,35 @@ namespace ImageGlass
             Application.DoEvents();
             Image im = null;
 
+
             try
             {
-                im = Setting.ImageList.get(Setting.CurrentIndex);
                 Setting.IsImageError = Setting.ImageList.imgError;
+
+                //Kiem tra neu la icon thi lay Image lon nhat
+                if (Path.GetExtension(Setting.ImageList.getPath(Setting.CurrentIndex)).Replace(".", "").ToUpper() == "ICO")
+                {
+                    try
+                    {
+                        MultiIcon mIcon = new MultiIcon();
+                        mIcon.Load(Setting.ImageList.getPath(Setting.CurrentIndex));
+
+                        SingleIcon sIcon = mIcon[0];//Lay icon day tien
+                        IconImage iImage = sIcon.OrderByDescending(ico => ico.Size.Width).ToList()[0];
+
+                        im = iImage.Icon.ToBitmap();
+                    }
+                    catch
+                    {
+                        im = Setting.ImageList.get(Setting.CurrentIndex);
+                        Setting.IsImageError = Setting.ImageList.imgError;
+                    }
+                }
+                else
+                {
+                    im = Setting.ImageList.get(Setting.CurrentIndex);
+                    Setting.IsImageError = Setting.ImageList.imgError;
+                }
 
                 if (im.Width <= sp0.Panel1.Width && im.Height <= sp0.Panel1.Height)
                 {
@@ -343,7 +371,6 @@ namespace ImageGlass
                     Recenter(im);
                     picMain.Image = im;
                 }
-
 
                 //Get zoom ratio               
                 lblZoomRatio.Text = Math.Round(GetZoomRatio(), 2).ToString() + "X";
@@ -361,6 +388,7 @@ namespace ImageGlass
             catch//(Exception ex)
             {
                 picMain.Image = null;
+                
                 Application.DoEvents();
                 if (!File.Exists(Setting.ImageList.getPath(Setting.CurrentIndex)))
                 {

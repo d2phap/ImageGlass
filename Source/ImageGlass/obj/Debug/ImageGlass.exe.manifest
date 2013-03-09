@@ -55,26 +55,38 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="igcmd.exe" size="253952">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="IconLib.dll" size="69632">
+      <assemblyIdentity name="IconLib" version="0.73.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>H+w4aNa+N+5vVCtHa5eouWzBo4E9iWqPXmG2zRctwUk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="igcmd.exe" size="253440">
       <assemblyIdentity name="igcmd" version="1.5.0.2" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+gXPRXzjQ2pDDUMokWLDtU0tHxKSL6ir5Y/3qTLq+Hg=</dsig:DigestValue>
+        <dsig:DigestValue>vxxfKUoKTXLAjwlEx6wgeVeIQES5DTR6q7yD0XhsJZw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageGlass.exe" size="403968">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageGlass.exe" size="403456">
       <assemblyIdentity name="ImageGlass" version="1.5.11.11" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>78HBxaZzpdAvfgdVgoc+KP3mMVZimBKY7k4ApDrEsJM=</dsig:DigestValue>
+        <dsig:DigestValue>9zWHUcbHRXQ25LZO1Ftamuehi3d77J7BFPp9u3VjpGQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DfAyCHpKlHUsj7+S3ie88VGDhDTeOjGSItbtSfU0x2M=</dsig:DigestValue>
+        <dsig:DigestValue>H/W7HLYB5MKtbYXogIPdATDbiL0GecPhO0s7itpUZB0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -98,19 +110,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SI3MdnbZHS7I0MAb5h1sRrdywqxRjQHK7a2xrYQeqWY=</dsig:DigestValue>
+        <dsig:DigestValue>m6pHgofsyNDWAPp96eszcl1FajMKDSIvqIQz3bf1s8g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageGlass.FileList.dll" size="12800">
-      <assemblyIdentity name="ImageGlass.FileList" version="1.0.4693.41204" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="ImageGlass.FileList" version="1.0.4816.38921" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>X2Q2HtqFr4gFvROpV7UrJXUJudM5s/q01qPEhBvCXKw=</dsig:DigestValue>
+        <dsig:DigestValue>nmfqsLCilXm5TXZR2HfNopfzpbzmauHvRuIu07H7KAI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -122,7 +134,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>b3aGaL36dqvllSD+gylaL6FSjXoCgyalzv23qIorIa4=</dsig:DigestValue>
+        <dsig:DigestValue>svSVft7pr/Uj8Uhk3zTH7eTGxcYgbyCXvt3dmvTdvpc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -134,19 +146,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>a8ATE3kHbteyg/YQtv/CXHOO9mwkgKqZIaZeERMX9rk=</dsig:DigestValue>
+        <dsig:DigestValue>HjyJYnmm+19o5gTZtCBIJ27sgu9Yl3Yi8KSLYEKrkJU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageGlass.ThumbBar.dll" size="11264">
-      <assemblyIdentity name="ImageGlass.ThumbBar" version="1.0.4693.41204" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="ImageGlass.ThumbBar" version="1.0.4816.38921" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>D5X0Vdcdke2mT53vLXoEipjkZiRkVRDaaW4TADvQ4O8=</dsig:DigestValue>
+        <dsig:DigestValue>D5KadsGGzCj3TP0ryMO7yzMxag/b2C5Y0M4mQ9XxU2E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

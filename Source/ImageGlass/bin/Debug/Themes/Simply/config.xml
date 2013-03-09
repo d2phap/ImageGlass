@@ -1,0 +1,7 @@
+<ImageGlass>
+  <Theme>
+    <Info name="Sand" version="1.0" author="Duong Dieu Phap" email="phap@imageglass.org" website="http://www.imageglass.org" description=" " type="ImageGlass Theme Configuration" compatibility="1.5" preview="preview.png" />
+    <main topbar="topbar.png" topbartransparent="0" bottombar="bottombar.png" backcolor="-1" statuscolor="-16777216" />
+    <toolbar_icon back="x" next="x" leftrotate="x" rightrotate="x" zoomin="x" zoomout="x" zoomlock="x" scaletofit="x" scaletowidth="x" scaletoheight="x" autosizewindow="x" open="x" refresh="x" gotoimage="x" thumbnail="x" caro="x" fullscreen="x" slideshow="x" convert="x" print="x" uploadfb="x" extension="x" settings="x" about="x" like="x" dislike="x" report="x" />
+  </Theme>
+</ImageGlass>

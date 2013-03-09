@@ -67,6 +67,3 @@ F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\bin\Debug\Im
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
-C:\Users\Duong Dieu Phap\Documents\GitHub\ImageGlass\ImageGlass\bin\Debug\ImageGlass.exe.config
-C:\Users\Duong Dieu Phap\Documents\GitHub\ImageGlass\ImageGlass\obj\Debug\ImageGlass.exe
-C:\Users\Duong Dieu Phap\Documents\GitHub\ImageGlass\ImageGlass\obj\Debug\ImageGlass.pdb

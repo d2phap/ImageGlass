@@ -1,0 +1,10 @@
+﻿<ImageGlass>
+	<Language>
+		<Info langCode="vi" langName="Tiếng Việt" author="Duong Dieu Phap" description="" />	
+		<Content count="3">
+			<_1 oriText="Open image">Mở tập tin hình ảnh</_1>
+			<_2 oriText="Edit with Paint">Chỉnh sửa hình ảnh bằng Paint</_2>
+			<_3 oriText="Image properties">Xem thuộc tính hình ảnh</_3>
+		</Content>
+	</Language>
+</ImageGlass>
