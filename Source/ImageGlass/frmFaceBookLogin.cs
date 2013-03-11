@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using Facebook;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,19 +32,41 @@ namespace ImageGlass
     public partial class frmFaceBookLogin : Form
     {
         private readonly Uri _loginUrl;
-
+        protected FacebookClient _fb;
         public Facebook.FacebookOAuthResult FacebookOAuthResult { get; private set; }
 
         public frmFaceBookLogin(string appId, string extendedPermissions)
+            : this(new FacebookClient(), appId, extendedPermissions)
+        {
+        }
+
+
+        public frmFaceBookLogin(FacebookClient fb, string appId, string extendedPermissions)
+        {
+            if (fb == null)
+                throw new ArgumentNullException("fb");
+            if (string.IsNullOrEmpty(appId.Trim()))
+                throw new ArgumentNullException("appId");
+
+            _fb = fb;
+            _loginUrl = GenerateLoginUrl(appId, extendedPermissions);
+
+            InitializeComponent();
+        }
+
+        private Uri GenerateLoginUrl(string appId, string extendedPermissions)
         {
             if (string.IsNullOrEmpty(appId))
                 throw new ArgumentNullException("appId");
 
             // Make sure to set the app id.
-            var oauthClient = new Facebook.FacebookOAuthClient { AppId = appId };
+            //var oauthClient = new Facebook.FacebookOAuthClient { AppId = appId };
 
             IDictionary<string, object> loginParameters = new Dictionary<string, object>();
-            
+
+            loginParameters["client_id"] = appId;
+            loginParameters["redirect_uri"] = "https://www.facebook.com/connect/login_success.html";
+
             // The requested response: an access token (token), an authorization code (code), or both (code token).
             loginParameters["response_type"] = "token";
 
@@ -58,9 +81,9 @@ namespace ImageGlass
             }
 
             // when the Form is loaded navigate to the login url.
-            _loginUrl = oauthClient.GetLoginUrl(loginParameters);
+            return _fb.GetLoginUrl(loginParameters); 
+            //oauthClient.GetLoginUrl(loginParameters);
 
-            InitializeComponent();
         }
 
        
@@ -70,7 +93,7 @@ namespace ImageGlass
             // the url may be the result of OAuth 2.0 authentication.
 
             Facebook.FacebookOAuthResult oauthResult;
-            if (Facebook.FacebookOAuthResult.TryParse(e.Url, out oauthResult))
+            if (_fb.TryParseOAuthCallbackUrl(e.Url, out oauthResult))
             {
                 // The url is the result of OAuth 2.0 authentication.
                 this.FacebookOAuthResult = oauthResult;

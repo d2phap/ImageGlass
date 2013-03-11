@@ -39,6 +39,8 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.picStatus = new System.Windows.Forms.PictureBox();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.lblMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -51,7 +53,7 @@
             this.lblPercent.BackColor = System.Drawing.Color.Transparent;
             this.lblPercent.Font = new System.Drawing.Font("Segoe UI", 20F);
             this.lblPercent.ForeColor = System.Drawing.Color.White;
-            this.lblPercent.Location = new System.Drawing.Point(227, 8);
+            this.lblPercent.Location = new System.Drawing.Point(278, 8);
             this.lblPercent.Name = "lblPercent";
             this.lblPercent.Size = new System.Drawing.Size(199, 30);
             this.lblPercent.TabIndex = 2;
@@ -62,11 +64,12 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(89)))), ((int)(((byte)(152)))));
             this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.picStatus);
             this.panel1.Controls.Add(this.lblPercent);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(429, 37);
+            this.panel1.Size = new System.Drawing.Size(480, 37);
             this.panel1.TabIndex = 6;
             // 
             // pictureBox1
@@ -83,12 +86,13 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(235)))), ((int)(((byte)(242)))));
+            this.panel2.Controls.Add(this.lblStatus);
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnUpload);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 191);
+            this.panel2.Location = new System.Drawing.Point(0, 225);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(429, 47);
+            this.panel2.Size = new System.Drawing.Size(480, 47);
             this.panel2.TabIndex = 8;
             // 
             // btnClose
@@ -96,7 +100,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(354, 11);
+            this.btnClose.Location = new System.Drawing.Point(405, 11);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(63, 28);
             this.btnClose.TabIndex = 13;
@@ -108,9 +112,9 @@
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.BackColor = System.Drawing.Color.Transparent;
-            this.btnUpload.Location = new System.Drawing.Point(273, 11);
+            this.btnUpload.Location = new System.Drawing.Point(307, 11);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(75, 28);
+            this.btnUpload.Size = new System.Drawing.Size(92, 28);
             this.btnUpload.TabIndex = 12;
             this.btnUpload.Tag = "0";
             this.btnUpload.Text = "Upload";
@@ -124,18 +128,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblStatus.Location = new System.Drawing.Point(0, 124);
+            this.lblStatus.Location = new System.Drawing.Point(9, 15);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(429, 64);
+            this.lblStatus.Size = new System.Drawing.Size(292, 21);
             this.lblStatus.TabIndex = 11;
             this.lblStatus.Text = "[lblStatus]";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // picStatus
             // 
-            this.picStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picStatus.Image = ((System.Drawing.Image)(resources.GetObject("picStatus.Image")));
-            this.picStatus.Location = new System.Drawing.Point(206, 105);
+            this.picStatus.Location = new System.Drawing.Point(102, 16);
             this.picStatus.Name = "picStatus";
             this.picStatus.Size = new System.Drawing.Size(16, 16);
             this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -143,22 +146,44 @@
             this.picStatus.TabStop = false;
             this.picStatus.Visible = false;
             // 
+            // txtMessage
+            // 
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMessage.Location = new System.Drawing.Point(16, 88);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMessage.Size = new System.Drawing.Size(452, 120);
+            this.txtMessage.TabIndex = 9;
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Location = new System.Drawing.Point(13, 70);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(56, 15);
+            this.lblMessage.TabIndex = 10;
+            this.lblMessage.Text = "Message:";
+            // 
             // frmFacebook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(429, 238);
-            this.Controls.Add(this.lblStatus);
+            this.ClientSize = new System.Drawing.Size(480, 272);
+            this.Controls.Add(this.lblMessage);
+            this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.picStatus);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(439, 270);
             this.Name = "frmFacebook";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFacebook_FormClosing);
             this.Load += new System.EventHandler(this.frmFacebook_Load);
             this.panel1.ResumeLayout(false);
@@ -182,5 +207,7 @@
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.Label lblMessage;
     }
 }

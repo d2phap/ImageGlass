@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using System.Dynamic;
+//using System.Dynamic;
 using System.IO;
 
 namespace ImageGlass
@@ -74,12 +74,20 @@ namespace ImageGlass
             //Do uploading
             if (btnUpload.Tag.ToString() == "0")
             {
+                txtMessage.Enabled = false;
+
                 btnUpload.Text = "Cancel";
                 btnUpload.Tag = 1;
                 UploadPhoto();
             }
+            else if (btnUpload.Tag.ToString().Length == 15)
+            {
+                string photoLink = "https://www.facebook.com/photo.php?fbid=" + btnUpload.Tag.ToString();
+                System.Diagnostics.Process.Start(photoLink);
+            }
             else //Do cancellation
             {
+                txtMessage.Enabled = true;
                 btnUpload.Text = "Upload";
                 btnUpload.Tag = 0;
                 lblStatus.Text = "click 'Upload' to begin";
@@ -93,7 +101,7 @@ namespace ImageGlass
 
         private void frmFacebook_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Setting.FacebookAccessToken))
+            if (string.IsNullOrEmpty(Setting.FacebookAccessToken.Trim()))
             {
                 // open the Facebook Login Dialog and ask for user permissions.
                 var fbLoginDlg = new frmFaceBookLogin(AppId, ExtendedPermissions);
@@ -111,7 +119,7 @@ namespace ImageGlass
             if (facebookOAuthResult == null)
             {
                 // the user closed the FacebookLoginDialog, so do nothing.
-                MessageBox.Show("Cancelled!");
+                // MessageBox.Show("Cancelled!");
                 this.Close();
                 return;
             }
@@ -148,7 +156,7 @@ namespace ImageGlass
                 ContentType = "image/jpeg",
                 FileName = Path.GetFileName(_filename)
             }.SetValue(File.ReadAllBytes(_filename));
-
+            
             lblPercent.Text = "0 %";
             picStatus.Visible = true;
             lblStatus.Text = "uploading...";
@@ -160,7 +168,11 @@ namespace ImageGlass
             // for cancellation
             _fb = fb;
 
-            fb.PostAsync("/me/photos", new Dictionary<string, object> { { "source", mediaObject } });
+            fb.PostAsync("/me/photos", new Dictionary<string, object> 
+            { 
+                { "source", mediaObject }, 
+                { "message", txtMessage.Text.Trim() }
+            });
         }
 
         public void fb_UploadProgressChanged(object sender, FacebookUploadProgressChangedEventArgs e)
@@ -174,17 +186,20 @@ namespace ImageGlass
         public void fb_PostCompleted(object sender, FacebookApiEventArgs e)
         {
             picStatus.Visible = false;
+            
             btnUpload.Tag = 0;
             btnUpload.Text = "Upload";
 
             if (e.Cancelled)
             {
-                lblStatus.Text = "upload cancelled";
+                lblStatus.Text = "Cancelled";
             }
             else if (e.Error == null)
             {
                 // upload successful.
-                lblStatus.Text = "upload successful";// e.GetResultData().ToString();
+                lblStatus.Text = "Successful";
+                btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
+                btnUpload.Text = "View image";
             }
             else
             {

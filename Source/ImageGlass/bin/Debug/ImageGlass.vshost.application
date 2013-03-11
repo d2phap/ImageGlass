@@ -6,17 +6,17 @@
     <deploymentProvider codebase="http://imageglass.com/ImageGlass.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
-    <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
+    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="ImageGlass.exe.manifest" size="11217">
+    <dependentAssembly dependencyType="install" codebase="ImageGlass.exe.manifest" size="10986">
       <assemblyIdentity name="ImageGlass.exe" version="1.4.27.38" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MJhREdLfCgWt5VYBS9snG8rQVnvVP4Xvqm8o4L7A8oE=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>KbTlSGVj7y5NAMijaqC4h/4YKGg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

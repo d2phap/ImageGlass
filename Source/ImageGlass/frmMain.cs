@@ -2444,6 +2444,11 @@ namespace ImageGlass
 
         #endregion
 
+        private void picMain_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
 
         

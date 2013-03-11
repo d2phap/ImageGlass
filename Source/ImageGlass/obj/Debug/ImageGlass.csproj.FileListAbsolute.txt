@@ -67,3 +67,37 @@ F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\bin\Debug\Im
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.config
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.manifest
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.application
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.exe
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Feature.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.dll
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Feature.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Feature.xml
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.pdb
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csprojResolveAssemblyReference.cache
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmAbout.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmMain.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.Properties.Resources.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmSetting.resources
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.TrustInfo.xml
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe.manifest
+F:\My Software\GitHub\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.application

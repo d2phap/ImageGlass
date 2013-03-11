@@ -27,6 +27,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panMain = new System.Windows.Forms.Panel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.picMain = new System.Windows.Forms.PictureBox();
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuStartSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStopSlideshow = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,11 +46,9 @@
             this.mnuCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuimageProperties = new System.Windows.Forms.ToolStripMenuItem();
-            this.picMain = new System.Windows.Forms.PictureBox();
             this.thumbBar = new ImageGlass.ThumbBar.ThumbnailFlowLayoutPanel();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.sysWatch = new System.IO.FileSystemWatcher();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -87,15 +86,16 @@
             this.lblImageSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageFileSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageDateCreate = new System.Windows.Forms.ToolStripLabel();
+            this.sysWatch = new System.IO.FileSystemWatcher();
             this.panMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
+            this.mnuPopup.SuspendLayout();
             this.toolMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.SuspendLayout();
             // 
             // panMain
@@ -107,7 +107,7 @@
             this.panMain.Location = new System.Drawing.Point(0, 33);
             this.panMain.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
             this.panMain.Name = "panMain";
-            this.panMain.Size = new System.Drawing.Size(827, 404);
+            this.panMain.Size = new System.Drawing.Size(887, 438);
             this.panMain.TabIndex = 2;
             // 
             // sp0
@@ -116,29 +116,41 @@
             this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.sp0.IsSplitterFixed = true;
             this.sp0.Location = new System.Drawing.Point(0, 0);
-            this.sp0.Margin = new System.Windows.Forms.Padding(0);
             this.sp0.Name = "sp0";
             this.sp0.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // sp0.Panel1
             // 
-            this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.sp0.Panel1.ContextMenuStrip = this.mnuPopup;
             this.sp0.Panel1.Controls.Add(this.picMain);
             this.sp0.Panel1.MouseEnter += new System.EventHandler(this.sp0_Panel1_MouseEnter);
             // 
             // sp0.Panel2
             // 
-            this.sp0.Panel2.BackColor = System.Drawing.Color.Transparent;
-            this.sp0.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("sp0.Panel2.BackgroundImage")));
+            this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
             this.sp0.Panel2.Controls.Add(this.thumbBar);
             this.sp0.Panel2Collapsed = true;
-            this.sp0.Panel2MinSize = 70;
-            this.sp0.Size = new System.Drawing.Size(827, 404);
-            this.sp0.SplitterDistance = 25;
+            this.sp0.Size = new System.Drawing.Size(887, 438);
+            this.sp0.SplitterDistance = 343;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
-            this.sp0.TabStop = false;
+            // 
+            // picMain
+            // 
+            this.picMain.BackColor = System.Drawing.Color.Transparent;
+            this.picMain.ContextMenuStrip = this.mnuPopup;
+            this.picMain.Location = new System.Drawing.Point(3, 3);
+            this.picMain.Name = "picMain";
+            this.picMain.Size = new System.Drawing.Size(62, 59);
+            this.picMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picMain.TabIndex = 0;
+            this.picMain.TabStop = false;
+            this.picMain.Tag = "0";
+            this.picMain.Click += new System.EventHandler(this.picMain_Click);
+            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
+            this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
+            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
+            this.picMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseUp);
             // 
             // mnuPopup
             // 
@@ -294,23 +306,6 @@
             this.mnuimageProperties.Text = "&Image properties";
             this.mnuimageProperties.Click += new System.EventHandler(this.mnuProperties_Click);
             // 
-            // picMain
-            // 
-            this.picMain.BackColor = System.Drawing.Color.Transparent;
-            this.picMain.ContextMenuStrip = this.mnuPopup;
-            this.picMain.Location = new System.Drawing.Point(3, 3);
-            this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(62, 59);
-            this.picMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picMain.TabIndex = 0;
-            this.picMain.TabStop = false;
-            this.picMain.Tag = "0";
-            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
-            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
-            this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
-            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
-            this.picMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseUp);
-            // 
             // thumbBar
             // 
             this.thumbBar.AutoScroll = true;
@@ -318,7 +313,7 @@
             this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(150, 46);
+            this.thumbBar.Size = new System.Drawing.Size(887, 94);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.WrapContents = false;
             // 
@@ -326,15 +321,6 @@
             // 
             this.timSlideShow.Interval = 2000;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
-            // 
-            // sysWatch
-            // 
-            this.sysWatch.EnableRaisingEvents = true;
-            this.sysWatch.SynchronizingObject = this;
-            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
-            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
             // toolMain
             // 
@@ -383,7 +369,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(827, 33);
+            this.toolMain.Size = new System.Drawing.Size(887, 33);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -841,6 +827,15 @@
             this.lblImageDateCreate.Name = "lblImageDateCreate";
             this.lblImageDateCreate.Size = new System.Drawing.Size(0, 30);
             // 
+            // sysWatch
+            // 
+            this.sysWatch.EnableRaisingEvents = true;
+            this.sysWatch.SynchronizingObject = this;
+            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
+            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
+            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
+            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -848,7 +843,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(827, 437);
+            this.ClientSize = new System.Drawing.Size(887, 471);
             this.Controls.Add(this.panMain);
             this.Controls.Add(this.toolMain);
             this.DoubleBuffered = true;
@@ -871,11 +866,11 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            this.mnuPopup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
+            this.mnuPopup.ResumeLayout(false);
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -886,7 +881,6 @@
         private System.Windows.Forms.Panel panMain;
         private System.Windows.Forms.ToolStrip toolMain;
         private System.Windows.Forms.Timer timSlideShow;
-        private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.ToolStripButton btnNext;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnRotateLeft;
@@ -931,7 +925,6 @@
         private System.Windows.Forms.ToolStripSeparator mnuPhanCach;
         private ThumbBar.ThumbnailFlowLayoutPanel thumbBar;
         private System.Windows.Forms.ToolTip tip1;
-        private System.IO.FileSystemWatcher sysWatch;
         private System.Windows.Forms.ToolStripMenuItem mnuRename;
         private System.Windows.Forms.ToolStripMenuItem mnuCopyImagePath;
         private System.Windows.Forms.ToolStripLabel lblImageType;
@@ -944,6 +937,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripButton btnExtension;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
+        private System.IO.FileSystemWatcher sysWatch;
+        private System.Windows.Forms.SplitContainer sp0;
     }
 }
 
