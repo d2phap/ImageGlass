@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("ImageGlass Component")> 
 <Assembly: AssemblyCompany("PhapSoftware")> 
 <Assembly: AssemblyProduct("ImageGlass.Feature")> 
-<Assembly: AssemblyCopyright("Copyright © 2012 by Duong Dieu Phap")> 
+<Assembly: AssemblyCopyright("Copyright © 2013 by Duong Dieu Phap")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.5.0.0")> 
-<Assembly: AssemblyFileVersion("1.5.0.0")> 
+<Assembly: AssemblyVersion("1.5.*")> 
+'<Assembly: AssemblyFileVersion("1.5.0.1")> 

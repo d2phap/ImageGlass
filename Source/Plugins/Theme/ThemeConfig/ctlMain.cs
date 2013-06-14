@@ -63,17 +63,17 @@ namespace ThemeConfig
 		/// <summary> 
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
 		#region Component Designer generated code
 		/// <summary> 
@@ -456,6 +456,16 @@ namespace ThemeConfig
                 string hkey = "HKEY_CURRENT_USER\\Software\\PhapSoftware\\ImageGlass\\";
                 Microsoft.Win32.Registry.SetValue(hkey, "Theme", lvTheme.SelectedItems[0].Tag.ToString());
 
+                try
+                {
+                    ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme(lvTheme.SelectedItems[0].Tag.ToString());
+                    Microsoft.Win32.Registry.SetValue(hkey, "BackgroundColor", th.backcolor.ToArgb());
+                }
+                catch
+                {
+                    Microsoft.Win32.Registry.SetValue(hkey, "BackgroundColor", Color.White.ToArgb());
+                }
+               
                 DialogResult msg = MessageBox.Show("Restart ImageGlass to complete new theme applying ?", 
                     "Restart", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (msg == DialogResult.Yes)

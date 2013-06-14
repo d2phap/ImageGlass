@@ -239,12 +239,10 @@ namespace ImageGlass
 
         private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
-            {
-                Process.Start("\"" + (Application.StartupPath + "\\").Replace("\\\\", "\\") +
-                            "igcmd.exe\"", "igupdate");
-            }
-            catch { }
+            Process p = new Process();
+            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.Arguments = "igupdate";
+            p.Start();
         }
         #endregion
 
@@ -260,6 +258,9 @@ namespace ImageGlass
             catch { }
         }
         #endregion
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Security.Principal;
+using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
 
@@ -137,6 +139,7 @@ namespace ImageGlass
             this.Refresh();
         }
 
+
         private void lblMenu_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
@@ -216,6 +219,12 @@ namespace ImageGlass
             }
         }
 
+        private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
+        {
+            Registry.SetValue(hkey, "Welcome", chkWelcomePicture.Checked.ToString());
+            Setting.IsWelcomePicture = chkWelcomePicture.Checked;
+        }
+
         private void barInterval_Scroll(object sender, EventArgs e)
         {
             Registry.SetValue(hkey, "Interval", barInterval.Value);
@@ -230,6 +239,7 @@ namespace ImageGlass
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
             Registry.SetValue(hkey, "ImageLoadingOrder", cmbImageOrder.SelectedIndex);
+            Setting.LoadImageOrderConfig();
         }
 
         /// <summary>
@@ -253,6 +263,9 @@ namespace ImageGlass
             {
                 chkAutoUpdate.Checked = false;
             }
+
+            //Get value of chkWelcomePicture
+            chkWelcomePicture.Checked = bool.Parse(Registry.GetValue(hkey, "Welcome", "true").ToString());
 
             //Get value of cmbZoomOptimization
             s = Registry.GetValue(hkey, "ZoomOptimize", "0").ToString();
@@ -302,23 +315,34 @@ namespace ImageGlass
             }
             cmbImageOrder.SelectedIndex = i;
 
+            //Get background color
+            picBackgroundColor.BackColor = Setting.BackgroundColor;
         }
         #endregion
 
         #region TAB CONTEXT MENU
+        [PrincipalPermissionAttribute(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
         private void lblAddContextMenu_Click(object sender, EventArgs e)
         {
             string hkey = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\Shell\\Open with ImageGlass\\Command\\";
             Registry.SetValue(hkey, "", Application.ExecutablePath + " %1");
         }
 
+
+        [PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
         private void lblRemoveContextMenu_Click(object sender, EventArgs e)
         {
             RegistryKey r;
             r = Registry.LocalMachine.OpenSubKey("Software\\Classes\\*\\Shell", true);
             r.DeleteSubKeyTree("Open with ImageGlass");
         }
+
+
         #endregion
+
+
+
+
 
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -335,6 +359,23 @@ namespace ImageGlass
             }
             catch { }
         }
+
+        private void picBackgroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog c = new ColorDialog();
+            c.AllowFullOpen = true;
+
+            if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                picBackgroundColor.BackColor = c.Color;
+                Setting.BackgroundColor = c.Color;
+
+                //Luu background color
+                Registry.SetValue(hkey, "BackgroundColor", Setting.BackgroundColor.ToArgb());
+            }
+        }
+
+        
 
         
 

@@ -49,6 +49,7 @@
             this.thumbBar = new ImageGlass.ThumbBar.ThumbnailFlowLayoutPanel();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.sysWatch = new System.IO.FileSystemWatcher();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -79,14 +80,13 @@
             this.btnSetting = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnReport = new System.Windows.Forms.ToolStripButton();
-            this.btnDisLike = new System.Windows.Forms.ToolStripButton();
-            this.btnLike = new System.Windows.Forms.ToolStripButton();
+            this.btnFollow = new System.Windows.Forms.ToolStripButton();
+            this.btnFacebookLike = new System.Windows.Forms.ToolStripButton();
             this.lblZoomRatio = new System.Windows.Forms.ToolStripLabel();
             this.lblImageType = new System.Windows.Forms.ToolStripLabel();
             this.lblImageSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageFileSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageDateCreate = new System.Windows.Forms.ToolStripLabel();
-            this.sysWatch = new System.IO.FileSystemWatcher();
             this.panMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -94,24 +94,25 @@
             this.sp0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.mnuPopup.SuspendLayout();
-            this.toolMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
+            this.toolMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panMain
             // 
             this.panMain.AutoScroll = true;
-            this.panMain.BackColor = System.Drawing.Color.Transparent;
+            this.panMain.BackColor = System.Drawing.Color.Black;
             this.panMain.Controls.Add(this.sp0);
             this.panMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panMain.Location = new System.Drawing.Point(0, 33);
             this.panMain.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
             this.panMain.Name = "panMain";
-            this.panMain.Size = new System.Drawing.Size(887, 438);
+            this.panMain.Size = new System.Drawing.Size(864, 438);
             this.panMain.TabIndex = 2;
             // 
             // sp0
             // 
+            this.sp0.BackColor = System.Drawing.Color.White;
             this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.sp0.IsSplitterFixed = true;
@@ -121,6 +122,7 @@
             // 
             // sp0.Panel1
             // 
+            this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel1.Controls.Add(this.picMain);
             this.sp0.Panel1.MouseEnter += new System.EventHandler(this.sp0_Panel1_MouseEnter);
             // 
@@ -129,7 +131,7 @@
             this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
             this.sp0.Panel2.Controls.Add(this.thumbBar);
             this.sp0.Panel2Collapsed = true;
-            this.sp0.Size = new System.Drawing.Size(887, 438);
+            this.sp0.Size = new System.Drawing.Size(864, 438);
             this.sp0.SplitterDistance = 343;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
@@ -145,7 +147,6 @@
             this.picMain.TabIndex = 0;
             this.picMain.TabStop = false;
             this.picMain.Tag = "0";
-            this.picMain.Click += new System.EventHandler(this.picMain_Click);
             this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
@@ -313,7 +314,7 @@
             this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(887, 94);
+            this.thumbBar.Size = new System.Drawing.Size(150, 46);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.WrapContents = false;
             // 
@@ -321,6 +322,15 @@
             // 
             this.timSlideShow.Interval = 2000;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
+            // 
+            // sysWatch
+            // 
+            this.sysWatch.EnableRaisingEvents = true;
+            this.sysWatch.SynchronizingObject = this;
+            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
+            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
+            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
+            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
             // toolMain
             // 
@@ -359,8 +369,8 @@
             this.btnSetting,
             this.btnHelp,
             this.btnReport,
-            this.btnDisLike,
-            this.btnLike,
+            this.btnFollow,
+            this.btnFacebookLike,
             this.lblZoomRatio,
             this.lblImageType,
             this.lblImageSize,
@@ -369,7 +379,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(887, 33);
+            this.toolMain.Size = new System.Drawing.Size(864, 33);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -678,8 +688,7 @@
             this.btnPrintImage.Margin = new System.Windows.Forms.Padding(0);
             this.btnPrintImage.Name = "btnPrintImage";
             this.btnPrintImage.Size = new System.Drawing.Size(25, 28);
-            this.btnPrintImage.ToolTipText = "Print image";
-            this.btnPrintImage.Visible = false;
+            this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnPrintImage_Click);
             // 
             // btnFacebook
@@ -728,7 +737,7 @@
             this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(25, 28);
-            this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + P)";
+            this.btnSetting.ToolTipText = "ImageGlass Settings";
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // btnHelp
@@ -760,37 +769,35 @@
             this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass beta";
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // btnDisLike
+            // btnFollow
             // 
-            this.btnDisLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnDisLike.AutoSize = false;
-            this.btnDisLike.BackColor = System.Drawing.Color.Transparent;
-            this.btnDisLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDisLike.Image = global::ImageGlass.Properties.Resources.dislike;
-            this.btnDisLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnDisLike.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDisLike.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDisLike.Name = "btnDisLike";
-            this.btnDisLike.Size = new System.Drawing.Size(25, 28);
-            this.btnDisLike.Text = "Dislike";
-            this.btnDisLike.ToolTipText = "Dislike ImageGlass";
-            this.btnDisLike.Click += new System.EventHandler(this.btnDisLike_Click);
+            this.btnFollow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnFollow.AutoSize = false;
+            this.btnFollow.BackColor = System.Drawing.Color.Transparent;
+            this.btnFollow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFollow.Image = global::ImageGlass.Properties.Resources.follow;
+            this.btnFollow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFollow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFollow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFollow.Name = "btnFollow";
+            this.btnFollow.Size = new System.Drawing.Size(25, 28);
+            this.btnFollow.ToolTipText = "Follow ImageGlass by email";
+            this.btnFollow.Click += new System.EventHandler(this.btnFollow_Click);
             // 
-            // btnLike
+            // btnFacebookLike
             // 
-            this.btnLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnLike.AutoSize = false;
-            this.btnLike.BackColor = System.Drawing.Color.Transparent;
-            this.btnLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLike.Image = global::ImageGlass.Properties.Resources.like;
-            this.btnLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnLike.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLike.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLike.Name = "btnLike";
-            this.btnLike.Size = new System.Drawing.Size(25, 28);
-            this.btnLike.Text = "Like";
-            this.btnLike.ToolTipText = "Like ImageGlass";
-            this.btnLike.Click += new System.EventHandler(this.btnLike_Click);
+            this.btnFacebookLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnFacebookLike.AutoSize = false;
+            this.btnFacebookLike.BackColor = System.Drawing.Color.Transparent;
+            this.btnFacebookLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFacebookLike.Image = global::ImageGlass.Properties.Resources.facebook;
+            this.btnFacebookLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFacebookLike.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFacebookLike.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnFacebookLike.Name = "btnFacebookLike";
+            this.btnFacebookLike.Size = new System.Drawing.Size(25, 28);
+            this.btnFacebookLike.ToolTipText = "Visit Facebook of ImageGlass";
+            this.btnFacebookLike.Click += new System.EventHandler(this.btnFacebookLike_Click);
             // 
             // lblZoomRatio
             // 
@@ -827,15 +834,6 @@
             this.lblImageDateCreate.Name = "lblImageDateCreate";
             this.lblImageDateCreate.Size = new System.Drawing.Size(0, 30);
             // 
-            // sysWatch
-            // 
-            this.sysWatch.EnableRaisingEvents = true;
-            this.sysWatch.SynchronizingObject = this;
-            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
-            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -843,7 +841,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(887, 471);
+            this.ClientSize = new System.Drawing.Size(864, 471);
             this.Controls.Add(this.panMain);
             this.Controls.Add(this.toolMain);
             this.DoubleBuffered = true;
@@ -854,6 +852,7 @@
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
             this.Text = "ImageGlass";
+            this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
@@ -868,9 +867,9 @@
             this.sp0.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.mnuPopup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -905,8 +904,8 @@
         private System.Windows.Forms.ToolStripButton btnSetting;
         private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.ToolStripButton btnReport;
-        private System.Windows.Forms.ToolStripButton btnDisLike;
-        private System.Windows.Forms.ToolStripButton btnLike;
+        private System.Windows.Forms.ToolStripButton btnFollow;
+        private System.Windows.Forms.ToolStripButton btnFacebookLike;
         private System.Windows.Forms.ToolStripLabel lblZoomRatio;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;

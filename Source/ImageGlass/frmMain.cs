@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -33,13 +33,12 @@ using Microsoft.Win32;
 using System.Threading;
 using ImageGlass.ThumbBar;
 using System.Drawing.Printing;
-using System.Drawing.Imaging;
 using System.Drawing.IconLib;
 using System.Drawing.IconLib.ColorProcessing;
+using System.Diagnostics;
 
 namespace ImageGlass
 {
-
     public partial class frmMain : Form
     {
         public frmMain()
@@ -248,7 +247,7 @@ namespace ImageGlass
             }
 
             //Lấy thứ tự sắp xếp ảnh
-            LoadImageOrderConfig();
+            Setting.LoadImageOrderConfig();
 
             //Sap xem thu tu hinh anh
             if (Setting.ImageOrderBy == ImageOrderBy.Length)
@@ -265,9 +264,13 @@ namespace ImageGlass
             }
             else if (Setting.ImageOrderBy == ImageOrderBy.Extension)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Extension));
+                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Extension));                
             }
-            else 
+            else if (Setting.ImageOrderBy == ImageOrderBy.Random)
+            {
+                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => Guid.NewGuid()));
+            }
+            else
             {
                 dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Name));
             }
@@ -719,7 +722,7 @@ namespace ImageGlass
             //ImageGlass Settings---------------------------------------------------------------
             if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
             {
-                btnSetting_Click(null, null);
+                btnPrintImage_Click(null, null);
                 return;
             }
 
@@ -830,7 +833,7 @@ namespace ImageGlass
             else
             {
                 //lấy kích thước tối đa của thumbnail
-                LoadMaxThumbnailFileSizeConfig();
+                Setting.LoadMaxThumbnailFileSizeConfig();
 
                 int size = M_THUMBNAIL_SIZE;
                 ImageViewer imageViewer = new ImageViewer();
@@ -1336,15 +1339,15 @@ namespace ImageGlass
             // <main>
             toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar;
             sp0.Panel2.BackgroundImage = ImageGlass.Properties.Resources.bottombar;
-            lblZoomRatio.ForeColor = Color.White;
-            lblImageDateCreate.ForeColor = Color.White;
-            lblImageFileSize.ForeColor = Color.White;
-            lblImageSize.ForeColor = Color.White;
-            lblImageType.ForeColor = Color.White;
+            lblZoomRatio.ForeColor = Color.Black;
+            lblImageDateCreate.ForeColor = Color.Black;
+            lblImageFileSize.ForeColor = Color.Black;
+            lblImageSize.ForeColor = Color.Black;
+            lblImageType.ForeColor = Color.Black;
 
-            this.BackColor = Color.White;
+            sp0.BackColor = Color.White;
             string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            Registry.SetValue(hkey, "BackColor", this.BackColor.ToArgb().ToString());
+            //Registry.SetValue(hkey, "BackgroundColor", sp0.BackColor.ToArgb());
 
             // <toolbar_icon>
             btnBack.Image = ImageGlass.Properties.Resources.back;
@@ -1370,8 +1373,8 @@ namespace ImageGlass
             btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb;
             btnSetting.Image = ImageGlass.Properties.Resources.settings;
             btnHelp.Image = ImageGlass.Properties.Resources.about;
-            btnLike.Image = ImageGlass.Properties.Resources.like;
-            btnDisLike.Image = ImageGlass.Properties.Resources.dislike;
+            btnFacebookLike.Image = ImageGlass.Properties.Resources.facebook;
+            btnFollow.Image = ImageGlass.Properties.Resources.follow;
             btnReport.Image = ImageGlass.Properties.Resources.report;
 
             Registry.SetValue(hkey, "Theme", "default");
@@ -1414,10 +1417,20 @@ namespace ImageGlass
                     lblImageType.ForeColor = Color.White;
                 }
 
-                try { this.BackColor = t.backcolor; }
-                catch { this.BackColor = Color.White; }
-                Registry.SetValue(hkey, "BackColor", this.BackColor.ToArgb().ToString());
 
+                try
+                {
+                    sp0.BackColor = t.backcolor;
+                    Setting.BackgroundColor = t.backcolor;
+                }
+                catch
+                {
+                    sp0.BackColor = Color.White;
+                    Setting.BackgroundColor = Color.White;
+                }
+            
+                //Registry.SetValue(hkey, "BackgroundColor", sp0.BackColor.ToArgb().ToString());
+                
                 // <toolbar_icon>
                 try { btnBack.Image = Image.FromFile(dir + t.back); }
                 catch { btnBack.Image = ImageGlass.Properties.Resources.back; }
@@ -1491,11 +1504,11 @@ namespace ImageGlass
                 try { btnHelp.Image = Image.FromFile(dir + t.about); }
                 catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
 
-                try { btnLike.Image = Image.FromFile(dir + t.like); }
-                catch { btnLike.Image = ImageGlass.Properties.Resources.like; }
+                try { btnFacebookLike.Image = Image.FromFile(dir + t.like); }
+                catch { btnFacebookLike.Image = ImageGlass.Properties.Resources.facebook; }
 
-                try { btnDisLike.Image = Image.FromFile(dir + t.dislike); }
-                catch { btnDisLike.Image = ImageGlass.Properties.Resources.dislike; }
+                try { btnFollow.Image = Image.FromFile(dir + t.dislike); }
+                catch { btnFollow.Image = ImageGlass.Properties.Resources.follow; }
 
                 try { btnReport.Image = Image.FromFile(dir + t.report); }
                 catch { btnReport.Image = ImageGlass.Properties.Resources.report; }
@@ -1553,6 +1566,9 @@ namespace ImageGlass
             //Lăn chuột mượt----------------------------------------------------------------
             Setting.IsSmoothPanning = bool.Parse(Registry.GetValue(hkey, "SmoothPanning", "False").ToString());
 
+            //Get welcome screen
+            Setting.IsWelcomePicture = bool.Parse(Registry.GetValue(hkey, "Welcome", "True").ToString());
+
             //Zoom optimization method
             string z = Microsoft.Win32.Registry.GetValue(hkey, "ZoomOptimize", "auto").ToString();
             if (z.ToLower() == "smooth pixels")
@@ -1568,75 +1584,28 @@ namespace ImageGlass
                 Setting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
             }
             
+            //Load ảnh mặc định
+            string y = Microsoft.Win32.Registry.GetValue(hkey, "Welcome", "true").ToString();
+            if (y.ToLower() == "true")
+            {
+                Prepare((Application.StartupPath + "\\").Replace("\\\\", "\\") + "default.png");
+            }
 
             //Kích thước tối đa của file ảnh thu nhỏ----------------------------------------
-            LoadMaxThumbnailFileSizeConfig();
+            Setting.LoadMaxThumbnailFileSizeConfig();
 
             //Thứ tự sắp xếp hình ảnh------------------------------------------------------
-            LoadImageOrderConfig();
+            Setting.LoadImageOrderConfig();
 
             //Load theme--------------------------------------------------------------------
             LoadTheme();
-                        
+            
+            //Load background
+            z = Microsoft.Win32.Registry.GetValue(hkey, "BackgroundColor", "-1").ToString();
+            Setting.BackgroundColor = Color.FromArgb(int.Parse(z));
+            sp0.BackColor = Setting.BackgroundColor;
         }
 
-        /// <summary>
-        /// Lấy kích thước tối đa sẽ nạp file ảnh thu nhỏ
-        /// </summary>
-        private void LoadMaxThumbnailFileSizeConfig()
-        {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            string s = Registry.GetValue(hkey, "MaxThumbnailFileSize", "1").ToString();
-            int i = 1;
-
-            if (int.TryParse(s, out i))
-            { }
-            Setting.ThumbnailMaxFileSize = i;
-        }
-
-        /// <summary>
-        /// Lấy dữ liệu thứ tự sắp xếp ảnh
-        /// </summary>
-        private void LoadImageOrderConfig()
-        {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            string s = Registry.GetValue(hkey, "ImageLoadingOrder", "0").ToString();
-            int i = 0;
-
-            if (int.TryParse(s, out i))
-            {
-                if (-1 < i && i < 6)
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-            if (i == 1)
-            {
-                Setting.ImageOrderBy = ImageOrderBy.Length;
-            }
-            else if (i == 2)
-            {
-                Setting.ImageOrderBy = ImageOrderBy.CreationTime;
-            }
-            else if (i == 3)
-            {
-                Setting.ImageOrderBy = ImageOrderBy.LastAccessTime;
-            }
-            else if (i == 4)
-            {
-                Setting.ImageOrderBy = ImageOrderBy.LastWriteTime;
-            }
-            else if (i == 5)
-            {
-                Setting.ImageOrderBy = ImageOrderBy.Extension;
-            }
-            else
-            {
-                Setting.ImageOrderBy = ImageOrderBy.Name;
-            }
-        }
 
         /// <summary>
         /// Lưu dữ liệu xuống Registry
@@ -1660,7 +1629,6 @@ namespace ImageGlass
             
             //Lan chuot muot------------------------------------------------------------------
             Registry.SetValue(hkey, "SmoothPanning", Setting.IsSmoothPanning);
-            
         }
 
         #endregion
@@ -1701,6 +1669,11 @@ namespace ImageGlass
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfig();
+        }
+
+        private void frmMain_Activated(object sender, EventArgs e)
+        {
+            sp0.BackColor = Setting.BackgroundColor;
         }
 
         private void m_Controller_OnStart(object sender, ThumbnailControllerEventArgs e)
@@ -1998,7 +1971,7 @@ namespace ImageGlass
                 this.rect = this.Bounds;
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.WindowState = FormWindowState.Normal;
-                this.BackColor = Color.Black;
+                sp0.BackColor = Color.Black;
                 toolMain.Visible = false;
                 Application.DoEvents();
                 this.Bounds = Screen.FromControl(this).Bounds;
@@ -2040,7 +2013,15 @@ namespace ImageGlass
 
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
+            if (Setting.ImageList.length < 1 || Setting.IsImageError)
+            {
+                return;
+            }
 
+            Process p = new Process();
+            p.StartInfo.FileName = Setting.ImageList.getPath(Setting.CurrentIndex);
+            p.StartInfo.Verb = "print";
+            p.Start();
         }
 
         private void btnFacebook_Click(object sender, EventArgs e)
@@ -2214,24 +2195,22 @@ namespace ImageGlass
             ImageGlass_Image.ConvertImage(picMain.Image, Setting.ImageList.getName(Setting.CurrentIndex));
         }
 
-        private void btnLike_Click(object sender, EventArgs e)
+        private void btnFacebookLike_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start(char.ConvertFromUtf32(34) +
-                                (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe" +
-                                char.ConvertFromUtf32(34), "iglike " + Application.ProductVersion);
+                System.Diagnostics.Process.Start("https://www.facebook.com/ImageGlass");
             }
             catch { }
         }
 
-        private void btnDisLike_Click(object sender, EventArgs e)
+        private void btnFollow_Click(object sender, EventArgs e)
         {
             try
             {
                 System.Diagnostics.Process.Start(char.ConvertFromUtf32(34) +
                                 (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe" +
-                                char.ConvertFromUtf32(34), "igdislike " + Application.ProductVersion);
+                                char.ConvertFromUtf32(34), "igfollow");
             }
             catch { }
         }
@@ -2310,7 +2289,7 @@ namespace ImageGlass
             timSlideShow.Stop();
             timSlideShow.Enabled = false;
 
-            this.BackColor = Color.White;
+            sp0.BackColor = Setting.BackgroundColor;
             toolMain.Visible = true;
 
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -2444,19 +2423,10 @@ namespace ImageGlass
 
         #endregion
 
-        private void picMain_Click(object sender, EventArgs e)
-        {
-
-        }
 
         
 
         
-        
-
-
-
-
 
 
     }

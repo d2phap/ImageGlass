@@ -3,8 +3,7 @@ F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.Theme\bin
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.Theme\obj\Debug\ResolveAssemblyReference.cache
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.dll
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\bin\Debug\ImageGlass.Theme.dll
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\bin\Debug\ImageGlass.Theme.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.dll
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.csprojResolveAssemblyReference.cache
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\bin\Debug\ImageGlass.Theme.dll
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\bin\Debug\ImageGlass.Theme.pdb
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.dll
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Theme\obj\Debug\ImageGlass.Theme.pdb

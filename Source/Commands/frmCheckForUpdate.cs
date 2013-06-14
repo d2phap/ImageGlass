@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ using ImageGlass.Feature;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using ImageGlass.Services;
 
 namespace igcmd
 {
@@ -37,6 +38,9 @@ namespace igcmd
         {
             InitializeComponent();
         }
+
+        Update up = new Update();
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             if (File.Exists("C:\\ImageGlass-Update.txt")) File.Delete("C:\\ImageGlass-Update.txt");
@@ -46,132 +50,68 @@ namespace igcmd
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            ThemeConfig.RenderTheme r = new ThemeConfig.RenderTheme();
-            r.ApplyTheme(lv);
-
-            lblStatus.Text = "Connecting to server, please wait...";
+            this.Text = "Connecting to server, please wait...";
             Thread t = new Thread(new ThreadStart(CheckForUpdate));
             t.Priority = ThreadPriority.BelowNormal;
             t.IsBackground = true;
             t.Start();
-        }
-            
 
-        //download failed
-        void d_FileDownloadFailed(Exception ex)
-        {
-            lblStatus.Text = "Cannot connect to server";
-            picStatus.Image = igcmd.Properties.Resources._del_2;
-            lv.Enabled = false;
-        }
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(Application.StartupPath + "\\ImageGlass.exe");
+            lblCurentVersion.Text = "Version: " + fv.FileVersion;
 
-        //download complete
-        void d_FileDownloadComplete()
-        {
-            if (File.Exists("C:\\ImageGlass-Update.txt"))
-            {
-                FileVersionInfo f;
-                StreamReader r = new StreamReader("C:\\ImageGlass-Update.txt");
-                List<string> ds = new List<string>();
-                int c = 0;//dem so luong can update
-
-                while (!r.EndOfStream)
-                {
-                    ds.Add(r.ReadLine());
-                }
-
-                string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\");//duong dan cai dat
-
-                //Kiem tra phien ban cua chuong trinh--------------------------------------------------------
-                f = FileVersionInfo.GetVersionInfo(dir + "ImageGlass.exe");
-                string v = ds[0].Split('#')[0];//lay phien ban update
-                ListViewItem i = lv.Items.Add("ImageGlass.exe");
-                i.Tag = "x";//khong co link
-                i.SubItems.Add(f.FileVersion);//phien ban hien tai
-                i.SubItems.Add(v);//phien ban moi
-                if (v != f.FileVersion)
-                {
-                    i.Tag = ds[0].Split('#')[1];//them link download      
-                    c++;
-                }
-
-                
-
-                //bao cao
-                if (c == 0)
-                {
-                    lblStatus.Text = "ImageGlass is up to date";
-                    picStatus.Image = igcmd.Properties.Resources.check;
-                    btnDownload.Enabled = false;
-                }
-                else
-                {
-                    lblStatus.Text = "Need to update: " + c.ToString();
-                    picStatus.Image = igcmd.Properties.Resources.ques;
-                    btnDownload.Enabled = true;
-                }
-
-                r.Close();
-                File.Delete("C:\\ImageGlass-Update.txt");
-                lv.Enabled = true;
-            }
         }
 
 
-        private void btnDownload_Click(object sender, EventArgs e)
-        {
-            if (lv.SelectedItems.Count > 0)
-            {
-                foreach (ListViewItem i in lv.SelectedItems)
-                {
-                    if (i.Tag.ToString() != "x")
-                    {
-                        Process.Start(i.Tag.ToString());
-                    }
-                }
-            }
-        }
 
         private void CheckForUpdate()
         {
-            
-            ImageGlass.Feature.ImageGlass_DownloadFile d = new ImageGlass.Feature.ImageGlass_DownloadFile();
-            d.FileDownloadComplete += new ImageGlass_DownloadFile.FileDownloadCompleteEventHandler(d_FileDownloadComplete);
-            d.FileDownloadFailed += new ImageGlass_DownloadFile.FileDownloadFailedEventHandler(d_FileDownloadFailed);
+            up = new Update(new Uri("http://www.imageglass.org/update.xml"), "C:\\ImageGlass-Update.xml");
+            if (File.Exists("C:\\ImageGlass-Update.xml")) File.Delete("C:\\ImageGlass-Update.xml");
 
-            try
+            lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
+            lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
+            lblUpdateImportance.Text = "Importance: " + up.Info.Level;
+            lblUpdateSize.Text = "Size: " + up.Info.Size;
+
+            this.Text = "";
+
+            if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe"))
             {
-                if (File.Exists("C:\\ImageGlass-Update.txt"))
+                if (up.Info.VersionType.ToLower() == "stable")
                 {
-                    File.Delete("C:\\ImageGlass-Update.txt");
+                    this.Text = "Your ImageGlass is outdate!";
                 }
 
-                d.DownloadFile("http://imageglass.googlecode.com/files/ImageGlass-Update.txt", "C:\\ImageGlass-Update.txt");
-
+                btnDownload.Enabled = true;
             }
-            catch
+            else
             {
-                lblStatus.Text = "Can not connect to server";
-                picStatus.Image = igcmd.Properties.Resources._del_2;
+                btnDownload.Enabled = false;
             }
-
         }
 
-        private void lv_SelectedIndexChanged(object sender, EventArgs e)
+        private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                if (lv.SelectedItems[0].Tag.ToString() == "x")
-                {
-                    btnDownload.Enabled = false;
-                }
-                else
-                {
-                    btnDownload.Enabled = true;
-                }
+                Process.Start(up.Info.Decription);
             }
-            catch { }
+            catch
+            {
+                MessageBox.Show("Check your Internet connection!");
+            }
         }
 
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(up.Info.Link.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("Check your Internet connection!");
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,17 +22,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ImageGlass.Core;
+using System.Drawing;
+using Microsoft.Win32;
 
 namespace ImageGlass
 {
     public enum ImageOrderBy
     {
-        Name,
-        Length,
-        CreationTime,
-        Extension,
-        LastAccessTime,
-        LastWriteTime
+        Name = 0,
+        Length = 1,
+        CreationTime = 2,
+        Extension = 3,
+        LastAccessTime = 4,
+        LastWriteTime = 5,
+        Random = 6
     }
 
     public enum ZoomOptimizationValue
@@ -68,11 +71,11 @@ namespace ImageGlass
         private static bool _isImageError = false;
         private static double _zoomLockValue = 1;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
+        private static bool _isWelcomePicture = true;
+        private static Color _backgroundColor = Color.White;
 
-        
-        
 
-
+        #region "Properties"
         /// <summary>
         /// Form frmFacebook
         /// </summary>
@@ -257,6 +260,93 @@ namespace ImageGlass
             get { return Setting._zoomOptimizationMethod; }
             set { Setting._zoomOptimizationMethod = value; }
         }
+
+        /// <summary>
+        /// Get, set welcome picture value
+        /// </summary>
+        public static bool IsWelcomePicture
+        {
+            get { return Setting._isWelcomePicture; }
+            set { Setting._isWelcomePicture = value; }
+        }
+
+        /// <summary>
+        /// Get, set background color
+        /// </summary>
+        public static Color BackgroundColor
+        {
+            get { return Setting._backgroundColor; }
+            set { Setting._backgroundColor = value; }
+        }
+
+#endregion
+
+
+
+        #region "Public Method"
+
+        /// <summary>
+        /// Lấy kích thước tối đa sẽ nạp file ảnh thu nhỏ
+        /// </summary>
+        public static void LoadMaxThumbnailFileSizeConfig()
+        {
+            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
+            string s = Registry.GetValue(hkey, "MaxThumbnailFileSize", "1").ToString();
+            int i = 1;
+
+            if (int.TryParse(s, out i))
+            { }
+            Setting.ThumbnailMaxFileSize = i;
+        }
+
+        /// <summary>
+        /// Lấy dữ liệu thứ tự sắp xếp ảnh
+        /// </summary>
+        public static void LoadImageOrderConfig()
+        {
+            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
+            string s = Registry.GetValue(hkey, "ImageLoadingOrder", "0").ToString();
+            int i = 0;
+
+            if (int.TryParse(s, out i))
+            {
+                if (-1 < i && i < 7) //<=== Số lượng phần tử
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+            if (i == 1)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.Length;
+            }
+            else if (i == 2)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.CreationTime;
+            }
+            else if (i == 3)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.LastAccessTime;
+            }
+            else if (i == 4)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.LastWriteTime;
+            }
+            else if (i == 5)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.Extension;
+            }
+            else if (i == 6)
+            {
+                Setting.ImageOrderBy = ImageOrderBy.Random;
+            }
+            else
+            {
+                Setting.ImageOrderBy = ImageOrderBy.Name;
+            }
+        }
+        #endregion
 
     }
 }

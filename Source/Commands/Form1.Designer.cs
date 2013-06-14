@@ -29,34 +29,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCheckForUpdate));
-            this.lblStatus = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.picStatus = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lv = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            ((System.ComponentModel.ISupportInitialize)(this.picStatus)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblUpdateVersion = new System.Windows.Forms.Label();
+            this.lblUpdateVersionType = new System.Windows.Forms.Label();
+            this.lblUpdateImportance = new System.Windows.Forms.Label();
+            this.lblUpdateSize = new System.Windows.Forms.Label();
+            this.lblCurentVersion = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lnkUpdateReadMore = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(34, 17);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(14, 15);
-            this.lblStatus.TabIndex = 0;
-            this.lblStatus.Text = "#";
-            // 
             // btnDownload
             // 
+            this.btnDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDownload.Enabled = false;
-            this.btnDownload.Location = new System.Drawing.Point(225, 11);
+            this.btnDownload.Location = new System.Drawing.Point(118, 11);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(93, 29);
+            this.btnDownload.Size = new System.Drawing.Size(107, 29);
             this.btnDownload.TabIndex = 1;
             this.btnDownload.Text = "Download";
             this.btnDownload.UseVisualStyleBackColor = true;
@@ -64,24 +58,15 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(324, 11);
+            this.btnClose.Location = new System.Drawing.Point(231, 11);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(73, 29);
+            this.btnClose.Size = new System.Drawing.Size(81, 29);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // picStatus
-            // 
-            this.picStatus.Image = global::igcmd.Properties.Resources.loading19;
-            this.picStatus.Location = new System.Drawing.Point(12, 16);
-            this.picStatus.Name = "picStatus";
-            this.picStatus.Size = new System.Drawing.Size(16, 16);
-            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picStatus.TabIndex = 3;
-            this.picStatus.TabStop = false;
             // 
             // panel1
             // 
@@ -89,44 +74,108 @@
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnDownload);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 182);
+            this.panel1.Location = new System.Drawing.Point(0, 275);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 52);
+            this.panel1.Size = new System.Drawing.Size(324, 52);
             this.panel1.TabIndex = 4;
             // 
-            // lv
+            // label1
             // 
-            this.lv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.lv.Enabled = false;
-            this.lv.FullRowSelect = true;
-            this.lv.Location = new System.Drawing.Point(12, 38);
-            this.lv.Name = "lv";
-            this.lv.Size = new System.Drawing.Size(385, 132);
-            this.lv.TabIndex = 5;
-            this.lv.UseCompatibleStateImageBehavior = false;
-            this.lv.View = System.Windows.Forms.View.Details;
-            this.lv.SelectedIndexChanged += new System.EventHandler(this.lv_SelectedIndexChanged);
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 127);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(216, 15);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "▶ The latest ImageGlass information:";
             // 
-            // columnHeader1
+            // lblUpdateVersion
             // 
-            this.columnHeader1.Text = "Filename";
-            this.columnHeader1.Width = 165;
+            this.lblUpdateVersion.AutoSize = true;
+            this.lblUpdateVersion.BackColor = System.Drawing.Color.Transparent;
+            this.lblUpdateVersion.Location = new System.Drawing.Point(30, 152);
+            this.lblUpdateVersion.Name = "lblUpdateVersion";
+            this.lblUpdateVersion.Size = new System.Drawing.Size(52, 15);
+            this.lblUpdateVersion.TabIndex = 7;
+            this.lblUpdateVersion.Text = "Version: ";
             // 
-            // columnHeader2
+            // lblUpdateVersionType
             // 
-            this.columnHeader2.Text = "Version";
-            this.columnHeader2.Width = 100;
+            this.lblUpdateVersionType.AutoSize = true;
+            this.lblUpdateVersionType.BackColor = System.Drawing.Color.Transparent;
+            this.lblUpdateVersionType.Location = new System.Drawing.Point(30, 172);
+            this.lblUpdateVersionType.Name = "lblUpdateVersionType";
+            this.lblUpdateVersionType.Size = new System.Drawing.Size(78, 15);
+            this.lblUpdateVersionType.TabIndex = 8;
+            this.lblUpdateVersionType.Text = "Version type: ";
             // 
-            // columnHeader3
+            // lblUpdateImportance
             // 
-            this.columnHeader3.Text = "New version";
-            this.columnHeader3.Width = 100;
+            this.lblUpdateImportance.AutoSize = true;
+            this.lblUpdateImportance.BackColor = System.Drawing.Color.Transparent;
+            this.lblUpdateImportance.Location = new System.Drawing.Point(30, 192);
+            this.lblUpdateImportance.Name = "lblUpdateImportance";
+            this.lblUpdateImportance.Size = new System.Drawing.Size(71, 15);
+            this.lblUpdateImportance.TabIndex = 9;
+            this.lblUpdateImportance.Text = "Importance:";
+            // 
+            // lblUpdateSize
+            // 
+            this.lblUpdateSize.AutoSize = true;
+            this.lblUpdateSize.BackColor = System.Drawing.Color.Transparent;
+            this.lblUpdateSize.Location = new System.Drawing.Point(30, 212);
+            this.lblUpdateSize.Name = "lblUpdateSize";
+            this.lblUpdateSize.Size = new System.Drawing.Size(33, 15);
+            this.lblUpdateSize.TabIndex = 10;
+            this.lblUpdateSize.Text = "Size: ";
+            // 
+            // lblCurentVersion
+            // 
+            this.lblCurentVersion.AutoSize = true;
+            this.lblCurentVersion.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurentVersion.Location = new System.Drawing.Point(30, 94);
+            this.lblCurentVersion.Name = "lblCurentVersion";
+            this.lblCurentVersion.Size = new System.Drawing.Size(52, 15);
+            this.lblCurentVersion.TabIndex = 12;
+            this.lblCurentVersion.Text = "Version: ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(12, 69);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(204, 15);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "▶ Current ImageGlass information:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.label8.Location = new System.Drawing.Point(10, 18);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(200, 30);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "ImageGlass Update";
+            // 
+            // lnkUpdateReadMore
+            // 
+            this.lnkUpdateReadMore.AutoSize = true;
+            this.lnkUpdateReadMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.lnkUpdateReadMore.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkUpdateReadMore.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.lnkUpdateReadMore.Location = new System.Drawing.Point(30, 232);
+            this.lnkUpdateReadMore.Name = "lnkUpdateReadMore";
+            this.lnkUpdateReadMore.Size = new System.Drawing.Size(64, 15);
+            this.lnkUpdateReadMore.TabIndex = 14;
+            this.lnkUpdateReadMore.TabStop = true;
+            this.lnkUpdateReadMore.Text = "Read more";
+            this.lnkUpdateReadMore.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.lnkUpdateReadMore.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUpdateReadMore_LinkClicked);
             // 
             // frmCheckForUpdate
             // 
@@ -135,21 +184,27 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(415, 234);
-            this.Controls.Add(this.lv);
+            this.ClientSize = new System.Drawing.Size(324, 327);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lnkUpdateReadMore);
+            this.Controls.Add(this.lblCurentVersion);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblUpdateSize);
+            this.Controls.Add(this.lblUpdateImportance);
+            this.Controls.Add(this.lblUpdateVersionType);
+            this.Controls.Add(this.lblUpdateVersion);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.picStatus);
-            this.Controls.Add(this.lblStatus);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(425, 266);
+            this.MaximumSize = new System.Drawing.Size(340, 365);
+            this.MinimumSize = new System.Drawing.Size(340, 365);
             this.Name = "frmCheckForUpdate";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Check for update";
             this.Load += new System.EventHandler(this.frmMain_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picStatus)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -158,15 +213,18 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.PictureBox picStatus;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListView lv;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblUpdateVersion;
+        private System.Windows.Forms.Label lblUpdateVersionType;
+        private System.Windows.Forms.Label lblUpdateImportance;
+        private System.Windows.Forms.Label lblUpdateSize;
+        private System.Windows.Forms.Label lblCurentVersion;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.LinkLabel lnkUpdateReadMore;
     }
 }
 

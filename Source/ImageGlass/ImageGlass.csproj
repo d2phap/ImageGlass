@@ -21,7 +21,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>C:\Users\Duong Dieu Phap\Desktop\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -32,12 +32,17 @@
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>http://imageglass.com/</UpdateUrl>
+    <SupportUrl>http://www.imageglass.org/support.php%3ftype=download-and-install</SupportUrl>
+    <ErrorReportUrl>http://www.imageglass.org/support.php%3ftype=fix-and-report-errors</ErrorReportUrl>
+    <ProductName>ImageGlass</ProductName>
+    <PublisherName>Duong Dieu Phap</PublisherName>
     <MinimumRequiredVersion>1.3.0.7</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>38</ApplicationRevision>
-    <ApplicationVersion>1.4.27.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
+    <ApplicationRevision>39</ApplicationRevision>
+    <ApplicationVersion>1.5.27.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -71,7 +76,7 @@
     <ManifestKeyFile>imaeg_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -82,7 +87,7 @@
   <PropertyGroup>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
@@ -172,6 +177,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -184,6 +190,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\top.png" />
+    <None Include="Resources\follow.png" />
+    <None Include="Resources\facebook.png" />
     <None Include="Resources\zoomlock.png" />
     <None Include="Resources\bottombar.png" />
     <None Include="Resources\topbar.png" />
@@ -226,6 +235,11 @@
     <None Include="Resources\caro.png" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -234,7 +248,7 @@
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>true</Install>
+      <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
       <Visible>False</Visible>
@@ -251,9 +265,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -273,6 +287,10 @@
     <ProjectReference Include="..\Extensions\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
       <Project>{3EBDAABB-077B-4308-9D69-93727DFD4554}</Project>
       <Name>ImageGlass.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Services\ImageGlass.Services.csproj">
+      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
+      <Name>ImageGlass.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Extensions\ImageGlass.Theme\ImageGlass.Theme.csproj">
       <Project>{76486F88-AA16-4D7D-BBF6-0F1C604D5853}</Project>

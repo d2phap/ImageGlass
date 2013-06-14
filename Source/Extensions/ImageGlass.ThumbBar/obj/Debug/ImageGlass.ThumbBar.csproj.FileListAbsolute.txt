@@ -10,10 +10,9 @@ F:\My Software\ImageGlass\Ver 1.5\New thumbBar\ImageGlass.ThumbBar\obj\Debug\Ima
 F:\My Software\ImageGlass\Ver 1.5\New thumbBar\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\Ver 1.5\New thumbBar\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.dll
 F:\My Software\ImageGlass\Ver 1.5\New thumbBar\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.dll
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.ImageViewer.resources
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csproj.GenerateResource.Cache
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.dll
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.pdb
-F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csprojResolveAssemblyReference.cache
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.dll
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.pdb
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.ImageViewer.resources
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csproj.GenerateResource.Cache
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.dll
+f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.pdb

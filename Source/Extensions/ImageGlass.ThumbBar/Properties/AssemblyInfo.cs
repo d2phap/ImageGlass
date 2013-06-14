@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("www.imageglass.org")]
 [assembly: AssemblyProduct("ImageGlass.ThumbBar")]
-[assembly: AssemblyCopyright("Copyright © Duong Dieu Phap 2012")]
+[assembly: AssemblyCopyright("Copyright © 2013 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

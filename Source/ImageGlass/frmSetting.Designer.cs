@@ -30,11 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
-            this.btnClose = new System.Windows.Forms.Button();
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
             this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
@@ -49,8 +50,8 @@
             this.tabContextMenu = new System.Windows.Forms.TabPage();
             this.lblRemoveContextMenu = new System.Windows.Forms.Label();
             this.lblAddContextMenu = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lbl_ContextMenu_Description = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabLaguage = new System.Windows.Forms.TabPage();
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.lblLanguageEdit = new System.Windows.Forms.Label();
@@ -64,44 +65,26 @@
             this.lblLanguage = new System.Windows.Forms.Label();
             this.lblContextMenu = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabLaguage.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(501, 5);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(86, 28);
-            this.btnClose.TabIndex = 6;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // imglTheme
             // 
             this.imglTheme.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imglTheme.ImageSize = new System.Drawing.Size(32, 32);
             this.imglTheme.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.Controls.Add(this.btnClose);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 371);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(595, 42);
-            this.panel1.TabIndex = 10;
             // 
             // tab1
             // 
@@ -117,11 +100,14 @@
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(613, 357);
+            this.tab1.Size = new System.Drawing.Size(613, 434);
             this.tab1.TabIndex = 15;
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.picBackgroundColor);
+            this.tabGeneral.Controls.Add(this.label2);
+            this.tabGeneral.Controls.Add(this.chkWelcomePicture);
             this.tabGeneral.Controls.Add(this.label1);
             this.tabGeneral.Controls.Add(this.cmbImageOrder);
             this.tabGeneral.Controls.Add(this.numMaxThumbSize);
@@ -136,15 +122,48 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(605, 331);
+            this.tabGeneral.Size = new System.Drawing.Size(605, 406);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // picBackgroundColor
+            // 
+            this.picBackgroundColor.BackColor = System.Drawing.Color.White;
+            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picBackgroundColor.Location = new System.Drawing.Point(130, 352);
+            this.picBackgroundColor.Name = "picBackgroundColor";
+            this.picBackgroundColor.Size = new System.Drawing.Size(52, 19);
+            this.picBackgroundColor.TabIndex = 12;
+            this.picBackgroundColor.TabStop = false;
+            this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
+            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 352);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 15);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Background color:";
+            // 
+            // chkWelcomePicture
+            // 
+            this.chkWelcomePicture.AutoSize = true;
+            this.chkWelcomePicture.Location = new System.Drawing.Point(22, 99);
+            this.chkWelcomePicture.Name = "chkWelcomePicture";
+            this.chkWelcomePicture.Size = new System.Drawing.Size(146, 19);
+            this.chkWelcomePicture.TabIndex = 3;
+            this.chkWelcomePicture.Text = "Show welcome picture";
+            this.chkWelcomePicture.UseVisualStyleBackColor = true;
+            this.chkWelcomePicture.CheckedChanged += new System.EventHandler(this.chkWelcomePicture_CheckedChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 240);
+            this.label1.Location = new System.Drawing.Point(20, 293);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 15);
             this.label1.TabIndex = 10;
@@ -160,16 +179,17 @@
             "Creation time",
             "Last access time",
             "Last write time",
-            "Extension"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(23, 258);
+            "Extension",
+            "Random"});
+            this.cmbImageOrder.Location = new System.Drawing.Point(23, 311);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
-            this.cmbImageOrder.TabIndex = 9;
+            this.cmbImageOrder.TabIndex = 7;
             this.cmbImageOrder.SelectedIndexChanged += new System.EventHandler(this.cmbImageOrder_SelectedIndexChanged);
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(218, 206);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(24, 254);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             10,
             0,
@@ -182,7 +202,7 @@
             0});
             this.numMaxThumbSize.Name = "numMaxThumbSize";
             this.numMaxThumbSize.Size = new System.Drawing.Size(84, 23);
-            this.numMaxThumbSize.TabIndex = 8;
+            this.numMaxThumbSize.TabIndex = 6;
             this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numMaxThumbSize.ThousandsSeparator = true;
             this.numMaxThumbSize.Value = new decimal(new int[] {
@@ -195,7 +215,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(20, 208);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(21, 233);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(192, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 7;
@@ -204,12 +224,12 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
-            this.barInterval.Location = new System.Drawing.Point(23, 178);
+            this.barInterval.Location = new System.Drawing.Point(24, 203);
             this.barInterval.Maximum = 30;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(279, 45);
-            this.barInterval.TabIndex = 6;
+            this.barInterval.TabIndex = 5;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
@@ -217,16 +237,16 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(20, 160);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(21, 185);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
-            this.lblSlideshowInterval.Size = new System.Drawing.Size(117, 15);
+            this.lblSlideshowInterval.Size = new System.Drawing.Size(171, 15);
             this.lblSlideshowInterval.TabIndex = 5;
-            this.lblSlideshowInterval.Text = "Slide show interval: 5";
+            this.lblSlideshowInterval.Text = "Slide show interval (seconds): 5";
             // 
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(20, 106);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(21, 131);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(112, 15);
             this.lblGeneral_ZoomOptimization.TabIndex = 4;
@@ -240,16 +260,16 @@
             "Auto",
             "Smooth pixels",
             "Clear pixels"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(23, 124);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(24, 149);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
-            this.cmbZoomOptimization.TabIndex = 3;
+            this.cmbZoomOptimization.TabIndex = 4;
             this.cmbZoomOptimization.SelectedIndexChanged += new System.EventHandler(this.cmbZoomOptimization_SelectedIndexChanged);
             // 
             // chkFindChildFolder
             // 
             this.chkFindChildFolder.AutoSize = true;
-            this.chkFindChildFolder.Location = new System.Drawing.Point(23, 74);
+            this.chkFindChildFolder.Location = new System.Drawing.Point(22, 74);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(166, 19);
             this.chkFindChildFolder.TabIndex = 2;
@@ -283,12 +303,12 @@
             // 
             this.tabContextMenu.Controls.Add(this.lblRemoveContextMenu);
             this.tabContextMenu.Controls.Add(this.lblAddContextMenu);
-            this.tabContextMenu.Controls.Add(this.pictureBox1);
             this.tabContextMenu.Controls.Add(this.lbl_ContextMenu_Description);
+            this.tabContextMenu.Controls.Add(this.pictureBox1);
             this.tabContextMenu.Location = new System.Drawing.Point(4, 4);
             this.tabContextMenu.Name = "tabContextMenu";
             this.tabContextMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabContextMenu.Size = new System.Drawing.Size(605, 331);
+            this.tabContextMenu.Size = new System.Drawing.Size(605, 406);
             this.tabContextMenu.TabIndex = 1;
             this.tabContextMenu.Text = "context menu";
             this.tabContextMenu.UseVisualStyleBackColor = true;
@@ -335,16 +355,6 @@
             this.lblAddContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
             this.lblAddContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(21, 103);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(283, 167);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // lbl_ContextMenu_Description
             // 
             this.lbl_ContextMenu_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -357,6 +367,16 @@
     " Add button. If you want to disable, press Remove button.\r\n\r\nAdd shortcut \'Open " +
     "with ImageGlass\' to context menu";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(21, 103);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(283, 167);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
             // tabLaguage
             // 
             this.tabLaguage.Controls.Add(this.lnkGetMoreLanguage);
@@ -368,7 +388,7 @@
             this.tabLaguage.Location = new System.Drawing.Point(4, 4);
             this.tabLaguage.Name = "tabLaguage";
             this.tabLaguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLaguage.Size = new System.Drawing.Size(605, 331);
+            this.tabLaguage.Size = new System.Drawing.Size(605, 406);
             this.tabLaguage.TabIndex = 2;
             this.tabLaguage.Text = "language";
             this.tabLaguage.UseVisualStyleBackColor = true;
@@ -474,7 +494,7 @@
             this.tabExtension.Location = new System.Drawing.Point(4, 4);
             this.tabExtension.Name = "tabExtension";
             this.tabExtension.Padding = new System.Windows.Forms.Padding(3);
-            this.tabExtension.Size = new System.Drawing.Size(605, 331);
+            this.tabExtension.Size = new System.Drawing.Size(605, 406);
             this.tabExtension.TabIndex = 3;
             this.tabExtension.Text = "extension";
             this.tabExtension.UseVisualStyleBackColor = true;
@@ -569,13 +589,35 @@
             this.lblGeneral.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblGeneral.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(501, 7);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(86, 28);
+            this.btnClose.TabIndex = 8;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.Controls.Add(this.btnClose);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 448);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(595, 42);
+            this.panel1.TabIndex = 10;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(595, 413);
+            this.ClientSize = new System.Drawing.Size(595, 490);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tab1);
@@ -587,10 +629,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSetting_FormClosing);
             this.Load += new System.EventHandler(this.frmSetting_Load);
             this.SizeChanged += new System.EventHandler(this.frmSetting_SizeChanged);
-            this.panel1.ResumeLayout(false);
             this.tab1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabContextMenu.ResumeLayout(false);
@@ -599,6 +641,7 @@
             this.tabLaguage.ResumeLayout(false);
             this.tabLaguage.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -639,6 +682,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
+        private System.Windows.Forms.CheckBox chkWelcomePicture;
+        private System.Windows.Forms.PictureBox picBackgroundColor;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip tip1;
 
     }
 }

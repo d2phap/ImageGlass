@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ using ImageGlass.Theme;
 using Ionic.Zip;
 using System.Windows.Forms;
 using System.Diagnostics;
+using ImageGlass.Services;
 
 namespace igcmd
 {
@@ -95,47 +96,20 @@ namespace igcmd
         /// </summary>
         public static void AutoUpdate()
         {
-            FileVersionInfo f;
-            try
-            {
-                ImageGlass.Feature.ImageGlass_DownloadFile d = new ImageGlass.Feature.ImageGlass_DownloadFile();
-                d.DownloadFile("http://imageglass.googlecode.com/files/ImageGlass-Update.txt", "C:\\ImageGlass-Update.txt");
-            }
-            catch { Application.Exit(); }
-
-            if (File.Exists("C:\\ImageGlass-Update.txt"))
-            {
-                StreamReader r = new StreamReader("C:\\ImageGlass-Update.txt");
-                List<string> ds = new List<string>();
-                while (!r.EndOfStream)
-                {
-                    ds.Add(r.ReadLine());
-                }
-
-                string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\");//duong dan cai dat
-
-                //Kiem tra phien ban cua chuong trinh--------------------------------------------------------
-                f = FileVersionInfo.GetVersionInfo(dir + "ImageGlass.exe");
-                string v = ds[0].Split('#')[0];//lay phien ban update
-                if (v != f.FileVersion)
-                {
-                    if (MessageBox.Show("Your ImageGlass version is outdate! Update to version " + v + " now!",
-                        "ImageGlass " + f.FileVersion + " update", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                        == DialogResult.Yes)
-                    {
-                        Process.Start(ds[0].Split('#')[1]);//mo link download
-                    }
-                }
-
-
-                r.Close();
-                File.Delete("C:\\ImageGlass-Update.txt");
-            }
+            Update up = new Update(new Uri("http://www.imageglass.org/update.xml"), "C:\\ImageGlass-Update.xml");
+            if (File.Exists("C:\\ImageGlass-Update.xml")) File.Delete("C:\\ImageGlass-Update.xml");
 
             Microsoft.Win32.Registry.SetValue(@"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\",
                 "AutoUpdate", DateTime.Now.Day.ToString() + "/" +
                             DateTime.Now.Month.ToString() + "/" +
                             DateTime.Now.Year.ToString());
+
+            if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe") &&
+                up.Info.VersionType.ToLower() != "stable")
+            {
+                frmCheckForUpdate f = new frmCheckForUpdate();
+                f.ShowDialog();
+            }
 
             Application.Exit();
         }
@@ -189,7 +163,13 @@ namespace igcmd
             Application.Run(new frmInstallTheme(filename));
         }
 
-
+        /// <summary>
+        /// Đăng ký theo dõi thông tin từ ImageGlass
+        /// </summary>
+        public static void Follow()
+        {
+            Application.Run(new frmFollow());
+        }
 
     }
 }

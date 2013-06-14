@@ -12,6 +12,7 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>igpacktheme "F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\WindowsFormsApplication1\bin\Debug\Temp\xxxx" "C:\Users\Duong Dieu Phap\Desktop\xxxxxxxxx.igtheme"</StartArguments>
+    <StartArguments>
+    </StartArguments>
   </PropertyGroup>
 </Project>

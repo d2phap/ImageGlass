@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmFollow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFollow.Designer.cs">
+      <DependentUpon>frmFollow.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInstallTheme.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     <Compile Include="RenderTheme.cs" />
     <EmbeddedResource Include="frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFollow.resx">
+      <DependentUpon>frmFollow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInstallTheme.resx">
       <DependentUpon>frmInstallTheme.cs</DependentUpon>
@@ -169,6 +178,10 @@
     <ProjectReference Include="..\Extensions\ImageGlass.Feature\ImageGlass.Feature.vbproj">
       <Project>{1D9CA2DF-866D-45A3-AEF4-88F1D04C8DC8}</Project>
       <Name>ImageGlass.Feature</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.Services\ImageGlass.Services.csproj">
+      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
+      <Name>ImageGlass.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Extensions\ImageGlass.Theme\ImageGlass.Theme.csproj">
       <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>

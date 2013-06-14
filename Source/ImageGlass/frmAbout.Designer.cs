@@ -56,7 +56,6 @@
             this.panAdvertisement = new System.Windows.Forms.Panel();
             this.lnkAdvertisement = new System.Windows.Forms.LinkLabel();
             this.txtAdvertisement = new System.Windows.Forms.RichTextBox();
-            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -474,18 +473,6 @@
             this.txtAdvertisement.TabIndex = 2;
             this.txtAdvertisement.Text = resources.GetString("txtAdvertisement.Text");
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Light", 20F);
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label6.Location = new System.Drawing.Point(546, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(154, 37);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Beta version";
-            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -504,7 +491,6 @@
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.panReferences);
             this.Controls.Add(this.panInfo);
-            this.Controls.Add(this.label6);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -552,6 +538,5 @@
         private System.Windows.Forms.Panel panAdvertisement;
         private System.Windows.Forms.RichTextBox txtAdvertisement;
         private System.Windows.Forms.LinkLabel lnkAdvertisement;
-        private System.Windows.Forms.Label label6;
     }
 }
