@@ -102,6 +102,7 @@
       <HintPath>..\..\..\Ver 1.4\ImageGlass 1.4\ImageGlass\bin\Debug\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />

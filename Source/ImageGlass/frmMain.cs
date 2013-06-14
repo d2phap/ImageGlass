@@ -73,7 +73,6 @@ namespace ImageGlass
         #endregion
 
 
-
         #region Drag - drop
         private void frmMain_DragOver(object sender, DragEventArgs e)
         {
@@ -1385,6 +1384,7 @@ namespace ImageGlass
                         
         }
 
+
         Rectangle StringToRect(string str)
         {
             string[] args = str.Split(',');
@@ -1419,8 +1419,6 @@ namespace ImageGlass
             lblImageType.ForeColor = Color.Black;
 
             sp0.BackColor = Color.White;
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            //Registry.SetValue(hkey, "BackgroundColor", sp0.BackColor.ToArgb());
 
             // <toolbar_icon>
             btnBack.Image = ImageGlass.Properties.Resources.back;
@@ -1450,16 +1448,16 @@ namespace ImageGlass
             btnFollow.Image = ImageGlass.Properties.Resources.follow;
             btnReport.Image = ImageGlass.Properties.Resources.report;
 
-            Registry.SetValue(hkey, "Theme", "default");
+            Setting.SetConfig("Theme", "default");
         }
+
 
         /// <summary>
         /// Thay đổi theme
         /// </summary>
         private void LoadTheme()
         {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            string themeFile = Registry.GetValue(hkey, "Theme", "default").ToString();
+            string themeFile = Setting.GetConfig("Theme", "default");
 
             if (File.Exists(themeFile))
             {
@@ -1502,7 +1500,6 @@ namespace ImageGlass
                     Setting.BackgroundColor = Color.White;
                 }
             
-                //Registry.SetValue(hkey, "BackgroundColor", sp0.BackColor.ToArgb().ToString());
                 
                 // <toolbar_icon>
                 try { btnBack.Image = Image.FromFile(dir + t.back); }
@@ -1586,7 +1583,7 @@ namespace ImageGlass
                 try { btnReport.Image = Image.FromFile(dir + t.report); }
                 catch { btnReport.Image = ImageGlass.Properties.Resources.report; }
 
-                Registry.SetValue(hkey, "Theme", themeFile);
+                Setting.SetConfig("Theme", themeFile);
             }
             else
             {
@@ -1595,21 +1592,20 @@ namespace ImageGlass
 
         }
 
+
         /// <summary>
         /// Tải dữ liệu từ Registry
         /// </summary>
         private void LoadConfig()
         {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            Registry.SetValue(hkey, "igVersion", Application.ProductVersion);
+            Setting.SetConfig("igVersion", Application.ProductVersion.ToString());
 
-            //Windows Bound (Position + Size)------------------------------------------------
-            Rectangle rc = StringToRect(Registry.GetValue(hkey, "WindowsBound",
-                                        "280,125,750,545").ToString());
+            //Windows Bound (Position + Size)------------------------------------------------                     "280,125,750,545").ToString());
+            Rectangle rc = StringToRect(Setting.GetConfig("WindowsBound", "280,125,750,545"));
             this.Bounds = rc;
             
             //windows state--------------------------------------------------------------
-            string s = Registry.GetValue(hkey, "WindowsState", "Normal").ToString();
+            string s = Setting.GetConfig("WindowsState", "Normal");
             if (s == "Normal")
             {
                 this.WindowState = FormWindowState.Normal;
@@ -1620,30 +1616,30 @@ namespace ImageGlass
             }
 
             //Slideshow Interval----------------------------------------------------------
-            int i = int.Parse(Registry.GetValue(hkey, "Interval", "5").ToString());
+            int i = int.Parse(Setting.GetConfig("Interval", "5"));
             if (!(0 < i && i < 61)) i = 5;//gioi han thoi gian [1; 60] giay
             timSlideShow.Interval = 1000 * i;
 
             //Show Caro
-            if (bool.Parse(Registry.GetValue(hkey, "Caro", "False").ToString()))
+            if (bool.Parse(Setting.GetConfig("Caro", "False").ToString()))
             {
                 btnCaro.PerformClick();
             }
 
             //Khoá khung ảnh---------------------------------------------------------------
-            Setting.IsLockWorkspaceEdges = bool.Parse(Registry.GetValue(hkey, "LockToEdge", "True").ToString());
+            Setting.IsLockWorkspaceEdges = bool.Parse(Setting.GetConfig("LockToEdge", "True"));
            
             //Tìm ảnh đệ quy----------------------------------------------------------------
-            Setting.IsRecursive = bool.Parse(Registry.GetValue(hkey, "Recursive", "False").ToString());
+            Setting.IsRecursive = bool.Parse(Setting.GetConfig("Recursive", "False"));
             
             //Lăn chuột mượt----------------------------------------------------------------
-            Setting.IsSmoothPanning = bool.Parse(Registry.GetValue(hkey, "SmoothPanning", "False").ToString());
+            Setting.IsSmoothPanning = bool.Parse(Setting.GetConfig("SmoothPanning", "False"));
 
             //Get welcome screen
-            Setting.IsWelcomePicture = bool.Parse(Registry.GetValue(hkey, "Welcome", "True").ToString());
+            Setting.IsWelcomePicture = bool.Parse(Setting.GetConfig("Welcome", "True"));
 
             //Zoom optimization method
-            string z = Microsoft.Win32.Registry.GetValue(hkey, "ZoomOptimize", "auto").ToString();
+            string z = Setting.GetConfig("ZoomOptimize", "auto");
             if (z.ToLower() == "smooth pixels")
             {
                 Setting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
@@ -1658,7 +1654,7 @@ namespace ImageGlass
             }
             
             //Load ảnh mặc định
-            string y = Microsoft.Win32.Registry.GetValue(hkey, "Welcome", "true").ToString();
+            string y = Setting.GetConfig("Welcome", "true");
             if (y.ToLower() == "true")
             {
                 Prepare((Application.StartupPath + "\\").Replace("\\\\", "\\") + "default.png");
@@ -1674,7 +1670,7 @@ namespace ImageGlass
             LoadTheme();
             
             //Load background
-            z = Microsoft.Win32.Registry.GetValue(hkey, "BackgroundColor", "-1").ToString();
+            z = Setting.GetConfig("BackgroundColor", "-1");
             Setting.BackgroundColor = Color.FromArgb(int.Parse(z));
             sp0.BackColor = Setting.BackgroundColor;
         }
@@ -1685,23 +1681,21 @@ namespace ImageGlass
         /// </summary>
         void SaveConfig()
         {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                Registry.SetValue(hkey, "WindowsBound", RectToString(rect == Rectangle.Empty ?
+                Setting.SetConfig("WindowsBound", RectToString(rect == Rectangle.Empty ?
                                                                     this.Bounds : rect));
             }            
 
             //Windows State-------------------------------------------------------------------
-            Registry.SetValue(hkey, "WindowsState", this.WindowState);
+            Setting.SetConfig("WindowsState", this.WindowState.ToString());
             
             //Caro Style
-            Registry.SetValue(hkey, "Caro", btnCaro.Checked.ToString());
+            Setting.SetConfig("Caro", btnCaro.Checked.ToString());
             
             //Lan chuot muot------------------------------------------------------------------
-            Registry.SetValue(hkey, "SmoothPanning", Setting.IsSmoothPanning);
+            Setting.SetConfig("SmoothPanning", Setting.IsSmoothPanning.ToString());
         }
 
         #endregion

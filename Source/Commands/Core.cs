@@ -98,12 +98,11 @@ namespace igcmd
         {
             Update up = new Update(new Uri("http://www.imageglass.org/update.xml"), "C:\\ImageGlass-Update.xml");
             if (File.Exists("C:\\ImageGlass-Update.xml")) File.Delete("C:\\ImageGlass-Update.xml");
-
-            Microsoft.Win32.Registry.SetValue(@"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\",
-                "AutoUpdate", DateTime.Now.Day.ToString() + "/" +
-                            DateTime.Now.Month.ToString() + "/" +
-                            DateTime.Now.Year.ToString());
-
+            
+            Setting.SetConfig("AutoUpdate", DateTime.Now.Day.ToString() + "/" +
+                                DateTime.Now.Month.ToString() + "/" +
+                                DateTime.Now.Year.ToString());
+            
             if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe") &&
                 up.Info.VersionType.ToLower() != "stable")
             {

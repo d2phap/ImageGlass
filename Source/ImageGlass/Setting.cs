@@ -24,6 +24,7 @@ using System.Text;
 using ImageGlass.Core;
 using System.Drawing;
 using Microsoft.Win32;
+using System.Configuration;
 
 namespace ImageGlass
 {
@@ -213,7 +214,11 @@ namespace ImageGlass
         public static bool IsLockWorkspaceEdges
         {
             get { return Setting._isLockWorkspaceEdges; }
-            set { Setting._isLockWorkspaceEdges = value; }
+            set
+            {
+                Setting._isLockWorkspaceEdges = value;
+                Setting.SetConfig("LockToEdge", value.ToString());
+            }
         }
 
         /// <summary>
@@ -258,7 +263,23 @@ namespace ImageGlass
         public static ZoomOptimizationValue ZoomOptimizationMethod
         {
             get { return Setting._zoomOptimizationMethod; }
-            set { Setting._zoomOptimizationMethod = value; }
+            set
+            {
+                Setting._zoomOptimizationMethod = value;
+
+                if (value == ZoomOptimizationValue.SmoothPixels)
+                {
+                    Setting.SetConfig("ZoomOptimize", "1");
+                }
+                else if (value == ZoomOptimizationValue.ClearPixels)
+                {
+                    Setting.SetConfig("ZoomOptimize", "2");
+                }
+                else
+                {
+                    Setting.SetConfig("ZoomOptimize", "0");
+                }
+            }
         }
 
         /// <summary>
@@ -267,7 +288,11 @@ namespace ImageGlass
         public static bool IsWelcomePicture
         {
             get { return Setting._isWelcomePicture; }
-            set { Setting._isWelcomePicture = value; }
+            set
+            {
+                Setting._isWelcomePicture = value;
+                Setting.SetConfig("Welcome", value.ToString());
+            }
         }
 
         /// <summary>
@@ -279,8 +304,7 @@ namespace ImageGlass
             set { Setting._backgroundColor = value; }
         }
 
-#endregion
-
+        #endregion
 
 
         #region "Public Method"
@@ -290,12 +314,10 @@ namespace ImageGlass
         /// </summary>
         public static void LoadMaxThumbnailFileSizeConfig()
         {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            string s = Registry.GetValue(hkey, "MaxThumbnailFileSize", "1").ToString();
-            int i = 1;
+            string s = Setting.GetConfig("MaxThumbnailFileSize", "1");
 
-            if (int.TryParse(s, out i))
-            { }
+            int i = 1;
+            int.TryParse(s, out i);
             Setting.ThumbnailMaxFileSize = i;
         }
 
@@ -304,8 +326,8 @@ namespace ImageGlass
         /// </summary>
         public static void LoadImageOrderConfig()
         {
-            string hkey = "HKEY_CURRENT_USER\\SOFTWARE\\PhapSoftware\\ImageGlass\\";
-            string s = Registry.GetValue(hkey, "ImageLoadingOrder", "0").ToString();
+            string s = Setting.GetConfig("ImageLoadingOrder", "0");
+
             int i = 0;
 
             if (int.TryParse(s, out i))
@@ -346,6 +368,81 @@ namespace ImageGlass
                 Setting.ImageOrderBy = ImageOrderBy.Name;
             }
         }
+
+        /// <summary>
+        /// Lấy thông tin cấu hình. Trả về "" nếu không tìm thấy.
+        /// </summary>
+        /// <param name="key">Tên cấu hình</param>
+        /// <returns></returns>
+        public static string GetConfig(string key)
+        {
+            return GetConfig(key, "");
+        }
+
+        /// <summary>
+        /// Lấy thông tin cấu hình
+        /// </summary>
+        /// <param name="key">Tên cấu hình</param>
+        /// <param name="defaultValue">Giá trị mặc định nếu không tìm thấy</param>
+        /// <returns></returns>
+        public static string GetConfig(string key, string defaultValue)
+        {
+            // Open App.Config of executable
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration
+                                                        (ConfigurationUserLevel.None);
+
+            //Kiểm tra sự tồn tại của Key
+            int index = config.AppSettings.Settings.AllKeys.ToList().IndexOf(key);
+
+            //Nếu tồn tại
+            if (index != -1)
+            {
+                //Thì lấy giá trị
+                return config.AppSettings.Settings[key].Value;
+            }
+            else //Nếu không tồn tại
+            {
+                //Trả về giá trị mặc định
+                return defaultValue;
+            }
+            
+        }
+        
+        /// <summary>
+        /// Gán thông tin cấu hình
+        /// </summary>
+        /// <param name="key">Tên cấu hình</param>
+        /// <param name="value">Giá trị cấu hình</param>
+        public static void SetConfig(string key, string value)
+        {
+            // Open App.Config of executable
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration
+                                                        (ConfigurationUserLevel.None);
+            
+            //Kiểm tra sự tồn tại của Key
+            int index = config.AppSettings.Settings.AllKeys.ToList().IndexOf(key);
+
+            //Nếu tồn tại
+            if (index != -1)
+            {
+                //Thì cập nhật
+                config.AppSettings.Settings[key].Value = value;
+            }
+            else //Nếu không tồn tại
+            {
+                //Tạo Key mới
+                config.AppSettings.Settings.Add(key, value);
+            }
+
+            // Save the changes in App.config file.
+            config.Save(ConfigurationSaveMode.Modified);
+            
+
+            // Force a reload of a changed section.
+            ConfigurationManager.RefreshSection("appSettings");
+
+        }
+        
         #endregion
 
     }

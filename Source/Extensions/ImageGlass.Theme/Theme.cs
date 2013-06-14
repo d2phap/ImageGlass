@@ -184,7 +184,6 @@ namespace ImageGlass.Theme
             return true;
         }
 
-
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.4)
         /// </summary>
@@ -357,6 +356,29 @@ namespace ImageGlass.Theme
             }
 
             doc.Save(dir + "config.xml"); //save file
+        }
+
+        /// <summary>
+        /// Áp dụng giao diện mới
+        /// </summary>
+        /// <param name="themePath">Đường dẫn đầy đủ của *.igtheme</param>
+        /// <param name="exePath">Đường dẫn đầy đủ của ImageGlass.exe</param>
+        public void ApplyTheme(string themePath, string exePath)
+        {
+            //Lưu đường dẫn theme
+            Setting.SetConfig("Theme", themePath, exePath);
+
+            //Lưu màu nền
+            try
+            {
+                ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme(themePath);
+                Setting.SetConfig("BackgroundColor", th.backcolor.ToArgb().ToString(), exePath);
+            }
+            catch
+            {
+                Setting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString(), exePath);
+            }
+            
         }
 
 

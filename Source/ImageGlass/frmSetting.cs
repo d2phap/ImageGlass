@@ -39,8 +39,7 @@ namespace ImageGlass
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 0, 123, 176);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 0, 160, 220);
-        private Color M_COLOR_MENU_NORMAL = Color.Silver;        
-        private string hkey = "HKEY_CURRENT_USER\\Software\\PhapSoftware\\ImageGlass\\";
+        private Color M_COLOR_MENU_NORMAL = Color.Silver;
         
 
         #region MOUSE ENTER - HOVER - DOWN MENU
@@ -180,7 +179,6 @@ namespace ImageGlass
         #region TAB GENERAL
         private void chkLockWorkspace_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "LockToEdge", chkLockWorkspace.Checked.ToString());
             Setting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
         }
 
@@ -188,23 +186,21 @@ namespace ImageGlass
         {
             if (chkAutoUpdate.Checked)
             {
-                Registry.SetValue(hkey, "AutoUpdate", chkAutoUpdate.Checked.ToString());
+                Setting.SetConfig("AutoUpdate", chkAutoUpdate.Checked.ToString());
             }
             else
             {
-                Registry.SetValue(hkey, "AutoUpdate", "0");
+                Setting.SetConfig("AutoUpdate", "0");
             }
         }
 
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "Recursive", chkFindChildFolder.Checked.ToString());
+            Setting.SetConfig("Recursive", chkFindChildFolder.Checked.ToString());
         }
 
         private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "ZoomOptimize", cmbZoomOptimization.SelectedIndex);
-
             if (cmbZoomOptimization.SelectedIndex == 1)
             {
                 Setting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
@@ -221,24 +217,23 @@ namespace ImageGlass
 
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "Welcome", chkWelcomePicture.Checked.ToString());
             Setting.IsWelcomePicture = chkWelcomePicture.Checked;
         }
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "Interval", barInterval.Value);
+            Setting.SetConfig("Interval", barInterval.Value.ToString());
             lblSlideshowInterval.Text = "Slide show interval: " + barInterval.Value.ToString();
         }
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "MaxThumbnailFileSize", numMaxThumbSize.Value);
+            Setting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
         }
 
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Registry.SetValue(hkey, "ImageLoadingOrder", cmbImageOrder.SelectedIndex);
+            Setting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
             Setting.LoadImageOrderConfig();
         }
 
@@ -248,13 +243,13 @@ namespace ImageGlass
         private void LoadTabGeneralConfig()
         {
             //Get value of chkLockWorkspace
-            chkLockWorkspace.Checked = bool.Parse(Registry.GetValue(hkey, "LockToEdge", "true").ToString());
+            chkLockWorkspace.Checked = bool.Parse(Setting.GetConfig("LockToEdge", "true"));
 
             //Get value of chkFindChildFolder
-            chkFindChildFolder.Checked = bool.Parse(Registry.GetValue(hkey, "Recursive", "false").ToString());
+            chkFindChildFolder.Checked = bool.Parse(Setting.GetConfig("Recursive", "false"));
 
             //Get value of cmbAutoUpdate
-            string s = Microsoft.Win32.Registry.GetValue(hkey, "AutoUpdate", "true").ToString();
+            string s = Setting.GetConfig("AutoUpdate", "true");
             if (s != "0")
             {
                 chkAutoUpdate.Checked = true;
@@ -265,10 +260,10 @@ namespace ImageGlass
             }
 
             //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = bool.Parse(Registry.GetValue(hkey, "Welcome", "true").ToString());
+            chkWelcomePicture.Checked = bool.Parse(Setting.GetConfig("Welcome", "true"));
 
             //Get value of cmbZoomOptimization
-            s = Registry.GetValue(hkey, "ZoomOptimize", "0").ToString();
+            s = Setting.GetConfig("ZoomOptimize", "0");
             int i = 0;
             if (int.TryParse(s, out i))
             {
@@ -282,7 +277,7 @@ namespace ImageGlass
             cmbZoomOptimization.SelectedIndex = i;
 
             //Get value of barInterval
-            i = int.Parse(Registry.GetValue(hkey, "Interval", "5").ToString());
+            i = int.Parse(Setting.GetConfig("Interval", "5"));
             if (0 < i && i < 61)
             {
                 barInterval.Value = i;
@@ -295,14 +290,14 @@ namespace ImageGlass
             lblSlideshowInterval.Text = "Slide show interval: " + barInterval.Value.ToString();
 
             //Get value of numMaxThumbSize
-            s = Registry.GetValue(hkey, "MaxThumbnailFileSize", "1").ToString();
+            s = Setting.GetConfig("MaxThumbnailFileSize", "1");
             i = 1;
             if (int.TryParse(s, out i))
             {}
             numMaxThumbSize.Value = i;
 
             //Get value of cmbImageOrder
-            s = Registry.GetValue(hkey, "ImageLoadingOrder", "0").ToString();
+            s = Setting.GetConfig("ImageLoadingOrder", "0");
             i = 0;
             if (int.TryParse(s, out i))
             {
@@ -319,6 +314,7 @@ namespace ImageGlass
             picBackgroundColor.BackColor = Setting.BackgroundColor;
         }
         #endregion
+
 
         #region TAB CONTEXT MENU
         [PrincipalPermissionAttribute(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
@@ -371,7 +367,7 @@ namespace ImageGlass
                 Setting.BackgroundColor = c.Color;
 
                 //Luu background color
-                Registry.SetValue(hkey, "BackgroundColor", Setting.BackgroundColor.ToArgb());
+                Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
             }
         }
 

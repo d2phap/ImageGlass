@@ -339,7 +339,7 @@ namespace ThemeConfig
         {
             string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "Themes";
             lvTheme.Items.Clear();
-            lvTheme.Items.Add("Frost Phoenix (default)").Tag = "Frost Phoenix";
+            lvTheme.Items.Add("(default)").Tag = "Default";
 
             if (Directory.Exists(dir))
             {
@@ -414,17 +414,17 @@ namespace ThemeConfig
         {
             try
             {
-                if (lvTheme.SelectedItems[0].Tag.ToString() == "Frost Phoenix")
+                if (lvTheme.SelectedItems[0].Tag.ToString() == "Default")
                 {
                     picPreview.Image = ThemeConfig.Properties.Resources.preview;
-                    txtInfo.Text = "Name: Frost Phoenix\r\n" +
-                                "Version: 1.0\r\n" +
+                    txtInfo.Text = "Name: ImageGlass default theme\r\n" +
+                                "Version: 1.5\r\n" +
                                 "Author: Duong Dieu Phap\r\n" +
-                                "Email: d2phap@gmail.com\r\n" +
-                                "Website: phapsoftware.wordpress.com\r\n" +
+                                "Email: phap@imageglass.org\r\n" +
+                                "Website: www.imageglass.org\r\n" +
                                 "Compatibility: 1.4\r\n" +
                                 "Description: This is default theme.\r\n" +
-                                "Download more themes at sites.google.com/site/psimageglass/downloads/theme-store/";
+                                "Download more themes at http://www.imageglass.org/themes.php";
                     btnSave.Enabled = false;
                     return;
                 }
@@ -453,20 +453,10 @@ namespace ThemeConfig
         {
             if (lvTheme.SelectedItems.Count > 0)
             {
-                string hkey = "HKEY_CURRENT_USER\\Software\\PhapSoftware\\ImageGlass\\";
-                Microsoft.Win32.Registry.SetValue(hkey, "Theme", lvTheme.SelectedItems[0].Tag.ToString());
-
-                try
-                {
-                    ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme(lvTheme.SelectedItems[0].Tag.ToString());
-                    Microsoft.Win32.Registry.SetValue(hkey, "BackgroundColor", th.backcolor.ToArgb());
-                }
-                catch
-                {
-                    Microsoft.Win32.Registry.SetValue(hkey, "BackgroundColor", Color.White.ToArgb());
-                }
+                ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme();
+                th.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString(), Application.ExecutablePath);
                
-                DialogResult msg = MessageBox.Show("Restart ImageGlass to complete new theme applying ?", 
+                DialogResult msg = MessageBox.Show("Restart ImageGlass to complete the new theme applying ?", 
                     "Restart", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (msg == DialogResult.Yes)
                 {

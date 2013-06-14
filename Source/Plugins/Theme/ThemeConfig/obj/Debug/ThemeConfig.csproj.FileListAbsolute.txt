@@ -7,3 +7,12 @@ F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\ThemeConf
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\ThemeConfig\bin\Debug\ThemeConfig.pdb
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.dll
 F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Debug\ThemeConfig.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Debug\ThemeConfig.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.ctlMain.resources
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.frmEdit.resources
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.Properties.Resources.resources
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.csproj.GenerateResource.Cache
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Debug\ThemeConfig.pdb

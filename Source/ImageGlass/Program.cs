@@ -35,41 +35,49 @@ namespace ImageGlass
         public static string igPath = (Application.StartupPath + "\\").Replace("\\\\", "\\");
         [STAThread]
         static void Main(string[] argv)
-        {            
+        {
             args = argv;            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain()); 
+            Application.Run(new frmMain());
+
 
             //autoupdate--------------------------------------------------------------------------------
-            string s = Registry.GetValue(@"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\",
-                                    "AutoUpdate", "1").ToString();
+            string s = Setting.GetConfig("AutoUpdate", "1");
+
             if (s != "0")
             {
-                // dd/mm/yyyy
-                string d = DateTime.Now.Day.ToString() + "/" + 
-                            DateTime.Now.Month.ToString() + "/" + 
-                            DateTime.Now.Year.ToString();
-                if (d != s)
+                DateTime lastUpdate = DateTime.Now;
+
+                if(DateTime.TryParse(s, out lastUpdate))
                 {
-                    Process.Start(char.ConvertFromUtf32(34) +
+                    //Kiểm tra cập nhật 7 ngày / lần
+                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
+                    {
+                        Process.Start(char.ConvertFromUtf32(34) +
                                 Program.igPath + "igcmd.exe" +
                                 char.ConvertFromUtf32(34), "igautoupdate");
+                    }
                 }
 
             }
 
-            //dang ky ext *.igtheme---------------------------------------------------------------------
-            Registry.SetValue("HKEY_CLASSES_ROOT\\.igtheme\\", "", "ImageGlass.igtheme");
-            Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\", "", "ImageGlass theme");
-            //icon
-            Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\DefaultIcon\\", "",
-                char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
-                ",0");
+            try
+            {
+                //dang ky ext *.igtheme---------------------------------------------------------------------
+                Registry.SetValue("HKEY_CLASSES_ROOT\\.igtheme\\", "", "ImageGlass.igtheme");
+                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\", "", "ImageGlass theme");
 
-            Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\shell\\open\\command\\", "",
-                char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
-                " iginstalltheme " + char.ConvertFromUtf32(34) + "%1" + char.ConvertFromUtf32(34));
+                //icon
+                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\DefaultIcon\\", "",
+                    char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
+                    ",0");
+
+                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\shell\\open\\command\\", "",
+                    char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
+                    " iginstalltheme " + char.ConvertFromUtf32(34) + "%1" + char.ConvertFromUtf32(34));
+            }
+            catch { }
 
             //xoa thu muc Temp---------------------------------------------------------------------------
             if (Directory.Exists(igPath + "Temp"))
@@ -80,6 +88,8 @@ namespace ImageGlass
                 }
                 catch { }
             }
+
+
 
         }
     }
