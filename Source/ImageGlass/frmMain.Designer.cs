@@ -135,6 +135,7 @@
             this.sp0.SplitterDistance = 343;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
+            this.sp0.TabStop = false;
             // 
             // picMain
             // 

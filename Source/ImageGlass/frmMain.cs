@@ -476,6 +476,7 @@ namespace ImageGlass
             //=  Thực hiện load file bằng cách  =\\'
             //=    dán dữ liệu từ Clipboard     =\\'
             //===================================\\'
+            #region Ctrl + V
             if (e.KeyCode == Keys.V && e.Control && !e.Shift && !e.Alt)//Ctrl + V
             {
                //Kiem tra co file trong clipboard khong?-------------------------------------------------------------------------
@@ -510,31 +511,42 @@ namespace ImageGlass
                 }
 
 
-            }           
- 
+            }
+            #endregion
 
 
             // Rotation Counterclockwise----------------------------------------------------
+            #region Ctrl + ,
             if (e.KeyValue == 188 && e.Control && !e.Shift && !e.Alt)//Ctrl + ,
             {
                 btnRotateLeft_Click(null, null);
                 return;
             }
+            #endregion
+
+
             //Rotate Clockwise--------------------------------------------------------------
+            #region Ctrl + .
             if (e.KeyValue == 190 && e.Control && !e.Shift && !e.Alt)//Ctrl + .
             {
                 btnRotateRight_Click(null, null);
                 return;
             }
-           
+            #endregion
+
+
             //Play slideshow----------------------------------------------------------------
+            #region F11
             if (e.KeyValue == 122 && !e.Control && !e.Shift && !e.Alt)//F11
             {
                 btnSlideShow_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Exit slideshow----------------------------------------------------------------
+            #region ESC
             if (e.KeyValue == 27 && !e.Control && !e.Shift && !e.Alt)//ESC
             {
                 if (Setting.IsPlaySlideShow)
@@ -543,8 +555,11 @@ namespace ImageGlass
                 }
                 return;
             }
+            #endregion
+
 
             //Start / stop slideshow---------------------------------------------------------
+            #region SPACE
             if (Setting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
             {
                 if (timSlideShow.Enabled)//stop
@@ -558,114 +573,160 @@ namespace ImageGlass
                 
                 return;
             }
+            #endregion
+
 
             // Help ------------------------------------------------------------------------
+            #region F1
             if (e.KeyValue == 112 && !e.Control && !e.Shift && !e.Alt)//F1
             {
                 btnHelp_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Previous Image----------------------------------------------------------------
+            #region LEFT ARROW / PAGE UP
             if ((e.KeyValue == 33 || e.KeyValue == 37) && 
                 e.Control == false && e.Shift == false && e.Alt == false)//Left arrow / PageUp
             {
                 NextPic(-1);
                 return;
             }
+            #endregion
+
 
             //Next Image---------------------------------------------------------------------
+            #region RIGHT ARROW / PAGE DOWN
             if ((e.KeyValue == 34 || e.KeyValue == 39) && 
                 e.Control == false && e.Shift == false && e.Alt == false)//Right arrow / Pagedown
             {
                 NextPic(1);
                 return;
             }
+            #endregion
+
 
             //Zoom + ------------------------------------------------------------------------
+            #region Ctrl + =
             if (e.KeyValue == 187 && e.Control && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Zoom - ------------------------------------------------------------------------
+            #region Ctrl + -
             if (e.KeyValue == 189 && e.Control && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Scale to Width------------------------------------------------------------------
+            #region Ctrl + W
             if (e.KeyCode == Keys.W && e.Control && !e.Shift && !e.Alt)// Ctrl + W
             {
                 btnScaletoWidth_Click(null, null);
                 return;
             }
+            #endregion
 
-            //Scale to Height------------------------------------------------------------------
-            if (e.KeyCode == Keys.H && e.Control && !e.Shift && !e.Alt)// Ctrl + W
+
+            //Scale to Height-----------------------------------------------------------------
+            #region Ctrl + H
+            if (e.KeyCode == Keys.H && e.Control && !e.Shift && !e.Alt)// Ctrl + H
             {
                 btnScaletoHeight_Click(null, null);
                 return;
             }
+            #endregion
 
-            //Auto size window------------------------------------------------------------------
-            if (e.KeyCode == Keys.M && e.Control && !e.Shift && !e.Alt)// Ctrl + W
+
+            //Auto size window----------------------------------------------------------------
+            #region Ctrl + M
+            if (e.KeyCode == Keys.M && e.Control && !e.Shift && !e.Alt)// Ctrl + M
             {
                 btnWindowAutosize_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Auto size image ----------------------------------------------------------------
+            #region Ctrl + 0
             if (e.KeyValue == 48 && e.Control && !e.Shift && !e.Alt)// Ctrl + 0
             {
                 btnScale11_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Full screen--------------------------------------------------------------------
+            #region ALT + ENTER
             if (e.Alt && e.KeyCode == Keys.Enter && !e.Control && !e.Shift)//Alt + Enter
             {
                 btnFullScreen.PerformClick();
                 return;
             }
+            #endregion
+
 
             //Open file----------------------------------------------------------------------
+            #region Ctrl + O
             if (e.KeyValue == 79 && e.Control && !e.Shift && !e.Alt)// Ctrl + O
             {
                 OpenFile();
                 return;
             }
+            #endregion
 
-            //Convert file----------------------------------------------------------------------
+
+            //Convert file-------------------------------------------------------------------
+            #region Ctrl + S
             if (e.KeyValue == 83 && e.Control && !e.Shift && !e.Alt)// Ctrl + S
             {
                 btnConvert_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Refresh Image------------------------------------------------------------------
+            #region F5
             if (e.KeyValue == 116)//F5
             {
                 btnRefresh_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Goto image---------------------------------------------------------------------
+            #region Ctrl + G
             if (e.KeyValue == 71 && e.Control && !e.Shift && !e.Alt)//Ctrl + G
             {
                 try
                 {
-                    int n = Convert.ToInt32(InputBox.Derp("Goto image ...", (Setting.CurrentIndex + 1).ToString())) - 1;
+                    int n = Convert.ToInt32(InputBox.Derp("Goto image ...", 
+                                            (Setting.CurrentIndex + 1).ToString())) - 1;
                     Setting.CurrentIndex = n;
                     NextPic(0);
                 }
                 catch { }
                 return;
             }
+            #endregion
+
 
             //Extract frames-----------------------------------------------------------------
+            #region Ctrl + E
             if (e.KeyCode == Keys.E && e.Control && !e.Shift && !e.Alt)//Ctrl + E
             {
                 try
@@ -676,74 +737,100 @@ namespace ImageGlass
                 catch { }
                 return;
             }
+            #endregion
+
 
             //Detele to Recycle bin----------------------------------------------------------
+            #region DELETE
             if (e.KeyCode == Keys.Delete && !e.Control && !e.Shift && !e.Alt)//Delete
             {
                 mnuRecycleBin_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Detele From Hark disk----------------------------------------------------------
+            #region SHIFT + DELETE
             if (e.KeyCode == Keys.Delete && !e.Control && e.Shift && !e.Alt)//Shift + Delete
             {
                 mnuDelete_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Open image location------------------------------------------------------------
+            #region Ctrl + L
             if (e.KeyCode == Keys.L && e.Control && !e.Shift && !e.Alt)//Ctrl + L
             {
                 mnuImageLocation_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Image properties----------------------------------------------------------------
+            #region Ctrl + I
             if (e.KeyCode == Keys.I && e.Control && !e.Shift && !e.Alt)//Ctrl + I
             {
                 mnuProperties_Click(null, null);
                 return;
             }
+            #endregion
+
 
             //Show thumbnail-------------------------------------------------------------------
+            #region Ctrl + T
             if (e.KeyCode == Keys.T && e.Control && !e.Shift && !e.Alt)// Ctrl + T
             {
                 btnThumb.PerformClick();
                 return;
             }
+            #endregion
+
 
             //Caro background------------------------------------------------------------------
+            #region Ctrl + B
             if (e.KeyCode == Keys.B && e.Control && !e.Shift && !e.Alt)// Ctrl + B
             {
                 btnCaro.PerformClick();
                 return;
             }
+            #endregion
+
 
             //ImageGlass Settings---------------------------------------------------------------
+            #region Ctrl + P
             if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
             {
                 btnPrintImage_Click(null, null);
                 return;
             }
+            #endregion
 
-            //Rename image-----------------------------------------------------------------------
+
+            //Rename image----------------------------------------------------------------------
+            #region F2
             if (e.KeyValue == 113)//F2
             {
                 RenameImage();
                 return;
             }
-           
+            #endregion
+
+            
             // Sap hinh anh voi duong bien duoi-----------------------------------------------------
             if (e.KeyCode == Keys.Down)
             {
                 //Sap bien duoi
                 if (e.Control && !e.Shift && !e.Alt)//Ctrl + Down
                 {
-                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); //dsp.Top += span.Height;
+                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); 
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2); //dsp.Top += span.Height / 2;
+                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2);
                 }
                 validateBounds();
                 return;
@@ -754,11 +841,11 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height); //dsp.Top -= span.Height;
+                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2); //dsp.Top -= span.Height / 2;
+                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2);
                 }
                 validateBounds();
                 return;
@@ -769,12 +856,12 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top); //dsp.Left += span.Width;
+                    scrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top);
                     validateBounds();
                 }
                 else if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top); //dsp.Left += span.Width / 2;
+                    scrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top);
                     validateBounds();
                 }
                 return;
@@ -786,32 +873,18 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top); //dsp.Left -= span.Width;
+                    scrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top); //dsp.Left -= span.Width / 2;
+                    scrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top);
                 }
                 validateBounds();
                 return;
             }
 
 
-            //if (e.KeyCode == Keys.B)
-            //{
-            //    picMain.BackgroundImage = null;
-            //    if (e.Control) this.BackColor = Color.White;
-            //    if (e.Shift) picMain.BackgroundImage = ImageGlass.Properties.Resources.caro;
-            //    if (e.Alt) using (ColorDialog cd = new ColorDialog())
-            //        {
-            //            cd.ShowDialog();
-            //            this.BackColor = cd.Color;
-            //        }
-            //    return;
-            //}
-
-
-            return;
+            
         }
 
         #endregion 
@@ -2423,10 +2496,6 @@ namespace ImageGlass
 
         #endregion
 
-
-        
-
-        
 
 
     }
