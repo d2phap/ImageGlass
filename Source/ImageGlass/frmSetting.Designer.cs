@@ -48,8 +48,11 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.chkLockWorkspace = new System.Windows.Forms.CheckBox();
             this.tabContextMenu = new System.Windows.Forms.TabPage();
-            this.lblRemoveContextMenu = new System.Windows.Forms.Label();
-            this.lblAddContextMenu = new System.Windows.Forms.Label();
+            this.lblUpdateContextMenu = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtExtensions = new System.Windows.Forms.TextBox();
+            this.lblRemoveAllContextMenu = new System.Windows.Forms.Label();
+            this.lblAddDefaultContextMenu = new System.Windows.Forms.Label();
             this.lbl_ContextMenu_Description = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabLaguage = new System.Windows.Forms.TabPage();
@@ -301,10 +304,13 @@
             // 
             // tabContextMenu
             // 
-            this.tabContextMenu.Controls.Add(this.lblRemoveContextMenu);
-            this.tabContextMenu.Controls.Add(this.lblAddContextMenu);
-            this.tabContextMenu.Controls.Add(this.lbl_ContextMenu_Description);
             this.tabContextMenu.Controls.Add(this.pictureBox1);
+            this.tabContextMenu.Controls.Add(this.lblUpdateContextMenu);
+            this.tabContextMenu.Controls.Add(this.label3);
+            this.tabContextMenu.Controls.Add(this.txtExtensions);
+            this.tabContextMenu.Controls.Add(this.lblRemoveAllContextMenu);
+            this.tabContextMenu.Controls.Add(this.lblAddDefaultContextMenu);
+            this.tabContextMenu.Controls.Add(this.lbl_ContextMenu_Description);
             this.tabContextMenu.Location = new System.Drawing.Point(4, 4);
             this.tabContextMenu.Name = "tabContextMenu";
             this.tabContextMenu.Padding = new System.Windows.Forms.Padding(3);
@@ -313,47 +319,81 @@
             this.tabContextMenu.Text = "context menu";
             this.tabContextMenu.UseVisualStyleBackColor = true;
             // 
-            // lblRemoveContextMenu
+            // lblUpdateContextMenu
             // 
-            this.lblRemoveContextMenu.AutoSize = true;
-            this.lblRemoveContextMenu.BackColor = System.Drawing.Color.Silver;
-            this.lblRemoveContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblRemoveContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblRemoveContextMenu.ForeColor = System.Drawing.Color.White;
-            this.lblRemoveContextMenu.Location = new System.Drawing.Point(320, 213);
-            this.lblRemoveContextMenu.Name = "lblRemoveContextMenu";
-            this.lblRemoveContextMenu.Padding = new System.Windows.Forms.Padding(5);
-            this.lblRemoveContextMenu.Size = new System.Drawing.Size(60, 25);
-            this.lblRemoveContextMenu.TabIndex = 17;
-            this.lblRemoveContextMenu.Tag = "1";
-            this.lblRemoveContextMenu.Text = "Remove";
-            this.lblRemoveContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblRemoveContextMenu.Click += new System.EventHandler(this.lblRemoveContextMenu_Click);
-            this.lblRemoveContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
-            this.lblRemoveContextMenu.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
-            this.lblRemoveContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
-            this.lblRemoveContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
+            this.lblUpdateContextMenu.BackColor = System.Drawing.Color.Silver;
+            this.lblUpdateContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblUpdateContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblUpdateContextMenu.ForeColor = System.Drawing.Color.White;
+            this.lblUpdateContextMenu.Location = new System.Drawing.Point(143, 352);
+            this.lblUpdateContextMenu.Name = "lblUpdateContextMenu";
+            this.lblUpdateContextMenu.Padding = new System.Windows.Forms.Padding(5);
+            this.lblUpdateContextMenu.Size = new System.Drawing.Size(115, 25);
+            this.lblUpdateContextMenu.TabIndex = 20;
+            this.lblUpdateContextMenu.Tag = "1";
+            this.lblUpdateContextMenu.Text = "Update";
+            this.lblUpdateContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblUpdateContextMenu.Click += new System.EventHandler(this.lblUpdateContextMenu_Click);
+            this.lblUpdateContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
+            this.lblUpdateContextMenu.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
+            this.lblUpdateContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
+            this.lblUpdateContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
             // 
-            // lblAddContextMenu
+            // label3
             // 
-            this.lblAddContextMenu.AutoSize = true;
-            this.lblAddContextMenu.BackColor = System.Drawing.Color.Silver;
-            this.lblAddContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblAddContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblAddContextMenu.ForeColor = System.Drawing.Color.White;
-            this.lblAddContextMenu.Location = new System.Drawing.Point(320, 173);
-            this.lblAddContextMenu.Name = "lblAddContextMenu";
-            this.lblAddContextMenu.Padding = new System.Windows.Forms.Padding(5);
-            this.lblAddContextMenu.Size = new System.Drawing.Size(39, 25);
-            this.lblAddContextMenu.TabIndex = 16;
-            this.lblAddContextMenu.Tag = "1";
-            this.lblAddContextMenu.Text = "Add";
-            this.lblAddContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblAddContextMenu.Click += new System.EventHandler(this.lblAddContextMenu_Click);
-            this.lblAddContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
-            this.lblAddContextMenu.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
-            this.lblAddContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
-            this.lblAddContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 300);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 15);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Extensions:";
+            // 
+            // txtExtensions
+            // 
+            this.txtExtensions.Location = new System.Drawing.Point(22, 318);
+            this.txtExtensions.Name = "txtExtensions";
+            this.txtExtensions.Size = new System.Drawing.Size(565, 23);
+            this.txtExtensions.TabIndex = 18;
+            // 
+            // lblRemoveAllContextMenu
+            // 
+            this.lblRemoveAllContextMenu.BackColor = System.Drawing.Color.Silver;
+            this.lblRemoveAllContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblRemoveAllContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblRemoveAllContextMenu.ForeColor = System.Drawing.Color.White;
+            this.lblRemoveAllContextMenu.Location = new System.Drawing.Point(264, 352);
+            this.lblRemoveAllContextMenu.Name = "lblRemoveAllContextMenu";
+            this.lblRemoveAllContextMenu.Padding = new System.Windows.Forms.Padding(5);
+            this.lblRemoveAllContextMenu.Size = new System.Drawing.Size(115, 25);
+            this.lblRemoveAllContextMenu.TabIndex = 17;
+            this.lblRemoveAllContextMenu.Tag = "1";
+            this.lblRemoveAllContextMenu.Text = "Remove all";
+            this.lblRemoveAllContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRemoveAllContextMenu.Click += new System.EventHandler(this.lblRemoveAllContextMenu_Click);
+            this.lblRemoveAllContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
+            this.lblRemoveAllContextMenu.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
+            this.lblRemoveAllContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
+            this.lblRemoveAllContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
+            // 
+            // lblAddDefaultContextMenu
+            // 
+            this.lblAddDefaultContextMenu.BackColor = System.Drawing.Color.Silver;
+            this.lblAddDefaultContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblAddDefaultContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblAddDefaultContextMenu.ForeColor = System.Drawing.Color.White;
+            this.lblAddDefaultContextMenu.Location = new System.Drawing.Point(22, 352);
+            this.lblAddDefaultContextMenu.Name = "lblAddDefaultContextMenu";
+            this.lblAddDefaultContextMenu.Padding = new System.Windows.Forms.Padding(5);
+            this.lblAddDefaultContextMenu.Size = new System.Drawing.Size(115, 25);
+            this.lblAddDefaultContextMenu.TabIndex = 16;
+            this.lblAddDefaultContextMenu.Tag = "1";
+            this.lblAddDefaultContextMenu.Text = "Add default";
+            this.lblAddDefaultContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblAddDefaultContextMenu.Click += new System.EventHandler(this.lblAddDefaultContextMenu_Click);
+            this.lblAddDefaultContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
+            this.lblAddDefaultContextMenu.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
+            this.lblAddDefaultContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
+            this.lblAddDefaultContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
             // 
             // lbl_ContextMenu_Description
             // 
@@ -361,18 +401,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_ContextMenu_Description.Location = new System.Drawing.Point(18, 18);
             this.lbl_ContextMenu_Description.Name = "lbl_ContextMenu_Description";
-            this.lbl_ContextMenu_Description.Size = new System.Drawing.Size(569, 82);
+            this.lbl_ContextMenu_Description.Size = new System.Drawing.Size(569, 102);
             this.lbl_ContextMenu_Description.TabIndex = 0;
-            this.lbl_ContextMenu_Description.Text = "This feature helps you open an image quickly by context menu. To enable it, press" +
-    " Add button. If you want to disable, press Remove button.\r\n\r\nAdd shortcut \'Open " +
-    "with ImageGlass\' to context menu";
+            this.lbl_ContextMenu_Description.Text = resources.GetString("lbl_ContextMenu_Description.Text");
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(21, 103);
+            this.pictureBox1.Location = new System.Drawing.Point(21, 123);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(283, 167);
+            this.pictureBox1.Size = new System.Drawing.Size(232, 167);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -668,8 +706,8 @@
         private System.Windows.Forms.CheckBox chkAutoUpdate;
         private System.Windows.Forms.Label lbl_ContextMenu_Description;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lblRemoveContextMenu;
-        private System.Windows.Forms.Label lblAddContextMenu;
+        private System.Windows.Forms.Label lblRemoveAllContextMenu;
+        private System.Windows.Forms.Label lblAddDefaultContextMenu;
         private System.Windows.Forms.TabPage tabLaguage;
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguage_Text;
@@ -686,6 +724,9 @@
         private System.Windows.Forms.PictureBox picBackgroundColor;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolTip tip1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtExtensions;
+        private System.Windows.Forms.Label lblUpdateContextMenu;
 
     }
 }

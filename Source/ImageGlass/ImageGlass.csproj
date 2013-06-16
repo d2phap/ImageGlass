@@ -273,7 +273,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commands\igcmd.csproj">
+    <ProjectReference Include="..\Commands\igcmd\igcmd.csproj">
       <Project>{CC391E3E-9137-4857-85DC-C4CF6DF37584}</Project>
       <Name>igcmd</Name>
     </ProjectReference>

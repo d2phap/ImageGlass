@@ -25,6 +25,7 @@ using ImageGlass.Core;
 using System.Drawing;
 using Microsoft.Win32;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
@@ -63,6 +64,7 @@ namespace ImageGlass
         private static string _supportedExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" + 
                                                      "*.exif;*.wmf;*.emf;";
+        private static string _contextMenuExtensions = "";
         private static int _thumbnailMaxFileSize = 3;
         private static bool _isPlaySlideShow = false;
         private static bool _isSmoothPanning = true;
@@ -177,15 +179,45 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Get, set support extension string
+        /// Get, set supported extension string
         /// </summary>
         public static string SupportedExtensions
         {
-            get { return Setting._supportedExtensions; }
-            set { Setting._supportedExtensions = value; }
+            get
+            {
+                Setting._supportedExtensions = Setting.GetConfig("SupportedExtensions", 
+                                                        Setting._supportedExtensions);
+
+                return Setting._supportedExtensions;
+            }
+            set
+            {
+                Setting._supportedExtensions = value;
+                Setting.SetConfig("SupportedExtensions", Setting._supportedExtensions);
+            }
         }
 
-        //Get, set max file size of thumbnail image file
+        /// <summary>
+        /// Get, set the Context menu Extensions
+        /// </summary>
+        public static string ContextMenuExtensions
+        {
+            get
+            {
+                Setting._contextMenuExtensions = Setting.GetConfig("ContextMenuExtensions", "");                                                        
+                return Setting._contextMenuExtensions;
+            }
+            set
+            {
+                Setting._contextMenuExtensions = value;
+                Setting.SetConfig("ContextMenuExtensions", Setting._contextMenuExtensions);
+            }
+        }
+
+
+        /// <summary>
+        /// Get, set max file size of thumbnail image file
+        /// </summary>
         public static int ThumbnailMaxFileSize
         {
             get { return Setting._thumbnailMaxFileSize; }
@@ -302,6 +334,17 @@ namespace ImageGlass
         {
             get { return Setting._backgroundColor; }
             set { Setting._backgroundColor = value; }
+        }
+
+        /// <summary>
+        /// Get start up directory of ImageGlass
+        /// </summary>
+        public static string StartUpDir
+        {
+            get
+            {
+                return (Application.StartupPath + "\\").Replace("\\\\", "\\");
+            }
         }
 
         #endregion
@@ -442,7 +485,8 @@ namespace ImageGlass
             ConfigurationManager.RefreshSection("appSettings");
 
         }
-        
+
+
         #endregion
 
     }

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>updateext "F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe"  "%2a.jpg%3b%2a.jpe%3b%2a.jfif%3b%2a.jpeg%3b%2a.png%3b%2a.gif%3b%2a.ico%3b%2a.bmp%3b%2a.dib%3b%2a.tif%3b%2a.tiff%3b%2a.exif%3b%2a.wmf%3b%2a.emf%3b"</StartArguments>
+  </PropertyGroup>
+</Project>

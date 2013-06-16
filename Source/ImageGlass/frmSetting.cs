@@ -27,6 +27,7 @@ using System.Security.Principal;
 using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ImageGlass
 {
@@ -138,7 +139,6 @@ namespace ImageGlass
             this.Refresh();
         }
 
-
         private void lblMenu_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
@@ -164,6 +164,7 @@ namespace ImageGlass
             else if (lbl.Name == "lblContextMenu")
             {
                 tab1.SelectedTab = tabContextMenu;
+                txtExtensions.Text = Setting.ContextMenuExtensions;
             }
             else if (lbl.Name == "lblLanguage")
             {
@@ -317,22 +318,49 @@ namespace ImageGlass
 
 
         #region TAB CONTEXT MENU
-        [PrincipalPermissionAttribute(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
-        private void lblAddContextMenu_Click(object sender, EventArgs e)
+        private void lblAddDefaultContextMenu_Click(object sender, EventArgs e)
         {
-            string hkey = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\*\\Shell\\Open with ImageGlass\\Command\\";
-            Registry.SetValue(hkey, "", Application.ExecutablePath + " %1");
+            Process p = new Process();
+            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.Arguments = "addext " + //name of param
+                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
+                                    "\"" + Setting.SupportedExtensions + "\" "; //arg 2
+            p.EnableRaisingEvents = true;
+            p.Exited += p_Exited;
+            p.Start();
+
         }
 
-
-        [PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
-        private void lblRemoveContextMenu_Click(object sender, EventArgs e)
+        private void lblUpdateContextMenu_Click(object sender, EventArgs e)
         {
-            RegistryKey r;
-            r = Registry.LocalMachine.OpenSubKey("Software\\Classes\\*\\Shell", true);
-            r.DeleteSubKeyTree("Open with ImageGlass");
+            //Update context menu
+            Process p = new Process();
+            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.Arguments = "updateext " + //name of param
+                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
+                                    "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
+            p.EnableRaisingEvents = true;
+            p.Exited += p_Exited;
+            p.Start();
         }
 
+        private void lblRemoveAllContextMenu_Click(object sender, EventArgs e)
+        {
+            //Remove all context menu
+            Process p = new Process();
+            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.Arguments = "removeext ";
+            p.EnableRaisingEvents = true;
+            p.Exited += p_Exited;
+            p.Start();
+
+            txtExtensions.Text = Setting.ContextMenuExtensions;
+        }
+
+        void p_Exited(object sender, EventArgs e)
+        {
+            txtExtensions.Text = Setting.ContextMenuExtensions;
+        }
 
         #endregion
 
@@ -370,6 +398,8 @@ namespace ImageGlass
                 Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
             }
         }
+
+        
 
         
 
