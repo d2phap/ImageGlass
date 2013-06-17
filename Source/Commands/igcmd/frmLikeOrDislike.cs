@@ -59,37 +59,37 @@ namespace igcmd
         {
             if (_expression == "iglike")
             {
-                if (ImageGlass.Feature.ImageGlass_DownloadFile.Send_Email(
-                    "d2phap@gmail.com", "xeko.necromancer@gmail.com",
-                    "xeko.necromancer", "nqstarlight",
-                    "smtp.gmail.com", "[ImageGlass][" + _version + "][Like]",
-                   System.Environment.UserName + " like ImageGlass") == 0)
-                {
-                    lblStatus.Text = "Can not connect to the internet";
-                    picStatus.Image = igcmd.Properties.Resources._del_2;
-                }
-                else
-                {
-                    lblStatus.Text = "Thank you!";
-                    picStatus.Image = igcmd.Properties.Resources.check;
-                }
+                //if (ImageGlass.Feature.ImageGlass_DownloadFile.Send_Email(
+                //    "d2phap@gmail.com", "xeko.necromancer@gmail.com",
+                //    "xeko.necromancer", "nqstarlight",
+                //    "smtp.gmail.com", "[ImageGlass][" + _version + "][Like]",
+                //   System.Environment.UserName + " like ImageGlass") == 0)
+                //{
+                //    lblStatus.Text = "Can not connect to the internet";
+                //    picStatus.Image = igcmd.Properties.Resources._del_2;
+                //}
+                //else
+                //{
+                //    lblStatus.Text = "Thank you!";
+                //    picStatus.Image = igcmd.Properties.Resources.check;
+                //}
             }
             else if (_expression == "igdislike")
             {
-                if (ImageGlass.Feature.ImageGlass_DownloadFile.Send_Email(
-                    "d2phap@gmail.com", "xeko.necromancer@gmail.com",
-                    "xeko.necromancer", "nqstarlight",
-                    "smtp.gmail.com", "[ImageGlass][" + _version + "][Dislike]",
-                   System.Environment.UserName + " dislike ImageGlass") == 0)
-                {
-                    lblStatus.Text = "Can not connect to the internet";
-                    picStatus.Image = igcmd.Properties.Resources._del_2;
-                }
-                else
-                {
-                    lblStatus.Text = "Thank you!";
-                    picStatus.Image = igcmd.Properties.Resources.check;
-                }
+                //if (ImageGlass.Feature.ImageGlass_DownloadFile.Send_Email(
+                //    "d2phap@gmail.com", "xeko.necromancer@gmail.com",
+                //    "xeko.necromancer", "nqstarlight",
+                //    "smtp.gmail.com", "[ImageGlass][" + _version + "][Dislike]",
+                //   System.Environment.UserName + " dislike ImageGlass") == 0)
+                //{
+                //    lblStatus.Text = "Can not connect to the internet";
+                //    picStatus.Image = igcmd.Properties.Resources._del_2;
+                //}
+                //else
+                //{
+                //    lblStatus.Text = "Thank you!";
+                //    picStatus.Image = igcmd.Properties.Resources.check;
+                //}
 
             }
         }

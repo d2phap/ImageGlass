@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using igtasks;
+using ImageGlass.Library;
+using ImageGlass.Library.Image;
 
 namespace adtasks
 {
@@ -28,7 +30,7 @@ namespace adtasks
             string topcmd = args[0].ToLower().Trim();
 
             //Them menu 'Open with ImageGlass'
-            #region addext <igPath> [ext]
+            #region addext <string igPath> [string ext]
             if (topcmd == "addext")
             {
                 //Lay duong dan exe
@@ -64,7 +66,7 @@ namespace adtasks
             #endregion
 
             //Cap nhat extension cho Menu
-            #region updateext <exePath> <exts>
+            #region updateext <string exePath> <string exts>
             else if (topcmd == "updateext")
             {
                 //Xoa tat ca
@@ -86,6 +88,47 @@ namespace adtasks
                 Application.Exit();
             }
             #endregion
+
+            //Thiet dat hinh nen wallpaper
+            #region setwallpaper <string imgPath> [int style]
+            else if (topcmd == "setwallpaper")
+            {
+                //Lay duong dan img
+                string imgPath = args[1];
+
+                if (args.Length > 2)
+                {
+                    //Lay style
+                    string style = args[2];
+
+                    //Ap dung
+                    if (style == "1")
+                    {
+                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Stretched);
+                    }
+                    else if (style == "2")
+                    {
+                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Tiled);
+                    }
+                    else //style == "0"
+                    {
+                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
+                    }
+                }
+                else
+                {
+                    //Ap dung
+                    DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
+                }
+
+                Application.Exit();
+            }
+            #endregion
+
+
+
+
+
 
         }
 

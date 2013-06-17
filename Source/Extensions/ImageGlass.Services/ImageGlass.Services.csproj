@@ -49,9 +49,9 @@
     <Compile Include="InfoUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Feature\ImageGlass.Feature.vbproj">
-      <Project>{1D9CA2DF-866D-45A3-AEF4-88F1D04C8DC8}</Project>
-      <Name>ImageGlass.Feature</Name>
+    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
+      <Name>ImageGlass.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,5 @@
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Debug\ImageGlass.Library.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\bin\Debug\ImageGlass.Library.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Debug\ImageGlass.Library.pdb

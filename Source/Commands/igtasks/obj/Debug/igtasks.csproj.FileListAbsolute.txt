@@ -6,3 +6,5 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.P
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.pdb

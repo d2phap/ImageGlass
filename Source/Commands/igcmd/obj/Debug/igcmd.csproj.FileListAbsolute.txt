@@ -60,11 +60,8 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\obj\Debug\igcmd.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.exe.config
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Feature.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Theme.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Feature.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Feature.xml
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Theme.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.csprojResolveAssemblyReference.cache
@@ -77,3 +74,5 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.Prope
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.pdb

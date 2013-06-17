@@ -80,6 +80,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Extensions\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
+      <Name>ImageGlass.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -281,9 +281,9 @@
       <Project>{8540D406-E362-4ECC-9761-F978996354DF}</Project>
       <Name>ImageGlass.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Extensions\ImageGlass.Feature\ImageGlass.Feature.vbproj">
-      <Project>{1D9CA2DF-866D-45A3-AEF4-88F1D04C8DC8}</Project>
-      <Name>ImageGlass.Feature</Name>
+    <ProjectReference Include="..\Extensions\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
+      <Name>ImageGlass.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\Extensions\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
       <Project>{3EBDAABB-077B-4308-9D69-93727DFD4554}</Project>

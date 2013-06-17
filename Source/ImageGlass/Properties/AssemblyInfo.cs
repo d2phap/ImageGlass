@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImageGlass 1.5 (Beta)")]
+[assembly: AssemblyTitle("ImageGlass 1.5")]
 [assembly: AssemblyDescription("Image viewer for Windows")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PhapSoftware")]
-[assembly: AssemblyProduct("ImageGlass 1.5 (Beta)")]
+[assembly: AssemblyProduct("ImageGlass 1.5")]
 [assembly: AssemblyCopyright("Copyright © 2010-2013 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

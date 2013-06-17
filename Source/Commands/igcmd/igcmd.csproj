@@ -177,10 +177,6 @@
     <Content Include="igtheme.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Extensions\ImageGlass.Feature\ImageGlass.Feature.vbproj">
-      <Project>{1D9CA2DF-866D-45A3-AEF4-88F1D04C8DC8}</Project>
-      <Name>ImageGlass.Feature</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Extensions\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>

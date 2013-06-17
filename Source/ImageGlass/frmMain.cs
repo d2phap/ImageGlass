@@ -27,11 +27,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using ImageGlass.Core;
-using ImageGlass.Feature;
+using ImageGlass.ThumbBar;
+using ImageGlass.Library.Image;
+using ImageGlass.Library.Comparer;
 using System.IO;
 using Microsoft.Win32;
 using System.Threading;
-using ImageGlass.ThumbBar;
 using System.Drawing.Printing;
 using System.Drawing.IconLib;
 using System.Drawing.IconLib.ColorProcessing;
@@ -144,7 +145,7 @@ namespace ImageGlass
                 picMain.Size = Setting.ImageList.ErrorImage().Size;
                 picMain.Image = Setting.ImageList.ErrorImage();
                 this.Text = "ImageGlass - " + initFile;
-                lblZoomRatio.Text = ImageGlass_ImageInfo.GetFileSize(initFile);
+                lblZoomRatio.Text = ImageInfo.GetFileSize(initFile);
 
                 return;
             }
@@ -251,27 +252,27 @@ namespace ImageGlass
             //Sap xem thu tu hinh anh
             if (Setting.ImageOrderBy == ImageOrderBy.Length)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Length));
+                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Length));
             }
             else if (Setting.ImageOrderBy == ImageOrderBy.LastWriteTime)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastWriteTime));
+                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastWriteTime));
             }
             else if (Setting.ImageOrderBy == ImageOrderBy.LastAccessTime)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastAccessTime));
+                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastAccessTime));
             }
             else if (Setting.ImageOrderBy == ImageOrderBy.Extension)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Extension));                
+                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Extension));                
             }
             else if (Setting.ImageOrderBy == ImageOrderBy.Random)
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => Guid.NewGuid()));
+                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => Guid.NewGuid()));
             }
             else
             {
-                dsFile.AddRange(System.IO.Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Name));
+                dsFile.AddRange(FileLogicalComparer.Sort(Directory.GetFiles(path)));
             }
 
 
@@ -377,7 +378,7 @@ namespace ImageGlass
                 //Get zoom ratio               
                 lblZoomRatio.Text = Math.Round(GetZoomRatio(), 2).ToString() + "X";
                 lblImageSize.Text = picMain.Image.Width + " x " + picMain.Image.Height + " px";
-                lblImageFileSize.Text = ImageGlass_ImageInfo.GetFileSize(Setting.ImageList.getPath(Setting.CurrentIndex));
+                lblImageFileSize.Text = ImageInfo.GetFileSize(Setting.ImageList.getPath(Setting.CurrentIndex));
                 lblImageType.Text = Path.GetExtension(Setting.ImageList.getPath(Setting.CurrentIndex)).Replace(".", "").ToUpper();
                 lblImageDateCreate.Text = File.GetCreationTime(Setting.ImageList.getPath(Setting.CurrentIndex)).ToString();
 
@@ -991,7 +992,8 @@ namespace ImageGlass
             picMain.Image = null;
 
             Application.DoEvents();
-            ImageGlass_Image.RenameFile(Setting.CurrentPath + oldFilename, newname);
+            //ImageGlass_Image.RenameFile(Setting.CurrentPath + oldFilename, newname);
+            ImageInfo.RenameFile(Setting.CurrentPath + oldFilename, Setting.CurrentPath + newname);
             NextPic(0);
         }
 
@@ -1594,7 +1596,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Tải dữ liệu từ Registry
+        /// Tải dữ liệu từ file Config
         /// </summary>
         private void LoadConfig()
         {
@@ -1677,7 +1679,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Lưu dữ liệu xuống Registry
+        /// Lưu dữ liệu xuống file Config
         /// </summary>
         void SaveConfig()
         {
@@ -2148,7 +2150,8 @@ namespace ImageGlass
 
         private void mnuProperties_Click(object sender, EventArgs e)
         {
-            ImageGlass_ImageInfo.DisplayFileProperties(Setting.ImageList.getPath(Setting.CurrentIndex), this.Handle);
+            ImageInfo.DisplayFileProperties(Setting.ImageList.getPath(Setting.CurrentIndex), 
+                                            this.Handle);
         }
 
         private void mnuImageLocation_Click(object sender, EventArgs e)
@@ -2180,7 +2183,7 @@ namespace ImageGlass
 
                 try
                 {
-                    ImageGlass_Image.DeleteFile(f, false);
+                    ImageInfo.DeleteFile(f);
                     NextPic(0);
                 }
                 catch { }
@@ -2210,7 +2213,7 @@ namespace ImageGlass
 
                 try
                 {
-                    ImageGlass_Image.DeleteFile(f, true);
+                    ImageInfo.DeleteFile(f, true);
                     NextPic(0);
                 }
                 catch { }
@@ -2221,7 +2224,13 @@ namespace ImageGlass
         {
             if (!Setting.IsImageError)
             {
-                ImageGlass_Image.SetWallpaper(Setting.ImageList.getPath(Setting.CurrentIndex));
+                Process p = new Process();
+                p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+                p.StartInfo.Arguments = "setwallpaper " + //name of param
+                                        "\"" + Setting.ImageList.getPath(Setting.CurrentIndex) + "\" " + //arg 1
+                                        "\"" + "0" + "\" "; //arg 2
+                
+                p.Start();
             }
         }
 
@@ -2236,7 +2245,9 @@ namespace ImageGlass
 
                 if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
                 {
-                    ImageGlass_Animation.ExtractAllFrames(Setting.ImageList.getPath(Setting.CurrentIndex), f.SelectedPath);
+                    Animation ani = new Animation();
+                    ani.ExtractAllFrames(Setting.ImageList.getPath(Setting.CurrentIndex), 
+                                                f.SelectedPath);                    
                 }
 
                 f = null;
@@ -2259,7 +2270,9 @@ namespace ImageGlass
                 }
             }
             catch { return; }
-            ImageGlass_Image.ConvertImage(picMain.Image, Setting.ImageList.getName(Setting.CurrentIndex));
+            //ImageGlass_Image.ConvertImage(picMain.Image, Setting.ImageList.getName(Setting.CurrentIndex));
+            Library.Image.ImageInfo.ConvertImage(picMain.Image, 
+                                    Setting.ImageList.getName(Setting.CurrentIndex));
         }
 
         private void btnFacebookLike_Click(object sender, EventArgs e)

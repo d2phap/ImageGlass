@@ -6,6 +6,7 @@ using System.Xml;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using ImageGlass.Library.Net;
 
 namespace ImageGlass.Services
 {
@@ -221,8 +222,7 @@ namespace ImageGlass.Services
 
             for (int i = 0; i < ds.Count; i++)
             {
-                ImageGlass.Feature.ImageGlass_DownloadFile d = new Feature.ImageGlass_DownloadFile();
-                totalProg += 1000; //d.GetFileSize(ds[i].Link.ToString());
+                totalProg += 1000;
             }
 
             ev.TotalPro = totalProg + (ds.Count * 100);
@@ -233,8 +233,8 @@ namespace ImageGlass.Services
             {
                 System.Windows.Forms.Application.DoEvents();
 
-                ImageGlass.Feature.ImageGlass_DownloadFile d = new Feature.ImageGlass_DownloadFile();
-                d.AmountDownloadedChanged += new Feature.ImageGlass_DownloadFile.AmountDownloadedChangedEventHandler(d_AmountDownloadedChanged);
+                FileDownloader d = new FileDownloader();
+                d.AmountDownloadedChanged += new FileDownloader.AmountDownloadedChangedEventHandler(d_AmountDownloadedChanged);
 
                 ev.Description = "Downloading " + Path.GetFileName(ds[i].DestinaionFile) + " ...";
                 OnInstallingStatus(ev);

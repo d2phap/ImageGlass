@@ -100,6 +100,7 @@
             // 
             // panMain
             // 
+            this.panMain.AllowDrop = true;
             this.panMain.AutoScroll = true;
             this.panMain.BackColor = System.Drawing.Color.Black;
             this.panMain.Controls.Add(this.sp0);
@@ -112,6 +113,7 @@
             // 
             // sp0
             // 
+            this.sp0.AllowDrop = true;
             this.sp0.BackColor = System.Drawing.Color.White;
             this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
@@ -122,8 +124,11 @@
             // 
             // sp0.Panel1
             // 
+            this.sp0.Panel1.AllowDrop = true;
             this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel1.Controls.Add(this.picMain);
+            this.sp0.Panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
+            this.sp0.Panel1.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
             this.sp0.Panel1.MouseEnter += new System.EventHandler(this.sp0_Panel1_MouseEnter);
             // 
             // sp0.Panel2
@@ -148,6 +153,8 @@
             this.picMain.TabIndex = 0;
             this.picMain.TabStop = false;
             this.picMain.Tag = "0";
+            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
+            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
             this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
