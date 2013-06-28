@@ -191,11 +191,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\bottombar.png" />
     <None Include="Resources\top.png" />
     <None Include="Resources\follow.png" />
     <None Include="Resources\facebook.png" />
     <None Include="Resources\zoomlock.png" />
-    <None Include="Resources\bottombar.png" />
     <None Include="Resources\topbar.png" />
     <None Include="Resources\extension.png" />
     <None Include="Resources\uploadfb.png" />

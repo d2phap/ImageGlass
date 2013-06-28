@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -106,12 +106,10 @@ namespace ImageGlass
             lblInfo.Tag = 0;
             lblComponent.Tag = 0;
             lblReferences.Tag = 0;
-            lblAdvertisement.Tag = 0;
 
             lblInfo.BackColor = M_COLOR_MENU_NORMAL;
             lblComponent.BackColor = M_COLOR_MENU_NORMAL;
             lblReferences.BackColor = M_COLOR_MENU_NORMAL;
-            lblAdvertisement.BackColor = M_COLOR_MENU_NORMAL;
 
             lbl.Tag = 1;
             lbl.BackColor = M_COLOR_MENU_ACTIVE;
@@ -124,7 +122,6 @@ namespace ImageGlass
 
                 panComponent.Visible = false;
                 panReferences.Visible = false;
-                panAdvertisement.Visible = false;
             }
             else if (lbl.Name == "lblComponent")
             {
@@ -134,9 +131,6 @@ namespace ImageGlass
 
                 panInfo.Visible = false;
                 panReferences.Visible = false;
-                panAdvertisement.Visible = false;
-
-
             }
             else if (lbl.Name == "lblReferences")
             {
@@ -145,17 +139,6 @@ namespace ImageGlass
                 panReferences.Visible = true;
 
                 panInfo.Visible = false;
-                panComponent.Visible = false;
-                panAdvertisement.Visible = false;
-            }
-            else if (lbl.Name == "lblAdvertisement")
-            {
-                panAdvertisement.Location = M_PANEL_LOCATION;
-                panAdvertisement.BringToFront();
-                panAdvertisement.Visible = true;
-
-                panInfo.Visible = false;
-                panReferences.Visible = false;
                 panComponent.Visible = false;
             }
         }

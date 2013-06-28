@@ -33,18 +33,18 @@
             this.lblPercent = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picStatus = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnUpload = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.picStatus = new System.Windows.Forms.PictureBox();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.lblMessage = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblPercent
@@ -83,9 +83,20 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // picStatus
+            // 
+            this.picStatus.Image = ((System.Drawing.Image)(resources.GetObject("picStatus.Image")));
+            this.picStatus.Location = new System.Drawing.Point(102, 16);
+            this.picStatus.Name = "picStatus";
+            this.picStatus.Size = new System.Drawing.Size(16, 16);
+            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picStatus.TabIndex = 1;
+            this.picStatus.TabStop = false;
+            this.picStatus.Visible = false;
+            // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(235)))), ((int)(((byte)(242)))));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
             this.panel2.Controls.Add(this.lblStatus);
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnUpload);
@@ -94,6 +105,20 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(480, 47);
             this.panel2.TabIndex = 8;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblStatus.Location = new System.Drawing.Point(9, 15);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(292, 21);
+            this.lblStatus.TabIndex = 11;
+            this.lblStatus.Text = "[lblStatus]";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnClose
             // 
@@ -120,31 +145,6 @@
             this.btnUpload.Text = "Upload";
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblStatus.Location = new System.Drawing.Point(9, 15);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(292, 21);
-            this.lblStatus.TabIndex = 11;
-            this.lblStatus.Text = "[lblStatus]";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // picStatus
-            // 
-            this.picStatus.Image = ((System.Drawing.Image)(resources.GetObject("picStatus.Image")));
-            this.picStatus.Location = new System.Drawing.Point(102, 16);
-            this.picStatus.Name = "picStatus";
-            this.picStatus.Size = new System.Drawing.Size(16, 16);
-            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picStatus.TabIndex = 1;
-            this.picStatus.TabStop = false;
-            this.picStatus.Visible = false;
             // 
             // txtMessage
             // 
@@ -189,8 +189,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

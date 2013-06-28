@@ -120,11 +120,14 @@
   <metadata name="imglTheme.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>90, 17</value>
   </metadata>
+  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOgAAACnCAYAAAAbpxDBAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AABQgSURBVHhe7Z17jF1HfcevRaiUQgu0pTGBPwq0UCki0GSv
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAABQgSURBVHhe7Z17jF1HfcevRaiUQgu0pTGBPwq0UCki0GSv
         KalkHJsQtYiWxEDbJI4vaxQEgdLKUQOoUYgd3+AGSyXFdZWXRPOwk4uyIcWEOo86CXb8WF/b6wfr2Fk7
         drzeXTt33w/buL/OzHn9Zs6cc8/u3r07d/e70ke5M/P7/eZ3zvl9z8x19pzNrVu3jgAAbqIEOjw8DABw
         DAgUAIeJCbS/v78uHD9xguRPX18fAMAAAgXAYSBQABwGAgXAYSBQABwGAgXAYdwVaLlI+VyOcpx8kcqm
@@ -217,16 +220,6 @@
     <value>This feature helps you open an image quickly by context menu. "Add default" button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in "Extensions" textbox, and then click "Update" button. "Remove all" button lets you remove all context menus related to ImageGlass.
 
 Add shortcut 'Open with ImageGlass' to context menu.</value>
-  </data>
-  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAQAAABjCAYAAAC8AKGcAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAsSURBVDhP7cghAQBAEALB6x+PEITA8JYAL1eMmZPUdba7
-        LkkXQRAEQfyP9AH6HxAn+by8KAAAAABJRU5ErkJggg==
-</value>
   </data>
   <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

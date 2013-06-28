@@ -33,9 +33,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.panExtension = new System.Windows.Forms.Panel();
+            this.lnkGetMoreExt = new System.Windows.Forms.LinkLabel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.tvExtension = new System.Windows.Forms.TreeView();
-            this.lnkGetMoreExt = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.panExtension.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -46,7 +46,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 422);
@@ -75,6 +75,19 @@
             this.panExtension.Name = "panExtension";
             this.panExtension.Size = new System.Drawing.Size(600, 404);
             this.panExtension.TabIndex = 0;
+            // 
+            // lnkGetMoreExt
+            // 
+            this.lnkGetMoreExt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkGetMoreExt.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkGetMoreExt.Location = new System.Drawing.Point(0, 0);
+            this.lnkGetMoreExt.Name = "lnkGetMoreExt";
+            this.lnkGetMoreExt.Size = new System.Drawing.Size(600, 404);
+            this.lnkGetMoreExt.TabIndex = 0;
+            this.lnkGetMoreExt.TabStop = true;
+            this.lnkGetMoreExt.Text = "Get more extensions";
+            this.lnkGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkGetMoreExt.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreExt_LinkClicked);
             // 
             // sp0
             // 
@@ -116,19 +129,6 @@
             this.tvExtension.Size = new System.Drawing.Size(193, 354);
             this.tvExtension.TabIndex = 8;
             this.tvExtension.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvExtension_AfterSelect);
-            // 
-            // lnkGetMoreExt
-            // 
-            this.lnkGetMoreExt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lnkGetMoreExt.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkGetMoreExt.Location = new System.Drawing.Point(0, 0);
-            this.lnkGetMoreExt.Name = "lnkGetMoreExt";
-            this.lnkGetMoreExt.Size = new System.Drawing.Size(600, 404);
-            this.lnkGetMoreExt.TabIndex = 0;
-            this.lnkGetMoreExt.TabStop = true;
-            this.lnkGetMoreExt.Text = "Get more extensions";
-            this.lnkGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkGetMoreExt.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreExt_LinkClicked);
             // 
             // frmExtension
             // 

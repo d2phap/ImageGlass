@@ -589,7 +589,7 @@ namespace ImageGlass
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
             if ((e.KeyValue == 33 || e.KeyValue == 37) && 
-                e.Control == false && e.Shift == false && e.Alt == false)//Left arrow / PageUp
+                !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
             {
                 NextPic(-1);
                 return;
@@ -600,7 +600,7 @@ namespace ImageGlass
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
             if ((e.KeyValue == 34 || e.KeyValue == 39) && 
-                e.Control == false && e.Shift == false && e.Alt == false)//Right arrow / Pagedown
+                !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
             {
                 NextPic(1);
                 return;
@@ -700,7 +700,7 @@ namespace ImageGlass
 
             //Refresh Image------------------------------------------------------------------
             #region F5
-            if (e.KeyValue == 116)//F5
+            if (e.KeyValue == 116 && !e.Control && !e.Shift && !e.Alt)//F5
             {
                 btnRefresh_Click(null, null);
                 return;
@@ -800,7 +800,7 @@ namespace ImageGlass
             #endregion
 
 
-            //ImageGlass Settings---------------------------------------------------------------
+            //Print Image-----------------------------------------------------------------------
             #region Ctrl + P
             if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
             {
@@ -812,14 +812,23 @@ namespace ImageGlass
 
             //Rename image----------------------------------------------------------------------
             #region F2
-            if (e.KeyValue == 113)//F2
+            if (e.KeyValue == 113 && !e.Control && !e.Shift && !e.Alt)//F2
             {
                 RenameImage();
                 return;
             }
             #endregion
 
-            
+            //Show Settings dialog--------------------------------------------------------------
+            #region Ctrl + Shift + P
+            if (e.KeyCode == Keys.P && e.Control && e.Shift && !e.Alt)// Ctrl + Shift + P
+            {
+                btnSetting_Click(null, null);
+                return;
+            }
+            #endregion
+
+
             // Sap hinh anh voi duong bien duoi-----------------------------------------------------
             if (e.KeyCode == Keys.Down)
             {
@@ -1617,12 +1626,12 @@ namespace ImageGlass
                 this.WindowState = FormWindowState.Maximized;
             }
 
-            //Slideshow Interval----------------------------------------------------------
+            //Slideshow Interval-----------------------------------------------------------
             int i = int.Parse(Setting.GetConfig("Interval", "5"));
             if (!(0 < i && i < 61)) i = 5;//gioi han thoi gian [1; 60] giay
             timSlideShow.Interval = 1000 * i;
 
-            //Show Caro
+            //Show Caro--------------------------------------------------------------------
             if (bool.Parse(Setting.GetConfig("Caro", "False").ToString()))
             {
                 btnCaro.PerformClick();
@@ -1637,10 +1646,10 @@ namespace ImageGlass
             //Lăn chuột mượt----------------------------------------------------------------
             Setting.IsSmoothPanning = bool.Parse(Setting.GetConfig("SmoothPanning", "False"));
 
-            //Get welcome screen
+            //Get welcome screen------------------------------------------------------------
             Setting.IsWelcomePicture = bool.Parse(Setting.GetConfig("Welcome", "True"));
 
-            //Zoom optimization method
+            //Zoom optimization method-------------------------------------------------------
             string z = Setting.GetConfig("ZoomOptimize", "auto");
             if (z.ToLower() == "smooth pixels")
             {
@@ -1655,7 +1664,7 @@ namespace ImageGlass
                 Setting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
             }
             
-            //Load ảnh mặc định
+            //Load ảnh mặc định------------------------------------------------------------
             string y = Setting.GetConfig("Welcome", "true");
             if (y.ToLower() == "true")
             {
@@ -1671,10 +1680,26 @@ namespace ImageGlass
             //Load theme--------------------------------------------------------------------
             LoadTheme();
             
-            //Load background
+            //Load background---------------------------------------------------------------
             z = Setting.GetConfig("BackgroundColor", "-1");
             Setting.BackgroundColor = Color.FromArgb(int.Parse(z));
             sp0.BackColor = Setting.BackgroundColor;
+
+            //Load state of Toolbar---------------------------------------------------------
+            if (bool.Parse(Setting.GetConfig("IsHideToolbar", "false")))//Dang An
+            {
+                //An
+                spMain.Panel1Collapsed = true;
+                mnuShowToolBar.Text = "Show toolbar";
+                Setting.IsHideToolBar = true;
+            }
+            else//Dang Hien
+            {
+                //Hien
+                spMain.Panel1Collapsed = false;
+                mnuShowToolBar.Text = "Hide toolbar";
+                Setting.IsHideToolBar = false;
+            }
         }
 
 
@@ -1993,8 +2018,6 @@ namespace ImageGlass
                 //Set value of zoom lock
                 SetZoomLockValue();
             }
-
-            this.Text = picMain.Width.ToString() + "--" + picMain.Image.Width.ToString();
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
@@ -2068,6 +2091,10 @@ namespace ImageGlass
                 this.WindowState = FormWindowState.Normal;
                 Application.DoEvents();
                 this.Bounds = Screen.FromControl(this).Bounds;
+
+                //An
+                spMain.Panel1Collapsed = true;
+                mnuShowToolBar.Text = "Show toolbar";
             }
             //exit full screen
             else
@@ -2077,6 +2104,13 @@ namespace ImageGlass
                 Application.DoEvents();
                 this.Bounds = this.rect;
                 this.rect = Rectangle.Empty;
+
+                //Hien
+                if (!Setting.IsHideToolBar)
+                {
+                    spMain.Panel1Collapsed = false;
+                    mnuShowToolBar.Text = "Hide toolbar";
+                }
             }
         }
 
@@ -2138,6 +2172,24 @@ namespace ImageGlass
             Setting.IsForcedActive = false;
             Setting.FSetting.Show();
             Setting.FSetting.Activate();
+        }
+
+        private void mnuShowToolBar_Click(object sender, EventArgs e)
+        {
+            if (Setting.IsHideToolBar)//Dang An
+            {
+                //Hien
+                spMain.Panel1Collapsed = false;
+                mnuShowToolBar.Text = "Hide toolbar";
+                Setting.IsHideToolBar = false;
+            }
+            else//Dang Hien
+            {
+                //An
+                spMain.Panel1Collapsed = true;
+                mnuShowToolBar.Text = "Show toolbar";
+                Setting.IsHideToolBar = true;
+            }
         }
 
         private void mnuEditWithPaint_Click(object sender, EventArgs e)

@@ -76,6 +76,9 @@ namespace ImageGlass
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
         private static Color _backgroundColor = Color.White;
+        private static bool _isHideToolBar = false;
+
+        
 
 
         #region "Properties"
@@ -334,6 +337,21 @@ namespace ImageGlass
         {
             get { return Setting._backgroundColor; }
             set { Setting._backgroundColor = value; }
+        }
+
+        /// <summary>
+        /// Get, set value of visibility of toolbar when start up
+        /// </summary>
+        public static bool IsHideToolBar
+        {
+            get
+            {
+                return Setting._isHideToolBar;
+            }
+            set
+            {
+                Setting._isHideToolBar = value;
+            }
         }
 
         /// <summary>

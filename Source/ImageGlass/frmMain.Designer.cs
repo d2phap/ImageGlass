@@ -25,23 +25,21 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.panMain = new System.Windows.Forms.Panel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.picMain = new System.Windows.Forms.PictureBox();
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuStartSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStopSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPhanCach = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuShowToolBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuEditWithPaint = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuSetWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMoveRecycle = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuUploadFacebook = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,6 +48,7 @@
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.sysWatch = new System.IO.FileSystemWatcher();
+            this.spMain = new System.Windows.Forms.SplitContainer();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -87,29 +86,22 @@
             this.lblImageSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageFileSize = new System.Windows.Forms.ToolStripLabel();
             this.lblImageDateCreate = new System.Windows.Forms.ToolStripLabel();
-            this.panMain.SuspendLayout();
+            this.picMain = new System.Windows.Forms.PictureBox();
+            this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUploadFacebook = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spMain)).BeginInit();
+            this.spMain.Panel1.SuspendLayout();
+            this.spMain.Panel2.SuspendLayout();
+            this.spMain.SuspendLayout();
             this.toolMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panMain
-            // 
-            this.panMain.AllowDrop = true;
-            this.panMain.AutoScroll = true;
-            this.panMain.BackColor = System.Drawing.Color.Black;
-            this.panMain.Controls.Add(this.sp0);
-            this.panMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panMain.Location = new System.Drawing.Point(0, 33);
-            this.panMain.Margin = new System.Windows.Forms.Padding(1, 0, 1, 1);
-            this.panMain.Name = "panMain";
-            this.panMain.Size = new System.Drawing.Size(864, 438);
-            this.panMain.TabIndex = 2;
             // 
             // sp0
             // 
@@ -133,33 +125,14 @@
             // 
             // sp0.Panel2
             // 
-            this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
+            this.sp0.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("sp0.Panel2.BackgroundImage")));
             this.sp0.Panel2.Controls.Add(this.thumbBar);
             this.sp0.Panel2Collapsed = true;
-            this.sp0.Size = new System.Drawing.Size(864, 438);
+            this.sp0.Size = new System.Drawing.Size(864, 437);
             this.sp0.SplitterDistance = 343;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;
-            // 
-            // picMain
-            // 
-            this.picMain.BackColor = System.Drawing.Color.Transparent;
-            this.picMain.ContextMenuStrip = this.mnuPopup;
-            this.picMain.Location = new System.Drawing.Point(3, 3);
-            this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(62, 59);
-            this.picMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picMain.TabIndex = 0;
-            this.picMain.TabStop = false;
-            this.picMain.Tag = "0";
-            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
-            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
-            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
-            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
-            this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
-            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
-            this.picMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseUp);
             // 
             // mnuPopup
             // 
@@ -168,6 +141,8 @@
             this.mnuStopSlideshow,
             this.mnuExitSlideshow,
             this.mnuPhanCach,
+            this.mnuShowToolBar,
+            this.toolStripMenuItem4,
             this.mnuEditWithPaint,
             this.mnuExtractFrames,
             this.toolStripMenuItem1,
@@ -183,7 +158,7 @@
             this.mnuimageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(244, 314);
+            this.mnuPopup.Size = new System.Drawing.Size(244, 342);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -219,6 +194,19 @@
             this.mnuPhanCach.Name = "mnuPhanCach";
             this.mnuPhanCach.Size = new System.Drawing.Size(240, 6);
             this.mnuPhanCach.Visible = false;
+            // 
+            // mnuShowToolBar
+            // 
+            this.mnuShowToolBar.Name = "mnuShowToolBar";
+            this.mnuShowToolBar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
+            this.mnuShowToolBar.Size = new System.Drawing.Size(243, 22);
+            this.mnuShowToolBar.Text = "Hide toolbar";
+            this.mnuShowToolBar.Click += new System.EventHandler(this.mnuShowToolBar_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(240, 6);
             // 
             // mnuEditWithPaint
             // 
@@ -256,15 +244,6 @@
             this.mnuMoveRecycle.Text = "&Move to recycle bin";
             this.mnuMoveRecycle.Click += new System.EventHandler(this.mnuRecycleBin_Click);
             // 
-            // mnuDelete
-            // 
-            this.mnuDelete.Image = ((System.Drawing.Image)(resources.GetObject("mnuDelete.Image")));
-            this.mnuDelete.Name = "mnuDelete";
-            this.mnuDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
-            this.mnuDelete.Size = new System.Drawing.Size(243, 22);
-            this.mnuDelete.Text = "&Delete from hard disk";
-            this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
-            // 
             // mnuRename
             // 
             this.mnuRename.Name = "mnuRename";
@@ -277,15 +256,6 @@
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(240, 6);
-            // 
-            // mnuUploadFacebook
-            // 
-            this.mnuUploadFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuUploadFacebook.Image")));
-            this.mnuUploadFacebook.Name = "mnuUploadFacebook";
-            this.mnuUploadFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
-            this.mnuUploadFacebook.Size = new System.Drawing.Size(243, 22);
-            this.mnuUploadFacebook.Text = "Upload to Facebook";
-            this.mnuUploadFacebook.Click += new System.EventHandler(this.mnuUploadFacebook_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -322,7 +292,7 @@
             this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(150, 46);
+            this.thumbBar.Size = new System.Drawing.Size(864, 93);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.WrapContents = false;
             // 
@@ -339,6 +309,29 @@
             this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
             this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
+            // 
+            // spMain
+            // 
+            this.spMain.BackColor = System.Drawing.Color.Transparent;
+            this.spMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.spMain.IsSplitterFixed = true;
+            this.spMain.Location = new System.Drawing.Point(0, 0);
+            this.spMain.Name = "spMain";
+            this.spMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // spMain.Panel1
+            // 
+            this.spMain.Panel1.Controls.Add(this.toolMain);
+            // 
+            // spMain.Panel2
+            // 
+            this.spMain.Panel2.Controls.Add(this.sp0);
+            this.spMain.Size = new System.Drawing.Size(864, 471);
+            this.spMain.SplitterDistance = 33;
+            this.spMain.SplitterWidth = 1;
+            this.spMain.TabIndex = 2;
+            this.spMain.TabStop = false;
             // 
             // toolMain
             // 
@@ -494,7 +487,7 @@
             this.btnScale11.Margin = new System.Windows.Forms.Padding(0);
             this.btnScale11.Name = "btnScale11";
             this.btnScale11.Size = new System.Drawing.Size(25, 28);
-            this.btnScale11.ToolTipText = "Scale 1:1 (Ctrl + 0)";
+            this.btnScale11.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnScale11.Click += new System.EventHandler(this.btnScale11_Click);
             // 
             // btnZoomLock
@@ -745,7 +738,7 @@
             this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(25, 28);
-            this.btnSetting.ToolTipText = "ImageGlass Settings";
+            this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + Shift + P)";
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // btnHelp
@@ -842,6 +835,43 @@
             this.lblImageDateCreate.Name = "lblImageDateCreate";
             this.lblImageDateCreate.Size = new System.Drawing.Size(0, 30);
             // 
+            // picMain
+            // 
+            this.picMain.BackColor = System.Drawing.Color.Transparent;
+            this.picMain.ContextMenuStrip = this.mnuPopup;
+            this.picMain.Location = new System.Drawing.Point(3, 3);
+            this.picMain.Name = "picMain";
+            this.picMain.Size = new System.Drawing.Size(62, 59);
+            this.picMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picMain.TabIndex = 0;
+            this.picMain.TabStop = false;
+            this.picMain.Tag = "0";
+            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
+            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
+            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
+            this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
+            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
+            this.picMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseUp);
+            // 
+            // mnuDelete
+            // 
+            this.mnuDelete.Image = ((System.Drawing.Image)(resources.GetObject("mnuDelete.Image")));
+            this.mnuDelete.Name = "mnuDelete";
+            this.mnuDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
+            this.mnuDelete.Size = new System.Drawing.Size(243, 22);
+            this.mnuDelete.Text = "&Delete from hard disk";
+            this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
+            // 
+            // mnuUploadFacebook
+            // 
+            this.mnuUploadFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuUploadFacebook.Image")));
+            this.mnuUploadFacebook.Name = "mnuUploadFacebook";
+            this.mnuUploadFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+            this.mnuUploadFacebook.Size = new System.Drawing.Size(243, 22);
+            this.mnuUploadFacebook.Text = "Upload to Facebook";
+            this.mnuUploadFacebook.Click += new System.EventHandler(this.mnuUploadFacebook_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -850,8 +880,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(864, 471);
-            this.Controls.Add(this.panMain);
-            this.Controls.Add(this.toolMain);
+            this.Controls.Add(this.spMain);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HelpButton = true;
@@ -868,16 +897,19 @@
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
-            this.panMain.ResumeLayout(false);
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.mnuPopup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
+            this.spMain.Panel1.ResumeLayout(false);
+            this.spMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.spMain)).EndInit();
+            this.spMain.ResumeLayout(false);
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -885,7 +917,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox picMain;
-        private System.Windows.Forms.Panel panMain;
         private System.Windows.Forms.ToolStrip toolMain;
         private System.Windows.Forms.Timer timSlideShow;
         private System.Windows.Forms.ToolStripButton btnNext;
@@ -946,6 +977,9 @@
         private System.Windows.Forms.ToolStripButton btnZoomLock;
         private System.IO.FileSystemWatcher sysWatch;
         private System.Windows.Forms.SplitContainer sp0;
+        private System.Windows.Forms.SplitContainer spMain;
+        private System.Windows.Forms.ToolStripMenuItem mnuShowToolBar;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
     }
 }
 

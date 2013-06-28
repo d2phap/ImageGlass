@@ -168,7 +168,7 @@ namespace ImageGlass
             }
             else if (lbl.Name == "lblLanguage")
             {
-                tab1.SelectedTab = tabLaguage;
+                tab1.SelectedTab = tabLanguage;
             }
             else if (lbl.Name == "lblExtension")
             {
@@ -198,6 +198,12 @@ namespace ImageGlass
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
             Setting.SetConfig("Recursive", chkFindChildFolder.Checked.ToString());
+        }
+
+        private void chkHideToolBar_CheckedChanged(object sender, EventArgs e)
+        {
+            Setting.IsHideToolBar = chkHideToolBar.Checked;
+            Setting.SetConfig("IsHideToolbar", Setting.IsHideToolBar.ToString());
         }
 
         private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
@@ -263,6 +269,9 @@ namespace ImageGlass
             //Get value of chkWelcomePicture
             chkWelcomePicture.Checked = bool.Parse(Setting.GetConfig("Welcome", "true"));
 
+            //Get value of chkHideToolBar
+            chkHideToolBar.Checked = bool.Parse(Setting.GetConfig("IsHideToolbar", "false"));
+
             //Get value of cmbZoomOptimization
             s = Setting.GetConfig("ZoomOptimize", "0");
             int i = 0;
@@ -327,7 +336,12 @@ namespace ImageGlass
                                     "\"" + Setting.SupportedExtensions + "\" "; //arg 2
             p.EnableRaisingEvents = true;
             p.Exited += p_Exited;
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
 
         }
 
@@ -341,7 +355,12 @@ namespace ImageGlass
                                     "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
             p.EnableRaisingEvents = true;
             p.Exited += p_Exited;
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lblRemoveAllContextMenu_Click(object sender, EventArgs e)
@@ -352,7 +371,12 @@ namespace ImageGlass
             p.StartInfo.Arguments = "removeext ";
             p.EnableRaisingEvents = true;
             p.Exited += p_Exited;
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
 
             txtExtensions.Text = Setting.ContextMenuExtensions;
         }
@@ -398,6 +422,8 @@ namespace ImageGlass
                 Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
             }
         }
+
+        
 
         
 

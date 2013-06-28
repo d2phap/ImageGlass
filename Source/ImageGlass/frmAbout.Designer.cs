@@ -33,7 +33,6 @@
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblComponent = new System.Windows.Forms.Label();
             this.lblReferences = new System.Windows.Forms.Label();
-            this.lblAdvertisement = new System.Windows.Forms.Label();
             this.panInfo = new System.Windows.Forms.Panel();
             this.lnkCheckUpdate = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,14 +52,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panReferences = new System.Windows.Forms.Panel();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
-            this.panAdvertisement = new System.Windows.Forms.Panel();
-            this.lnkAdvertisement = new System.Windows.Forms.LinkLabel();
-            this.txtAdvertisement = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
             this.panReferences.SuspendLayout();
-            this.panAdvertisement.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -104,7 +99,7 @@
             this.lblComponent.Size = new System.Drawing.Size(139, 40);
             this.lblComponent.TabIndex = 2;
             this.lblComponent.Tag = "0";
-            this.lblComponent.Text = "Component";
+            this.lblComponent.Text = "Components";
             this.lblComponent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblComponent.Click += new System.EventHandler(this.lblMenu_Click);
             this.lblComponent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
@@ -131,25 +126,6 @@
             this.lblReferences.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblReferences.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblAdvertisement
-            // 
-            this.lblAdvertisement.BackColor = System.Drawing.Color.Silver;
-            this.lblAdvertisement.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblAdvertisement.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.lblAdvertisement.ForeColor = System.Drawing.Color.White;
-            this.lblAdvertisement.Location = new System.Drawing.Point(447, 94);
-            this.lblAdvertisement.Name = "lblAdvertisement";
-            this.lblAdvertisement.Size = new System.Drawing.Size(139, 40);
-            this.lblAdvertisement.TabIndex = 4;
-            this.lblAdvertisement.Tag = "0";
-            this.lblAdvertisement.Text = "Advertisement";
-            this.lblAdvertisement.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblAdvertisement.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblAdvertisement.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblAdvertisement.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblAdvertisement.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblAdvertisement.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
             // panInfo
             // 
             this.panInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -171,7 +147,7 @@
             this.panInfo.Controls.Add(this.lblVersion);
             this.panInfo.Location = new System.Drawing.Point(12, 138);
             this.panInfo.Name = "panInfo";
-            this.panInfo.Size = new System.Drawing.Size(688, 385);
+            this.panInfo.Size = new System.Drawing.Size(594, 385);
             this.panInfo.TabIndex = 5;
             // 
             // lnkCheckUpdate
@@ -402,9 +378,9 @@
             this.panReferences.AutoScroll = true;
             this.panReferences.BackColor = System.Drawing.Color.White;
             this.panReferences.Controls.Add(this.txtReferences);
-            this.panReferences.Location = new System.Drawing.Point(592, 82);
+            this.panReferences.Location = new System.Drawing.Point(484, 73);
             this.panReferences.Name = "panReferences";
-            this.panReferences.Size = new System.Drawing.Size(688, 385);
+            this.panReferences.Size = new System.Drawing.Size(594, 385);
             this.panReferences.TabIndex = 16;
             this.panReferences.Visible = false;
             // 
@@ -420,58 +396,9 @@
             this.txtReferences.Location = new System.Drawing.Point(19, 16);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
-            this.txtReferences.Size = new System.Drawing.Size(658, 354);
+            this.txtReferences.Size = new System.Drawing.Size(564, 354);
             this.txtReferences.TabIndex = 2;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
-            // 
-            // panAdvertisement
-            // 
-            this.panAdvertisement.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panAdvertisement.AutoScroll = true;
-            this.panAdvertisement.BackColor = System.Drawing.Color.White;
-            this.panAdvertisement.Controls.Add(this.lnkAdvertisement);
-            this.panAdvertisement.Controls.Add(this.txtAdvertisement);
-            this.panAdvertisement.Location = new System.Drawing.Point(633, 59);
-            this.panAdvertisement.Name = "panAdvertisement";
-            this.panAdvertisement.Size = new System.Drawing.Size(688, 385);
-            this.panAdvertisement.TabIndex = 17;
-            this.panAdvertisement.Visible = false;
-            // 
-            // lnkAdvertisement
-            // 
-            this.lnkAdvertisement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lnkAdvertisement.AutoSize = true;
-            this.lnkAdvertisement.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lnkAdvertisement.LinkArea = new System.Windows.Forms.LinkArea(9, 1000);
-            this.lnkAdvertisement.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkAdvertisement.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkAdvertisement.Location = new System.Drawing.Point(19, 351);
-            this.lnkAdvertisement.Name = "lnkAdvertisement";
-            this.lnkAdvertisement.Size = new System.Drawing.Size(423, 23);
-            this.lnkAdvertisement.TabIndex = 17;
-            this.lnkAdvertisement.TabStop = true;
-            this.lnkAdvertisement.Text = "Details: http://www.imageglass.org/support.php?type=advertisement";
-            this.lnkAdvertisement.UseCompatibleTextRendering = true;
-            this.lnkAdvertisement.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkAdvertisement.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
-            // 
-            // txtAdvertisement
-            // 
-            this.txtAdvertisement.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdvertisement.BackColor = System.Drawing.Color.White;
-            this.txtAdvertisement.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAdvertisement.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.txtAdvertisement.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtAdvertisement.Location = new System.Drawing.Point(19, 16);
-            this.txtAdvertisement.Name = "txtAdvertisement";
-            this.txtAdvertisement.ReadOnly = true;
-            this.txtAdvertisement.Size = new System.Drawing.Size(658, 322);
-            this.txtAdvertisement.TabIndex = 2;
-            this.txtAdvertisement.Text = resources.GetString("txtAdvertisement.Text");
             // 
             // frmAbout
             // 
@@ -479,17 +406,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(712, 538);
-            this.Controls.Add(this.panAdvertisement);
+            this.ClientSize = new System.Drawing.Size(618, 538);
+            this.Controls.Add(this.panReferences);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panComponent);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lblAdvertisement);
             this.Controls.Add(this.lblReferences);
             this.Controls.Add(this.lblComponent);
             this.Controls.Add(this.lblInfo);
-            this.Controls.Add(this.panReferences);
             this.Controls.Add(this.panInfo);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -502,8 +427,6 @@
             this.panInfo.PerformLayout();
             this.panComponent.ResumeLayout(false);
             this.panReferences.ResumeLayout(false);
-            this.panAdvertisement.ResumeLayout(false);
-            this.panAdvertisement.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -515,7 +438,6 @@
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.Label lblComponent;
         private System.Windows.Forms.Label lblReferences;
-        private System.Windows.Forms.Label lblAdvertisement;
         private System.Windows.Forms.Panel panInfo;
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.Label lblVersion;
@@ -535,8 +457,5 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panReferences;
         private System.Windows.Forms.RichTextBox txtReferences;
-        private System.Windows.Forms.Panel panAdvertisement;
-        private System.Windows.Forms.RichTextBox txtAdvertisement;
-        private System.Windows.Forms.LinkLabel lnkAdvertisement;
     }
 }
