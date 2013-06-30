@@ -1,10 +1,87 @@
 ﻿<ImageGlass>
 	<Language>
-		<Info langCode="vi" langName="Tiếng Việt" author="Duong Dieu Phap" description="" />	
+		<Info langCode="vi" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" />	
 		<Content count="3">
-			<_1 oriText="Open image">Mở tập tin hình ảnh</_1>
-			<_2 oriText="Edit with Paint">Chỉnh sửa hình ảnh bằng Paint</_2>
-			<_3 oriText="Image properties">Xem thuộc tính hình ảnh</_3>
+			<_1 key="frmMain.btnBack" default="Go to previous image (Left arrow / PageDown)" value="xxxxxxxxxxxxxx" />
+			<_2 key="frmMain.btnNext" default="Go to next image (Right arrow / PageUp)" value="xxxxxxxxxxxxxx" />
+			<_3 key="frmMain.btnRotateLeft" default="Rotate Counterclockwise (Ctrl + ,)" value="xxxxxxxxxxxxxx" />
+			<_4 key="frmMain.btnRotateRight" default="Rotate Clockwise (Ctrl + .)" value="xxxxxxxxxxxxxx" />
+			<_5 key="frmMain.btnZoomIn" default="Zoom in (Ctrl + =)" value="xxxxxxxxxxxxxx" />
+			<_6 key="frmMain.btnZoomOut" default="Zoom out (Ctrl + -)" value="xxxxxxxxxxxxxx" />
+			<_7 key="frmMain.btnActualSize" default="Actual size (Ctrl + 0)" value="xxxxxxxxxxxxxx" />
+			<_8 key="frmMain.btnZoomLock" default="Lock zoom ratio" value="xxxxxxxxxxxxxx" />
+			<_9 key="frmMain.btnScaletoWidth" default="Scale to Width (Ctrl + W)" value="xxxxxxxxxxxxxx" />
+			<_10 key="frmMain.btnScaletoHeight" default="Scale to Height (Ctrl + H)" value="xxxxxxxxxxxxxx" />
+			<_11 key="frmMain.btnWindowAutosize" default="Window adapt to image (Ctrl + M)" value="xxxxxxxxxxxxxx" />
+			<_12 key="frmMain.btnOpen" default="Open file (Ctrl + O)" value="xxxxxxxxxxxxxx" />
+			<_13 key="frmMain.btnRefresh" default="Refresh (F5)" value="xxxxxxxxxxxxxx" />
+			<_14 key="frmMain.btnGoto" default="Go to ... (Ctrl + G)" value="xxxxxxxxxxxxxx" />
+			<_15 key="frmMain.btnThumb" default="Show thumbnail (Ctrl + T)" value="xxxxxxxxxxxxxx" />
+			<_16 key="frmMain.btnCaro" default="Show checked background (Ctrl + B)" value="xxxxxxxxxxxxxx" />
+			<_17 key="frmMain.btnFullScreen" default="Full sreen (Alt + Enter)" value="xxxxxxxxxxxxxx" />
+			<_18 key="frmMain.btnSlideShow" default="Play slideshow (F11, ESC to exit)" value="xxxxxxxxxxxxxx" />
+			<_19 key="frmMain.btnConvert" default="Convert image (Ctrl + S)" value="xxxxxxxxxxxxxx" />
+			<_20 key="frmMain.btnPrintImage" default="Print image (Ctrl + P)" value="xxxxxxxxxxxxxx" />
+			<_21 key="frmMain.btnFacebook" default="Upload to Facebook (Ctrl + U)" value="xxxxxxxxxxxxxx" />
+			<_22 key="frmMain.btnExtension" default="Extensions" value="xxxxxxxxxxxxxx" />
+			<_23 key="frmMain.btnSetting" default="ImageGlass Settings (Ctrl + Shift + P)" value="xxxxxxxxxxxxxx" />
+			<_24 key="frmMain.btnHelp" default="Help (F1)" value="xxxxxxxxxxxxxx" />
+			<_25 key="frmMain.btnFacebookLike" default="Visit Facebook of ImageGlass" value="xxxxxxxxxxxxxx" />
+			<_26 key="frmMain.btnFollow" default="Follow ImageGlass by email" value="xxxxxxxxxxxxxx" />
+			<_27 key="frmMain.btnReport" default="Report a bug or comment about ImageGlass" value="xxxxxxxxxxxxxx" />
+			<_28 key="frmMain.mnuStartSlideshow" default="Start slideshow" value="xxxxxxxxxxxxxx" />
+			<_29 key="frmMain.mnuStopSlideshow" default="Stop slideshow" value="xxxxxxxxxxxxxx" />
+			<_30 key="frmMain.mnuExitSlideshow" default="Exit slideshow" value="xxxxxxxxxxxxxx" />
+			<_31 key="frmMain.mnuShowToolBar._Hide" default="&Hide toolbar" value="xxxxxxxxxxxxxx" />
+			<_32 key="frmMain.mnuShowToolBar._Show" default="S&how toolbar" value="xxxxxxxxxxxxxx" />
+			<_33 key="frmMain.mnuEditWithPaint" default="&Edit with Paint" value="xxxxxxxxxxxxxx" />
+			<_34 key="frmMain.mnuExtractFrames" default="E&xtract image frames ({0})" value="xxxxxxxxxxxxxx" />
+			<_35 key="frmMain.mnuSetWallpaper" default="&Set as desktop background" value="xxxxxxxxxxxxxx" />
+			<_36 key="frmMain.mnuMoveRecycle" default="&Move to recycle bin" value="xxxxxxxxxxxxxx" />
+			<_37 key="frmMain.mnuDelete" default="&Delete from hard disk" value="xxxxxxxxxxxxxx" />
+			<_38 key="frmMain.mnuRename" default="&Rename image" value="xxxxxxxxxxxxxx" />
+			<_39 key="frmMain.mnuUploadFacebook" default="&Upload to Facebook" value="xxxxxxxxxxxxxx" />
+			<_40 key="frmMain.mnuCopyImagePath" default="&Copy image path" value="xxxxxxxxxxxxxx" />
+			<_41 key="frmMain.mnuOpenLocation" default="&Open image location" value="xxxxxxxxxxxxxx" />
+			<_42 key="frmMain.mnuImageProperties" default="&Image properties" value="xxxxxxxxxxxxxx" />
+			<_43 key="frmMain._OpenFileDialog" default="All supported files" value="xxxxxxxxxxxxxx" />
+			<_44 key="frmMain._Text" default="file(s)" value="xxxxxxxxxxxxxx" />
+			<_45 key="frmMain._RenameDialog" default="Enter new filename" value="xxxxxxxxxxxxxx" />
+			<_46 key="frmMain._GotoDialogText" default="Enter the image index to view it. Press {ENTER}" value="xxxxxxxxxxxxxx" />
+			<_47 key="frmMain._DeleteDialogText" default="Delete file '{0}' ?" value="xxxxxxxxxxxxxx" />
+			<_48 key="frmMain._DeleteDialogTitle" default="Confirm" value="xxxxxxxxxxxxxx" />
+			<_49 key="frmMain._RecycleBinDialogText" default="Send file '{0}' to recycle bin ?" value="xxxxxxxxxxxxxx" />
+			<_50 key="frmMain._RecycleBinDialogTitle" default="Confirm" value="xxxxxxxxxxxxxx" />
+			<_51 key="frmMain._ExtractFrameText" default="Select output folder" value="xxxxxxxxxxxxxx" />
+			<_52 key="frmExtension._Text" default="Extension" value="xxxxxxxxxxxxxx" />
+			<_53 key="frmExtension.lnkGetMoreExt" default="Get more extensions" value="xxxxxxxxxxxxxx" />
+			<_54 key="frmExtension.Node0" default="Get more extensions" value="xxxxxxxxxxxxxx" />
+			<_55 key="frmExtension.btnClose" default="Close" value="xxxxxxxxxxxxxx" />
+			<_56 key="frmFacebook.lblMessage" default="Message:" value="xxxxxxxxxxxxxx" />
+			<_57 key="frmFacebook.btnUpload._Upload" default="Upload" value="xxxxxxxxxxxxxx" />
+			<_58 key="frmFacebook.btnUpload._Cancel" default="Cancel" value="xxxxxxxxxxxxxx" />
+			<_59 key="frmFacebook.btnUpload._ViewImage" default="View image" value="xxxxxxxxxxxxxx" />
+			<_60 key="frmFacebook.btnClose" default="Close" value="xxxxxxxxxxxxxx" />
+			<_61 key="frmFacebook._StatusBegin" default="click '{0}' to begin" value="xxxxxxxxxxxxxx" />
+			<_62 key="frmFacebook._StatusInvalid" default="invalid filename" value="xxxxxxxxxxxxxx" />
+			<_63 key="frmFacebook._StatusUploading" default="uploading..." value="xxxxxxxxxxxxxx" />
+			<_64 key="frmFacebook._StatusCancel" default="cancelled" value="xxxxxxxxxxxxxx" />
+			<_65 key="frmFacebook._StatusSuccessful" default="successful" value="xxxxxxxxxxxxxx" />
+			<_66 key="frmFaceBookLogin._Text" default="Logging in to Facebook ..." value="xxxxxxxxxxxxxx" />
+			<_67 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_68 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_69 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_70 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
+			<_80 key="frmAbout.xxxxxxxx" default="xxxxxxxxxx" value="xxxxxxxxxxxxxx" />
 		</Content>
 	</Language>
 </ImageGlass>

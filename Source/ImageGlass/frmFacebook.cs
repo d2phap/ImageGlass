@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            lblStatus.Text = "click 'Upload' to begin";
+            lblStatus.Text = string.Format("click '{0}' to begin", btnUpload.Text);
             lblPercent.Text = "";
         }
 
@@ -90,7 +90,7 @@ namespace ImageGlass
                 txtMessage.Enabled = true;
                 btnUpload.Text = "Upload";
                 btnUpload.Tag = 0;
-                lblStatus.Text = "click 'Upload' to begin";
+                lblStatus.Text = string.Format("click '{0}' to begin", btnUpload.Text);
 
                 if (_fb != null)
                 {
@@ -192,12 +192,12 @@ namespace ImageGlass
 
             if (e.Cancelled)
             {
-                lblStatus.Text = "Cancelled";
+                lblStatus.Text = "cancelled";
             }
             else if (e.Error == null)
             {
                 // upload successful.
-                lblStatus.Text = "Successful";
+                lblStatus.Text = "successful";
                 btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
                 btnUpload.Text = "View image";
             }

@@ -382,6 +382,15 @@ namespace ImageGlass
                 lblImageType.Text = Path.GetExtension(Setting.ImageList.getPath(Setting.CurrentIndex)).Replace(".", "").ToUpper();
                 lblImageDateCreate.Text = File.GetCreationTime(Setting.ImageList.getPath(Setting.CurrentIndex)).ToString();
 
+                if (Setting.IsHideToolBar)
+                {
+                    this.Text += " - " + lblZoomRatio.Text;
+                    this.Text += " - " + lblImageSize.Text;
+                    this.Text += " - " + lblImageFileSize.Text;
+                    this.Text += " - " + lblImageType.Text;
+                    this.Text += " - " + lblImageDateCreate.Text;
+                }
+
                 //giai phong bo nho
                 if (Setting.CurrentIndex - 1 > -1 && Setting.CurrentIndex < Setting.ImageList.length)
                 {
@@ -444,7 +453,7 @@ namespace ImageGlass
             if (Setting.ZoomLockValue != 1 && !Setting.IsImageError)
             {
                 setZoomOrigin();
-                zoomImage(Setting.ZoomLockValue);
+                ZoomImage(Setting.ZoomLockValue);
             }
 
             System.GC.Collect();
@@ -662,7 +671,7 @@ namespace ImageGlass
             #region Ctrl + 0
             if (e.KeyValue == 48 && e.Control && !e.Shift && !e.Alt)// Ctrl + 0
             {
-                btnScale11_Click(null, null);
+                btnActualSize_Click(null, null);
                 return;
             }
             #endregion
@@ -714,7 +723,7 @@ namespace ImageGlass
             {
                 try
                 {
-                    int n = Convert.ToInt32(InputBox.Derp("Goto image ...", 
+                    int n = Convert.ToInt32(InputBox.Derp("Enter the image index to view it. Press {ENTER}", 
                                             (Setting.CurrentIndex + 1).ToString())) - 1;
                     Setting.CurrentIndex = n;
                     NextPic(0);
@@ -835,11 +844,11 @@ namespace ImageGlass
                 //Sap bien duoi
                 if (e.Control && !e.Shift && !e.Alt)//Ctrl + Down
                 {
-                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); 
+                    ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); 
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2);
+                    ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2);
                 }
                 validateBounds();
                 return;
@@ -850,11 +859,11 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height);
+                    ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2);
+                    ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2);
                 }
                 validateBounds();
                 return;
@@ -865,12 +874,12 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top);
+                    ScrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top);
                     validateBounds();
                 }
                 else if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top);
+                    ScrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top);
                     validateBounds();
                 }
                 return;
@@ -882,11 +891,11 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top);
+                    ScrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    scrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top);
+                    ScrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top);
                 }
                 validateBounds();
                 return;
@@ -1140,7 +1149,7 @@ namespace ImageGlass
                         diff *= Math.Sign(diffX);
                     else diff *= Math.Sign(diffY);
 
-                    zoomImage(diff);
+                    ZoomImage(diff);
 
                 }
                 else if (e.Button == MouseButtons.Left)
@@ -1191,7 +1200,7 @@ namespace ImageGlass
         /// Zooms the image lambda pizels
         /// </summary>
         /// <param name="lambda">Amount of pixels to append</param>
-        void zoomImage(double lambda)
+        void ZoomImage(double lambda)
         {
             Setting.IsZooming = true;
 
@@ -1241,6 +1250,17 @@ namespace ImageGlass
 
                 //Get zoom ratio               
                 lblZoomRatio.Text = Math.Round(GetZoomRatio(), 2).ToString() + "X";
+                if (Setting.IsHideToolBar)
+                {
+                    this.Text = "ImageGlass - " +
+                        (Setting.CurrentIndex + 1) + "/" + Setting.ImageList.length + " file(s) - " +
+                        Setting.ImageList.getPath(Setting.CurrentIndex);
+                    this.Text += " - " + lblZoomRatio.Text;
+                    this.Text += " - " + lblImageSize.Text;
+                    this.Text += " - " + lblImageFileSize.Text;
+                    this.Text += " - " + lblImageType.Text;
+                    this.Text += " - " + lblImageDateCreate.Text;
+                }
                 
                 Application.DoEvents();
             }
@@ -1297,7 +1317,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        void scrollSmooth(int x, int y)
+        void ScrollSmooth(int x, int y)
         {
 
             // Filter repetitious scrolls
@@ -1305,7 +1325,7 @@ namespace ImageGlass
             int myIdent = scrollIdent;
 
             // DERP
-            if (!Setting.IsSmoothPanning) scrollInstant(x, y);
+            if (!Setting.IsSmoothPanning) ScrollInstant(x, y);
 
             // Make sure we're within bounds
             Point xy = validateBounds(new Rectangle(x, y, picMain.Width, picMain.Height), false);
@@ -1355,7 +1375,7 @@ namespace ImageGlass
             }
         }
 
-        void scrollInstant(int x, int y)
+        void ScrollInstant(int x, int y)
         {
             validateBounds(new Rectangle(x, y, picMain.Width, picMain.Height), true);
         }
@@ -1438,7 +1458,7 @@ namespace ImageGlass
             btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate;
             btnZoomIn.Image = ImageGlass.Properties.Resources.zoomin;
             btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout;
-            btnScale11.Image = ImageGlass.Properties.Resources.scaletofit;
+            btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit;
             btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock;
             btnScaletoWidth.Image = ImageGlass.Properties.Resources.scaletowidth;
             btnScaletoHeight.Image = ImageGlass.Properties.Resources.scaletoheight;
@@ -1531,8 +1551,8 @@ namespace ImageGlass
                 try { btnZoomOut.Image = Image.FromFile(dir + t.zoomout); }
                 catch { btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout; }
 
-                try { btnScale11.Image = Image.FromFile(dir + t.scaletofit); }
-                catch { btnScale11.Image = ImageGlass.Properties.Resources.scaletofit; }
+                try { btnActualSize.Image = Image.FromFile(dir + t.scaletofit); }
+                catch { btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit; }
 
                 try { btnZoomLock.Image = Image.FromFile(dir + t.zoomlock); }
                 catch { btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock; }
@@ -1849,7 +1869,7 @@ namespace ImageGlass
                 return;
             }
             setZoomOrigin();
-            zoomImage(e.Delta);
+            ZoomImage(e.Delta);
 
             //Set value of zoom lock
             SetZoomLockValue();
@@ -1921,7 +1941,7 @@ namespace ImageGlass
             }
         }
 
-        private void btnScale11_Click(object sender, EventArgs e)
+        private void btnActualSize_Click(object sender, EventArgs e)
         {
             if (Setting.ImageList.length < 1 || Setting.IsImageError)
             {
@@ -1968,7 +1988,7 @@ namespace ImageGlass
             {
                 return;
             }
-            // In Soviet Russia, window adapt to image
+            // Window adapt to image
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             this.WindowState = FormWindowState.Normal;
             this.Size = new Size(Width += picMain.Image.Width - sp0.Panel1.Width,
@@ -1982,7 +2002,7 @@ namespace ImageGlass
         private void btnGoto_Click(object sender, EventArgs e)
         {
             int n = Setting.CurrentIndex;
-            string s = InputBox.Derp("Enter the image index to view it. Press [ENTER] ", "0");
+            string s = InputBox.Derp("Enter the image index to view it. Press {ENTER}", "0");
 
             if (int.TryParse(s, out n))
             {
@@ -2013,7 +2033,7 @@ namespace ImageGlass
             if (!Setting.IsImageError)
             {
                 setZoomOrigin();
-                zoomImage(14);
+                ZoomImage(14);
 
                 //Set value of zoom lock
                 SetZoomLockValue();
@@ -2025,7 +2045,7 @@ namespace ImageGlass
             if (!Setting.IsImageError)
             {
                 setZoomOrigin();
-                zoomImage(-14);
+                ZoomImage(-14);
 
                 //Set value of zoom lock
                 SetZoomLockValue();
@@ -2222,8 +2242,9 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show("Delete file '" + Setting.ImageList.getPath(Setting.CurrentIndex) + "' ?",
-                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = MessageBox.Show(string.Format("Delete file '{0}' ?", 
+                                Setting.ImageList.getPath(Setting.CurrentIndex)),
+                                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (msg == DialogResult.Yes)
             {
                 string f = Setting.ImageList.getPath(Setting.CurrentIndex);
@@ -2253,8 +2274,9 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show("Send file '" + Setting.ImageList.getPath(Setting.CurrentIndex) + "' to recycle bin?",
-                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = MessageBox.Show(string.Format("Send file '{0}' to recycle bin ?", 
+                                Setting.ImageList.getPath(Setting.CurrentIndex)),
+                                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (msg == DialogResult.Yes)
             {
                 string f = Setting.ImageList.getPath(Setting.CurrentIndex);
@@ -2322,7 +2344,7 @@ namespace ImageGlass
                 }
             }
             catch { return; }
-            //ImageGlass_Image.ConvertImage(picMain.Image, Setting.ImageList.getName(Setting.CurrentIndex));
+
             Library.Image.ImageInfo.ConvertImage(picMain.Image, 
                                     Setting.ImageList.getName(Setting.CurrentIndex));
         }
@@ -2386,7 +2408,8 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(Setting.ImageList.getPath(Setting.CurrentIndex)) || Setting.IsImageError)
+                if (!File.Exists(Setting.ImageList.getPath(Setting.CurrentIndex)) || 
+                                 Setting.IsImageError)
                 {
                     e.Cancel = true;
                     return;
@@ -2397,7 +2420,7 @@ namespace ImageGlass
             try
             {
                 int i = Setting.ImageList.get(Setting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
-                mnuExtractFrames.Text = "&Extract image frames (" + i.ToString() + ")";
+                mnuExtractFrames.Text = string.Format("E&xtract image frames ({0})", i.ToString());
                 mnuExtractFrames.Enabled = true;
             }
             catch

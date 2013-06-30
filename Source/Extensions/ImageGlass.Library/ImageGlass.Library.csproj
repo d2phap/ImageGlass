@@ -44,6 +44,7 @@
     <Compile Include="Comparer\DictionaryEntryComparer.cs" />
     <Compile Include="Comparer\FileLogicalComparer.cs" />
     <Compile Include="Comparer\NumericComparer.cs" />
+    <Compile Include="Language\Language.cs" />
     <Compile Include="Net\DownloadFile.cs" />
     <Compile Include="Image\Animation.cs" />
     <Compile Include="Image\DesktopWallapaper.cs" />

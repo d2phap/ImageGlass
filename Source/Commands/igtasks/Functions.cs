@@ -12,7 +12,6 @@ namespace igtasks
 {
     public static class Functions
     {
-
         /// <summary>
         /// Thêm menu 'Open with ImageGlass' vào menu ngữ cảnh
         /// </summary>
@@ -109,15 +108,6 @@ namespace igtasks
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-
-
-
-
-
-
-
 
 
 
