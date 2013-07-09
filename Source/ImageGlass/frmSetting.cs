@@ -28,6 +28,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace ImageGlass
 {
@@ -41,7 +42,7 @@ namespace ImageGlass
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 0, 123, 176);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 0, 160, 220);
         private Color M_COLOR_MENU_NORMAL = Color.Silver;
-        
+        private List<Library.Language> dsLanguages = new List<Library.Language>();
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
@@ -138,7 +139,17 @@ namespace ImageGlass
         {
             this.Refresh();
         }
+        
+        private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Setting.IsForcedActive = true;
+        }
 
+        /// <summary>
+        /// TAB LABEL CLICK
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lblMenu_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
@@ -146,12 +157,10 @@ namespace ImageGlass
             lblGeneral.Tag = 0;
             lblContextMenu.Tag = 0;
             lblLanguage.Tag = 0;
-            lblExtension.Tag = 0;
 
             lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
             lblContextMenu.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
-            lblExtension.BackColor = M_COLOR_MENU_NORMAL;
 
             lbl.Tag = 1;
             lbl.BackColor = M_COLOR_MENU_ACTIVE;
@@ -169,15 +178,94 @@ namespace ImageGlass
             else if (lbl.Name == "lblLanguage")
             {
                 tab1.SelectedTab = tabLanguage;
-            }
-            else if (lbl.Name == "lblExtension")
-            {
-                tab1.SelectedTab = tabExtension;
+                lnkRefresh_LinkClicked(null, null);
             }
         }
 
 
         #region TAB GENERAL
+
+        /// <summary>
+        /// Get and load value of General tab
+        /// </summary>
+        private void LoadTabGeneralConfig()
+        {
+            //Get value of chkLockWorkspace
+            chkLockWorkspace.Checked = bool.Parse(Setting.GetConfig("LockToEdge", "true"));
+
+            //Get value of chkFindChildFolder
+            chkFindChildFolder.Checked = bool.Parse(Setting.GetConfig("Recursive", "false"));
+
+            //Get value of cmbAutoUpdate
+            string s = Setting.GetConfig("AutoUpdate", "true");
+            if (s != "0")
+            {
+                chkAutoUpdate.Checked = true;
+            }
+            else
+            {
+                chkAutoUpdate.Checked = false;
+            }
+
+            //Get value of chkWelcomePicture
+            chkWelcomePicture.Checked = bool.Parse(Setting.GetConfig("Welcome", "true"));
+
+            //Get value of chkHideToolBar
+            chkHideToolBar.Checked = bool.Parse(Setting.GetConfig("IsHideToolbar", "false"));
+
+            //Get value of cmbZoomOptimization
+            s = Setting.GetConfig("ZoomOptimize", "0");
+            int i = 0;
+            if (int.TryParse(s, out i))
+            {
+                if (-1 < i && i < cmbZoomOptimization.Items.Count)
+                {}
+                else
+                {
+                    i = 0;
+                }
+            }
+            cmbZoomOptimization.SelectedIndex = i;
+
+            //Get value of barInterval
+            i = int.Parse(Setting.GetConfig("Interval", "5"));
+            if (0 < i && i < 61)
+            {
+                barInterval.Value = i;
+            }
+            else
+            {
+                barInterval.Value = 5;
+            }
+
+            lblSlideshowInterval.Text = string.Format("Slide show interval: {0}", 
+                                        barInterval.Value.ToString());
+
+            //Get value of numMaxThumbSize
+            s = Setting.GetConfig("MaxThumbnailFileSize", "1");
+            i = 1;
+            if (int.TryParse(s, out i))
+            {}
+            numMaxThumbSize.Value = i;
+
+            //Get value of cmbImageOrder
+            s = Setting.GetConfig("ImageLoadingOrder", "0");
+            i = 0;
+            if (int.TryParse(s, out i))
+            {
+                if (-1 < i && i < cmbImageOrder.Items.Count)
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+            cmbImageOrder.SelectedIndex = i;
+
+            //Get background color
+            picBackgroundColor.BackColor = Setting.BackgroundColor;
+        }
+
         private void chkLockWorkspace_CheckedChanged(object sender, EventArgs e)
         {
             Setting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
@@ -244,84 +332,19 @@ namespace ImageGlass
             Setting.LoadImageOrderConfig();
         }
 
-        /// <summary>
-        /// Get and load value of General tab
-        /// </summary>
-        private void LoadTabGeneralConfig()
+        private void picBackgroundColor_Click(object sender, EventArgs e)
         {
-            //Get value of chkLockWorkspace
-            chkLockWorkspace.Checked = bool.Parse(Setting.GetConfig("LockToEdge", "true"));
+            ColorDialog c = new ColorDialog();
+            c.AllowFullOpen = true;
 
-            //Get value of chkFindChildFolder
-            chkFindChildFolder.Checked = bool.Parse(Setting.GetConfig("Recursive", "false"));
-
-            //Get value of cmbAutoUpdate
-            string s = Setting.GetConfig("AutoUpdate", "true");
-            if (s != "0")
+            if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                chkAutoUpdate.Checked = true;
+                picBackgroundColor.BackColor = c.Color;
+                Setting.BackgroundColor = c.Color;
+
+                //Luu background color
+                Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
             }
-            else
-            {
-                chkAutoUpdate.Checked = false;
-            }
-
-            //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = bool.Parse(Setting.GetConfig("Welcome", "true"));
-
-            //Get value of chkHideToolBar
-            chkHideToolBar.Checked = bool.Parse(Setting.GetConfig("IsHideToolbar", "false"));
-
-            //Get value of cmbZoomOptimization
-            s = Setting.GetConfig("ZoomOptimize", "0");
-            int i = 0;
-            if (int.TryParse(s, out i))
-            {
-                if (-1 < i && i < cmbZoomOptimization.Items.Count)
-                {}
-                else
-                {
-                    i = 0;
-                }
-            }
-            cmbZoomOptimization.SelectedIndex = i;
-
-            //Get value of barInterval
-            i = int.Parse(Setting.GetConfig("Interval", "5"));
-            if (0 < i && i < 61)
-            {
-                barInterval.Value = i;
-            }
-            else
-            {
-                barInterval.Value = 5;
-            }
-
-            lblSlideshowInterval.Text = "Slide show interval: " + barInterval.Value.ToString();
-
-            //Get value of numMaxThumbSize
-            s = Setting.GetConfig("MaxThumbnailFileSize", "1");
-            i = 1;
-            if (int.TryParse(s, out i))
-            {}
-            numMaxThumbSize.Value = i;
-
-            //Get value of cmbImageOrder
-            s = Setting.GetConfig("ImageLoadingOrder", "0");
-            i = 0;
-            if (int.TryParse(s, out i))
-            {
-                if (-1 < i && i < cmbImageOrder.Items.Count)
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-            cmbImageOrder.SelectedIndex = i;
-
-            //Get background color
-            picBackgroundColor.BackColor = Setting.BackgroundColor;
         }
         #endregion
 
@@ -389,14 +412,7 @@ namespace ImageGlass
         #endregion
 
 
-
-
-
-        private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Setting.IsForcedActive = true;
-        }
-
+        #region TAB LANGUAGE
         private void lnkGetMoreLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
@@ -408,30 +424,61 @@ namespace ImageGlass
             catch { }
         }
 
-        private void picBackgroundColor_Click(object sender, EventArgs e)
+        private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ColorDialog c = new ColorDialog();
-            c.AllowFullOpen = true;
-
-            if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                picBackgroundColor.BackColor = c.Color;
-                Setting.BackgroundColor = c.Color;
-
-                //Luu background color
-                Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
-            }
+            Process p = new Process();
+            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.Arguments = "ignewlang";
+            p.Start();
         }
 
+        private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.Arguments = "igeditlang";
+            p.Start();
+        }
+
+        private void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            cmbLanguage.Items.Clear();
+            cmbLanguage.Items.Add("English");
+            dsLanguages = new List<Library.Language>();
+            dsLanguages.Add(new Library.Language());
+
+            foreach (string f in Directory.GetFiles(Setting.StartUpDir + "Languages\\"))
+            {
+                if (Path.GetExtension(f).ToLower() == ".iglang")
+                {
+                    Library.Language l = new Library.Language(f);
+                    dsLanguages.Add(l);
+
+                    int iLang = cmbLanguage.Items.Add(l.LangName);
+                    string curLang = Setting.LanguageFile;
+
+                    //Nếu là ngôn ngữ đang dùng
+                    if (f.CompareTo(curLang) == 0)
+                    {
+                        cmbLanguage.SelectedIndex = iLang;
+                    }
+                }
+            }
+
+            if (cmbLanguage.SelectedIndex == -1)
+            {
+                cmbLanguage.SelectedIndex = 0;
+            }
+        }
         
+        private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Setting.LoadLanguagePack(dsLanguages[cmbLanguage.SelectedIndex]);
+        }
+
+        #endregion
 
         
-
-        
-
-        
-
-
 
 
 

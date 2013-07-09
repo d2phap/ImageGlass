@@ -35,7 +35,7 @@
             this.lblReferences = new System.Windows.Forms.Label();
             this.panInfo = new System.Windows.Forms.Panel();
             this.lnkCheckUpdate = new System.Windows.Forms.LinkLabel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblUpdate = new System.Windows.Forms.Label();
             this.lnkFacebook = new System.Windows.Forms.LinkLabel();
             this.lnkProjectPage = new System.Windows.Forms.LinkLabel();
             this.lnkIGHomepage = new System.Windows.Forms.LinkLabel();
@@ -43,15 +43,17 @@
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.lnkEmail = new System.Windows.Forms.LinkLabel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblInfoContact = new System.Windows.Forms.Label();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.panComponent = new System.Windows.Forms.Panel();
             this.fileList1 = new ImageGlass.FileList.FileList();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblSlogant = new System.Windows.Forms.Label();
             this.panReferences = new System.Windows.Forms.Panel();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -134,7 +136,7 @@
             this.panInfo.AutoScroll = true;
             this.panInfo.BackColor = System.Drawing.Color.White;
             this.panInfo.Controls.Add(this.lnkCheckUpdate);
-            this.panInfo.Controls.Add(this.label3);
+            this.panInfo.Controls.Add(this.lblUpdate);
             this.panInfo.Controls.Add(this.lnkFacebook);
             this.panInfo.Controls.Add(this.lnkProjectPage);
             this.panInfo.Controls.Add(this.lnkIGHomepage);
@@ -142,7 +144,7 @@
             this.panInfo.Controls.Add(this.linkLabel4);
             this.panInfo.Controls.Add(this.linkLabel2);
             this.panInfo.Controls.Add(this.lnkEmail);
-            this.panInfo.Controls.Add(this.label1);
+            this.panInfo.Controls.Add(this.lblInfoContact);
             this.panInfo.Controls.Add(this.lblCopyright);
             this.panInfo.Controls.Add(this.lblVersion);
             this.panInfo.Location = new System.Drawing.Point(12, 138);
@@ -167,15 +169,15 @@
             this.lnkCheckUpdate.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkCheckUpdate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCheckUpdate_LinkClicked);
             // 
-            // label3
+            // lblUpdate
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
-            this.label3.Location = new System.Drawing.Point(19, 310);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 19);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Software updates:";
+            this.lblUpdate.AutoSize = true;
+            this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
+            this.lblUpdate.Location = new System.Drawing.Point(19, 310);
+            this.lblUpdate.Name = "lblUpdate";
+            this.lblUpdate.Size = new System.Drawing.Size(118, 19);
+            this.lblUpdate.TabIndex = 13;
+            this.lblUpdate.Text = "Software updates:";
             // 
             // lnkFacebook
             // 
@@ -289,15 +291,15 @@
             this.lnkEmail.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEmail_LinkClicked);
             // 
-            // label1
+            // lblInfoContact
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
-            this.label1.Location = new System.Drawing.Point(19, 108);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 19);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Contact:";
+            this.lblInfoContact.AutoSize = true;
+            this.lblInfoContact.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
+            this.lblInfoContact.Location = new System.Drawing.Point(19, 108);
+            this.lblInfoContact.Name = "lblInfoContact";
+            this.lblInfoContact.Size = new System.Drawing.Size(60, 19);
+            this.lblInfoContact.TabIndex = 2;
+            this.lblInfoContact.Text = "Contact:";
             // 
             // lblCopyright
             // 
@@ -326,7 +328,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panComponent.AutoScroll = true;
             this.panComponent.Controls.Add(this.fileList1);
-            this.panComponent.Location = new System.Drawing.Point(688, 22);
+            this.panComponent.Location = new System.Drawing.Point(554, 36);
             this.panComponent.MinimumSize = new System.Drawing.Size(688, 385);
             this.panComponent.Name = "panComponent";
             this.panComponent.Size = new System.Drawing.Size(688, 385);
@@ -358,17 +360,17 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "ImageGlass";
             // 
-            // label5
+            // lblSlogant
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Italic);
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
-            this.label5.Location = new System.Drawing.Point(82, 49);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(232, 20);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Free and open source image viewer";
+            this.lblSlogant.AutoSize = true;
+            this.lblSlogant.BackColor = System.Drawing.Color.Transparent;
+            this.lblSlogant.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Italic);
+            this.lblSlogant.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.lblSlogant.Location = new System.Drawing.Point(82, 49);
+            this.lblSlogant.Name = "lblSlogant";
+            this.lblSlogant.Size = new System.Drawing.Size(232, 20);
+            this.lblSlogant.TabIndex = 8;
+            this.lblSlogant.Text = "Free and open source image viewer";
             // 
             // panReferences
             // 
@@ -378,7 +380,7 @@
             this.panReferences.AutoScroll = true;
             this.panReferences.BackColor = System.Drawing.Color.White;
             this.panReferences.Controls.Add(this.txtReferences);
-            this.panReferences.Location = new System.Drawing.Point(484, 73);
+            this.panReferences.Location = new System.Drawing.Point(466, 114);
             this.panReferences.Name = "panReferences";
             this.panReferences.Size = new System.Drawing.Size(594, 385);
             this.panReferences.TabIndex = 16;
@@ -400,6 +402,28 @@
             this.txtReferences.TabIndex = 2;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Italic);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.label5.Location = new System.Drawing.Point(82, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(232, 20);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Free and open source image viewer";
+            // 
+            // lblSoftwareUpdate
+            // 
+            this.lblSoftwareUpdate.AutoSize = true;
+            this.lblSoftwareUpdate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
+            this.lblSoftwareUpdate.Location = new System.Drawing.Point(19, 310);
+            this.lblSoftwareUpdate.Name = "lblSoftwareUpdate";
+            this.lblSoftwareUpdate.Size = new System.Drawing.Size(118, 19);
+            this.lblSoftwareUpdate.TabIndex = 13;
+            this.lblSoftwareUpdate.Text = "Software updates:";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -408,7 +432,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(618, 538);
             this.Controls.Add(this.panReferences);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblSlogant);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panComponent);
             this.Controls.Add(this.pictureBox1);
@@ -443,19 +467,21 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.LinkLabel lnkEmail;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblInfoContact;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel lnkIGHomepage;
         private System.Windows.Forms.LinkLabel lnkProjectPage;
         private System.Windows.Forms.LinkLabel lnkFacebook;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblUpdate;
         private System.Windows.Forms.LinkLabel lnkCheckUpdate;
         private System.Windows.Forms.Panel panComponent;
         private FileList.FileList fileList1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblSlogant;
         private System.Windows.Forms.Panel panReferences;
         private System.Windows.Forms.RichTextBox txtReferences;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblSoftwareUpdate;
     }
 }

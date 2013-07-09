@@ -170,5 +170,27 @@ namespace igcmd
             Application.Run(new frmFollow());
         }
 
+        /// <summary>
+        /// Tạo mới gói ngôn ngữ
+        /// </summary>
+        public static void NewLanguage()
+        {
+
+        }
+
+        /// <summary>
+        /// Chỉnh sửa gói ngôn ngữ
+        /// </summary>
+        /// <param name="filename">Đường dẫn của tập tin</param>
+        public static void EditLanguage(string filename)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "notepad.exe";
+            p.StartInfo.Arguments = "\"" + filename + "\"";
+            p.Start();
+        }
+                
+
+
     }
 }

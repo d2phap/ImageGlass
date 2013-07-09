@@ -78,7 +78,7 @@ namespace ImageGlass
         private static Color _backgroundColor = Color.White;
         private static bool _isHideToolBar = false;
 
-        
+        private static string _languageFile = "English";
 
 
         #region "Properties"
@@ -355,6 +355,23 @@ namespace ImageGlass
         }
 
         /// <summary>
+        /// Get, set language
+        /// </summary>
+        public static string LanguageFile
+        {
+            get
+            {
+                Setting._languageFile = Setting.GetConfig("Language", "English");
+                return Setting._languageFile;
+            }
+            set
+            {
+                Setting._languageFile = value;
+                Setting.SetConfig("Language", Setting._languageFile);
+            }
+        }
+
+        /// <summary>
         /// Get start up directory of ImageGlass
         /// </summary>
         public static string StartUpDir
@@ -504,6 +521,14 @@ namespace ImageGlass
 
         }
 
+        /// <summary>
+        /// Áp dụng gói ngôn ngữ
+        /// </summary>
+        /// <param name="l">Gói ngôn ngữ</param>
+        public static void LoadLanguagePack(ImageGlass.Library.Language l)
+        {
+            
+        }
 
         #endregion
 

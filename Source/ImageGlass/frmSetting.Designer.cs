@@ -35,9 +35,9 @@
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.chkHideToolBar = new System.Windows.Forms.CheckBox();
             this.picBackgroundColor = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblBackGroundColor = new System.Windows.Forms.Label();
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
             this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
             this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
@@ -51,21 +51,19 @@
             this.tabContextMenu = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblUpdateContextMenu = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblExtensions = new System.Windows.Forms.Label();
             this.txtExtensions = new System.Windows.Forms.TextBox();
             this.lblRemoveAllContextMenu = new System.Windows.Forms.Label();
             this.lblAddDefaultContextMenu = new System.Windows.Forms.Label();
             this.lbl_ContextMenu_Description = new System.Windows.Forms.Label();
             this.tabLanguage = new System.Windows.Forms.TabPage();
+            this.lnkRefresh = new System.Windows.Forms.LinkLabel();
+            this.lnkEdit = new System.Windows.Forms.LinkLabel();
+            this.lnkCreateNew = new System.Windows.Forms.LinkLabel();
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
-            this.lblLanguageEdit = new System.Windows.Forms.Label();
-            this.lblLanguageCreateNew = new System.Windows.Forms.Label();
-            this.lblLanguageRefresh = new System.Windows.Forms.Label();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
-            this.lblLanguage_Text = new System.Windows.Forms.Label();
-            this.tabExtension = new System.Windows.Forms.TabPage();
+            this.lblLanguageText = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lblExtension = new System.Windows.Forms.Label();
             this.lblLanguage = new System.Windows.Forms.Label();
             this.lblContextMenu = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
@@ -99,7 +97,6 @@
             this.tab1.Controls.Add(this.tabGeneral);
             this.tab1.Controls.Add(this.tabContextMenu);
             this.tab1.Controls.Add(this.tabLanguage);
-            this.tab1.Controls.Add(this.tabExtension);
             this.tab1.Location = new System.Drawing.Point(-10, 53);
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
@@ -111,9 +108,9 @@
             // 
             this.tabGeneral.Controls.Add(this.chkHideToolBar);
             this.tabGeneral.Controls.Add(this.picBackgroundColor);
-            this.tabGeneral.Controls.Add(this.label2);
+            this.tabGeneral.Controls.Add(this.lblBackGroundColor);
             this.tabGeneral.Controls.Add(this.chkWelcomePicture);
-            this.tabGeneral.Controls.Add(this.label1);
+            this.tabGeneral.Controls.Add(this.lblImageLoadingOrder);
             this.tabGeneral.Controls.Add(this.cmbImageOrder);
             this.tabGeneral.Controls.Add(this.numMaxThumbSize);
             this.tabGeneral.Controls.Add(this.lblGeneral_MaxFileSize);
@@ -156,14 +153,14 @@
             this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
             this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
             // 
-            // label2
+            // lblBackGroundColor
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 377);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 15);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Background color:";
+            this.lblBackGroundColor.AutoSize = true;
+            this.lblBackGroundColor.Location = new System.Drawing.Point(20, 377);
+            this.lblBackGroundColor.Name = "lblBackGroundColor";
+            this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
+            this.lblBackGroundColor.TabIndex = 11;
+            this.lblBackGroundColor.Text = "Background color:";
             // 
             // chkWelcomePicture
             // 
@@ -176,14 +173,14 @@
             this.chkWelcomePicture.UseVisualStyleBackColor = true;
             this.chkWelcomePicture.CheckedChanged += new System.EventHandler(this.chkWelcomePicture_CheckedChanged);
             // 
-            // label1
+            // lblImageLoadingOrder
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 318);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Image loading order:";
+            this.lblImageLoadingOrder.AutoSize = true;
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(20, 318);
+            this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
+            this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
+            this.lblImageLoadingOrder.TabIndex = 10;
+            this.lblImageLoadingOrder.Text = "Image loading order:";
             // 
             // cmbImageOrder
             // 
@@ -319,7 +316,7 @@
             // 
             this.tabContextMenu.Controls.Add(this.pictureBox1);
             this.tabContextMenu.Controls.Add(this.lblUpdateContextMenu);
-            this.tabContextMenu.Controls.Add(this.label3);
+            this.tabContextMenu.Controls.Add(this.lblExtensions);
             this.tabContextMenu.Controls.Add(this.txtExtensions);
             this.tabContextMenu.Controls.Add(this.lblRemoveAllContextMenu);
             this.tabContextMenu.Controls.Add(this.lblAddDefaultContextMenu);
@@ -362,14 +359,14 @@
             this.lblUpdateContextMenu.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
             this.lblUpdateContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
             // 
-            // label3
+            // lblExtensions
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 300);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 15);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Extensions:";
+            this.lblExtensions.AutoSize = true;
+            this.lblExtensions.Location = new System.Drawing.Point(19, 300);
+            this.lblExtensions.Name = "lblExtensions";
+            this.lblExtensions.Size = new System.Drawing.Size(65, 15);
+            this.lblExtensions.TabIndex = 19;
+            this.lblExtensions.Text = "Extensions:";
             // 
             // txtExtensions
             // 
@@ -430,12 +427,12 @@
             // 
             // tabLanguage
             // 
+            this.tabLanguage.Controls.Add(this.lnkRefresh);
+            this.tabLanguage.Controls.Add(this.lnkEdit);
+            this.tabLanguage.Controls.Add(this.lnkCreateNew);
             this.tabLanguage.Controls.Add(this.lnkGetMoreLanguage);
-            this.tabLanguage.Controls.Add(this.lblLanguageEdit);
-            this.tabLanguage.Controls.Add(this.lblLanguageCreateNew);
-            this.tabLanguage.Controls.Add(this.lblLanguageRefresh);
             this.tabLanguage.Controls.Add(this.cmbLanguage);
-            this.tabLanguage.Controls.Add(this.lblLanguage_Text);
+            this.tabLanguage.Controls.Add(this.lblLanguageText);
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
@@ -444,6 +441,45 @@
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
             // 
+            // lnkRefresh
+            // 
+            this.lnkRefresh.AutoSize = true;
+            this.lnkRefresh.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkRefresh.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkRefresh.Location = new System.Drawing.Point(295, 53);
+            this.lnkRefresh.Name = "lnkRefresh";
+            this.lnkRefresh.Size = new System.Drawing.Size(57, 15);
+            this.lnkRefresh.TabIndex = 23;
+            this.lnkRefresh.TabStop = true;
+            this.lnkRefresh.Text = "> Refresh";
+            this.lnkRefresh.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkRefresh_LinkClicked);
+            // 
+            // lnkEdit
+            // 
+            this.lnkEdit.AutoSize = true;
+            this.lnkEdit.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkEdit.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkEdit.Location = new System.Drawing.Point(20, 248);
+            this.lnkEdit.Name = "lnkEdit";
+            this.lnkEdit.Size = new System.Drawing.Size(164, 15);
+            this.lnkEdit.TabIndex = 22;
+            this.lnkEdit.TabStop = true;
+            this.lnkEdit.Text = "> Edit selected language pack";
+            this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
+            // 
+            // lnkCreateNew
+            // 
+            this.lnkCreateNew.AutoSize = true;
+            this.lnkCreateNew.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkCreateNew.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkCreateNew.Location = new System.Drawing.Point(20, 217);
+            this.lnkCreateNew.Name = "lnkCreateNew";
+            this.lnkCreateNew.Size = new System.Drawing.Size(157, 15);
+            this.lnkCreateNew.TabIndex = 21;
+            this.lnkCreateNew.TabStop = true;
+            this.lnkCreateNew.Text = "> Create new language pack";
+            this.lnkCreateNew.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCreateNew_LinkClicked);
+            // 
             // lnkGetMoreLanguage
             // 
             this.lnkGetMoreLanguage.AutoSize = true;
@@ -451,71 +487,11 @@
             this.lnkGetMoreLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkGetMoreLanguage.Location = new System.Drawing.Point(19, 279);
             this.lnkGetMoreLanguage.Name = "lnkGetMoreLanguage";
-            this.lnkGetMoreLanguage.Size = new System.Drawing.Size(124, 15);
+            this.lnkGetMoreLanguage.Size = new System.Drawing.Size(152, 15);
             this.lnkGetMoreLanguage.TabIndex = 20;
             this.lnkGetMoreLanguage.TabStop = true;
-            this.lnkGetMoreLanguage.Text = "> Get more languages";
+            this.lnkGetMoreLanguage.Text = "> Get more language packs";
             this.lnkGetMoreLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreLanguage_LinkClicked);
-            // 
-            // lblLanguageEdit
-            // 
-            this.lblLanguageEdit.AutoSize = true;
-            this.lblLanguageEdit.BackColor = System.Drawing.Color.Silver;
-            this.lblLanguageEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblLanguageEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblLanguageEdit.ForeColor = System.Drawing.Color.White;
-            this.lblLanguageEdit.Location = new System.Drawing.Point(278, 124);
-            this.lblLanguageEdit.Name = "lblLanguageEdit";
-            this.lblLanguageEdit.Padding = new System.Windows.Forms.Padding(5);
-            this.lblLanguageEdit.Size = new System.Drawing.Size(163, 25);
-            this.lblLanguageEdit.TabIndex = 19;
-            this.lblLanguageEdit.Tag = "1";
-            this.lblLanguageEdit.Text = "Edit selected language pack";
-            this.lblLanguageEdit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblLanguageEdit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
-            this.lblLanguageEdit.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
-            this.lblLanguageEdit.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
-            this.lblLanguageEdit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
-            // 
-            // lblLanguageCreateNew
-            // 
-            this.lblLanguageCreateNew.AutoSize = true;
-            this.lblLanguageCreateNew.BackColor = System.Drawing.Color.Silver;
-            this.lblLanguageCreateNew.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblLanguageCreateNew.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblLanguageCreateNew.ForeColor = System.Drawing.Color.White;
-            this.lblLanguageCreateNew.Location = new System.Drawing.Point(278, 87);
-            this.lblLanguageCreateNew.Name = "lblLanguageCreateNew";
-            this.lblLanguageCreateNew.Padding = new System.Windows.Forms.Padding(5);
-            this.lblLanguageCreateNew.Size = new System.Drawing.Size(156, 25);
-            this.lblLanguageCreateNew.TabIndex = 18;
-            this.lblLanguageCreateNew.Tag = "1";
-            this.lblLanguageCreateNew.Text = "Create new language pack";
-            this.lblLanguageCreateNew.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblLanguageCreateNew.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
-            this.lblLanguageCreateNew.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
-            this.lblLanguageCreateNew.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
-            this.lblLanguageCreateNew.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
-            // 
-            // lblLanguageRefresh
-            // 
-            this.lblLanguageRefresh.AutoSize = true;
-            this.lblLanguageRefresh.BackColor = System.Drawing.Color.Silver;
-            this.lblLanguageRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblLanguageRefresh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblLanguageRefresh.ForeColor = System.Drawing.Color.White;
-            this.lblLanguageRefresh.Location = new System.Drawing.Point(278, 50);
-            this.lblLanguageRefresh.Name = "lblLanguageRefresh";
-            this.lblLanguageRefresh.Padding = new System.Windows.Forms.Padding(5);
-            this.lblLanguageRefresh.Size = new System.Drawing.Size(56, 25);
-            this.lblLanguageRefresh.TabIndex = 17;
-            this.lblLanguageRefresh.Tag = "1";
-            this.lblLanguageRefresh.Text = "Refresh";
-            this.lblLanguageRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblLanguageRefresh.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseDown);
-            this.lblLanguageRefresh.MouseEnter += new System.EventHandler(this.lblButton_MouseEnter);
-            this.lblLanguageRefresh.MouseLeave += new System.EventHandler(this.lblButton_MouseLeave);
-            this.lblLanguageRefresh.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblButton_MouseUp);
             // 
             // cmbLanguage
             // 
@@ -526,33 +502,23 @@
             "Vietnamese"});
             this.cmbLanguage.Location = new System.Drawing.Point(23, 50);
             this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(249, 23);
+            this.cmbLanguage.Size = new System.Drawing.Size(253, 23);
             this.cmbLanguage.TabIndex = 2;
+            this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
-            // lblLanguage_Text
+            // lblLanguageText
             // 
-            this.lblLanguage_Text.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblLanguageText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLanguage_Text.AutoSize = true;
-            this.lblLanguage_Text.Location = new System.Drawing.Point(20, 30);
-            this.lblLanguage_Text.Name = "lblLanguage_Text";
-            this.lblLanguage_Text.Size = new System.Drawing.Size(114, 15);
-            this.lblLanguage_Text.TabIndex = 1;
-            this.lblLanguage_Text.Text = "Supported language";
-            // 
-            // tabExtension
-            // 
-            this.tabExtension.Location = new System.Drawing.Point(4, 4);
-            this.tabExtension.Name = "tabExtension";
-            this.tabExtension.Padding = new System.Windows.Forms.Padding(3);
-            this.tabExtension.Size = new System.Drawing.Size(605, 448);
-            this.tabExtension.TabIndex = 3;
-            this.tabExtension.Text = "extension";
-            this.tabExtension.UseVisualStyleBackColor = true;
+            this.lblLanguageText.AutoSize = true;
+            this.lblLanguageText.Location = new System.Drawing.Point(20, 30);
+            this.lblLanguageText.Name = "lblLanguageText";
+            this.lblLanguageText.Size = new System.Drawing.Size(111, 15);
+            this.lblLanguageText.TabIndex = 1;
+            this.lblLanguageText.Text = "Installed languages:";
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.lblExtension);
             this.panel2.Controls.Add(this.lblLanguage);
             this.panel2.Controls.Add(this.lblContextMenu);
             this.panel2.Controls.Add(this.lblGeneral);
@@ -561,26 +527,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(595, 62);
             this.panel2.TabIndex = 16;
-            // 
-            // lblExtension
-            // 
-            this.lblExtension.BackColor = System.Drawing.Color.Silver;
-            this.lblExtension.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblExtension.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblExtension.ForeColor = System.Drawing.Color.White;
-            this.lblExtension.Location = new System.Drawing.Point(447, 9);
-            this.lblExtension.Name = "lblExtension";
-            this.lblExtension.Size = new System.Drawing.Size(136, 40);
-            this.lblExtension.TabIndex = 18;
-            this.lblExtension.Tag = "0";
-            this.lblExtension.Text = "Extension";
-            this.lblExtension.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblExtension.Visible = false;
-            this.lblExtension.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblExtension.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblExtension.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblExtension.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblExtension.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblLanguage
             // 
@@ -595,7 +541,6 @@
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblLanguage.Visible = false;
             this.lblLanguage.Click += new System.EventHandler(this.lblMenu_Click);
             this.lblLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
             this.lblLanguage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
@@ -706,7 +651,6 @@
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.TabPage tabContextMenu;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label lblExtension;
         private System.Windows.Forms.Label lblLanguage;
         private System.Windows.Forms.Label lblContextMenu;
         private System.Windows.Forms.Label lblGeneral;
@@ -723,24 +667,23 @@
         private System.Windows.Forms.Label lblAddDefaultContextMenu;
         private System.Windows.Forms.TabPage tabLanguage;
         private System.Windows.Forms.ComboBox cmbLanguage;
-        private System.Windows.Forms.Label lblLanguage_Text;
-        private System.Windows.Forms.Label lblLanguageRefresh;
-        private System.Windows.Forms.Label lblLanguageCreateNew;
-        private System.Windows.Forms.Label lblLanguageEdit;
-        private System.Windows.Forms.TabPage tabExtension;
+        private System.Windows.Forms.Label lblLanguageText;
         private System.Windows.Forms.NumericUpDown numMaxThumbSize;
         private System.Windows.Forms.Label lblGeneral_MaxFileSize;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
         private System.Windows.Forms.CheckBox chkWelcomePicture;
         private System.Windows.Forms.PictureBox picBackgroundColor;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblBackGroundColor;
         private System.Windows.Forms.ToolTip tip1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblExtensions;
         private System.Windows.Forms.TextBox txtExtensions;
         private System.Windows.Forms.Label lblUpdateContextMenu;
         private System.Windows.Forms.CheckBox chkHideToolBar;
+        private System.Windows.Forms.LinkLabel lnkEdit;
+        private System.Windows.Forms.LinkLabel lnkCreateNew;
+        private System.Windows.Forms.LinkLabel lnkRefresh;
 
     }
 }

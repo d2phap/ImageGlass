@@ -75,6 +75,15 @@ namespace igcmd
             {
                 Core.Follow();
             }
+            else if (topcmd == "ignewlang")//tạo mới 1 gói ngôn ngữ
+            {
+                Core.NewLanguage();
+            }
+            else if (topcmd == "igeditlang")//chỉnh sửa gói ngôn ngữ
+            {
+                //cmd: igcmd.exe igeditlang "srcFile"
+                Core.EditLanguage(args[1]);
+            }
         }
 
 

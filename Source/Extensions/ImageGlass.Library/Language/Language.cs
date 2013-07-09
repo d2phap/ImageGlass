@@ -13,6 +13,7 @@ namespace ImageGlass.Library
         private string _langName;
         private string _author;
         private string _description;
+        private string _fileName;
         private Dictionary<string, string> _Items;
 
         #region Properties
@@ -49,6 +50,15 @@ namespace ImageGlass.Library
         }
 
         /// <summary>
+        /// Get, set language file path
+        /// </summary>
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+
+        /// <summary>
         /// Get, set list of language string
         /// </summary>
         public Dictionary<string, string> Items
@@ -64,10 +74,11 @@ namespace ImageGlass.Library
         /// </summary>
         public Language()
         {
-            _langCode = "vi";
-            _langName = "Tiếng Việt";
+            _langCode = "en";
+            _langName = "English";
             _author = "Dương Diệu Pháp";
-            _description = "Vietnamese";
+            _description = "English";
+            _fileName = "";
 
             _Items = new Dictionary<string, string>();
         }
@@ -76,21 +87,21 @@ namespace ImageGlass.Library
         /// <summary>
         /// Set values of Language
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="fileName">*.igLang path</param>
         public Language(string fileName)
         {
-            ReadLanguageFile(fileName);
+            _fileName = fileName;
+            ReadLanguageFile();
         }
 
 
         /// <summary>
         /// Read language strings from file
         /// </summary>
-        /// <param name="fileName">*.igLang path</param>
-        public void ReadLanguageFile(string fileName)
+        public void ReadLanguageFile()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(fileName);
+            doc.Load(_fileName);
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
             XmlElement nType = (XmlElement)root.SelectNodes("Language")[0]; //<Language>
             XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>

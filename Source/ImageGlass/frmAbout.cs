@@ -146,7 +146,7 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblVersion.Text = "Version: " + Application.ProductVersion;
+            lblVersion.Text = String.Format("Version: {0}", Application.ProductVersion);
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
                                 "All rights reserved.";
 
