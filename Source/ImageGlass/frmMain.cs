@@ -98,7 +98,8 @@ namespace ImageGlass
         private void OpenFile()
         {
             OpenFileDialog o = new OpenFileDialog();
-            o.Filter = "All supported files|" + Setting.SupportedExtensions;
+            o.Filter = Setting.LangPack.Items["frmMain._OpenFileDialog"] + "|" + 
+                        Setting.SupportedExtensions;
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {               
@@ -325,7 +326,8 @@ namespace ImageGlass
 
             picMain.Image = null;       
             this.Text = "ImageGlass - " +
-                        (Setting.CurrentIndex + 1) + "/" + Setting.ImageList.length + " file(s) - " +
+                        (Setting.CurrentIndex + 1) + "/" + Setting.ImageList.length + " " + 
+                        Setting.LangPack.Items["frmMain._Text"] + " - " +
                         Setting.ImageList.getPath(Setting.CurrentIndex);
             Application.DoEvents();
             Image im = null;
@@ -721,14 +723,7 @@ namespace ImageGlass
             #region Ctrl + G
             if (e.KeyValue == 71 && e.Control && !e.Shift && !e.Alt)//Ctrl + G
             {
-                try
-                {
-                    int n = Convert.ToInt32(InputBox.Derp("Enter the image index to view it. Press {ENTER}", 
-                                            (Setting.CurrentIndex + 1).ToString())) - 1;
-                    Setting.CurrentIndex = n;
-                    NextPic(0);
-                }
-                catch { }
+                btnGoto_Click(null, null);
                 return;
             }
             #endregion
@@ -994,7 +989,7 @@ namespace ImageGlass
             string ext = newname.Substring(newname.LastIndexOf("."));
             newname = newname.Substring(0, newname.Length - ext.Length);
 
-            string str = InputBox.Derp("Enter new filename", newname);
+            string str = InputBox.Derp(Setting.LangPack.Items["frmMain._RenameDialog"], newname);
             if (str == null)
             {
                 return;
@@ -1010,7 +1005,7 @@ namespace ImageGlass
             picMain.Image = null;
 
             Application.DoEvents();
-            //ImageGlass_Image.RenameFile(Setting.CurrentPath + oldFilename, newname);
+
             ImageInfo.RenameFile(Setting.CurrentPath + oldFilename, Setting.CurrentPath + newname);
             NextPic(0);
         }
@@ -1253,7 +1248,8 @@ namespace ImageGlass
                 if (Setting.IsHideToolBar)
                 {
                     this.Text = "ImageGlass - " +
-                        (Setting.CurrentIndex + 1) + "/" + Setting.ImageList.length + " file(s) - " +
+                        (Setting.CurrentIndex + 1) + "/" + Setting.ImageList.length + " " + 
+                        Setting.LangPack.Items["frmMain._Text"] + " - " +
                         Setting.ImageList.getPath(Setting.CurrentIndex);
                     this.Text += " - " + lblZoomRatio.Text;
                     this.Text += " - " + lblImageSize.Text;
@@ -1710,14 +1706,14 @@ namespace ImageGlass
             {
                 //An
                 spMain.Panel1Collapsed = true;
-                mnuShowToolBar.Text = "Show toolbar";
+                mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
                 Setting.IsHideToolBar = true;
             }
             else//Dang Hien
             {
                 //Hien
                 spMain.Panel1Collapsed = false;
-                mnuShowToolBar.Text = "Hide toolbar";
+                mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
                 Setting.IsHideToolBar = false;
             }
         }
@@ -1788,6 +1784,49 @@ namespace ImageGlass
         private void frmMain_Activated(object sender, EventArgs e)
         {
             sp0.BackColor = Setting.BackgroundColor;
+
+            //Change language
+            btnBack.ToolTipText = Setting.LangPack.Items["frmMain.btnBack"];
+            btnNext.ToolTipText = Setting.LangPack.Items["frmMain.btnNext"];
+            btnRotateLeft.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateLeft"];
+            btnRotateRight.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateRight"];
+            btnZoomIn.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomIn"];
+            btnZoomOut.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomOut"];
+            btnActualSize.ToolTipText = Setting.LangPack.Items["frmMain.btnActualSize"];
+            btnZoomLock.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomLock"];
+            btnScaletoWidth.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoWidth"];
+            btnScaletoHeight.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoHeight"];
+            btnWindowAutosize.ToolTipText = Setting.LangPack.Items["frmMain.btnWindowAutosize"];
+            btnOpen.ToolTipText = Setting.LangPack.Items["frmMain.btnOpen"];
+            btnRefresh.ToolTipText = Setting.LangPack.Items["frmMain.btnRefresh"];
+            btnGoto.ToolTipText = Setting.LangPack.Items["frmMain.btnGoto"];
+            btnThumb.ToolTipText = Setting.LangPack.Items["frmMain.btnThumb"];
+            btnCaro.ToolTipText = Setting.LangPack.Items["frmMain.btnCaro"];
+            btnFullScreen.ToolTipText = Setting.LangPack.Items["frmMain.btnFullScreen"];
+            btnSlideShow.ToolTipText = Setting.LangPack.Items["frmMain.btnSlideShow"];
+            btnConvert.ToolTipText = Setting.LangPack.Items["frmMain.btnConvert"];
+            btnPrintImage.ToolTipText = Setting.LangPack.Items["frmMain.btnPrintImage"];
+            btnFacebook.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebook"];
+            btnExtension.ToolTipText = Setting.LangPack.Items["frmMain.btnExtension"];
+            btnSetting.ToolTipText = Setting.LangPack.Items["frmMain.btnSetting"];
+            btnHelp.ToolTipText = Setting.LangPack.Items["frmMain.btnHelp"];
+            btnFacebookLike.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebookLike"];
+            btnFollow.ToolTipText = Setting.LangPack.Items["frmMain.btnFollow"];
+            btnReport.ToolTipText = Setting.LangPack.Items["frmMain.btnReport"];
+
+            mnuStartSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStartSlideshow"];
+            mnuStopSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStopSlideshow"];
+            mnuExitSlideshow.Text = Setting.LangPack.Items["frmMain.mnuExitSlideshow"];
+            mnuEditWithPaint.Text = Setting.LangPack.Items["frmMain.mnuEditWithPaint"];
+            mnuExtractFrames.Text = string.Format(Setting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
+            mnuSetWallpaper.Text = Setting.LangPack.Items["frmMain.mnuSetWallpaper"];
+            mnuMoveRecycle.Text = Setting.LangPack.Items["frmMain.mnuMoveRecycle"];
+            mnuDelete.Text = Setting.LangPack.Items["frmMain.mnuDelete"];
+            mnuRename.Text = Setting.LangPack.Items["frmMain.mnuRename"];
+            mnuUploadFacebook.Text = Setting.LangPack.Items["frmMain.mnuUploadFacebook"];
+            mnuCopyImagePath.Text = Setting.LangPack.Items["frmMain.mnuCopyImagePath"];
+            mnuOpenLocation.Text = Setting.LangPack.Items["frmMain.mnuOpenLocation"];
+            mnuImageProperties.Text = Setting.LangPack.Items["frmMain.mnuImageProperties"];
         }
 
         private void m_Controller_OnStart(object sender, ThumbnailControllerEventArgs e)
@@ -2002,7 +2041,7 @@ namespace ImageGlass
         private void btnGoto_Click(object sender, EventArgs e)
         {
             int n = Setting.CurrentIndex;
-            string s = InputBox.Derp("Enter the image index to view it. Press {ENTER}", "0");
+            string s = InputBox.Derp(Setting.LangPack.Items["frmMain._GotoDialogText"], "0");
 
             if (int.TryParse(s, out n))
             {
@@ -2114,7 +2153,7 @@ namespace ImageGlass
 
                 //An
                 spMain.Panel1Collapsed = true;
-                mnuShowToolBar.Text = "Show toolbar";
+                mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
             }
             //exit full screen
             else
@@ -2129,7 +2168,7 @@ namespace ImageGlass
                 if (!Setting.IsHideToolBar)
                 {
                     spMain.Panel1Collapsed = false;
-                    mnuShowToolBar.Text = "Hide toolbar";
+                    mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
                 }
             }
         }
@@ -2200,14 +2239,14 @@ namespace ImageGlass
             {
                 //Hien
                 spMain.Panel1Collapsed = false;
-                mnuShowToolBar.Text = "Hide toolbar";
+                mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
                 Setting.IsHideToolBar = false;
             }
             else//Dang Hien
             {
                 //An
                 spMain.Panel1Collapsed = true;
-                mnuShowToolBar.Text = "Show toolbar";
+                mnuShowToolBar.Text = Setting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
                 Setting.IsHideToolBar = true;
             }
         }
@@ -2242,9 +2281,11 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show(string.Format("Delete file '{0}' ?", 
-                                Setting.ImageList.getPath(Setting.CurrentIndex)),
-                                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = MessageBox.Show(
+                                string.Format(Setting.LangPack.Items["frmMain._DeleteDialogText"], 
+                                            Setting.ImageList.getPath(Setting.CurrentIndex)),
+                                Setting.LangPack.Items["frmMain._DeleteDialogTitle"], 
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (msg == DialogResult.Yes)
             {
                 string f = Setting.ImageList.getPath(Setting.CurrentIndex);
@@ -2274,9 +2315,11 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show(string.Format("Send file '{0}' to recycle bin ?", 
-                                Setting.ImageList.getPath(Setting.CurrentIndex)),
-                                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = MessageBox.Show(
+                                string.Format(Setting.LangPack.Items["frmMain._RecycleBinDialogText"], 
+                                                Setting.ImageList.getPath(Setting.CurrentIndex)),
+                                Setting.LangPack.Items["frmMain._RecycleBinDialogTitle"], 
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (msg == DialogResult.Yes)
             {
                 string f = Setting.ImageList.getPath(Setting.CurrentIndex);
@@ -2313,7 +2356,7 @@ namespace ImageGlass
             if (!Setting.IsImageError)
             {
                 FolderBrowserDialog f = new FolderBrowserDialog();
-                f.Description = "Select output folder";
+                f.Description = Setting.LangPack.Items["frmMain._ExtractFrameText"];
                 f.ShowNewFolderButton = true;
                 DialogResult res = f.ShowDialog();
 
@@ -2577,6 +2620,7 @@ namespace ImageGlass
         }
 
         #endregion
+
 
 
 

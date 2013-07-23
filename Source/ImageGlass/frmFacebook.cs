@@ -37,9 +37,6 @@ namespace ImageGlass
         public frmFacebook()
         {
             InitializeComponent();
-
-            lblStatus.Text = string.Format("click '{0}' to begin", btnUpload.Text);
-            lblPercent.Text = "";
         }
 
         
@@ -76,7 +73,7 @@ namespace ImageGlass
             {
                 txtMessage.Enabled = false;
 
-                btnUpload.Text = "Cancel";
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook._Cancel"];
                 btnUpload.Tag = 1;
                 UploadPhoto();
             }
@@ -88,9 +85,10 @@ namespace ImageGlass
             else //Do cancellation
             {
                 txtMessage.Enabled = true;
-                btnUpload.Text = "Upload";
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook._Upload"];
                 btnUpload.Tag = 0;
-                lblStatus.Text = string.Format("click '{0}' to begin", btnUpload.Text);
+                lblStatus.Text = string.Format(Setting.LangPack.Items["frmFacebook._StatusBegin"], 
+                                                btnUpload.Text);
 
                 if (_fb != null)
                 {
@@ -111,7 +109,14 @@ namespace ImageGlass
                 // which can be known by looking at the dialogs FacebookOAuthResult property.
                 // Depending on the result take appropriate actions.
                 TakeLoggedInAction(fbLoginDlg.FacebookOAuthResult);
-            }            
+            }
+
+            //Load language
+            lblMessage.Text = Setting.LangPack.Items["frmFacebook.lblMessage"];
+            btnClose.Text = Setting.LangPack.Items["frmFacebook.btnClose"];
+            lblStatus.Text = string.Format(Setting.LangPack.Items["frmFacebook._StatusBegin"],
+                                            btnUpload.Text);
+            lblPercent.Text = "";
         }
 
         private void TakeLoggedInAction(Facebook.FacebookOAuthResult facebookOAuthResult)
@@ -147,7 +152,7 @@ namespace ImageGlass
         {
             if (!File.Exists(_filename))
             {
-                lblStatus.Text = "invalid filename";
+                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusInvalid"];
                 return;
             }
 
@@ -159,7 +164,7 @@ namespace ImageGlass
             
             lblPercent.Text = "0 %";
             picStatus.Visible = true;
-            lblStatus.Text = "uploading...";
+            lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusUploading"];
 
             var fb = new FacebookClient(Setting.FacebookAccessToken);
             fb.UploadProgressChanged += fb_UploadProgressChanged;
@@ -188,18 +193,18 @@ namespace ImageGlass
             picStatus.Visible = false;
             
             btnUpload.Tag = 0;
-            btnUpload.Text = "Upload";
+            btnUpload.Text = Setting.LangPack.Items["frmFacebook._Upload"];
 
             if (e.Cancelled)
             {
-                lblStatus.Text = "cancelled";
+                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusCancel"];
             }
             else if (e.Error == null)
             {
                 // upload successful.
-                lblStatus.Text = "successful";
+                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusSuccessful"];
                 btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
-                btnUpload.Text = "View image";
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook._ViewImage"];
             }
             else
             {

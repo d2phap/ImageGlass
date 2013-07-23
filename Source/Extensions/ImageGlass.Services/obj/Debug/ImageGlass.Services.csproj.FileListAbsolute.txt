@@ -16,8 +16,8 @@ f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.S
 f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Services.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Library.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.csprojResolveAssemblyReference.cache
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Library.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Library.pdb

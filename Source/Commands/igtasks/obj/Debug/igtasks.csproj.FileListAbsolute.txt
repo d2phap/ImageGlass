@@ -1,10 +1,9 @@
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\igtasks.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.csprojResolveAssemblyReference.cache
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\adtasks.frmMain.resources
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.Properties.Resources.resources
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.pdb

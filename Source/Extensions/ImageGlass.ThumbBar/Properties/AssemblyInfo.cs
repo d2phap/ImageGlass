@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ImageGlass.ThumbBar")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("www.imageglass.org")]
+[assembly: AssemblyCompany("PhapSoftware")]
 [assembly: AssemblyProduct("ImageGlass.ThumbBar")]
 [assembly: AssemblyCopyright("Copyright © 2013 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]

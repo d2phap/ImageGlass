@@ -128,6 +128,7 @@ namespace ImageGlass
         private void frmSetting_Load(object sender, EventArgs e)
         {
             lblMenu_Click(lblGeneral, EventArgs.Empty);
+            InitLanguagePack();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -143,6 +144,40 @@ namespace ImageGlass
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
             Setting.IsForcedActive = true;
+        }
+
+        /// <summary>
+        /// Load language pack
+        /// </summary>
+        private void InitLanguagePack()
+        {
+            this.Text = Setting.LangPack.Items["frmSetting._Text"];
+            lblGeneral.Text = Setting.LangPack.Items["frmSetting.lblGeneral"];
+            lblContextMenu.Text = Setting.LangPack.Items["frmSetting.lblContextMenu"];
+            lblLanguage.Text = Setting.LangPack.Items["frmSetting.lblLanguage"];
+
+            //General tab
+            chkLockWorkspace.Text = Setting.LangPack.Items["frmSetting.chkLockWorkspace"];
+            chkAutoUpdate.Text = Setting.LangPack.Items["frmSetting.chkAutoUpdate"];
+            chkFindChildFolder.Text = Setting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            chkWelcomePicture.Text = Setting.LangPack.Items["frmSetting.chkWelcomePicture"];
+            chkHideToolBar.Text = Setting.LangPack.Items["frmSetting.chkHideToolBar"];
+            lblGeneral_ZoomOptimization.Text = Setting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
+            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+            lblGeneral_MaxFileSize.Text = Setting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
+            lblImageLoadingOrder.Text = Setting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
+            lblBackGroundColor.Text = Setting.LangPack.Items["frmSetting.lblBackGroundColor"];
+            btnClose.Text = Setting.LangPack.Items["frmSetting.btnClose"];
+            lbl_ContextMenu_Description.Text = Setting.LangPack.Items["frmSetting.lbl_ContextMenu_Description"];
+            lblExtensions.Text = Setting.LangPack.Items["frmSetting.lblExtensions"];
+            lblAddDefaultContextMenu.Text = Setting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
+            lblUpdateContextMenu.Text = Setting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
+            lblRemoveAllContextMenu.Text = Setting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
+            lblLanguageText.Text = Setting.LangPack.Items["frmSetting.lblLanguageText"];
+            lnkRefresh.Text = Setting.LangPack.Items["frmSetting.lnkRefresh"];
+            lnkCreateNew.Text = Setting.LangPack.Items["frmSetting.lnkCreateNew"];
+            lnkEdit.Text = Setting.LangPack.Items["frmSetting.lnkEdit"];
+            lnkGetMoreLanguage.Text = Setting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
         }
 
         /// <summary>
@@ -213,6 +248,12 @@ namespace ImageGlass
             //Get value of chkHideToolBar
             chkHideToolBar.Checked = bool.Parse(Setting.GetConfig("IsHideToolbar", "false"));
 
+            //Load items of cmbZoomOptimization
+            cmbZoomOptimization.Items.Clear();
+            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
+            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
+            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
+
             //Get value of cmbZoomOptimization
             s = Setting.GetConfig("ZoomOptimize", "0");
             int i = 0;
@@ -247,6 +288,16 @@ namespace ImageGlass
             if (int.TryParse(s, out i))
             {}
             numMaxThumbSize.Value = i;
+
+            //Load items of cmbImageOrder
+            cmbImageOrder.Items.Clear();
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
+            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
 
             //Get value of cmbImageOrder
             s = Setting.GetConfig("ImageLoadingOrder", "0");
@@ -417,9 +468,7 @@ namespace ImageGlass
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/languages.php" +
-                    "?utm_source=imageglass&utm_medium=language_click&utm_campaign=from_app_" +
-                    Application.ProductVersion.Replace(".", "_"));
+                System.Diagnostics.Process.Start("http://www.imageglass.org/download/languagepacks");
             }
             catch { }
         }
@@ -436,7 +485,7 @@ namespace ImageGlass
         {
             Process p = new Process();
             p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
-            p.StartInfo.Arguments = "igeditlang";
+            p.StartInfo.Arguments = "igeditlang \"" + Setting.LangPack.FileName + "\"";
             p.Start();
         }
 
@@ -455,7 +504,7 @@ namespace ImageGlass
                     dsLanguages.Add(l);
 
                     int iLang = cmbLanguage.Items.Add(l.LangName);
-                    string curLang = Setting.LanguageFile;
+                    string curLang = Setting.LangPack.FileName;
 
                     //Nếu là ngôn ngữ đang dùng
                     if (f.CompareTo(curLang) == 0)
@@ -473,7 +522,7 @@ namespace ImageGlass
         
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Setting.LoadLanguagePack(dsLanguages[cmbLanguage.SelectedIndex]);
+            Setting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
         }
 
         #endregion

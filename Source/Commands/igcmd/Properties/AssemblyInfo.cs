@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("PhapSoftware")]
 [assembly: AssemblyProduct("igcmd")]
 [assembly: AssemblyCopyright("Copyright © 2013 by Duong Dieu Phap")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.0.24")]
-[assembly: AssemblyFileVersion("1.5.0.24")]
+[assembly: AssemblyVersion("1.5.20.0")]
+[assembly: AssemblyFileVersion("1.5.20.0")]

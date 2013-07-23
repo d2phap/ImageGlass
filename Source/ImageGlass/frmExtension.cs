@@ -24,7 +24,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Plugins;
 
@@ -64,6 +63,13 @@ namespace ImageGlass
 
                 }
             }
+
+            //Load language:
+            this.Text = Setting.LangPack.Items["frmExtension._Text"];
+            lnkGetMoreExt.Text = Setting.LangPack.Items["frmExtension.lnkGetMoreExt"];
+            tvExtension.Nodes[0].Text = Setting.LangPack.Items["frmExtension.Node0"];
+            btnClose.Text = Setting.LangPack.Items["frmExtension.btnClose"];
+
         }
 
         private void tvExtension_AfterSelect(object sender, TreeViewEventArgs e)

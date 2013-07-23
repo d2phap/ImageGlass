@@ -65,13 +65,12 @@ f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\bin\Debug\Im
 f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.exe
 f:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5_desktop\ImageGlass\obj\Debug\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.config
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.dll
+F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.dll
@@ -79,6 +78,7 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Thum
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\Ionic.Zip.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.pdb
@@ -93,5 +93,5 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmM
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.Properties.Resources.resources
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmSetting.resources
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.dll
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
+F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb

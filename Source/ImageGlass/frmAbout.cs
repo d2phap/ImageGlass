@@ -146,7 +146,8 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblVersion.Text = String.Format("Version: {0}", Application.ProductVersion);
+            lblVersion.Text = String.Format(Setting.LangPack.Items["frmAbout.lblVersion"], 
+                                            Application.ProductVersion);
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
                                 "All rights reserved.";
 
@@ -162,6 +163,17 @@ namespace ImageGlass
             fileList1.ReLoadItems();
 
             lblMenu_Click(lblInfo, EventArgs.Empty);
+
+            //Load language:
+            lblSlogant.Text = Setting.LangPack.Items["frmAbout.lblSlogant"];
+            lblInfo.Text = Setting.LangPack.Items["frmAbout.lblInfo"];
+            lblComponent.Text = Setting.LangPack.Items["frmAbout.lblComponent"];
+            lblReferences.Text = Setting.LangPack.Items["frmAbout.lblReferences"];
+            lblInfoContact.Text = Setting.LangPack.Items["frmAbout.lblInfoContact"];
+            lblSoftwareUpdate.Text = Setting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
+            lnkCheckUpdate.Text = Setting.LangPack.Items["frmAbout.lnkCheckUpdate"];
+            this.Text = Setting.LangPack.Items["frmAbout._Text"];
+
         }
 
         #region IMAGEGLASS INFORMATION PANEL
@@ -241,6 +253,11 @@ namespace ImageGlass
             catch { }
         }
         #endregion
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
 

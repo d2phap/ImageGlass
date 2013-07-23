@@ -9,6 +9,17 @@ namespace igcmd
 {
     public static class Setting
     {
+        /// <summary>
+        /// Get start up directory of ImageGlass
+        /// </summary>
+        public static string StartUpDir
+        {
+            get
+            {
+                return (Application.StartupPath + "\\").Replace("\\\\", "\\");
+            }
+        }
+
 
         /// <summary>
         /// Lấy thông tin cấu hình. Trả về "" nếu không tìm thấy.

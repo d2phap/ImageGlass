@@ -110,6 +110,9 @@ namespace ImageGlass
         {
             // make sure to use the AbsoluteUri.
             webBrowser1.Navigate(_loginUrl.AbsoluteUri);
+
+            //Load language
+            this.Text = Setting.LangPack.Items["frmFaceBookLogin._Text"];
         }
     }
 }

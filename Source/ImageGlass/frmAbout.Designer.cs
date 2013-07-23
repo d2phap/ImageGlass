@@ -54,6 +54,7 @@
             this.txtReferences = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -424,13 +425,26 @@
             this.lblSoftwareUpdate.TabIndex = 13;
             this.lblSoftwareUpdate.Text = "Software updates:";
             // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(395, -29);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(66, 24);
+            this.btnClose.TabIndex = 17;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(618, 538);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.panReferences);
             this.Controls.Add(this.lblSlogant);
             this.Controls.Add(this.label4);
@@ -443,6 +457,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmAbout";
             this.Text = "About";
             this.Load += new System.EventHandler(this.frmAbout_Load);
@@ -483,5 +498,6 @@
         private System.Windows.Forms.RichTextBox txtReferences;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblSoftwareUpdate;
+        private System.Windows.Forms.Button btnClose;
     }
 }

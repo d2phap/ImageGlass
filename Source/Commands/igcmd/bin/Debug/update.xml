@@ -1,0 +1,10 @@
+﻿<ImageGlass>
+	<Update>
+		<Info newVersion="1.5.4444.5555" versionType="pre-beta/beta/stable" level="optional/recommended/important" link="http://imageglass.org/setup.exe" size="2.3 MB" decription="http://www.imageglass.org/news.php?id=10" />	
+		<Hotfix count="3" temp="{root}\temp" >
+			<_1 level="optional/recommended/important" newVersion="1.5.44.252" oriFile="{root}\igcmd.exe" link="http://imageglass.org/igcmd.exe" desFile="{root}\igcmd.exe" />
+			<_2 level="optional/recommended/important" newVersion="1.1.0.342" oriFile="{root}\zip.dll" link="http://imageglass.org/zip.dll" desFile="{root\plugins\zip.dll" />
+			<_3 level="optional/recommended/important" newVersion="1.0.0.6550" oriFile="{root}\xxx.exe" link="http://imageglass.org/xxx.exe" desFile="{root}\xxx.exe" />
+		</Hotfix>
+	</Update>
+</ImageGlass>
