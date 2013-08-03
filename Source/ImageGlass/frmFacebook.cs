@@ -73,7 +73,7 @@ namespace ImageGlass
             {
                 txtMessage.Enabled = false;
 
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook._Cancel"];
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Cancel"];
                 btnUpload.Tag = 1;
                 UploadPhoto();
             }
@@ -85,7 +85,7 @@ namespace ImageGlass
             else //Do cancellation
             {
                 txtMessage.Enabled = true;
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook._Upload"];
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Upload"];
                 btnUpload.Tag = 0;
                 lblStatus.Text = string.Format(Setting.LangPack.Items["frmFacebook._StatusBegin"], 
                                                 btnUpload.Text);
@@ -193,7 +193,7 @@ namespace ImageGlass
             picStatus.Visible = false;
             
             btnUpload.Tag = 0;
-            btnUpload.Text = Setting.LangPack.Items["frmFacebook._Upload"];
+            btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Upload"];
 
             if (e.Cancelled)
             {
@@ -204,7 +204,7 @@ namespace ImageGlass
                 // upload successful.
                 lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusSuccessful"];
                 btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook._ViewImage"];
+                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._ViewImage"];
             }
             else
             {
