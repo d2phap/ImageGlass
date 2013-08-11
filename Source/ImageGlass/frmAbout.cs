@@ -207,9 +207,7 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("http://www.imageglass.org" +
-                    "?utm_source=imageglass&utm_medium=homepage_click&utm_campaign=from_app_" +
-                    Application.ProductVersion.Replace(".", "_"));
+                Process.Start("http://www.imageglass.org");
             }
             catch { }
         }
@@ -218,7 +216,7 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("http://imageglass.codeplex.com");
+                Process.Start("http://www.imageglass.org/source");
             }
             catch { }
         }
@@ -238,19 +236,6 @@ namespace ImageGlass
             p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
             p.StartInfo.Arguments = "igupdate";
             p.Start();
-        }
-        #endregion
-
-        #region IMAGEGLASS ADVERTISEMENT PANEL
-        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                Process.Start("http://www.imageglass.org/support.php?type=advertisement" +
-                            "&utm_source=imageglass&utm_medium=advertisement_click&" +
-                            "utm_campaign=from_app_" + Application.ProductVersion.Replace(".", "_"));
-            }
-            catch { }
         }
         #endregion
 

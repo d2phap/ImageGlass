@@ -279,8 +279,8 @@ namespace ImageGlass
                 barInterval.Value = 5;
             }
 
-            lblSlideshowInterval.Text = string.Format("Slide show interval: {0}", 
-                                        barInterval.Value.ToString());
+            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
+                                        barInterval.Value);
 
             //Get value of numMaxThumbSize
             s = Setting.GetConfig("MaxThumbnailFileSize", "1");
@@ -369,7 +369,8 @@ namespace ImageGlass
         private void barInterval_Scroll(object sender, EventArgs e)
         {
             Setting.SetConfig("Interval", barInterval.Value.ToString());
-            lblSlideshowInterval.Text = "Slide show interval: " + barInterval.Value.ToString();
+            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"],
+                                        barInterval.Value);
         }
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)

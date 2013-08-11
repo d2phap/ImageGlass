@@ -119,6 +119,7 @@
             this.tvExtension.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvExtension.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvExtension.ImageKey = "empty.png";
+            this.tvExtension.ItemHeight = 25;
             this.tvExtension.Location = new System.Drawing.Point(0, 50);
             this.tvExtension.Name = "tvExtension";
             treeNode1.Name = "Node0";

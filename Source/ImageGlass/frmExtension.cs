@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ImageGlass.Plugins;
+using ImageGlass.Theme;
 
 namespace ImageGlass
 {
@@ -96,9 +97,7 @@ namespace ImageGlass
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/extensions.php" + 
-                    "?utm_source=imageglass&utm_medium=extension_click&utm_campaign=from_app_" + 
-                    Application.ProductVersion.Replace(".","_"));
+                System.Diagnostics.Process.Start("http://www.imageglass.org/download/extensions");
             }
             catch { }
         }

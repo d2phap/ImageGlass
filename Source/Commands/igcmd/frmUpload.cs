@@ -60,24 +60,8 @@ namespace igcmd
 
         private void Upload()
         {
-            //if (ImageGlass.Feature.ImageGlass_DownloadFile.Send_Email("d2phap@gmail.com",
-            //    "xeko.necromancer@gmail.com", "xeko.necromancer", "nqstarlight",
-            //    "smtp.gmail.com", "[ImageGlass][Theme]", System.Environment.UserName + " (" +
-            //    System.Environment.OSVersion.VersionString + ")",
-            //    _filename) == 0)//loi
-            //{
-            //    lblStatus.Text = "Cannot connect to the internet";
-            //    picStatus.Image = igcmd.Properties.Resources._del_2;
-            //}
-            //else
-            //{
-            //    lblStatus.Text = "Upload successful. Thank you for sharing!";
-            //    picStatus.Image = igcmd.Properties.Resources.check;
-            //}
-
             lblStatus.Text = "Cannot connect to the internet";
             picStatus.Image = igcmd.Properties.Resources._del_2;
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)

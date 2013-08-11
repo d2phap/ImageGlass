@@ -150,7 +150,6 @@
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderTheme.cs" />
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,7 +229,6 @@
       <DependentUpon>frmSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="IG Icon.ico" />
     <None Include="Resources\imagetoolarge.png" />
     <None Include="Resources\Hand_Move.png" />
     <None Include="Resources\Hand_Down.png" />

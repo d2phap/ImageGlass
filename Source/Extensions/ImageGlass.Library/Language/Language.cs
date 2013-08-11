@@ -123,7 +123,7 @@ namespace ImageGlass.Library
             {
                 XmlElement node = (XmlElement)n.SelectNodes("_" + (i + 1).ToString())[0];//<_1>
                 string _key = node.GetAttribute("key");
-                string _value = node.GetAttribute("value");
+                string _value = node.GetAttribute("value").Replace("\\n", "\n");
 
                 this.Items.Add(_key, _value);
             }

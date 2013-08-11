@@ -145,9 +145,9 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(130, 377);
+            this.picBackgroundColor.Location = new System.Drawing.Point(24, 395);
             this.picBackgroundColor.Name = "picBackgroundColor";
-            this.picBackgroundColor.Size = new System.Drawing.Size(52, 19);
+            this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
             this.picBackgroundColor.TabStop = false;
             this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
@@ -156,7 +156,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(20, 377);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(20, 374);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -332,7 +332,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(21, 123);
+            this.pictureBox1.Location = new System.Drawing.Point(21, 158);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(232, 167);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -345,7 +345,7 @@
             this.lblUpdateContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblUpdateContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblUpdateContextMenu.ForeColor = System.Drawing.Color.White;
-            this.lblUpdateContextMenu.Location = new System.Drawing.Point(143, 352);
+            this.lblUpdateContextMenu.Location = new System.Drawing.Point(143, 387);
             this.lblUpdateContextMenu.Name = "lblUpdateContextMenu";
             this.lblUpdateContextMenu.Padding = new System.Windows.Forms.Padding(5);
             this.lblUpdateContextMenu.Size = new System.Drawing.Size(115, 25);
@@ -362,7 +362,7 @@
             // lblExtensions
             // 
             this.lblExtensions.AutoSize = true;
-            this.lblExtensions.Location = new System.Drawing.Point(19, 300);
+            this.lblExtensions.Location = new System.Drawing.Point(19, 335);
             this.lblExtensions.Name = "lblExtensions";
             this.lblExtensions.Size = new System.Drawing.Size(65, 15);
             this.lblExtensions.TabIndex = 19;
@@ -370,7 +370,7 @@
             // 
             // txtExtensions
             // 
-            this.txtExtensions.Location = new System.Drawing.Point(22, 318);
+            this.txtExtensions.Location = new System.Drawing.Point(22, 353);
             this.txtExtensions.Name = "txtExtensions";
             this.txtExtensions.Size = new System.Drawing.Size(565, 23);
             this.txtExtensions.TabIndex = 18;
@@ -381,7 +381,7 @@
             this.lblRemoveAllContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblRemoveAllContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblRemoveAllContextMenu.ForeColor = System.Drawing.Color.White;
-            this.lblRemoveAllContextMenu.Location = new System.Drawing.Point(264, 352);
+            this.lblRemoveAllContextMenu.Location = new System.Drawing.Point(264, 387);
             this.lblRemoveAllContextMenu.Name = "lblRemoveAllContextMenu";
             this.lblRemoveAllContextMenu.Padding = new System.Windows.Forms.Padding(5);
             this.lblRemoveAllContextMenu.Size = new System.Drawing.Size(115, 25);
@@ -401,7 +401,7 @@
             this.lblAddDefaultContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblAddDefaultContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblAddDefaultContextMenu.ForeColor = System.Drawing.Color.White;
-            this.lblAddDefaultContextMenu.Location = new System.Drawing.Point(22, 352);
+            this.lblAddDefaultContextMenu.Location = new System.Drawing.Point(22, 387);
             this.lblAddDefaultContextMenu.Name = "lblAddDefaultContextMenu";
             this.lblAddDefaultContextMenu.Padding = new System.Windows.Forms.Padding(5);
             this.lblAddDefaultContextMenu.Size = new System.Drawing.Size(115, 25);
@@ -421,7 +421,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_ContextMenu_Description.Location = new System.Drawing.Point(18, 18);
             this.lbl_ContextMenu_Description.Name = "lbl_ContextMenu_Description";
-            this.lbl_ContextMenu_Description.Size = new System.Drawing.Size(569, 102);
+            this.lbl_ContextMenu_Description.Size = new System.Drawing.Size(569, 137);
             this.lbl_ContextMenu_Description.TabIndex = 0;
             this.lbl_ContextMenu_Description.Text = resources.GetString("lbl_ContextMenu_Description.Text");
             // 

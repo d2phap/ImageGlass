@@ -36,9 +36,11 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RenderTheme.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

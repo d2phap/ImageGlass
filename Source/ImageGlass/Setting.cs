@@ -361,7 +361,12 @@ namespace ImageGlass
         public static Library.Language LangPack
         {
             get { return Setting._langPack; }
-            set { Setting._langPack = value; }
+            set
+            {
+                Setting._langPack = value;
+                Setting.SetConfig("Language", _langPack.FileName);
+            }
+
         }
 
         /// <summary>

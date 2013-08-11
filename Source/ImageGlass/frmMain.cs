@@ -1627,12 +1627,19 @@ namespace ImageGlass
         {
             Setting.SetConfig("igVersion", Application.ProductVersion.ToString());
 
+            //Load language pack-------------------------------------------------------------
+            string s = Setting.GetConfig("Language", "English");
+            if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
+            {
+                Setting.LangPack = new Library.Language(s);
+            }
+
             //Windows Bound (Position + Size)------------------------------------------------                     "280,125,750,545").ToString());
             Rectangle rc = StringToRect(Setting.GetConfig("WindowsBound", "280,125,750,545"));
             this.Bounds = rc;
             
             //windows state--------------------------------------------------------------
-            string s = Setting.GetConfig("WindowsState", "Normal");
+            s = Setting.GetConfig("WindowsState", "Normal");
             if (s == "Normal")
             {
                 this.WindowState = FormWindowState.Normal;
