@@ -4,10 +4,6 @@ http://www.imageglass.org/ <br/>
 Free and open source image viewer
 <h3>Share ImageGlass</h3>
 <a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
-<br/>
-<a target="_blank" href="http://www.facebook.com/sharer.php?u=http://www.imageglass.org&t=ImageGlass - Free and open source image viewer">
-<img src="http://png.findicons.com/files/icons/2155/social_media_bookmark/122/facebook_button.png" alt="Share ImageGlass on Facebook" />
-</a>
 
 <h3>Link</h3>
 <ul>
