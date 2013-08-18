@@ -2470,7 +2470,7 @@ namespace ImageGlass
             try
             {
                 int i = Setting.ImageList.get(Setting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
-                mnuExtractFrames.Text = string.Format("E&xtract image frames ({0})", i.ToString());
+                mnuExtractFrames.Text = string.Format(Setting.LangPack.Items["frmMain.mnuExtractFrames"], i);
                 mnuExtractFrames.Enabled = true;
             }
             catch
