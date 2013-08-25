@@ -15,5 +15,10 @@ namespace igcmd
         {
             InitializeComponent();
         }
+
+        private void frmFollow_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -257,6 +257,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.cmbImageOrder._Random", "Random");
             this.Items.Add("frmSetting.lblBackGroundColor", "Background color:");
             this.Items.Add("frmSetting.btnClose", "Close");
+            this.Items.Add("frmSetting._OpenWithImageGlass", "Open with ImageGlass");
             this.Items.Add("frmSetting.lbl_ContextMenu_Description", "This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu.");
             this.Items.Add("frmSetting.lblExtensions", "Extensions:");
             this.Items.Add("frmSetting.lblAddDefaultContextMenu", "Add default");
@@ -267,7 +268,6 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             this.Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
             this.Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
-            
         }
 
 

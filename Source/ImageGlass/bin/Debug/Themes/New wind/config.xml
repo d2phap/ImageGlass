@@ -1,0 +1,5 @@
+<data>
+  <metadata name="New wind" version="1.0" author="Duong Dieu Phap" email="d2phap@gmail.com" website="http://phapsoftware.wordpress.com" description=" " type="ImageGlass Theme Configuration" compatibility="1.4" preview="prev.png" />
+  <main topbar="top.png" topbartransparent="0" bottombar="bottom.png" backcolor="-1" statuscolor="-16777216" />
+  <toolbar_icon back="back.png" next="next.png" leftrotate="rotateleft.png" rightrotate="rotateright.png" zoomin="zoom+.png" zoomout="zoom-.png" scaletofit="scaletofit.png" scaletowidth="scaletowidth.png" scaletoheight="scale to height.png" autosizewindow="autosize.png" open="open.png" refresh="refresh.png" gotoimage="goto.png" thumbnail="thumbnail.png" caro="caro.png" fullscreen="fullscreen.png" slideshow="slideshow.png" convert="convert.png" settings="settings.png" about="about.png" like="like.png" dislike="dislike.png" report="report.png" />
+</data>

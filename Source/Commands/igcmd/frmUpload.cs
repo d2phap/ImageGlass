@@ -61,7 +61,7 @@ namespace igcmd
         private void Upload()
         {
             lblStatus.Text = "Cannot connect to the internet";
-            picStatus.Image = igcmd.Properties.Resources._del_2;
+            picStatus.Image = igcmd.Properties.Resources.warning;
         }
 
         private void btnClose_Click(object sender, EventArgs e)

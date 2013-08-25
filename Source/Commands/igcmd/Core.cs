@@ -96,9 +96,14 @@ namespace igcmd
         /// </summary>
         public static void AutoUpdate()
         {
-            Update up = new Update(new Uri("http://www.imageglass.org/update.xml"), "C:\\ImageGlass-Update.xml");
-            if (File.Exists("C:\\ImageGlass-Update.xml")) File.Delete("C:\\ImageGlass-Update.xml");
-            
+            Update up = new Update(new Uri("http://www.imageglass.org/checkforupdate"),
+                Setting.StartUpDir + "update.xml");
+
+            if (File.Exists(Setting.StartUpDir + "update.xml"))
+            {
+                File.Delete(Setting.StartUpDir + "update.xml");
+            }
+
             Setting.SetConfig("AutoUpdate", DateTime.Now.Day.ToString() + "/" +
                                 DateTime.Now.Month.ToString() + "/" +
                                 DateTime.Now.Year.ToString());
@@ -111,29 +116,6 @@ namespace igcmd
             }
 
             Application.Exit();
-        }
-
-        /// <summary>
-        /// Like ImageGlass
-        /// </summary>
-        /// <param name="version"></param>
-        public static void Like(string version)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start("https://www.facebook.com/ImageGlass");
-            }
-            catch { }
-            //Application.Run(new frmLikeOrDislike("like", version));
-        }
-
-        /// <summary>
-        /// Dislike ImageGlass
-        /// </summary>
-        /// <param name="version"></param>
-        public static void Dislike(string version)
-        {
-            Application.Run(new frmLikeOrDislike("dislike", version));
         }
 
         /// <summary>
@@ -189,8 +171,14 @@ namespace igcmd
             p.StartInfo.Arguments = "\"" + filename + "\"";
             p.Start();
         }
-                
 
+        /// <summary>
+        /// Viết review
+        /// </summary>
+        public static void Social()
+        {
+            Application.Run(new frmReview());
+        }
 
     }
 }

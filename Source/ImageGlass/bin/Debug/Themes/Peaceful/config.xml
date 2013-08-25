@@ -1,0 +1,5 @@
+<data>
+  <metadata name="Peaceful" version="1.0" author="Dương Diệu Pháp" email="d2phap@gmail.com" website="phapsoftware.wordpress.com" description="Get more theme at https://sites.google.com/site/psimageglass/downloads/theme-store" type="ImageGlass Theme Configuration" compatibility="1.4" preview="prev.png" />
+  <main topbar="toolbar.png" topbartransparent="0" bottombar="thumbbar.png" backcolor="-1" statuscolor="-16777216" />
+  <toolbar_icon back="back.png" next="next.png" leftrotate="leftrotate.png" rightrotate="rightrotate.png" zoomin="zoomin.png" zoomout="zoomout.png" scaletofit="scaletofit.png" scaletowidth="scaletowidth.png" scaletoheight="scaletoheight.png" autosizewindow="autosizewindow.png" open="open.png" refresh="refresh.png" gotoimage="gotoimage.png" thumbnail="thumbnail.png" caro="caro.png" fullscreen="fullscreen.png" slideshow="slideshow.png" convert="convert.png" settings="settings.png" about="about.png" like="like.png" dislike="dislike.png" report="report.png" />
+</data>

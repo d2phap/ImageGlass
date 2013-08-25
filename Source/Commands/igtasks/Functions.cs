@@ -44,7 +44,7 @@ namespace igtasks
             {
                 string[] exts = extensions.Replace("*", "").Split(new char[] { ';' },
                                                 StringSplitOptions.RemoveEmptyEntries);
-
+                
                 foreach (string ext in exts)
                 {
                     AddContextMenuItem(ext, "Open with ImageGlass", "", igPath + " %1", igPath, "0");

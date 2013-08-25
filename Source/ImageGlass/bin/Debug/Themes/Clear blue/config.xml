@@ -1,0 +1,5 @@
+<data>
+  <metadata name="Clear blue" version="1.0" author="Duong Dieu Phap" email="d2phap@gmail.com" website="http://phapsoftware.wordpress.com" description="ImageClass have reached to 60000 download hits" type="ImageGlass Theme Configuration" compatibility="1.4" preview="preview.png" />
+  <main topbar="bg1.png" topbartransparent="0" bottombar="bgthum.png" backcolor="-12666881" statuscolor="-15229697" />
+  <toolbar_icon back="navigation_left_frame.png" next="navigation_right_frame.png" leftrotate="chart_bar_left.png" rightrotate="chart_bar_up.png" zoomin="zoom_in.png" zoomout="zoom_out.png" scaletofit="search.png" scaletowidth="toggle_right.png" scaletoheight="toggle_down.png" autosizewindow="toggle_collapse.png" open="folder.png" refresh="button_rotate_ccw.png" gotoimage="inbox.png" thumbnail="application.png" caro="wall.png" fullscreen="desktop.png" slideshow="presentation.png" convert="floppy_disk.png" settings="gear.png" about="question_frame.png" like="heart.png" dislike="broken.png" report="question_balloon.png" />
+</data>

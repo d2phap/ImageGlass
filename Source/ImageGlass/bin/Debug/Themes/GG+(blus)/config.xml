@@ -1,7 +1,0 @@
-<ImageGlass>
-  <Theme>
-    <Info name="Google Plus (blue)" version="1.1" author="Duong Dieu Phap" email="d2phap@gmail.com" website="www.imageglass.org" description=" " type="ImageGlass Theme Configuration" compatibility="1.5" preview="preview.png" />
-    <main topbar="topbar.png" topbartransparent="0" bottombar="thumbbar.png" backcolor="-1" statuscolor="-1" />
-    <toolbar_icon back="back.png" next="next.png" leftrotate="rotateleft.png" rightrotate="rotateright.png" zoomin="zoom+.png" zoomout="zoom-.png" scaletofit="scale11.png" scaletowidth="scaletowidth.png" scaletoheight="scaletoheight.png" autosizewindow="autosize.png" open="open.png" refresh="refresh.png" gotoimage="goto.png" thumbnail="thumbnail.png" caro="caro.png" fullscreen="fullscreen.png" slideshow="slideshow.png" convert="convert.png" print="x" uploadfb="x" extension="x" settings="settings.png" about="help.png" like="LIKE.png" dislike="dislike.png" report="report.png" />
-  </Theme>
-</ImageGlass>

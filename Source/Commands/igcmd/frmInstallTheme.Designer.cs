@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInstallTheme));
             this.tim = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.picStatus = new System.Windows.Forms.PictureBox();
-            this.btnOpen = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +56,17 @@
             this.panel1.Size = new System.Drawing.Size(409, 52);
             this.panel1.TabIndex = 10;
             // 
+            // btnOpen
+            // 
+            this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnOpen.Location = new System.Drawing.Point(216, 11);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(102, 29);
+            this.btnOpen.TabIndex = 3;
+            this.btnOpen.Text = "Open location";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -71,7 +82,7 @@
             // 
             this.lblStatus.AutoSize = true;
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lblStatus.Location = new System.Drawing.Point(34, 25);
+            this.lblStatus.Location = new System.Drawing.Point(46, 24);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(67, 15);
             this.lblStatus.TabIndex = 8;
@@ -79,24 +90,13 @@
             // 
             // picStatus
             // 
-            this.picStatus.Image = global::igcmd.Properties.Resources.loading19;
-            this.picStatus.Location = new System.Drawing.Point(12, 24);
+            this.picStatus.Image = global::igcmd.Properties.Resources.loading;
+            this.picStatus.Location = new System.Drawing.Point(12, 16);
             this.picStatus.Name = "picStatus";
-            this.picStatus.Size = new System.Drawing.Size(16, 16);
-            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picStatus.Size = new System.Drawing.Size(32, 32);
+            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picStatus.TabIndex = 9;
             this.picStatus.TabStop = false;
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOpen.Location = new System.Drawing.Point(216, 11);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(102, 29);
-            this.btnOpen.TabIndex = 3;
-            this.btnOpen.Text = "Open location";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // frmInstallTheme
             // 

@@ -63,7 +63,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(34, 17);
+            this.lblStatus.Location = new System.Drawing.Point(46, 20);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(14, 15);
             this.lblStatus.TabIndex = 5;
@@ -76,11 +76,11 @@
             // 
             // picStatus
             // 
-            this.picStatus.Image = global::igcmd.Properties.Resources.loading19;
-            this.picStatus.Location = new System.Drawing.Point(12, 16);
+            this.picStatus.Image = global::igcmd.Properties.Resources.loading;
+            this.picStatus.Location = new System.Drawing.Point(12, 11);
             this.picStatus.Name = "picStatus";
-            this.picStatus.Size = new System.Drawing.Size(16, 16);
-            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picStatus.Size = new System.Drawing.Size(32, 32);
+            this.picStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picStatus.TabIndex = 6;
             this.picStatus.TabStop = false;
             // 

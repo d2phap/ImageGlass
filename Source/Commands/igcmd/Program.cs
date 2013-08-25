@@ -42,13 +42,9 @@ namespace igcmd
             Application.SetCompatibleTextRenderingDefault(false);
             string topcmd = args[0].ToLower().Trim();
 
-            if (topcmd == "iglike")
+            if (topcmd == "igsocial")
             {
-                Core.Like(args[1]);
-            }
-            else if (topcmd == "igdislike")
-            {
-                Core.Dislike(args[1]);
+                Core.Social();
             }
             else if (topcmd == "igupdate")//kiem tra phien ban
             {

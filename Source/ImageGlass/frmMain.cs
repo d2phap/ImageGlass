@@ -2403,7 +2403,9 @@ namespace ImageGlass
         {
             try
             {
-                System.Diagnostics.Process.Start("https://www.facebook.com/ImageGlass");
+                System.Diagnostics.Process.Start(char.ConvertFromUtf32(34) +
+                                (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe" +
+                                char.ConvertFromUtf32(34), "igsocial");
             }
             catch { }
         }

@@ -121,7 +121,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABRmSURBVHhevdpncFzndQbgpVhAggDRiA6i945FJwGQka14
+        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAABRmSURBVHhevdpncFzndQbgpVhAggDRiA6i945FJwGQka14
         HMeKJ0omGcuT8UzGsewkHnviSHEysmJLskixAiQK0Rs7xSqSYi8AibrAAlhg0TsBkGDPzObPjk/ec/de
         8GJ5t4Cg8+MdsIC7OM/97ne+c5cq9elpddqZ+zqE0pFM8WvamWnC31HKqSlKPjVJiV9NUPzJCYo5OU7R
         J8Yo4vgIhR0boZCjwxR4ZIgCDg2Q76F+8q7X08a6PvKo7SX36h5yq+om18oucqnQknN5BzmVaWh9aTs5
@@ -212,7 +212,7 @@
 </value>
   </data>
   <data name="txtReferences.Text" xml:space="preserve">
-    <value>Logo designer: Nguyễn Quốc Tuấn
+    <value>Logo designer: Nguyen Quoc Tuan
 
 DotNetZip Library: http://dotnetzip.codeplex.com/
 Imaeg: http://code.google.com/p/imaeg/

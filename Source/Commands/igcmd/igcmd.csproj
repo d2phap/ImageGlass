@@ -79,17 +79,17 @@
     <Compile Include="frmInstallTheme.Designer.cs">
       <DependentUpon>frmInstallTheme.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLikeOrDislike.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmLikeOrDislike.Designer.cs">
-      <DependentUpon>frmLikeOrDislike.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmCheckForUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReview.Designer.cs">
+      <DependentUpon>frmReview.cs</DependentUpon>
     </Compile>
     <Compile Include="frmUpload.cs">
       <SubType>Form</SubType>
@@ -111,9 +111,8 @@
     <EmbeddedResource Include="frmInstallTheme.resx">
       <DependentUpon>frmInstallTheme.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLikeOrDislike.resx">
-      <DependentUpon>frmLikeOrDislike.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="frmReview.resx">
+      <DependentUpon>frmReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUpload.resx">
       <DependentUpon>frmUpload.cs</DependentUpon>
@@ -175,6 +174,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="igtheme.ico" />
+    <None Include="Resources\warning.png" />
+    <None Include="Resources\recommend.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\loading.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Extensions\ImageGlass.Services\ImageGlass.Services.csproj">

@@ -191,6 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="imageglass.ico" />
+    <None Include="Resources\Hand_Down.png" />
+    <None Include="Resources\Hand_Move.png" />
     <None Include="Resources\bottombar.png" />
     <None Include="Resources\top.png" />
     <None Include="Resources\follow.png" />
@@ -230,8 +232,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\imagetoolarge.png" />
-    <None Include="Resources\Hand_Move.png" />
-    <None Include="Resources\Hand_Down.png" />
     <None Include="Resources\caro.png" />
   </ItemGroup>
   <ItemGroup>

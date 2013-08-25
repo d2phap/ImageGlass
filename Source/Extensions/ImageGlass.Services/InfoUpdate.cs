@@ -33,6 +33,7 @@ namespace ImageGlass.Services
         private string _level;
         private Uri _link;
         private string _size;
+        private DateTime _pubDate;
         private string _decription;
 
         #region Properties
@@ -64,7 +65,16 @@ namespace ImageGlass.Services
         {
             get { return _size; }
             set { _size = value; }
-        }        
+        }
+
+        /// <summary>
+        /// Get, set publish date
+        /// </summary>
+        public DateTime PublishDate
+        {
+            get { return _pubDate; }
+            set { _pubDate = value; }
+        }
 
         public string Decription
         {
@@ -83,6 +93,7 @@ namespace ImageGlass.Services
             _level = "Recommended";
             _link = new Uri("http://imageglass.org");
             _size = "0 MB";
+            _pubDate = DateTime.Now;
             _decription = string.Empty;           
         }
 

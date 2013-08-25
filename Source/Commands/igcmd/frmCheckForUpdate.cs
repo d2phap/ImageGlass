@@ -51,21 +51,22 @@ namespace igcmd
         private void frmMain_Load(object sender, EventArgs e)
         {
             this.Text = "Connecting to server, please wait...";
+            picStatus.Image = igcmd.Properties.Resources.loading;
             Thread t = new Thread(new ThreadStart(CheckForUpdate));
             t.Priority = ThreadPriority.BelowNormal;
             t.IsBackground = true;
             t.Start();
+
+            //CheckForUpdate();
 
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(Setting.StartUpDir + "ImageGlass.exe");
             lblCurentVersion.Text = "Version: " + fv.FileVersion;
 
         }
 
-
-
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/update.xml"), 
+            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), 
                 Setting.StartUpDir + "update.xml");
 
             if (File.Exists(Setting.StartUpDir + "update.xml"))
@@ -77,6 +78,7 @@ namespace igcmd
             lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
             lblUpdateImportance.Text = "Importance: " + up.Info.Level;
             lblUpdateSize.Text = "Size: " + up.Info.Size;
+            lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
 
             this.Text = "";
 
@@ -87,11 +89,13 @@ namespace igcmd
                     this.Text = "Your ImageGlass is outdate!";
                 }
 
+                picStatus.Image = igcmd.Properties.Resources.warning;
                 btnDownload.Enabled = true;
             }
             else
             {
                 btnDownload.Enabled = false;
+                picStatus.Image = igcmd.Properties.Resources.ok;
             }
         }
 

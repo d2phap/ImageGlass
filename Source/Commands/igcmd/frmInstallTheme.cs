@@ -75,7 +75,7 @@ namespace igcmd
 
         private void z_ZipError(object sender, ZipErrorEventArgs e)
         {
-            picStatus.Image = igcmd.Properties.Resources._del_2;
+            picStatus.Image = igcmd.Properties.Resources.warning;
             lblStatus.Text = "Theme was error!";
         }
 
@@ -83,7 +83,7 @@ namespace igcmd
         {
             if (e.EntriesExtracted == e.EntriesTotal)
             {
-                picStatus.Image = igcmd.Properties.Resources.check;
+                picStatus.Image = igcmd.Properties.Resources.ok;
                 lblStatus.Text = "Install successful!";
             }
         }
