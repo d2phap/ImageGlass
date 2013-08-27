@@ -2,6 +2,13 @@ ImageGlass
 ==========
 http://www.imageglass.org/ <br/>
 Free and open source image viewer
+
+<h3>Donation</h3>
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20Software&item_number=igdonation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
+</a>
+
 <h3>Share ImageGlass</h3>
 <a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
 
