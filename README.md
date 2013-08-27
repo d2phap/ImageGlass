@@ -15,8 +15,7 @@ Free and open source image viewer
 <h3>Link</h3>
 <ul>
 <li><a title="ImageGlass homepage" href="http://www.imageglass.org/" target="_blank"><strong>Homepage</strong></a> </li>
-<li><a title="ImageGlass themes" href="http://www.imageglass.org/themes.php" target="_blank"><strong><span style="color: #008080;">Download themes&nbsp;</span></strong></a> </li>
-<li><a href="https://sites.google.com/site/psimageglass/support/develope" target="_blank"><strong>Plugin development</strong></a> </li>
+<li><a title="ImageGlass themes" href="http://www.imageglass.org/download/themes" target="_blank"><strong><span style="color: #008080;">Download themes&nbsp;</span></strong></a> </li>
 </ul>
 <h3>Feedback &amp; Support</h3>
 <p><span>If you&nbsp;</span><em>need help</em><span>&nbsp;installing or using the tool, use the&nbsp;</span><span style="text-decoration: underline;">Discussions</span><span>&nbsp;tab to ask your question.</span><br /> <span>If you&nbsp;</span><em>find a bug</em><span>&nbsp;or&nbsp;</span><em>think of a feature</em><span>, use the&nbsp;</span><span style="text-decoration: underline;">Issue Tracker</span><span>&nbsp;tab to submit your request.</span><br /> <span>If you&nbsp;</span><em>love it</em><span>, </span><span style="color: #ff0000;"><strong><a title="Like ImageGlass" href="https://www.facebook.com/ImageGlass" target="_blank">Like</a></strong></span>&nbsp;it on Facebook</p>
