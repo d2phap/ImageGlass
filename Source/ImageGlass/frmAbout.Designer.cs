@@ -206,10 +206,10 @@
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkProjectPage.Location = new System.Drawing.Point(48, 260);
             this.lnkProjectPage.Name = "lnkProjectPage";
-            this.lnkProjectPage.Size = new System.Drawing.Size(246, 23);
+            this.lnkProjectPage.Size = new System.Drawing.Size(261, 23);
             this.lnkProjectPage.TabIndex = 11;
             this.lnkProjectPage.TabStop = true;
-            this.lnkProjectPage.Text = "Source: http://imageglass.codeplex.com";
+            this.lnkProjectPage.Text = "Source: http://www.imageglass.org/source";
             this.lnkProjectPage.UseCompatibleTextRendering = true;
             this.lnkProjectPage.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkProjectPage_LinkClicked);

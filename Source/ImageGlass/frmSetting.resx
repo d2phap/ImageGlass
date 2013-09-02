@@ -127,7 +127,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOgAAACnCAIAAACUxYeWAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAABMnSURBVHhe7Z19cFxXdcDXgUk7DIGBZoppAyWY0YoETEkD
+        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAABMnSURBVHhe7Z19cFxXdcDXgUk7DIGBZoppAyWY0YoETEkD
         M3yM7abttAwTe6vQP1oYBv7hD5jhnxAk9AczZCg0EEickLhx/LFJnMRJXNuAkzjBNo4/ZBnLVmzFsSw5
         kixZsvWR/dJqV5LxbM+559777vvY1Wp39VY3Or85E9137jn3vn3v5+eVvYojGxjGQlDcKYaxChaXsRKX
         uOmaMjg0VCgUUgxTU8hVFpexDHKVxWUsg1xlcRnLIFdZXMYyyFUWl7EMcjVccdtbGiMGjS3tcqIi4rHq
@@ -217,6 +217,9 @@
 
 Add shortcut 'Open with ImageGlass' to context menu.</value>
   </data>
+  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 4</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>26</value>
   </metadata>

@@ -26,6 +26,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass.FileList
 {
+    [field:NonSerialized()]
     public partial class FileListItem : UserControl
     {
         public FileListItem()
@@ -171,13 +172,13 @@ namespace ImageGlass.FileList
                 str = _title + " - version: " + _currenVersion + "\r\n" + _path;
             }
 
-
-            Font f = new System.Drawing.Font(new FontFamily("Segoe UI"), 9);
+            Font f = new System.Drawing.Font("sans-serif", 9);
             Brush b = Brushes.Black;
             PointF p = new PointF(51, 9);
 
             g.Clear(bgColor);
             g.DrawString(str, f, b, p);
+            
         }
 
         private void FileListItem_Load(object sender, EventArgs e)

@@ -466,7 +466,6 @@ namespace ImageGlass
             // Open App.Config of executable
             System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration
                                                         (ConfigurationUserLevel.None);
-
             //Kiểm tra sự tồn tại của Key
             int index = config.AppSettings.Settings.AllKeys.ToList().IndexOf(key);
 
@@ -474,10 +473,15 @@ namespace ImageGlass
             if (index != -1)
             {
                 //Thì lấy giá trị
-                return config.AppSettings.Settings[key].Value;
+                string v = config.AppSettings.Settings[key].Value;
+                config = null;
+                
+                return v;
             }
             else //Nếu không tồn tại
             {
+                config = null;
+
                 //Trả về giá trị mặc định
                 return defaultValue;
             }
@@ -516,9 +520,24 @@ namespace ImageGlass
 
             // Force a reload of a changed section.
             ConfigurationManager.RefreshSection("appSettings");
-
+            config = null;
         }
 
+        public static Rectangle StringToRect(string str)
+        {
+            string[] args = str.Split(',');
+            int[] arg = new int[args.Length];
+            for (int a = 0; a < arg.Length; a++)
+            {
+                arg[a] = Convert.ToInt32(args[a]);
+            }
+            return new Rectangle(arg[0], arg[1], arg[2], arg[3]);
+        }
+
+        public static string RectToString(Rectangle rc)
+        {
+            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
+        }
 
         #endregion
 

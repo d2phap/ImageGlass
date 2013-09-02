@@ -179,6 +179,9 @@
   <ItemGroup>
     <None Include="Resources\preview.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\preview.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

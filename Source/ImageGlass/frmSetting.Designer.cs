@@ -101,8 +101,9 @@
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(613, 476);
+            this.tab1.Size = new System.Drawing.Size(612, 476);
             this.tab1.TabIndex = 15;
+            this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
             // tabGeneral
             // 
@@ -124,7 +125,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(605, 448);
+            this.tabGeneral.Size = new System.Drawing.Size(604, 448);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -525,7 +526,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(595, 62);
+            this.panel2.Size = new System.Drawing.Size(594, 62);
             this.panel2.TabIndex = 16;
             // 
             // lblLanguage
@@ -589,7 +590,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(501, 7);
+            this.btnClose.Location = new System.Drawing.Point(500, 7);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(86, 28);
             this.btnClose.TabIndex = 8;
@@ -604,7 +605,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 490);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(595, 42);
+            this.panel1.Size = new System.Drawing.Size(594, 42);
             this.panel1.TabIndex = 10;
             // 
             // frmSetting
@@ -613,13 +614,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(595, 532);
+            this.ClientSize = new System.Drawing.Size(594, 532);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tab1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(605, 410);
+            this.MinimumSize = new System.Drawing.Size(610, 570);
             this.Name = "frmSetting";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSetting_FormClosing);

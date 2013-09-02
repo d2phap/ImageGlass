@@ -53,7 +53,10 @@ namespace ImageGlass.Library.Comparer
 
         public ArrayList GetSorted()
         {
-            _files.Sort(new DictionaryEntryComparer(new ImageGlass.Library.Comparer.NumericComparer()));
+            if (_files != null)
+            {
+                _files.Sort(new DictionaryEntryComparer(new ImageGlass.Library.Comparer.NumericComparer()));
+            }
             return _files;
         }
         #endregion

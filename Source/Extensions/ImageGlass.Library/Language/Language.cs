@@ -164,7 +164,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             this.Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             this.Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
-            this.Items.Add("frmMain.btnZoomLock", "Lock zoom ratio");
+            this.Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             this.Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
             this.Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
             this.Items.Add("frmMain.btnWindowAutosize", "Window adapt to image (Ctrl + M)");
@@ -178,10 +178,10 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
             this.Items.Add("frmMain.btnPrintImage", "Print image (Ctrl + P)");
             this.Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)");
-            this.Items.Add("frmMain.btnExtension", "Extensions");
+            this.Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)");
             this.Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)");
             this.Items.Add("frmMain.btnHelp", "Help (F1)");
-            this.Items.Add("frmMain.btnFacebookLike", "Visit Facebook of ImageGlass");
+            this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet");
             this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email");
             this.Items.Add("frmMain.btnReport", "Report a bug or comment about ImageGlass");
             this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow");
@@ -208,7 +208,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?");
             this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm");
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
-            this.Items.Add("frmExtension._Text", "Extension");
+            this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
             this.Items.Add("frmExtension.Node0", "Get more extensions");
             this.Items.Add("frmExtension.btnClose", "Close");

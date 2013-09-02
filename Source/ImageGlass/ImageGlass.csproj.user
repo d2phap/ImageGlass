@@ -3,16 +3,15 @@
   <PropertyGroup>
     <PublishUrlHistory>C:\Users\Duong Dieu Phap\Desktop\|http://imageglass.org/|publish\</PublishUrlHistory>
     <InstallUrlHistory>http://imageglass.com/</InstallUrlHistory>
-    <SupportUrlHistory />
+    <SupportUrlHistory>http://www.imageglass.org/support.php%3ftype=download-and-install</SupportUrlHistory>
     <UpdateUrlHistory>http://imageglass.com/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
-    <ErrorReportUrlHistory />
+    <ErrorReportUrlHistory>http://www.imageglass.org/support.php%3ftype=fix-and-report-errors</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>"C:\Users\Duong Dieu Phap\Desktop\vestavt.png"</StartArguments>
     <RemoteDebugEnabled>false</RemoteDebugEnabled>
     <StartWorkingDirectory>
     </StartWorkingDirectory>

@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using ImageGlass.Plugins;
+using System.Linq;
 
 namespace ImageGlass.Plugins
 {
@@ -100,7 +101,7 @@ namespace ImageGlass.Plugins
         private void AddPlugin(string FileName)
         {
             //Create a new assembly from the plugin file we're adding..
-            Assembly pluginAssembly = Assembly.LoadFrom(FileName);
+            Assembly pluginAssembly = Assembly.LoadFile(FileName);
 
             //Next we'll loop through all the Types found in the assembly
             foreach (Type pluginType in pluginAssembly.GetTypes())

@@ -228,7 +228,7 @@
             this.btnScale11.Name = "btnScale11";
             this.btnScale11.Size = new System.Drawing.Size(25, 28);
             this.btnScale11.Tag = "x";
-            this.btnScale11.ToolTipText = "Scale 1:1 (Ctrl + 0)";
+            this.btnScale11.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnScale11.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnZoomLock
@@ -242,7 +242,7 @@
             this.btnZoomLock.Name = "btnZoomLock";
             this.btnZoomLock.Size = new System.Drawing.Size(25, 28);
             this.btnZoomLock.Tag = "x";
-            this.btnZoomLock.ToolTipText = "Zoom lock";
+            this.btnZoomLock.ToolTipText = "Lock zoom ratio";
             this.btnZoomLock.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnScaletoWidth
@@ -397,7 +397,7 @@
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(25, 28);
             this.btnConvert.Tag = "x";
-            this.btnConvert.ToolTipText = "Save as (Ctrl + S)";
+            this.btnConvert.ToolTipText = "Convert image (Ctrl + S)";
             this.btnConvert.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnPrintImage
@@ -411,7 +411,7 @@
             this.btnPrintImage.Name = "btnPrintImage";
             this.btnPrintImage.Size = new System.Drawing.Size(25, 28);
             this.btnPrintImage.Tag = "x";
-            this.btnPrintImage.ToolTipText = "Print image";
+            this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnFacebook
@@ -439,7 +439,7 @@
             this.btnExtension.Name = "btnExtension";
             this.btnExtension.Size = new System.Drawing.Size(25, 28);
             this.btnExtension.Tag = "x";
-            this.btnExtension.ToolTipText = "Upload to Facebook (Ctrl + U)";
+            this.btnExtension.ToolTipText = "Extension manager";
             this.btnExtension.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnSetting
@@ -482,7 +482,7 @@
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(25, 28);
             this.btnReport.Tag = "x";
-            this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass beta";
+            this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
             this.btnReport.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnDisLike
@@ -498,7 +498,7 @@
             this.btnDisLike.Size = new System.Drawing.Size(25, 28);
             this.btnDisLike.Tag = "x";
             this.btnDisLike.Text = "Dislike";
-            this.btnDisLike.ToolTipText = "Dislike ImageGlass";
+            this.btnDisLike.ToolTipText = "Follow ImageGlass by email";
             this.btnDisLike.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnLike
@@ -514,7 +514,7 @@
             this.btnLike.Size = new System.Drawing.Size(25, 28);
             this.btnLike.Tag = "x";
             this.btnLike.Text = "Like";
-            this.btnLike.ToolTipText = "Like ImageGlass";
+            this.btnLike.ToolTipText = "Find ImageGlass on the Internet";
             this.btnLike.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnStatus
@@ -567,7 +567,7 @@
             this.lnkToolBar.TabIndex = 6;
             this.lnkToolBar.TabStop = true;
             this.lnkToolBar.Tag = "x";
-            this.lnkToolBar.Text = "2. Change toolbar background (... x 33px)";
+            this.lnkToolBar.Text = "2. Change toolbar background (... x 31px)";
             this.lnkToolBar.UseCompatibleTextRendering = true;
             this.lnkToolBar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkToolBar_LinkClicked);
             // 
@@ -624,7 +624,7 @@
             this.lnkSave.TabIndex = 10;
             this.lnkSave.TabStop = true;
             this.lnkSave.Tag = "x";
-            this.lnkSave.Text = "6. Save as ImageGlass theme";
+            this.lnkSave.Text = "7. Save as ImageGlass theme";
             this.lnkSave.UseCompatibleTextRendering = true;
             this.lnkSave.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSave_LinkClicked);
             // 
@@ -632,14 +632,14 @@
             // 
             this.lnkUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkUpload.AutoSize = true;
-            this.lnkUpload.LinkArea = new System.Windows.Forms.LinkArea(3, 7);
+            this.lnkUpload.LinkArea = new System.Windows.Forms.LinkArea(4, 6);
             this.lnkUpload.Location = new System.Drawing.Point(247, 440);
             this.lnkUpload.Name = "lnkUpload";
-            this.lnkUpload.Size = new System.Drawing.Size(222, 21);
+            this.lnkUpload.Size = new System.Drawing.Size(223, 21);
             this.lnkUpload.TabIndex = 11;
             this.lnkUpload.TabStop = true;
             this.lnkUpload.Tag = "x";
-            this.lnkUpload.Text = "7. Upload to ImageGlass site for sharing";
+            this.lnkUpload.Text = "    Upload to ImageGlass site for sharing";
             this.lnkUpload.UseCompatibleTextRendering = true;
             this.lnkUpload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUpload_LinkClicked);
             // 
@@ -667,7 +667,7 @@
             this.lnkPreview.TabIndex = 14;
             this.lnkPreview.TabStop = true;
             this.lnkPreview.Tag = "x";
-            this.lnkPreview.Text = "5. Select a picture to preview your theme (253 x 100px)";
+            this.lnkPreview.Text = "6. Select a picture to preview your theme (253 x 100px)";
             this.lnkPreview.UseCompatibleTextRendering = true;
             this.lnkPreview.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPreview_LinkClicked);
             // 

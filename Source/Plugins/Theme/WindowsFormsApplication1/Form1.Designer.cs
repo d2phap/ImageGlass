@@ -33,7 +33,7 @@
             // 
             // ctlMain1
             // 
-            this.ctlMain1.BackColor = System.Drawing.Color.Transparent;
+            this.ctlMain1.BackColor = System.Drawing.Color.White;
             this.ctlMain1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlMain1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ctlMain1.Location = new System.Drawing.Point(0, 0);

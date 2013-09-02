@@ -1,0 +1,5 @@
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Theme\bin\Release\ImageGlass.Theme.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Theme\bin\Release\ImageGlass.Theme.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Theme\obj\Release\ImageGlass.Theme.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Theme\obj\Release\ImageGlass.Theme.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Theme\obj\Release\ImageGlass.Theme.pdb

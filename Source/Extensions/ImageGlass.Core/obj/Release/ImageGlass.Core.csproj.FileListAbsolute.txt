@@ -1,0 +1,7 @@
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\bin\Release\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\bin\Release\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Release\ImageGlass.Core.csprojResolveAssemblyReference.cache
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Release\ImageGlass.Core.Properties.Resources.resources
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Release\ImageGlass.Core.csproj.GenerateResource.Cache
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Release\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Release\ImageGlass.Core.pdb

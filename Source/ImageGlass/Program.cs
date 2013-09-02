@@ -42,7 +42,7 @@ namespace ImageGlass
             Application.Run(new frmMain());
 
 
-            //autoupdate--------------------------------------------------------------------------------
+            //autoupdate----------------------------------------------------------------
             string s = Setting.GetConfig("AutoUpdate", "1");
 
             if (s != "0")

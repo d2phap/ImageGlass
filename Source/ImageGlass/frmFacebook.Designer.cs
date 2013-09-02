@@ -115,7 +115,7 @@
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblStatus.Location = new System.Drawing.Point(9, 15);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(292, 21);
+            this.lblStatus.Size = new System.Drawing.Size(270, 21);
             this.lblStatus.TabIndex = 11;
             this.lblStatus.Text = "[lblStatus]";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -125,9 +125,9 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(405, 11);
+            this.btnClose.Location = new System.Drawing.Point(394, 11);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(63, 28);
+            this.btnClose.Size = new System.Drawing.Size(74, 28);
             this.btnClose.TabIndex = 13;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -137,9 +137,9 @@
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.BackColor = System.Drawing.Color.Transparent;
-            this.btnUpload.Location = new System.Drawing.Point(307, 11);
+            this.btnUpload.Location = new System.Drawing.Point(285, 11);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(92, 28);
+            this.btnUpload.Size = new System.Drawing.Size(103, 28);
             this.btnUpload.TabIndex = 12;
             this.btnUpload.Tag = "0";
             this.btnUpload.Text = "Upload";

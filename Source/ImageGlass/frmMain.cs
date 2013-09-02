@@ -669,11 +669,21 @@ namespace ImageGlass
             #endregion
 
 
-            //Auto size image ----------------------------------------------------------------
+            //Actual size image -------------------------------------------------------------
             #region Ctrl + 0
             if (e.KeyValue == 48 && e.Control && !e.Shift && !e.Alt)// Ctrl + 0
             {
                 btnActualSize_Click(null, null);
+                return;
+            }
+            #endregion
+
+
+            //Lock zoom ratio--- -------------------------------------------------------------
+            #region Ctrl + R
+            if (e.KeyData == Keys.R && e.Control && !e.Shift && !e.Alt)// Ctrl + R
+            {
+                btnZoomLock.PerformClick();
                 return;
             }
             #endregion
@@ -813,6 +823,14 @@ namespace ImageGlass
             }
             #endregion
 
+            //Print Image-----------------------------------------------------------------------
+            #region Ctrl + F1
+            if (e.KeyCode == Keys.F1 && e.Control && !e.Shift && !e.Alt)// Ctrl + F1
+            {
+                mnuShowToolBar_Click(null, null);
+                return;
+            }
+            #endregion
 
             //Rename image----------------------------------------------------------------------
             #region F2
@@ -832,6 +850,15 @@ namespace ImageGlass
             }
             #endregion
 
+
+            //Show Extension Manager dialog-----------------------------------------------------
+            #region Ctrl + Shift + E
+            if (e.KeyCode == Keys.E && e.Control && e.Shift && !e.Alt)// Ctrl + Shift + P
+            {
+                btnExtension_Click(null, null);
+                return;
+            }
+            #endregion
 
             // Sap hinh anh voi duong bien duoi-----------------------------------------------------
             if (e.KeyCode == Keys.Down)
@@ -1410,23 +1437,6 @@ namespace ImageGlass
             picMain.Size = new Size(durrX, durrY);
                         
         }
-
-
-        Rectangle StringToRect(string str)
-        {
-            string[] args = str.Split(',');
-            int[] arg = new int[args.Length];
-            for (int a = 0; a < arg.Length; a++)
-            {
-                arg[a] = Convert.ToInt32(args[a]);
-            }
-            return new Rectangle(arg[0], arg[1], arg[2], arg[3]);
-        }
-
-        string RectToString(Rectangle rc)
-        {
-            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
-        }
         #endregion
 
 
@@ -1469,6 +1479,7 @@ namespace ImageGlass
             btnConvert.Image = ImageGlass.Properties.Resources.convert;
             btnPrintImage.Image = ImageGlass.Properties.Resources.printer;
             btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb;
+            btnExtension.Image = ImageGlass.Properties.Resources.extension;
             btnSetting.Image = ImageGlass.Properties.Resources.settings;
             btnHelp.Image = ImageGlass.Properties.Resources.about;
             btnFacebookLike.Image = ImageGlass.Properties.Resources.facebook;
@@ -1635,7 +1646,7 @@ namespace ImageGlass
             }
 
             //Windows Bound (Position + Size)------------------------------------------------                     "280,125,750,545").ToString());
-            Rectangle rc = StringToRect(Setting.GetConfig("WindowsBound", "280,125,750,545"));
+            Rectangle rc = Setting.StringToRect(Setting.GetConfig("WindowsBound", "280,125,750,545"));
             this.Bounds = rc;
             
             //windows state--------------------------------------------------------------
@@ -1734,7 +1745,7 @@ namespace ImageGlass
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                Setting.SetConfig("WindowsBound", RectToString(rect == Rectangle.Empty ?
+                Setting.SetConfig("WindowsBound", Setting.RectToString(rect == Rectangle.Empty ?
                                                                     this.Bounds : rect));
             }            
 
@@ -1757,6 +1768,7 @@ namespace ImageGlass
             Application.DoEvents();
             LoadConfig();
 
+            //Load image from param
             if (Program.args.Length > 0)
             {
                 if (File.Exists(Program.args[0]))
@@ -1790,50 +1802,55 @@ namespace ImageGlass
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
-            sp0.BackColor = Setting.BackgroundColor;
+            if (Setting.IsForcedActive)
+            {
+                sp0.BackColor = Setting.BackgroundColor;
 
-            //Change language
-            btnBack.ToolTipText = Setting.LangPack.Items["frmMain.btnBack"];
-            btnNext.ToolTipText = Setting.LangPack.Items["frmMain.btnNext"];
-            btnRotateLeft.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateLeft"];
-            btnRotateRight.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateRight"];
-            btnZoomIn.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomIn"];
-            btnZoomOut.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomOut"];
-            btnActualSize.ToolTipText = Setting.LangPack.Items["frmMain.btnActualSize"];
-            btnZoomLock.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomLock"];
-            btnScaletoWidth.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoWidth"];
-            btnScaletoHeight.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoHeight"];
-            btnWindowAutosize.ToolTipText = Setting.LangPack.Items["frmMain.btnWindowAutosize"];
-            btnOpen.ToolTipText = Setting.LangPack.Items["frmMain.btnOpen"];
-            btnRefresh.ToolTipText = Setting.LangPack.Items["frmMain.btnRefresh"];
-            btnGoto.ToolTipText = Setting.LangPack.Items["frmMain.btnGoto"];
-            btnThumb.ToolTipText = Setting.LangPack.Items["frmMain.btnThumb"];
-            btnCaro.ToolTipText = Setting.LangPack.Items["frmMain.btnCaro"];
-            btnFullScreen.ToolTipText = Setting.LangPack.Items["frmMain.btnFullScreen"];
-            btnSlideShow.ToolTipText = Setting.LangPack.Items["frmMain.btnSlideShow"];
-            btnConvert.ToolTipText = Setting.LangPack.Items["frmMain.btnConvert"];
-            btnPrintImage.ToolTipText = Setting.LangPack.Items["frmMain.btnPrintImage"];
-            btnFacebook.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebook"];
-            btnExtension.ToolTipText = Setting.LangPack.Items["frmMain.btnExtension"];
-            btnSetting.ToolTipText = Setting.LangPack.Items["frmMain.btnSetting"];
-            btnHelp.ToolTipText = Setting.LangPack.Items["frmMain.btnHelp"];
-            btnFacebookLike.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebookLike"];
-            btnFollow.ToolTipText = Setting.LangPack.Items["frmMain.btnFollow"];
-            btnReport.ToolTipText = Setting.LangPack.Items["frmMain.btnReport"];
+                //Change language
+                btnBack.ToolTipText = Setting.LangPack.Items["frmMain.btnBack"];
+                btnNext.ToolTipText = Setting.LangPack.Items["frmMain.btnNext"];
+                btnRotateLeft.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateLeft"];
+                btnRotateRight.ToolTipText = Setting.LangPack.Items["frmMain.btnRotateRight"];
+                btnZoomIn.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomIn"];
+                btnZoomOut.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomOut"];
+                btnActualSize.ToolTipText = Setting.LangPack.Items["frmMain.btnActualSize"];
+                btnZoomLock.ToolTipText = Setting.LangPack.Items["frmMain.btnZoomLock"];
+                btnScaletoWidth.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoWidth"];
+                btnScaletoHeight.ToolTipText = Setting.LangPack.Items["frmMain.btnScaletoHeight"];
+                btnWindowAutosize.ToolTipText = Setting.LangPack.Items["frmMain.btnWindowAutosize"];
+                btnOpen.ToolTipText = Setting.LangPack.Items["frmMain.btnOpen"];
+                btnRefresh.ToolTipText = Setting.LangPack.Items["frmMain.btnRefresh"];
+                btnGoto.ToolTipText = Setting.LangPack.Items["frmMain.btnGoto"];
+                btnThumb.ToolTipText = Setting.LangPack.Items["frmMain.btnThumb"];
+                btnCaro.ToolTipText = Setting.LangPack.Items["frmMain.btnCaro"];
+                btnFullScreen.ToolTipText = Setting.LangPack.Items["frmMain.btnFullScreen"];
+                btnSlideShow.ToolTipText = Setting.LangPack.Items["frmMain.btnSlideShow"];
+                btnConvert.ToolTipText = Setting.LangPack.Items["frmMain.btnConvert"];
+                btnPrintImage.ToolTipText = Setting.LangPack.Items["frmMain.btnPrintImage"];
+                btnFacebook.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebook"];
+                btnExtension.ToolTipText = Setting.LangPack.Items["frmMain.btnExtension"];
+                btnSetting.ToolTipText = Setting.LangPack.Items["frmMain.btnSetting"];
+                btnHelp.ToolTipText = Setting.LangPack.Items["frmMain.btnHelp"];
+                btnFacebookLike.ToolTipText = Setting.LangPack.Items["frmMain.btnFacebookLike"];
+                btnFollow.ToolTipText = Setting.LangPack.Items["frmMain.btnFollow"];
+                btnReport.ToolTipText = Setting.LangPack.Items["frmMain.btnReport"];
 
-            mnuStartSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStartSlideshow"];
-            mnuStopSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStopSlideshow"];
-            mnuExitSlideshow.Text = Setting.LangPack.Items["frmMain.mnuExitSlideshow"];
-            mnuEditWithPaint.Text = Setting.LangPack.Items["frmMain.mnuEditWithPaint"];
-            mnuExtractFrames.Text = string.Format(Setting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
-            mnuSetWallpaper.Text = Setting.LangPack.Items["frmMain.mnuSetWallpaper"];
-            mnuMoveRecycle.Text = Setting.LangPack.Items["frmMain.mnuMoveRecycle"];
-            mnuDelete.Text = Setting.LangPack.Items["frmMain.mnuDelete"];
-            mnuRename.Text = Setting.LangPack.Items["frmMain.mnuRename"];
-            mnuUploadFacebook.Text = Setting.LangPack.Items["frmMain.mnuUploadFacebook"];
-            mnuCopyImagePath.Text = Setting.LangPack.Items["frmMain.mnuCopyImagePath"];
-            mnuOpenLocation.Text = Setting.LangPack.Items["frmMain.mnuOpenLocation"];
-            mnuImageProperties.Text = Setting.LangPack.Items["frmMain.mnuImageProperties"];
+                mnuStartSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStartSlideshow"];
+                mnuStopSlideshow.Text = Setting.LangPack.Items["frmMain.mnuStopSlideshow"];
+                mnuExitSlideshow.Text = Setting.LangPack.Items["frmMain.mnuExitSlideshow"];
+                mnuEditWithPaint.Text = Setting.LangPack.Items["frmMain.mnuEditWithPaint"];
+                mnuExtractFrames.Text = string.Format(Setting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
+                mnuSetWallpaper.Text = Setting.LangPack.Items["frmMain.mnuSetWallpaper"];
+                mnuMoveRecycle.Text = Setting.LangPack.Items["frmMain.mnuMoveRecycle"];
+                mnuDelete.Text = Setting.LangPack.Items["frmMain.mnuDelete"];
+                mnuRename.Text = Setting.LangPack.Items["frmMain.mnuRename"];
+                mnuUploadFacebook.Text = Setting.LangPack.Items["frmMain.mnuUploadFacebook"];
+                mnuCopyImagePath.Text = Setting.LangPack.Items["frmMain.mnuCopyImagePath"];
+                mnuOpenLocation.Text = Setting.LangPack.Items["frmMain.mnuOpenLocation"];
+                mnuImageProperties.Text = Setting.LangPack.Items["frmMain.mnuImageProperties"];
+            }
+
+            Setting.IsForcedActive = false;
         }
 
         private void m_Controller_OnStart(object sender, ThumbnailControllerEventArgs e)
@@ -2126,13 +2143,8 @@ namespace ImageGlass
             //full screen
             if (this.rect == Rectangle.Empty)
             {
-                this.rect = this.Bounds;
-                this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Normal;
                 sp0.BackColor = Color.Black;
-                toolMain.Visible = false;
-                Application.DoEvents();
-                this.Bounds = Screen.FromControl(this).Bounds;
+                btnFullScreen.PerformClick();
 
                 timSlideShow.Start();
                 timSlideShow.Enabled = true;
@@ -2144,6 +2156,11 @@ namespace ImageGlass
                 mnuPhanCach.Visible = true;
                 mnuStartSlideshow.Enabled = false;
                 mnuStopSlideshow.Enabled = true;
+            }
+            else
+            {
+                btnFullScreen.PerformClick();
+                btnSlideShow_Click(sender, e);
             }
         }
 
@@ -2268,13 +2285,20 @@ namespace ImageGlass
 
         private void mnuProperties_Click(object sender, EventArgs e)
         {
-            ImageInfo.DisplayFileProperties(Setting.ImageList.getPath(Setting.CurrentIndex), 
-                                            this.Handle);
+            if (Setting.ImageList.length > 0)
+            {
+                ImageInfo.DisplayFileProperties(Setting.ImageList.getPath(Setting.CurrentIndex),
+                                                this.Handle);
+            }
         }
 
         private void mnuImageLocation_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", "/select,\"" + Setting.ImageList.getPath(Setting.CurrentIndex) + "\"");
+            if (Setting.ImageList.length > 0)
+            {
+                System.Diagnostics.Process.Start("explorer.exe", "/select,\"" + 
+                    Setting.ImageList.getPath(Setting.CurrentIndex) + "\"");
+            }
         }
 
         private void mnuDelete_Click(object sender, EventArgs e)
@@ -2497,14 +2521,7 @@ namespace ImageGlass
             timSlideShow.Enabled = false;
 
             sp0.BackColor = Setting.BackgroundColor;
-            toolMain.Visible = true;
-
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.WindowState = FormWindowState.Normal;
-
-            Application.DoEvents();
-            this.Bounds = this.rect;
-            this.rect = Rectangle.Empty;
+            btnFullScreen.PerformClick();
 
             mnuStartSlideshow.Visible = false;
             mnuStopSlideshow.Visible = false;

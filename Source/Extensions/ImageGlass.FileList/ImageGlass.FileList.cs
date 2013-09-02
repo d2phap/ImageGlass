@@ -44,6 +44,9 @@ namespace ImageGlass.FileList
 
 
         #region Properties
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<FileListItem> Items
         {
             get { return ds; }

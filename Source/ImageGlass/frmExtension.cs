@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ImageGlass;
 using ImageGlass.Plugins;
 using ImageGlass.Theme;
 
@@ -45,6 +46,24 @@ namespace ImageGlass
 
         private void frmExtension_Load(object sender, EventArgs e)
         {
+            //Load config
+            //Windows Bound (Position + Size)--------------------------------------------
+            Rectangle rc = Setting.StringToRect(Setting.GetConfig(this.Name + ".WindowsBound",
+                                                "280,125,840,500"));
+            this.Bounds = rc;
+
+            //windows state--------------------------------------------------------------
+            string s = Setting.GetConfig(this.Name + ".WindowsState", "Normal");
+            if (s == "Normal")
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else if (s == "Maximized")
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+
+            //Apply Windows theme
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(tvExtension);
 
@@ -100,6 +119,19 @@ namespace ImageGlass
                 System.Diagnostics.Process.Start("http://www.imageglass.org/download/extensions");
             }
             catch { }
+        }
+
+        private void frmExtension_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Save config---------------------------------
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                //Windows Bound-------------------------------------------------------------------
+                Setting.SetConfig(this.Name + ".WindowsBound", Setting.RectToString(this.Bounds));
+            }
+
+            //Windows State-------------------------------------------------------------------
+            Setting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
         }
     }
 }

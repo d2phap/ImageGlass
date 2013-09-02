@@ -26,6 +26,7 @@ using Ionic.Zip;
 using System.Text;
 using ImageGlass.Theme;
 
+
 namespace igcmd
 {
     static class Program

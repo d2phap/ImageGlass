@@ -127,7 +127,24 @@ namespace ImageGlass
 
         private void frmSetting_Load(object sender, EventArgs e)
         {
-            lblMenu_Click(lblGeneral, EventArgs.Empty);
+            //Load config
+            //Windows Bound (Position + Size)--------------------------------------------
+            Rectangle rc = Setting.StringToRect(Setting.GetConfig(this.Name + ".WindowsBound",
+                                                "280,125,610, 570"));
+            this.Bounds = rc;
+
+            //windows state--------------------------------------------------------------
+            string s = Setting.GetConfig(this.Name + ".WindowsState", "Normal");
+            if (s == "Normal")
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else if (s == "Maximized")
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+
+            LoadTabGeneralConfig();
             InitLanguagePack();
         }
 
@@ -143,6 +160,17 @@ namespace ImageGlass
         
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //Save config---------------------------------
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                //Windows Bound-------------------------------------------------------------------
+                Setting.SetConfig(this.Name + ".WindowsBound", Setting.RectToString(this.Bounds));
+            }
+
+            //Windows State-------------------------------------------------------------------
+            Setting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
+
+            //Ép thực thi các thiết lập
             Setting.IsForcedActive = true;
         }
 
@@ -189,6 +217,22 @@ namespace ImageGlass
         {
             Label lbl = (Label)sender;
 
+            if (lbl.Name == "lblGeneral")
+            {
+                tab1.SelectedTab = tabGeneral;
+            }
+            else if (lbl.Name == "lblContextMenu")
+            {
+                tab1.SelectedTab = tabContextMenu;
+            }
+            else if (lbl.Name == "lblLanguage")
+            {
+                tab1.SelectedTab = tabLanguage;
+            }
+        }
+
+        private void tab1_SelectedIndexChanged(object sender, EventArgs e)
+        {
             lblGeneral.Tag = 0;
             lblContextMenu.Tag = 0;
             lblLanguage.Tag = 0;
@@ -197,22 +241,25 @@ namespace ImageGlass
             lblContextMenu.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
 
-            lbl.Tag = 1;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;
-
-            if (lbl.Name == "lblGeneral")
+            if (tab1.SelectedTab == tabGeneral)
             {
-                tab1.SelectedTab = tabGeneral;
+                lblGeneral.Tag = 1;
+                lblGeneral.BackColor = M_COLOR_MENU_ACTIVE;
+
                 LoadTabGeneralConfig();
             }
-            else if (lbl.Name == "lblContextMenu")
+            else if (tab1.SelectedTab == tabContextMenu)
             {
-                tab1.SelectedTab = tabContextMenu;
+                lblContextMenu.Tag = 1;
+                lblContextMenu.BackColor = M_COLOR_MENU_ACTIVE;
+
                 txtExtensions.Text = Setting.ContextMenuExtensions;
             }
-            else if (lbl.Name == "lblLanguage")
+            else if (tab1.SelectedTab == tabLanguage)
             {
-                tab1.SelectedTab = tabLanguage;
+                lblLanguage.Tag = 1;
+                lblLanguage.BackColor = M_COLOR_MENU_ACTIVE;
+
                 lnkRefresh_LinkClicked(null, null);
             }
         }
@@ -497,20 +544,27 @@ namespace ImageGlass
             dsLanguages = new List<Library.Language>();
             dsLanguages.Add(new Library.Language());
 
-            foreach (string f in Directory.GetFiles(Setting.StartUpDir + "Languages\\"))
+            if (!Directory.Exists(Setting.StartUpDir + "Languages\\"))
             {
-                if (Path.GetExtension(f).ToLower() == ".iglang")
+                Directory.CreateDirectory(Setting.StartUpDir + "Languages\\");
+            }
+            else
+            {
+                foreach (string f in Directory.GetFiles(Setting.StartUpDir + "Languages\\"))
                 {
-                    Library.Language l = new Library.Language(f);
-                    dsLanguages.Add(l);
-
-                    int iLang = cmbLanguage.Items.Add(l.LangName);
-                    string curLang = Setting.LangPack.FileName;
-
-                    //Nếu là ngôn ngữ đang dùng
-                    if (f.CompareTo(curLang) == 0)
+                    if (Path.GetExtension(f).ToLower() == ".iglang")
                     {
-                        cmbLanguage.SelectedIndex = iLang;
+                        Library.Language l = new Library.Language(f);
+                        dsLanguages.Add(l);
+
+                        int iLang = cmbLanguage.Items.Add(l.LangName);
+                        string curLang = Setting.LangPack.FileName;
+
+                        //Nếu là ngôn ngữ đang dùng
+                        if (f.CompareTo(curLang) == 0)
+                        {
+                            cmbLanguage.SelectedIndex = iLang;
+                        }
                     }
                 }
             }
@@ -527,6 +581,8 @@ namespace ImageGlass
         }
 
         #endregion
+
+        
 
         
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExtension));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Get more extensions");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Get more extensions");
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.panExtension = new System.Windows.Forms.Panel();
@@ -49,16 +49,16 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 422);
+            this.panel1.Location = new System.Drawing.Point(0, 420);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(822, 42);
+            this.panel1.Size = new System.Drawing.Size(824, 42);
             this.panel1.TabIndex = 14;
             // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(728, 5);
+            this.btnClose.Location = new System.Drawing.Point(730, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(86, 28);
             this.btnClose.TabIndex = 6;
@@ -73,7 +73,7 @@
             this.panExtension.Location = new System.Drawing.Point(4, 0);
             this.panExtension.Margin = new System.Windows.Forms.Padding(0);
             this.panExtension.Name = "panExtension";
-            this.panExtension.Size = new System.Drawing.Size(600, 404);
+            this.panExtension.Size = new System.Drawing.Size(602, 402);
             this.panExtension.TabIndex = 0;
             // 
             // lnkGetMoreExt
@@ -82,7 +82,7 @@
             this.lnkGetMoreExt.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkGetMoreExt.Location = new System.Drawing.Point(0, 0);
             this.lnkGetMoreExt.Name = "lnkGetMoreExt";
-            this.lnkGetMoreExt.Size = new System.Drawing.Size(600, 404);
+            this.lnkGetMoreExt.Size = new System.Drawing.Size(602, 402);
             this.lnkGetMoreExt.TabIndex = 0;
             this.lnkGetMoreExt.TabStop = true;
             this.lnkGetMoreExt.Text = "Get more extensions";
@@ -110,7 +110,7 @@
             this.sp0.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.sp0.Panel2.Controls.Add(this.panExtension);
             this.sp0.Panel2.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.sp0.Size = new System.Drawing.Size(804, 404);
+            this.sp0.Size = new System.Drawing.Size(806, 402);
             this.sp0.SplitterDistance = 196;
             this.sp0.TabIndex = 13;
             // 
@@ -122,12 +122,12 @@
             this.tvExtension.ItemHeight = 25;
             this.tvExtension.Location = new System.Drawing.Point(0, 50);
             this.tvExtension.Name = "tvExtension";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Get more extensions";
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "Get more extensions";
             this.tvExtension.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.tvExtension.ShowRootLines = false;
-            this.tvExtension.Size = new System.Drawing.Size(193, 354);
+            this.tvExtension.Size = new System.Drawing.Size(193, 352);
             this.tvExtension.TabIndex = 8;
             this.tvExtension.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvExtension_AfterSelect);
             // 
@@ -136,13 +136,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(822, 464);
+            this.ClientSize = new System.Drawing.Size(824, 462);
             this.Controls.Add(this.sp0);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(440, 200);
             this.Name = "frmExtension";
-            this.Text = "Extension";
+            this.Text = "Extension Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExtension_FormClosing);
             this.Load += new System.EventHandler(this.frmExtension_Load);
             this.panel1.ResumeLayout(false);
             this.panExtension.ResumeLayout(false);
