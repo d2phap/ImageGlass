@@ -74,3 +74,8 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.cspro
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmReview.resources
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\Ionic.Zip.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.pdb

@@ -147,7 +147,7 @@
       <DependentUpon>frmSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
-    <Compile Include="Setting.cs" />
+    <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmAbout.resx">
@@ -190,6 +190,35 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\1.png" />
+    <Content Include="Resources\10.png" />
+    <Content Include="Resources\11.png" />
+    <Content Include="Resources\12.png" />
+    <Content Include="Resources\13.png" />
+    <Content Include="Resources\14.png" />
+    <Content Include="Resources\15.png" />
+    <Content Include="Resources\16.png" />
+    <Content Include="Resources\17.png" />
+    <Content Include="Resources\18.png" />
+    <Content Include="Resources\19.png" />
+    <Content Include="Resources\2.png" />
+    <Content Include="Resources\20.png" />
+    <Content Include="Resources\21.png" />
+    <Content Include="Resources\22.png" />
+    <Content Include="Resources\23.png" />
+    <Content Include="Resources\24.png" />
+    <Content Include="Resources\25.png" />
+    <Content Include="Resources\26.png" />
+    <Content Include="Resources\27.png" />
+    <Content Include="Resources\3.png" />
+    <Content Include="Resources\4.png" />
+    <Content Include="Resources\5.png" />
+    <Content Include="Resources\6.png" />
+    <Content Include="Resources\7.png" />
+    <Content Include="Resources\8.png" />
+    <Content Include="Resources\9.png" />
+    <Content Include="Resources\bot3.png" />
+    <Content Include="Resources\top3.png" />
     <None Include="bin\Debug\Themes\Storm\1.png" />
     <None Include="bin\Debug\Themes\Storm\2.png" />
     <None Include="bin\Debug\Themes\Storm\3.png" />
@@ -222,38 +251,6 @@
     <Content Include="imageglass.ico" />
     <None Include="Resources\Hand_Down.png" />
     <None Include="Resources\Hand_Move.png" />
-    <None Include="Resources\bottombar.png" />
-    <None Include="Resources\top.png" />
-    <None Include="Resources\follow.png" />
-    <None Include="Resources\facebook.png" />
-    <None Include="Resources\zoomlock.png" />
-    <None Include="Resources\topbar.png" />
-    <None Include="Resources\extension.png" />
-    <None Include="Resources\uploadfb.png" />
-    <None Include="Resources\printer.png" />
-    <None Include="Resources\zoomout.png" />
-    <None Include="Resources\zoomin.png" />
-    <None Include="Resources\thumbnail.png" />
-    <None Include="Resources\slideshow.png" />
-    <None Include="Resources\settings.png" />
-    <None Include="Resources\scaletowidth.png" />
-    <None Include="Resources\scaletoheight.png" />
-    <None Include="Resources\scaletofit.png" />
-    <None Include="Resources\rightrotate.png" />
-    <None Include="Resources\report.png" />
-    <None Include="Resources\refresh.png" />
-    <None Include="Resources\open.png" />
-    <None Include="Resources\next.png" />
-    <None Include="Resources\like.png" />
-    <None Include="Resources\leftrotate.png" />
-    <None Include="Resources\gotoimage.png" />
-    <None Include="Resources\fullscreen.png" />
-    <None Include="Resources\dislike.png" />
-    <None Include="Resources\convert.png" />
-    <None Include="Resources\caro1.png" />
-    <None Include="Resources\back.png" />
-    <None Include="Resources\autosizewindow.png" />
-    <None Include="Resources\about.png" />
     <None Include="Resources\noimg.png" />
     <None Include="Resources\imageerror.png" />
     <EmbeddedResource Include="frmSetting.resx">

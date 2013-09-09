@@ -92,7 +92,7 @@
 			<_88 key="frmSetting.cmbZoomOptimization._ClearPixels" default="Clear pixels" value="Làm rõ nét từng pixels" />
 			<_89 key="frmSetting.lblSlideshowInterval" default="Slide show interval: {0}" value="Thời gian chuyển tiếp hình ảnh: {0}" />
 			<_90 key="frmSetting.lblGeneral_MaxFileSize" default="Maximum thumbnail file size (MB):" value="Kích thước tổi đa hiển thị ảnh thu nhỏ (MB):" />
-			<_91 key="frmSetting.lblImageLoadingOrder" default="Image loading order:" value="Thứ tự tải ảnh tỏng thư mục:" />
+			<_91 key="frmSetting.lblImageLoadingOrder" default="Image loading order:" value="Thứ tự tải ảnh trong thư mục:" />
 			<_92 key="frmSetting.cmbImageOrder._Name" default="Name (default)" value="Tên (mặc định)" />
 			<_93 key="frmSetting.cmbImageOrder._Length" default="Length" value="Kích thước tập tin" />
 			<_94 key="frmSetting.cmbImageOrder._CreationTime" default="Creation time" value="Thời gian tạo" />

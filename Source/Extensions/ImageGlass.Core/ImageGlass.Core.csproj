@@ -62,6 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapBooster.cs" />
+    <Compile Include="frmDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDialogBox.Designer.cs">
+      <DependentUpon>frmDialogBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Img.cs" />
     <Compile Include="ImgFilter.cs" />
     <Compile Include="ImgMan.cs" />
@@ -75,6 +81,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmDialogBox.resx">
+      <DependentUpon>frmDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

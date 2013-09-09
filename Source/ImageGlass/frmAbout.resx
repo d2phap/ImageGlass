@@ -121,7 +121,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAABRmSURBVHhevdpncFzndQbgpVhAggDRiA6i945FJwGQka14
+        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAABRmSURBVHhevdpncFzndQbgpVhAggDRiA6i945FJwGQka14
         HMeKJ0omGcuT8UzGsewkHnviSHEysmJLskixAiQK0Rs7xSqSYi8AibrAAlhg0TsBkGDPzObPjk/ec/de
         8GJ5t4Cg8+MdsIC7OM/97ne+c5cq9elpddqZ+zqE0pFM8WvamWnC31HKqSlKPjVJiV9NUPzJCYo5OU7R
         J8Yo4vgIhR0boZCjwxR4ZIgCDg2Q76F+8q7X08a6PvKo7SX36h5yq+om18oucqnQknN5BzmVaWh9aTs5
@@ -212,14 +212,10 @@
 </value>
   </data>
   <data name="txtReferences.Text" xml:space="preserve">
-    <value>Logo designer: Nguyen Quoc Tuan
-
-DotNetZip Library: http://dotnetzip.codeplex.com/
-Imaeg: http://code.google.com/p/imaeg/
-IconLib: http://www.codeproject.com/Articles/16178/IconLib-Icons-Unfolded-MultiIcon-and-Windows-Vista
-Thumbnail dot NET: http://www.codeproject.com/Articles/20013/Image-Thumbnail-Viewer-with-NET-2-0
-Facebook SDK: http://csharpsdk.org/
-Numeric String Sort in C#: http://www.codeproject.com/Articles/11016/Numeric-String-Sort-in-C#</value>
+    <value>DotNetZip Library: copyright (c) 2006 - 2011 Dino Chiesa
+Imaeg: copyright (c) 2011 ed &lt;tripflag@gmail.com&gt;
+IconLib: copyright (c) 2006 Franco, Gustavo
+Facebook SDK: copyright (c) 2011 The Outercurve Foundation</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -41,9 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RenderTheme.cs" />
-    <Compile Include="Setting.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
+      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
+      <Name>ImageGlass.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

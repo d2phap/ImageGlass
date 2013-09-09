@@ -132,6 +132,7 @@ namespace ImageGlass.Core
         {
             try
             {
+                /*
                 string b = InputBox.Derp(
                     "Please select viewer brightness.\n" +
                     "-100 to 100, higher is brighter.\n" +
@@ -156,6 +157,7 @@ namespace ImageGlass.Core
                     contr = (float)(Convert.ToDouble(c) / 100);
                     gamma = (float)(Convert.ToDouble(g) / 100);
                 }
+                 * */
             }
             catch { }
         }

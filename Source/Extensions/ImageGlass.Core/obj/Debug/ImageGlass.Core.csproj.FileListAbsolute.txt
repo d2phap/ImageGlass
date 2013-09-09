@@ -19,3 +19,4 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Debug
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Debug\ImageGlass.Core.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Debug\ImageGlass.Core.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Debug\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Core\obj\Debug\ImageGlass.Core.frmDialogBox.resources

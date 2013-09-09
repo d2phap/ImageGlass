@@ -343,7 +343,6 @@
             this.sysWatch.EnableRaisingEvents = true;
             this.sysWatch.SynchronizingObject = this;
             this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
             this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 

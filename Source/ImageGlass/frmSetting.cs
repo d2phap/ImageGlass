@@ -29,6 +29,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -129,12 +130,12 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = Setting.StringToRect(Setting.GetConfig(this.Name + ".WindowsBound",
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound",
                                                 "280,125,610, 570"));
             this.Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = Setting.GetConfig(this.Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig(this.Name + ".WindowsState", "Normal");
             if (s == "Normal")
             {
                 this.WindowState = FormWindowState.Normal;
@@ -164,14 +165,14 @@ namespace ImageGlass
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                Setting.SetConfig(this.Name + ".WindowsBound", Setting.RectToString(this.Bounds));
+                GlobalSetting.SetConfig(this.Name + ".WindowsBound", GlobalSetting.RectToString(this.Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            Setting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
+            GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
 
             //Ép thực thi các thiết lập
-            Setting.IsForcedActive = true;
+            GlobalSetting.IsForcedActive = true;
         }
 
         /// <summary>
@@ -179,33 +180,33 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
-            this.Text = Setting.LangPack.Items["frmSetting._Text"];
-            lblGeneral.Text = Setting.LangPack.Items["frmSetting.lblGeneral"];
-            lblContextMenu.Text = Setting.LangPack.Items["frmSetting.lblContextMenu"];
-            lblLanguage.Text = Setting.LangPack.Items["frmSetting.lblLanguage"];
+            this.Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
+            lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
+            lblContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblContextMenu"];
+            lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
-            chkLockWorkspace.Text = Setting.LangPack.Items["frmSetting.chkLockWorkspace"];
-            chkAutoUpdate.Text = Setting.LangPack.Items["frmSetting.chkAutoUpdate"];
-            chkFindChildFolder.Text = Setting.LangPack.Items["frmSetting.chkFindChildFolder"];
-            chkWelcomePicture.Text = Setting.LangPack.Items["frmSetting.chkWelcomePicture"];
-            chkHideToolBar.Text = Setting.LangPack.Items["frmSetting.chkHideToolBar"];
-            lblGeneral_ZoomOptimization.Text = Setting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
-            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
-            lblGeneral_MaxFileSize.Text = Setting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
-            lblImageLoadingOrder.Text = Setting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
-            lblBackGroundColor.Text = Setting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            btnClose.Text = Setting.LangPack.Items["frmSetting.btnClose"];
-            lbl_ContextMenu_Description.Text = Setting.LangPack.Items["frmSetting.lbl_ContextMenu_Description"];
-            lblExtensions.Text = Setting.LangPack.Items["frmSetting.lblExtensions"];
-            lblAddDefaultContextMenu.Text = Setting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
-            lblUpdateContextMenu.Text = Setting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
-            lblRemoveAllContextMenu.Text = Setting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
-            lblLanguageText.Text = Setting.LangPack.Items["frmSetting.lblLanguageText"];
-            lnkRefresh.Text = Setting.LangPack.Items["frmSetting.lnkRefresh"];
-            lnkCreateNew.Text = Setting.LangPack.Items["frmSetting.lnkCreateNew"];
-            lnkEdit.Text = Setting.LangPack.Items["frmSetting.lnkEdit"];
-            lnkGetMoreLanguage.Text = Setting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
+            chkLockWorkspace.Text = GlobalSetting.LangPack.Items["frmSetting.chkLockWorkspace"];
+            chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
+            chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
+            chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
+            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+            lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
+            lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
+            lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
+            btnClose.Text = GlobalSetting.LangPack.Items["frmSetting.btnClose"];
+            lbl_ContextMenu_Description.Text = GlobalSetting.LangPack.Items["frmSetting.lbl_ContextMenu_Description"];
+            lblExtensions.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensions"];
+            lblAddDefaultContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
+            lblUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
+            lblRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
+            lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
+            lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
+            lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
+            lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
+            lnkGetMoreLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace ImageGlass
                 lblContextMenu.Tag = 1;
                 lblContextMenu.BackColor = M_COLOR_MENU_ACTIVE;
 
-                txtExtensions.Text = Setting.ContextMenuExtensions;
+                txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -273,13 +274,13 @@ namespace ImageGlass
         private void LoadTabGeneralConfig()
         {
             //Get value of chkLockWorkspace
-            chkLockWorkspace.Checked = bool.Parse(Setting.GetConfig("LockToEdge", "true"));
+            chkLockWorkspace.Checked = bool.Parse(GlobalSetting.GetConfig("LockToEdge", "true"));
 
             //Get value of chkFindChildFolder
-            chkFindChildFolder.Checked = bool.Parse(Setting.GetConfig("Recursive", "false"));
+            chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("Recursive", "false"));
 
             //Get value of cmbAutoUpdate
-            string s = Setting.GetConfig("AutoUpdate", "true");
+            string s = GlobalSetting.GetConfig("AutoUpdate", "true");
             if (s != "0")
             {
                 chkAutoUpdate.Checked = true;
@@ -290,19 +291,19 @@ namespace ImageGlass
             }
 
             //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = bool.Parse(Setting.GetConfig("Welcome", "true"));
+            chkWelcomePicture.Checked = bool.Parse(GlobalSetting.GetConfig("Welcome", "true"));
 
             //Get value of chkHideToolBar
-            chkHideToolBar.Checked = bool.Parse(Setting.GetConfig("IsHideToolbar", "false"));
+            chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
 
             //Load items of cmbZoomOptimization
             cmbZoomOptimization.Items.Clear();
-            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
-            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
-            cmbZoomOptimization.Items.Add(Setting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
 
             //Get value of cmbZoomOptimization
-            s = Setting.GetConfig("ZoomOptimize", "0");
+            s = GlobalSetting.GetConfig("ZoomOptimize", "0");
             int i = 0;
             if (int.TryParse(s, out i))
             {
@@ -316,7 +317,7 @@ namespace ImageGlass
             cmbZoomOptimization.SelectedIndex = i;
 
             //Get value of barInterval
-            i = int.Parse(Setting.GetConfig("Interval", "5"));
+            i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
             if (0 < i && i < 61)
             {
                 barInterval.Value = i;
@@ -326,11 +327,11 @@ namespace ImageGlass
                 barInterval.Value = 5;
             }
 
-            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
                                         barInterval.Value);
 
             //Get value of numMaxThumbSize
-            s = Setting.GetConfig("MaxThumbnailFileSize", "1");
+            s = GlobalSetting.GetConfig("MaxThumbnailFileSize", "1");
             i = 1;
             if (int.TryParse(s, out i))
             {}
@@ -338,16 +339,16 @@ namespace ImageGlass
 
             //Load items of cmbImageOrder
             cmbImageOrder.Items.Clear();
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
-            cmbImageOrder.Items.Add(Setting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
 
             //Get value of cmbImageOrder
-            s = Setting.GetConfig("ImageLoadingOrder", "0");
+            s = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
             i = 0;
             if (int.TryParse(s, out i))
             {
@@ -361,74 +362,74 @@ namespace ImageGlass
             cmbImageOrder.SelectedIndex = i;
 
             //Get background color
-            picBackgroundColor.BackColor = Setting.BackgroundColor;
+            picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
 
         private void chkLockWorkspace_CheckedChanged(object sender, EventArgs e)
         {
-            Setting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
+            GlobalSetting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
         {
             if (chkAutoUpdate.Checked)
             {
-                Setting.SetConfig("AutoUpdate", chkAutoUpdate.Checked.ToString());
+                GlobalSetting.SetConfig("AutoUpdate", chkAutoUpdate.Checked.ToString());
             }
             else
             {
-                Setting.SetConfig("AutoUpdate", "0");
+                GlobalSetting.SetConfig("AutoUpdate", "0");
             }
         }
 
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
-            Setting.SetConfig("Recursive", chkFindChildFolder.Checked.ToString());
+            GlobalSetting.SetConfig("Recursive", chkFindChildFolder.Checked.ToString());
         }
 
         private void chkHideToolBar_CheckedChanged(object sender, EventArgs e)
         {
-            Setting.IsHideToolBar = chkHideToolBar.Checked;
-            Setting.SetConfig("IsHideToolbar", Setting.IsHideToolBar.ToString());
+            GlobalSetting.IsHideToolBar = chkHideToolBar.Checked;
+            GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsHideToolBar.ToString());
         }
 
         private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbZoomOptimization.SelectedIndex == 1)
             {
-                Setting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
             }
             else if (cmbZoomOptimization.SelectedIndex == 2)
             {
-                Setting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
             }
             else
             {
-                Setting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
             }
         }
 
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
-            Setting.IsWelcomePicture = chkWelcomePicture.Checked;
+            GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
         }
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            Setting.SetConfig("Interval", barInterval.Value.ToString());
-            lblSlideshowInterval.Text = string.Format(Setting.LangPack.Items["frmSetting.lblSlideshowInterval"],
+            GlobalSetting.SetConfig("Interval", barInterval.Value.ToString());
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"],
                                         barInterval.Value);
         }
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
         {
-            Setting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
+            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
         }
 
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Setting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
-            Setting.LoadImageOrderConfig();
+            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
+            GlobalSetting.LoadImageOrderConfig();
         }
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
@@ -439,10 +440,10 @@ namespace ImageGlass
             if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 picBackgroundColor.BackColor = c.Color;
-                Setting.BackgroundColor = c.Color;
+                GlobalSetting.BackgroundColor = c.Color;
 
                 //Luu background color
-                Setting.SetConfig("BackgroundColor", Setting.BackgroundColor.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
             }
         }
         #endregion
@@ -452,10 +453,10 @@ namespace ImageGlass
         private void lblAddDefaultContextMenu_Click(object sender, EventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
             p.StartInfo.Arguments = "addext " + //name of param
                                     "\"" + Application.ExecutablePath + "\" " + //arg 1
-                                    "\"" + Setting.SupportedExtensions + "\" "; //arg 2
+                                    "\"" + GlobalSetting.SupportedExtensions + "\" "; //arg 2
             p.EnableRaisingEvents = true;
             p.Exited += p_Exited;
 
@@ -471,7 +472,7 @@ namespace ImageGlass
         {
             //Update context menu
             Process p = new Process();
-            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
             p.StartInfo.Arguments = "updateext " + //name of param
                                     "\"" + Application.ExecutablePath + "\" " + //arg 1
                                     "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
@@ -489,7 +490,7 @@ namespace ImageGlass
         {
             //Remove all context menu
             Process p = new Process();
-            p.StartInfo.FileName = Setting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
             p.StartInfo.Arguments = "removeext ";
             p.EnableRaisingEvents = true;
             p.Exited += p_Exited;
@@ -500,12 +501,12 @@ namespace ImageGlass
             }
             catch { }
 
-            txtExtensions.Text = Setting.ContextMenuExtensions;
+            txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
         }
 
         void p_Exited(object sender, EventArgs e)
         {
-            txtExtensions.Text = Setting.ContextMenuExtensions;
+            txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
         }
 
         #endregion
@@ -533,7 +534,7 @@ namespace ImageGlass
         {
             Process p = new Process();
             p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
-            p.StartInfo.Arguments = "igeditlang \"" + Setting.LangPack.FileName + "\"";
+            p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
             p.Start();
         }
 
@@ -544,13 +545,13 @@ namespace ImageGlass
             dsLanguages = new List<Library.Language>();
             dsLanguages.Add(new Library.Language());
 
-            if (!Directory.Exists(Setting.StartUpDir + "Languages\\"))
+            if (!Directory.Exists(GlobalSetting.StartUpDir + "Languages\\"))
             {
-                Directory.CreateDirectory(Setting.StartUpDir + "Languages\\");
+                Directory.CreateDirectory(GlobalSetting.StartUpDir + "Languages\\");
             }
             else
             {
-                foreach (string f in Directory.GetFiles(Setting.StartUpDir + "Languages\\"))
+                foreach (string f in Directory.GetFiles(GlobalSetting.StartUpDir + "Languages\\"))
                 {
                     if (Path.GetExtension(f).ToLower() == ".iglang")
                     {
@@ -558,7 +559,7 @@ namespace ImageGlass
                         dsLanguages.Add(l);
 
                         int iLang = cmbLanguage.Items.Add(l.LangName);
-                        string curLang = Setting.LangPack.FileName;
+                        string curLang = GlobalSetting.LangPack.FileName;
 
                         //Nếu là ngôn ngữ đang dùng
                         if (f.CompareTo(curLang) == 0)
@@ -577,7 +578,7 @@ namespace ImageGlass
         
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Setting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+            GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
         }
 
         #endregion

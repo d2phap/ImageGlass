@@ -27,6 +27,7 @@ using Ionic.Zip;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services;
+using ImageGlass.Services.Configuration;
 
 namespace igcmd
 {
@@ -97,14 +98,14 @@ namespace igcmd
         public static void AutoUpdate()
         {
             Update up = new Update(new Uri("http://www.imageglass.org/checkforupdate"),
-                Setting.StartUpDir + "update.xml");
+                GlobalSetting.StartUpDir + "update.xml");
 
-            if (File.Exists(Setting.StartUpDir + "update.xml"))
+            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
             {
-                File.Delete(Setting.StartUpDir + "update.xml");
+                File.Delete(GlobalSetting.StartUpDir + "update.xml");
             }
 
-            Setting.SetConfig("AutoUpdate", DateTime.Now.Day.ToString() + "/" +
+            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.Day.ToString() + "/" +
                                 DateTime.Now.Month.ToString() + "/" +
                                 DateTime.Now.Year.ToString());
             

@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using ImageGlass;
 using ImageGlass.Plugins;
 using ImageGlass.Theme;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -48,12 +49,12 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = Setting.StringToRect(Setting.GetConfig(this.Name + ".WindowsBound",
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound",
                                                 "280,125,840,500"));
             this.Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = Setting.GetConfig(this.Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig(this.Name + ".WindowsState", "Normal");
             if (s == "Normal")
             {
                 this.WindowState = FormWindowState.Normal;
@@ -85,10 +86,10 @@ namespace ImageGlass
             }
 
             //Load language:
-            this.Text = Setting.LangPack.Items["frmExtension._Text"];
-            lnkGetMoreExt.Text = Setting.LangPack.Items["frmExtension.lnkGetMoreExt"];
-            tvExtension.Nodes[0].Text = Setting.LangPack.Items["frmExtension.Node0"];
-            btnClose.Text = Setting.LangPack.Items["frmExtension.btnClose"];
+            this.Text = GlobalSetting.LangPack.Items["frmExtension._Text"];
+            lnkGetMoreExt.Text = GlobalSetting.LangPack.Items["frmExtension.lnkGetMoreExt"];
+            tvExtension.Nodes[0].Text = GlobalSetting.LangPack.Items["frmExtension.Node0"];
+            btnClose.Text = GlobalSetting.LangPack.Items["frmExtension.btnClose"];
 
         }
 
@@ -127,11 +128,11 @@ namespace ImageGlass
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                Setting.SetConfig(this.Name + ".WindowsBound", Setting.RectToString(this.Bounds));
+                GlobalSetting.SetConfig(this.Name + ".WindowsBound", GlobalSetting.RectToString(this.Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            Setting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
+            GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
         }
     }
 }

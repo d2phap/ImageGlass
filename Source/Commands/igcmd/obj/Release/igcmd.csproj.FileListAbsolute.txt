@@ -11,8 +11,11 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\igcmd.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Theme.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\Ionic.Zip.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Theme.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Release\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\obj\Release\igcmd.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Release\ImageGlass.Library.pdb

@@ -25,75 +25,73 @@ namespace ImageGlass.Core
 {
     public class InputBox
     {
-        public static string Derp(string query, string std)
+        private static bool _isNumberOnly = false;
+        private static string _message = "";
+        
+        /// <summary>
+        /// Get, set input style
+        /// </summary>
+        public static bool IsNumberOnly
         {
-            InputBox ib = new InputBox(query, std);
-            ib.ShowDialogue();
-            return ib.ret;
-        }
-        Form form;
-        Label label;
-        TextBox textbox;
-        public string ret;
-        public bool closed;
-        public InputBox(string query, string std)
-        {
-            form = null;
-            label = null;
-            textbox = null;
-            closed = false;
-            ret = null;
-
-            form = new Form();
-            form.StartPosition = FormStartPosition.CenterParent;
-            form.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-
-            Label derp = new Label(); derp.Dock = DockStyle.Fill;
-            form.Controls.Add(derp); Size pad = new Size(
-                form.Width - derp.Width,
-                form.Height - derp.Height);
-            derp.Dispose();
-
-            label = new Label();
-            label.Text = query;
-            label.AutoSize = true;
-            label.Location = new Point(16, 16);
-            label.Visible = true;
-            form.Controls.Add(label);
-
-            textbox = new TextBox();
-            textbox.Text = std;
-            textbox.Width = Math.Max(
-                480, label.Width);
-            textbox.Location = new Point(
-                label.Location.X,
-                label.Location.Y +
-                label.Height + 16);
-            textbox.Visible = true;
-            form.Controls.Add(textbox);
-
-            form.Width = textbox.Width + 32 + pad.Width;
-            form.Height = textbox.Top + textbox.Height + 8 + pad.Height;
-            textbox.KeyDown += new KeyEventHandler(textbox_KeyDown);
+            get { return _isNumberOnly; }
+            set { _isNumberOnly = value; }
         }
 
-        public void ShowDialogue()
+        /// <summary>
+        /// Get, set the message user inputs
+        /// </summary>
+        public static string Message
         {
-            form.ShowDialog();
-            textbox.Focus();
+            get { return InputBox._message; }
+            set { _message = value; }
         }
 
-        void textbox_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Show input dialog box
+        /// </summary>
+        /// <param name="title">Title</param>
+        /// <param name="message">Message</param>
+        /// <returns></returns>
+        public static DialogResult ShowDiaLog(string title, string message)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                ret = textbox.Text;
-                form.Close();
-            }
-            if (e.KeyCode == Keys.Escape)
-            {
-                form.Close();
-            }
+            frmDialogBox f = new frmDialogBox(title, message);
+            f.Title = title;
+            f.IsNumberOnly = false;
+            f.ShowDialog();
+
+            //Lưu nội dung vừa nhập
+            InputBox.Message = f.Content;
+
+            return f.DialogResult;
         }
+
+        public static DialogResult ShowDiaLog(string title, string message, string defaultValue)
+        {
+            frmDialogBox f = new frmDialogBox(title, message);
+            f.Title = title;
+            f.IsNumberOnly = false;
+            f.Content = defaultValue;
+            f.ShowDialog();
+
+            //Lưu nội dung vừa nhập
+            InputBox.Message = f.Content;
+
+            return f.DialogResult;
+        }
+
+        public static DialogResult ShowDiaLog(string title, string message, string defaultValue, bool isNumberOnly)
+        {
+            frmDialogBox f = new frmDialogBox(title, message);
+            f.Title = title;
+            f.IsNumberOnly = isNumberOnly;
+            f.Content = defaultValue;
+            f.ShowDialog();
+
+            //Lưu nội dung vừa nhập
+            InputBox.Message = f.Content;
+
+            return f.DialogResult;
+        }
+
     }
 }

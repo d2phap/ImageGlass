@@ -1,7 +1,5 @@
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\WindowsFormsApplication1.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\WindowsFormsApplication1.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Plugins.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Theme.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ThemeConfig.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Form1.resources
@@ -9,3 +7,9 @@ F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplicatio
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.exe
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Services.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Library.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Services.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Core.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Library.pdb

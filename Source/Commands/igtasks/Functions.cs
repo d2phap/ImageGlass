@@ -7,6 +7,7 @@ using System.Security.Permissions;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Configuration;
+using ImageGlass.Services.Configuration;
 
 namespace igtasks
 {
@@ -23,7 +24,7 @@ namespace igtasks
                 string supportedExts = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                          "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                          "*.exif;*.wmf;*.emf;";
-                supportedExts = GetConfig("SupportedExtensions", supportedExts);
+                supportedExts = GlobalSetting.GetConfig("SupportedExtensions", supportedExts);
 
                 AddImageGlassToContextMenu(igPath, supportedExts);
             }
@@ -50,7 +51,7 @@ namespace igtasks
                     AddContextMenuItem(ext, "Open with ImageGlass", "", igPath + " %1", igPath, "0");
                 }
 
-                SetConfig("ContextMenuExtensions", extensions);
+                GlobalSetting.SetConfig("ContextMenuExtensions", extensions);
             }
             catch (Exception ex)
             {
@@ -67,9 +68,9 @@ namespace igtasks
             try
             {
                 string supportedExts = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
-                                                         "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                         "*.exif;*.wmf;*.emf;";
-                supportedExts = GetConfig("SupportedExtensions", supportedExts);
+                                        "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
+                                        "*.exif;*.wmf;*.emf;";
+                supportedExts = GlobalSetting.GetConfig("SupportedExtensions", supportedExts);
 
                 string[] exts = supportedExts.Replace("*", "").Split(new char[] { ';' },
                                                 StringSplitOptions.RemoveEmptyEntries);
@@ -79,7 +80,7 @@ namespace igtasks
                     RemoveContextMenuItem(ext, "Open with ImageGlass");
                 }
 
-                SetConfig("ContextMenuExtensions", "");
+                GlobalSetting.SetConfig("ContextMenuExtensions", "");
             }
             catch (Exception ex)
             {
@@ -237,81 +238,6 @@ namespace igtasks
         }
 
 
-
-        
-        /// <summary>
-        /// Lấy thông tin cấu hình. Trả về "" nếu không tìm thấy.
-        /// </summary>
-        /// <param name="key">Tên cấu hình</param>
-        /// <returns></returns>
-        public static string GetConfig(string key)
-        {
-            return GetConfig(key, "");
-        }
-
-        /// <summary>
-        /// Lấy thông tin cấu hình
-        /// </summary>
-        /// <param name="key">Tên cấu hình</param>
-        /// <param name="defaultValue">Giá trị mặc định nếu không tìm thấy</param>
-        /// <returns></returns>
-        public static string GetConfig(string key, string defaultValue)
-        {
-            // Open App.Config of executable
-            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration
-                                                        (Application.StartupPath + "\\ImageGlass.exe");
-
-            //Kiểm tra sự tồn tại của Key
-            int index = config.AppSettings.Settings.AllKeys.ToList().IndexOf(key);
-
-            //Nếu tồn tại
-            if (index != -1)
-            {
-                //Thì lấy giá trị
-                return config.AppSettings.Settings[key].Value;
-            }
-            else //Nếu không tồn tại
-            {
-                //Trả về giá trị mặc định
-                return defaultValue;
-            }
-
-        }
-
-        /// <summary>
-        /// Gán thông tin cấu hình
-        /// </summary>
-        /// <param name="key">Tên cấu hình</param>
-        /// <param name="value">Giá trị cấu hình</param>
-        public static void SetConfig(string key, string value)
-        {
-            // Open App.Config of executable
-            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration
-                                                        (Application.StartupPath + "\\ImageGlass.exe");
-
-            //Kiểm tra sự tồn tại của Key
-            int index = config.AppSettings.Settings.AllKeys.ToList().IndexOf(key);
-
-            //Nếu tồn tại
-            if (index != -1)
-            {
-                //Thì cập nhật
-                config.AppSettings.Settings[key].Value = value;
-            }
-            else //Nếu không tồn tại
-            {
-                //Tạo Key mới
-                config.AppSettings.Settings.Add(key, value);
-            }
-
-            // Save the changes in App.config file.
-            config.Save(ConfigurationSaveMode.Modified);
-
-
-            // Force a reload of a changed section.
-            ConfigurationManager.RefreshSection("appSettings");
-
-        }
         #endregion
 
 

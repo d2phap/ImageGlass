@@ -27,6 +27,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -146,7 +147,7 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblVersion.Text = String.Format(Setting.LangPack.Items["frmAbout.lblVersion"], 
+            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], 
                                             Application.ProductVersion);
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
                                 "All rights reserved.";
@@ -165,14 +166,14 @@ namespace ImageGlass
             lblMenu_Click(lblInfo, EventArgs.Empty);
 
             //Load language:
-            lblSlogant.Text = Setting.LangPack.Items["frmAbout.lblSlogant"];
-            lblInfo.Text = Setting.LangPack.Items["frmAbout.lblInfo"];
-            lblComponent.Text = Setting.LangPack.Items["frmAbout.lblComponent"];
-            lblReferences.Text = Setting.LangPack.Items["frmAbout.lblReferences"];
-            lblInfoContact.Text = Setting.LangPack.Items["frmAbout.lblInfoContact"];
-            lblSoftwareUpdate.Text = Setting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
-            lnkCheckUpdate.Text = Setting.LangPack.Items["frmAbout.lnkCheckUpdate"];
-            this.Text = Setting.LangPack.Items["frmAbout._Text"];
+            lblSlogant.Text = GlobalSetting.LangPack.Items["frmAbout.lblSlogant"];
+            lblInfo.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfo"];
+            lblComponent.Text = GlobalSetting.LangPack.Items["frmAbout.lblComponent"];
+            lblReferences.Text = GlobalSetting.LangPack.Items["frmAbout.lblReferences"];
+            lblInfoContact.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfoContact"];
+            lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
+            lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
+            this.Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
 
         }
 

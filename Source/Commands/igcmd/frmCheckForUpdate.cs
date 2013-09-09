@@ -28,6 +28,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
+using ImageGlass.Services.Configuration;
 
 namespace igcmd
 {
@@ -42,8 +43,8 @@ namespace igcmd
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Setting.StartUpDir + "update.xml"))
-                File.Delete(Setting.StartUpDir + "update.xml");
+            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
+                File.Delete(GlobalSetting.StartUpDir + "update.xml");
             Application.Exit();
         }
 
@@ -59,19 +60,19 @@ namespace igcmd
 
             //CheckForUpdate();
 
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(Setting.StartUpDir + "ImageGlass.exe");
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir + "ImageGlass.exe");
             lblCurentVersion.Text = "Version: " + fv.FileVersion;
 
         }
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), 
-                Setting.StartUpDir + "update.xml");
+            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"),
+                GlobalSetting.StartUpDir + "update.xml");
 
-            if (File.Exists(Setting.StartUpDir + "update.xml"))
+            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
             {
-                File.Delete(Setting.StartUpDir + "update.xml");
+                File.Delete(GlobalSetting.StartUpDir + "update.xml");
             }
 
             lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
@@ -82,7 +83,7 @@ namespace igcmd
 
             this.Text = "";
 
-            if (up.CheckForUpdate(Setting.StartUpDir + "ImageGlass.exe"))
+            if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
             {
                 if (up.Info.VersionType.ToLower() == "stable")
                 {

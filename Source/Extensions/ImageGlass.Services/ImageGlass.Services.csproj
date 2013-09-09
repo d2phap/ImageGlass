@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\GlobalSetting.cs" />
     <Compile Include="HotfixItemUpdate.cs" />
     <Compile Include="HotfixUpdate.cs" />
     <Compile Include="Update.cs" />
@@ -49,6 +50,10 @@
     <Compile Include="InfoUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
+      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
+      <Name>ImageGlass.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>

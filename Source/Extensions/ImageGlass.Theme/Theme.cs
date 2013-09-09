@@ -23,6 +23,8 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using System.Drawing;
+using ImageGlass.Services.Configuration;
+
 
 namespace ImageGlass.Theme
 {
@@ -54,7 +56,7 @@ namespace ImageGlass.Theme
         public string zoomin = string.Empty;
         public string zoomout = string.Empty;
         public string scaletofit = string.Empty;
-        public string zoomlock = string.Empty;                  //v1.5 only
+        public string zoomlock = string.Empty;                  //v1.5+ only
         public string scaletowidth = string.Empty;
         public string scaletoheight = string.Empty;
         public string autosizewindow = string.Empty;
@@ -66,9 +68,9 @@ namespace ImageGlass.Theme
         public string fullscreen = string.Empty;
         public string slideshow = string.Empty;
         public string convert = string.Empty;
-        public string print = string.Empty;                     //v1.5 only
-        public string uploadfb = string.Empty;                  //v1.5 only
-        public string extension = string.Empty;                 //v1.5 only
+        public string print = string.Empty;                     //v1.5+ only
+        public string uploadfb = string.Empty;                  //v1.5+ only
+        public string extension = string.Empty;                 //v1.5+ only
         public string settings = string.Empty;
         public string about = string.Empty;
         public string like = string.Empty;
@@ -78,7 +80,7 @@ namespace ImageGlass.Theme
         public Theme() { }
 
         /// <summary>
-        /// Read theme data from theme configuration file (Version 1.5)
+        /// Read theme data from theme configuration file (Version 1.5+)
         /// </summary>
         /// <param name="file"></param>
         public Theme(string file)
@@ -87,7 +89,7 @@ namespace ImageGlass.Theme
         }
 
         /// <summary>
-        /// Read theme data from theme configuration file (Version 1.5). 
+        /// Read theme data from theme configuration file (Version 1.5+). 
         /// Return TRUE if sucessful, FALSE if the theme is older version
         /// </summary>
         /// <param name="file"></param>
@@ -381,21 +383,20 @@ namespace ImageGlass.Theme
         /// Áp dụng giao diện mới
         /// </summary>
         /// <param name="themePath">Đường dẫn đầy đủ của *.igtheme</param>
-        /// <param name="exePath">Đường dẫn đầy đủ của ImageGlass.exe</param>
-        public void ApplyTheme(string themePath, string exePath)
+        public void ApplyTheme(string themePath)
         {
             //Lưu đường dẫn theme
-            Setting.SetConfig("Theme", themePath, exePath);
+            GlobalSetting.SetConfig("Theme", themePath);
 
             //Lưu màu nền
             try
             {
                 ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme(themePath);
-                Setting.SetConfig("BackgroundColor", th.backcolor.ToArgb().ToString(), exePath);
+                GlobalSetting.SetConfig("BackgroundColor", th.backcolor.ToArgb().ToString());
             }
             catch
             {
-                Setting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString(), exePath);
+                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString());
             }
             
         }

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using Facebook;
+using ImageGlass.Services.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -112,7 +113,7 @@ namespace ImageGlass
             webBrowser1.Navigate(_loginUrl.AbsoluteUri);
 
             //Load language
-            this.Text = Setting.LangPack.Items["frmFaceBookLogin._Text"];
+            this.Text = GlobalSetting.LangPack.Items["frmFaceBookLogin._Text"];
         }
     }
 }

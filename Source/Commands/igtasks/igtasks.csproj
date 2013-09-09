@@ -76,6 +76,10 @@
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Extensions\ImageGlass.Services\ImageGlass.Services.csproj">
+      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
+      <Name>ImageGlass.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

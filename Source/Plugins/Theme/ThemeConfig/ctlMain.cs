@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using System.IO;
+using ImageGlass.Services.Configuration;
 
 namespace ThemeConfig
 {
@@ -46,6 +47,7 @@ namespace ThemeConfig
         private Button btnAdd;
         private Label label1;
         private LinkLabel lnkDownloadTheme;
+        private PictureBox pictureBox1;
         private IContainer components;
 
 		public ctlMain()
@@ -79,6 +81,7 @@ namespace ThemeConfig
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ctlMain));
             this.clnThemeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lnkHelp = new System.Windows.Forms.LinkLabel();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -93,7 +96,9 @@ namespace ThemeConfig
             this.btnAdd = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lnkDownloadTheme = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // clnThemeName
@@ -238,7 +243,7 @@ namespace ThemeConfig
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.label1.Location = new System.Drawing.Point(19, 16);
+            this.label1.Location = new System.Drawing.Point(62, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(285, 25);
             this.label1.TabIndex = 22;
@@ -258,9 +263,20 @@ namespace ThemeConfig
             this.lnkDownloadTheme.Text = "Download theme";
             this.lnkDownloadTheme.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDownloadTheme_LinkClicked);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(24, 9);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            // 
             // ctlMain
             // 
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lnkDownloadTheme);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lnkHelp);
@@ -280,6 +296,7 @@ namespace ThemeConfig
             this.Size = new System.Drawing.Size(554, 396);
             this.Load += new System.EventHandler(this.ctlMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,6 +305,7 @@ namespace ThemeConfig
 
         private void RefreshThemeList()
         {
+            
             string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "Themes";
             lvTheme.Items.Clear();
             lvTheme.Items.Add("(default)").Tag = "Default";
@@ -403,7 +421,7 @@ namespace ThemeConfig
             if (lvTheme.SelectedItems.Count > 0)
             {
                 ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme();
-                th.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString(), Application.ExecutablePath);
+                th.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString());
                
                 DialogResult msg = MessageBox.Show("Restart ImageGlass to complete the new theme applying ?", 
                     "Restart", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -465,7 +483,7 @@ namespace ThemeConfig
 
                 if (t == lvTheme.SelectedItems[0].Tag.ToString())
                 {
-                    MessageBox.Show("Cannot uninstall the selected theme because ImageGlass is using");
+                    MessageBox.Show("Cannot uninstall the selected theme because ImageGlass is using.");
                     return;
                 }
                 else

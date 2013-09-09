@@ -55,6 +55,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -136,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panInfo.AutoScroll = true;
             this.panInfo.BackColor = System.Drawing.Color.White;
+            this.panInfo.Controls.Add(this.label1);
             this.panInfo.Controls.Add(this.lnkCheckUpdate);
             this.panInfo.Controls.Add(this.lblUpdate);
             this.panInfo.Controls.Add(this.lnkFacebook);
@@ -160,7 +162,7 @@
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkCheckUpdate.Location = new System.Drawing.Point(48, 338);
+            this.lnkCheckUpdate.Location = new System.Drawing.Point(48, 356);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(120, 23);
             this.lnkCheckUpdate.TabIndex = 15;
@@ -174,7 +176,7 @@
             // 
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
-            this.lblUpdate.Location = new System.Drawing.Point(19, 310);
+            this.lblUpdate.Location = new System.Drawing.Point(19, 328);
             this.lblUpdate.Name = "lblUpdate";
             this.lblUpdate.Size = new System.Drawing.Size(118, 19);
             this.lblUpdate.TabIndex = 13;
@@ -187,7 +189,7 @@
             this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkFacebook.Location = new System.Drawing.Point(48, 283);
+            this.lnkFacebook.Location = new System.Drawing.Point(48, 301);
             this.lnkFacebook.Name = "lnkFacebook";
             this.lnkFacebook.Size = new System.Drawing.Size(307, 23);
             this.lnkFacebook.TabIndex = 12;
@@ -204,7 +206,7 @@
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkProjectPage.Location = new System.Drawing.Point(48, 260);
+            this.lnkProjectPage.Location = new System.Drawing.Point(48, 278);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(261, 23);
             this.lnkProjectPage.TabIndex = 11;
@@ -221,7 +223,7 @@
             this.lnkIGHomepage.LinkArea = new System.Windows.Forms.LinkArea(22, 99);
             this.lnkIGHomepage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkIGHomepage.Location = new System.Drawing.Point(48, 237);
+            this.lnkIGHomepage.Location = new System.Drawing.Point(48, 255);
             this.lnkIGHomepage.Name = "lnkIGHomepage";
             this.lnkIGHomepage.Size = new System.Drawing.Size(278, 23);
             this.lnkIGHomepage.TabIndex = 10;
@@ -235,7 +237,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
-            this.label2.Location = new System.Drawing.Point(19, 209);
+            this.label2.Location = new System.Drawing.Point(19, 227);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 19);
             this.label2.TabIndex = 8;
@@ -248,7 +250,7 @@
             this.linkLabel4.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkLabel4.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.linkLabel4.Location = new System.Drawing.Point(48, 182);
+            this.linkLabel4.Location = new System.Drawing.Point(48, 200);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(156, 23);
             this.linkLabel4.TabIndex = 7;
@@ -265,7 +267,7 @@
             this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.linkLabel2.Location = new System.Drawing.Point(48, 159);
+            this.linkLabel2.Location = new System.Drawing.Point(48, 177);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(94, 23);
             this.linkLabel2.TabIndex = 5;
@@ -282,7 +284,7 @@
             this.lnkEmail.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.lnkEmail.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEmail.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkEmail.Location = new System.Drawing.Point(48, 136);
+            this.lnkEmail.Location = new System.Drawing.Point(48, 154);
             this.lnkEmail.Name = "lnkEmail";
             this.lnkEmail.Size = new System.Drawing.Size(166, 23);
             this.lnkEmail.TabIndex = 4;
@@ -296,7 +298,7 @@
             // 
             this.lblInfoContact.AutoSize = true;
             this.lblInfoContact.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Underline);
-            this.lblInfoContact.Location = new System.Drawing.Point(19, 108);
+            this.lblInfoContact.Location = new System.Drawing.Point(19, 126);
             this.lblInfoContact.Name = "lblInfoContact";
             this.lblInfoContact.Size = new System.Drawing.Size(60, 19);
             this.lblInfoContact.TabIndex = 2;
@@ -306,7 +308,7 @@
             // 
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblCopyright.Location = new System.Drawing.Point(19, 55);
+            this.lblCopyright.Location = new System.Drawing.Point(19, 49);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(292, 38);
             this.lblCopyright.TabIndex = 1;
@@ -436,6 +438,15 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 99);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(180, 15);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Design logo: Nguyễn Quốc Tuấn";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -499,5 +510,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblSoftwareUpdate;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label label1;
     }
 }

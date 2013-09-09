@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using System.Threading;
 //using System.Dynamic;
 using System.IO;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -63,7 +64,7 @@ namespace ImageGlass
 
         private void frmFacebook_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Setting.IsForcedActive = true;
+            GlobalSetting.IsForcedActive = true;
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -73,7 +74,7 @@ namespace ImageGlass
             {
                 txtMessage.Enabled = false;
 
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Cancel"];
+                btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Cancel"];
                 btnUpload.Tag = 1;
                 UploadPhoto();
             }
@@ -85,9 +86,9 @@ namespace ImageGlass
             else //Do cancellation
             {
                 txtMessage.Enabled = true;
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Upload"];
+                btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
                 btnUpload.Tag = 0;
-                lblStatus.Text = string.Format(Setting.LangPack.Items["frmFacebook._StatusBegin"], 
+                lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"], 
                                                 btnUpload.Text);
 
                 if (_fb != null)
@@ -99,7 +100,7 @@ namespace ImageGlass
 
         private void frmFacebook_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Setting.FacebookAccessToken.Trim()))
+            if (string.IsNullOrEmpty(GlobalSetting.FacebookAccessToken.Trim()))
             {
                 // open the Facebook Login Dialog and ask for user permissions.
                 var fbLoginDlg = new frmFaceBookLogin(AppId, ExtendedPermissions);
@@ -112,9 +113,9 @@ namespace ImageGlass
             }
 
             //Load language
-            lblMessage.Text = Setting.LangPack.Items["frmFacebook.lblMessage"];
-            btnClose.Text = Setting.LangPack.Items["frmFacebook.btnClose"];
-            lblStatus.Text = string.Format(Setting.LangPack.Items["frmFacebook._StatusBegin"],
+            lblMessage.Text = GlobalSetting.LangPack.Items["frmFacebook.lblMessage"];
+            btnClose.Text = GlobalSetting.LangPack.Items["frmFacebook.btnClose"];
+            lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"],
                                             btnUpload.Text);
             lblPercent.Text = "";
         }
@@ -136,7 +137,7 @@ namespace ImageGlass
                 // since our respone_type in FacebookLoginDialog was token,
                 // we got the access_token
                 // The user now has successfully granted permission to our app.
-                Setting.FacebookAccessToken = facebookOAuthResult.AccessToken;
+                GlobalSetting.FacebookAccessToken = facebookOAuthResult.AccessToken;
             }
             else
             {
@@ -152,7 +153,7 @@ namespace ImageGlass
         {
             if (!File.Exists(_filename))
             {
-                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusInvalid"];
+                lblStatus.Text = GlobalSetting.LangPack.Items["frmFacebook._StatusInvalid"];
                 return;
             }
 
@@ -164,9 +165,9 @@ namespace ImageGlass
             
             lblPercent.Text = "0 %";
             picStatus.Visible = true;
-            lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusUploading"];
+            lblStatus.Text = GlobalSetting.LangPack.Items["frmFacebook._StatusUploading"];
 
-            var fb = new FacebookClient(Setting.FacebookAccessToken);
+            var fb = new FacebookClient(GlobalSetting.FacebookAccessToken);
             fb.UploadProgressChanged += fb_UploadProgressChanged;
             fb.PostCompleted += fb_PostCompleted;
 
@@ -193,18 +194,18 @@ namespace ImageGlass
             picStatus.Visible = false;
             
             btnUpload.Tag = 0;
-            btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._Upload"];
+            btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
 
             if (e.Cancelled)
             {
-                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusCancel"];
+                lblStatus.Text = GlobalSetting.LangPack.Items["frmFacebook._StatusCancel"];
             }
             else if (e.Error == null)
             {
                 // upload successful.
-                lblStatus.Text = Setting.LangPack.Items["frmFacebook._StatusSuccessful"];
+                lblStatus.Text = GlobalSetting.LangPack.Items["frmFacebook._StatusSuccessful"];
                 btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
-                btnUpload.Text = Setting.LangPack.Items["frmFacebook.btnUpload._ViewImage"];
+                btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._ViewImage"];
             }
             else
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace ImageGlass.Core
 {
@@ -12,7 +13,11 @@ namespace ImageGlass.Core
         public static Bitmap load(string path)
         {
             if (path.ToLower().EndsWith(".tga")) return Targa(path);
-            return new Bitmap(path);
+            
+            using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return new Bitmap(fs);
+            }
         }
 
         // Tested on files created by:

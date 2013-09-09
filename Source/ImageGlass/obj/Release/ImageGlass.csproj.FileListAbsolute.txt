@@ -10,8 +10,6 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.fr
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\Facebook.dll
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\IconLib.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\igcmd.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Core.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.FileList.dll
@@ -20,7 +18,6 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Pl
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ThumbBar.dll
-F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\Ionic.Zip.dll
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\igcmd.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Core.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Library.pdb

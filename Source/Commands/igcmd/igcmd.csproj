@@ -54,6 +54,7 @@
   <PropertyGroup>
     <ApplicationIcon>igtheme.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\ImageGlass\bin\Debug\Ionic.Zip.dll</HintPath>
@@ -100,8 +101,6 @@
     <Compile Include="Core.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderTheme.cs" />
-    <Compile Include="Setting.cs" />
     <EmbeddedResource Include="frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,6 +172,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="form_igtheme.ico" />
     <Content Include="igtheme.ico" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\recommend.png" />

@@ -21,3 +21,5 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\D
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.csprojResolveAssemblyReference.cache
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Debug\ImageGlass.Services.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Core.dll
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Debug\ImageGlass.Core.pdb

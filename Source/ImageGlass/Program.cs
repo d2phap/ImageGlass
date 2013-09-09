@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -43,7 +44,7 @@ namespace ImageGlass
 
 
             //autoupdate----------------------------------------------------------------
-            string s = Setting.GetConfig("AutoUpdate", "1");
+            string s = GlobalSetting.GetConfig("AutoUpdate", "1");
 
             if (s != "0")
             {
@@ -61,35 +62,6 @@ namespace ImageGlass
                 }
 
             }
-
-            try
-            {
-                //dang ky ext *.igtheme---------------------------------------------------------------------
-                Registry.SetValue("HKEY_CLASSES_ROOT\\.igtheme\\", "", "ImageGlass.igtheme");
-                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\", "", "ImageGlass theme");
-
-                //icon
-                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\DefaultIcon\\", "",
-                    char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
-                    ",0");
-
-                Registry.SetValue("HKEY_CLASSES_ROOT\\ImageGlass.igtheme\\shell\\open\\command\\", "",
-                    char.ConvertFromUtf32(34) + Program.igPath + "igcmd.exe" + char.ConvertFromUtf32(34) +
-                    " iginstalltheme " + char.ConvertFromUtf32(34) + "%1" + char.ConvertFromUtf32(34));
-            }
-            catch { }
-
-
-            //xoa thu muc Temp---------------------------------------------------------------------------
-            if (Directory.Exists(igPath + "Temp"))
-            {
-                try
-                {
-                    Directory.Delete(igPath + "Temp", true);
-                }
-                catch { }
-            }
-
 
 
         }
