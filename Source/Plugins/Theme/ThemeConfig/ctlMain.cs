@@ -305,8 +305,8 @@ namespace ThemeConfig
 
         private void RefreshThemeList()
         {
-            
-            string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "Themes";
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
+                        "\\ImageGlass\\Themes";
             lvTheme.Items.Clear();
             lvTheme.Items.Add("(default)").Tag = "Default";
 
@@ -337,18 +337,6 @@ namespace ThemeConfig
             RefreshThemeList();
         }
 
-        private void CopyFile(string file, string themeName)
-        {
-            try
-            {
-                if (File.Exists(file))
-                {
-                    File.Copy(file, (Application.StartupPath + "\\").Replace("\\\\", "\\") + "Themes\\" +
-                        themeName + "\\" + Path.GetFileName(file));
-                }
-            }
-            catch { }
-        }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
