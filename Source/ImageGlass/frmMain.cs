@@ -826,7 +826,8 @@ namespace ImageGlass
             }
             #endregion
 
-            //Print Image-----------------------------------------------------------------------
+
+            //Show / Hide Toolbar-----------------------------------------------------------------
             #region Ctrl + F1
             if (e.KeyCode == Keys.F1 && e.Control && !e.Shift && !e.Alt)// Ctrl + F1
             {
@@ -834,6 +835,17 @@ namespace ImageGlass
                 return;
             }
             #endregion
+
+
+            //Upload image to Facebook------------------------------------------------------------
+            #region Ctrl + U
+            if (e.KeyCode == Keys.U && e.Control && !e.Shift && !e.Alt)// Ctrl + U
+            {
+                btnFacebook_Click(btnFacebook, e);
+                return;
+            }
+            #endregion
+            
 
             //Rename image----------------------------------------------------------------------
             #region F2
@@ -863,7 +875,7 @@ namespace ImageGlass
             }
             #endregion
 
-            // Sap hinh anh voi duong bien duoi-----------------------------------------------------
+            // Sap hinh anh voi duong bien duoi-------------------------------------------------
             if (e.KeyCode == Keys.Down)
             {
                 //Sap bien duoi
