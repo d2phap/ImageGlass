@@ -777,11 +777,11 @@ namespace ImageGlass
             #endregion
 
 
-            //Open image location------------------------------------------------------------
+            //Lock zoom ratio----------------------------------------------------------------
             #region Ctrl + L
             if (e.KeyCode == Keys.L && e.Control && !e.Shift && !e.Alt)//Ctrl + L
             {
-                mnuImageLocation_Click(null, null);
+                btnZoomLock.PerformClick();
                 return;
             }
             #endregion
@@ -871,6 +871,16 @@ namespace ImageGlass
             if (e.KeyCode == Keys.E && e.Control && e.Shift && !e.Alt)// Ctrl + Shift + P
             {
                 btnExtension_Click(null, null);
+                return;
+            }
+            #endregion
+
+
+            //Image location--------------------------------------------------------------------
+            #region Ctrl + Shift + L
+            if (e.KeyCode == Keys.L && e.Control && e.Shift && !e.Alt)//Ctrl + Shift + L
+            {
+                mnuImageLocation_Click(null, null);
                 return;
             }
             #endregion
