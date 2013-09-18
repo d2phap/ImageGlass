@@ -40,11 +40,12 @@ namespace igcmd
         }
 
         Update up = new Update();
+        string tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
 
         private void btnClose_Click(object sender, EventArgs e)
-        {
-            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
-                File.Delete(GlobalSetting.StartUpDir + "update.xml");
+        {            
+            if (File.Exists(tempDir + "update.xml"))
+                File.Delete(tempDir + "update.xml");
             Application.Exit();
         }
 
@@ -67,12 +68,11 @@ namespace igcmd
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"),
-                GlobalSetting.StartUpDir + "update.xml");
+            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), tempDir + "update.xml");
 
-            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
+            if (File.Exists(tempDir + "update.xml"))
             {
-                File.Delete(GlobalSetting.StartUpDir + "update.xml");
+                File.Delete(tempDir + "update.xml");
             }
 
             lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();

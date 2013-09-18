@@ -124,7 +124,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set current path (full filename) of image
+        /// Get, set current path (directory only) of image
         /// </summary>
         public static string CurrentPath
         {
@@ -447,6 +447,11 @@ namespace ImageGlass.Services.Configuration
             Registry.SetValue(hkey, key, value);
         }
 
+        /// <summary>
+        /// Convert String to Rectangle
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static Rectangle StringToRect(string str)
         {
             string[] args = str.Split(',');
@@ -458,6 +463,11 @@ namespace ImageGlass.Services.Configuration
             return new Rectangle(arg[0], arg[1], arg[2], arg[3]);
         }
 
+        /// <summary>
+        /// Convert Rectangle to String
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <returns></returns>
         public static string RectToString(Rectangle rc)
         {
             return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;

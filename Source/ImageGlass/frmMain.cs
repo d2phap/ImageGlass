@@ -2463,7 +2463,8 @@ namespace ImageGlass
             }
             catch { return; }
 
-            Library.Image.ImageInfo.ConvertImage(picMain.Image, 
+            Library.Image.ImageInfo.ConvertImage(Image.FromFile(GlobalSetting.CurrentPath + 
+                                    GlobalSetting.ImageList.getName(GlobalSetting.CurrentIndex)), 
                                     GlobalSetting.ImageList.getName(GlobalSetting.CurrentIndex));
         }
 
@@ -2666,15 +2667,19 @@ namespace ImageGlass
                 GlobalSetting.ImageList.remove(imgIndex);
                 GlobalSetting.ImageFilenameList.RemoveAt(imgIndex);
 
-                //delete thumbnail list
-                thumbBar.Controls.RemoveAt(imgIndex);
-                
-                //update index of thumbnail
-                for (int i = imgIndex; i < thumbBar.Controls.Count; i++)
+                try
                 {
-                    ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
-                    ti.IndexImage = i;
+                    //delete thumbnail list
+                    thumbBar.Controls.RemoveAt(imgIndex);
+
+                    //update index of thumbnail
+                    for (int i = imgIndex; i < thumbBar.Controls.Count; i++)
+                    {
+                        ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                        ti.IndexImage = i;
+                    }
                 }
+                catch { }
 
                 NextPic(0);
             }
