@@ -2,3 +2,4 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\bin\Re
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\bin\Release\ImageGlass.Plugins.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Release\ImageGlass.Plugins.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Release\ImageGlass.Plugins.pdb
+F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Release\ImageGlass.Plugins.csprojResolveAssemblyReference.cache

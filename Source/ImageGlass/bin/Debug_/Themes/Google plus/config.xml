@@ -1,5 +1,0 @@
-<data>
-  <metadata name="Google plus" version="1.0" author="Dương Diệu Pháp" email="d2phap@gmail.com" website="http://phapsoftware.wordpress.com" description="Google plus style theme" type="ImageGlass Theme Configuration" compatibility="1.4" preview="preview.png" />
-  <main topbar="topbar.png" topbartransparent="0" bottombar="thumbbar.png" backcolor="-1" statuscolor="-8421505" />
-  <toolbar_icon back="back.png" next="next.png" leftrotate="rotateleft.png" rightrotate="rotateright.png" zoomin="zoom+.png" zoomout="zoom-.png" scaletofit="scale11.png" scaletowidth="scaletowidth.png" scaletoheight="scaletoheight.png" autosizewindow="autosize.png" open="open.png" refresh="refresh.png" gotoimage="goto.png" thumbnail="thumbnail.png" caro="caro.png" fullscreen="fullscreen.png" slideshow="slideshow.png" convert="convert.png" settings="settings.png" about="help.png" like="LIKE.png" dislike="dislike.png" report="report.png" />
-</data>

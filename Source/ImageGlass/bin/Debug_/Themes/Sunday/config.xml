@@ -1,7 +1,0 @@
-<ImageGlass>
-  <Theme>
-    <Info name="Sunday" version="1.0" author="Duong Dieu Phap" email="phap@imageglass.org" website="http://imageglass.org" description=" " type="ImageGlass Theme Configuration" compatibility="1.5" preview="pre.png" />
-    <main topbar="topbot.png" topbartransparent="0" bottombar="topbot.png" backcolor="-1" statuscolor="-14134661" />
-    <toolbar_icon back="1.png" next="2.png" leftrotate="3.png" rightrotate="4.png" zoomin="5.png" zoomout="6.png" zoomlock="8.png" scaletofit="7.png" scaletowidth="9.png" scaletoheight="10.png" autosizewindow="11.png" open="12.png" refresh="13.png" gotoimage="14.png" thumbnail="15.png" caro="16.png" fullscreen="17.png" slideshow="18.png" convert="19.png" print="20.png" uploadfb="21.png" extension="22.png" settings="23.png" about="24.png" like="25.png" dislike="26.png" report="27.png" />
-  </Theme>
-</ImageGlass>

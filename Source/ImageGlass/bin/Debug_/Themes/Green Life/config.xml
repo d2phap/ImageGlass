@@ -1,5 +1,0 @@
-<data>
-  <metadata name="Green Life" version="1.0" author="Dương Diệu Pháp" email="d2phap@gmail.com" website="http://www.phapsoftware.wordpress.com" description="Download more theme at https://sites.google.com/site/psimageglass/downloads/theme-store" type="ImageGlass Theme Configuration" compatibility="1.4.26.7" preview="preview.png" />
-  <main topbar="top8.png" topbartransparent="0" bottombar="bottom.png" backcolor="-656137" statuscolor="-12088772" />
-  <toolbar_icon back="left.png" next="right.png" leftrotate="roleft.png" rightrotate="roright.png" zoomin="zoom_in.png" zoomout="zoom_out.png" scaletofit="search.png" scaletowidth="w.png" scaletoheight="h.png" autosizewindow="auto.png" open="open.png" refresh="refresh.png" gotoimage="goto.png" thumbnail="thumb.png" caro="caro.png" fullscreen="full.png" slideshow="slide.png" convert="convert.png" settings="config.png" about="help.png" like="like.png" dislike="dislike.png" report="comment.png" />
-</data>

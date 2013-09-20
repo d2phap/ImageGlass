@@ -1,5 +1,0 @@
-<data>
-  <metadata name="Cooler" version="1.0" author="Duong Dieu Phap" email="d2phap@gmail.com" website="http://phapsoftware.wordpress.com" description=" " type="ImageGlass Theme Configuration" compatibility="1.4" preview="preview_thum.png" />
-  <main topbar="top3.png" topbartransparent="0" bottombar="bot.png" backcolor="-1" statuscolor="-15689218" />
-  <toolbar_icon back="back.png" next="next.png" leftrotate="rl.png" rightrotate="rr.png" zoomin="addd.png" zoomout="remove.png" scaletofit="search.png" scaletowidth="w.png" scaletoheight="h.png" autosizewindow="a.png" open="add_more.png" refresh="reload.png" gotoimage="dashboard.png" thumbnail="cancel_D.png" caro="todo.png" fullscreen="upload.png" slideshow="preview.png" convert="save.png" settings="setting.png" about="info.png" like="ok.png" dislike="dislike.png" report="find_bug.png" />
-</data>

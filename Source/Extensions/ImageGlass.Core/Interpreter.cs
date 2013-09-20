@@ -13,11 +13,13 @@ namespace ImageGlass.Core
         public static Bitmap load(string path)
         {
             if (path.ToLower().EndsWith(".tga")) return Targa(path);
+            if (path.ToLower().EndsWith(".gif")) return new Bitmap(path);
             
             using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return new Bitmap(fs);
             }
+            
         }
 
         // Tested on files created by:

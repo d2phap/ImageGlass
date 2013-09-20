@@ -103,7 +103,7 @@ namespace ImageGlass
                         GlobalSetting.SupportedExtensions;
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
-            {               
+            {
                 Prepare(o.FileName);
             }
             o.Dispose();
@@ -347,7 +347,7 @@ namespace ImageGlass
                     {
                         MultiIcon mIcon = new MultiIcon();
                         mIcon.Load(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex));
-
+                        
                         SingleIcon sIcon = mIcon[0];//Lay icon day tien
                         IconImage iImage = sIcon.OrderByDescending(ico => ico.Size.Width).ToList()[0];
 
@@ -1068,19 +1068,11 @@ namespace ImageGlass
                 //Doi ten tap tin
                 ImageInfo.RenameFile(GlobalSetting.CurrentPath + oldFilename,
                                     GlobalSetting.CurrentPath + newname);
-
-                //Cập nhật lại trạng thái tiêu đề
-                this.Text = "ImageGlass - " +
-                            (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.length + " " +
-                            GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
-                            GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            
         }
 
 
@@ -2373,6 +2365,31 @@ namespace ImageGlass
                 string f = GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
                 try
                 {
+                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
+                    string ext = Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToLower();
+                    if (ext == ".gif")
+                    {
+                        try
+                        {
+                            //delete thumbnail list
+                            thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
+
+                            //update index of thumbnail
+                            for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
+                            {
+                                ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                                ti.IndexImage = i;
+                            }
+                        }
+                        catch { }
+
+                        //delete image list
+                        GlobalSetting.ImageList.remove(GlobalSetting.CurrentIndex);
+                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+
+                        NextPic(0);
+                    }
+
                     ImageInfo.DeleteFile(f);
                 }
                 catch (Exception ex)
@@ -2403,7 +2420,33 @@ namespace ImageGlass
                 string f = GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
                 try
                 {
+                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
+                    string ext = Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToLower();
+                    if (ext == ".gif")
+                    {
+                        try
+                        {
+                            //delete thumbnail list
+                            thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
+
+                            //update index of thumbnail
+                            for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
+                            {
+                                ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                                ti.IndexImage = i;
+                            }
+                        }
+                        catch { }
+
+                        //delete image list
+                        GlobalSetting.ImageList.remove(GlobalSetting.CurrentIndex);                        
+                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+
+                        NextPic(0);
+                    }
+
                     ImageInfo.DeleteFile(f, true);
+                    
                 }
                 catch (Exception ex)
                 {
