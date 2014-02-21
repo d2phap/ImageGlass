@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace Testing
 {
     partial class Form1
     {
@@ -28,36 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctlMain1 = new ThemeConfig.ctlMain();
+            this.imageMixture1 = new Image_Mixer.ImageMixture();
             this.SuspendLayout();
             // 
-            // ctlMain1
+            // imageMixture1
             // 
-            this.ctlMain1.BackColor = System.Drawing.Color.White;
-            this.ctlMain1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlMain1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctlMain1.Location = new System.Drawing.Point(0, 0);
-            this.ctlMain1.MinimumSize = new System.Drawing.Size(723, 396);
-            this.ctlMain1.Name = "ctlMain1";
-            this.ctlMain1.Size = new System.Drawing.Size(810, 495);
-            this.ctlMain1.TabIndex = 0;
+            this.imageMixture1.BackColor = System.Drawing.Color.Transparent;
+            this.imageMixture1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageMixture1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.imageMixture1.Location = new System.Drawing.Point(0, 0);
+            this.imageMixture1.Name = "imageMixture1";
+            this.imageMixture1.Size = new System.Drawing.Size(819, 420);
+            this.imageMixture1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 495);
-            this.Controls.Add(this.ctlMain1);
+            this.ClientSize = new System.Drawing.Size(819, 420);
+            this.Controls.Add(this.imageMixture1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private ThemeConfig.ctlMain ctlMain1;
+        private Image_Mixer.ImageMixture imageMixture1;
     }
 }
 
