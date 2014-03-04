@@ -1,0 +1,256 @@
+﻿using System.Drawing;
+namespace Image_Comparator
+{
+    partial class ImageComparator
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.label1 = new System.Windows.Forms.Label();
+            this.panBot = new System.Windows.Forms.Panel();
+            this.btnCompare = new System.Windows.Forms.Button();
+            this.btnChangeImage = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lnkAbout = new System.Windows.Forms.LinkLabel();
+            this.pic = new System.Windows.Forms.PictureBox();
+            this.radImage = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radFolder = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtImagePath = new System.Windows.Forms.TextBox();
+            this.btnChooseImage = new System.Windows.Forms.Button();
+            this.btnChooseFoler = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.panBot.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.label1.Location = new System.Drawing.Point(24, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(177, 28);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Image Comparator";
+            // 
+            // panBot
+            // 
+            this.panBot.Controls.Add(this.btnCompare);
+            this.panBot.Controls.Add(this.btnChangeImage);
+            this.panBot.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panBot.Location = new System.Drawing.Point(0, 314);
+            this.panBot.Name = "panBot";
+            this.panBot.Size = new System.Drawing.Size(645, 54);
+            this.panBot.TabIndex = 1;
+            this.panBot.Paint += new System.Windows.Forms.PaintEventHandler(this.panBot_Paint);
+            // 
+            // btnCompare
+            // 
+            this.btnCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCompare.Location = new System.Drawing.Point(530, 10);
+            this.btnCompare.Name = "btnCompare";
+            this.btnCompare.Size = new System.Drawing.Size(89, 31);
+            this.btnCompare.TabIndex = 1;
+            this.btnCompare.Text = "Compare";
+            this.btnCompare.UseVisualStyleBackColor = true;
+            this.btnCompare.Click += new System.EventHandler(this.btnSaveAs_Click);
+            // 
+            // btnChangeImage
+            // 
+            this.btnChangeImage.Location = new System.Drawing.Point(29, 10);
+            this.btnChangeImage.Name = "btnChangeImage";
+            this.btnChangeImage.Size = new System.Drawing.Size(152, 31);
+            this.btnChangeImage.TabIndex = 0;
+            this.btnChangeImage.Text = "Change current image";
+            this.btnChangeImage.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(243, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Compare images to see if they were identical";
+            // 
+            // lnkAbout
+            // 
+            this.lnkAbout.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkAbout.AutoSize = true;
+            this.lnkAbout.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkAbout.Location = new System.Drawing.Point(579, 47);
+            this.lnkAbout.Name = "lnkAbout";
+            this.lnkAbout.Size = new System.Drawing.Size(40, 15);
+            this.lnkAbout.TabIndex = 4;
+            this.lnkAbout.TabStop = true;
+            this.lnkAbout.Text = "About";
+            this.lnkAbout.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAbout_LinkClicked);
+            // 
+            // pic
+            // 
+            this.pic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic.Location = new System.Drawing.Point(16, 22);
+            this.pic.Name = "pic";
+            this.pic.Size = new System.Drawing.Size(276, 190);
+            this.pic.TabIndex = 5;
+            this.pic.TabStop = false;
+            // 
+            // radImage
+            // 
+            this.radImage.AutoSize = true;
+            this.radImage.Location = new System.Drawing.Point(22, 32);
+            this.radImage.Name = "radImage";
+            this.radImage.Size = new System.Drawing.Size(88, 19);
+            this.radImage.TabIndex = 6;
+            this.radImage.TabStop = true;
+            this.radImage.Text = "Image path:";
+            this.radImage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnChooseFoler);
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.btnChooseImage);
+            this.groupBox1.Controls.Add(this.txtImagePath);
+            this.groupBox1.Controls.Add(this.radFolder);
+            this.groupBox1.Controls.Add(this.radImage);
+            this.groupBox1.Location = new System.Drawing.Point(354, 75);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(265, 158);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Options";
+            // 
+            // radFolder
+            // 
+            this.radFolder.AutoSize = true;
+            this.radFolder.Location = new System.Drawing.Point(22, 86);
+            this.radFolder.Name = "radFolder";
+            this.radFolder.Size = new System.Drawing.Size(88, 19);
+            this.radFolder.TabIndex = 7;
+            this.radFolder.TabStop = true;
+            this.radFolder.Text = "Folder path:";
+            this.radFolder.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.pic);
+            this.groupBox2.Location = new System.Drawing.Point(29, 75);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(307, 228);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Current image";
+            // 
+            // txtImagePath
+            // 
+            this.txtImagePath.Location = new System.Drawing.Point(40, 57);
+            this.txtImagePath.Name = "txtImagePath";
+            this.txtImagePath.Size = new System.Drawing.Size(171, 23);
+            this.txtImagePath.TabIndex = 8;
+            // 
+            // btnChooseImage
+            // 
+            this.btnChooseImage.Location = new System.Drawing.Point(217, 57);
+            this.btnChooseImage.Name = "btnChooseImage";
+            this.btnChooseImage.Size = new System.Drawing.Size(34, 23);
+            this.btnChooseImage.TabIndex = 9;
+            this.btnChooseImage.Text = "...";
+            this.btnChooseImage.UseVisualStyleBackColor = true;
+            // 
+            // btnChooseFoler
+            // 
+            this.btnChooseFoler.Location = new System.Drawing.Point(217, 111);
+            this.btnChooseFoler.Name = "btnChooseFoler";
+            this.btnChooseFoler.Size = new System.Drawing.Size(34, 23);
+            this.btnChooseFoler.TabIndex = 11;
+            this.btnChooseFoler.Text = "...";
+            this.btnChooseFoler.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(40, 111);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(171, 23);
+            this.textBox2.TabIndex = 10;
+            // 
+            // ImageComparator
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.lnkAbout);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panBot);
+            this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Name = "ImageComparator";
+            this.Size = new System.Drawing.Size(645, 368);
+            this.Load += new System.EventHandler(this.ImageComparator_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ImageComparator_Paint);
+            this.panBot.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panBot;
+        private System.Windows.Forms.Button btnCompare;
+        private System.Windows.Forms.Button btnChangeImage;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel lnkAbout;
+        private System.Windows.Forms.PictureBox pic;
+        private System.Windows.Forms.RadioButton radImage;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radFolder;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnChooseFoler;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnChooseImage;
+        private System.Windows.Forms.TextBox txtImagePath;
+    }
+}

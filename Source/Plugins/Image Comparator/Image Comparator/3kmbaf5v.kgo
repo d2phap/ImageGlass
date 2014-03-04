@@ -1,0 +1,383 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
+using System.Drawing.Imaging;
+using ImageGlass.Services.Configuration;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Cryptography;
+
+namespace Image_Comparator
+{
+    public partial class ImageComparator : UserControl
+    {
+        public ImageComparator()
+        {
+            InitializeComponent();
+        }
+
+        private delegate void DelegateCompareImage();
+        private DelegateCompareImage _delegateCompare;
+
+        #region Control events
+        private void lnkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Config conf = new Config();
+            MessageBox.Show(string.Format(@"{0}
+{1}
+
+Version: {2}
+Author: {3}
+", conf.Name.ToUpper(), conf.Description, conf.Version, conf.Author), "About",
+ MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void panBot_Paint(object sender, PaintEventArgs e)
+        {
+            //e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204), 1), 30, 0, panBot.Width - 30, 0);
+        }
+
+
+        private void ImageComparator_SizeChanged(object sender, EventArgs e)
+        {
+            panBot.Invalidate();
+        }
+
+        private void btnChangeImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "Supported formats (" + GlobalSetting.SupportedExtensions + ") | " +
+                GlobalSetting.SupportedExtensions;
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                if(Path.GetExtension(o.FileName).ToLower().CompareTo(".gif") != 0)
+                {
+                    using (FileStream fs = new FileStream(o.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        pic.Image = new Bitmap(fs);
+                    }
+                }
+                else
+                {
+                    pic.Image = Image.FromFile(o.FileName);
+                }
+
+                //Save path
+                pic.Tag = o.FileName;
+            }
+        }
+
+        private void lnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(lblResult.Text);
+        }
+
+        private void btnChooseImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "Supported formats (" + GlobalSetting.SupportedExtensions + ") | " +
+                GlobalSetting.SupportedExtensions;
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                txtImagePath.Text = o.FileName;
+            }
+        }
+
+        private void btnChooseFoler_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog f = new FolderBrowserDialog();
+            f.ShowNewFolderButton = true;
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                txtFolderPath.Text = f.SelectedPath;
+            }
+        }
+
+        private void btnCompare_Click(object sender, EventArgs e)
+        {
+            //Thread t = new Thread(new ThreadStart(StartComparing));
+            //t.Priority = ThreadPriority.AboveNormal;
+            //t.IsBackground = true;
+
+            //t.Start();
+
+            MessageBox.Show(Compare(new Bitmap(txtFolderPath.Text), new Bitmap(txtImagePath.Text)).ToString());
+        }
+
+        private void txtImagePath_Enter(object sender, EventArgs e)
+        {
+            radImage.Checked = true;
+        }
+
+        private void txtFolderPath_Enter(object sender, EventArgs e)
+        {
+            radFolder.Checked = true;
+        }
+
+        private void ImageComparator_Load(object sender, EventArgs e)
+        {
+            _delegateCompare = new DelegateCompareImage(StartComparing);
+        }
+        #endregion
+
+        #region Private Method
+        private bool CompareBitmaps(Image left, Image right)
+        {
+            if (object.Equals(left, right))
+                return true;
+            if (left == null || right == null)
+                return false;
+            if (!left.Size.Equals(right.Size) || !left.PixelFormat.Equals(right.PixelFormat))
+                return false;
+
+            Bitmap leftBitmap = left as Bitmap;
+            Bitmap rightBitmap = right as Bitmap;
+            if (leftBitmap == null || rightBitmap == null)
+                return true;
+
+            #region Optimized code for performance
+
+            int bytes = left.Width * left.Height * (Image.GetPixelFormatSize(left.PixelFormat) / 8);
+
+            bool result = true;
+            byte[] b1bytes = new byte[bytes];
+            byte[] b2bytes = new byte[bytes];
+
+            BitmapData bmd1 = leftBitmap.LockBits(new Rectangle(0, 0, leftBitmap.Width - 1, leftBitmap.Height - 1), ImageLockMode.ReadOnly, leftBitmap.PixelFormat);
+            BitmapData bmd2 = rightBitmap.LockBits(new Rectangle(0, 0, rightBitmap.Width - 1, rightBitmap.Height - 1), ImageLockMode.ReadOnly, rightBitmap.PixelFormat);
+
+            Marshal.Copy(bmd1.Scan0, b1bytes, 0, bytes);
+            Marshal.Copy(bmd2.Scan0, b2bytes, 0, bytes);
+
+            for (int n = 0; n <= bytes - 1; n++)
+            {
+                if (b1bytes[n] != b2bytes[n])
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            leftBitmap.UnlockBits(bmd1);
+            rightBitmap.UnlockBits(bmd2);
+
+            #endregion
+
+            return result;
+        }
+
+        private void StartComparing()
+        {
+            //safe thread
+            if (this.InvokeRequired)
+            {
+                this.Invoke(_delegateCompare);
+            }
+            else
+            {
+                lblResult.Text = "";
+                Image imgCurrent = pic.Image;
+                Image img = null;
+
+                Font font = lblResult.Font;
+
+                if (imgCurrent == null)
+                {
+                    lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                    lblResult.Text = "Current image is null.";
+                    lblResult.ForeColor = Color.Firebrick;
+                    return;
+                }
+
+                #region Compare one to one
+                if (radImage.Checked)
+                {
+                    if (File.Exists(txtImagePath.Text))
+                    {
+                        try
+                        {
+                            using (FileStream fs = new FileStream(txtImagePath.Text, FileMode.Open, FileAccess.Read))
+                            {
+                                img = new Bitmap(fs);
+                            }
+
+                            if (CompareBitmaps(imgCurrent, img))
+                            {
+                                //True
+                                lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                                lblResult.Text = "These are one.";
+                                lblResult.ForeColor = Color.FromArgb(0, 122, 204);
+                            }
+                            else
+                            {
+                                //False
+                                lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                                lblResult.Text = "These are different.";
+                                lblResult.ForeColor = Color.OrangeRed;
+                            }
+                        }
+                        catch
+                        {
+                            lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                            lblResult.Text = "Cannot read image data.";
+                            lblResult.ForeColor = Color.Firebrick;
+                        }
+                    }
+                    else
+                    {
+                        lblResult.Text = "Image path does not exist.";
+                        lblResult.ForeColor = Color.Firebrick;
+                    }
+                }
+                #endregion
+
+                #region Compare one to many
+                else
+                {
+                    if (Directory.Exists(txtFolderPath.Text))
+                    {
+                        var files = DirectoryTool.FileList(txtFolderPath.Text, true,
+                            new Predicate<string>(delegate(String f)
+                        {
+                            Application.DoEvents();
+                            if (GlobalSetting.SupportedExtensions.Contains(Path.GetExtension(f).ToLower()))
+                            {
+                                return true;
+                            }
+                            return false;
+                        }));
+
+
+                        int i = 0;
+                        int filesCount = files.Count;
+                        int trueFilesCount = 0;
+                        string trueFiles = "";
+
+                        Graphics g = panBot.CreateGraphics();
+
+                        foreach (var f in files)
+                        {
+                            Application.DoEvents();
+                            i++;
+
+                            int _value = (i * panBot.Width) / filesCount;
+
+                            g.DrawLine(new Pen(Color.FromArgb(0, 122, 204), 1),
+                                0, 0, _value, 0);
+                            panBot.Invalidate();
+
+                            try
+                            {
+                                using (FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read))
+                                {
+                                    img = new Bitmap(fs);
+                                    
+                                    lblResult.Font = new System.Drawing.Font(font.FontFamily, 
+                                        font.Size, FontStyle.Regular);
+                                    lblResult.ForeColor = Color.Black;
+                                    lblResult.Text = string.Format("Comparing {0} of {1} {2}...\n{3}",
+                                        i, filesCount, (filesCount > 1) ? "files" : "file",
+                                        f);
+                                }
+                            }
+                            catch
+                            {
+                                continue; //skip
+                            }
+
+                            if (CompareBitmaps(imgCurrent, img))
+                            {
+                                trueFiles += Path.GetFileName(f) + "\n";
+                                trueFilesCount++;
+                            }
+                        }
+
+                        //Output
+                        lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                        lblResult.Text = string.Format("There {0} {1} identical {2}: \n{3}",
+                            (trueFilesCount > 1) ? "are" : "is", trueFilesCount,
+                            (trueFilesCount > 1) ? "images" : "image", trueFiles);
+                        lblResult.ForeColor = Color.FromArgb(0, 122, 204);
+                    }
+                    else
+                    {
+                        lblResult.Font = new System.Drawing.Font(font.FontFamily,
+                                        font.Size, FontStyle.Bold);
+                        lblResult.Text = "Folder path does not exist.";
+                        lblResult.ForeColor = Color.Firebrick;
+                    }
+                }
+                #endregion
+
+                tip1.SetToolTip(lblResult, lblResult.Text);
+            }
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+        public enum CompareResult
+        {
+            ciCompareOk,
+            ciPixelMismatch,
+            ciSizeMismatch
+        };
+
+        public CompareResult Compare(Bitmap bmp1, Bitmap bmp2)
+        {
+            CompareResult cr = CompareResult.ciCompareOk;
+
+            //Test to see if we have the same size of image
+            if (bmp1.Size != bmp2.Size)
+            {
+                cr = CompareResult.ciSizeMismatch;
+            }
+            else
+            {
+                //Convert each image to a byte array
+                System.Drawing.ImageConverter ic =
+                       new System.Drawing.ImageConverter();
+                byte[] btImage1 = new byte[1];
+                btImage1 = (byte[])ic.ConvertTo(bmp1, btImage1.GetType());
+                byte[] btImage2 = new byte[1];
+                btImage2 = (byte[])ic.ConvertTo(bmp2, btImage2.GetType());
+
+                //Compute a hash for each image
+                SHA256Managed shaM = new SHA256Managed();
+                byte[] hash1 = shaM.ComputeHash(btImage1);
+                byte[] hash2 = shaM.ComputeHash(btImage2);
+
+                //Compare the hash values
+                for (int i = 0; i < hash1.Length && i < hash2.Length
+                                  && cr == CompareResult.ciCompareOk; i++)
+                {
+                    if (hash1[i] != hash2[i])
+                        cr = CompareResult.ciPixelMismatch;
+                }
+            }
+            return cr;
+        }
+    }
+}
