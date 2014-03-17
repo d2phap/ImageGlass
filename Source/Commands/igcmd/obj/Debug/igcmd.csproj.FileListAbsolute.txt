@@ -79,3 +79,25 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Core.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igcmd\bin\Debug\Ionic.Zip.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.exe.config
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\igcmd.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Theme.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\Ionic.Zip.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Theme.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\bin\Debug\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmCheckForUpdate.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmFollow.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmInstallTheme.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmReview.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.frmUpload.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.csproj.GenerateResource.Cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igcmd\obj\Debug\igcmd.pdb

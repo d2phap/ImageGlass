@@ -34,6 +34,7 @@
             this.lblComponent = new System.Windows.Forms.Label();
             this.lblReferences = new System.Windows.Forms.Label();
             this.panInfo = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lnkCheckUpdate = new System.Windows.Forms.LinkLabel();
             this.lblUpdate = new System.Windows.Forms.Label();
             this.lnkFacebook = new System.Windows.Forms.LinkLabel();
@@ -55,7 +56,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -154,6 +154,15 @@
             this.panInfo.Name = "panInfo";
             this.panInfo.Size = new System.Drawing.Size(594, 385);
             this.panInfo.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 99);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(180, 15);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Design logo: Nguyễn Quốc Tuấn";
             // 
             // lnkCheckUpdate
             // 
@@ -437,15 +446,6 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 99);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(180, 15);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Design logo: Nguyễn Quốc Tuấn";
             // 
             // frmAbout
             // 

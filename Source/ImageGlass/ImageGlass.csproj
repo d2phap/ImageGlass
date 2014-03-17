@@ -311,6 +311,10 @@
       <Project>{8540D406-E362-4ECC-9761-F978996354DF}</Project>
       <Name>ImageGlass.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Extensions\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
+      <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>
+      <Name>ImageGlass.ImageBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Extensions\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>

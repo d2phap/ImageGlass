@@ -64,7 +64,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isPlaySlideShow = false;
         private static bool _isSmoothPanning = true;
         private static bool _isLockWorkspaceEdges = true;
-        private static bool _isZooming = false;
+        //private static bool _isZooming = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
         private static double _zoomLockValue = 1;
@@ -228,11 +228,11 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Get, set the value of zoom event
         /// </summary>
-        public static bool IsZooming
-        {
-            get { return GlobalSetting._isZooming; }
-            set { GlobalSetting._isZooming = value; }
-        }
+        //public static bool IsZooming
+        //{
+        //    get { return GlobalSetting._isZooming; }
+        //    set { GlobalSetting._isZooming = value; }
+        //}
 
         /// <summary>
         /// Get, set value of thumbnail visibility

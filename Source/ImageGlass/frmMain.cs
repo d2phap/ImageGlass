@@ -38,6 +38,7 @@ using System.Drawing.IconLib;
 using System.Drawing.IconLib.ColorProcessing;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Library;
 
 namespace ImageGlass
 {
@@ -57,16 +58,8 @@ namespace ImageGlass
 
 
         #region Local variable
-        private Rectangle rect = Rectangle.Empty;               // Widnow size memory (kiosk mode)
-        private Rectangle[] zoom = new Rectangle[10];           // The zoom level memory
-        private int scrollIdent = 0;                            // Sticky keys scrolling filter
-        private const int M_THUMBNAIL_SIZE = 40;                
-        
-        private double offX, offY, aspect;                      // Relative position reference
-        private Point loc = Point.Empty;
-        private Point center = Point.Empty;
-        private bool mouseMoveAvailable = true;
-        private Point chrome = Point.Empty;
+        private Rectangle rect = Rectangle.Empty; // Window size 
+        private const int M_THUMBNAIL_SIZE = 40;
 
         public event ThumbnailImageEventHandler OnImageSizeChanged;
         private ThumbnailController m_thumbBar;
@@ -76,12 +69,12 @@ namespace ImageGlass
 
 
         #region Drag - drop
-        private void frmMain_DragOver(object sender, DragEventArgs e)
+        private void picMain_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.All;
         }
 
-        private void frmMain_DragDrop(object sender, DragEventArgs e)
+        private void picMain_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
@@ -110,58 +103,132 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Lấy tất cả các file ảnh trong thư mục
+        /// Prepare to load image
         /// </summary>
-        /// <param name="path"></param>
- 
+        /// <param name="path">Path</param>
         private void Prepare(string path)
         {            
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
 
-            GlobalSetting.IsZooming = false;
-            GlobalSetting.CurrentIndex = 0;//dat lai index cua hinh anh
+            //Reset current index
+            GlobalSetting.CurrentIndex = 0;
             string initFile = "";
 
+            //Check path is file or directory?
             if (File.Exists(path))
             {
                 initFile = path;
-                path = path.Substring(0, path.LastIndexOf("\\") + 1);//lay duong dan thu muc                
+                path = path.Substring(0, path.LastIndexOf("\\") + 1);
             }
             else if (Directory.Exists(path))
             {
                 path = path.Replace("\\\\", "\\");                
             }
 
-            GlobalSetting.CurrentPath = path;//gan lam thu muc hinh anh
-            GlobalSetting.ImageFilenameList = new List<string>(); //danh sach ten tap tin hinh anh
-            GetFiles(GlobalSetting.ImageFilenameList, path, -1);//loc lay danh sach hinh anh co trong thu muc
-            GlobalSetting.ImageList.Dispose();
-            GlobalSetting.ImageList = new ImgMan(path, GlobalSetting.ImageFilenameList.ToArray());//gan ds hinh anh
+            //Set path as current image path
+            GlobalSetting.CurrentPath = path;
 
-            //tim index cua hinh anh
+            //Declare a new list to store filename
+            GlobalSetting.ImageFilenameList = new List<string>();
+
+            //Get supported image extensions from path
+            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(GlobalSetting.CurrentPath);
+
+            //Dispose all garbage
+            GlobalSetting.ImageList.Dispose();
+
+            //Set filename to image list
+            GlobalSetting.ImageList = new ImgMan(GlobalSetting.CurrentPath, 
+                GlobalSetting.ImageFilenameList.ToArray());
+
+            //Find the index of current image
             GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(Path.GetFileName(initFile));
-            if (GlobalSetting.CurrentIndex == -1)//ảnh không thể hiển thị
+            
+            //Cannot find the index
+            if (GlobalSetting.CurrentIndex == -1)
             {
+                //Mark as Image Error
                 GlobalSetting.IsImageError = true;
-                picMain.Size = GlobalSetting.ImageList.ErrorImage().Size;
-                picMain.Image = GlobalSetting.ImageList.ErrorImage();
                 this.Text = "ImageGlass - " + initFile;
                 lblZoomRatio.Text = ImageInfo.GetFileSize(initFile);
 
+                //Exit function
                 return;
             }
 
+            //Start loading image
             NextPic(0);
 
-            //show thumbnail image--------------------------------------------------------------------------
+            //Check wheather show thumbnail or not
             if (GlobalSetting.IsShowThumbnail)
             {
+                //Load thumnbnail
                 LoadThumnailImage(true);
             }
 
+            //Watch all change of current path
             sysWatch.Path = GlobalSetting.CurrentPath;
             sysWatch.EnableRaisingEvents = true;
+        }
+
+        /// <summary>
+        /// Sort and find all supported image from directory
+        /// </summary>
+        /// <param name="path">Image folder path</param>
+        private List<string> LoadImageFilesFromDirectory(string path)
+        {
+            //Load image order from config
+            GlobalSetting.LoadImageOrderConfig();
+
+            var list = new List<string>();
+
+            //Get files from dir
+            var dsFile = DirectoryFinder.FindFiles(path,
+                GlobalSetting.IsRecursive,
+                new Predicate<string>(delegate(String f)
+                {
+                    Application.DoEvents();
+                    if (GlobalSetting.SupportedExtensions.Contains(Path.GetExtension(f).ToLower()))
+                    {
+                        return true;
+                    }
+                    return false;
+                }));
+
+            //Sort image file
+            if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => new FileInfo(f).Length));
+            }
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastWriteTime)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => new FileInfo(f).LastWriteTime));
+            }
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastAccessTime)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => new FileInfo(f).LastAccessTime));
+            }
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Extension)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => new FileInfo(f).Extension));
+            }
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Random)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => Guid.NewGuid()));
+            }
+            else
+            {
+                list.AddRange(FileLogicalComparer
+                    .Sort(dsFile.ToArray()));
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -170,17 +237,11 @@ namespace ImageGlass
         /// <param name="Setting.ImageFilenameList"></param>
         private void LoadThumnailImage(bool isNext)
         {
-            //lay so luong thumbnail se hien thi
+            //Get the number of thumbnails will be displayed
             int soluong = this.Width / (M_THUMBNAIL_SIZE + 13);
 
-            //lay 1/2 so tam anh de tim index;
-            //int half = soluong / 2;
-
-            //danh sach vi tri anh se duoc load
+            //List of image position
             List<int> dsIndex = new List<int>();
-
-            //vi tri cua tam anh cuoi cung dc load
-            //int max = Setting.CurrentIndex + half;
 
             int iBegin = 0;
             int iEnd = 0;
@@ -207,7 +268,7 @@ namespace ImageGlass
                 iEnd = GlobalSetting.ImageList.length;
             }
 
-            //tim ds cac index hop le
+            //Find valid index from list
             for (int i = iBegin; i < iEnd; i++)
             {
                 if (-1 < i && i < GlobalSetting.ImageList.length) //i = [0, lenght - 1]
@@ -216,13 +277,13 @@ namespace ImageGlass
                 }
             }
 
-            //clear thumbnail items
+            //Clear thumbnail items
             thumbBar.Controls.Clear();
 
-            //item list will be loaded
+            //Item list will be loaded
             List<string> files = new List<string>();
 
-            //ve thumbnail
+            //Draw thumbnail
             for (int i = 0; i < dsIndex.Count; i++)
             {
                 Application.DoEvents();
@@ -233,83 +294,11 @@ namespace ImageGlass
             System.GC.Collect();
         }
 
-
         /// <summary>
-        /// Lọc ra các tập tin định dạng hình ảnh từ thư mục
+        /// Change image
         /// </summary>
-        /// <param name="dsFile"></param>
-        /// <param name="path"></param>
-        /// <param name="len"></param>
-        void GetFiles(List<string> dsFile, string path, int len)
-        {
-            int a = dsFile.Count;
-            if (len < 0)
-            {
-                len = path.Length;
-            }
-
-            //Lấy thứ tự sắp xếp ảnh
-            GlobalSetting.LoadImageOrderConfig();
-
-            //Sap xem thu tu hinh anh
-            if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
-            {
-                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Length));
-            }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastWriteTime)
-            {
-                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastWriteTime));
-            }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastAccessTime)
-            {
-                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).LastAccessTime));
-            }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Extension)
-            {
-                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => new FileInfo(f).Extension));                
-            }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Random)
-            {
-                dsFile.AddRange(Directory.GetFiles(path).OrderBy(f => Guid.NewGuid()));
-            }
-            else
-            {
-                dsFile.AddRange(FileLogicalComparer.Sort(Directory.GetFiles(path)));
-            }
-
-
-            for (; a < dsFile.Count; a++)
-            {
-                //Lay ext cua file
-                string ext = Path.GetExtension(dsFile[a]).ToLower();
-
-                //Lọc lấy phần name của file
-                dsFile[a] = dsFile[a].Substring(len);
-
-                // loc lai danh sach cac file co ext ho tro
-                if (!GlobalSetting.SupportedExtensions.Contains(ext))
-                {
-                    dsFile.RemoveAt(a);
-                    a--;
-                }
-            }
-
-            //neu tim kiem de quy
-            if (GlobalSetting.IsRecursive)
-            {
-                string[] sub = System.IO.Directory.GetDirectories(path);
-                foreach (string e in sub)
-                {
-                    GetFiles(dsFile, e, len);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Change to the dir'th picture from this one
-        /// </summary>
-        /// <param name="step">Steps, signed</param>
-        void NextPic(int step)
+        /// <param name="step">Image step to change. Zero is reload the current image.</param>
+        private void NextPic(int step)
         {
             if (GlobalSetting.ImageList.length < 1)
             {
@@ -320,75 +309,73 @@ namespace ImageGlass
                 return;
             }
 
-            GlobalSetting.IsZooming = false;
+            //Update current index
             GlobalSetting.CurrentIndex += step;
-            if (GlobalSetting.ImageList.length == 0) return;
+
+            //Check if current index is greater than upper limit
             if (GlobalSetting.CurrentIndex >= GlobalSetting.ImageList.length) GlobalSetting.CurrentIndex = 0;
+
+            //Check if current index is less than lower limit
             if (GlobalSetting.CurrentIndex < 0) GlobalSetting.CurrentIndex = GlobalSetting.ImageList.length - 1;
 
-
-            picMain.Image = null;       
+            //Set the text of Window title
             this.Text = "ImageGlass - " +
                         (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.length + " " + 
                         GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
                         GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
             Application.DoEvents();
-            Image im = null;
 
+            //The image data will load
+            Image im = null;
 
             try
             {
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.imgError;
 
-                //Kiem tra neu la icon thi lay Image lon nhat
-                if (Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() == "ICO")
+                //Check if the image is a icon or not
+                if (Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToLower() == ".ico")
                 {
                     try
                     {
                         MultiIcon mIcon = new MultiIcon();
                         mIcon.Load(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex));
                         
-                        SingleIcon sIcon = mIcon[0];//Lay icon day tien
+                        //Try to get the largest image of it
+                        SingleIcon sIcon = mIcon[0];
                         IconImage iImage = sIcon.OrderByDescending(ico => ico.Size.Width).ToList()[0];
 
+                        //Convert to bitmap
                         im = iImage.Icon.ToBitmap();
                     }
-                    catch
+                    catch //If a invalid icon
                     {
                         im = GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex);
                         GlobalSetting.IsImageError = GlobalSetting.ImageList.imgError;
                     }
                 }
-                else
+                else //If a normal image
                 {
                     im = GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex);
                     GlobalSetting.IsImageError = GlobalSetting.ImageList.imgError;
                 }
 
-                if (im.Width <= sp0.Panel1.Width && im.Height <= sp0.Panel1.Height)
-                {
-                    Point p = new Point();
-                    p.X = sp0.Panel1.Width / 2 - im.Width / 2;
-                    p.Y = sp0.Panel1.Height / 2 - im.Height / 2;
+                //Show image
+                picMain.Image = im;
 
-                    picMain.Image = im;
-                    picMain.Bounds = new Rectangle(p, picMain.Image.Size);
-                }
-                else
-                {
-                    Recenter(im);
-                    picMain.Image = im;
-                }
+                //Reset zoom
+                picMain.ZoomToFit();
 
-                //Get zoom ratio               
-                lblZoomRatio.Text = Math.Round(GetZoomRatio(), 2).ToString() + "X";
+                //Get image file information
+                lblZoomRatio.Text = picMain.Zoom.ToString() + "%";
                 lblImageSize.Text = picMain.Image.Width + " x " + picMain.Image.Height + " px";
                 lblImageFileSize.Text = ImageInfo.GetFileSize(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex));
                 lblImageType.Text = Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper();
                 lblImageDateCreate.Text = File.GetCreationTime(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToString();
 
+                //Check if Toolbar is hide or not
                 if (GlobalSetting.IsHideToolBar)
                 {
+                    //Move image information to Window title
                     this.Text += " - " + lblZoomRatio.Text;
                     this.Text += " - " + lblImageSize.Text;
                     this.Text += " - " + lblImageFileSize.Text;
@@ -396,7 +383,7 @@ namespace ImageGlass
                     this.Text += " - " + lblImageDateCreate.Text;
                 }
 
-                //giai phong bo nho
+                //Release unused images
                 if (GlobalSetting.CurrentIndex - 1 > -1 && GlobalSetting.CurrentIndex < GlobalSetting.ImageList.length)
                 {
                     GlobalSetting.ImageList.unload(GlobalSetting.CurrentIndex - 1);
@@ -413,7 +400,7 @@ namespace ImageGlass
                 }
             }
 
-            //select thumbnail item
+            //Select thumbnail item
             if (GlobalSetting.IsShowThumbnail)
             {
                 int iFrom = 0;
@@ -455,12 +442,7 @@ namespace ImageGlass
                 }                
             }//end thumbnail
 
-            if (GlobalSetting.ZoomLockValue != 1 && !GlobalSetting.IsImageError)
-            {
-                setZoomOrigin();
-                ZoomImage(GlobalSetting.ZoomLockValue);
-            }
-
+            //Collect system garbage
             System.GC.Collect();
         }
         #endregion
@@ -468,19 +450,19 @@ namespace ImageGlass
 
         #region Key event
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Left)
-            {
-                NextPic(-1);
-            }
-            else if (keyData == Keys.Right)
-            {
-                NextPic(1);
-            }
+        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        //{
+        //    if (keyData == Keys.Left)
+        //    {
+        //        NextPic(-1);
+        //    }
+        //    else if (keyData == Keys.Right)
+        //    {
+        //        NextPic(1);
+        //    }
 
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
+        //    return base.ProcessCmdKey(ref msg, keyData);
+        //}
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
@@ -510,7 +492,7 @@ namespace ImageGlass
                 //CheckImageInClipboard: ;
                 else if (Clipboard.ContainsImage())
                 {
-                    picMain.Image = Clipboard.GetImage();
+                    //picMain.Image = Clipboard.GetImage();
                 }
                
 
@@ -891,13 +873,13 @@ namespace ImageGlass
                 //Sap bien duoi
                 if (e.Control && !e.Shift && !e.Alt)//Ctrl + Down
                 {
-                    ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); 
+                    //ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height); 
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2);
+                    //ScrollSmooth(picMain.Left, picMain.Top + sp0.Panel1.Height / 2);
                 }
-                validateBounds();
+                //validateBounds();
                 return;
             }
 
@@ -906,13 +888,13 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height);
+                    //ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2);
+                    //ScrollSmooth(picMain.Left, picMain.Top - sp0.Panel1.Height / 2);
                 }
-                validateBounds();
+                //validateBounds();
                 return;
             }
 
@@ -921,13 +903,13 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top);
-                    validateBounds();
+                    //ScrollSmooth(picMain.Left + sp0.Panel1.Width, picMain.Top);
+                    //validateBounds();
                 }
                 else if (e.Shift && !e.Control && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top);
-                    validateBounds();
+                    //ScrollSmooth(picMain.Left + sp0.Panel1.Width / 2, picMain.Top);
+                    //validateBounds();
                 }
                 return;
 
@@ -938,13 +920,13 @@ namespace ImageGlass
             {
                 if (e.Control && !e.Shift && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top);
+                    //ScrollSmooth(picMain.Left - sp0.Panel1.Width, picMain.Top);
                 }
                 if (e.Shift && !e.Control && !e.Alt)
                 {
-                    ScrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top);
+                    //ScrollSmooth(picMain.Left - sp0.Panel1.Width / 2, picMain.Top);
                 }
-                validateBounds();
+                //validateBounds();
                 return;
             }
 
@@ -1075,406 +1057,6 @@ namespace ImageGlass
             }
         }
 
-
-        /// <summary>
-        /// Set zoom pivot by reading viewport location
-        /// </summary>
-        private void setZoomOrigin()
-        {
-            setZoomOrigin(getCursorPositionRelativeToWindowPositionThroughTheMathematicalImplementation());
-        }
-
-
-        /// <summary>
-        /// Set zoom pivot based on mouseEvent
-        /// </summary>
-        /// <param name="pt">The clicked absolute coordinate of dsp</param>
-        private void setZoomOrigin(Point pt)
-        {
-            loc = getCursorPositionRelativeToWindowPosition();
-            center = loc;
-            offX = pt.X / (picMain.Width * 1.0);
-            offY = pt.Y / (picMain.Height * 1.0);
-            try
-            {
-                aspect = picMain.Image.Width / (1.0 * picMain.Image.Height);
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Check whether existing viewport is within allowed bounds
-        /// Please don't use this method unless you want flickering
-        /// </summary>
-        /// <returns>The closest valid viewport based on reg</returns>
-        private Point validateBounds()
-        {
-            return validateBounds(picMain.Bounds, true);
-        }
-
-        /// <summary>
-        /// Validate and (optionally) apply new viewport
-        /// </summary>
-        /// <param name="reg">The new viewport</param>
-        /// <param name="exec">Apply viewport</param>
-        /// <returns>The closest valid viewport based on reg</returns>
-        private Point validateBounds(Rectangle reg, bool exec)
-        {
-            int x = reg.Left, y = reg.Top;
-            if (GlobalSetting.IsLockWorkspaceEdges)
-            {
-
-                // Validate width
-                if (reg.Width >= sp0.Panel1.Width)
-                {
-                    // Larger than screen
-                    if (x > 0) x = 0;
-                    if (sp0.Panel1.Width > reg.Width + x)
-                        x = -(reg.Width - sp0.Panel1.Width);
-                }
-                else
-                {
-                    // Smaller than screen
-                    if (x < 0) x = 0;
-                    if (sp0.Panel1.Width < reg.Width + x)
-                        x = sp0.Panel1.Width - reg.Width;
-                }
-
-                // Validate height
-                if (reg.Height >= sp0.Panel1.Height)
-                {
-                    // Larger than screen
-                    if (y > 0) y = 0;
-                    if (sp0.Panel1.Height > reg.Height + y)
-                        y = -(reg.Height - sp0.Panel1.Height);
-                }
-                else
-                {
-                    // Smaller than screen
-                    if (y < 0) y = 0;
-                    if (sp0.Panel1.Height < reg.Height + y)
-                        y = sp0.Panel1.Height - reg.Height;
-                }
-            }
-            //bool ret = (x == reg.Left && y == reg.Top);
-            if (exec) picMain.Location = new Point(x, y);
-            return new Point(x, y);
-        }        
-
-        /// <summary>
-        /// Handles mouseMove event (pan/zoom)
-        /// </summary>
-        /// <param name="sender">Event origin (control)</param>
-        /// <param name="e">Event parameters</param>
-        private void picMain_MouseMove(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                //change cursor
-                if (int.Parse(picMain.Tag.ToString()) == 1)
-                {
-                    Bitmap img = ImageGlass.Properties.Resources.Hand_Down;
-                    Cursor c = new Cursor(img.GetHicon());
-                    picMain.Cursor = c;
-                }
-                else
-                {
-                    Bitmap img = ImageGlass.Properties.Resources.Hand_Move;
-                    Cursor c = new Cursor(img.GetHicon());
-                    picMain.Cursor = c;
-                }
-
-
-                if (!mouseMoveAvailable) return;
-                mouseMoveAvailable = false;
-
-                if (e.Button == MouseButtons.Right && !GlobalSetting.IsImageError)
-                {
-
-                    // ZOOOOOOOOM
-                    Point pos = loc;
-                    loc = getCursorPositionRelativeToWindowPosition();
-
-                    // Just to make things less complicated
-                    int diffX = loc.X - pos.X;
-                    int diffY = loc.Y - pos.Y;
-
-                    // Pythagoras to find length
-                    double diff = Math.Sqrt(
-                        Math.Pow(1.0 * diffX, 2) +
-                        Math.Pow(1.0 * diffY, 2));
-
-                    // Retain most weighted sign
-                    if (Math.Abs(diffX) > Math.Abs(diffY))
-                        diff *= Math.Sign(diffX);
-                    else diff *= Math.Sign(diffY);
-
-                    ZoomImage(diff);
-
-                }
-                else if (e.Button == MouseButtons.Left)
-                {
-
-                    // Pan
-                    Point pos = loc; loc = getCursorPositionRelativeToWindowPosition(); //Cursor.Position;
-
-                    // Directly set location
-                    //dsp.Left += Cursor.Position.X - pos.X;
-                    //dsp.Top += Cursor.Position.Y - pos.Y;
-
-                    // Validate not out of bounds
-                    validateBounds(new Rectangle(
-                        picMain.Left + (loc.X - pos.X),
-                        picMain.Top + (loc.Y - pos.Y),
-                        picMain.Width, picMain.Height), true);
-                }
-                mouseMoveAvailable = true;
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Feeling real ENTERPRISE
-        /// </summary>
-        /// <returns>The Cursor Position Relative To Window Position (Thus Not The Absolute Position Of The Cursor)</returns>
-        Point getCursorPositionRelativeToWindowPosition()
-        {
-            Point ret = Cursor.Position;
-            ret.X -= this.Left - chrome.X;
-            ret.Y -= this.Top - chrome.Y;
-            return ret;
-        }
-
-        /// <summary>
-        /// Alternative vershun
-        /// </summary>
-        /// <returns>Mathematical variation of gCPRTWP; more suitable for zoomfix</returns>
-        Point getCursorPositionRelativeToWindowPositionThroughTheMathematicalImplementation()
-        {
-            return new Point(
-                Cursor.Position.X - picMain.Left - this.Left,
-                Cursor.Position.Y - picMain.Top - this.Top);
-        }
-
-        /// <summary>
-        /// Zooms the image lambda pizels
-        /// </summary>
-        /// <param name="lambda">Amount of pixels to append</param>
-        void ZoomImage(double lambda)
-        {
-            GlobalSetting.IsZooming = true;
-
-            // I'm too tired to figure out why this is
-            // necessary right now, I'm just happy it works
-            if (lambda < 0)
-            {
-                lambda /= 2.5;
-            }
-            else
-            {
-                lambda /= 1.5;
-            }
-                      
-
-            // Slightly higher performance
-            double w = picMain.Width, h = picMain.Height;
-
-            // Calculate new size and offset
-            double newW = Math.Max(25, w + w * 0.005 * lambda);
-            double newH = newW / aspect;
-            double newOffX = -(newW * offX) + center.X;
-            double newOffY = -(newH * offY) + center.Y;
-
-            // Apply the change
-            if (newW * newH < 104857600)
-            { //10240^2
-
-                picMain.Width = (int)newW;
-                picMain.Height = (int)newH;
-
-                // Old pivot method; centered on screen
-                picMain.Left -= (int)(picMain.Width - w) / 2;
-                picMain.Top -= (int)(picMain.Height - h) / 2;
-
-                // New pivot method; weighted on original rightclick coordinate
-                //if ((int)newOffY < 0)
-                //    picMain.Top = 0;
-                //else
-                //    picMain.Top = (int)newOffY;
-
-                //if ((int)newOffX < 0)
-                //    picMain.Left = 0;
-                //else
-                //    picMain.Left = (int)newOffX;
-
-
-                //Get zoom ratio               
-                lblZoomRatio.Text = Math.Round(GetZoomRatio(), 2).ToString() + "X";
-                if (GlobalSetting.IsHideToolBar)
-                {
-                    this.Text = "ImageGlass - " +
-                        (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.length + " " + 
-                        GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
-                        GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
-                    this.Text += " - " + lblZoomRatio.Text;
-                    this.Text += " - " + lblImageSize.Text;
-                    this.Text += " - " + lblImageFileSize.Text;
-                    this.Text += " - " + lblImageType.Text;
-                    this.Text += " - " + lblImageDateCreate.Text;
-                }
-                
-                Application.DoEvents();
-            }
-        }
-
-        /// <summary>
-        /// Get zoom ratio value
-        /// </summary>
-        /// <returns></returns>
-        private double GetZoomRatio()
-        {
-            //Get zoom ratio
-            double x = 0;
-            if (picMain.Width < picMain.Image.Width)
-            {
-                x = -picMain.Image.Width * 1.0 / picMain.Width;
-            }
-            else
-            {
-                x = picMain.Width * 1.0 / picMain.Image.Width;
-            }
-
-            return x;
-        }
-
-        /// <summary>
-        /// Set value of zoom lock
-        /// </summary>
-        private void SetZoomLockValue()
-        {
-            if (btnZoomLock.Checked && picMain.Image != null)
-            {
-                double x = 0;
-
-                if (picMain.Width < picMain.Image.Width)
-                {
-                    x = -picMain.Image.Width * 1.0 / picMain.Width;
-                }
-                else
-                {
-                    x = picMain.Width * 1.0 / picMain.Image.Width;
-                }
-
-                GlobalSetting.ZoomLockValue = x * 140;
-            }
-            else
-            {
-                GlobalSetting.ZoomLockValue = 1;
-            }
-        }
-
-        /// <summary>
-        /// Smoothly scroll the image to given position
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        void ScrollSmooth(int x, int y)
-        {
-
-            // Filter repetitious scrolls
-            scrollIdent++;
-            int myIdent = scrollIdent;
-
-            // DERP
-            if (!GlobalSetting.IsSmoothPanning) ScrollInstant(x, y);
-
-            // Make sure we're within bounds
-            Point xy = validateBounds(new Rectangle(x, y, picMain.Width, picMain.Height), false);
-            x = xy.X; y = xy.Y;         // expand validated position
-
-            int xa = picMain.Left;          // read current ("from") pos
-            int ya = picMain.Top;
-            int xd = x - xa;            // difference between Setting.CurrentIndex and target
-            int yd = y - ya;
-            int xs = Math.Sign(xd);     // get direction
-            int ys = Math.Sign(yd);
-            xd *= xs;                   // filter direction from distance
-            yd *= ys;
-            Size sz = picMain.Size;
-            int[] stepsize = { 200, 100, 50, 25, 12, 6, 3, 2, 1 };
-            while (xd > 1 || yd > 1)
-            {
-                bool xb = false, yb = false;            // stepped this axis yet?
-                foreach (int step in stepsize)
-                {        // try all stepsizes
-                    Point newpos = new Point(xa, ya);   // original position
-                    if (!xb && step < xd)
-                    {             // can & should step X axis?
-                        xd -= step;                     // subtract steps from dist
-                        xa += step * (1 * xs);          // add step to position
-                        xb = true;                      // stepped X axis
-                    }
-                    if (!yb && step < yd)
-                    {
-                        yd -= step;
-                        ya += step * (1 * ys);
-                        yb = true;
-                    }
-                    /*if (step < dist) {
-                        dist -= step;
-                        from += step * (-1 * sign);
-                        if (!validateBounds(new Rectangle(dsp.Left, from, dsp.Width, dsp.Height))) dist = 0;
-                        Application.DoEvents();
-                        System.Threading.Thread.Sleep(50);
-                        break;
-                    }*/
-                }
-                if (myIdent != scrollIdent) break;
-                validateBounds(new Rectangle(xa, ya, sz.Width, sz.Height), true);
-                Application.DoEvents();
-                System.Threading.Thread.Sleep(20);
-            }
-        }
-
-        void ScrollInstant(int x, int y)
-        {
-            validateBounds(new Rectangle(x, y, picMain.Width, picMain.Height), true);
-        }
-
-        /// <summary>
-        /// Apply and center a best-fit viewport
-        /// </summary>
-        void Recenter()
-        {
-            if (picMain.Image != null) Recenter(picMain.Image);
-        }
-
-        /// <summary>
-        /// Apply and center a best-fit viewport based on supplied bitmap
-        /// </summary>
-        /// <param name="bm">Image to base calculations on</param>
-        void Recenter(Image bm)
-        {            
-            int durrX, durrY;
-            double derpX = bm.Width / (1.0 * sp0.Panel1.Width);
-            double derpY = bm.Height / (1.0 * sp0.Panel1.Height);
-
-            if (derpX > derpY)
-            {
-                durrX = sp0.Panel1.Width;
-                durrY = (int)(bm.Height / derpX);
-                picMain.Location = new Point(0, (sp0.Panel1.Height - durrY) / 2);
-            }
-            else
-            {
-                durrY = sp0.Panel1.Height;
-                durrX = (int)(bm.Width / derpY);
-                picMain.Location = new Point((sp0.Panel1.Width - durrX) / 2, 0);
-            }
-
-            picMain.Size = new Size(durrX, durrY);
-                        
-        }
         #endregion
 
 
@@ -1822,7 +1404,7 @@ namespace ImageGlass
             }
 
             // Apply zooming with scroll wheel
-            this.MouseWheel += new MouseEventHandler(picMain_MouseWheel);
+            //this.MouseWheel += new MouseEventHandler(picMain_MouseWheel);
             sp0.SplitterDistance = sp0.Height - 71;
 
             System.GC.Collect();
@@ -1911,70 +1493,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        /// I wonder what this does
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void picMain_MouseDown(object sender, MouseEventArgs e)
-        {
-            // Set chrome (non-userspace) padding
-            chrome = new Point(
-                (e.X + picMain.Left) - (Cursor.Position.X - this.Left),
-                (e.Y + picMain.Top) - (Cursor.Position.Y - this.Top));
-
-            setZoomOrigin(e.Location);
-            picMain.Tag = 1;
-
-            Bitmap img = ImageGlass.Properties.Resources.Hand_Down;
-            Cursor c = new Cursor(img.GetHicon());
-            picMain.Cursor = c;
-        }
-
-        /// <summary>
-        /// Hurr
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void frmMain_Resize(object sender, EventArgs e)
-        {
-            try
-            {
-                if (GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Width <= sp0.Panel1.Width && GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Height <= sp0.Panel1.Height)
-                {
-                    Point p = new Point();
-                    p.X = sp0.Panel1.Width / 2 - GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Width / 2;
-                    p.Y = sp0.Panel1.Height / 2 - GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Height / 2;
-
-                    picMain.Image = GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex);
-                    picMain.Bounds = new Rectangle(p, picMain.Image.Size);
-                }
-                else
-                {
-                    Recenter(); //NO DOCKING ALLOWED
-                }
-            }
-            catch { }
-
-        }
-
-        /// <summary>
-        /// Zoom
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void picMain_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (GlobalSetting.IsImageError)
-            {
-                return;
-            }
-            setZoomOrigin();
-            ZoomImage(e.Delta);
-
-            //Set value of zoom lock
-            SetZoomLockValue();
-        }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -2017,6 +1535,7 @@ namespace ImageGlass
                 return;
             }
 
+
             GlobalSetting.ImageList.filter.incRotate(-1);
             NextPic(0);
         }
@@ -2050,12 +1569,12 @@ namespace ImageGlass
             }
 
             Point l = new Point();
-            GlobalSetting.IsZooming = false;
+            //GlobalSetting.IsZooming = false;
 
-            l.X = sp0.Panel1.Width / 2 - picMain.Width / 2;
-            l.Y = sp0.Panel1.Height / 2 - picMain.Width / 2;
+            //l.X = sp0.Panel1.Width / 2 - picMain.Width / 2;
+            //l.Y = sp0.Panel1.Height / 2 - picMain.Width / 2;
 
-            picMain.Bounds = new Rectangle(l, picMain.Image.Size);
+            //picMain.Bounds = new Rectangle(l, picMain.Image.Size);
 
         }
 
@@ -2065,10 +1584,10 @@ namespace ImageGlass
             {
                 return;
             }
-            // Scale to Width
-            double frac = sp0.Panel1.Width / (1.0 * picMain.Image.Width);
-            int height = (int)(picMain.Image.Height * frac);
-            picMain.Bounds = new Rectangle(Point.Empty, new Size(sp0.Panel1.Width, height));
+            //// Scale to Width
+            //double frac = sp0.Panel1.Width / (1.0 * picMain.Image.Width);
+            //int height = (int)(picMain.Image.Height * frac);
+            //picMain.Bounds = new Rectangle(Point.Empty, new Size(sp0.Panel1.Width, height));
         }
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
@@ -2077,10 +1596,10 @@ namespace ImageGlass
             {
                 return;
             }
-            // Scale to Height
-            double frac = sp0.Panel1.Height / (1.0 * picMain.Image.Height);
-            int width = (int)(picMain.Image.Width * frac);
-            picMain.Bounds = new Rectangle(Point.Empty, new Size(width, sp0.Panel1.Height));
+            //// Scale to Height
+            //double frac = sp0.Panel1.Height / (1.0 * picMain.Image.Height);
+            //int width = (int)(picMain.Image.Width * frac);
+            //picMain.Bounds = new Rectangle(Point.Empty, new Size(width, sp0.Panel1.Height));
         }
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
@@ -2092,12 +1611,12 @@ namespace ImageGlass
             // Window adapt to image
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             this.WindowState = FormWindowState.Normal;
-            this.Size = new Size(Width += picMain.Image.Width - sp0.Panel1.Width,
-                                Height += picMain.Image.Height - sp0.Panel1.Height);
-            //Application.DoEvents();
-            picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
-            this.Top = (screen.Height - this.Height) / 2 + screen.Top;
-            this.Left = (screen.Width - this.Width) / 2 + screen.Left;
+            //this.Size = new Size(Width += picMain.Image.Width - sp0.Panel1.Width,
+            //                    Height += picMain.Image.Height - sp0.Panel1.Height);
+            ////Application.DoEvents();
+            //picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
+            //this.Top = (screen.Height - this.Height) / 2 + screen.Top;
+            //this.Left = (screen.Width - this.Width) / 2 + screen.Left;
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
@@ -2126,49 +1645,49 @@ namespace ImageGlass
         {
             if (btnCaro.Checked)
             {
-                picMain.BackgroundImage = ImageGlass.Properties.Resources.caro;
+                //picMain.BackgroundImage = ImageGlass.Properties.Resources.caro;
             }
             else
             {
-                picMain.BackgroundImage = null;
+                //picMain.BackgroundImage = null;
             }
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
-            {
-                setZoomOrigin();
-                ZoomImage(14);
+            //if (!GlobalSetting.IsImageError)
+            //{
+            //    setZoomOrigin();
+            //    ZoomImage(14);
 
-                //Set value of zoom lock
-                SetZoomLockValue();
-            }
+            //    //Set value of zoom lock
+            //    SetZoomLockValue();
+            //}
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
-            {
-                setZoomOrigin();
-                ZoomImage(-14);
+            //if (!GlobalSetting.IsImageError)
+            //{
+            //    setZoomOrigin();
+            //    ZoomImage(-14);
 
-                //Set value of zoom lock
-                SetZoomLockValue();
-            }
+            //    //Set value of zoom lock
+            //    SetZoomLockValue();
+            //}
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
-            if (btnZoomLock.Checked && picMain.Image != null)
-            {
-                SetZoomLockValue();
-            }
-            else
-            {
-                GlobalSetting.ZoomLockValue = 1;
-                btnZoomLock.Checked = false;
-            }
+            //if (btnZoomLock.Checked && picMain.Image != null)
+            //{
+            //    SetZoomLockValue();
+            //}
+            //else
+            //{
+            //    GlobalSetting.ZoomLockValue = 1;
+            //    btnZoomLock.Checked = false;
+            //}
         }
 
         private void timSlideShow_Tick(object sender, EventArgs e)
@@ -2269,13 +1788,6 @@ namespace ImageGlass
             }
         }
 
-        private void picMain_MouseUp(object sender, MouseEventArgs e)
-        {
-            picMain.Tag = 0;
-            Bitmap img = ImageGlass.Properties.Resources.Hand_Move;
-            Cursor c = new Cursor(img.GetHicon());
-            picMain.Cursor = c;
-        }
 
         private void btnExtension_Click(object sender, EventArgs e)
         {
@@ -2538,30 +2050,6 @@ namespace ImageGlass
             System.Diagnostics.Process.Start("http://code.google.com/p/imageglass/issues/");
         }
 
-        private void picMain_Paint(object sender, PaintEventArgs e)
-        {
-            if (GlobalSetting.ImageList.length < 1 || GlobalSetting.IsZooming == false) return;
-
-            Graphics g = e.Graphics;
-            
-            if(GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.SmoothPixels)
-            {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            }
-            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.ClearPixels)
-            {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            }
-            else //auto
-            {
-                if (GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Width * GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex).Height > picMain.Width * picMain.Height)
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-                else
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            }
-
-            g.DrawImage(GlobalSetting.ImageList.get(GlobalSetting.CurrentIndex), 0, 0, picMain.Width, picMain.Height);
-        }
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
@@ -2651,17 +2139,10 @@ namespace ImageGlass
         {
             if (GlobalSetting.IsForcedActive)
             {
-                picMain.Focus();
+                //picMain.Focus();
             }
         }
 
-        private void picMain_MouseEnter(object sender, EventArgs e)
-        {
-            if (GlobalSetting.IsForcedActive)
-            {
-                picMain.Focus();
-            }
-        }
 
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
@@ -2730,6 +2211,8 @@ namespace ImageGlass
 
         #endregion
 
+        
+        
 
 
 

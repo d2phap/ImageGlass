@@ -11,3 +11,16 @@ F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlas
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Core.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\igtasks.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\igtasks.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\bin\Debug\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.csproj.GenerateResource.Cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Commands\igtasks\obj\Debug\igtasks.pdb

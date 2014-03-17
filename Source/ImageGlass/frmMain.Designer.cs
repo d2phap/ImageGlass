@@ -26,7 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.picMain = new System.Windows.Forms.PictureBox();
+            this.picMain = new ImageGlass.ImageBox();
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuStartSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStopSlideshow = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +93,6 @@
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spMain)).BeginInit();
@@ -119,8 +118,6 @@
             this.sp0.Panel1.AllowDrop = true;
             this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel1.Controls.Add(this.picMain);
-            this.sp0.Panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
-            this.sp0.Panel1.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
             this.sp0.Panel1.MouseEnter += new System.EventHandler(this.sp0_Panel1_MouseEnter);
             // 
             // sp0.Panel2
@@ -136,22 +133,19 @@
             // 
             // picMain
             // 
-            this.picMain.BackColor = System.Drawing.Color.Transparent;
+            this.picMain.AllowDrop = true;
+            this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
-            this.picMain.Location = new System.Drawing.Point(3, 3);
+            this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
+            this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(62, 59);
-            this.picMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picMain.TabIndex = 0;
-            this.picMain.TabStop = false;
-            this.picMain.Tag = "0";
-            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
-            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
-            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.picMain_Paint);
-            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
-            this.picMain.MouseEnter += new System.EventHandler(this.picMain_MouseEnter);
-            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
-            this.picMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseUp);
+            this.picMain.Size = new System.Drawing.Size(864, 437);
+            this.picMain.TabIndex = 1;
+            this.picMain.Text = "Dương Diệu Pháp";
+            this.picMain.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
+            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
             // 
             // mnuPopup
             // 
@@ -177,7 +171,7 @@
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(258, 364);
+            this.mnuPopup.Size = new System.Drawing.Size(258, 342);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -374,7 +368,7 @@
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
-            this.toolMain.BackColor = System.Drawing.Color.Gray;
+            this.toolMain.BackColor = System.Drawing.Color.Transparent;
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -892,15 +886,11 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
-            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.mnuPopup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.spMain.Panel1.ResumeLayout(false);
@@ -915,7 +905,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picMain;
         private System.Windows.Forms.ToolStrip toolMain;
         private System.Windows.Forms.Timer timSlideShow;
         private System.Windows.Forms.ToolStripButton btnNext;
@@ -979,6 +968,7 @@
         private System.Windows.Forms.SplitContainer spMain;
         private System.Windows.Forms.ToolStripMenuItem mnuShowToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private ImageBox picMain;
     }
 }
 
