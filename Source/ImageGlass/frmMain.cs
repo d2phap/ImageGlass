@@ -27,7 +27,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using ImageGlass.Core;
-using ImageGlass.ThumbBar;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.Comparer;
 using System.IO;
@@ -39,6 +38,7 @@ using System.Drawing.IconLib.ColorProcessing;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
+using ImageGlass.ThumbBar.ImageHandling;
 
 namespace ImageGlass
 {
@@ -47,13 +47,6 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-
-            m_AddImageDelegate = new DelegateAddImage(this.AddImage);
-
-            m_thumbBar = new ThumbnailController();
-            m_thumbBar.OnStart += new ThumbnailControllerEventHandler(m_Controller_OnStart);
-            m_thumbBar.OnAdd += new ThumbnailControllerEventHandler(m_Controller_OnAdd);
-            m_thumbBar.OnEnd += new ThumbnailControllerEventHandler(m_Controller_OnEnd);
         }
 
 
@@ -61,8 +54,6 @@ namespace ImageGlass
         private Rectangle rect = Rectangle.Empty; // Window size 
         private const int M_THUMBNAIL_SIZE = 40;
 
-        public event ThumbnailImageEventHandler OnImageSizeChanged;
-        private ThumbnailController m_thumbBar;
         private delegate void DelegateAddImage(string imageFilename);
         private DelegateAddImage m_AddImageDelegate;
         #endregion
@@ -277,20 +268,28 @@ namespace ImageGlass
                 }
             }
 
-            //Clear thumbnail items
-            thumbBar.Controls.Clear();
+            //Stop current thumbnail generation thread
+            thumbBar.StopThumbnailsGeneration();
+
+            //Remove all current thumbnails
+            thumbBar.DisposeOfPreviousThumbnails();
 
             //Item list will be loaded
             List<string> files = new List<string>();
 
-            //Draw thumbnail
+            //Build file list
             for (int i = 0; i < dsIndex.Count; i++)
             {
                 Application.DoEvents();
                 files.Add(GlobalSetting.ImageList.getPath(dsIndex[i]));
             }
 
-            m_thumbBar.AddFile(files.ToArray());
+            //Add generation event
+            thumbBar.OnGeneratingThumbnailItem += thumbBar_OnGeneratingThumbnailItem;
+
+            //Show thumbnail
+            thumbBar.ShowThumbnails(files);
+
             System.GC.Collect();
         }
 
@@ -401,46 +400,46 @@ namespace ImageGlass
             }
 
             //Select thumbnail item
-            if (GlobalSetting.IsShowThumbnail)
-            {
-                int iFrom = 0;
-                int iTo = 0;
+            //if (GlobalSetting.IsShowThumbnail)
+            //{
+            //    int iFrom = 0;
+            //    int iTo = 0;
 
-                int i = 1;
-                foreach (Control c in thumbBar.Controls)
-                {
-                    ImageViewer ti = (ImageViewer)c;
+            //    int i = 1;
+            //    foreach (Control c in thumbBar.Controls)
+            //    {
+            //        ImageViewer ti = (ImageViewer)c;
 
-                    if (ti.IndexImage == GlobalSetting.CurrentIndex)
-                    {
-                        ti.IsActive = true;
-                    }
-                    else
-                    {
-                        ti.IsActive = false;
-                    }
-                    i++;
-                }
+            //        if (ti.IndexImage == GlobalSetting.CurrentIndex)
+            //        {
+            //            ti.IsActive = true;
+            //        }
+            //        else
+            //        {
+            //            ti.IsActive = false;
+            //        }
+            //        i++;
+            //    }
 
-                //lấy giá trị mút index cua thumbnail
-                if (thumbBar.Controls.Count > 0)
-                {
-                    ImageViewer ti = (ImageViewer)thumbBar.Controls[0];
-                    iFrom = ti.IndexImage;
+            //    //lấy giá trị mút index cua thumbnail
+            //    if (thumbBar.Controls.Count > 0)
+            //    {
+            //        ImageViewer ti = (ImageViewer)thumbBar.Controls[0];
+            //        iFrom = ti.IndexImage;
 
-                    ti = (ImageViewer)thumbBar.Controls[thumbBar.Controls.Count - 1];
-                    iTo = ti.IndexImage;
+            //        ti = (ImageViewer)thumbBar.Controls[thumbBar.Controls.Count - 1];
+            //        iTo = ti.IndexImage;
 
-                    if (GlobalSetting.CurrentIndex < iFrom)
-                    {
-                        LoadThumnailImage(false);
-                    }
-                    else if (GlobalSetting.CurrentIndex > iTo)
-                    {
-                        LoadThumnailImage(true);
-                    }
-                }                
-            }//end thumbnail
+            //        if (GlobalSetting.CurrentIndex < iFrom)
+            //        {
+            //            LoadThumnailImage(false);
+            //        }
+            //        else if (GlobalSetting.CurrentIndex > iTo)
+            //        {
+            //            LoadThumnailImage(true);
+            //        }
+            //    }                
+            //}//end thumbnail
 
             //Collect system garbage
             System.GC.Collect();
@@ -939,76 +938,6 @@ namespace ImageGlass
 
         #region Phuong thuc
         
-        /// <summary>
-        /// Add thumbnail item
-        /// </summary>
-        /// <param name="imageFilename"></param>
-        private void AddImage(string imageFilename)
-        {
-            // thread safe
-            if (this.InvokeRequired)
-            {
-                this.Invoke(m_AddImageDelegate, imageFilename);
-            }
-            else
-            {
-                //lấy kích thước tối đa của thumbnail
-                GlobalSetting.LoadMaxThumbnailFileSizeConfig();
-
-                int size = M_THUMBNAIL_SIZE;
-                ImageViewer imageViewer = new ImageViewer();
-                imageViewer.Dock = DockStyle.Bottom;
-
-                //chi load thumbnail voi SIZE < Setting.ThumbnailMaxFileSize MB
-                if (new FileInfo(imageFilename).Length > GlobalSetting.ThumbnailMaxFileSize * 1024 * 1024)
-                {
-                    imageViewer.Image = ImageGlass.Properties.Resources.imagetoolarge;
-                    imageViewer.ImageLocation = imageFilename;
-                }
-                else
-                {
-                    imageViewer.LoadImage(imageFilename, M_THUMBNAIL_SIZE, M_THUMBNAIL_SIZE);
-                }
-                
-                                
-                imageViewer.Width = size;
-                imageViewer.Height = size;
-                imageViewer.IsThumbnail = false;
-                imageViewer.BackColor = Color.Transparent;
-                imageViewer.IndexImage = GlobalSetting.ImageFilenameList.IndexOf(Path.GetFileName(imageFilename));
-
-                if (imageViewer.IndexImage == GlobalSetting.CurrentIndex)
-                {
-                    imageViewer.IsActive = true;
-                }
-
-                tip1.SetToolTip(imageViewer, imageFilename);
-
-                imageViewer.MouseClick += thumbBarItem_MouseClick;
-                this.OnImageSizeChanged += new ThumbnailImageEventHandler(imageViewer.ImageSizeChanged);
-
-                this.thumbBar.Controls.Add(imageViewer);
-            }
-        }
-
-        private void thumbBarItem_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                ImageViewer iv = (ImageViewer)sender;
-
-                //active control
-                foreach (Control c in thumbBar.Controls)
-                {
-                    ImageViewer ti = (ImageViewer)c;
-                    ti.IsActive = false;
-                }
-                iv.IsActive = true;
-
-                GlobalSetting.CurrentIndex = iv.IndexImage;
-                NextPic(0);
-            }
-        }
 
         /// <summary>
         /// Rename image
@@ -1417,6 +1346,9 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //Stop Thumbnails Generation thread
+            thumbBar.StopThumbnailsGeneration();
+
             SaveConfig();
         }
 
@@ -1473,26 +1405,28 @@ namespace ImageGlass
             GlobalSetting.IsForcedActive = false;
         }
 
-        private void m_Controller_OnStart(object sender, ThumbnailControllerEventArgs e)
+        private void thumbBar_OnGeneratingThumbnailItem(object sender, GeneratingEventArgs e)
         {
-
-        }
-
-        private void m_Controller_OnAdd(object sender, ThumbnailControllerEventArgs e)
-        {
-            this.AddImage(e.ImageFilename);
-            this.Invalidate();
-        }
-
-        private void m_Controller_OnEnd(object sender, ThumbnailControllerEventArgs e)
-        {
-            // thread safe
-            if (this.InvokeRequired)
+            try
             {
-                this.Invoke(new ThumbnailControllerEventHandler(m_Controller_OnEnd), sender, e);
+                e.ThumbnailItem.OnSelectThumbnailItem -= ThumbnailItem_OnSelectThumbnailItem;
+                e.ThumbnailItem.OnClickThumbnailItem -= ThumbnailItem_OnClickThumbnailItem;
             }
+            catch { }
+
+            e.ThumbnailItem.OnSelectThumbnailItem += ThumbnailItem_OnSelectThumbnailItem;
+            e.ThumbnailItem.OnClickThumbnailItem += ThumbnailItem_OnClickThumbnailItem;
         }
 
+        private void ThumbnailItem_OnClickThumbnailItem(object sender, ThumbnailItemClickEventArgs e)
+        {
+            
+        }
+
+        private void ThumbnailItem_OnSelectThumbnailItem(object sender, KeyDownEventArgs e)
+        {
+            
+        }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -1534,7 +1468,6 @@ namespace ImageGlass
             {
                 return;
             }
-
 
             GlobalSetting.ImageList.filter.incRotate(-1);
             NextPic(0);
@@ -1881,19 +1814,19 @@ namespace ImageGlass
                     string ext = Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToLower();
                     if (ext == ".gif")
                     {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
+                        //try
+                        //{
+                        //    //delete thumbnail list
+                        //    thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
 
-                            //update index of thumbnail
-                            for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
-                            {
-                                ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
-                                ti.IndexImage = i;
-                            }
-                        }
-                        catch { }
+                        //    //update index of thumbnail
+                        //    for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
+                        //    {
+                        //        ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                        //        ti.IndexImage = i;
+                        //    }
+                        //}
+                        //catch { }
 
                         //delete image list
                         GlobalSetting.ImageList.remove(GlobalSetting.CurrentIndex);
@@ -1936,19 +1869,19 @@ namespace ImageGlass
                     string ext = Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToLower();
                     if (ext == ".gif")
                     {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
+                        //try
+                        //{
+                        //    //delete thumbnail list
+                        //    thumbBar.Controls.RemoveAt(GlobalSetting.CurrentIndex);
 
-                            //update index of thumbnail
-                            for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
-                            {
-                                ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
-                                ti.IndexImage = i;
-                            }
-                        }
-                        catch { }
+                        //    //update index of thumbnail
+                        //    for (int i = GlobalSetting.CurrentIndex; i < thumbBar.Controls.Count; i++)
+                        //    {
+                        //        ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                        //        ti.IndexImage = i;
+                        //    }
+                        //}
+                        //catch { }
 
                         //delete image list
                         GlobalSetting.ImageList.remove(GlobalSetting.CurrentIndex);                        
@@ -2169,14 +2102,14 @@ namespace ImageGlass
                         GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
                         GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex);
 
-                try
-                {
-                    //Rename image in thumbnail bar
-                    ImageViewer ti = (ImageViewer)thumbBar.Controls[imgIndex];
-                    ti.ImageLocation = e.FullPath;
-                    tip1.SetToolTip(ti, e.FullPath);
-                }
-                catch { }
+                //try
+                //{
+                //    //Rename image in thumbnail bar
+                //    ImageViewer ti = (ImageViewer)thumbBar.Controls[imgIndex];
+                //    ti.ImageLocation = e.FullPath;
+                //    tip1.SetToolTip(ti, e.FullPath);
+                //}
+                //catch { }
             }
         }
 
@@ -2193,15 +2126,15 @@ namespace ImageGlass
 
                 try
                 {
-                    //delete thumbnail list
-                    thumbBar.Controls.RemoveAt(imgIndex);
+                    ////delete thumbnail list
+                    //thumbBar.Controls.RemoveAt(imgIndex);
 
-                    //update index of thumbnail
-                    for (int i = imgIndex; i < thumbBar.Controls.Count; i++)
-                    {
-                        ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
-                        ti.IndexImage = i;
-                    }
+                    ////update index of thumbnail
+                    //for (int i = imgIndex; i < thumbBar.Controls.Count; i++)
+                    //{
+                    //    ImageViewer ti = (ImageViewer)thumbBar.Controls[i];
+                    //    ti.IndexImage = i;
+                    //}
                 }
                 catch { }
 

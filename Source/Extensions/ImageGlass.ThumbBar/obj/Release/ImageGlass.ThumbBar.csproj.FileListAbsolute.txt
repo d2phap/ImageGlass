@@ -1,6 +1,0 @@
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\bin\Release\ImageGlass.ThumbBar.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\bin\Release\ImageGlass.ThumbBar.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Release\ImageGlass.ThumbBar.ImageViewer.resources
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Release\ImageGlass.ThumbBar.csproj.GenerateResource.Cache
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Release\ImageGlass.ThumbBar.dll
-F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Release\ImageGlass.ThumbBar.pdb
