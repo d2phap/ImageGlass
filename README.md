@@ -9,6 +9,8 @@ Free and open source image viewer
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
 </a>
 
+<h3><a href="https://github.com/d2phap/ImageGlass/archive/1.x.zip">Download source code v1.5 final</a></h3>
+
 <h3>Share ImageGlass</h3>
 <a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
 
