@@ -42,3 +42,12 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\D
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csproj.GenerateResource.Cache
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\bin\Debug\ImageGlass.FileList.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileList.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.FileListItem.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.csproj.GenerateResource.Cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Debug\ImageGlass.FileList.pdb

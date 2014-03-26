@@ -125,7 +125,7 @@
             this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
             this.sp0.Panel2.Controls.Add(this.thumbBar);
             this.sp0.Size = new System.Drawing.Size(864, 437);
-            this.sp0.SplitterDistance = 353;
+            this.sp0.SplitterDistance = 356;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;
@@ -139,9 +139,8 @@
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(864, 353);
+            this.picMain.Size = new System.Drawing.Size(864, 356);
             this.picMain.TabIndex = 1;
-            this.picMain.Text = "Dương Diệu Pháp";
             this.picMain.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
@@ -324,7 +323,7 @@
             this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(864, 83);
+            this.thumbBar.Size = new System.Drawing.Size(864, 80);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.ThumbnailSize = 40;
             this.thumbBar.WrapContents = false;

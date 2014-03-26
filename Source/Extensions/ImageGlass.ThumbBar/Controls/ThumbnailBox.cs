@@ -107,6 +107,7 @@ namespace ImageGlass.ThumbBar
             //}
 
             pbThumbnail.MouseClick += new MouseEventHandler(Controls_MouseClick);
+            
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -115,28 +116,28 @@ namespace ImageGlass.ThumbBar
 
             if (thumbnailsSequence.CurrentThumbnail != null)
             {
-                KeyDownEventArgs ev = new KeyDownEventArgs(e);
-                
-                if (e.KeyCode == Keys.Right)
-                {
-                    thumbnailsSequence.MoveToNextThumbnail();
+                //KeyDownEventArgs ev = new KeyDownEventArgs(e);
 
-                    ev.ThumbnailItem = thumbnailsSequence.CurrentThumbnail;
-                    ev.Index = thumbnailsSequence.CurrentThumbnail.ThumbnailIndex;
+                //if (e.KeyCode == Keys.Right)
+                //{
+                //    thumbnailsSequence.MoveToNextThumbnail();
 
-                    OnSelectThumbnailItem(thumbnailsSequence.CurrentThumbnail, ev);
-                }
-                else if (e.KeyCode == Keys.Left)
-                {
-                    thumbnailsSequence.MoveToPreviousThumbnail();
+                //    ev.ThumbnailItem = thumbnailsSequence.CurrentThumbnail;
+                //    ev.Index = thumbnailsSequence.CurrentThumbnail.ThumbnailIndex;
 
-                    ev.ThumbnailItem = thumbnailsSequence.CurrentThumbnail;
-                    ev.Index = thumbnailsSequence.CurrentThumbnail.ThumbnailIndex;
+                //    OnSelectThumbnailItem(thumbnailsSequence.CurrentThumbnail, ev);
+                //}
+                //else if (e.KeyCode == Keys.Left)
+                //{
+                //    thumbnailsSequence.MoveToPreviousThumbnail();
 
-                    OnSelectThumbnailItem(thumbnailsSequence.CurrentThumbnail, ev);
-                }
+                //    ev.ThumbnailItem = thumbnailsSequence.CurrentThumbnail;
+                //    ev.Index = thumbnailsSequence.CurrentThumbnail.ThumbnailIndex;
 
+                //    OnSelectThumbnailItem(thumbnailsSequence.CurrentThumbnail, ev);
+                //}
             }
+
             //if (e.KeyCode == Keys.Enter)
             //{
             //    if (thumbnailsSequence.CurrentThumbnail != null)
@@ -144,7 +145,7 @@ namespace ImageGlass.ThumbBar
             //}
             //else if ((e.KeyCode == Keys.Down) || (e.KeyCode == Keys.Right))
             //{
-                
+
             //    thumbnailsSequence.MoveToNextThumbnail();
             //    MessageBox.Show(thumbnailIndex.ToString() + "_" + imageFile.ShortFileName);
             //}
@@ -186,6 +187,21 @@ namespace ImageGlass.ThumbBar
         #region Private
 
         private ToolTip tip = new ToolTip();
+
+        private string toolTip = "";
+
+        /// <summary>
+        /// Get, set tooltip
+        /// </summary>
+        public string ToolTip
+        {
+            get { return toolTip; }
+            set
+            {
+                toolTip = value;
+                tip.SetToolTip(pbThumbnail, value);
+            }
+        }
 
         /// <summary>
         /// The thumbnails sequence parent container.
@@ -261,6 +277,8 @@ namespace ImageGlass.ThumbBar
         }
 
         #endregion
+
+        
 
 
         

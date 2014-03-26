@@ -141,6 +141,15 @@ namespace ImageGlass.ThumbBar
         }
 
         /// <summary>
+        /// Moves to the given thumbnail index in the sequence.
+        /// </summary>
+        /// <param name="index"></param>
+        public void MoveToThumbnail(int index)
+        {
+            
+        }
+
+        /// <summary>
         /// Moves to the next thumbnail in the sequence, if any.
         /// </summary>
         public ThumbnailBox MoveToNextThumbnail()
