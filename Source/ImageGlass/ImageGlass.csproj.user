@@ -11,7 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>"C:\Users\Duong Dieu Phap\Desktop\vestavt.png"</StartArguments>
+    <StartArguments>"C:\Users\Duong Dieu Phap\Desktop\hand.png"</StartArguments>
     <RemoteDebugEnabled>false</RemoteDebugEnabled>
     <StartWorkingDirectory>
     </StartWorkingDirectory>

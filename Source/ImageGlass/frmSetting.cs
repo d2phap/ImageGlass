@@ -423,7 +423,7 @@ namespace ImageGlass
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
         {
-            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
+            //GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
         }
 
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)

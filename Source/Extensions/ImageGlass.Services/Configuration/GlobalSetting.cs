@@ -52,7 +52,7 @@ namespace ImageGlass.Services.Configuration
         private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
         private static bool _isForcedActive = true;
-        private static int _currentIndex = 0;
+        private static int _currentIndex = -1;
         private static string _currentPath = "";
         private static bool _isRecursive = false;
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
@@ -60,7 +60,7 @@ namespace ImageGlass.Services.Configuration
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;";
         private static string _contextMenuExtensions = "";
-        private static int _thumbnailMaxFileSize = 3;
+        //private static int _thumbnailMaxFileSize = 3;
         private static bool _isPlaySlideShow = false;
         private static bool _isSmoothPanning = true;
         private static bool _isLockWorkspaceEdges = true;
@@ -186,16 +186,6 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-
-        /// <summary>
-        /// Get, set max file size of thumbnail image file
-        /// </summary>
-        public static int ThumbnailMaxFileSize
-        {
-            get { return GlobalSetting._thumbnailMaxFileSize; }
-            set { GlobalSetting._thumbnailMaxFileSize = value; }
-        }
-
         /// <summary>
         /// Get, set value of slideshow state
         /// </summary>
@@ -224,15 +214,6 @@ namespace ImageGlass.Services.Configuration
                 GlobalSetting.SetConfig("LockToEdge", value.ToString());
             }
         }
-
-        /// <summary>
-        /// Get, set the value of zoom event
-        /// </summary>
-        //public static bool IsZooming
-        //{
-        //    get { return GlobalSetting._isZooming; }
-        //    set { GlobalSetting._isZooming = value; }
-        //}
 
         /// <summary>
         /// Get, set value of thumbnail visibility
@@ -354,17 +335,6 @@ namespace ImageGlass.Services.Configuration
 
         #region "Public Method"
 
-        /// <summary>
-        /// Lấy kích thước tối đa sẽ nạp file ảnh thu nhỏ
-        /// </summary>
-        public static void LoadMaxThumbnailFileSizeConfig()
-        {
-            string s = GlobalSetting.GetConfig("MaxThumbnailFileSize", "1");
-
-            int i = 1;
-            int.TryParse(s, out i);
-            GlobalSetting.ThumbnailMaxFileSize = i;
-        }
 
         /// <summary>
         /// Lấy dữ liệu thứ tự sắp xếp ảnh

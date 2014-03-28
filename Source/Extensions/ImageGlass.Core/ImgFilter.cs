@@ -25,7 +25,6 @@ namespace ImageGlass.Core
 {
     public class ImgFilter
     {
-
         int rotate;
         bool changed;
         float _brigh, _contr, _gamma;
@@ -59,6 +58,12 @@ namespace ImageGlass.Core
             if (oldrot != rotate)
                 changed = true;
             //Program.dbg("Set rotation to " + rotate);
+        }
+
+        public void ResetRotate()
+        {
+            rotate = 0;
+            changed = false;
         }
 
         public Image apply(Image img)

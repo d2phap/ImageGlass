@@ -40,7 +40,6 @@
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
             this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
-            this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
             this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
@@ -70,6 +69,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
@@ -226,15 +226,6 @@
             0});
             this.numMaxThumbSize.ValueChanged += new System.EventHandler(this.numMaxThumbSize_ValueChanged);
             // 
-            // lblGeneral_MaxFileSize
-            // 
-            this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(21, 258);
-            this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
-            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(192, 15);
-            this.lblGeneral_MaxFileSize.TabIndex = 7;
-            this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail file size (MB):";
-            // 
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
@@ -325,7 +316,7 @@
             this.tabContextMenu.Location = new System.Drawing.Point(4, 4);
             this.tabContextMenu.Name = "tabContextMenu";
             this.tabContextMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabContextMenu.Size = new System.Drawing.Size(605, 448);
+            this.tabContextMenu.Size = new System.Drawing.Size(604, 448);
             this.tabContextMenu.TabIndex = 1;
             this.tabContextMenu.Text = "context menu";
             this.tabContextMenu.UseVisualStyleBackColor = true;
@@ -437,7 +428,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(605, 448);
+            this.tabLanguage.Size = new System.Drawing.Size(604, 448);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -608,6 +599,15 @@
             this.panel1.Size = new System.Drawing.Size(594, 42);
             this.panel1.TabIndex = 10;
             // 
+            // lblGeneral_MaxFileSize
+            // 
+            this.lblGeneral_MaxFileSize.AutoSize = true;
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(21, 258);
+            this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
+            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(192, 15);
+            this.lblGeneral_MaxFileSize.TabIndex = 7;
+            this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail file size (MB):";
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -670,7 +670,6 @@
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguageText;
         private System.Windows.Forms.NumericUpDown numMaxThumbSize;
-        private System.Windows.Forms.Label lblGeneral_MaxFileSize;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
@@ -685,6 +684,7 @@
         private System.Windows.Forms.LinkLabel lnkEdit;
         private System.Windows.Forms.LinkLabel lnkCreateNew;
         private System.Windows.Forms.LinkLabel lnkRefresh;
+        private System.Windows.Forms.Label lblGeneral_MaxFileSize;
 
     }
 }

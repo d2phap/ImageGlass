@@ -211,6 +211,9 @@ namespace ImageGlass.Core
         }
         public string getPath(int i)
         {
+            if (i < 0 || i > image.Count)
+                return "";
+
             return root + image[i].getName();
         }
         public void setName(int i, string s)

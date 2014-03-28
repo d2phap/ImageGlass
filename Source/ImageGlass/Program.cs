@@ -37,7 +37,8 @@ namespace ImageGlass
         [STAThread]
         static void Main(string[] argv)
         {
-            args = argv;            
+            args = argv;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());

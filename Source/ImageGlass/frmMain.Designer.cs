@@ -84,11 +84,7 @@
             this.btnReport = new System.Windows.Forms.ToolStripButton();
             this.btnFollow = new System.Windows.Forms.ToolStripButton();
             this.btnFacebookLike = new System.Windows.Forms.ToolStripButton();
-            this.lblZoomRatio = new System.Windows.Forms.ToolStripLabel();
-            this.lblImageType = new System.Windows.Forms.ToolStripLabel();
-            this.lblImageSize = new System.Windows.Forms.ToolStripLabel();
-            this.lblImageFileSize = new System.Windows.Forms.ToolStripLabel();
-            this.lblImageDateCreate = new System.Windows.Forms.ToolStripLabel();
+            this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
@@ -118,14 +114,14 @@
             this.sp0.Panel1.AllowDrop = true;
             this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel1.Controls.Add(this.picMain);
-            this.sp0.Panel1.MouseEnter += new System.EventHandler(this.sp0_Panel1_MouseEnter);
             // 
             // sp0.Panel2
             // 
             this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
             this.sp0.Panel2.Controls.Add(this.thumbBar);
+            this.sp0.Panel2Collapsed = true;
             this.sp0.Size = new System.Drawing.Size(864, 437);
-            this.sp0.SplitterDistance = 356;
+            this.sp0.SplitterDistance = 362;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;
@@ -137,11 +133,13 @@
             this.picMain.ContextMenuStrip = this.mnuPopup;
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
+            this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(864, 356);
+            this.picMain.Size = new System.Drawing.Size(864, 437);
             this.picMain.TabIndex = 1;
             this.picMain.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
             // 
@@ -168,7 +166,7 @@
             this.mnuOpenLocation,
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
-            this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.mnuPopup.Size = new System.Drawing.Size(258, 342);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
@@ -323,7 +321,7 @@
             this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(864, 80);
+            this.thumbBar.Size = new System.Drawing.Size(150, 46);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.ThumbnailSize = 40;
             this.thumbBar.WrapContents = false;
@@ -403,11 +401,7 @@
             this.btnReport,
             this.btnFollow,
             this.btnFacebookLike,
-            this.lblZoomRatio,
-            this.lblImageType,
-            this.lblImageSize,
-            this.lblImageFileSize,
-            this.lblImageDateCreate});
+            this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -831,40 +825,12 @@
             this.btnFacebookLike.ToolTipText = "Visit Facebook of ImageGlass";
             this.btnFacebookLike.Click += new System.EventHandler(this.btnFacebookLike_Click);
             // 
-            // lblZoomRatio
+            // lblInfo
             // 
-            this.lblZoomRatio.BackColor = System.Drawing.Color.Transparent;
-            this.lblZoomRatio.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
-            this.lblZoomRatio.Name = "lblZoomRatio";
-            this.lblZoomRatio.Size = new System.Drawing.Size(0, 30);
-            // 
-            // lblImageType
-            // 
-            this.lblImageType.BackColor = System.Drawing.Color.Transparent;
-            this.lblImageType.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
-            this.lblImageType.Name = "lblImageType";
-            this.lblImageType.Size = new System.Drawing.Size(0, 30);
-            // 
-            // lblImageSize
-            // 
-            this.lblImageSize.BackColor = System.Drawing.Color.Transparent;
-            this.lblImageSize.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
-            this.lblImageSize.Name = "lblImageSize";
-            this.lblImageSize.Size = new System.Drawing.Size(0, 30);
-            // 
-            // lblImageFileSize
-            // 
-            this.lblImageFileSize.BackColor = System.Drawing.Color.Transparent;
-            this.lblImageFileSize.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
-            this.lblImageFileSize.Name = "lblImageFileSize";
-            this.lblImageFileSize.Size = new System.Drawing.Size(0, 30);
-            // 
-            // lblImageDateCreate
-            // 
-            this.lblImageDateCreate.BackColor = System.Drawing.Color.Transparent;
-            this.lblImageDateCreate.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
-            this.lblImageDateCreate.Name = "lblImageDateCreate";
-            this.lblImageDateCreate.Size = new System.Drawing.Size(0, 30);
+            this.lblInfo.BackColor = System.Drawing.Color.Transparent;
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(0, 30);
             // 
             // frmMain
             // 
@@ -881,7 +847,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
-            this.Text = "ImageGlass";
+            this.Text = "ImageGlass 2015";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -933,7 +899,7 @@
         private System.Windows.Forms.ToolStripButton btnReport;
         private System.Windows.Forms.ToolStripButton btnFollow;
         private System.Windows.Forms.ToolStripButton btnFacebookLike;
-        private System.Windows.Forms.ToolStripLabel lblZoomRatio;
+        private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;
         private System.Windows.Forms.ToolStripMenuItem mnuEditWithPaint;
@@ -952,10 +918,6 @@
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripMenuItem mnuRename;
         private System.Windows.Forms.ToolStripMenuItem mnuCopyImagePath;
-        private System.Windows.Forms.ToolStripLabel lblImageType;
-        private System.Windows.Forms.ToolStripLabel lblImageDateCreate;
-        private System.Windows.Forms.ToolStripLabel lblImageFileSize;
-        private System.Windows.Forms.ToolStripLabel lblImageSize;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
         private System.Windows.Forms.ToolStripButton btnFacebook;
         private System.Windows.Forms.ToolStripMenuItem mnuUploadFacebook;
