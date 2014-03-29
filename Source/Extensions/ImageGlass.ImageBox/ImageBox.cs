@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ImageGlass
@@ -24,6 +25,62 @@ namespace ImageGlass
     /* [Designer("Cyotek.Windows.Forms.Design.ImageBoxDesigner", Cyotek.Windows.Forms.ImageBox.Design.dll, PublicKeyToken=58daa28b0b2de221")] */
     public class ImageBox : VirtualScrollableControl
     {
+        #region [Phap] API Hide HSCROLL
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case 0x83: // WM_NCCALCSIZE
+                    int style = (int)GetWindowLong(this.Handle, GWL_STYLE);
+                    //if ((style & WS_VSCROLL) == WS_VSCROLL)
+                    //{
+                    //    SetWindowLong(this.Handle, GWL_STYLE, style & ~WS_VSCROLL);
+                    //}
+                    if ((style & WS_HSCROLL) == WS_HSCROLL)
+                    {
+                        SetWindowLong(this.Handle, GWL_STYLE, style & ~WS_HSCROLL);
+                    }
+                    base.WndProc(ref m);
+                    break;
+                default:
+                    base.WndProc(ref m);
+                    break;
+            }
+        }
+        const int GWL_STYLE = -16;
+        const int WS_VSCROLL = 0x00200000;
+        const int WS_HSCROLL = 0x00100000;
+
+        public static int GetWindowLong(IntPtr hWnd, int nIndex)
+        {
+            if (IntPtr.Size == 4)
+                return (int)GetWindowLong32(hWnd, nIndex);
+            else
+                return (int)(long)GetWindowLongPtr64(hWnd, nIndex);
+        }
+
+        public static int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong)
+        {
+            if (IntPtr.Size == 4)
+                return (int)SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
+            else
+                return (int)(long)SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+        }
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, int dwNewLong);
+        #endregion
+
+
         #region Constants
 
         private const int MaxZoom = 3500;
@@ -41,7 +98,7 @@ namespace ImageGlass
         private bool _allowDoubleClick;
 
         private bool _allowZoom;
-
+        
         private bool _autoCenter;
 
         private bool _autoPan;
@@ -943,7 +1000,7 @@ namespace ImageGlass
         protected override void OnScroll(ScrollEventArgs se)
         {
             this.Invalidate();
-
+            
             base.OnScroll(se);
         }
 
@@ -961,6 +1018,7 @@ namespace ImageGlass
         #endregion
 
         #region Public Properties
+
 
         /// <summary>
         ///   Gets or sets a value indicating whether clicking the control with the mouse will automatically zoom in or out.
@@ -2663,7 +2721,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        ///   Zooms to the maximum size for displaying the entire image within the bounds of the control.
+        ///   [Phap] Zooms to the maximum size or actual size for displaying the entire image within the bounds of the control.
         /// </summary>
         public virtual void ZoomToFit()
         {
@@ -2677,26 +2735,35 @@ namespace ImageGlass
 
                 innerRectangle = this.GetInsideViewPort(true);
 
-                if (this.ViewSize.Width > this.ViewSize.Height)
+                //View actual size
+                if (this.ViewSize.Width <= innerRectangle.Width &&
+                    this.ViewSize.Height <= innerRectangle.Height)
                 {
-                    aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
-                    zoom = aspectRatio * 100.0;
-
-                    if (innerRectangle.Height < ((this.ViewSize.Height * zoom) / 100.0))
-                    {
-                        aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
-                        zoom = aspectRatio * 100.0;
-                    }
+                    zoom = 100.0;
                 }
                 else
                 {
-                    aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
-                    zoom = aspectRatio * 100.0;
-
-                    if (innerRectangle.Width < ((this.ViewSize.Width * zoom) / 100.0))
+                    if (this.ViewSize.Width > this.ViewSize.Height)
                     {
                         aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
                         zoom = aspectRatio * 100.0;
+
+                        if (innerRectangle.Height < ((this.ViewSize.Height * zoom) / 100.0))
+                        {
+                            aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
+                            zoom = aspectRatio * 100.0;
+                        }
+                    }
+                    else
+                    {
+                        aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
+                        zoom = aspectRatio * 100.0;
+
+                        if (innerRectangle.Width < ((this.ViewSize.Width * zoom) / 100.0))
+                        {
+                            aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
+                            zoom = aspectRatio * 100.0;
+                        }
                     }
                 }
 

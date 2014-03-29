@@ -132,13 +132,13 @@
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
             this.picMain.Size = new System.Drawing.Size(864, 437);
             this.picMain.TabIndex = 1;
-            this.picMain.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
@@ -335,7 +335,6 @@
             // 
             this.sysWatch.EnableRaisingEvents = true;
             this.sysWatch.SynchronizingObject = this;
-            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
             this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 

@@ -15,5 +15,6 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\De
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Debug\ImageGlass.Plugins.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Plugins\bin\Debug\ImageGlass.Plugins.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Plugins\bin\Debug\ImageGlass.Plugins.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Debug\ImageGlass.Plugins.csprojResolveAssemblyReference.cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Debug\ImageGlass.Plugins.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Plugins\obj\Debug\ImageGlass.Plugins.pdb

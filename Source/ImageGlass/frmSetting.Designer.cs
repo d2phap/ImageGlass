@@ -39,7 +39,6 @@
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
-            this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
             this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
@@ -69,11 +68,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -113,8 +110,6 @@
             this.tabGeneral.Controls.Add(this.chkWelcomePicture);
             this.tabGeneral.Controls.Add(this.lblImageLoadingOrder);
             this.tabGeneral.Controls.Add(this.cmbImageOrder);
-            this.tabGeneral.Controls.Add(this.numMaxThumbSize);
-            this.tabGeneral.Controls.Add(this.lblGeneral_MaxFileSize);
             this.tabGeneral.Controls.Add(this.barInterval);
             this.tabGeneral.Controls.Add(this.lblSlideshowInterval);
             this.tabGeneral.Controls.Add(this.lblGeneral_ZoomOptimization);
@@ -146,7 +141,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(24, 395);
+            this.picBackgroundColor.Location = new System.Drawing.Point(25, 353);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -157,7 +152,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(20, 374);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(21, 332);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -177,7 +172,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(20, 318);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(21, 276);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -195,36 +190,11 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(23, 336);
+            this.cmbImageOrder.Location = new System.Drawing.Point(24, 294);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 7;
             this.cmbImageOrder.SelectedIndexChanged += new System.EventHandler(this.cmbImageOrder_SelectedIndexChanged);
-            // 
-            // numMaxThumbSize
-            // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(24, 279);
-            this.numMaxThumbSize.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numMaxThumbSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMaxThumbSize.Name = "numMaxThumbSize";
-            this.numMaxThumbSize.Size = new System.Drawing.Size(84, 23);
-            this.numMaxThumbSize.TabIndex = 6;
-            this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numMaxThumbSize.ThousandsSeparator = true;
-            this.numMaxThumbSize.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numMaxThumbSize.ValueChanged += new System.EventHandler(this.numMaxThumbSize_ValueChanged);
             // 
             // barInterval
             // 
@@ -599,15 +569,6 @@
             this.panel1.Size = new System.Drawing.Size(594, 42);
             this.panel1.TabIndex = 10;
             // 
-            // lblGeneral_MaxFileSize
-            // 
-            this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(21, 258);
-            this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
-            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(192, 15);
-            this.lblGeneral_MaxFileSize.TabIndex = 7;
-            this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail file size (MB):";
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -630,7 +591,6 @@
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabContextMenu.ResumeLayout(false);
             this.tabContextMenu.PerformLayout();
@@ -669,7 +629,6 @@
         private System.Windows.Forms.TabPage tabLanguage;
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguageText;
-        private System.Windows.Forms.NumericUpDown numMaxThumbSize;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
@@ -684,7 +643,6 @@
         private System.Windows.Forms.LinkLabel lnkEdit;
         private System.Windows.Forms.LinkLabel lnkCreateNew;
         private System.Windows.Forms.LinkLabel lnkRefresh;
-        private System.Windows.Forms.Label lblGeneral_MaxFileSize;
 
     }
 }

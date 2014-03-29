@@ -143,18 +143,13 @@ namespace ImageGlass.Core
 			if (image[i].failed)
             {
                 imgError = true;
-                return new Bitmap(ImageGlass.Core.Properties.Resources.Image_Error);
+                return new Bitmap(1, 1);//ImageGlass.Core.Properties.Resources.Image_Error);
             }
             else
             {
                 imgError = false;                
                 return (Image)image[i].get();
             }
-			
-            /*return !image[i].failed ?
-                (Image)image[i].get() :
-                new Bitmap(Img.embedded("error.png"));
-			*/
         }
 
         /// <summary>

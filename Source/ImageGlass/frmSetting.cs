@@ -193,7 +193,7 @@ namespace ImageGlass
             chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
             lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
-            lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
+            //lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmSetting.btnClose"];
@@ -329,14 +329,7 @@ namespace ImageGlass
 
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
                                         barInterval.Value);
-
-            //Get value of numMaxThumbSize
-            s = GlobalSetting.GetConfig("MaxThumbnailFileSize", "1");
-            i = 1;
-            if (int.TryParse(s, out i))
-            {}
-            numMaxThumbSize.Value = i;
-
+            
             //Load items of cmbImageOrder
             cmbImageOrder.Items.Clear();
             cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
@@ -367,7 +360,7 @@ namespace ImageGlass
 
         private void chkLockWorkspace_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
+            //GlobalSetting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)

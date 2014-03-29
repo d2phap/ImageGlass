@@ -160,9 +160,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(20, 99);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(180, 15);
+            this.label1.Size = new System.Drawing.Size(192, 15);
             this.label1.TabIndex = 16;
-            this.label1.Text = "Design logo: Nguyễn Quốc Tuấn";
+            this.label1.Text = "Logo designer: Nguyễn Quốc Tuấn";
             // 
             // lnkCheckUpdate
             // 

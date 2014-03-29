@@ -6,6 +6,7 @@ C:\Users\Duong Dieu Phap\Desktop\ImageFan\ImageFan\obj\Debug\ImageGlass.ThumbBar
 C:\Users\Duong Dieu Phap\Desktop\ImageFan\ImageFan\obj\Debug\ImageGlass.ThumbBar.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\bin\Debug\ImageGlass.ThumbBar.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csprojResolveAssemblyReference.cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.ThumbnailBox.resources
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.ThumbBar\obj\Debug\ImageGlass.ThumbBar.dll

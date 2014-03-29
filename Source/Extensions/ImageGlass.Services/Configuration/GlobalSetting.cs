@@ -62,12 +62,12 @@ namespace ImageGlass.Services.Configuration
         private static string _contextMenuExtensions = "";
         //private static int _thumbnailMaxFileSize = 3;
         private static bool _isPlaySlideShow = false;
-        private static bool _isSmoothPanning = true;
-        private static bool _isLockWorkspaceEdges = true;
+        //private static bool _isSmoothPanning = true;
+        //private static bool _isLockWorkspaceEdges = true;
         //private static bool _isZooming = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
-        private static double _zoomLockValue = 1;
+        private static int _zoomLockValue = 100;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
         private static Color _backgroundColor = Color.White;
@@ -196,24 +196,24 @@ namespace ImageGlass.Services.Configuration
         }
 
         //Get, set value of smooth panning
-        public static bool IsSmoothPanning
-        {
-            get { return GlobalSetting._isSmoothPanning; }
-            set { GlobalSetting._isSmoothPanning = value; }
-        }
+        //public static bool IsSmoothPanning
+        //{
+        //    get { return GlobalSetting._isSmoothPanning; }
+        //    set { GlobalSetting._isSmoothPanning = value; }
+        //}
 
         /// <summary>
         /// Get, set the value of moving, lock onto screen edges
         /// </summary>
-        public static bool IsLockWorkspaceEdges
-        {
-            get { return GlobalSetting._isLockWorkspaceEdges; }
-            set
-            {
-                GlobalSetting._isLockWorkspaceEdges = value;
-                GlobalSetting.SetConfig("LockToEdge", value.ToString());
-            }
-        }
+        //public static bool IsLockWorkspaceEdges
+        //{
+        //    get { return GlobalSetting._isLockWorkspaceEdges; }
+        //    set
+        //    {
+        //        GlobalSetting._isLockWorkspaceEdges = value;
+        //        GlobalSetting.SetConfig("LockToEdge", value.ToString());
+        //    }
+        //}
 
         /// <summary>
         /// Get, set value of thumbnail visibility
@@ -236,7 +236,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Get, set fixed width on zooming
         /// </summary>
-        public static double ZoomLockValue
+        public static int ZoomLockValue
         {
             get { return GlobalSetting._zoomLockValue; }
             set { GlobalSetting._zoomLockValue = value; }

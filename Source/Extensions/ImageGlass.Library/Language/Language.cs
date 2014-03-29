@@ -157,6 +157,7 @@ namespace ImageGlass.Library
         private void InitDefaultLanguageDictionary()
         {
             //frmMain
+            this.Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0
             this.Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageDown)");
             this.Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageUp)");
             this.Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
@@ -183,7 +184,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnHelp", "Help (F1)");
             this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet");
             this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email");
-            this.Items.Add("frmMain.btnReport", "Report a bug or comment about ImageGlass");
+            this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks");
             this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow");
             this.Items.Add("frmMain.mnuStopSlideshow", "Stop slideshow");
             this.Items.Add("frmMain.mnuExitSlideshow", "Exit slideshow");
@@ -208,6 +209,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?");
             this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm");
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
+            this.Items.Add("frmMain._FullscreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0
+            this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0
             this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
             this.Items.Add("frmExtension.Node0", "Get more extensions");
