@@ -201,6 +201,51 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
+        /// Lấy tên loại định dạng của hình ảnh
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <param name="extensionOnly"></param>
+        /// <returns></returns>
+        public static string GetImageFileType(string extension, bool extensionOnly)
+        {
+            string ext = extension.Replace(".", "").ToLower();
+
+            switch (ext)
+            {
+                case "bmp":
+                    return "Bitmap Image File";
+                case "dib":
+                    return "Device Independent Bitmap File";
+                case "jpg":
+                    return "JPEG Image File";
+                case "jpeg":
+                    return "Joint Photographic Experts Group";
+                case "jfif":
+                    return "JPEG File Interchange Format";
+                case "jpe":
+                    return "JPEG Image File";
+                case "png":
+                    return "Portable Network Graphics";
+                case "gif":
+                    return "Graphics Interchange Format File";
+                case "ico":
+                    return "Icon File";
+                case "emf":
+                    return "Enhanced Windows Metafile";
+                case "exif":
+                    return "Exchangeable Image Information File";
+                case "wmf":
+                    return "Windows Metafile";
+                case "tif":
+                    return "Tagged Image File";
+                case "tiff":
+                    return "Tagged Image File Format";
+                default:
+                    return ext.ToUpper() + " File";
+            }
+        }
+
+        /// <summary>
         /// Lấy dung lượng của tập tin kèm theo đơn vị
         /// </summary>
         /// <param name="filename">Đường dẫn của tập tin</param>

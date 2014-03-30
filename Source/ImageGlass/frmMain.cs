@@ -310,8 +310,7 @@ namespace ImageGlass
 
                 //Show image
                 picMain.Image = im;
-                picMain.VerticalScroll.Visible = false;
-                picMain.HorizontalScroll.Visible = false;
+
                 //Zoom condition
                 if(btnZoomLock.Checked)
                 {
@@ -1428,7 +1427,8 @@ namespace ImageGlass
                 }
             }
             catch { return; }
-            Prepare(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex));//cap nhat lai thu muc anh
+
+            NextPic(0);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)

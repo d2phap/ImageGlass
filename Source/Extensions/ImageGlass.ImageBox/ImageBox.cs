@@ -25,6 +25,7 @@ namespace ImageGlass
     /* [Designer("Cyotek.Windows.Forms.Design.ImageBoxDesigner", Cyotek.Windows.Forms.ImageBox.Design.dll, PublicKeyToken=58daa28b0b2de221")] */
     public class ImageBox : VirtualScrollableControl
     {
+        /*
         #region [Phap] API Hide HSCROLL
         protected override void WndProc(ref Message m)
         {
@@ -80,6 +81,7 @@ namespace ImageGlass
         public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, int dwNewLong);
         #endregion
 
+        */
 
         #region Constants
 

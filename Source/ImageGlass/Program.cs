@@ -61,8 +61,8 @@ namespace ImageGlass
                                 char.ConvertFromUtf32(34), "igautoupdate");
                     }
                 }
-
             }
+
 
 
         }

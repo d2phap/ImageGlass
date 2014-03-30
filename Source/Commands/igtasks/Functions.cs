@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Configuration;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Library.FileAssociations;
 
 namespace igtasks
 {
@@ -57,6 +58,7 @@ namespace igtasks
             {
                 MessageBox.Show(ex.Message);
             }
+
         }
 
 
@@ -108,6 +110,31 @@ namespace igtasks
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Register file association
+        /// </summary>
+        /// <param name="ext">Extension, for ex: .png</param>
+        /// <param name="programID">Program ID, for ex: ImageGlass.PNG</param>
+        /// <param name="description">Extension description</param>
+        /// <param name="icon">.ICO path</param>
+        /// <param name="igPath">Executable file</param>
+        /// <param name="appName">Application name</param>
+        public static void RegisterAssociation(string ext, string programID,
+            string description, string icon, string igPath, string appName)
+        {
+            // Initializes a new FileAssociator to associate the .ABC file extension.
+            FileAssociator assoc = new FileAssociator(ext);
+
+            // Creates a new file association for the .ABC file extension. Data is overwritten if it already exists.
+            assoc.Create(programID,
+                description,
+                new ProgramIcon(icon),
+                new ExecApplication(igPath),
+                new OpenWithList(new string[] { appName }));
+
+            MessageBox.Show("dsgsdg");
         }
 
 
@@ -239,9 +266,6 @@ namespace igtasks
 
 
         #endregion
-
-
-
 
 
     }

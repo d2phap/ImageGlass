@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using igtasks;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
+using ImageGlass.Library.FileAssociations;
 
 namespace adtasks
 {
@@ -125,8 +126,28 @@ namespace adtasks
             }
             #endregion
 
+            //Register file association
+            #region regassociations <string ext> <string programID> <string description> <string icon> <string igPath> <string appName>
+            else if (topcmd == "regassociations")
+            {
+                //get Extension
+                string ext = args[1];
+                //get Program ID
+                string programID = args[2];
+                //get Extension description
+                string description = args[3];
+                //get .ICO path
+                string icon = args[4];
+                //get Executable file
+                string igPath = args[5];
+                //get Application name
+                string appName = args[6];
 
+                Functions.RegisterAssociation(ext, programID, description, icon, igPath, appName);
 
+                Application.Exit();
+            }
+            #endregion
 
 
 

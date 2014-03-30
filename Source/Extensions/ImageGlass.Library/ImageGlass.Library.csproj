@@ -46,6 +46,11 @@
     <Compile Include="Comparer\FileLogicalComparer.cs" />
     <Compile Include="Comparer\NumericComparer.cs" />
     <Compile Include="DirectoryFinder\DirectoryFinder.cs" />
+    <Compile Include="FileAssociations\ExecApplication.cs" />
+    <Compile Include="FileAssociations\FileAssociator.cs" />
+    <Compile Include="FileAssociations\OpenWithList.cs" />
+    <Compile Include="FileAssociations\ProgramIcon.cs" />
+    <Compile Include="FileAssociations\RegistryUtilities.cs" />
     <Compile Include="Language\Language.cs" />
     <Compile Include="Net\DownloadFile.cs" />
     <Compile Include="Image\Animation.cs" />

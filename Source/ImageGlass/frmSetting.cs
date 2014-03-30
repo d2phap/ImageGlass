@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Library.Image;
 
 namespace ImageGlass
 {
@@ -459,6 +460,21 @@ namespace ImageGlass
             }
             catch { }
 
+
+            //Process p = new Process();
+            //p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            //p.StartInfo.Arguments = "regassociations " + //name of param
+            //                        ".gif " + //arg 1
+            //                        "ImageGlass.Gif " + //arg 2
+            //                        "\"" + ImageInfo.GetImageFileType("gif", true) + "\" " + //arg 3
+            //                        "\"" + Application.StartupPath + "\\imageglass.ico\" " + //arg 4
+            //                        "\"" + Application.ExecutablePath + "\" " + //arg 5
+            //                        "\"ImageGlass 2\" "; //arg 6
+            //try
+            //{
+            //    p.Start();
+            //}
+            //catch { }
         }
 
         private void lblUpdateContextMenu_Click(object sender, EventArgs e)
