@@ -27,12 +27,17 @@ namespace ImageGlass.ThumbBar
     /// Global data class of the application.
     /// </summary>
     static class GlobalData
-    {   
+    {
 
         /// <summary>
-        /// The given thumbnail size.
+        /// The given thumbnail width and height
         /// </summary>
-        public static int ThumbnailSize = 64;
+        public static int ThumbnailWidthAndHeight = 64;
+
+        /// <summary>
+        /// The given thumbnail size in MB
+        /// </summary>
+        public static int ThumbnailMaxLoadingSize = 5;
 
         /// <summary>
         /// The invalid image logo.
@@ -43,6 +48,11 @@ namespace ImageGlass.ThumbBar
         /// The thumbnail of the invalid image logo.
         /// </summary>
         public static Image InvalidImageThumbnail = null;
+
+        /// <summary>
+        /// The thumbnail of the too large image logo.
+        /// </summary>
+        public static Image TooLargeImageThumbnail = null;
 
         /// <summary>
         /// The loading image logo.
@@ -59,7 +69,12 @@ namespace ImageGlass.ThumbBar
         /// </summary>
         static GlobalData()
         {
-            ReloadData();
+            InvalidImage = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            InvalidImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            TooLargeImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+
+            LoadingImage = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            LoadingImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
         }
 
         /// <summary>
@@ -67,11 +82,12 @@ namespace ImageGlass.ThumbBar
         /// </summary>
         public static void ReloadData()
         {
-            InvalidImage = new Bitmap(ThumbnailSize, ThumbnailSize);
-            InvalidImageThumbnail = new Bitmap(ThumbnailSize, ThumbnailSize);
+            //InvalidImage = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            //InvalidImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            //TooLargeImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
 
-            LoadingImage = new Bitmap(ThumbnailSize, ThumbnailSize);
-            LoadingImageThumbnail = new Bitmap(ThumbnailSize, ThumbnailSize);
+            //LoadingImage = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
+            //LoadingImageThumbnail = new Bitmap(ThumbnailWidthAndHeight, ThumbnailWidthAndHeight);
         }
 
     }

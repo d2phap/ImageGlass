@@ -59,18 +59,72 @@ namespace ImageGlass.ThumbBar
         }
 
         /// <summary>
-        /// Gets, sets thumbnail size
+        /// Gets, sets thumbnail width and height
         /// </summary>
-        public int ThumbnailSize
+        public int ThumbnailWidthAndHeight
         {
             set
             {
-                GlobalData.ThumbnailSize = value;
+                GlobalData.ThumbnailWidthAndHeight = value;
                 GlobalData.ReloadData();
             }
             get
             {
-                return GlobalData.ThumbnailSize;
+                return GlobalData.ThumbnailWidthAndHeight;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets thumbnail size in MB
+        /// </summary>
+        public int ThumbnailMaxLoadingSize
+        {
+            get
+            {
+                return GlobalData.ThumbnailMaxLoadingSize;
+            }
+            set
+            {
+                GlobalData.ThumbnailMaxLoadingSize = value;
+            }
+        }
+
+        public Image InvalidImageThumbnail
+        {
+            get
+            {
+                return GlobalData.InvalidImageThumbnail;
+            }
+            set
+            {
+                GlobalData.InvalidImage = new Bitmap(value,
+                    GlobalData.ThumbnailWidthAndHeight, GlobalData.ThumbnailWidthAndHeight);
+                GlobalData.InvalidImageThumbnail = GlobalData.InvalidImage;
+            }
+        }
+        public Image TooLargeImageThumbnail
+        {
+            get
+            {
+                return GlobalData.TooLargeImageThumbnail;
+            }
+            set
+            {
+                GlobalData.TooLargeImageThumbnail = new Bitmap(value, 
+                    GlobalData.ThumbnailWidthAndHeight, GlobalData.ThumbnailWidthAndHeight);
+            }
+        }
+        public Image LoadingImageThumbnail
+        {
+            get
+            {
+                return GlobalData.LoadingImageThumbnail;
+            }
+            set
+            {
+                GlobalData.LoadingImage = new Bitmap(value,
+                    GlobalData.ThumbnailWidthAndHeight, GlobalData.ThumbnailWidthAndHeight);
+                GlobalData.LoadingImageThumbnail = GlobalData.LoadingImage;
             }
         }
         #endregion
@@ -131,9 +185,9 @@ namespace ImageGlass.ThumbBar
             {
                 this.SuspendLayout();
                 
-                SetThumbnailBorder(BorderStyle.None);
+                SetThumbnailSelection(false);
                 currentThumbnail = thumbnail;
-                SetThumbnailBorder(BorderStyle.FixedSingle);
+                SetThumbnailSelection(true);
                 ScrollControlIntoView(currentThumbnail);
 
                 this.ResumeLayout(true);
@@ -310,13 +364,14 @@ namespace ImageGlass.ThumbBar
             }
         }
 
-        private void SetThumbnailBorder(BorderStyle borderStyle)
+        private void SetThumbnailSelection(bool isShowBorder)
         {
             if (allowSetThumbnailBorder == true)
             {
                 if (currentThumbnail != null)
                 {
-                    currentThumbnail.SetBorder(borderStyle);
+                    //currentThumbnail.SetBorder(borderStyle);
+                    currentThumbnail.IsShowBorder = isShowBorder;
                     currentThumbnail.Select();
                 }
             }

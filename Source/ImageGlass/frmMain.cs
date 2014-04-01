@@ -352,8 +352,12 @@ namespace ImageGlass
             {
                 if (thumbBar.Controls.Count > 0)
                 {
-                    ThumbnailBox tb = (ThumbnailBox)thumbBar.Controls[GlobalSetting.CurrentIndex];
-                    thumbBar.MoveToThumbnail(tb);
+                    try
+                    {
+                        ThumbnailBox tb = (ThumbnailBox)thumbBar.Controls[GlobalSetting.CurrentIndex];
+                        thumbBar.MoveToThumbnail(tb);
+                    }
+                    catch { }
                 }
             }//end thumbnail
 
@@ -1300,8 +1304,9 @@ namespace ImageGlass
         #region Form events
         private void frmMain_Load(object sender, EventArgs e)
         {
-            Application.DoEvents();
             LoadConfig();
+
+            Application.DoEvents();
 
             //Load image from param
             if (Program.args.Length > 0)

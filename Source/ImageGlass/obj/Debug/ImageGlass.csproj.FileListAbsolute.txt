@@ -127,6 +127,6 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.pdb

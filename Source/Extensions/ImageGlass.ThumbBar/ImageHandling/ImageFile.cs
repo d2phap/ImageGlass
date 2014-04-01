@@ -69,6 +69,14 @@ namespace ImageGlass.ThumbBar
             {
                 try
                 {
+                    System.IO.FileInfo Fi = new System.IO.FileInfo(this.fileName);
+                    double _size = Math.Round((Fi.Length * 1.0) / 1024 / 1024, 2); //in MB
+
+                    if (_size > GlobalData.ThumbnailMaxLoadingSize)
+                    {
+                        return new Bitmap(GlobalData.TooLargeImageThumbnail);
+                    }
+
                     return new Bitmap(fileName);
                 }
                 catch
@@ -87,23 +95,33 @@ namespace ImageGlass.ThumbBar
             { 
                 Image thumbnail;
 
-                try
+                System.IO.FileInfo Fi = new System.IO.FileInfo(this.fileName);
+                double _size = Math.Round((Fi.Length * 1.0) / 1024 / 1024, 2); //in MB
+
+                if (_size > GlobalData.ThumbnailMaxLoadingSize)
                 {
-                    if (anImage != null)
-                        thumbnail = ImageResizer.CreateThumbnailFromImage(anImage, GlobalData.ThumbnailSize);
-                    else
-                        thumbnail = ImageResizer.CreateThumbnailFromFile(fileName, GlobalData.ThumbnailSize);
+                    thumbnail = GlobalData.TooLargeImageThumbnail;
                 }
-                catch
+                else
                 {
-                    thumbnail = GlobalData.InvalidImageThumbnail;
-                }
-                finally
-                {
-                    if ((anImage != null) && (anImage != GlobalData.InvalidImage))
+                    try
                     {
-                        anImage.Dispose();
-                        anImage = null;
+                        if (anImage != null)
+                            thumbnail = ImageResizer.CreateThumbnailFromImage(anImage, GlobalData.ThumbnailWidthAndHeight);
+                        else
+                            thumbnail = ImageResizer.CreateThumbnailFromFile(fileName, GlobalData.ThumbnailWidthAndHeight);
+                    }
+                    catch
+                    {
+                        thumbnail = GlobalData.InvalidImageThumbnail;
+                    }
+                    finally
+                    {
+                        if ((anImage != null) && (anImage != GlobalData.InvalidImage))
+                        {
+                            anImage.Dispose();
+                            anImage = null;
+                        }
                     }
                 }
 

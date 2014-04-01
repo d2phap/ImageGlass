@@ -43,6 +43,25 @@ namespace ImageGlass.ThumbBar
             SetLoadingImageThumbnail();
         }
 
+        private bool _isShowBorder = false;
+
+        /// <summary>
+        /// Gets or sets the border is visible or not.
+        /// </summary>
+        public bool IsShowBorder
+        {
+            get
+            {
+                return _isShowBorder;
+            }
+            set
+            {
+                _isShowBorder = value;
+                pbThumbnail.Invalidate();
+            }
+        }
+
+
         /// <summary>
         /// Gets or sets the index of the thumbnail in the thumbnail sequence of the folder.
         /// </summary>
@@ -79,15 +98,6 @@ namespace ImageGlass.ThumbBar
         public void ReadImageFromDiscThread()
         {
             imageFile.GetImageFromFile();
-        }
-
-        /// <summary>
-        /// Sets the border style of the control.
-        /// </summary>
-        /// <param name="borderStyle">The border style to be set</param>
-        public void SetBorder(BorderStyle borderStyle)
-        {
-            this.BorderStyle = borderStyle;
         }
 
 
@@ -276,7 +286,24 @@ namespace ImageGlass.ThumbBar
             pbThumbnail.Image = GlobalData.LoadingImageThumbnail;
         }
 
+        /// <summary>
+        /// Sets the border of thumbnail
+        /// </summary>
+        private void pbThumbnail_Paint(object sender, PaintEventArgs e)
+        {
+            if (IsShowBorder)
+            {
+                Pen p = new Pen(Brushes.Black, 1);
+                e.Graphics.DrawRectangle(p, 0, 0, this.Width - 1, this.Height - 1);
+
+                p = new Pen(Brushes.White, 1);
+                e.Graphics.DrawRectangle(p, 1, 1, this.Width - 3, this.Height - 3);
+            }
+        }
         #endregion
+
+
+        
 
         
 

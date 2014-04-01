@@ -53,6 +53,7 @@ namespace ImageGlass.ThumbBar
             this.pbThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbThumbnail.TabIndex = 1;
             this.pbThumbnail.TabStop = false;
+            this.pbThumbnail.Paint += new System.Windows.Forms.PaintEventHandler(this.pbThumbnail_Paint);
             // 
             // ThumbnailBox
             // 
