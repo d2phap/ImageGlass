@@ -1013,7 +1013,7 @@ namespace ImageGlass
             sp0.Panel2.BackgroundImage = ImageGlass.Properties.Resources.bottombar;
             lblInfo.ForeColor = Color.Black;
 
-            sp0.BackColor = Color.White;
+            picMain.BackColor = Color.White;
 
             // <toolbar_icon>
             btnBack.Image = ImageGlass.Properties.Resources.back;
@@ -1079,12 +1079,12 @@ namespace ImageGlass
 
                 try
                 {
-                    sp0.BackColor = t.backcolor;
+                    picMain.BackColor = t.backcolor;
                     GlobalSetting.BackgroundColor = t.backcolor;
                 }
                 catch
                 {
-                    sp0.BackColor = Color.White;
+                    picMain.BackColor = Color.White;
                     GlobalSetting.BackgroundColor = Color.White;
                 }
             
@@ -1341,7 +1341,7 @@ namespace ImageGlass
         {
             if (GlobalSetting.IsForcedActive)
             {
-                sp0.BackColor = GlobalSetting.BackgroundColor;
+                picMain.BackColor = GlobalSetting.BackgroundColor;
 
                 //Change language
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
