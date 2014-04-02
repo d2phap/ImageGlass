@@ -3,3 +3,8 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\bin\Re
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.csprojResolveAssemblyReference.cache
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Library\bin\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Library\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Library\obj\Release\ImageGlass.Library.pdb

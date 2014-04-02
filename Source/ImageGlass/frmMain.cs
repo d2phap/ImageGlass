@@ -137,6 +137,7 @@ namespace ImageGlass
                 this.Text = "ImageGlass - " + initFile;
                 lblInfo.Text = ImageInfo.GetFileSize(initFile);
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
+                picMain.Image = null;
 
                 //Exit function
                 return;
@@ -259,8 +260,9 @@ namespace ImageGlass
             {
                 this.Text = "ImageGlass";
                 lblInfo.Text = string.Empty;
-                picMain.Image = null;
+                
                 GlobalSetting.IsImageError = true;
+                picMain.Image = null;
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._Text"];
 
                 return;
@@ -345,6 +347,7 @@ namespace ImageGlass
             if(GlobalSetting.IsImageError)
             {
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
+                picMain.Image = null; 
             }
 
             //Select thumbnail item
@@ -380,10 +383,14 @@ namespace ImageGlass
 
             if (GlobalSetting.IsImageError)
             {
-                fileinfo = ImageInfo.GetFileSize(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)) + "\t  |  ";
-                fileinfo += Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
-                fileinfo += File.GetCreationTime(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToString();
-                this.imageInfo = fileinfo;
+                try
+                {
+                    fileinfo = ImageInfo.GetFileSize(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)) + "\t  |  ";
+                    fileinfo += Path.GetExtension(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
+                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.getPath(GlobalSetting.CurrentIndex)).ToString();
+                    this.imageInfo = fileinfo;
+                }
+                catch { }
             }
             else
             {
@@ -1258,7 +1265,7 @@ namespace ImageGlass
             //Load background---------------------------------------------------------------
             z = GlobalSetting.GetConfig("BackgroundColor", "-1");
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
-            sp0.BackColor = GlobalSetting.BackgroundColor;
+            picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load state of Toolbar---------------------------------------------------------
             if (bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false")))//Invisible

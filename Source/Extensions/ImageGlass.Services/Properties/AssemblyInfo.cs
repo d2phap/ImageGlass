@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ImageGlass.Services")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PhapSoftware")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass.Services")]
 [assembly: AssemblyCopyright("Copyright © 2013 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]

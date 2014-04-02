@@ -45,7 +45,6 @@
             this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
-            this.chkLockWorkspace = new System.Windows.Forms.CheckBox();
             this.tabContextMenu = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblUpdateContextMenu = new System.Windows.Forms.Label();
@@ -68,6 +67,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
+            this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
@@ -77,6 +78,7 @@
             this.tabLanguage.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -104,6 +106,8 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.numMaxThumbSize);
+            this.tabGeneral.Controls.Add(this.lblGeneral_MaxFileSize);
             this.tabGeneral.Controls.Add(this.chkHideToolBar);
             this.tabGeneral.Controls.Add(this.picBackgroundColor);
             this.tabGeneral.Controls.Add(this.lblBackGroundColor);
@@ -116,7 +120,6 @@
             this.tabGeneral.Controls.Add(this.cmbZoomOptimization);
             this.tabGeneral.Controls.Add(this.chkFindChildFolder);
             this.tabGeneral.Controls.Add(this.chkAutoUpdate);
-            this.tabGeneral.Controls.Add(this.chkLockWorkspace);
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -128,7 +131,7 @@
             // chkHideToolBar
             // 
             this.chkHideToolBar.AutoSize = true;
-            this.chkHideToolBar.Location = new System.Drawing.Point(22, 124);
+            this.chkHideToolBar.Location = new System.Drawing.Point(22, 92);
             this.chkHideToolBar.Name = "chkHideToolBar";
             this.chkHideToolBar.Size = new System.Drawing.Size(167, 19);
             this.chkHideToolBar.TabIndex = 13;
@@ -141,7 +144,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(25, 353);
+            this.picBackgroundColor.Location = new System.Drawing.Point(25, 367);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -152,7 +155,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(21, 332);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(21, 346);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -161,7 +164,7 @@
             // chkWelcomePicture
             // 
             this.chkWelcomePicture.AutoSize = true;
-            this.chkWelcomePicture.Location = new System.Drawing.Point(22, 99);
+            this.chkWelcomePicture.Location = new System.Drawing.Point(22, 67);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(146, 19);
             this.chkWelcomePicture.TabIndex = 3;
@@ -172,7 +175,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(21, 276);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(21, 290);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -190,7 +193,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(24, 294);
+            this.cmbImageOrder.Location = new System.Drawing.Point(24, 308);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 7;
@@ -199,7 +202,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
-            this.barInterval.Location = new System.Drawing.Point(24, 228);
+            this.barInterval.Location = new System.Drawing.Point(24, 196);
             this.barInterval.Maximum = 30;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -212,7 +215,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(21, 210);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(21, 178);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(171, 15);
             this.lblSlideshowInterval.TabIndex = 5;
@@ -221,7 +224,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(21, 156);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(21, 124);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(112, 15);
             this.lblGeneral_ZoomOptimization.TabIndex = 4;
@@ -235,7 +238,7 @@
             "Auto",
             "Smooth pixels",
             "Clear pixels"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(24, 174);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(24, 142);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
             this.cmbZoomOptimization.TabIndex = 4;
@@ -244,7 +247,7 @@
             // chkFindChildFolder
             // 
             this.chkFindChildFolder.AutoSize = true;
-            this.chkFindChildFolder.Location = new System.Drawing.Point(22, 74);
+            this.chkFindChildFolder.Location = new System.Drawing.Point(22, 42);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(166, 19);
             this.chkFindChildFolder.TabIndex = 2;
@@ -255,24 +258,13 @@
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(23, 49);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(23, 17);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(192, 19);
             this.chkAutoUpdate.TabIndex = 1;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
             this.chkAutoUpdate.CheckedChanged += new System.EventHandler(this.chkAutoUpdate_CheckedChanged);
-            // 
-            // chkLockWorkspace
-            // 
-            this.chkLockWorkspace.AutoSize = true;
-            this.chkLockWorkspace.Location = new System.Drawing.Point(23, 24);
-            this.chkLockWorkspace.Name = "chkLockWorkspace";
-            this.chkLockWorkspace.Size = new System.Drawing.Size(153, 19);
-            this.chkLockWorkspace.TabIndex = 0;
-            this.chkLockWorkspace.Text = "Lock to workspace edge";
-            this.chkLockWorkspace.UseVisualStyleBackColor = true;
-            this.chkLockWorkspace.CheckedChanged += new System.EventHandler(this.chkLockWorkspace_CheckedChanged);
             // 
             // tabContextMenu
             // 
@@ -569,6 +561,39 @@
             this.panel1.Size = new System.Drawing.Size(594, 42);
             this.panel1.TabIndex = 10;
             // 
+            // lblGeneral_MaxFileSize
+            // 
+            this.lblGeneral_MaxFileSize.AutoSize = true;
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(22, 235);
+            this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
+            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
+            this.lblGeneral_MaxFileSize.TabIndex = 14;
+            this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail size (in MB):";
+            // 
+            // numMaxThumbSize
+            // 
+            this.numMaxThumbSize.Location = new System.Drawing.Point(25, 253);
+            this.numMaxThumbSize.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numMaxThumbSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMaxThumbSize.Name = "numMaxThumbSize";
+            this.numMaxThumbSize.Size = new System.Drawing.Size(79, 23);
+            this.numMaxThumbSize.TabIndex = 15;
+            this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numMaxThumbSize.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numMaxThumbSize.ValueChanged += new System.EventHandler(this.numMaxThumbSize_ValueChanged);
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -599,6 +624,7 @@
             this.tabLanguage.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -615,7 +641,6 @@
         private System.Windows.Forms.Label lblLanguage;
         private System.Windows.Forms.Label lblContextMenu;
         private System.Windows.Forms.Label lblGeneral;
-        private System.Windows.Forms.CheckBox chkLockWorkspace;
         private System.Windows.Forms.TrackBar barInterval;
         private System.Windows.Forms.Label lblSlideshowInterval;
         private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
@@ -643,6 +668,8 @@
         private System.Windows.Forms.LinkLabel lnkEdit;
         private System.Windows.Forms.LinkLabel lnkCreateNew;
         private System.Windows.Forms.LinkLabel lnkRefresh;
+        private System.Windows.Forms.NumericUpDown numMaxThumbSize;
+        private System.Windows.Forms.Label lblGeneral_MaxFileSize;
 
     }
 }

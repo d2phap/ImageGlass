@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ImageGlass ImageBox Control")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PhapSoftware")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass ImageBox Control")]
 [assembly: AssemblyCopyright("Copyright © 2010-2014 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]

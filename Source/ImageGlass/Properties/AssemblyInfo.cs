@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ImageGlass 2")]
 [assembly: AssemblyDescription("Image viewer for Windows")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PhapSoftware")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass 2")]
 [assembly: AssemblyCopyright("Copyright © 2010-2014 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]

@@ -7,3 +7,12 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\R
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Release\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Core.dll
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Release\ImageGlass.Services.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Release\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.Services\obj\Release\ImageGlass.Services.pdb

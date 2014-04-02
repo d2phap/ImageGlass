@@ -187,14 +187,14 @@ namespace ImageGlass
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
-            chkLockWorkspace.Text = GlobalSetting.LangPack.Items["frmSetting.chkLockWorkspace"];
+            //chkLockWorkspace.Text = GlobalSetting.LangPack.Items["frmSetting.chkLockWorkspace"];
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
             chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
             lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
-            //lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
+            lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmSetting.btnClose"];
@@ -274,9 +274,6 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
-            //Get value of chkLockWorkspace
-            chkLockWorkspace.Checked = bool.Parse(GlobalSetting.GetConfig("LockToEdge", "true"));
-
             //Get value of chkFindChildFolder
             chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("Recursive", "false"));
 
@@ -359,11 +356,6 @@ namespace ImageGlass
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
 
-        private void chkLockWorkspace_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsLockWorkspaceEdges = chkLockWorkspace.Checked;
-        }
-
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
         {
             if (chkAutoUpdate.Checked)
@@ -417,7 +409,7 @@ namespace ImageGlass
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
         {
-            //GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
+            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
         }
 
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
