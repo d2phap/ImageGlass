@@ -96,15 +96,6 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csprojResolveAssemblyReference.cache
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmAbout.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmMain.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.Properties.Resources.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmSetting.resources
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.config
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.pdb
@@ -122,12 +113,21 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.xml
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmAbout.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmMain.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmSetting.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ThumbBar.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.xml

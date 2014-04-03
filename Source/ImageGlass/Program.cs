@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2014 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ namespace ImageGlass
 
                 if(DateTime.TryParse(s, out lastUpdate))
                 {
-                    //Kiểm tra cập nhật 7 ngày / lần
+                    //Check for update every 7 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
                     {
                         Process.Start(char.ConvertFromUtf32(34) +

@@ -110,6 +110,9 @@ namespace ImageGlass.Library
         /// <param name="fileName">*.igLang path</param>
         public Language(string fileName)
         {
+            _Items = new Dictionary<string, string>();
+            InitDefaultLanguageDictionary();
+
             _fileName = fileName;
             ReadLanguageFile();
         }
@@ -137,14 +140,18 @@ namespace ImageGlass.Library
             int _itemsCount = int.Parse(n.GetAttribute("count"));
 
             //Get Language string items
-            this.Items = new Dictionary<string, string>();
+            //this.Items = new Dictionary<string, string>();
             for (int i = 0; i < _itemsCount; i++)
             {
                 XmlElement node = (XmlElement)n.SelectNodes("_" + (i + 1).ToString())[0];//<_1>
                 string _key = node.GetAttribute("key");
                 string _value = node.GetAttribute("value").Replace("\\n", "\n");
 
-                this.Items.Add(_key, _value);
+                try
+                {
+                    this.Items[_key] = _value;
+                }
+                catch { }
             }
 
             
@@ -209,7 +216,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?");
             this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm");
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
-            this.Items.Add("frmMain._FullscreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0
+            this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0
             this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");

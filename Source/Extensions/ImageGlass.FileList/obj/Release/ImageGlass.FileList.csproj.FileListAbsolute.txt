@@ -8,6 +8,7 @@ F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\R
 F:\My Software\ImageGlass\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Release\ImageGlass.FileList.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\bin\Release\ImageGlass.FileList.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\bin\Release\ImageGlass.FileList.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Release\ImageGlass.FileList.csprojResolveAssemblyReference.cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Release\ImageGlass.FileList.FileList.resources
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Release\ImageGlass.FileList.FileListItem.resources
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Extensions\ImageGlass.FileList\obj\Release\ImageGlass.FileList.Properties.Resources.resources

@@ -24,13 +24,14 @@ namespace ImageGlass.Core
 {
     public class Img
     {
-        Image bm;
-        string path;
-        bool _finished, _failed;
+        private Image bm;
+        private string path;
+        private bool _finished, _failed;
+
         public Img(string path)
         {
             this.path = path;
-            dispose();
+            Dispose();
             //Program.dbg("Img instance created");
         }
 
@@ -38,20 +39,22 @@ namespace ImageGlass.Core
         /// Load image from file
         /// </summary>
         /// <param name="root">Parent folder for instance path</param>
-        public void load(string root)
+        //public void load(string root)
+        public void Load()
         {
             Image im = null;
             try
             {
                 //Program.dbg("Loading image " + path);
-                im = Interpreter.load(root + path);
+                //im = Interpreter.load(root + path);
+                im = Interpreter.load(path);
                 //Program.dbg("Finished without errors.");
             }
             catch
             {
                 //Program.dbg("Loading failed!");
             }
-            set(im);
+            Set(im);
         }
 
         /// <summary>
@@ -59,13 +62,15 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="root">Parent folder for instance path</param>
         /// <param name="filter">The ImgFilter to pass image through</param>
-        public void load(string root, ImgFilter filter)
+        //public void load(string root, ImgFilter filter)
+        public void Load(ImgFilter filter)
         {
             Image im = null;
             try
             {
                 //Program.dbg("Loading image " + path);
-                Bitmap asdf = Interpreter.load(root + path);
+                //Bitmap asdf = Interpreter.load(root + path);
+                Bitmap asdf = Interpreter.load(path);
                 //Program.dbg("Applying filters");
                 im = filter.apply(asdf);
                 //Program.dbg("Finished without errors.");
@@ -74,14 +79,14 @@ namespace ImageGlass.Core
             {
                 //Program.dbg("Loading failed!");
             }
-            set(im);
+            Set(im);
         }
 
         /// <summary>
         /// True if (attempted) image loading finished.
         /// False if loading hasn't finished.
         /// </summary>
-        public bool finished
+        public bool IsFinished
         {
             get { return _finished; }
             set { }
@@ -91,7 +96,7 @@ namespace ImageGlass.Core
         /// True if loading finished with errors.
         /// False if image loaded successfully.
         /// </summary>
-        public bool failed
+        public bool IsFailed
         {
             get { return _failed; }
             set { }
@@ -100,7 +105,7 @@ namespace ImageGlass.Core
         /// <summary>
         /// Initialize this instance
         /// </summary>
-        public void dispose()
+        public void Dispose()
         {
             if (bm != null)
             {
@@ -117,7 +122,7 @@ namespace ImageGlass.Core
         /// Return the image (or null)
         /// </summary>
         /// <returns>HURR</returns>
-        public Image get()
+        public Image Get()
         {
             //Program.dbg("Image " + path + " (" + (bm == null ? "null" : "not null") + ") requested");
             return bm;
@@ -127,9 +132,9 @@ namespace ImageGlass.Core
         /// Manually set new image
         /// </summary>
         /// <param name="im">DURR</param>
-        public void set(Image im)
+        public void Set(Image im)
         {
-            dispose();
+            Dispose();
             bm = im;
 
             if (im != null)
@@ -152,7 +157,7 @@ namespace ImageGlass.Core
         /// Get relative path of this image
         /// </summary>
         /// <returns>Relative path of image</returns>
-        public string getName()
+        public string GetFileName()
         {
             return path;
         }
@@ -161,7 +166,7 @@ namespace ImageGlass.Core
         /// Set relative path of this image
         /// </summary>
         /// <param name="s">New relative path of image</param>
-        public void setName(string s)
+        public void SetFileName(string s)
         {
             //Program.dbg("Changed " + path + " to " + s);
             path = s;
@@ -172,7 +177,7 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="filename">Resource name</param>
         /// <returns>Resource Stream</returns>
-        public static System.IO.Stream embedded(string filename)
+        public static System.IO.Stream Embedded(string filename)
         {
             return System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("ImageGlass." + filename);
         }

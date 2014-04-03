@@ -108,7 +108,7 @@ namespace ImageGlass.Library
                             {
                                 // add the file if it passes the filter 
                                 if ((Filter == null) || (Filter(file.FullName)))
-                                    retList.Add(file.Name); // file.FullName
+                                    retList.Add(file.FullName);
                             }
 
                             catch (Exception ex)

@@ -53,18 +53,13 @@ namespace ImageGlass.Services.Configuration
         private static string _facebookAccessToken = "";
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;
-        private static string _currentPath = "";
         private static bool _isRecursive = false;
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _supportedExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;";
         private static string _contextMenuExtensions = "";
-        //private static int _thumbnailMaxFileSize = 3;
         private static bool _isPlaySlideShow = false;
-        //private static bool _isSmoothPanning = true;
-        //private static bool _isLockWorkspaceEdges = true;
-        //private static bool _isZooming = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
         private static int _zoomLockValue = 100;
@@ -79,7 +74,7 @@ namespace ImageGlass.Services.Configuration
         #region "Properties"
         
         /// <summary>
-        /// Get, set image list
+        /// Gets, sets image list
         /// </summary>
         public static ImgMan ImageList
         {
@@ -88,7 +83,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set filename list
+        /// Gets, sets filename list
         /// </summary>
         public static List<String> ImageFilenameList
         {
@@ -97,7 +92,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set Access token of Facebook
+        /// Gets, sets Access token of Facebook
         /// </summary>
         public static string FacebookAccessToken
         {
@@ -106,7 +101,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set active value whenever hover on picturebox
+        /// Gets, sets active value whenever hover on picturebox
         /// </summary>
         public static bool IsForcedActive
         {
@@ -115,7 +110,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set current index of image
+        /// Gets, sets current index of image
         /// </summary>
         public static int CurrentIndex
         {
@@ -124,16 +119,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set current path (directory only) of image
-        /// </summary>
-        public static string CurrentPath
-        {
-            get { return GlobalSetting._currentPath; }
-            set { GlobalSetting._currentPath = value; }
-        }
-
-        /// <summary>
-        /// Get, set recursive value
+        /// Gets, sets recursive value
         /// </summary>
         public static bool IsRecursive
         {
@@ -142,7 +128,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set image order
+        /// Gets, sets image order
         /// </summary>
         public static ImageOrderBy ImageOrderBy
         {
@@ -151,7 +137,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set supported extension string
+        /// Gets, sets supported extension string
         /// </summary>
         public static string SupportedExtensions
         {
@@ -170,7 +156,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set the Context menu Extensions
+        /// Gets, sets the Context menu Extensions
         /// </summary>
         public static string ContextMenuExtensions
         {
@@ -187,7 +173,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set value of slideshow state
+        /// Gets, sets value of slideshow state
         /// </summary>
         public static bool IsPlaySlideShow
         {
@@ -195,28 +181,9 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isPlaySlideShow = value; }
         }
 
-        //Get, set value of smooth panning
-        //public static bool IsSmoothPanning
-        //{
-        //    get { return GlobalSetting._isSmoothPanning; }
-        //    set { GlobalSetting._isSmoothPanning = value; }
-        //}
 
         /// <summary>
-        /// Get, set the value of moving, lock onto screen edges
-        /// </summary>
-        //public static bool IsLockWorkspaceEdges
-        //{
-        //    get { return GlobalSetting._isLockWorkspaceEdges; }
-        //    set
-        //    {
-        //        GlobalSetting._isLockWorkspaceEdges = value;
-        //        GlobalSetting.SetConfig("LockToEdge", value.ToString());
-        //    }
-        //}
-
-        /// <summary>
-        /// Get, set value of thumbnail visibility
+        /// Gets, sets value of thumbnail visibility
         /// </summary>
         public static bool IsShowThumbnail
         {
@@ -225,7 +192,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set image error value
+        /// Gets, sets image error value
         /// </summary>
         public static bool IsImageError
         {
@@ -234,7 +201,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set fixed width on zooming
+        /// Gets, sets fixed width on zooming
         /// </summary>
         public static int ZoomLockValue
         {
@@ -243,7 +210,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set zoom optimization value
+        /// Gets, sets zoom optimization value
         /// </summary>
         public static ZoomOptimizationValue ZoomOptimizationMethod
         {
@@ -268,7 +235,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set welcome picture value
+        /// Gets, sets welcome picture value
         /// </summary>
         public static bool IsWelcomePicture
         {
@@ -281,7 +248,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set background color
+        /// Gets, sets background color
         /// </summary>
         public static Color BackgroundColor
         {
@@ -290,7 +257,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get, set value of visibility of toolbar when start up
+        /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
         public static bool IsHideToolBar
         {
@@ -306,7 +273,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Get, set language pack
+        /// Gets, sets language pack
         /// </summary>
         public static Library.Language LangPack
         {
@@ -320,7 +287,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Get start up directory of ImageGlass
+        /// Gets start up directory of ImageGlass
         /// </summary>
         public static string StartUpDir
         {
@@ -337,7 +304,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Lấy dữ liệu thứ tự sắp xếp ảnh
+        /// Load image order from configuration file
         /// </summary>
         public static void LoadImageOrderConfig()
         {
@@ -385,9 +352,9 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Lấy thông tin cấu hình. Trả về "" nếu không tìm thấy.
+        /// Gets a specify config. Return "" if not found.
         /// </summary>
-        /// <param name="key">Tên cấu hình</param>
+        /// <param name="key">Configuration key</param>
         /// <returns></returns>
         public static string GetConfig(string key)
         {
@@ -395,10 +362,10 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Lấy thông tin cấu hình
+        /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
-        /// <param name="key">Tên cấu hình</param>
-        /// <param name="defaultValue">Giá trị mặc định nếu không tìm thấy</param>
+        /// <param name="key">Configuration key</param>
+        /// <param name="defaultValue">Default value</param>
         /// <returns></returns>
         public static string GetConfig(string key, string defaultValue)
         {
@@ -407,10 +374,10 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gán thông tin cấu hình
+        /// Sets a specify config.
         /// </summary>
-        /// <param name="key">Tên cấu hình</param>
-        /// <param name="value">Giá trị cấu hình</param>
+        /// <param name="key">Configuration key</param>
+        /// <param name="value">Configuration value</param>
         public static void SetConfig(string key, string value)
         {
             string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
