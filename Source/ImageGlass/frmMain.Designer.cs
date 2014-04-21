@@ -47,6 +47,7 @@
             this.mnuCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuImageProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.thumbBar = new ImageGlass.ThumbBar.ThumbnailsSequence();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.sysWatch = new System.IO.FileSystemWatcher();
@@ -84,7 +85,6 @@
             this.btnFollow = new System.Windows.Forms.ToolStripButton();
             this.btnFacebookLike = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
-            this.thumbBar = new ImageGlass.ThumbBar.ThumbnailsSequence();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
@@ -312,6 +312,23 @@
             this.mnuImageProperties.Size = new System.Drawing.Size(257, 22);
             this.mnuImageProperties.Text = "&Image properties";
             this.mnuImageProperties.Click += new System.EventHandler(this.mnuProperties_Click);
+            // 
+            // thumbBar
+            // 
+            this.thumbBar.AutoScroll = true;
+            this.thumbBar.BackColor = System.Drawing.Color.Transparent;
+            this.thumbBar.CurrentThumbnail = null;
+            this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thumbBar.InvalidImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.InvalidImageThumbnail")));
+            this.thumbBar.LoadingImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.LoadingImageThumbnail")));
+            this.thumbBar.Location = new System.Drawing.Point(0, 0);
+            this.thumbBar.Name = "thumbBar";
+            this.thumbBar.Size = new System.Drawing.Size(150, 46);
+            this.thumbBar.TabIndex = 0;
+            this.thumbBar.ThumbnailMaxLoadingSize = 5;
+            this.thumbBar.ThumbnailWidthAndHeight = 40;
+            this.thumbBar.TooLargeImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.TooLargeImageThumbnail")));
+            this.thumbBar.WrapContents = false;
             // 
             // timSlideShow
             // 
@@ -818,23 +835,6 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 30);
             // 
-            // thumbBar
-            // 
-            this.thumbBar.AutoScroll = true;
-            this.thumbBar.BackColor = System.Drawing.Color.Transparent;
-            this.thumbBar.CurrentThumbnail = null;
-            this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.thumbBar.InvalidImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.InvalidImageThumbnail")));
-            this.thumbBar.LoadingImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.LoadingImageThumbnail")));
-            this.thumbBar.Location = new System.Drawing.Point(0, 0);
-            this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(150, 46);
-            this.thumbBar.TabIndex = 0;
-            this.thumbBar.ThumbnailMaxLoadingSize = 5;
-            this.thumbBar.ThumbnailWidthAndHeight = 40;
-            this.thumbBar.TooLargeImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.TooLargeImageThumbnail")));
-            this.thumbBar.WrapContents = false;
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -850,7 +850,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
-            this.Text = "ImageGlass 2015";
+            this.Text = "ImageGlass 2 BETA";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);

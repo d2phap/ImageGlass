@@ -139,6 +139,8 @@ namespace ImageGlass.Library
             n = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
             int _itemsCount = int.Parse(n.GetAttribute("count"));
 
+            
+
             //Get Language string items
             //this.Items = new Dictionary<string, string>();
             for (int i = 0; i < _itemsCount; i++)

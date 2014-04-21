@@ -56,6 +56,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panInfo.SuspendLayout();
             this.panComponent.SuspendLayout();
@@ -447,6 +448,17 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(227, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 32);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "BETA";
+            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -455,6 +467,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(618, 538);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.panReferences);
             this.Controls.Add(this.lblSlogant);
@@ -511,5 +524,6 @@
         private System.Windows.Forms.Label lblSoftwareUpdate;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
     }
 }
