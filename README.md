@@ -9,8 +9,6 @@ Free and open source image viewer
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
 </a>
 
-<h3><a href="https://github.com/d2phap/ImageGlass/archive/1.x.zip">Download source code v1.5 final</a></h3>
-
 <h3>Share ImageGlass</h3>
 <a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
 
@@ -24,8 +22,35 @@ Free and open source image viewer
 <h3>Feedback &amp; Support</h3>
 <p><span>If you&nbsp;</span><em>need help</em><span>&nbsp;installing or using the tool, use the&nbsp;</span><span style="text-decoration: underline;">Discussions</span><span>&nbsp;tab to ask your question.</span><br /> <span>If you&nbsp;</span><em>find a bug</em><span>&nbsp;or&nbsp;</span><em>think of a feature</em><span>, use the&nbsp;</span><span style="text-decoration: underline;">Issue Tracker</span><span>&nbsp;tab to submit your request.</span><br /> <span>If you&nbsp;</span><em>love it</em><span>, </span><span style="color: #ff0000;"><strong><a title="Like ImageGlass" href="https://www.facebook.com/ImageGlass" target="_blank">Like</a></strong></span>&nbsp;it on Facebook</p>
 <h3>Project Decription</h3>
-<p>ImageGlass is a lightweight, versatile image viewing application that is designed to take the place of Photo Viewer in Windows 7 and Vista, especially those installations that may have trouble displaying PNG and GIF files in Photo Viewer. ImageGlass loads  images faster than Photo Viewer, thanks to a feature that uses RAM to preload the next image. It also lets you quickly resize and reorient images in the main display.</p>
-<p><img style="vertical-align: middle;" src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/ImageGlass/imageglass_main_zps33d1682f.png" alt="" width="600" /><br /> <br /> With a blank main window and an icon-based toolbar, ImageGlass presents a clean aspect. The Open File icon is about halfway along the toolbar; we clicked it and browsed to a JPEG image in our archive. From the toolbar, we could instantly rotate the image right  or left, zoom in and out, and scale the image to the screen or the screen to the image. We could also convert images using an ultrasimple tool that involves choosing a new file type from a drop-down list and saving the file to a directory of our choice. Buttons  also let us alter the background, toggle a full-screen view, display thumbnails, and access the program's settings, including the ImageBooster feature, a slider that designates specific amounts of system memory to loading the next image in a series. It enables  users to quickly move through a file full of images, even large images, though the program advises caution in low-RAM systems. We could also add ImageGlass to context menus, enabling us to right-click image files and open them directly in the program. One  entry let us go online to get new skins for the program, too. We could even Like or Dislike ImageGlass on Facebook directly from the interface.</p>
+<p>ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.</p>
+<p>
+With ImageGlass you will be able to drag and drop the image, zoom in and zoom out and perform several actions that are not available in some other similar software, such as uploading images to Facebook. For those users who want a simple and quick image viewer this would be a good option, since its PC requirements are very low. Besides, its performance is rather good and the functions it provides can be improved by several available extensions that make ImageGlass compatible with other non-native functions. This way, ImageGlass' users can change some functionalities of the main program; however, this option is actually not too expanded offering right now just a theme modifier. Similarly, some criticism has arisen due to the 'Rotate' option, because it affects all the images loaded in the interface.
+</p>
+<p><img style="vertical-align: middle;" src="https://camo.githubusercontent.com/d9b484b6de1b79ea36b2bf151bc88315176827b2/687474703a2f2f69313231342e70686f746f6275636b65742e636f6d2f616c62756d732f63633438332f70686170737578656b6f2f496d616765476c6173732f696732625f7a707366643135376436392e706e67" alt="" width="600" /></p>
+<p>
+Getting ImageGlass in your PC won't take you too long. Once you are done with the setup process, you will soon notice that ImageGlass provides the features that Windows' standard image viewer lacks. This program will display your pictures at the center of the screen after you open them with the traditional 'Open' dialog or just right after you drag and drop them over the interface.
+</p><p>
+The main options of ImageGlass are distributed in an horizontal toolbar located at the top of the screen. There you can choose to rotate images, zoom in or out, fit the image on the interface, etc. To switch between images you just need to use Back and Forward options. In case you want to jump to a certain file, you will need to provide its index number on a built-in window. Besides, this program is able to display the files you load as thumbnails.
+</p><p>
+But one of the most outstanding features of ImageGlass, along with the Facebook uploading possibility, is the chance of removing the background while viewing PNG and GIF photos. Moreover, format conversion in this program is quite easy. There is not a separate option for this; all you must do is saving the image in the format you desire to get in the standard 'Save' dialog
+</p>
 
+<b>ImageGlass Features</b>
 
+The unique features of ImageGlass are the following:
+<ul>
+<li>ImageGlass works great with GIF, ICO and PNG formats, among others</li>
+<li>Various zoom options: zoom in or zoom out, scale to height, scale to width, lock zoom ratio, etc.</li>
+<li>14 image formats supported, including GIF</li>
+<li>Fast switch between images</li>
+<li>Image frames extraction from GIF files</li>
+<li>Thumbnail images can be shown in the current viewing folder</li>
+<li>Different theme packs available to change the look of the interface</li>
+<li>'Slide Show' viewing functionality</li>
+<li>Conversion can be made in up to 14 different formats</li>
+<li>Possibility of uploading the image being viewed to Facebook</li>
+<li>Multilanguage support, which makes the user able to create its own packs</li>
+<li>Easy installation of new extensions to widen the program's possibilities</li>
+
+</ul>
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/fbae7bd4bcce6c5bf39eae6056040fe9 "githalytics.com")](http://githalytics.com/d2phap/ImageGlass)
