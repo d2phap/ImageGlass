@@ -1,0 +1,122 @@
+﻿<ImageGlass>
+	<Language>
+		<Info langCode="de" langName="Deutsch" author="Michael Gangolf" description="xxxxxxxxxxxxx" />
+		<Content count="113">
+			<_1 key="frmMain.btnBack" default="Go to previous image (Left arrow / PageDown)" value="Vorheriges Bild (Pfeil links / Bild runter)" />
+			<_2 key="frmMain.btnNext" default="Go to next image (Right arrow / PageUp)" value="Nächstes Bild (Pfeil rechts / Bild hoc)" />
+			<_3 key="frmMain.btnRotateLeft" default="Rotate Counterclockwise (Ctrl + ,)" value="Bild links drehen (Strg + ,)" />
+			<_4 key="frmMain.btnRotateRight" default="Rotate Clockwise (Ctrl + .)" value="Bild rechts drehen (Strg + .)" />
+			<_5 key="frmMain.btnZoomIn" default="Zoom in (Ctrl + =)" value="Vergrößern (Strg + =)" />
+			<_6 key="frmMain.btnZoomOut" default="Zoom out (Ctrl + -)" value="Verkleinern (Strg + -)" />
+			<_7 key="frmMain.btnActualSize" default="Actual size (Ctrl + 0)" value="Originalgröße (Strg + 0)" />
+			<_8 key="frmMain.btnZoomLock" default="Lock zoom ratio" value="Seitenverhältnis sperren" />
+			<_9 key="frmMain.btnScaletoWidth" default="Scale to Width (Ctrl + W)" value="Bild auf Fensterbreite skalieren (Strg + W)" />
+			<_10 key="frmMain.btnScaletoHeight" default="Scale to Height (Ctrl + H)" value="Bild auf Fensterhöhe skalieren (Strg + H)" />
+			<_11 key="frmMain.btnWindowAutosize" default="Window adapt to image (Ctrl + M)" value="Fenster an Bildgröße anpassen (Strg + M)" />
+			<_12 key="frmMain.btnOpen" default="Open file (Ctrl + O)" value="Datei öffnen (Strg + O)" />
+			<_13 key="frmMain.btnRefresh" default="Refresh (F5)" value="Aktualisieren (F5)" />
+			<_14 key="frmMain.btnGoto" default="Go to ... (Ctrl + G)" value="Gehe zu ... (Strg + G)" />
+			<_15 key="frmMain.btnThumb" default="Show thumbnail (Ctrl + T)" value="Vorschaubilder anzeigen (Strg + T)" />
+			<_16 key="frmMain.btnCaro" default="Show checked background (Ctrl + B)" value="Schachbrettmuster im Hintergrund anzeigen (Strg + B)" />
+			<_17 key="frmMain.btnFullScreen" default="Full sreen (Alt + Enter)" value="Vollbild (Alt + Enter)" />
+			<_18 key="frmMain.btnSlideShow" default="Play slideshow (F11, ESC to exit)" value="Diashow starten (F11, ESC zum beenden)" />
+			<_19 key="frmMain.btnConvert" default="Convert image (Ctrl + S)" value="Bild konvertieren (Strg + S)" />
+			<_20 key="frmMain.btnPrintImage" default="Print image (Ctrl + P)" value="Bild drucken (Strg + P)" />
+			<_21 key="frmMain.btnFacebook" default="Upload to Facebook (Ctrl + U)" value="Auf Facebook posten (Strg + U)" />
+			<_22 key="frmMain.btnExtension" default="Extensions" value="Erweiterungen" />
+			<_23 key="frmMain.btnSetting" default="ImageGlass Settings (Ctrl + Shift + P)" value="Einstellungen (Strg + Shift + P)" />
+			<_24 key="frmMain.btnHelp" default="Help (F1)" value="Hilfe (F1)" />
+			<_25 key="frmMain.btnFacebookLike" default="Visit Facebook of ImageGlass" value="ImageGlass Facebook Seite besuchen" />
+			<_26 key="frmMain.btnFollow" default="Follow ImageGlass by email" value="ImageGlass Newsletter" />
+			<_27 key="frmMain.btnReport" default="Report a bug or comment about ImageGlass" value="Fehler oder Kommentare melden" />
+			<_28 key="frmMain.mnuStartSlideshow" default="Start slideshow" value="Diashow starten" />
+			<_29 key="frmMain.mnuStopSlideshow" default="Stop slideshow" value="Diashow anhalten" />
+			<_30 key="frmMain.mnuExitSlideshow" default="Exit slideshow" value="Diashow beenden" />
+			<_31 key="frmMain.mnuShowToolBar._Hide" default="Hide toolbar" value="Werkzeugleiste versteken" />
+			<_32 key="frmMain.mnuShowToolBar._Show" default="Show toolbar" value="Werkzeugleiste anzeigen" />
+			<_33 key="frmMain.mnuEditWithPaint" default="Edit with Paint" value="Bild bearbeiten" />
+			<_34 key="frmMain.mnuExtractFrames" default="Extract image frames ({0})" value="Bild-Frame {{0}} extrahieren" />
+			<_35 key="frmMain.mnuSetWallpaper" default="Set as desktop background" value="Als Hintergrundbild verwenden" />
+			<_36 key="frmMain.mnuMoveRecycle" default="Move to recycle bin" value="In den Papierkorb werfen" />
+			<_37 key="frmMain.mnuDelete" default="Delete from hard disk" value="Entfernen" />
+			<_38 key="frmMain.mnuRename" default="Rename image" value="Umbenennen" />
+			<_39 key="frmMain.mnuUploadFacebook" default="Upload to Facebook" value="Auf Facebook posten" />
+			<_40 key="frmMain.mnuCopyImagePath" default="Copy image path" value="Bildpfad kopieren" />
+			<_41 key="frmMain.mnuOpenLocation" default="Open image location" value="Bildpfad öffnen" />
+			<_42 key="frmMain.mnuImageProperties" default="Image properties" value="Bild-Eigenschaften" />
+			<_43 key="frmMain._OpenFileDialog" default="All supported files" value="Alle unterstützten Dateiformate" />
+			<_44 key="frmMain._Text" default="file(s)" value="Datei(en)" />
+			<_45 key="frmMain._RenameDialog" default="Enter new filename" value="neuen Bildnamen eingeben" />
+			<_46 key="frmMain._GotoDialogText" default="Enter the image index to view it. Press {ENTER}" value="Bildnummer eingeben um es anzuzeigen. Drücke {ENTER}" />
+			<_47 key="frmMain._DeleteDialogText" default="Delete file '{0}' ?" value="Datei {0} löschen?" />
+			<_48 key="frmMain._DeleteDialogTitle" default="Confirm" value="Bestätigen" />
+			<_49 key="frmMain._RecycleBinDialogText" default="Send file '{0}' to recycle bin ?" value="Datei {0} in den Papierkorb werfen?" />
+			<_50 key="frmMain._RecycleBinDialogTitle" default="Confirm" value="Bestätigen" />
+			<_51 key="frmMain._ExtractFrameText" default="Select output folder" value="Ausgabeverzeichnis wählen" />
+			<_52 key="frmExtension._Text" default="Extension" value="Erweiterungen" />
+			<_53 key="frmExtension.lnkGetMoreExt" default="Get more extensions" value="Erweiterungen herunterladen" />
+			<_54 key="frmExtension.Node0" default="Get more extensions" value="Erweiterungen herunterladen" />
+			<_55 key="frmExtension.btnClose" default="Close" value="Schließen" />
+			<_56 key="frmFacebook.lblMessage" default="Message:" value="Nachricht:" />
+			<_57 key="frmFacebook.btnUpload._Upload" default="Upload" value="Hochladen" />
+			<_58 key="frmFacebook.btnUpload._Cancel" default="Cancel" value="Abbrechen" />
+			<_59 key="frmFacebook.btnUpload._ViewImage" default="View image" value="Bild anzeigen" />
+			<_60 key="frmFacebook.btnClose" default="Close" value="Schließen" />
+			<_61 key="frmFacebook._StatusBegin" default="click '{0}' to begin" value="drücke {0} zum Starten" />
+			<_62 key="frmFacebook._StatusInvalid" default="invalid filename" value="ungültiger Dateiname" />
+			<_63 key="frmFacebook._StatusUploading" default="uploading..." value="hochladen..." />
+			<_64 key="frmFacebook._StatusCancel" default="cancelled" value="abgebrochen" />
+			<_65 key="frmFacebook._StatusSuccessful" default="successful" value="erfolgreich" />
+			<_66 key="frmFaceBookLogin._Text" default="Logging in to Facebook ..." value="Bei Facebook anmelden..." />
+			<_67 key="frmAbout.lblSlogant" default="Free and open source image viewer" value="Freier Open Source Bildbetrachter" />
+			<_68 key="frmAbout.lblInfo" default="Info" value="Informationen" />
+			<_69 key="frmAbout.lblComponent" default="Components" value="Komponenten" />
+			<_70 key="frmAbout.lblReferences" default="References" value="Referenzen" />
+			<_71 key="frmAbout.lblVersion" default="Version: {0}" value="Version: {0}" />
+			<_72 key="frmAbout.lblInfoContact" default="Contact:" value="Kontakt:" />
+			<_73 key="frmAbout.lblSoftwareUpdate" default="Software updates:" value="Software Updates:" />
+			<_74 key="frmAbout.lnkCheckUpdate" default="» Check for update" value="Nach Updates suchen" />
+			<_75 key="frmAbout._Text" default="About" value="Über" />
+			<_76 key="frmSetting._Text" default="Settings" value="Einstellungen" />
+			<_77 key="frmSetting.lblGeneral" default="General" value="Allgemein" />
+			<_78 key="frmSetting.lblContextMenu" default="Context menu" value="Kontextmenü" />
+			<_79 key="frmSetting.lblLanguage" default="Language" value="Sprache" />
+			<_80 key="frmSetting.chkLockWorkspace" default="Lock to workspace edge" value="Am Bildschirm einrasten" />
+			<_81 key="frmSetting.chkAutoUpdate" default="Check for update automatically" value="Automatisch nach Updates suchen" />
+			<_82 key="frmSetting.chkFindChildFolder" default="Find images in child folder" value="Bilder in Unterverzeichnissen suchen" />
+			<_83 key="frmSetting.chkWelcomePicture" default="Show welcome picture" value="Startbild anzeigen" />
+			<_84 key="frmSetting.chkHideToolBar" default="Hide toolbar when start up" value="Menüzeile beim Start verstekcen" />
+			<_85 key="frmSetting.lblGeneral_ZoomOptimization" default="Zoom optimization:" value="Zoomoptimierung:" />
+			<_86 key="frmSetting.cmbZoomOptimization._Auto" default="Auto" value="Automatisch" />
+			<_87 key="frmSetting.cmbZoomOptimization._SmoothPixels" default="Smooth pixels" value="Kanten glätten" />
+			<_88 key="frmSetting.cmbZoomOptimization._ClearPixels" default="Clear pixels" value="Scharfe Kanten" />
+			<_89 key="frmSetting.lblSlideshowInterval" default="Slide show interval: {0}" value="Dia-Standzeit" />
+			<_90 key="frmSetting.lblGeneral_MaxFileSize" default="Maximum thumbnail file size (MB):" value="Maximale Vorschaugröße (MB):" />
+			<_91 key="frmSetting.lblImageLoadingOrder" default="Image loading order:" value="Bildsortierung:" />
+			<_92 key="frmSetting.cmbImageOrder._Name" default="Name (default)" value="Name (Standard)" />
+			<_93 key="frmSetting.cmbImageOrder._Length" default="Length" value="Länge" />
+			<_94 key="frmSetting.cmbImageOrder._CreationTime" default="Creation time" value="Erstellungszeit" />
+			<_95 key="frmSetting.cmbImageOrder._LastAccessTime" default="Last access time" value="Letzte Zugriffszeit" />
+			<_96 key="frmSetting.cmbImageOrder._LastWriteTime" default="Last write time" value="Letzter Schreibzugriff" />
+			<_97 key="frmSetting.cmbImageOrder._Extension" default="Extension" value="Erweiterung" />
+			<_98 key="frmSetting.cmbImageOrder._Random" default="Random" value="Zufall" />
+			<_99 key="frmSetting.lblBackGroundColor" default="Background color:" value="Hintergrundfarbe:" />
+			<_100 key="frmSetting.btnClose" default="Close" value="Schließen" />
+			<_101 key="frmSetting.lbl_ContextMenu_Description" default="This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu." value="Hiermit können Sie ein Bild schnell über das Kontextmenü öffnen. 'Als Standard festlegen' fügt ImageGlass bei allen unterstützten Bildformaten hinzu. Wenn Sie eigene Bildformate hinzufügen wollen ändern Sie das 'Erweiterungen' Textfeld und drücken auf 'Aktualisieren'. 'Alles entfernen' entfernt den Eintrag überall." />
+			<_102 key="frmSetting.lblExtensions" default="Extensions:" value="Endungen:" />
+			<_103 key="frmSetting.lblAddDefaultContextMenu" default="Add default" value="Als Standard festlegen" />
+			<_104 key="frmSetting.lblUpdateContextMenu" default="Update" value="Aktualisieren" />
+			<_105 key="frmSetting.lblRemoveAllContextMenu" default="Remove all" value="Alles entfernen" />
+			<_106 key="frmSetting.lblLanguageText" default="Installed languages:" value="Installiere Sprache:" />
+			<_107 key="frmSetting.lnkRefresh" default="> Refresh" value="> Aktualisieren" />
+			<_108 key="frmSetting.lnkCreateNew" default="> Create new language pack" value="> neues Sprachpaket erstellen" />
+			<_109 key="frmSetting.lnkEdit" default="> Edit selected language pack" value="> markiertes Sprachpaket bearbeiten" />
+			<_110 key="frmSetting.lnkGetMoreLanguage" default="> Get more language packs" value="Mehr Sprachpakete herunterladen" />
+
+			<!-- New key for version 2.0 beta -->
+			<_111 key="frmMain.picMain._ErrorText" default="ImageGlass cannot open this picture because the file appears to be damaged, or corrupted." value="Datei kann nicht geöffnet werden, da sie Fehlerhaft ist." />
+			<_112 key="frmMain._FullScreenMessage" default="Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu." value="Drücke ALT + ENTER um den Vollbildmodus zu beenden\nOder Strg + F1 um das Menü anzuzeigen." />
+			<_113 key="frmMain._SlideshowMessage" default="Press ESC to exit slideshow.\n Right click to open context menu." value="Drücke ESC um die Diashow zu beenden.\n Rechte Maustause um das Kontextmenü zu öffnen" />
+		</Content>
+	</Language>
+</ImageGlass>
