@@ -75,9 +75,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Image Comparator\Image Comparator.csproj">
+    <ProjectReference Include="..\Image Comparator\ImageComparator.csproj">
       <Project>{cd883116-5655-482b-b31a-789f2347ebf3}</Project>
-      <Name>Image Mixture</Name>
+      <Name>ImageComparator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

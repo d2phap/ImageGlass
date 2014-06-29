@@ -369,7 +369,6 @@
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
-            this.toolMain.BackColor = System.Drawing.Color.Transparent;
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

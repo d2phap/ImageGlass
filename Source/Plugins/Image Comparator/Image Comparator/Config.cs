@@ -13,7 +13,7 @@ namespace Image_Comparator
         string myName = "Image Comparator"; //Tên của plugin
         string myDescription = "Compare images to see if they were identical."; //Miêu tả cho plugin
         string myAuthor = "Dương Diệu Pháp"; //Tên tác giả
-        string myVersion = "1.0"; //Phiên bản của plugin
+        string myVersion = "1.1"; //Phiên bản của plugin
 
         public Config()
         {

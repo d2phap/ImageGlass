@@ -41,6 +41,7 @@
             this.imageComparator1.Name = "imageComparator1";
             this.imageComparator1.Size = new System.Drawing.Size(819, 420);
             this.imageComparator1.TabIndex = 0;
+            this.imageComparator1.Load += new System.EventHandler(this.imageComparator1_Load);
             // 
             // Form1
             // 

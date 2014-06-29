@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Image_Comparator</RootNamespace>
-    <AssemblyName>Image Comparator</AssemblyName>
+    <AssemblyName>ImageComparator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImageGlass.Core">
+      <HintPath>..\..\..\ImageGlass\bin\Debug\ImageGlass.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ImageGlass.Plugins">
       <HintPath>..\..\..\ImageGlass\bin\Debug\ImageGlass.Plugins.dll</HintPath>
     </Reference>

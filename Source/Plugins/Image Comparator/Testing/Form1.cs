@@ -16,5 +16,10 @@ namespace Testing
             InitializeComponent();
         }
 
+        private void imageComparator1_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

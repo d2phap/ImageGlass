@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Image Mixer")]
+[assembly: AssemblyTitle("ImageMixer")]
 [assembly: AssemblyDescription("Create an new image from a few image files by joining them together.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PhapSoftware")]
-[assembly: AssemblyProduct("Image Mixer")]
+[assembly: AssemblyProduct("ImageMixer")]
 [assembly: AssemblyCopyright("Copyright © Duong Dieu Phap 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -18,6 +18,7 @@
     </StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Extensions\;F:\My Software\ImageGlass\Ver 1.5\ImageGlass 1.5\Commands\</ReferencePath>
+    <ReferencePath>
+    </ReferencePath>
   </PropertyGroup>
 </Project>

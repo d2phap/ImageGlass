@@ -121,8 +121,7 @@ Author: {3}
 
             try
             {
-                string _filename = GlobalSetting.CurrentPath +
-                    GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+                string _filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
                 //Load image passed from ImageGlass
                 if (File.Exists(_filename))
