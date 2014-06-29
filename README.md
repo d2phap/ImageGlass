@@ -5,8 +5,42 @@ Free and open source image viewer
 
 <h3>Donation</h3>
 
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20Software&item_number=igdonation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
+<a style="text-align: center;
+display: inline-block;
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=10%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
+10 USD
+</a>
+
+
+<a style="text-align: center;
+display: inline-block;
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=20%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
+20 USD
+</a>
+
+
+<a style="text-align: center;
+display: inline-block;
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=50%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
+50 USD
+</a>
+
+
+<a style="text-align: center;
+display: inline-block;
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=100%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
+100 USD
+</a>
+
+<a style="text-align: center;
+display: inline-block;
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=200%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
+200 USD
 </a>
 
 <h3>Share ImageGlass</h3>
