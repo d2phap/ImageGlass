@@ -294,6 +294,9 @@ namespace ImageGlass
             //Get value of chkHideToolBar
             chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
 
+            //Get value of chkLoopSlideshow
+            chkLoopSlideshow.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "true"));
+            
             //Load items of cmbZoomOptimization
             cmbZoomOptimization.Items.Clear();
             cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
@@ -398,6 +401,12 @@ namespace ImageGlass
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
+        }
+
+        private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
+            GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
         }
 
         private void barInterval_Scroll(object sender, EventArgs e)
@@ -585,9 +594,6 @@ namespace ImageGlass
         #endregion
 
         
-
-        
-
 
 
     }

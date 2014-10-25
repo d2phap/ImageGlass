@@ -33,6 +33,7 @@ using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using ImageGlass.ThumbBar.ImageHandling;
 using ImageGlass.ThumbBar;
+using System.Collections.Specialized;
 
 namespace ImageGlass
 {
@@ -186,27 +187,31 @@ namespace ImageGlass
             {
                 list.AddRange(FileLogicalComparer
                     .Sort(dsFile.ToArray()));
-
             }
             else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).Length));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastWriteTime)
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.CreationTime)
             {
                 list.AddRange(dsFile
-                    .OrderBy(f => new FileInfo(f).LastWriteTime));
+                    .OrderBy(f => new FileInfo(f).CreationTimeUtc));
+            }
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Extension)
+            {
+                list.AddRange(dsFile
+                    .OrderBy(f => new FileInfo(f).Extension));
             }
             else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastAccessTime)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).LastAccessTime));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Extension)
+            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastWriteTime)
             {
                 list.AddRange(dsFile
-                    .OrderBy(f => new FileInfo(f).Extension));
+                    .OrderBy(f => new FileInfo(f).LastWriteTime));
             }
             else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Random)
             {
@@ -476,6 +481,13 @@ namespace ImageGlass
             }
             #endregion
 
+            // Copy file to clipboard-------------------------------------------------------
+            #region Ctrl + C
+            if (e.KeyValue == 67 && e.Control && !e.Shift && !e.Alt)
+            {
+                CopyFile();
+            }
+            #endregion
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -874,6 +886,15 @@ namespace ImageGlass
         /// <param name="newname"></param>
         private void RenameImage()
         {
+            try
+            {
+                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
             //Lay ten file
             string oldName; 
             string newName;
@@ -909,8 +930,7 @@ namespace ImageGlass
             try
             {
                 //Doi ten tap tin
-                ImageInfo.RenameFile(currentPath + oldName,
-                                    currentPath + newName);
+                ImageInfo.RenameFile(currentPath + oldName, currentPath + newName);
             }
             catch (Exception ex)
             {
@@ -949,6 +969,32 @@ namespace ImageGlass
             picMain.Font = this.Font;
             picMain.ForeColor = Color.Black;
             picMain.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Copy file to Clipboard
+        /// </summary>
+        private void CopyFileToClipBoard(string filename, ref StringCollection pathCollection)
+        {
+            pathCollection.Add(filename);
+            Clipboard.SetFileDropList(pathCollection);
+        }
+
+        private void CopyFile()
+        {
+            try
+            {
+                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            StringCollection pathCollection = new StringCollection();
+            
+            CopyFileToClipBoard(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), 
+                ref pathCollection);
         }
 
         #endregion
@@ -1195,11 +1241,14 @@ namespace ImageGlass
             }
             
             //Load default image------------------------------------------------------------
-            string y = GlobalSetting.GetConfig("Welcome", "true");
+            string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
             {
                 Prepare((Application.StartupPath + "\\").Replace("\\\\", "\\") + "default.png");
             }
+
+            //Load is loop back slideshow---------------------------------------------------
+            GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
 
             //Load image order config------------------------------------------------------
             GlobalSetting.LoadImageOrderConfig();
@@ -1546,6 +1595,15 @@ namespace ImageGlass
         private void timSlideShow_Tick(object sender, EventArgs e)
         {
             NextPic(1);
+
+            //stop playing slideshow at last image
+            if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
+            {
+                if (!GlobalSetting.IsLoopBackSlideShow)
+                {
+                    mnuStopSlideshow_Click(null, null);
+                }
+            }
         }
 
         private void btnSlideShow_Click(object sender, EventArgs e)

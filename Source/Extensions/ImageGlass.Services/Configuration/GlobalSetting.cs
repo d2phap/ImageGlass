@@ -67,6 +67,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isWelcomePicture = true;
         private static Color _backgroundColor = Color.White;
         private static bool _isHideToolBar = false;
+        private static bool _isLoopBackSlideShow = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -268,6 +269,19 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 GlobalSetting._isHideToolBar = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
+        /// </summary>
+        public static bool IsLoopBackSlideShow
+        {
+            get { 
+                return GlobalSetting._isLoopBackSlideShow; 
+            }
+            set { 
+                GlobalSetting._isLoopBackSlideShow = value; 
             }
         }
 
