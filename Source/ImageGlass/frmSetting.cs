@@ -41,9 +41,9 @@ namespace ImageGlass
             InitializeComponent();
         }
 
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 0, 123, 176);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 0, 160, 220);
-        private Color M_COLOR_MENU_NORMAL = Color.Silver;
+        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
+        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
+        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
         private List<Library.Language> dsLanguages = new List<Library.Language>();
 
         #region MOUSE ENTER - HOVER - DOWN MENU
@@ -59,9 +59,7 @@ namespace ImageGlass
 
             if (int.Parse(lbl.Tag.ToString()) == 1)
             {
-                lbl.BackColor = Color.FromArgb(255, M_COLOR_MENU_ACTIVE.R + 20,
-                                                M_COLOR_MENU_ACTIVE.G + 20,
-                                                M_COLOR_MENU_ACTIVE.B + 20);
+                lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
             else
             {
@@ -75,9 +73,7 @@ namespace ImageGlass
 
             if (int.Parse(lbl.Tag.ToString()) == 1)
             {
-                lbl.BackColor = Color.FromArgb(255, M_COLOR_MENU_ACTIVE.R + 20,
-                                                M_COLOR_MENU_ACTIVE.G + 20,
-                                                M_COLOR_MENU_ACTIVE.B + 20);
+                lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
             else
             {
@@ -150,11 +146,6 @@ namespace ImageGlass
             InitLanguagePack();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void frmSetting_SizeChanged(object sender, EventArgs e)
         {
             this.Refresh();
@@ -174,6 +165,15 @@ namespace ImageGlass
 
             //Ép thực thi các thiết lập
             GlobalSetting.IsForcedActive = true;
+        }
+
+        private void frmSetting_KeyDown(object sender, KeyEventArgs e)
+        {
+            //close dialog
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
+            {
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -197,12 +197,11 @@ namespace ImageGlass
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            btnClose.Text = GlobalSetting.LangPack.Items["frmSetting.btnClose"];
             lbl_ContextMenu_Description.Text = GlobalSetting.LangPack.Items["frmSetting.lbl_ContextMenu_Description"];
             lblExtensions.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensions"];
-            lblAddDefaultContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
-            lblUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
-            lblRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
+            btnAddDefaultContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
+            btnUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
+            btnRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
             lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
             lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
@@ -278,7 +277,7 @@ namespace ImageGlass
             chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("Recursive", "false"));
 
             //Get value of cmbAutoUpdate
-            string s = GlobalSetting.GetConfig("AutoUpdate", "true");
+            string s = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
             if (s != "0")
             {
                 chkAutoUpdate.Checked = true;
@@ -363,7 +362,7 @@ namespace ImageGlass
         {
             if (chkAutoUpdate.Checked)
             {
-                GlobalSetting.SetConfig("AutoUpdate", chkAutoUpdate.Checked.ToString());
+                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString());
             }
             else
             {
@@ -445,7 +444,7 @@ namespace ImageGlass
 
 
         #region TAB CONTEXT MENU
-        private void lblAddDefaultContextMenu_Click(object sender, EventArgs e)
+        private void btnAddDefaultContextMenu_Click(object sender, EventArgs e)
         {
             Process p = new Process();
             p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
@@ -461,24 +460,9 @@ namespace ImageGlass
             }
             catch { }
 
-
-            //Process p = new Process();
-            //p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            //p.StartInfo.Arguments = "regassociations " + //name of param
-            //                        ".gif " + //arg 1
-            //                        "ImageGlass.Gif " + //arg 2
-            //                        "\"" + ImageInfo.GetImageFileType("gif", true) + "\" " + //arg 3
-            //                        "\"" + Application.StartupPath + "\\imageglass.ico\" " + //arg 4
-            //                        "\"" + Application.ExecutablePath + "\" " + //arg 5
-            //                        "\"ImageGlass 2\" "; //arg 6
-            //try
-            //{
-            //    p.Start();
-            //}
-            //catch { }
         }
 
-        private void lblUpdateContextMenu_Click(object sender, EventArgs e)
+        private void btnUpdateContextMenu_Click(object sender, EventArgs e)
         {
             //Update context menu
             Process p = new Process();
@@ -496,7 +480,7 @@ namespace ImageGlass
             catch { }
         }
 
-        private void lblRemoveAllContextMenu_Click(object sender, EventArgs e)
+        private void btnRemoveAllContextMenu_Click(object sender, EventArgs e)
         {
             //Remove all context menu
             Process p = new Process();
@@ -592,6 +576,12 @@ namespace ImageGlass
         }
 
         #endregion
+
+        
+
+        
+
+        
 
         
 

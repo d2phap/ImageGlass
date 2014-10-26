@@ -22,7 +22,7 @@ namespace ImageGlass.Core
             set
             {
                 _title = value;
-                lblTitle.Text = _title;
+                this.Text = _title;
             }
         }
 
@@ -105,27 +105,6 @@ namespace ImageGlass.Core
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
-
-        private void lblClose_MouseDown(object sender, MouseEventArgs e)
-        {
-            lblClose.BackColor = Color.FromArgb(0, 107, 179);
-        }
-
-        private void lblClose_MouseEnter(object sender, EventArgs e)
-        {
-            lblClose.BackColor = Color.FromArgb(0, 152, 253);
-        }
-
-        private void lblClose_MouseLeave(object sender, EventArgs e)
-        {
-            lblClose.BackColor = Color.FromArgb(0, 122, 204);
-        }
-
-        private void lblClose_MouseUp(object sender, MouseEventArgs e)
-        {
-            lblClose.BackColor = Color.FromArgb(0, 122, 204);
-        }
-
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (this.IsNumberOnly)
@@ -141,14 +120,18 @@ namespace ImageGlass.Core
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-        }
-
         private void DialogBox_Load(object sender, EventArgs e)
         {
             txtValue.Focus();
+        }
+
+        private void frmDialogBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            //close dialog
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
         }
     }
 }
