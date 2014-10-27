@@ -38,17 +38,15 @@ namespace ImageGlass
             InitializeComponent();
         }
 
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 0, 123, 176);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 0, 160, 220);
-        private Color M_COLOR_MENU_NORMAL = Color.Silver;
-        private Point M_PANEL_LOCATION = new Point(12, 140);
-        
+        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
+        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
+        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
         {
             Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;            
+            lbl.BackColor = M_COLOR_MENU_ACTIVE;
         }
 
         private void lblMenu_MouseUp(object sender, MouseEventArgs e)
@@ -57,15 +55,12 @@ namespace ImageGlass
 
             if (int.Parse(lbl.Tag.ToString()) == 1)
             {
-                lbl.BackColor = Color.FromArgb(255, M_COLOR_MENU_ACTIVE.R,
-                                                M_COLOR_MENU_ACTIVE.G - 20,
-                                                M_COLOR_MENU_ACTIVE.B - 20);
+                lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
             else
             {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
             }
-
         }
 
         private void lblMenu_MouseEnter(object sender, EventArgs e)
@@ -74,9 +69,7 @@ namespace ImageGlass
 
             if (int.Parse(lbl.Tag.ToString()) == 1)
             {
-                lbl.BackColor = Color.FromArgb(255, M_COLOR_MENU_ACTIVE.R + 20,
-                                                M_COLOR_MENU_ACTIVE.G + 20,
-                                                M_COLOR_MENU_ACTIVE.B + 20);
+                lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
             else
             {
@@ -99,51 +92,23 @@ namespace ImageGlass
         }
         #endregion
 
-
         private void lblMenu_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
 
-            lblInfo.Tag = 0;
-            lblComponent.Tag = 0;
-            lblReferences.Tag = 0;
-
-            lblInfo.BackColor = M_COLOR_MENU_NORMAL;
-            lblComponent.BackColor = M_COLOR_MENU_NORMAL;
-            lblReferences.BackColor = M_COLOR_MENU_NORMAL;
-
-            lbl.Tag = 1;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;
-
             if (lbl.Name == "lblInfo")
             {
-                panInfo.Location = M_PANEL_LOCATION;
-                panInfo.BringToFront();
-                panInfo.Visible = true;
-
-                panComponent.Visible = false;
-                panReferences.Visible = false;
+                tab1.SelectedTab = tpInfo;
             }
             else if (lbl.Name == "lblComponent")
             {
-                panComponent.Location = M_PANEL_LOCATION;
-                panComponent.BringToFront();
-                panComponent.Visible = true;
-
-                panInfo.Visible = false;
-                panReferences.Visible = false;
+                tab1.SelectedTab = tpComponents;
             }
             else if (lbl.Name == "lblReferences")
             {
-                panReferences.Location = M_PANEL_LOCATION;
-                panReferences.BringToFront();
-                panReferences.Visible = true;
-
-                panInfo.Visible = false;
-                panComponent.Visible = false;
+                tab1.SelectedTab = tpReferences;
             }
         }
-
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
@@ -162,8 +127,6 @@ namespace ImageGlass
                 }
             }
             fileList1.ReLoadItems();
-
-            lblMenu_Click(lblInfo, EventArgs.Empty);
 
             //Load language:
             lblSlogant.Text = GlobalSetting.LangPack.Items["frmAbout.lblSlogant"];
@@ -244,6 +207,40 @@ namespace ImageGlass
         {
             this.Close();
         }
+
+        private void fileList1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tab1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblInfo.Tag = 0;
+            lblComponent.Tag = 0;
+            lblReferences.Tag = 0;
+
+            lblInfo.BackColor = M_COLOR_MENU_NORMAL;
+            lblComponent.BackColor = M_COLOR_MENU_NORMAL;
+            lblReferences.BackColor = M_COLOR_MENU_NORMAL;
+
+            if (tab1.SelectedTab == tpInfo)
+            {
+                lblInfo.Tag = 1;
+                lblInfo.BackColor = M_COLOR_MENU_ACTIVE;
+
+            }
+            else if (tab1.SelectedTab == tpComponents)
+            {
+                lblComponent.Tag = 1;
+                lblComponent.BackColor = M_COLOR_MENU_ACTIVE;
+            }
+            else if (tab1.SelectedTab == tpReferences)
+            {
+                lblReferences.Tag = 1;
+                lblReferences.BackColor = M_COLOR_MENU_ACTIVE;
+            }
+        }
+
 
 
 
