@@ -69,7 +69,6 @@
       <DependentUpon>frmDialogBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Img.cs" />
-    <Compile Include="ImgFilter.cs" />
     <Compile Include="ImgMan.cs" />
     <Compile Include="InputBox.cs" />
     <Compile Include="Interpreter.cs" />
@@ -89,9 +88,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image_Error.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

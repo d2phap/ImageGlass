@@ -68,6 +68,7 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabContextMenu.SuspendLayout();
@@ -158,7 +159,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(20, 341);
+            this.picBackgroundColor.Location = new System.Drawing.Point(20, 376);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -344,6 +345,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chkImageBoosterBack);
             this.tabGeneral.Controls.Add(this.chkLoopSlideshow);
             this.tabGeneral.Controls.Add(this.numMaxThumbSize);
             this.tabGeneral.Controls.Add(this.lblGeneral_MaxFileSize);
@@ -380,7 +382,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 227);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 262);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -405,7 +407,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 209);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 244);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 14;
@@ -425,7 +427,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 320);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 355);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -445,7 +447,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 264);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 299);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -463,7 +465,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(20, 282);
+            this.cmbImageOrder.Location = new System.Drawing.Point(20, 317);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 7;
@@ -472,7 +474,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
-            this.barInterval.Location = new System.Drawing.Point(14, 172);
+            this.barInterval.Location = new System.Drawing.Point(14, 207);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -485,7 +487,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 154);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 189);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(171, 15);
             this.lblSlideshowInterval.TabIndex = 5;
@@ -494,7 +496,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 100);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 135);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(112, 15);
             this.lblGeneral_ZoomOptimization.TabIndex = 4;
@@ -508,7 +510,7 @@
             "Auto",
             "Smooth pixels",
             "Clear pixels"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 118);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 153);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
             this.cmbZoomOptimization.TabIndex = 4;
@@ -573,6 +575,17 @@
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
+            // 
+            // chkImageBoosterBack
+            // 
+            this.chkImageBoosterBack.AutoSize = true;
+            this.chkImageBoosterBack.Location = new System.Drawing.Point(20, 92);
+            this.chkImageBoosterBack.Name = "chkImageBoosterBack";
+            this.chkImageBoosterBack.Size = new System.Drawing.Size(385, 19);
+            this.chkImageBoosterBack.TabIndex = 17;
+            this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
+            this.chkImageBoosterBack.UseVisualStyleBackColor = true;
+            this.chkImageBoosterBack.CheckedChanged += new System.EventHandler(this.chkImageBoosterBack_CheckedChanged);
             // 
             // frmSetting
             // 
@@ -650,6 +663,7 @@
         private System.Windows.Forms.Button btnRemoveAllContextMenu;
         private System.Windows.Forms.Button btnUpdateContextMenu;
         private System.Windows.Forms.Button btnAddDefaultContextMenu;
+        private System.Windows.Forms.CheckBox chkImageBoosterBack;
 
     }
 }

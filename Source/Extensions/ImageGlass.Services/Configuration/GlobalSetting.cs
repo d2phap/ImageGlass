@@ -68,6 +68,7 @@ namespace ImageGlass.Services.Configuration
         private static Color _backgroundColor = Color.White;
         private static bool _isHideToolBar = false;
         private static bool _isLoopBackSlideShow = false;
+        private static bool _isImageBoosterBack = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -283,6 +284,15 @@ namespace ImageGlass.Services.Configuration
             set { 
                 GlobalSetting._isLoopBackSlideShow = value; 
             }
+        }
+
+        /// <summary>
+        /// Gets, sets value that allow user speed up image loading when navigate back
+        /// </summary>
+        public static bool IsImageBoosterBack
+        {
+            get { return GlobalSetting._isImageBoosterBack; }
+            set { GlobalSetting._isImageBoosterBack = value; }
         }
 
 

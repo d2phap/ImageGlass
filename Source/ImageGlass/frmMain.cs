@@ -312,7 +312,7 @@ namespace ImageGlass
                     im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
                 }
 
-                GlobalSetting.IsImageError = GlobalSetting.ImageList.imgError;
+                GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
                 //Show image
                 picMain.Image = im;
@@ -327,17 +327,21 @@ namespace ImageGlass
                     //Reset zoom
                     picMain.ZoomToFit();
                 }
-
+                
                 //Get image file information
                 this.UpdateStatusBar();
 
                 //Release unused images
-                if (GlobalSetting.CurrentIndex - 1 > -1 && GlobalSetting.CurrentIndex < GlobalSetting.ImageList.Length)
+                if (GlobalSetting.CurrentIndex - 2 >= 0)
+                {
+                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
+                }
+                if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
                 {
                     GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
                 }
             }
-            catch//(Exception ex)
+            catch
             {
                 picMain.Image = null;
                 
@@ -1444,7 +1448,7 @@ namespace ImageGlass
                 return;
             }
 
-            GlobalSetting.ImageList.filter.incRotate(1);
+            //GlobalSetting.ImageList.filter.incRotate(1);
             NextPic(0);
         }
 
@@ -1455,7 +1459,7 @@ namespace ImageGlass
                 return;
             }
 
-            GlobalSetting.ImageList.filter.incRotate(-1);
+            //GlobalSetting.ImageList.filter.incRotate(-1);
             NextPic(0);
         }
 
@@ -1911,18 +1915,18 @@ namespace ImageGlass
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            try
+            if (picMain.Image == null)
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
+                return;
             }
-            catch { return; }
 
-            Library.Image.ImageInfo.ConvertImage(Image.FromFile(
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            if (filename == "")
+            {
+                filename = "untitled.png";
+            }
+
+            Library.Image.ImageInfo.ConvertImage(picMain.Image, filename);
         }
 
         private void btnFacebookLike_Click(object sender, EventArgs e)
@@ -2070,7 +2074,7 @@ namespace ImageGlass
         {
             //Get index of deleted image
             int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
-
+            
             if (imgIndex > -1)
             {
                 //delete image list
@@ -2086,6 +2090,12 @@ namespace ImageGlass
 
                 NextPic(0);
             }
+        }
+
+        private void sysWatch_Changed(object sender, FileSystemEventArgs e)
+        {
+            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+            NextPic(0);
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)

@@ -166,7 +166,7 @@ namespace ImageGlass.Library
         private void InitDefaultLanguageDictionary()
         {
             //frmMain
-            this.Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0
+            this.Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0 beta
             this.Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageDown)");
             this.Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageUp)");
             this.Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
@@ -218,8 +218,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?");
             this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm");
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
-            this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0
-            this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0
+            this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
+            this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
             this.Items.Add("frmExtension.Node0", "Get more extensions");
@@ -253,6 +253,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             this.Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
             this.Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when start up");
+            this.Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
+            this.Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:");
             this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
             this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");

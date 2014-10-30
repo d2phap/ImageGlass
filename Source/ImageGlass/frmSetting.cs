@@ -187,11 +187,13 @@ namespace ImageGlass
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
-            //chkLockWorkspace.Text = GlobalSetting.LangPack.Items["frmSetting.chkLockWorkspace"];
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
             chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
+            chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
+            chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
+
             lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
@@ -295,6 +297,9 @@ namespace ImageGlass
 
             //Get value of chkLoopSlideshow
             chkLoopSlideshow.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "true"));
+
+            //Get value of chkImageBoosterBack
+            chkImageBoosterBack.Checked = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "false"));
             
             //Load items of cmbZoomOptimization
             cmbZoomOptimization.Items.Clear();
@@ -406,6 +411,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
             GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
+        }
+
+        private void chkImageBoosterBack_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
+            GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
         }
 
         private void barInterval_Scroll(object sender, EventArgs e)
@@ -579,11 +590,14 @@ namespace ImageGlass
 
         
 
-        
 
-        
 
-        
+
+
+
+
+
+
 
 
     }

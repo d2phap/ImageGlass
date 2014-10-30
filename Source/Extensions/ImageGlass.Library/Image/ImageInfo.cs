@@ -85,7 +85,7 @@ namespace ImageGlass.Library.Image
         public static void ConvertImage(System.Drawing.Image pic, string filename)
         {
             SaveFileDialog s = new SaveFileDialog();
-            s.Filter = "BMP|*.BMP|EMF|*.EMF|EXIF|*.EXIF|GIF|*.GIF|ICO|*.ICO|JPG|*.JPG|PNG|*.PNG|TIFF|*.TIFF|WMF|*.WMF";
+            s.Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf";
             s.FileName = Path.GetFileNameWithoutExtension(filename);
             string ext = Path.GetExtension(filename).Substring(1);
 
