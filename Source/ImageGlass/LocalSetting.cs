@@ -35,6 +35,9 @@ namespace ImageGlass
         private static frmFacebook _fFacebook = new frmFacebook();
         private static frmSetting _fSetting = new frmSetting();
         private static frmExtension _fExtension = new frmExtension();
+        private static string _imageModifiedPath = "";
+
+        
 
         #region "Properties"
         /// <summary>
@@ -62,6 +65,15 @@ namespace ImageGlass
         {
             get { return LocalSetting._fExtension; }
             set { LocalSetting._fExtension = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value if image was modified
+        /// </summary>
+        public static string ImageModifiedPath
+        {
+            get { return LocalSetting._imageModifiedPath; }
+            set { LocalSetting._imageModifiedPath = value; }
         }
         #endregion
         

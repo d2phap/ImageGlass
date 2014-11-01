@@ -69,6 +69,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isHideToolBar = false;
         private static bool _isLoopBackSlideShow = false;
         private static bool _isImageBoosterBack = false;
+        
 
         private static Library.Language _langPack = new Library.Language();
 

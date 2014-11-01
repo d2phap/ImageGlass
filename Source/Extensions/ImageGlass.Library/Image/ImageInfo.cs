@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2014 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -153,6 +153,49 @@ namespace ImageGlass.Library.Image
                         pic.Save(s.FileName, ImageFormat.Wmf);
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Save image
+        /// </summary>
+        /// <param name="pic">Image source</param>
+        /// <param name="filename">Filename</param>
+        public static void SaveImage(System.Drawing.Image pic, string filename)
+        {
+            string ext = Path.GetExtension(filename).Substring(1).ToLower();
+
+            if (ext == "bmp")
+            {
+                pic.Save(filename, ImageFormat.Bmp);
+            }
+            else if (ext == "emf")
+            {
+                pic.Save(filename, ImageFormat.Emf);
+            }
+            else if (ext == "exif")
+            {
+                pic.Save(filename, ImageFormat.Exif);
+            }
+            else if (ext == "ico")
+            {
+                pic.Save(filename, ImageFormat.Icon);
+            }
+            else if (ext == "jpeg" || ext == "jpg" || ext == "jfif")
+            {
+                pic.Save(filename, ImageFormat.Jpeg);
+            }
+            else if (ext == "png")
+            {
+                pic.Save(filename, ImageFormat.Png);
+            }
+            else if (ext == "tiff")
+            {
+                pic.Save(filename, ImageFormat.Tiff);
+            }
+            else if (ext == "wmf")
+            {
+                pic.Save(filename, ImageFormat.Wmf);
             }
         }
 

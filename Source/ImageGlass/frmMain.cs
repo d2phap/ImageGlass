@@ -34,6 +34,7 @@ using ImageGlass.Library;
 using ImageGlass.ThumbBar.ImageHandling;
 using ImageGlass.ThumbBar;
 using System.Collections.Specialized;
+using System.Threading;
 
 namespace ImageGlass
 {
@@ -259,6 +260,15 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         private void NextPic(int step)
         {
+            //Save previous image if it was modified
+            if (File.Exists(LocalSetting.ImageModifiedPath))
+            {
+                this.DisplayTextMessage("Saving change...", 1);
+
+                Application.DoEvents();
+                ImageSaveChange();
+            }
+
             picMain.Text = "";
 
             if (GlobalSetting.ImageList.Length < 1)
@@ -268,6 +278,7 @@ namespace ImageGlass
                 
                 GlobalSetting.IsImageError = true;
                 picMain.Image = null;
+                LocalSetting.ImageModifiedPath = "";
 
                 return;
             }
@@ -344,6 +355,7 @@ namespace ImageGlass
             catch
             {
                 picMain.Image = null;
+                LocalSetting.ImageModifiedPath = "";
                 
                 Application.DoEvents();
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
@@ -355,7 +367,8 @@ namespace ImageGlass
             if(GlobalSetting.IsImageError)
             {
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
-                picMain.Image = null; 
+                picMain.Image = null;
+                LocalSetting.ImageModifiedPath = "";
             }
 
             //Select thumbnail item
@@ -375,6 +388,8 @@ namespace ImageGlass
             //Collect system garbage
             System.GC.Collect();
         }
+
+        
 
         /// <summary>
         /// Update image information on status bar
@@ -945,8 +960,8 @@ namespace ImageGlass
         /// <summary>
         /// Display a message on picture box
         /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="duration"></param>
+        /// <param name="msg">Message</param>
+        /// <param name="duration">Duration (second)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
             System.Windows.Forms.Timer tmsg = new System.Windows.Forms.Timer();
@@ -1001,6 +1016,14 @@ namespace ImageGlass
                 ref pathCollection);
         }
 
+        /// <summary>
+        /// Save all change of image
+        /// </summary>
+        private void ImageSaveChange()
+        {
+            Library.Image.ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+            LocalSetting.ImageModifiedPath = "";
+        }
         #endregion
 
 
@@ -1463,6 +1486,12 @@ namespace ImageGlass
             Bitmap bmp = new Bitmap(picMain.Image);
             bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
             picMain.Image = bmp;
+
+            try
+            {
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+            }
+            catch { }
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
@@ -1476,7 +1505,11 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
             picMain.Image = bmp;
 
-            //bmp.Save(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]);
+            try
+            {
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+            }
+            catch { }
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
