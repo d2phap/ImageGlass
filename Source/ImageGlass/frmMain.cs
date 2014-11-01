@@ -1309,8 +1309,10 @@ namespace ImageGlass
         #region Form events
         private void frmMain_Load(object sender, EventArgs e)
         {
-            LoadConfig();
+            //Remove white line under tool strip
+            toolMain.Renderer = new ImageGlass.Theme.ToolStripRenderer();
 
+            LoadConfig();
             Application.DoEvents();
 
             //Load image from param
@@ -1419,12 +1421,22 @@ namespace ImageGlass
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            NextPic(1);//xem anh ke tiep
+            if (GlobalSetting.ImageList.Length < 1)
+            {
+                return;
+            }
+
+            NextPic(1); 
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            NextPic(-1);//xem anh truoc do
+            if (GlobalSetting.ImageList.Length < 1)
+            {
+                return;
+            }
+
+            NextPic(-1); //xem anh truoc do
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -1443,24 +1455,28 @@ namespace ImageGlass
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
 
-            //GlobalSetting.ImageList.filter.incRotate(1);
-            NextPic(0);
+            Bitmap bmp = new Bitmap(picMain.Image);
+            bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            picMain.Image = bmp;
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
 
-            //GlobalSetting.ImageList.filter.incRotate(-1);
-            NextPic(0);
+            Bitmap bmp = new Bitmap(picMain.Image);
+            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            picMain.Image = bmp;
+
+            //bmp.Save(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -1486,7 +1502,7 @@ namespace ImageGlass
 
         private void btnActualSize_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
@@ -1496,10 +1512,11 @@ namespace ImageGlass
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
+
             // Scale to Width
             double frac = sp0.Panel1.Width / (1.0 * picMain.Image.Width);
             picMain.Zoom = (int)(frac * 100);
@@ -1507,10 +1524,11 @@ namespace ImageGlass
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
+
             // Scale to Height
             double frac = sp0.Panel1.Height / (1.0 * picMain.Image.Height);
             picMain.Zoom = (int)(frac * 100);
@@ -1518,10 +1536,11 @@ namespace ImageGlass
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
+
             // Window adapt to image
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             this.WindowState = FormWindowState.Normal;
@@ -1569,18 +1588,22 @@ namespace ImageGlass
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
-                picMain.ZoomIn();
+                return;
             }
+
+            picMain.ZoomIn();
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
-                picMain.ZoomOut();
+                return;
             }
+
+            picMain.ZoomOut();
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)

@@ -39,15 +39,12 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuSetWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMoveRecycle = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuUploadFacebook = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuImageProperties = new System.Windows.Forms.ToolStripMenuItem();
-            this.thumbBar = new ImageGlass.ThumbBar.ThumbnailsSequence();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.sysWatch = new System.IO.FileSystemWatcher();
@@ -85,6 +82,9 @@
             this.btnFollow = new System.Windows.Forms.ToolStripButton();
             this.btnFacebookLike = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
+            this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUploadFacebook = new System.Windows.Forms.ToolStripMenuItem();
+            this.thumbBar = new ImageGlass.ThumbBar.ThumbnailsSequence();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
@@ -253,15 +253,6 @@
             this.mnuMoveRecycle.Text = "&Move to recycle bin";
             this.mnuMoveRecycle.Click += new System.EventHandler(this.mnuRecycleBin_Click);
             // 
-            // mnuDelete
-            // 
-            this.mnuDelete.Image = ((System.Drawing.Image)(resources.GetObject("mnuDelete.Image")));
-            this.mnuDelete.Name = "mnuDelete";
-            this.mnuDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
-            this.mnuDelete.Size = new System.Drawing.Size(257, 22);
-            this.mnuDelete.Text = "&Delete from hard disk";
-            this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
-            // 
             // mnuRename
             // 
             this.mnuRename.Name = "mnuRename";
@@ -274,15 +265,6 @@
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(254, 6);
-            // 
-            // mnuUploadFacebook
-            // 
-            this.mnuUploadFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuUploadFacebook.Image")));
-            this.mnuUploadFacebook.Name = "mnuUploadFacebook";
-            this.mnuUploadFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
-            this.mnuUploadFacebook.Size = new System.Drawing.Size(257, 22);
-            this.mnuUploadFacebook.Text = "&Upload to Facebook";
-            this.mnuUploadFacebook.Click += new System.EventHandler(this.mnuUploadFacebook_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -312,23 +294,6 @@
             this.mnuImageProperties.Size = new System.Drawing.Size(257, 22);
             this.mnuImageProperties.Text = "&Image properties";
             this.mnuImageProperties.Click += new System.EventHandler(this.mnuProperties_Click);
-            // 
-            // thumbBar
-            // 
-            this.thumbBar.AutoScroll = true;
-            this.thumbBar.BackColor = System.Drawing.Color.Transparent;
-            this.thumbBar.CurrentThumbnail = null;
-            this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.thumbBar.InvalidImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.InvalidImageThumbnail")));
-            this.thumbBar.LoadingImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.LoadingImageThumbnail")));
-            this.thumbBar.Location = new System.Drawing.Point(0, 0);
-            this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(150, 46);
-            this.thumbBar.TabIndex = 0;
-            this.thumbBar.ThumbnailMaxLoadingSize = 5;
-            this.thumbBar.ThumbnailWidthAndHeight = 40;
-            this.thumbBar.TooLargeImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.TooLargeImageThumbnail")));
-            this.thumbBar.WrapContents = false;
             // 
             // timSlideShow
             // 
@@ -792,7 +757,7 @@
             this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
             this.btnReport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnReport.Margin = new System.Windows.Forms.Padding(0);
+            this.btnReport.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(25, 28);
             this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
@@ -811,6 +776,7 @@
             this.btnFollow.Name = "btnFollow";
             this.btnFollow.Size = new System.Drawing.Size(25, 28);
             this.btnFollow.ToolTipText = "Follow ImageGlass by email";
+            this.btnFollow.Visible = false;
             this.btnFollow.Click += new System.EventHandler(this.btnFollow_Click);
             // 
             // btnFacebookLike
@@ -826,6 +792,7 @@
             this.btnFacebookLike.Name = "btnFacebookLike";
             this.btnFacebookLike.Size = new System.Drawing.Size(25, 28);
             this.btnFacebookLike.ToolTipText = "Visit Facebook of ImageGlass";
+            this.btnFacebookLike.Visible = false;
             this.btnFacebookLike.Click += new System.EventHandler(this.btnFacebookLike_Click);
             // 
             // lblInfo
@@ -834,6 +801,41 @@
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 30);
+            // 
+            // mnuDelete
+            // 
+            this.mnuDelete.Image = ((System.Drawing.Image)(resources.GetObject("mnuDelete.Image")));
+            this.mnuDelete.Name = "mnuDelete";
+            this.mnuDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
+            this.mnuDelete.Size = new System.Drawing.Size(257, 22);
+            this.mnuDelete.Text = "&Delete from hard disk";
+            this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
+            // 
+            // mnuUploadFacebook
+            // 
+            this.mnuUploadFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuUploadFacebook.Image")));
+            this.mnuUploadFacebook.Name = "mnuUploadFacebook";
+            this.mnuUploadFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+            this.mnuUploadFacebook.Size = new System.Drawing.Size(257, 22);
+            this.mnuUploadFacebook.Text = "&Upload to Facebook";
+            this.mnuUploadFacebook.Click += new System.EventHandler(this.mnuUploadFacebook_Click);
+            // 
+            // thumbBar
+            // 
+            this.thumbBar.AutoScroll = true;
+            this.thumbBar.BackColor = System.Drawing.Color.Transparent;
+            this.thumbBar.CurrentThumbnail = null;
+            this.thumbBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thumbBar.InvalidImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.InvalidImageThumbnail")));
+            this.thumbBar.LoadingImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.LoadingImageThumbnail")));
+            this.thumbBar.Location = new System.Drawing.Point(0, 0);
+            this.thumbBar.Name = "thumbBar";
+            this.thumbBar.Size = new System.Drawing.Size(150, 46);
+            this.thumbBar.TabIndex = 0;
+            this.thumbBar.ThumbnailMaxLoadingSize = 5;
+            this.thumbBar.ThumbnailWidthAndHeight = 40;
+            this.thumbBar.TooLargeImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.TooLargeImageThumbnail")));
+            this.thumbBar.WrapContents = false;
             // 
             // frmMain
             // 
