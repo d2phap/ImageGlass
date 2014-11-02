@@ -300,7 +300,10 @@ namespace ImageGlass
 
             //Get value of chkImageBoosterBack
             chkImageBoosterBack.Checked = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "false"));
-            
+
+            //Get value of IsPressESCToQuit
+            chkESCToQuit.Checked = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "true"));
+
             //Load items of cmbZoomOptimization
             cmbZoomOptimization.Items.Clear();
             cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
@@ -417,6 +420,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
+        }
+
+        private void chkESCToQuit_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsPressESCToQuit = chkESCToQuit.Checked;
+            GlobalSetting.SetConfig("IsPressESCToQuit", GlobalSetting.IsPressESCToQuit.ToString());
         }
 
         private void barInterval_Scroll(object sender, EventArgs e)
@@ -587,6 +596,8 @@ namespace ImageGlass
         }
 
         #endregion
+
+        
 
         
 

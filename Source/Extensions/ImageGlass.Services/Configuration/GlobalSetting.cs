@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2014 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Win32;
 using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Specialized;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -69,7 +68,8 @@ namespace ImageGlass.Services.Configuration
         private static bool _isHideToolBar = false;
         private static bool _isLoopBackSlideShow = false;
         private static bool _isImageBoosterBack = false;
-        
+        private static bool _isPressESCToQuit = true;
+    private static StringCollection _stringClipboard = new StringCollection();
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -296,6 +296,23 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isImageBoosterBack = value; }
         }
 
+        /// <summary>
+        /// Gets, sets copied filename collection (multi-copy)
+        /// </summary>
+        public static StringCollection StringClipboard
+        {
+            get { return GlobalSetting._stringClipboard; }
+            set { GlobalSetting._stringClipboard = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that allow quit application by ESC
+        /// </summary>
+        public static bool IsPressESCToQuit
+        {
+            get { return GlobalSetting._isPressESCToQuit; }
+            set { GlobalSetting._isPressESCToQuit = value; }
+        }
 
         /// <summary>
         /// Gets, sets language pack

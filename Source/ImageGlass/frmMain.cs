@@ -34,7 +34,6 @@ using ImageGlass.Library;
 using ImageGlass.ThumbBar.ImageHandling;
 using ImageGlass.ThumbBar;
 using System.Collections.Specialized;
-using System.Threading;
 
 namespace ImageGlass
 {
@@ -263,7 +262,7 @@ namespace ImageGlass
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
             {
-                this.DisplayTextMessage("Saving change...", 1);
+                this.DisplayTextMessage("Saving change...", 1000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -500,6 +499,7 @@ namespace ImageGlass
             }
             #endregion
 
+
             // Copy file to clipboard-------------------------------------------------------
             #region Ctrl + C
             if (e.KeyValue == 67 && e.Control && !e.Shift && !e.Alt)
@@ -507,6 +507,16 @@ namespace ImageGlass
                 CopyFile();
             }
             #endregion
+
+
+            // Copy multi-file to clipboard-------------------------------------------------------
+            #region Ctrl + Shift + C
+            if (e.KeyValue == 67 && e.Control && e.Shift && !e.Alt)
+            {
+                CopyMultiFile();
+            }
+            #endregion
+
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -538,13 +548,35 @@ namespace ImageGlass
             #endregion
 
 
-            //Exit slideshow----------------------------------------------------------------
+            //ESC ultility------------------------------------------------------------------
             #region ESC
             if (e.KeyValue == 27 && !e.Control && !e.Shift && !e.Alt)//ESC
             {
+                //exit slideshow
                 if (GlobalSetting.IsPlaySlideShow)
                 {
                     mnuExitSlideshow_Click(null, null);
+                }
+                    //Quit ImageGlass
+                else if (GlobalSetting.IsPressESCToQuit)
+                {
+                    Application.Exit();
+                }
+                return;
+            }
+            #endregion
+
+
+            //Clear clipboard----------------------------------------------------------------
+            #region CTRL + `
+            if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)
+            {
+                //clear copied files in clipboard
+                if (GlobalSetting.StringClipboard.Count > 0)
+                {
+                    GlobalSetting.StringClipboard = new StringCollection();
+                    Clipboard.Clear();
+                    this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
                 }
                 return;
             }
@@ -600,6 +632,29 @@ namespace ImageGlass
             }
             #endregion
 
+
+            //Goto the first Image---------------------------------------------------------------
+            #region HOME
+            if ((e.KeyValue == 36 || e.KeyValue == 39) &&
+                !e.Control && !e.Shift && !e.Alt)
+            {
+                GlobalSetting.CurrentIndex = 0;
+                NextPic(0);
+                return;
+            }
+            #endregion
+
+            //Goto the last Image---------------------------------------------------------------
+            #region END
+            if ((e.KeyValue == 35 || e.KeyValue == 39) &&
+                !e.Control && !e.Shift && !e.Alt)
+            {
+                GlobalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
+                NextPic(0);
+                return;
+            }
+            #endregion
+            
 
             //Zoom + ------------------------------------------------------------------------
             #region Ctrl + =
@@ -961,19 +1016,19 @@ namespace ImageGlass
         /// Display a message on picture box
         /// </summary>
         /// <param name="msg">Message</param>
-        /// <param name="duration">Duration (second)</param>
+        /// <param name="duration">Duration (milisecond)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
             System.Windows.Forms.Timer tmsg = new System.Windows.Forms.Timer();
             tmsg.Enabled = false;
             tmsg.Tick += tmsg_Tick;
-            tmsg.Interval = duration; //display in xxx seconds
+            tmsg.Interval = duration; //display in xxx mili seconds
 
             picMain.TextBackColor = Color.Black;
-            picMain.Font = new System.Drawing.Font(this.Font.FontFamily, 14);
+            picMain.Font = new System.Drawing.Font(this.Font.FontFamily, 12);
             picMain.ForeColor = Color.White;
             picMain.Text = msg;
-
+           
             //Start timer
             tmsg.Enabled = true;
             tmsg.Start();
@@ -990,15 +1045,6 @@ namespace ImageGlass
             picMain.Text = string.Empty;
         }
 
-        /// <summary>
-        /// Copy file to Clipboard
-        /// </summary>
-        private void CopyFileToClipBoard(string filename, ref StringCollection pathCollection)
-        {
-            pathCollection.Add(filename);
-            Clipboard.SetFileDropList(pathCollection);
-        }
-
         private void CopyFile()
         {
             try
@@ -1010,10 +1056,32 @@ namespace ImageGlass
             }
             catch { return; }
 
-            StringCollection pathCollection = new StringCollection();
-            
-            CopyFileToClipBoard(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), 
-                ref pathCollection);
+            GlobalSetting.StringClipboard = new StringCollection();
+            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
+
+            this.DisplayTextMessage(
+                string.Format(GlobalSetting.LangPack.Items["frmMain._AddFileToClipboardText"],
+                GlobalSetting.StringClipboard.Count), 1000);
+        }
+
+        private void CopyMultiFile()
+        {
+            try
+            {
+                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
+
+            this.DisplayTextMessage(
+                string.Format(GlobalSetting.LangPack.Items["frmMain._AddFileToClipboardText"],
+                GlobalSetting.StringClipboard.Count), 1000);
         }
 
         /// <summary>
@@ -1271,11 +1339,15 @@ namespace ImageGlass
             string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
             {
-                Prepare((Application.StartupPath + "\\").Replace("\\\\", "\\") + "default.png");
+                Prepare(GlobalSetting.StartUpDir + "default.png");
             }
-
+            
             //Load is loop back slideshow---------------------------------------------------
             GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
+
+            //Load IsPressESCToQuit---------------------------------------------------------
+            GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
+
 
             //Load image order config------------------------------------------------------
             GlobalSetting.LoadImageOrderConfig();

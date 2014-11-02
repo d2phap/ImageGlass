@@ -220,6 +220,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
             this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
+            this.Items.Add("frmMain._AddFileToClipboardText", "Added an image to clipboard. Copied {0} files."); //v2.0 final
+            this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
             this.Items.Add("frmExtension.Node0", "Get more extensions");
@@ -255,6 +257,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when start up");
             this.Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             this.Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
+            this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:");
             this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
             this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
