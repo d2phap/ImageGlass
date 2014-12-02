@@ -204,8 +204,11 @@ namespace ImageGlass
             btnAddDefaultContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
             btnUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
             btnRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
+
+            //language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
             lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
+            lnkInstallLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkInstallLanguage"];
             lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
             lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
             lnkGetMoreLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
@@ -536,10 +539,18 @@ namespace ImageGlass
             catch { }
         }
 
+        private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            p.StartInfo.Arguments = "iginstalllang";
+            p.Start();
+        }
+
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
             p.StartInfo.Arguments = "ignewlang";
             p.Start();
         }
@@ -547,7 +558,7 @@ namespace ImageGlass
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
             p.Start();
         }
@@ -595,21 +606,23 @@ namespace ImageGlass
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
         
-
-        
-
-
-
-
-
-
-
-
-
-
-
     }
 }

@@ -222,6 +222,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             this.Items.Add("frmMain._AddFileToClipboardText", "Added an image to clipboard. Copied {0} files."); //v2.0 final
             this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
+            this.Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
             this.Items.Add("frmExtension._Text", "Extension Manager");
             this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
             this.Items.Add("frmExtension.Node0", "Get more extensions");
@@ -282,9 +283,11 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all");
             this.Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             this.Items.Add("frmSetting.lnkRefresh", "> Refresh");
+            this.Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)"); //v2.0 final
             this.Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             this.Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
             this.Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
+            
         }
 
 

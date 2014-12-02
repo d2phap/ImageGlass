@@ -46,7 +46,6 @@ namespace ImageGlass
 
 
         #region Local variables
-        private Rectangle rect = Rectangle.Empty; // Window size
         private string imageInfo = "";
         private delegate void DelegateAddImage(string imageFilename);
         private DelegateAddImage m_AddImageDelegate;
@@ -262,7 +261,7 @@ namespace ImageGlass
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
             {
-                this.DisplayTextMessage("Saving change...", 1000);
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain.picMain._SaveChanges"], 1000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -557,7 +556,12 @@ namespace ImageGlass
                 {
                     mnuExitSlideshow_Click(null, null);
                 }
-                    //Quit ImageGlass
+                //exit full screen
+                else if (GlobalSetting.IsFullScreen)
+                {
+                    btnFullScreen.PerformClick();
+                }
+                //Quit ImageGlass
                 else if (GlobalSetting.IsPressESCToQuit)
                 {
                     Application.Exit();
@@ -716,7 +720,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Lock zoom ratio--- -------------------------------------------------------------
+            //Lock zoom ratio-----------------------------------------------------------------
             #region Ctrl + R
             if (e.KeyData == Keys.R && e.Control && !e.Shift && !e.Alt)// Ctrl + R
             {
@@ -1133,8 +1137,6 @@ namespace ImageGlass
             btnExtension.Image = ImageGlass.Properties.Resources.extension;
             btnSetting.Image = ImageGlass.Properties.Resources.settings;
             btnHelp.Image = ImageGlass.Properties.Resources.about;
-            btnFacebookLike.Image = ImageGlass.Properties.Resources.facebook;
-            btnFollow.Image = ImageGlass.Properties.Resources.follow;
             btnReport.Image = ImageGlass.Properties.Resources.report;
 
             GlobalSetting.SetConfig("Theme", "default");
@@ -1255,12 +1257,6 @@ namespace ImageGlass
                 try { btnHelp.Image = Image.FromFile(dir + t.about); }
                 catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
 
-                try { btnFacebookLike.Image = Image.FromFile(dir + t.like); }
-                catch { btnFacebookLike.Image = ImageGlass.Properties.Resources.facebook; }
-
-                try { btnFollow.Image = Image.FromFile(dir + t.dislike); }
-                catch { btnFollow.Image = ImageGlass.Properties.Resources.follow; }
-
                 try { btnReport.Image = Image.FromFile(dir + t.report); }
                 catch { btnReport.Image = ImageGlass.Properties.Resources.report; }
 
@@ -1348,7 +1344,6 @@ namespace ImageGlass
             //Load IsPressESCToQuit---------------------------------------------------------
             GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
 
-
             //Load image order config------------------------------------------------------
             GlobalSetting.LoadImageOrderConfig();
 
@@ -1361,20 +1356,14 @@ namespace ImageGlass
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load state of Toolbar---------------------------------------------------------
-            if (bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false")))//Invisible
+            GlobalSetting.IsHideToolBar = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
+            if (GlobalSetting.IsHideToolBar)
             {
-                //Hide
+                //hide tool bar
                 spMain.Panel1Collapsed = true;
                 mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
-                GlobalSetting.IsHideToolBar = true;
             }
-            else//Visible
-            {
-                //Show
-                spMain.Panel1Collapsed = false;
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
-                GlobalSetting.IsHideToolBar = false;
-            }
+
         }
 
 
@@ -1386,16 +1375,26 @@ namespace ImageGlass
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig("WindowsBound", GlobalSetting.RectToString(rect == Rectangle.Empty ?
-                                                                    this.Bounds : rect));
-            }            
+                GlobalSetting.SetConfig("WindowsBound", GlobalSetting.RectToString(this.Bounds));
+            }
 
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig("WindowsState", this.WindowState.ToString());
             
             //Checked background
             GlobalSetting.SetConfig("Caro", btnCaro.Checked.ToString());
-            
+
+            //Tool bar state
+            GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsHideToolBar.ToString());
+
+            //Save previous image if it was modified
+            if (File.Exists(LocalSetting.ImageModifiedPath))
+            {
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 1000);
+
+                Application.DoEvents();
+                ImageSaveChange();
+            }
         }
 
         #endregion
@@ -1470,8 +1469,6 @@ namespace ImageGlass
                 btnExtension.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnExtension"];
                 btnSetting.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSetting"];
                 btnHelp.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnHelp"];
-                btnFacebookLike.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFacebookLike"];
-                btnFollow.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFollow"];
                 btnReport.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnReport"];
 
                 mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
@@ -1745,8 +1742,8 @@ namespace ImageGlass
                 return;
             }
 
-            //full screen
-            if (this.rect == Rectangle.Empty)
+            //stop slide show
+            if (!GlobalSetting.IsPlaySlideShow)
             {
                 sp0.BackColor = Color.Black;
                 btnFullScreen.PerformClick();
@@ -1775,11 +1772,13 @@ namespace ImageGlass
         private void btnFullScreen_Click(object sender, EventArgs e)
         {
             //full screen
-            if (this.rect == Rectangle.Empty)
+            if (!GlobalSetting.IsFullScreen)
             {
-                this.rect = this.Bounds;
+                SaveConfig();
+
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.WindowState = FormWindowState.Normal;
+                GlobalSetting.IsFullScreen = true;
                 Application.DoEvents();
                 this.Bounds = Screen.FromControl(this).Bounds;
 
@@ -1794,10 +1793,23 @@ namespace ImageGlass
             else
             {
                 this.FormBorderStyle = FormBorderStyle.Sizable;
-                this.WindowState = FormWindowState.Normal;
+
+                //windows state
+                string state_str = GlobalSetting.GetConfig("WindowsState", "Normal");
+                if (state_str == "Normal")
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+                else if (state_str == "Maximized")
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+
+                //Windows Bound (Position + Size
+                this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
+
+                GlobalSetting.IsFullScreen = false;
                 Application.DoEvents();
-                this.Bounds = this.rect;
-                this.rect = Rectangle.Empty;
 
                 //Show
                 if (!GlobalSetting.IsHideToolBar)
@@ -2057,27 +2069,6 @@ namespace ImageGlass
             Library.Image.ImageInfo.ConvertImage(picMain.Image, filename);
         }
 
-        private void btnFacebookLike_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(char.ConvertFromUtf32(34) +
-                                (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe" +
-                                char.ConvertFromUtf32(34), "igsocial");
-            }
-            catch { }
-        }
-
-        private void btnFollow_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(char.ConvertFromUtf32(34) +
-                                (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe" +
-                                char.ConvertFromUtf32(34), "igfollow");
-            }
-            catch { }
-        }
 
         private void btnReport_Click(object sender, EventArgs e)
         {
@@ -2132,6 +2123,7 @@ namespace ImageGlass
         {
             timSlideShow.Stop();
             timSlideShow.Enabled = false;
+            GlobalSetting.IsPlaySlideShow = false;
 
             sp0.BackColor = GlobalSetting.BackgroundColor;
             btnFullScreen.PerformClick();

@@ -59,6 +59,7 @@ namespace ImageGlass.Services.Configuration
                                                      "*.exif;*.wmf;*.emf;";
         private static string _contextMenuExtensions = "";
         private static bool _isPlaySlideShow = false;
+        private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
         private static int _zoomLockValue = 100;
@@ -336,6 +337,22 @@ namespace ImageGlass.Services.Configuration
             get
             {
                 return (Application.StartupPath + "\\").Replace("\\\\", "\\");
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that wheather the window is full screen or not
+        /// </summary>
+        public static bool IsFullScreen
+        {
+            get
+            {
+                return _isFullScreen;
+            }
+
+            set
+            {
+                _isFullScreen = value;
             }
         }
 

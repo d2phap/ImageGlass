@@ -52,6 +52,7 @@
             this.txtExtensions = new System.Windows.Forms.TextBox();
             this.lbl_ContextMenu_Description = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkESCToQuit = new System.Windows.Forms.CheckBox();
             this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
             this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
@@ -69,7 +70,7 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.chkESCToQuit = new System.Windows.Forms.CheckBox();
+            this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabContextMenu.SuspendLayout();
@@ -170,6 +171,7 @@
             // 
             // tabLanguage
             // 
+            this.tabLanguage.Controls.Add(this.lnkInstallLanguage);
             this.tabLanguage.Controls.Add(this.lnkRefresh);
             this.tabLanguage.Controls.Add(this.lnkEdit);
             this.tabLanguage.Controls.Add(this.lnkCreateNew);
@@ -179,7 +181,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 456);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 454);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -370,6 +372,17 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkESCToQuit
+            // 
+            this.chkESCToQuit.AutoSize = true;
+            this.chkESCToQuit.Location = new System.Drawing.Point(20, 117);
+            this.chkESCToQuit.Name = "chkESCToQuit";
+            this.chkESCToQuit.Size = new System.Drawing.Size(223, 19);
+            this.chkESCToQuit.TabIndex = 18;
+            this.chkESCToQuit.Text = "Allow to press ESC to quit application";
+            this.chkESCToQuit.UseVisualStyleBackColor = true;
+            this.chkESCToQuit.CheckedChanged += new System.EventHandler(this.chkESCToQuit_CheckedChanged);
             // 
             // chkImageBoosterBack
             // 
@@ -589,16 +602,18 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
-            // chkESCToQuit
+            // lnkInstallLanguage
             // 
-            this.chkESCToQuit.AutoSize = true;
-            this.chkESCToQuit.Location = new System.Drawing.Point(20, 117);
-            this.chkESCToQuit.Name = "chkESCToQuit";
-            this.chkESCToQuit.Size = new System.Drawing.Size(223, 19);
-            this.chkESCToQuit.TabIndex = 18;
-            this.chkESCToQuit.Text = "Allow to press ESC to quit application";
-            this.chkESCToQuit.UseVisualStyleBackColor = true;
-            this.chkESCToQuit.CheckedChanged += new System.EventHandler(this.chkESCToQuit_CheckedChanged);
+            this.lnkInstallLanguage.AutoSize = true;
+            this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkInstallLanguage.Location = new System.Drawing.Point(20, 189);
+            this.lnkInstallLanguage.Name = "lnkInstallLanguage";
+            this.lnkInstallLanguage.Size = new System.Drawing.Size(206, 15);
+            this.lnkInstallLanguage.TabIndex = 24;
+            this.lnkInstallLanguage.TabStop = true;
+            this.lnkInstallLanguage.Text = "> Install new language pack (*.iglang)";
+            this.lnkInstallLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkInstallLanguage_LinkClicked);
             // 
             // frmSetting
             // 
@@ -678,6 +693,6 @@
         private System.Windows.Forms.Button btnAddDefaultContextMenu;
         private System.Windows.Forms.CheckBox chkImageBoosterBack;
         private System.Windows.Forms.CheckBox chkESCToQuit;
-
+        private System.Windows.Forms.LinkLabel lnkInstallLanguage;
     }
 }

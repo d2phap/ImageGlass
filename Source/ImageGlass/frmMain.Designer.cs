@@ -82,8 +82,6 @@
             this.btnSetting = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnReport = new System.Windows.Forms.ToolStripButton();
-            this.btnFollow = new System.Windows.Forms.ToolStripButton();
-            this.btnFacebookLike = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -402,8 +400,6 @@
             this.btnSetting,
             this.btnHelp,
             this.btnReport,
-            this.btnFollow,
-            this.btnFacebookLike,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
@@ -798,38 +794,6 @@
             this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // btnFollow
-            // 
-            this.btnFollow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnFollow.AutoSize = false;
-            this.btnFollow.BackColor = System.Drawing.Color.Transparent;
-            this.btnFollow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFollow.Image = ((System.Drawing.Image)(resources.GetObject("btnFollow.Image")));
-            this.btnFollow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnFollow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFollow.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFollow.Name = "btnFollow";
-            this.btnFollow.Size = new System.Drawing.Size(25, 28);
-            this.btnFollow.ToolTipText = "Follow ImageGlass by email";
-            this.btnFollow.Visible = false;
-            this.btnFollow.Click += new System.EventHandler(this.btnFollow_Click);
-            // 
-            // btnFacebookLike
-            // 
-            this.btnFacebookLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnFacebookLike.AutoSize = false;
-            this.btnFacebookLike.BackColor = System.Drawing.Color.Transparent;
-            this.btnFacebookLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFacebookLike.Image = ((System.Drawing.Image)(resources.GetObject("btnFacebookLike.Image")));
-            this.btnFacebookLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnFacebookLike.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFacebookLike.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnFacebookLike.Name = "btnFacebookLike";
-            this.btnFacebookLike.Size = new System.Drawing.Size(25, 28);
-            this.btnFacebookLike.ToolTipText = "Visit Facebook of ImageGlass";
-            this.btnFacebookLike.Visible = false;
-            this.btnFacebookLike.Click += new System.EventHandler(this.btnFacebookLike_Click);
-            // 
             // lblInfo
             // 
             this.lblInfo.BackColor = System.Drawing.Color.Transparent;
@@ -852,7 +816,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
-            this.Text = "ImageGlass 2 BETA";
+            this.Text = "ImageGlass 2";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -902,8 +866,6 @@
         private System.Windows.Forms.ToolStripButton btnSetting;
         private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.ToolStripButton btnReport;
-        private System.Windows.Forms.ToolStripButton btnFollow;
-        private System.Windows.Forms.ToolStripButton btnFacebookLike;
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;
