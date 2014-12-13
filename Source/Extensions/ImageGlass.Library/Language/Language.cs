@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2014 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace ImageGlass.Library
@@ -119,7 +115,7 @@ namespace ImageGlass.Library
 
 
         /// <summary>
-        /// Read language strings from file
+        /// Read language strings from file (new format)
         /// </summary>
         public void ReadLanguageFile()
         {
@@ -135,19 +131,17 @@ namespace ImageGlass.Library
             this.Author = n.GetAttribute("author");
             this.Description = n.GetAttribute("description");
 
-            //Get <Content> Attributes
-            n = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
-            int _itemsCount = int.Parse(n.GetAttribute("count"));
+            //Get <Content> element
+            XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
 
-            
+            //Get all lang items
+            XmlNodeList nLangList = nContent.SelectNodes("Item");//<Item>
 
-            //Get Language string items
-            //this.Items = new Dictionary<string, string>();
-            for (int i = 0; i < _itemsCount; i++)
+            foreach (var item in nLangList)
             {
-                XmlElement node = (XmlElement)n.SelectNodes("_" + (i + 1).ToString())[0];//<_1>
-                string _key = node.GetAttribute("key");
-                string _value = node.GetAttribute("value").Replace("\\n", "\n");
+                XmlElement nItem = (XmlElement)item;
+                string _key = nItem.GetAttribute("key");
+                string _value = nItem.GetAttribute("value").Replace("\\n", "\n");
 
                 try
                 {
@@ -155,8 +149,6 @@ namespace ImageGlass.Library
                 }
                 catch { }
             }
-
-            
         }
 
 
@@ -191,8 +183,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)");
             this.Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)");
             this.Items.Add("frmMain.btnHelp", "Help (F1)");
-            this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet");
-            this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email");
+            //this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet"); //removed v2.0 final
+            //this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email"); //removed v2.0 final
             this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks");
             this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow");
             this.Items.Add("frmMain.mnuStopSlideshow", "Stop slideshow");
@@ -224,8 +216,11 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             this.Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
             this.Items.Add("frmExtension._Text", "Extension Manager");
-            this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions");
-            this.Items.Add("frmExtension.Node0", "Get more extensions");
+            //this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions"); //removed v2.0 final
+            this.Items.Add("frmExtension.btnGetMoreExt", "Get more extensions"); //v2.0 final
+            this.Items.Add("frmExtension.btnRefreshAllExt", "Refresh"); //v2.0 final
+            this.Items.Add("frmExtension.btnInstallExt", "Install"); //v2.0 final
+            //this.Items.Add("frmExtension.Node0", "Get more extensions"); //removed v2.0 final
             this.Items.Add("frmExtension.btnClose", "Close");
             this.Items.Add("frmFacebook.lblMessage", "Message:");
             this.Items.Add("frmFacebook.btnUpload._Upload", "Upload");
@@ -239,7 +234,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmFacebook._StatusSuccessful", "successful");
             this.Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ...");
             this.Items.Add("frmAbout.lblSlogant", "Free and open source image viewer");
-            this.Items.Add("frmAbout.lblInfo", "Info");
+            this.Items.Add("frmAbout.lblInfo", "Information");
             this.Items.Add("frmAbout.lblComponent", "Components");
             this.Items.Add("frmAbout.lblReferences", "References");
             this.Items.Add("frmAbout.lblVersion", "Version: {0}");
@@ -251,7 +246,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.lblGeneral", "General");
             this.Items.Add("frmSetting.lblContextMenu", "Context menu");
             this.Items.Add("frmSetting.lblLanguage", "Language");
-            this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge");
+            //this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge"); //removed v2.0 beta
             this.Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             this.Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             this.Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");

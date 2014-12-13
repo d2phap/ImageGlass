@@ -118,6 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnInstallExt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACZSURBVDhP5dDB
+        DYMwDAVQT4DYIBd2YBPuqPdOUQn2YgwW4Mq5UtP/LQdV7U+lcm2kF5lvxwcs51yFcyHVK2RY4MykeoUM
+        i39dgDPBLepjATOYXmc9/wjMEmwwgi+ImlkS89aJsIcdlsC6F3Mdrzs0ojnAIwyi3wDfGr/a94EYulKl
+        14IX1QXf8E289Ys/jsEv+MYXrFGcYOsTtRnQHC5fqBsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnGetMoreExt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAC
+        NwAAAjcB9wZEwgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACGSURBVDhPpc2h
+        EYNQEIThE0gEBhsXFIouiI5NBykBg49NNykltXAsmTtgMivYQXwzb3/gYe5+Co0KGhU0KmhU0KigUbEd
+        zBp4wyV2Dy8oYj9gzPfT/oIBlsMz9id2G/sLE9T5za+vB7MKlr+Usa9w3z3v4JZ77f9BRaOCRgWNChoV
+        NB7nNgMRlb8i4HDjgwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnRefreshAllExt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAC
+        TwAAAk8B95E4kAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADoSURBVDhPndM9
+        DgFBGMbxNyERHIBEp1LoRCgkKolCJ0SvUYhS3EAhUXMEKnEIH9GIgs4FOIJk/Sdm1xjr801+m3dmn9ns
+        zu6K4zgeKoQOpjhghwlaSJpZb43XiBSwQh8lhPV8HDXsUXXz3jodUovPyNoBFxXGCE1rXqLYIGOe8EMF
+        sUTRmJMuhmbwHSqNsTGWGcpm6BNK3XFA93JExA75odQ+tLHFAHV8fwGFauCi1yXVxD+PUEFC979tok1V
+        BGt8fI1+bgeRPE54+SG9cm9EcljA/pRTaCLqZk2Pg+efSZmjh5iZvXHkCv0w1UiNA4DtAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
   <data name="sp0.Panel2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcI

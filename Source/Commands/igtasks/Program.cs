@@ -54,7 +54,7 @@ namespace adtasks
                 Application.Exit();
             }
             #endregion
-            
+
             //Xoa menu 'Open with ImageGlass'
             #region removeext
             else if (topcmd == "removeext")
@@ -148,8 +148,23 @@ namespace adtasks
                 Application.Exit();
             }
             #endregion
+            //Install new language packs
+            #region iginstalllang
+            else if (topcmd == "iginstalllang")
+            {
+                Functions.InstallLanguagePacks();
+                Application.Exit();
+            }
+            #endregion
 
-
+            //Install new extensions
+            #region iginstallext
+            else if (topcmd == "iginstallext")
+            {
+                Functions.InstallExtensions();
+                Application.Exit();
+            }
+            #endregion
 
         }
 

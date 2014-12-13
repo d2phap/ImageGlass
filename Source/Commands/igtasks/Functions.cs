@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using System.Configuration;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library.FileAssociations;
+using System.IO;
 
 namespace igtasks
 {
@@ -138,6 +139,57 @@ namespace igtasks
         }
 
 
+        /// <summary>
+        /// Install new extensions
+        /// </summary>
+        public static void InstallExtensions()
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "ImageGlass extensions (*.dll)|*.dll";
+            o.Multiselect = true;
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string f in o.FileNames)
+                {
+                    try
+                    {
+                        File.Copy(f, GlobalSetting.StartUpDir + "Plugins\\" + Path.GetFileName(f));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Install new language packs
+        /// </summary>
+        public static void InstallLanguagePacks()
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "ImageGlass language pack (*.iglang)|*.iglang";
+            o.Multiselect = true;
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string f in o.FileNames)
+                {
+                    try
+                    {
+                        File.Copy(f, GlobalSetting.StartUpDir + "Languages\\" + Path.GetFileName(f));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+            }
+        }
 
 
         #region General functions

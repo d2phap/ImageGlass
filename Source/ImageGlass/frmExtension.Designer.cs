@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExtension));
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Get more extensions");
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnInstallExt = new System.Windows.Forms.Button();
+            this.btnGetMoreExt = new System.Windows.Forms.Button();
+            this.btnRefreshAllExt = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.panExtension = new System.Windows.Forms.Panel();
-            this.lnkGetMoreExt = new System.Windows.Forms.LinkLabel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.tvExtension = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
-            this.panExtension.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
@@ -47,12 +47,57 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.panel1.Controls.Add(this.btnInstallExt);
+            this.panel1.Controls.Add(this.btnGetMoreExt);
+            this.panel1.Controls.Add(this.btnRefreshAllExt);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 420);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(824, 42);
             this.panel1.TabIndex = 14;
+            // 
+            // btnInstallExt
+            // 
+            this.btnInstallExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnInstallExt.Image = ((System.Drawing.Image)(resources.GetObject("btnInstallExt.Image")));
+            this.btnInstallExt.Location = new System.Drawing.Point(133, 5);
+            this.btnInstallExt.Name = "btnInstallExt";
+            this.btnInstallExt.Size = new System.Drawing.Size(115, 28);
+            this.btnInstallExt.TabIndex = 9;
+            this.btnInstallExt.Text = "Install";
+            this.btnInstallExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnInstallExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnInstallExt.UseVisualStyleBackColor = true;
+            this.btnInstallExt.Click += new System.EventHandler(this.btnInstallExt_Click);
+            // 
+            // btnGetMoreExt
+            // 
+            this.btnGetMoreExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGetMoreExt.Image = ((System.Drawing.Image)(resources.GetObject("btnGetMoreExt.Image")));
+            this.btnGetMoreExt.Location = new System.Drawing.Point(254, 5);
+            this.btnGetMoreExt.Name = "btnGetMoreExt";
+            this.btnGetMoreExt.Size = new System.Drawing.Size(179, 28);
+            this.btnGetMoreExt.TabIndex = 8;
+            this.btnGetMoreExt.Text = "Get more extensions";
+            this.btnGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGetMoreExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGetMoreExt.UseVisualStyleBackColor = true;
+            this.btnGetMoreExt.Click += new System.EventHandler(this.btnGetMoreExt_Click);
+            // 
+            // btnRefreshAllExt
+            // 
+            this.btnRefreshAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRefreshAllExt.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshAllExt.Image")));
+            this.btnRefreshAllExt.Location = new System.Drawing.Point(12, 5);
+            this.btnRefreshAllExt.Name = "btnRefreshAllExt";
+            this.btnRefreshAllExt.Size = new System.Drawing.Size(115, 28);
+            this.btnRefreshAllExt.TabIndex = 7;
+            this.btnRefreshAllExt.Text = "Refresh";
+            this.btnRefreshAllExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRefreshAllExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRefreshAllExt.UseVisualStyleBackColor = true;
+            this.btnRefreshAllExt.Click += new System.EventHandler(this.btnRefreshAllExt_Click);
             // 
             // btnClose
             // 
@@ -68,26 +113,12 @@
             // 
             // panExtension
             // 
-            this.panExtension.Controls.Add(this.lnkGetMoreExt);
             this.panExtension.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panExtension.Location = new System.Drawing.Point(4, 0);
             this.panExtension.Margin = new System.Windows.Forms.Padding(0);
             this.panExtension.Name = "panExtension";
             this.panExtension.Size = new System.Drawing.Size(602, 402);
             this.panExtension.TabIndex = 0;
-            // 
-            // lnkGetMoreExt
-            // 
-            this.lnkGetMoreExt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lnkGetMoreExt.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkGetMoreExt.Location = new System.Drawing.Point(0, 0);
-            this.lnkGetMoreExt.Name = "lnkGetMoreExt";
-            this.lnkGetMoreExt.Size = new System.Drawing.Size(602, 402);
-            this.lnkGetMoreExt.TabIndex = 0;
-            this.lnkGetMoreExt.TabStop = true;
-            this.lnkGetMoreExt.Text = "Get more extensions";
-            this.lnkGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkGetMoreExt.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreExt_LinkClicked);
             // 
             // sp0
             // 
@@ -122,10 +153,6 @@
             this.tvExtension.ItemHeight = 25;
             this.tvExtension.Location = new System.Drawing.Point(0, 50);
             this.tvExtension.Name = "tvExtension";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Get more extensions";
-            this.tvExtension.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
             this.tvExtension.ShowRootLines = false;
             this.tvExtension.Size = new System.Drawing.Size(193, 352);
             this.tvExtension.TabIndex = 8;
@@ -147,7 +174,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExtension_FormClosing);
             this.Load += new System.EventHandler(this.frmExtension_Load);
             this.panel1.ResumeLayout(false);
-            this.panExtension.ResumeLayout(false);
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
@@ -163,6 +189,8 @@
         private System.Windows.Forms.Panel panExtension;
         private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.TreeView tvExtension;
-        private System.Windows.Forms.LinkLabel lnkGetMoreExt;
+        private System.Windows.Forms.Button btnRefreshAllExt;
+        private System.Windows.Forms.Button btnInstallExt;
+        private System.Windows.Forms.Button btnGetMoreExt;
     }
 }

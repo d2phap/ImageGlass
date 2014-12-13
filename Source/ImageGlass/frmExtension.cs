@@ -29,6 +29,7 @@ using ImageGlass;
 using ImageGlass.Plugins;
 using ImageGlass.Theme;
 using ImageGlass.Services.Configuration;
+using System.Diagnostics;
 
 namespace ImageGlass
 {
@@ -44,6 +45,38 @@ namespace ImageGlass
             Global.Plugins.ClosePlugins();
             this.Close();
         }
+
+        private void btnRefreshAllExt_Click(object sender, EventArgs e)
+        {
+            LoadExtensions();
+        }
+
+        private void btnGetMoreExt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("http://www.imageglass.org/download/extensions");
+            }
+            catch { }
+        }
+
+        private void btnInstallExt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+                p.StartInfo.Arguments = "iginstallext";
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
+            }
+            catch { }
+        }
+
 
         private void frmExtension_Load(object sender, EventArgs e)
         {
@@ -68,27 +101,14 @@ namespace ImageGlass
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(tvExtension);
 
-            if (!System.IO.Directory.Exists(Application.StartupPath + @"\Plugins"))
-            {
-                System.IO.Directory.CreateDirectory(Application.StartupPath + @"\Plugins");
-            }
-            else
-            {
-                Global.Plugins.FindPlugins(Application.StartupPath + @"\Plugins");
-
-                foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
-                {
-                    TreeNode n = new TreeNode(p.Instance.Name);
-                    tvExtension.Nodes.Add(n);
-                    n = null;
-
-                }
-            }
+            //load extensions
+            LoadExtensions();
 
             //Load language:
             this.Text = GlobalSetting.LangPack.Items["frmExtension._Text"];
-            lnkGetMoreExt.Text = GlobalSetting.LangPack.Items["frmExtension.lnkGetMoreExt"];
-            tvExtension.Nodes[0].Text = GlobalSetting.LangPack.Items["frmExtension.Node0"];
+            btnRefreshAllExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnRefreshAllExt"];
+            btnGetMoreExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnGetMoreExt"];
+            btnInstallExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnInstallExt"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmExtension.btnClose"];
 
         }
@@ -108,18 +128,8 @@ namespace ImageGlass
                 else
                 {
                     panExtension.Controls.Clear();
-                    panExtension.Controls.Add(lnkGetMoreExt);
                 }
             }
-        }
-
-        private void lnkGetMoreExt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/download/extensions");
-            }
-            catch { }
         }
 
         private void frmExtension_FormClosing(object sender, FormClosingEventArgs e)
@@ -134,5 +144,29 @@ namespace ImageGlass
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
         }
+
+        private void LoadExtensions()
+        {
+            tvExtension.Nodes.Clear();
+
+            if (!System.IO.Directory.Exists(Application.StartupPath + @"\Plugins"))
+            {
+                System.IO.Directory.CreateDirectory(Application.StartupPath + @"\Plugins");
+            }
+            else
+            {
+                Global.Plugins.FindPlugins(Application.StartupPath + @"\Plugins");
+
+                foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
+                {
+                    TreeNode n = new TreeNode(p.Instance.Name);
+                    tvExtension.Nodes.Add(n);
+                    n = null;
+
+                }
+            }
+        }
+
+       
     }
 }
