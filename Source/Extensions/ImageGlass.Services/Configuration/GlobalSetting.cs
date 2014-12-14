@@ -70,7 +70,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isLoopBackSlideShow = false;
         private static bool _isImageBoosterBack = false;
         private static bool _isPressESCToQuit = true;
-    private static StringCollection _stringClipboard = new StringCollection();
+        private static StringCollection _stringClipboard = new StringCollection();
 
         private static Library.Language _langPack = new Library.Language();
 

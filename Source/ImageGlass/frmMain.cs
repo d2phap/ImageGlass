@@ -1080,7 +1080,17 @@ namespace ImageGlass
             }
             catch { return; }
 
-            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            //get filename
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+            //exit if duplicated filename
+            if (GlobalSetting.StringClipboard.IndexOf(filename) != -1)
+            {
+                return;
+            }
+
+            //add filename to clipboard
+            GlobalSetting.StringClipboard.Add(filename);
             Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
 
             this.DisplayTextMessage(
