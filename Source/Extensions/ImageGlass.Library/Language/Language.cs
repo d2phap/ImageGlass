@@ -194,6 +194,12 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint");
             this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})");
             this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background");
+
+            this.Items.Add("frmMain.mnuCopy", "Copy"); //v2.0 final
+            this.Items.Add("frmMain.mnuMultiCopy", "Copy multiple files"); //v2.0 final
+            this.Items.Add("frmMain.mnuCut", "Cut"); //v2.0 final
+            this.Items.Add("frmMain.mnuMultiCut", "Cut multiple files"); //v2.0 final
+
             this.Items.Add("frmMain.mnuMoveRecycle", "Move to recycle bin");
             this.Items.Add("frmMain.mnuDelete", "Delete from hard disk");
             this.Items.Add("frmMain.mnuRename", "Rename image");
@@ -212,7 +218,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
             this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
-            this.Items.Add("frmMain._AddFileToClipboardText", "Added an image to clipboard. Copied {0} files."); //v2.0 final
+            this.Items.Add("frmMain._CopyFileText", "Copied {0} file(s)."); //v2.0 final
+            this.Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
             this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             this.Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
             this.Items.Add("frmExtension._Text", "Extension Manager");

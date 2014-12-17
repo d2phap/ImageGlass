@@ -261,10 +261,11 @@ namespace ImageGlass
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
             {
-                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain.picMain._SaveChanges"], 1000);
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 2000);
 
                 Application.DoEvents();
                 ImageSaveChange();
+                return;
             }
 
             picMain.Text = "";
@@ -415,7 +416,7 @@ namespace ImageGlass
                 {
                     fileinfo = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
                     fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
-                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString();
+                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
                     this.imageInfo = fileinfo;
                 }
                 catch { fileinfo = ""; }
@@ -431,8 +432,8 @@ namespace ImageGlass
                 else
                 {
                     fileinfo += ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
-                    fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
-                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString();
+                    //fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
+                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
 
                     this.imageInfo = fileinfo;
 
@@ -495,24 +496,6 @@ namespace ImageGlass
                 }
 
 
-            }
-            #endregion
-
-
-            // Copy file to clipboard-------------------------------------------------------
-            #region Ctrl + C
-            if (e.KeyValue == 67 && e.Control && !e.Shift && !e.Alt)
-            {
-                CopyFile();
-            }
-            #endregion
-
-
-            // Copy multi-file to clipboard-------------------------------------------------------
-            #region Ctrl + Shift + C
-            if (e.KeyValue == 67 && e.Control && e.Shift && !e.Alt)
-            {
-                CopyMultiFile();
             }
             #endregion
 
@@ -1065,7 +1048,7 @@ namespace ImageGlass
             Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
 
             this.DisplayTextMessage(
-                string.Format(GlobalSetting.LangPack.Items["frmMain._AddFileToClipboardText"],
+                string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
                 GlobalSetting.StringClipboard.Count), 1000);
         }
 
@@ -1094,7 +1077,76 @@ namespace ImageGlass
             Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
 
             this.DisplayTextMessage(
-                string.Format(GlobalSetting.LangPack.Items["frmMain._AddFileToClipboardText"],
+                string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
+                GlobalSetting.StringClipboard.Count), 1000);
+        }
+
+        private void CutFile()
+        {
+            try
+            {
+                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            GlobalSetting.StringClipboard = new StringCollection();
+            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+
+            byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
+            MemoryStream dropEffect = new MemoryStream();
+            dropEffect.Write(moveEffect, 0, moveEffect.Length);
+
+            DataObject data = new DataObject();
+            data.SetFileDropList(GlobalSetting.StringClipboard);
+            data.SetData("Preferred DropEffect", dropEffect);
+
+            Clipboard.Clear();
+            Clipboard.SetDataObject(data, true);
+
+            this.DisplayTextMessage(
+                string.Format(GlobalSetting.LangPack.Items["frmMain._CutFileText"],
+                GlobalSetting.StringClipboard.Count), 1000);
+        }
+
+        private void CutMultiFile()
+        {
+            try
+            {
+                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            //get filename
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+            //exit if duplicated filename
+            if (GlobalSetting.StringClipboard.IndexOf(filename) != -1)
+            {
+                return;
+            }
+
+            //add filename to clipboard
+            GlobalSetting.StringClipboard.Add(filename);
+
+            byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
+            MemoryStream dropEffect = new MemoryStream();
+            dropEffect.Write(moveEffect, 0, moveEffect.Length);
+
+            DataObject data = new DataObject();
+            data.SetFileDropList(GlobalSetting.StringClipboard);
+            data.SetData("Preferred DropEffect", dropEffect);
+
+            Clipboard.Clear();
+            Clipboard.SetDataObject(data, true);
+
+            this.DisplayTextMessage(
+                string.Format(GlobalSetting.LangPack.Items["frmMain._CutFileText"],
                 GlobalSetting.StringClipboard.Count), 1000);
         }
 
@@ -1487,6 +1539,11 @@ namespace ImageGlass
                 mnuEditWithPaint.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditWithPaint"];
                 mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
                 mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
+
+                mnuCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopy"];
+                mnuMultiCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCopy"];
+                mnuCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuCut"];
+                mnuMultiCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCut"];
                 mnuMoveRecycle.Text = GlobalSetting.LangPack.Items["frmMain.mnuMoveRecycle"];
                 mnuDelete.Text = GlobalSetting.LangPack.Items["frmMain.mnuDelete"];
                 mnuRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuRename"];
@@ -1926,6 +1983,26 @@ namespace ImageGlass
             }
         }
 
+        private void mnuCut_Click(object sender, EventArgs e)
+        {
+            CutFile();
+        }
+
+        private void mnuMultiCut_Click(object sender, EventArgs e)
+        {
+            CutMultiFile();
+        }
+
+        private void mnuMultiCopy_Click(object sender, EventArgs e)
+        {
+            CopyMultiFile();
+        }
+
+        private void mnuCopy_Click(object sender, EventArgs e)
+        {
+            CopyFile();
+        }
+
         private void mnuDelete_Click(object sender, EventArgs e)
         {
             try
@@ -2224,8 +2301,11 @@ namespace ImageGlass
 
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
-            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
-            NextPic(0);
+            if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                NextPic(0);
+            }
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
@@ -2235,9 +2315,10 @@ namespace ImageGlass
 
             this.UpdateStatusBar(true);
         }
+
+
         #endregion
 
         
-
     }
 }

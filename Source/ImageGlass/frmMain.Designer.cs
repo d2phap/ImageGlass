@@ -36,11 +36,15 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuEditWithPaint = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuSetWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMultiCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMultiCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMoveRecycle = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuUploadFacebook = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
@@ -143,6 +147,7 @@
             // 
             // mnuPopup
             // 
+            this.mnuPopup.BackColor = System.Drawing.Color.White;
             this.mnuPopup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuStartSlideshow,
             this.mnuStopSlideshow,
@@ -152,11 +157,15 @@
             this.toolStripMenuItem4,
             this.mnuEditWithPaint,
             this.mnuExtractFrames,
-            this.toolStripMenuItem1,
             this.mnuSetWallpaper,
+            this.toolStripMenuItem1,
+            this.mnuCopy,
+            this.mnuMultiCopy,
+            this.mnuCut,
+            this.mnuMultiCut,
+            this.mnuRename,
             this.mnuMoveRecycle,
             this.mnuDelete,
-            this.mnuRename,
             this.toolStripMenuItem2,
             this.mnuUploadFacebook,
             this.toolStripMenuItem3,
@@ -164,8 +173,8 @@
             this.mnuOpenLocation,
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
-            this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.mnuPopup.Size = new System.Drawing.Size(258, 342);
+            this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mnuPopup.Size = new System.Drawing.Size(258, 430);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -217,6 +226,7 @@
             // 
             // mnuEditWithPaint
             // 
+            this.mnuEditWithPaint.Image = ((System.Drawing.Image)(resources.GetObject("mnuEditWithPaint.Image")));
             this.mnuEditWithPaint.Name = "mnuEditWithPaint";
             this.mnuEditWithPaint.Size = new System.Drawing.Size(257, 22);
             this.mnuEditWithPaint.Text = "&Edit with Paint";
@@ -231,11 +241,6 @@
             this.mnuExtractFrames.Text = "E&xtract image frames";
             this.mnuExtractFrames.Click += new System.EventHandler(this.mnuExtractFrames_Click);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(254, 6);
-            // 
             // mnuSetWallpaper
             // 
             this.mnuSetWallpaper.Name = "mnuSetWallpaper";
@@ -243,8 +248,59 @@
             this.mnuSetWallpaper.Text = "&Set as desktop background";
             this.mnuSetWallpaper.Click += new System.EventHandler(this.mnuWallpaper_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(254, 6);
+            // 
+            // mnuCopy
+            // 
+            this.mnuCopy.Image = ((System.Drawing.Image)(resources.GetObject("mnuCopy.Image")));
+            this.mnuCopy.Name = "mnuCopy";
+            this.mnuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mnuCopy.Size = new System.Drawing.Size(257, 22);
+            this.mnuCopy.Text = "&Copy";
+            this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
+            // 
+            // mnuMultiCopy
+            // 
+            this.mnuMultiCopy.Name = "mnuMultiCopy";
+            this.mnuMultiCopy.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
+            this.mnuMultiCopy.Size = new System.Drawing.Size(257, 22);
+            this.mnuMultiCopy.Text = "Copy &multiple files";
+            this.mnuMultiCopy.Click += new System.EventHandler(this.mnuMultiCopy_Click);
+            // 
+            // mnuCut
+            // 
+            this.mnuCut.Image = ((System.Drawing.Image)(resources.GetObject("mnuCut.Image")));
+            this.mnuCut.Name = "mnuCut";
+            this.mnuCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.mnuCut.Size = new System.Drawing.Size(257, 22);
+            this.mnuCut.Text = "Cut";
+            this.mnuCut.Click += new System.EventHandler(this.mnuCut_Click);
+            // 
+            // mnuMultiCut
+            // 
+            this.mnuMultiCut.Name = "mnuMultiCut";
+            this.mnuMultiCut.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.X)));
+            this.mnuMultiCut.Size = new System.Drawing.Size(257, 22);
+            this.mnuMultiCut.Text = "Cut multiple files";
+            this.mnuMultiCut.Click += new System.EventHandler(this.mnuMultiCut_Click);
+            // 
+            // mnuRename
+            // 
+            this.mnuRename.Image = ((System.Drawing.Image)(resources.GetObject("mnuRename.Image")));
+            this.mnuRename.Name = "mnuRename";
+            this.mnuRename.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.mnuRename.Size = new System.Drawing.Size(257, 22);
+            this.mnuRename.Text = "&Rename image";
+            this.mnuRename.Click += new System.EventHandler(this.mnuRename_Click);
+            // 
             // mnuMoveRecycle
             // 
+            this.mnuMoveRecycle.Image = ((System.Drawing.Image)(resources.GetObject("mnuMoveRecycle.Image")));
             this.mnuMoveRecycle.Name = "mnuMoveRecycle";
             this.mnuMoveRecycle.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.mnuMoveRecycle.Size = new System.Drawing.Size(257, 22);
@@ -259,14 +315,6 @@
             this.mnuDelete.Size = new System.Drawing.Size(257, 22);
             this.mnuDelete.Text = "&Delete from hard disk";
             this.mnuDelete.Click += new System.EventHandler(this.mnuDelete_Click);
-            // 
-            // mnuRename
-            // 
-            this.mnuRename.Name = "mnuRename";
-            this.mnuRename.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.mnuRename.Size = new System.Drawing.Size(257, 22);
-            this.mnuRename.Text = "&Rename image";
-            this.mnuRename.Click += new System.EventHandler(this.mnuRename_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -296,6 +344,7 @@
             // 
             // mnuOpenLocation
             // 
+            this.mnuOpenLocation.Image = ((System.Drawing.Image)(resources.GetObject("mnuOpenLocation.Image")));
             this.mnuOpenLocation.Name = "mnuOpenLocation";
             this.mnuOpenLocation.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.L)));
@@ -898,6 +947,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private ImageBox picMain;
         private ThumbBar.ThumbnailsSequence thumbBar;
+        private System.Windows.Forms.ToolStripMenuItem mnuCopy;
+        private System.Windows.Forms.ToolStripMenuItem mnuMultiCopy;
+        private System.Windows.Forms.ToolStripMenuItem mnuCut;
+        private System.Windows.Forms.ToolStripMenuItem mnuMultiCut;
     }
 }
 
