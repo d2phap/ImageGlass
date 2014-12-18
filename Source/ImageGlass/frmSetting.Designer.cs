@@ -37,6 +37,7 @@
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.tabLanguage = new System.Windows.Forms.TabPage();
+            this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
             this.lnkRefresh = new System.Windows.Forms.LinkLabel();
             this.lnkEdit = new System.Windows.Forms.LinkLabel();
             this.lnkCreateNew = new System.Windows.Forms.LinkLabel();
@@ -70,7 +71,6 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabContextMenu.SuspendLayout();
@@ -103,7 +103,7 @@
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblLanguage.Size = new System.Drawing.Size(155, 40);
-            this.lblLanguage.TabIndex = 17;
+            this.lblLanguage.TabIndex = 3;
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -125,7 +125,7 @@
             this.lblContextMenu.Name = "lblContextMenu";
             this.lblContextMenu.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblContextMenu.Size = new System.Drawing.Size(155, 40);
-            this.lblContextMenu.TabIndex = 16;
+            this.lblContextMenu.TabIndex = 2;
             this.lblContextMenu.Tag = "0";
             this.lblContextMenu.Text = "Context menu";
             this.lblContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -146,7 +146,7 @@
             this.lblGeneral.Name = "lblGeneral";
             this.lblGeneral.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblGeneral.Size = new System.Drawing.Size(155, 40);
-            this.lblGeneral.TabIndex = 15;
+            this.lblGeneral.TabIndex = 1;
             this.lblGeneral.Tag = "1";
             this.lblGeneral.Text = "General";
             this.lblGeneral.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -186,6 +186,19 @@
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
             // 
+            // lnkInstallLanguage
+            // 
+            this.lnkInstallLanguage.AutoSize = true;
+            this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkInstallLanguage.Location = new System.Drawing.Point(20, 189);
+            this.lnkInstallLanguage.Name = "lnkInstallLanguage";
+            this.lnkInstallLanguage.Size = new System.Drawing.Size(206, 15);
+            this.lnkInstallLanguage.TabIndex = 21;
+            this.lnkInstallLanguage.TabStop = true;
+            this.lnkInstallLanguage.Text = "> Install new language pack (*.iglang)";
+            this.lnkInstallLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkInstallLanguage_LinkClicked);
+            // 
             // lnkRefresh
             // 
             this.lnkRefresh.AutoSize = true;
@@ -194,7 +207,7 @@
             this.lnkRefresh.Location = new System.Drawing.Point(295, 53);
             this.lnkRefresh.Name = "lnkRefresh";
             this.lnkRefresh.Size = new System.Drawing.Size(57, 15);
-            this.lnkRefresh.TabIndex = 23;
+            this.lnkRefresh.TabIndex = 20;
             this.lnkRefresh.TabStop = true;
             this.lnkRefresh.Text = "> Refresh";
             this.lnkRefresh.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkRefresh_LinkClicked);
@@ -207,7 +220,7 @@
             this.lnkEdit.Location = new System.Drawing.Point(20, 248);
             this.lnkEdit.Name = "lnkEdit";
             this.lnkEdit.Size = new System.Drawing.Size(164, 15);
-            this.lnkEdit.TabIndex = 22;
+            this.lnkEdit.TabIndex = 23;
             this.lnkEdit.TabStop = true;
             this.lnkEdit.Text = "> Edit selected language pack";
             this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
@@ -220,7 +233,7 @@
             this.lnkCreateNew.Location = new System.Drawing.Point(20, 217);
             this.lnkCreateNew.Name = "lnkCreateNew";
             this.lnkCreateNew.Size = new System.Drawing.Size(157, 15);
-            this.lnkCreateNew.TabIndex = 21;
+            this.lnkCreateNew.TabIndex = 22;
             this.lnkCreateNew.TabStop = true;
             this.lnkCreateNew.Text = "> Create new language pack";
             this.lnkCreateNew.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCreateNew_LinkClicked);
@@ -233,7 +246,7 @@
             this.lnkGetMoreLanguage.Location = new System.Drawing.Point(19, 279);
             this.lnkGetMoreLanguage.Name = "lnkGetMoreLanguage";
             this.lnkGetMoreLanguage.Size = new System.Drawing.Size(152, 15);
-            this.lnkGetMoreLanguage.TabIndex = 20;
+            this.lnkGetMoreLanguage.TabIndex = 24;
             this.lnkGetMoreLanguage.TabStop = true;
             this.lnkGetMoreLanguage.Text = "> Get more language packs";
             this.lnkGetMoreLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreLanguage_LinkClicked);
@@ -248,7 +261,7 @@
             this.cmbLanguage.Location = new System.Drawing.Point(23, 50);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(253, 23);
-            this.cmbLanguage.TabIndex = 2;
+            this.cmbLanguage.TabIndex = 19;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
             // lblLanguageText
@@ -284,7 +297,7 @@
             this.btnRemoveAllContextMenu.Location = new System.Drawing.Point(264, 387);
             this.btnRemoveAllContextMenu.Name = "btnRemoveAllContextMenu";
             this.btnRemoveAllContextMenu.Size = new System.Drawing.Size(115, 29);
-            this.btnRemoveAllContextMenu.TabIndex = 23;
+            this.btnRemoveAllContextMenu.TabIndex = 18;
             this.btnRemoveAllContextMenu.Text = "Remove all";
             this.btnRemoveAllContextMenu.UseVisualStyleBackColor = true;
             this.btnRemoveAllContextMenu.Click += new System.EventHandler(this.btnRemoveAllContextMenu_Click);
@@ -294,7 +307,7 @@
             this.btnUpdateContextMenu.Location = new System.Drawing.Point(143, 387);
             this.btnUpdateContextMenu.Name = "btnUpdateContextMenu";
             this.btnUpdateContextMenu.Size = new System.Drawing.Size(115, 29);
-            this.btnUpdateContextMenu.TabIndex = 22;
+            this.btnUpdateContextMenu.TabIndex = 17;
             this.btnUpdateContextMenu.Text = "Update";
             this.btnUpdateContextMenu.UseVisualStyleBackColor = true;
             this.btnUpdateContextMenu.Click += new System.EventHandler(this.btnUpdateContextMenu_Click);
@@ -304,7 +317,7 @@
             this.btnAddDefaultContextMenu.Location = new System.Drawing.Point(22, 387);
             this.btnAddDefaultContextMenu.Name = "btnAddDefaultContextMenu";
             this.btnAddDefaultContextMenu.Size = new System.Drawing.Size(115, 29);
-            this.btnAddDefaultContextMenu.TabIndex = 21;
+            this.btnAddDefaultContextMenu.TabIndex = 16;
             this.btnAddDefaultContextMenu.Text = "Add default";
             this.btnAddDefaultContextMenu.UseVisualStyleBackColor = true;
             this.btnAddDefaultContextMenu.Click += new System.EventHandler(this.btnAddDefaultContextMenu_Click);
@@ -333,7 +346,7 @@
             this.txtExtensions.Location = new System.Drawing.Point(22, 353);
             this.txtExtensions.Name = "txtExtensions";
             this.txtExtensions.Size = new System.Drawing.Size(357, 23);
-            this.txtExtensions.TabIndex = 18;
+            this.txtExtensions.TabIndex = 15;
             this.txtExtensions.TabStop = false;
             // 
             // lbl_ContextMenu_Description
@@ -379,7 +392,7 @@
             this.chkESCToQuit.Location = new System.Drawing.Point(20, 117);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(223, 19);
-            this.chkESCToQuit.TabIndex = 18;
+            this.chkESCToQuit.TabIndex = 10;
             this.chkESCToQuit.Text = "Allow to press ESC to quit application";
             this.chkESCToQuit.UseVisualStyleBackColor = true;
             this.chkESCToQuit.CheckedChanged += new System.EventHandler(this.chkESCToQuit_CheckedChanged);
@@ -390,7 +403,7 @@
             this.chkImageBoosterBack.Location = new System.Drawing.Point(20, 92);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
             this.chkImageBoosterBack.Size = new System.Drawing.Size(385, 19);
-            this.chkImageBoosterBack.TabIndex = 17;
+            this.chkImageBoosterBack.TabIndex = 9;
             this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
             this.chkImageBoosterBack.UseVisualStyleBackColor = true;
             this.chkImageBoosterBack.CheckedChanged += new System.EventHandler(this.chkImageBoosterBack_CheckedChanged);
@@ -401,7 +414,7 @@
             this.chkLoopSlideshow.Location = new System.Drawing.Point(20, 67);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(405, 19);
-            this.chkLoopSlideshow.TabIndex = 16;
+            this.chkLoopSlideshow.TabIndex = 8;
             this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             this.chkLoopSlideshow.CheckedChanged += new System.EventHandler(this.chkLoopSlideshow_CheckedChanged);
@@ -421,7 +434,7 @@
             0});
             this.numMaxThumbSize.Name = "numMaxThumbSize";
             this.numMaxThumbSize.Size = new System.Drawing.Size(79, 23);
-            this.numMaxThumbSize.TabIndex = 15;
+            this.numMaxThumbSize.TabIndex = 13;
             this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numMaxThumbSize.Value = new decimal(new int[] {
             5,
@@ -445,7 +458,7 @@
             this.chkHideToolBar.Location = new System.Drawing.Point(312, 42);
             this.chkHideToolBar.Name = "chkHideToolBar";
             this.chkHideToolBar.Size = new System.Drawing.Size(167, 19);
-            this.chkHideToolBar.TabIndex = 13;
+            this.chkHideToolBar.TabIndex = 7;
             this.chkHideToolBar.Text = "Hide toolbar when start up";
             this.chkHideToolBar.UseVisualStyleBackColor = true;
             this.chkHideToolBar.CheckedChanged += new System.EventHandler(this.chkHideToolBar_CheckedChanged);
@@ -465,7 +478,7 @@
             this.chkWelcomePicture.Location = new System.Drawing.Point(312, 17);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(146, 19);
-            this.chkWelcomePicture.TabIndex = 3;
+            this.chkWelcomePicture.TabIndex = 6;
             this.chkWelcomePicture.Text = "Show welcome picture";
             this.chkWelcomePicture.UseVisualStyleBackColor = true;
             this.chkWelcomePicture.CheckedChanged += new System.EventHandler(this.chkWelcomePicture_CheckedChanged);
@@ -494,7 +507,7 @@
             this.cmbImageOrder.Location = new System.Drawing.Point(20, 328);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
-            this.cmbImageOrder.TabIndex = 7;
+            this.cmbImageOrder.TabIndex = 14;
             this.cmbImageOrder.SelectedIndexChanged += new System.EventHandler(this.cmbImageOrder_SelectedIndexChanged);
             // 
             // barInterval
@@ -505,7 +518,7 @@
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(292, 45);
-            this.barInterval.TabIndex = 5;
+            this.barInterval.TabIndex = 12;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
@@ -539,7 +552,7 @@
             this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 164);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
-            this.cmbZoomOptimization.TabIndex = 4;
+            this.cmbZoomOptimization.TabIndex = 11;
             this.cmbZoomOptimization.SelectedIndexChanged += new System.EventHandler(this.cmbZoomOptimization_SelectedIndexChanged);
             // 
             // chkFindChildFolder
@@ -548,7 +561,7 @@
             this.chkFindChildFolder.Location = new System.Drawing.Point(20, 42);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(166, 19);
-            this.chkFindChildFolder.TabIndex = 2;
+            this.chkFindChildFolder.TabIndex = 5;
             this.chkFindChildFolder.Text = "Find images in child folder";
             this.chkFindChildFolder.UseVisualStyleBackColor = true;
             this.chkFindChildFolder.CheckedChanged += new System.EventHandler(this.chkFindChildFolder_CheckedChanged);
@@ -559,7 +572,7 @@
             this.chkAutoUpdate.Location = new System.Drawing.Point(20, 17);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(192, 19);
-            this.chkAutoUpdate.TabIndex = 1;
+            this.chkAutoUpdate.TabIndex = 4;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
             this.chkAutoUpdate.CheckedChanged += new System.EventHandler(this.chkAutoUpdate_CheckedChanged);
@@ -578,7 +591,7 @@
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
             this.tab1.Size = new System.Drawing.Size(559, 482);
-            this.tab1.TabIndex = 15;
+            this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
             // sp0
@@ -601,19 +614,6 @@
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
-            // 
-            // lnkInstallLanguage
-            // 
-            this.lnkInstallLanguage.AutoSize = true;
-            this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkInstallLanguage.Location = new System.Drawing.Point(20, 189);
-            this.lnkInstallLanguage.Name = "lnkInstallLanguage";
-            this.lnkInstallLanguage.Size = new System.Drawing.Size(206, 15);
-            this.lnkInstallLanguage.TabIndex = 24;
-            this.lnkInstallLanguage.TabStop = true;
-            this.lnkInstallLanguage.Text = "> Install new language pack (*.iglang)";
-            this.lnkInstallLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkInstallLanguage_LinkClicked);
             // 
             // frmSetting
             // 

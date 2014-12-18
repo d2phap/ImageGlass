@@ -535,7 +535,8 @@ namespace ImageGlass
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/download/languagepacks");
+                string version = Application.ProductVersion.Replace(".", "_");
+                Process.Start("http://www.imageglass.org/download/languagepacks?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_languagepack");
             }
             catch { }
         }

@@ -171,7 +171,8 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("http://www.imageglass.org");
+                string version = Application.ProductVersion.Replace(".", "_");
+                Process.Start("http://www.imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
             catch { }
         }
@@ -180,7 +181,8 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("http://www.imageglass.org/source");
+                string version = Application.ProductVersion.Replace(".", "_");
+                Process.Start("http://www.imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
             catch { }
         }
@@ -241,13 +243,14 @@ namespace ImageGlass
             }
         }
 
-
-
-
-
-
-
-
-
+        private void btnDonation_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string version = Application.ProductVersion.Replace(".", "_");
+                Process.Start("http://www.imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
+            }
+            catch { }
+        }
     }
 }

@@ -64,7 +64,7 @@
             this.btnInstallExt.Location = new System.Drawing.Point(133, 5);
             this.btnInstallExt.Name = "btnInstallExt";
             this.btnInstallExt.Size = new System.Drawing.Size(115, 28);
-            this.btnInstallExt.TabIndex = 9;
+            this.btnInstallExt.TabIndex = 2;
             this.btnInstallExt.Text = "Install";
             this.btnInstallExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnInstallExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -78,7 +78,7 @@
             this.btnGetMoreExt.Location = new System.Drawing.Point(254, 5);
             this.btnGetMoreExt.Name = "btnGetMoreExt";
             this.btnGetMoreExt.Size = new System.Drawing.Size(179, 28);
-            this.btnGetMoreExt.TabIndex = 8;
+            this.btnGetMoreExt.TabIndex = 3;
             this.btnGetMoreExt.Text = "Get more extensions";
             this.btnGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnGetMoreExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -92,7 +92,7 @@
             this.btnRefreshAllExt.Location = new System.Drawing.Point(12, 5);
             this.btnRefreshAllExt.Name = "btnRefreshAllExt";
             this.btnRefreshAllExt.Size = new System.Drawing.Size(115, 28);
-            this.btnRefreshAllExt.TabIndex = 7;
+            this.btnRefreshAllExt.TabIndex = 1;
             this.btnRefreshAllExt.Text = "Refresh";
             this.btnRefreshAllExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRefreshAllExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -106,7 +106,7 @@
             this.btnClose.Location = new System.Drawing.Point(730, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(86, 28);
-            this.btnClose.TabIndex = 6;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -155,7 +155,7 @@
             this.tvExtension.Name = "tvExtension";
             this.tvExtension.ShowRootLines = false;
             this.tvExtension.Size = new System.Drawing.Size(193, 352);
-            this.tvExtension.TabIndex = 8;
+            this.tvExtension.TabIndex = 0;
             this.tvExtension.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvExtension_AfterSelect);
             // 
             // frmExtension

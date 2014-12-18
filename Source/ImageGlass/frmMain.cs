@@ -1190,7 +1190,7 @@ namespace ImageGlass
             btnRefresh.Image = ImageGlass.Properties.Resources.refresh;
             btnGoto.Image = ImageGlass.Properties.Resources.gotoimage;
             btnThumb.Image = ImageGlass.Properties.Resources.thumbnail;
-            btnCaro.Image = ImageGlass.Properties.Resources.caro;
+            btnCaro.Image = ImageGlass.Properties.Resources.background;
             btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen;
             btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow;
             btnConvert.Image = ImageGlass.Properties.Resources.convert;
@@ -1293,7 +1293,7 @@ namespace ImageGlass
                 catch { btnThumb.Image = ImageGlass.Properties.Resources.thumbnail; }
 
                 try { btnCaro.Image = Image.FromFile(dir + t.caro); }
-                catch { btnCaro.Image = ImageGlass.Properties.Resources.caro; }
+                catch { btnCaro.Image = ImageGlass.Properties.Resources.background; }
 
                 try { btnFullScreen.Image = Image.FromFile(dir + t.fullscreen); }
                 catch { btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen; }
@@ -2159,7 +2159,11 @@ namespace ImageGlass
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://code.google.com/p/imageglass/issues/");
+            try
+            {
+                Process.Start("https://code.google.com/p/imageglass/issues/list");
+            }
+            catch { }
         }
 
         private void mnuPopup_Opening(object sender, CancelEventArgs e)

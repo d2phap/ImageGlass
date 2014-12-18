@@ -55,7 +55,8 @@ namespace ImageGlass
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/download/extensions");
+                string version = Application.ProductVersion.Replace(".", "_");
+                Process.Start("http://www.imageglass.org/download/extensions?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_extension");
             }
             catch { }
         }

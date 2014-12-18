@@ -58,6 +58,7 @@
             this.tpComponents = new System.Windows.Forms.TabPage();
             this.tpReferences = new System.Windows.Forms.TabPage();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
+            this.btnDonation = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -67,6 +68,7 @@
             this.tpInfo.SuspendLayout();
             this.tpComponents.SuspendLayout();
             this.tpReferences.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -99,7 +101,7 @@
             this.lnkCheckUpdate.Location = new System.Drawing.Point(41, 339);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(108, 21);
-            this.lnkCheckUpdate.TabIndex = 15;
+            this.lnkCheckUpdate.TabIndex = 10;
             this.lnkCheckUpdate.TabStop = true;
             this.lnkCheckUpdate.Text = "» Check for update";
             this.lnkCheckUpdate.UseCompatibleTextRendering = true;
@@ -126,7 +128,7 @@
             this.lnkFacebook.Location = new System.Drawing.Point(41, 284);
             this.lnkFacebook.Name = "lnkFacebook";
             this.lnkFacebook.Size = new System.Drawing.Size(276, 21);
-            this.lnkFacebook.TabIndex = 12;
+            this.lnkFacebook.TabIndex = 9;
             this.lnkFacebook.TabStop = true;
             this.lnkFacebook.Text = "Facebook: https://www.facebook.com/ImageGlass";
             this.lnkFacebook.UseCompatibleTextRendering = true;
@@ -143,7 +145,7 @@
             this.lnkProjectPage.Location = new System.Drawing.Point(41, 261);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(235, 21);
-            this.lnkProjectPage.TabIndex = 11;
+            this.lnkProjectPage.TabIndex = 8;
             this.lnkProjectPage.TabStop = true;
             this.lnkProjectPage.Text = "Source: http://www.imageglass.org/source";
             this.lnkProjectPage.UseCompatibleTextRendering = true;
@@ -160,7 +162,7 @@
             this.lnkIGHomepage.Location = new System.Drawing.Point(41, 238);
             this.lnkIGHomepage.Name = "lnkIGHomepage";
             this.lnkIGHomepage.Size = new System.Drawing.Size(250, 21);
-            this.lnkIGHomepage.TabIndex = 10;
+            this.lnkIGHomepage.TabIndex = 7;
             this.lnkIGHomepage.TabStop = true;
             this.lnkIGHomepage.Text = "ImageGlass home page: www.imageglass.org";
             this.lnkIGHomepage.UseCompatibleTextRendering = true;
@@ -187,7 +189,7 @@
             this.linkLabel4.Location = new System.Drawing.Point(41, 183);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(140, 21);
-            this.linkLabel4.TabIndex = 7;
+            this.linkLabel4.TabIndex = 6;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "Phone: +84 167 4710360";
             this.linkLabel4.UseCompatibleTextRendering = true;
@@ -267,7 +269,7 @@
             this.fileList1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileList1.Location = new System.Drawing.Point(20, 5);
             this.fileList1.Name = "fileList1";
-            this.fileList1.Size = new System.Drawing.Size(488, 390);
+            this.fileList1.Size = new System.Drawing.Size(488, 388);
             this.fileList1.TabIndex = 0;
             this.fileList1.Title = "";
             this.fileList1.Load += new System.EventHandler(this.fileList1_Load);
@@ -364,7 +366,7 @@
             this.lblReferences.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblReferences.Size = new System.Drawing.Size(147, 40);
             this.lblReferences.TabIndex = 20;
-            this.lblReferences.Tag = "0";
+            this.lblReferences.Tag = "3";
             this.lblReferences.Text = "References";
             this.lblReferences.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblReferences.Click += new System.EventHandler(this.lblMenu_Click);
@@ -407,7 +409,7 @@
             this.lblComponent.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblComponent.Size = new System.Drawing.Size(147, 40);
             this.lblComponent.TabIndex = 19;
-            this.lblComponent.Tag = "0";
+            this.lblComponent.Tag = "2";
             this.lblComponent.Text = "Components";
             this.lblComponent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblComponent.Click += new System.EventHandler(this.lblMenu_Click);
@@ -468,10 +470,10 @@
             // tpReferences
             // 
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 22);
+            this.tpReferences.Location = new System.Drawing.Point(4, 24);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tpReferences.Size = new System.Drawing.Size(516, 404);
+            this.tpReferences.Size = new System.Drawing.Size(516, 402);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             this.tpReferences.UseVisualStyleBackColor = true;
@@ -489,9 +491,22 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(488, 391);
+            this.txtReferences.Size = new System.Drawing.Size(488, 389);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
+            // 
+            // btnDonation
+            // 
+            this.btnDonation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDonation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
+            this.btnDonation.Location = new System.Drawing.Point(612, 23);
+            this.btnDonation.Name = "btnDonation";
+            this.btnDonation.Size = new System.Drawing.Size(24, 26);
+            this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.btnDonation.TabIndex = 20;
+            this.btnDonation.TabStop = false;
+            this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
             // 
             // frmAbout
             // 
@@ -501,6 +516,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(659, 486);
+            this.Controls.Add(this.btnDonation);
             this.Controls.Add(this.sp0);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblSlogant);
@@ -524,6 +540,7 @@
             this.tpInfo.PerformLayout();
             this.tpComponents.ResumeLayout(false);
             this.tpReferences.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,5 +577,6 @@
         private System.Windows.Forms.TabPage tpComponents;
         private System.Windows.Forms.TabPage tpReferences;
         private System.Windows.Forms.RichTextBox txtReferences;
+        private System.Windows.Forms.PictureBox btnDonation;
     }
 }

@@ -218,6 +218,22 @@ ImageGlass ImageBox based on Cyotek ImageBox Control. Copyright (c) 2010-2014 Cy
 IconLib: copyright (c) 2006 Franco, Gustavo
 Facebook SDK: copyright (c) 2011 The Outercurve Foundation</value>
   </data>
+  <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAYAAACtv5zzAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAE
+        KgAABCoB0H9wEwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIeSURBVEhLtdVN
+        SxVhFMDx4wtBCFIS7cJXSlCEBMsoNy1MBKFF0MZF9qZEhmlZUBtpobgIF0YJCi5s1QslmhoEVmAqaJaR
+        guE3EPwGt/8ZzlyemTuTXmgO/LhnznNmzjgzzkgqlQogjmAcf/Dd8qPhvv0KbogU4Ae6cBg5aMYqGnEH
+        b9CHYnffOMENkQcYcWtWL8UQrqIMl6AnUhbuDQtuiMyg2q3FIWrwCb+h+52N6ZNaLOEXxqKa9kKcgF7G
+        gog1+YLm8EK2iMdoi6jLV+SFF7JFvENLRF1u4SM6HG3It4YzaMdN3MA16M3Wniu4jinoieZkDLCDaOMc
+        dNhtPEW/rW1BH9u76EYP7uG+6cUzvHAP7PMHNGEgXRSpx7jlm349jvVnNaAI2xjEa78eh9AB09Dj1OFg
+        es0aAgOsVgW9voVuPQqhA/S1MoD32EW7t2YN4b+gQVmuN9N7FxGP7LcQnU5/4BIRxdDH/2LcgIfKcn38
+        6i3ftd9KLDr9GfeA0GN+S3KAvii3Extg9U0/SWrAhp8kcYnysZbkAP1/mEhkAKE3eB61/30AoZ/dl3ji
+        bVvxAtwB+gLrtfwtTlm+Y7/HseD064DPGIZ+SlvTa9agZ/TK2UHfRUWWlyDX8gqnp9zJL2MS53DAr3tr
+        1pCLdRxzF/eL+IDTkWvpROQ8VlDjNvwLcQijeB61roIbIicxi59Y24Ne62XoV867hJlS8hcRVnpZQa7l
+        TAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAMAEBAAAAEAIABoBAAANgAAABgYAAABACAAiAkAAJ4EAAAgIAAAAQAgAKgQAAAmDgAAKAAAABAA
