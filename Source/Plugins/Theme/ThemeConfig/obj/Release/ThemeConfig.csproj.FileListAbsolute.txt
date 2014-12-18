@@ -11,3 +11,18 @@ F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Releas
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Core.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ThemeConfig.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Theme.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Theme.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.ctlMain.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.frmEdit.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.csproj.GenerateResource.Cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.dll

@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PhapSoftware")]
 [assembly: AssemblyProduct("ImageGlass theme configuration")]
-[assembly: AssemblyCopyright("Copyright © 2013 by Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2015 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -26,7 +26,7 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.5.9.22")]
+[assembly: AssemblyVersion("2.0.1.5")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -56,4 +56,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyFileVersionAttribute("1.5.9.22")]
+[assembly: AssemblyFileVersion("2.0.1.5")]

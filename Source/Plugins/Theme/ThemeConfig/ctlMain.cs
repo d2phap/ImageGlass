@@ -25,6 +25,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using ImageGlass.Services.Configuration;
+using System.Diagnostics;
 
 namespace ThemeConfig
 {
@@ -255,12 +256,12 @@ namespace ThemeConfig
             this.lnkDownloadTheme.AutoSize = true;
             this.lnkDownloadTheme.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkDownloadTheme.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkDownloadTheme.Location = new System.Drawing.Point(280, 53);
+            this.lnkDownloadTheme.Location = new System.Drawing.Point(277, 53);
             this.lnkDownloadTheme.Name = "lnkDownloadTheme";
-            this.lnkDownloadTheme.Size = new System.Drawing.Size(98, 15);
+            this.lnkDownloadTheme.Size = new System.Drawing.Size(103, 15);
             this.lnkDownloadTheme.TabIndex = 23;
             this.lnkDownloadTheme.TabStop = true;
-            this.lnkDownloadTheme.Text = "Download theme";
+            this.lnkDownloadTheme.Text = "Download themes";
             this.lnkDownloadTheme.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDownloadTheme_LinkClicked);
             // 
             // pictureBox1
@@ -308,7 +309,7 @@ namespace ThemeConfig
             string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
                         "\\ImageGlass\\Themes";
             lvTheme.Items.Clear();
-            lvTheme.Items.Add("(default)").Tag = "Default";
+            lvTheme.Items.Add("2015 (default)").Tag = "Default";
 
             if (Directory.Exists(dir))
             {
@@ -364,8 +365,8 @@ namespace ThemeConfig
                 if (lvTheme.SelectedItems[0].Tag.ToString() == "Default")
                 {
                     picPreview.Image = ThemeConfig.Properties.Resources.preview;
-                    txtInfo.Text = "Name: ImageGlass default theme\r\n" +
-                                "Version: 1.5\r\n" +
+                    txtInfo.Text = "Name: 2015 (default)\r\n" +
+                                "Version: 2.0.1.5\r\n" +
                                 "Author: Duong Dieu Phap\r\n" +
                                 "Email: phap@imageglass.org\r\n" +
                                 "Download more themes at http://www.imageglass.org/download/themes";
@@ -445,8 +446,7 @@ namespace ThemeConfig
         {
             if (lvTheme.SelectedItems.Count > 0)//edit theme
             {
-                frmEdit f = new frmEdit((Path.GetDirectoryName(lvTheme.SelectedItems[0].Tag.ToString()) +
-                                "\\").Replace("\\\\", "\\"));
+                frmEdit f = new frmEdit((Path.GetDirectoryName(lvTheme.SelectedItems[0].Tag.ToString()) + "\\").Replace("\\\\", "\\"));
                 f.Show();
             }
             else //make new theme
@@ -503,7 +503,8 @@ namespace ThemeConfig
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/support/user/personalize#CreateTheme");
+                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                Process.Start("http://www.imageglass.org/support/user/create-theme?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_create_theme");
             }
             catch { }
         }
@@ -512,7 +513,8 @@ namespace ThemeConfig
         {
             try
             {
-                System.Diagnostics.Process.Start("http://www.imageglass.org/download/themes");
+                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                Process.Start("http://www.imageglass.org/download/themes?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_download_theme");
             }
             catch { }
         }

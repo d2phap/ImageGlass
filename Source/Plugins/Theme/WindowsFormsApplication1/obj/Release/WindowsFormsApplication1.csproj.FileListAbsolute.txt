@@ -13,3 +13,18 @@ F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplicatio
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Services.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Core.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\WindowsFormsApplication1.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\WindowsFormsApplication1.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ThemeConfig.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Form1.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csproj.GenerateResource.Cache

@@ -55,8 +55,6 @@
             this.btnSetting = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnReport = new System.Windows.Forms.ToolStripButton();
-            this.btnDisLike = new System.Windows.Forms.ToolStripButton();
-            this.btnLike = new System.Windows.Forms.ToolStripButton();
             this.btnStatus = new System.Windows.Forms.ToolStripButton();
             this.panThumbnail = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -122,8 +120,6 @@
             this.btnSetting,
             this.btnHelp,
             this.btnReport,
-            this.btnDisLike,
-            this.btnLike,
             this.btnStatus});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
@@ -485,38 +481,6 @@
             this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
             this.btnReport.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // btnDisLike
-            // 
-            this.btnDisLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnDisLike.AutoSize = false;
-            this.btnDisLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDisLike.Image = ((System.Drawing.Image)(resources.GetObject("btnDisLike.Image")));
-            this.btnDisLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnDisLike.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDisLike.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDisLike.Name = "btnDisLike";
-            this.btnDisLike.Size = new System.Drawing.Size(25, 28);
-            this.btnDisLike.Tag = "x";
-            this.btnDisLike.Text = "Dislike";
-            this.btnDisLike.ToolTipText = "Follow ImageGlass by email";
-            this.btnDisLike.Click += new System.EventHandler(this.btnBack_Click);
-            // 
-            // btnLike
-            // 
-            this.btnLike.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnLike.AutoSize = false;
-            this.btnLike.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLike.Image = ((System.Drawing.Image)(resources.GetObject("btnLike.Image")));
-            this.btnLike.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnLike.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLike.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLike.Name = "btnLike";
-            this.btnLike.Size = new System.Drawing.Size(25, 28);
-            this.btnLike.Tag = "x";
-            this.btnLike.Text = "Like";
-            this.btnLike.ToolTipText = "Find ImageGlass on the Internet";
-            this.btnLike.Click += new System.EventHandler(this.btnBack_Click);
-            // 
             // btnStatus
             // 
             this.btnStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -727,7 +691,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(3, 150);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 15);
+            this.label7.Size = new System.Drawing.Size(88, 15);
             this.label7.TabIndex = 10;
             this.label7.Tag = "x";
             this.label7.Text = "Version require:";
@@ -893,8 +857,6 @@
         private System.Windows.Forms.ToolStripButton btnSetting;
         private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.ToolStripButton btnReport;
-        private System.Windows.Forms.ToolStripButton btnDisLike;
-        private System.Windows.Forms.ToolStripButton btnLike;
         private System.Windows.Forms.Panel panThumbnail;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel lnkToolBar;

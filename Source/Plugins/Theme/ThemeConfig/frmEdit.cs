@@ -257,8 +257,6 @@ namespace ThemeConfig
                 n.SetAttribute("extension", btnExtension.Tag.ToString());
                 n.SetAttribute("settings", btnSetting.Tag.ToString());
                 n.SetAttribute("about", btnHelp.Tag.ToString());
-                n.SetAttribute("like", btnLike.Tag.ToString());
-                n.SetAttribute("dislike", btnDisLike.Tag.ToString());
                 n.SetAttribute("report", btnReport.Tag.ToString());
                 nType.AppendChild(n);
 
@@ -403,12 +401,6 @@ namespace ThemeConfig
 
                 try { btnHelp.Image = Image.FromFile(themedir + t.about); btnHelp.Tag = t.about; }
                 catch { btnHelp.Image = ThemeConfig.Properties.Resources.noimg; }
-
-                try { btnLike.Image = Image.FromFile(themedir + t.like); btnLike.Tag = t.like; }
-                catch { btnLike.Image = ThemeConfig.Properties.Resources.noimg; }
-
-                try { btnDisLike.Image = Image.FromFile(themedir + t.dislike); btnDisLike.Tag = t.dislike; }
-                catch { btnDisLike.Image = ThemeConfig.Properties.Resources.noimg; }
 
                 try { btnReport.Image = Image.FromFile(themedir + t.report); btnReport.Tag = t.report; }
                 catch { btnReport.Image = ThemeConfig.Properties.Resources.noimg; }
