@@ -30,6 +30,7 @@ namespace adtasks
             //Lay param dau tien
             string topcmd = args[0].ToLower().Trim();
 
+
             //Them menu 'Open with ImageGlass'
             #region addext <string igPath> [string ext]
             if (topcmd == "addext")
@@ -162,6 +163,31 @@ namespace adtasks
             else if (topcmd == "iginstallext")
             {
                 Functions.InstallExtensions();
+                Application.Exit();
+            }
+            #endregion
+
+            //Them menu 'Open with ImageGlass'
+            #region setassociations <string igPath> [string ext]
+            else if (topcmd == "setassociations")
+            {
+                //Lay duong dan exe
+                string exePath = args[1];
+
+                if (args.Length > 2)
+                {
+                    //Lay extension
+                    string ext = args[2];
+
+                    //Ap dung
+                    Functions.SetAssociations(exePath, ext);
+                }
+                else
+                {
+                    //Ap dung
+                    Functions.SetAssociations(exePath);
+                }
+
                 Application.Exit();
             }
             #endregion

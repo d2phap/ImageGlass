@@ -251,7 +251,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmAbout._Text", "About");
             this.Items.Add("frmSetting._Text", "Settings");
             this.Items.Add("frmSetting.lblGeneral", "General");
-            this.Items.Add("frmSetting.lblContextMenu", "Context menu");
+            //this.Items.Add("frmSetting.lblContextMenu", "Context menu"); //removed v2.0 final
+            this.Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
             this.Items.Add("frmSetting.lblLanguage", "Language");
             //this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge"); //removed v2.0 beta
             this.Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
@@ -278,11 +279,19 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.lblBackGroundColor", "Background color:");
             this.Items.Add("frmSetting.btnClose", "Close");
             this.Items.Add("frmSetting._OpenWithImageGlass", "Open with ImageGlass");
-            this.Items.Add("frmSetting.lbl_ContextMenu_Description", "This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu.");
+            //this.Items.Add("frmSetting.lbl_ContextMenu_Description", "This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu."); //removed 2.0 final
             this.Items.Add("frmSetting.lblExtensions", "Extensions:");
-            this.Items.Add("frmSetting.lblAddDefaultContextMenu", "Add default");
-            this.Items.Add("frmSetting.lblUpdateContextMenu", "Update");
-            this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all");
+            this.Items.Add("frmSetting.btnAddDefaultExtension", "Add default"); //add 2.0 final
+            //this.Items.Add("frmSetting.lblAddDefaultContextMenu", "Add default"); //removed 2.0 final
+            this.Items.Add("frmSetting.lblContextMenu", "Context menu:"); //add 2.0 final
+            this.Items.Add("frmSetting.btnUpdateContextMenu", "Update"); //add 2.0 final
+            this.Items.Add("frmSetting.btnRemoveAllContextMenu", "Remove all"); //add 2.0 final
+            //this.Items.Add("frmSetting.lblUpdateContextMenu", "Update"); //removed 2.0 final
+            //this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all"); //removed 2.0 final
+            this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final
+            this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //add 2.0 final
+            this.Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //add 2.0 final
+
             this.Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             this.Items.Add("frmSetting.lnkRefresh", "> Refresh");
             this.Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)"); //v2.0 final

@@ -10,6 +10,7 @@ using System.Configuration;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library.FileAssociations;
 using System.IO;
+using System.Reflection;
 
 namespace igtasks
 {
@@ -191,18 +192,71 @@ namespace igtasks
             }
         }
 
+        /// <summary>
+        /// Set file associations
+        /// </summary>
+        /// <param name="igPath">ImageGlass.exe path</param>
+        public static void SetAssociations(string igPath)
+        {
+            try
+            {
+                string supportedExts = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
+                                                         "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
+                                                         "*.exif;*.wmf;*.emf;";
+                supportedExts = GlobalSetting.GetConfig("SupportedExtensions", supportedExts);
+                Functions.SetAssociations(igPath, supportedExts);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Set file associations
+        /// </summary>
+        /// <param name="igPath">ImageGlass.exe path</param>
+        /// <param name="extensions">Supported extensions, such as: *.png;*.jpg</param>
+        public static void SetAssociations(string igPath, string extensions)
+        {
+            try
+            {
+                string[] exts = extensions.Replace("*", "").Split(new char[] { ';' },
+                                                StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string ext in exts)
+                {
+                    var imgKey = Registry.ClassesRoot.OpenSubKey(ext);
+                    var imgType = imgKey.GetValue("");
+
+                    String command = "\"" + igPath + "\"" + " \"%1\"";
+
+                    String keyName = imgType + @"\shell\Open\command";
+                    using (var key = Registry.ClassesRoot.CreateSubKey(keyName))
+                    {
+                        key.SetValue("", command);
+                    }
+                }
+
+                GlobalSetting.SetConfig("ContextMenuExtensions", extensions);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         #region General functions
-        /// <summary>
-        /// Thêm menu vào menu ngữ cảnh
-        /// </summary>
-        /// <param name="extension">Tên thành phần mở rộng, ví dụ .png</param>
-        /// <param name="menuName">Tên của menu mới</param>
-        /// <param name="menuDescription">Miêu tả của menu mới</param>
-        /// <param name="exePath">Đường dẫn ứng dụng + command</param>
-        /// <param name="iconFile">Đường dẫn tập tin icon, có thể là thư viện icon DLL, EXE, ...</param>
-        /// <param name="iconIndex">Chỉ số icon sẽ hiển thị, mặc định là 0</param>
-        /// <returns></returns>
+            /// <summary>
+            /// Thêm menu vào menu ngữ cảnh
+            /// </summary>
+            /// <param name="extension">Tên thành phần mở rộng, ví dụ .png</param>
+            /// <param name="menuName">Tên của menu mới</param>
+            /// <param name="menuDescription">Miêu tả của menu mới</param>
+            /// <param name="exePath">Đường dẫn ứng dụng + command</param>
+            /// <param name="iconFile">Đường dẫn tập tin icon, có thể là thư viện icon DLL, EXE, ...</param>
+            /// <param name="iconIndex">Chỉ số icon sẽ hiển thị, mặc định là 0</param>
+            /// <returns></returns>
         public static bool AddContextMenuItem(string extension, string menuName,
                                             string menuDescription, string exePath,
                                             string iconFile, string iconIndex)

@@ -183,7 +183,7 @@ namespace ImageGlass
         {
             this.Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
             lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
-            lblContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblContextMenu"];
+            lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
@@ -200,13 +200,18 @@ namespace ImageGlass
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            lbl_ContextMenu_Description.Text = GlobalSetting.LangPack.Items["frmSetting.lbl_ContextMenu_Description"];
-            lblExtensions.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensions"];
-            btnAddDefaultContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblAddDefaultContextMenu"];
-            btnUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblUpdateContextMenu"];
-            btnRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblRemoveAllContextMenu"];
 
-            //language tab
+            //File Associations tab
+            lblExtensions.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensions"];
+            btnAddDefaultExtension.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddDefaultExtension"];
+            lblContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblContextMenu"];
+            btnUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.btnUpdateContextMenu"];
+            btnRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.btnRemoveAllContextMenu"];
+            lblFileAssociationsMng.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociationsMng"];
+            btnSetAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnSetAssociations"];
+            btnOpenFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
+
+            //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
             lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
             lnkInstallLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkInstallLanguage"];
@@ -228,9 +233,9 @@ namespace ImageGlass
             {
                 tab1.SelectedTab = tabGeneral;
             }
-            else if (lbl.Name == "lblContextMenu")
+            else if (lbl.Name == "lblFileAssociations")
             {
-                tab1.SelectedTab = tabContextMenu;
+                tab1.SelectedTab = tabFileAssociation;
             }
             else if (lbl.Name == "lblLanguage")
             {
@@ -241,11 +246,11 @@ namespace ImageGlass
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblGeneral.Tag = 0;
-            lblContextMenu.Tag = 0;
+            lblFileAssociations.Tag = 0;
             lblLanguage.Tag = 0;
 
             lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
-            lblContextMenu.BackColor = M_COLOR_MENU_NORMAL;
+            lblFileAssociations.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
@@ -255,10 +260,10 @@ namespace ImageGlass
 
                 LoadTabGeneralConfig();
             }
-            else if (tab1.SelectedTab == tabContextMenu)
+            else if (tab1.SelectedTab == tabFileAssociation)
             {
-                lblContextMenu.Tag = 1;
-                lblContextMenu.BackColor = M_COLOR_MENU_ACTIVE;
+                lblFileAssociations.Tag = 1;
+                lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
                 txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
             }
@@ -468,22 +473,11 @@ namespace ImageGlass
 
 
         #region TAB CONTEXT MENU
-        private void btnAddDefaultContextMenu_Click(object sender, EventArgs e)
+        private void btnAddDefaultExtension_Click(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            p.StartInfo.Arguments = "addext " + //name of param
-                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
-                                    "\"" + GlobalSetting.SupportedExtensions + "\" "; //arg 2
-            p.EnableRaisingEvents = true;
-            p.Exited += p_Exited;
+            string supportedExts = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;";
 
-            try
-            {
-                p.Start();
-            }
-            catch { }
-
+            txtExtensions.Text = supportedExts;
         }
 
         private void btnUpdateContextMenu_Click(object sender, EventArgs e)
@@ -623,8 +617,31 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-        
+        private void btnOpenFileAssociations_Click(object sender, EventArgs e)
+        {
+            string controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); // path to %windir%\system32\control.exe (ensures the correct control.exe)
+
+            Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
+        }
+
+        private void btnSetAssociations_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            p.StartInfo.Arguments = "setassociations " + //name of param
+                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
+                                    "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
+            p.EnableRaisingEvents = true;
+            p.Exited += p_Exited;
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
+        }
     }
 }

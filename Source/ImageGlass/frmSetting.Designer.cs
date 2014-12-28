@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
             this.lblLanguage = new System.Windows.Forms.Label();
-            this.lblContextMenu = new System.Windows.Forms.Label();
+            this.lblFileAssociations = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.picBackgroundColor = new System.Windows.Forms.PictureBox();
@@ -44,14 +44,16 @@
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
-            this.tabContextMenu = new System.Windows.Forms.TabPage();
+            this.tabFileAssociation = new System.Windows.Forms.TabPage();
+            this.lblContextMenu = new System.Windows.Forms.Label();
+            this.btnSetAssociations = new System.Windows.Forms.Button();
+            this.lblFileAssociationsMng = new System.Windows.Forms.Label();
+            this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.btnRemoveAllContextMenu = new System.Windows.Forms.Button();
             this.btnUpdateContextMenu = new System.Windows.Forms.Button();
-            this.btnAddDefaultContextMenu = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnAddDefaultExtension = new System.Windows.Forms.Button();
             this.lblExtensions = new System.Windows.Forms.Label();
             this.txtExtensions = new System.Windows.Forms.TextBox();
-            this.lbl_ContextMenu_Description = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.chkESCToQuit = new System.Windows.Forms.CheckBox();
             this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
@@ -73,8 +75,7 @@
             this.sp0 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
-            this.tabContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabFileAssociation.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
@@ -113,27 +114,27 @@
             this.lblLanguage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblLanguage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblContextMenu
+            // lblFileAssociations
             // 
-            this.lblContextMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblContextMenu.BackColor = System.Drawing.SystemColors.Control;
-            this.lblContextMenu.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblContextMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblContextMenu.ForeColor = System.Drawing.Color.Black;
-            this.lblContextMenu.Location = new System.Drawing.Point(0, 40);
-            this.lblContextMenu.Name = "lblContextMenu";
-            this.lblContextMenu.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblContextMenu.Size = new System.Drawing.Size(155, 40);
-            this.lblContextMenu.TabIndex = 2;
-            this.lblContextMenu.Tag = "0";
-            this.lblContextMenu.Text = "Context menu";
-            this.lblContextMenu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblContextMenu.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblContextMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblContextMenu.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblContextMenu.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblContextMenu.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            this.lblFileAssociations.BackColor = System.Drawing.SystemColors.Control;
+            this.lblFileAssociations.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblFileAssociations.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblFileAssociations.ForeColor = System.Drawing.Color.Black;
+            this.lblFileAssociations.Location = new System.Drawing.Point(0, 40);
+            this.lblFileAssociations.Name = "lblFileAssociations";
+            this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblFileAssociations.Size = new System.Drawing.Size(155, 40);
+            this.lblFileAssociations.TabIndex = 2;
+            this.lblFileAssociations.Tag = "0";
+            this.lblFileAssociations.Text = "File Associations";
+            this.lblFileAssociations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblFileAssociations.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblFileAssociations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblFileAssociations.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblFileAssociations.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblFileAssociations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblGeneral
             // 
@@ -181,7 +182,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 454);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 456);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -275,26 +276,66 @@
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
-            // tabContextMenu
+            // tabFileAssociation
             // 
-            this.tabContextMenu.Controls.Add(this.btnRemoveAllContextMenu);
-            this.tabContextMenu.Controls.Add(this.btnUpdateContextMenu);
-            this.tabContextMenu.Controls.Add(this.btnAddDefaultContextMenu);
-            this.tabContextMenu.Controls.Add(this.pictureBox1);
-            this.tabContextMenu.Controls.Add(this.lblExtensions);
-            this.tabContextMenu.Controls.Add(this.txtExtensions);
-            this.tabContextMenu.Controls.Add(this.lbl_ContextMenu_Description);
-            this.tabContextMenu.Location = new System.Drawing.Point(4, 4);
-            this.tabContextMenu.Name = "tabContextMenu";
-            this.tabContextMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabContextMenu.Size = new System.Drawing.Size(551, 456);
-            this.tabContextMenu.TabIndex = 1;
-            this.tabContextMenu.Text = "context menu";
-            this.tabContextMenu.UseVisualStyleBackColor = true;
+            this.tabFileAssociation.Controls.Add(this.lblContextMenu);
+            this.tabFileAssociation.Controls.Add(this.btnSetAssociations);
+            this.tabFileAssociation.Controls.Add(this.lblFileAssociationsMng);
+            this.tabFileAssociation.Controls.Add(this.btnOpenFileAssociations);
+            this.tabFileAssociation.Controls.Add(this.btnRemoveAllContextMenu);
+            this.tabFileAssociation.Controls.Add(this.btnUpdateContextMenu);
+            this.tabFileAssociation.Controls.Add(this.btnAddDefaultExtension);
+            this.tabFileAssociation.Controls.Add(this.lblExtensions);
+            this.tabFileAssociation.Controls.Add(this.txtExtensions);
+            this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
+            this.tabFileAssociation.Name = "tabFileAssociation";
+            this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 454);
+            this.tabFileAssociation.TabIndex = 1;
+            this.tabFileAssociation.Text = "file association";
+            this.tabFileAssociation.UseVisualStyleBackColor = true;
+            // 
+            // lblContextMenu
+            // 
+            this.lblContextMenu.AutoSize = true;
+            this.lblContextMenu.Location = new System.Drawing.Point(18, 118);
+            this.lblContextMenu.Name = "lblContextMenu";
+            this.lblContextMenu.Size = new System.Drawing.Size(85, 15);
+            this.lblContextMenu.TabIndex = 23;
+            this.lblContextMenu.Text = "Context menu:";
+            // 
+            // btnSetAssociations
+            // 
+            this.btnSetAssociations.Location = new System.Drawing.Point(21, 198);
+            this.btnSetAssociations.Name = "btnSetAssociations";
+            this.btnSetAssociations.Size = new System.Drawing.Size(151, 29);
+            this.btnSetAssociations.TabIndex = 22;
+            this.btnSetAssociations.Text = "Set associations";
+            this.btnSetAssociations.UseVisualStyleBackColor = true;
+            this.btnSetAssociations.Click += new System.EventHandler(this.btnSetAssociations_Click);
+            // 
+            // lblFileAssociationsMng
+            // 
+            this.lblFileAssociationsMng.AutoSize = true;
+            this.lblFileAssociationsMng.Location = new System.Drawing.Point(18, 179);
+            this.lblFileAssociationsMng.Name = "lblFileAssociationsMng";
+            this.lblFileAssociationsMng.Size = new System.Drawing.Size(95, 15);
+            this.lblFileAssociationsMng.TabIndex = 21;
+            this.lblFileAssociationsMng.Text = "File associations:";
+            // 
+            // btnOpenFileAssociations
+            // 
+            this.btnOpenFileAssociations.Location = new System.Drawing.Point(178, 198);
+            this.btnOpenFileAssociations.Name = "btnOpenFileAssociations";
+            this.btnOpenFileAssociations.Size = new System.Drawing.Size(199, 29);
+            this.btnOpenFileAssociations.TabIndex = 20;
+            this.btnOpenFileAssociations.Text = "Open File Associations";
+            this.btnOpenFileAssociations.UseVisualStyleBackColor = true;
+            this.btnOpenFileAssociations.Click += new System.EventHandler(this.btnOpenFileAssociations_Click);
             // 
             // btnRemoveAllContextMenu
             // 
-            this.btnRemoveAllContextMenu.Location = new System.Drawing.Point(264, 387);
+            this.btnRemoveAllContextMenu.Location = new System.Drawing.Point(142, 136);
             this.btnRemoveAllContextMenu.Name = "btnRemoveAllContextMenu";
             this.btnRemoveAllContextMenu.Size = new System.Drawing.Size(115, 29);
             this.btnRemoveAllContextMenu.TabIndex = 18;
@@ -304,7 +345,7 @@
             // 
             // btnUpdateContextMenu
             // 
-            this.btnUpdateContextMenu.Location = new System.Drawing.Point(143, 387);
+            this.btnUpdateContextMenu.Location = new System.Drawing.Point(21, 136);
             this.btnUpdateContextMenu.Name = "btnUpdateContextMenu";
             this.btnUpdateContextMenu.Size = new System.Drawing.Size(115, 29);
             this.btnUpdateContextMenu.TabIndex = 17;
@@ -312,30 +353,20 @@
             this.btnUpdateContextMenu.UseVisualStyleBackColor = true;
             this.btnUpdateContextMenu.Click += new System.EventHandler(this.btnUpdateContextMenu_Click);
             // 
-            // btnAddDefaultContextMenu
+            // btnAddDefaultExtension
             // 
-            this.btnAddDefaultContextMenu.Location = new System.Drawing.Point(22, 387);
-            this.btnAddDefaultContextMenu.Name = "btnAddDefaultContextMenu";
-            this.btnAddDefaultContextMenu.Size = new System.Drawing.Size(115, 29);
-            this.btnAddDefaultContextMenu.TabIndex = 16;
-            this.btnAddDefaultContextMenu.Text = "Add default";
-            this.btnAddDefaultContextMenu.UseVisualStyleBackColor = true;
-            this.btnAddDefaultContextMenu.Click += new System.EventHandler(this.btnAddDefaultContextMenu_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(21, 158);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(232, 167);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.btnAddDefaultExtension.Location = new System.Drawing.Point(384, 32);
+            this.btnAddDefaultExtension.Name = "btnAddDefaultExtension";
+            this.btnAddDefaultExtension.Size = new System.Drawing.Size(115, 29);
+            this.btnAddDefaultExtension.TabIndex = 16;
+            this.btnAddDefaultExtension.Text = "Add default";
+            this.btnAddDefaultExtension.UseVisualStyleBackColor = true;
+            this.btnAddDefaultExtension.Click += new System.EventHandler(this.btnAddDefaultExtension_Click);
             // 
             // lblExtensions
             // 
             this.lblExtensions.AutoSize = true;
-            this.lblExtensions.Location = new System.Drawing.Point(19, 335);
+            this.lblExtensions.Location = new System.Drawing.Point(18, 18);
             this.lblExtensions.Name = "lblExtensions";
             this.lblExtensions.Size = new System.Drawing.Size(65, 15);
             this.lblExtensions.TabIndex = 19;
@@ -343,21 +374,11 @@
             // 
             // txtExtensions
             // 
-            this.txtExtensions.Location = new System.Drawing.Point(22, 353);
+            this.txtExtensions.Location = new System.Drawing.Point(21, 36);
             this.txtExtensions.Name = "txtExtensions";
             this.txtExtensions.Size = new System.Drawing.Size(357, 23);
             this.txtExtensions.TabIndex = 15;
             this.txtExtensions.TabStop = false;
-            // 
-            // lbl_ContextMenu_Description
-            // 
-            this.lbl_ContextMenu_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_ContextMenu_Description.Location = new System.Drawing.Point(18, 18);
-            this.lbl_ContextMenu_Description.Name = "lbl_ContextMenu_Description";
-            this.lbl_ContextMenu_Description.Size = new System.Drawing.Size(516, 137);
-            this.lbl_ContextMenu_Description.TabIndex = 0;
-            this.lbl_ContextMenu_Description.Text = resources.GetString("lbl_ContextMenu_Description.Text");
             // 
             // tabGeneral
             // 
@@ -584,7 +605,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tab1.Controls.Add(this.tabGeneral);
-            this.tab1.Controls.Add(this.tabContextMenu);
+            this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Controls.Add(this.tabLanguage);
             this.tab1.Location = new System.Drawing.Point(-7, -6);
             this.tab1.Multiline = true;
@@ -605,7 +626,7 @@
             this.sp0.Panel1.BackColor = System.Drawing.SystemColors.Control;
             this.sp0.Panel1.Controls.Add(this.lblLanguage);
             this.sp0.Panel1.Controls.Add(this.lblGeneral);
-            this.sp0.Panel1.Controls.Add(this.lblContextMenu);
+            this.sp0.Panel1.Controls.Add(this.lblFileAssociations);
             // 
             // sp0.Panel2
             // 
@@ -635,9 +656,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
-            this.tabContextMenu.ResumeLayout(false);
-            this.tabContextMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabFileAssociation.ResumeLayout(false);
+            this.tabFileAssociation.PerformLayout();
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
@@ -655,7 +675,7 @@
 
         private System.Windows.Forms.ImageList imglTheme;
         private System.Windows.Forms.Label lblLanguage;
-        private System.Windows.Forms.Label lblContextMenu;
+        private System.Windows.Forms.Label lblFileAssociations;
         private System.Windows.Forms.Label lblGeneral;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.TabPage tabLanguage;
@@ -665,11 +685,9 @@
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguageText;
-        private System.Windows.Forms.TabPage tabContextMenu;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TabPage tabFileAssociation;
         private System.Windows.Forms.Label lblExtensions;
         private System.Windows.Forms.TextBox txtExtensions;
-        private System.Windows.Forms.Label lbl_ContextMenu_Description;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.CheckBox chkLoopSlideshow;
         private System.Windows.Forms.NumericUpDown numMaxThumbSize;
@@ -690,9 +708,13 @@
         private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.Button btnRemoveAllContextMenu;
         private System.Windows.Forms.Button btnUpdateContextMenu;
-        private System.Windows.Forms.Button btnAddDefaultContextMenu;
+        private System.Windows.Forms.Button btnAddDefaultExtension;
         private System.Windows.Forms.CheckBox chkImageBoosterBack;
         private System.Windows.Forms.CheckBox chkESCToQuit;
         private System.Windows.Forms.LinkLabel lnkInstallLanguage;
+        private System.Windows.Forms.Button btnOpenFileAssociations;
+        private System.Windows.Forms.Label lblFileAssociationsMng;
+        private System.Windows.Forms.Button btnSetAssociations;
+        private System.Windows.Forms.Label lblContextMenu;
     }
 }
