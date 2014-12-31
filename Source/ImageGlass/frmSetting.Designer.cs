@@ -355,9 +355,9 @@
             // 
             // btnAddDefaultExtension
             // 
-            this.btnAddDefaultExtension.Location = new System.Drawing.Point(384, 32);
+            this.btnAddDefaultExtension.Location = new System.Drawing.Point(21, 65);
             this.btnAddDefaultExtension.Name = "btnAddDefaultExtension";
-            this.btnAddDefaultExtension.Size = new System.Drawing.Size(115, 29);
+            this.btnAddDefaultExtension.Size = new System.Drawing.Size(151, 29);
             this.btnAddDefaultExtension.TabIndex = 16;
             this.btnAddDefaultExtension.Text = "Add default";
             this.btnAddDefaultExtension.UseVisualStyleBackColor = true;
@@ -376,7 +376,7 @@
             // 
             this.txtExtensions.Location = new System.Drawing.Point(21, 36);
             this.txtExtensions.Name = "txtExtensions";
-            this.txtExtensions.Size = new System.Drawing.Size(357, 23);
+            this.txtExtensions.Size = new System.Drawing.Size(496, 23);
             this.txtExtensions.TabIndex = 15;
             this.txtExtensions.TabStop = false;
             // 

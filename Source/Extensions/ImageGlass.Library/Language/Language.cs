@@ -195,10 +195,12 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})");
             this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background");
 
+            this.Items.Add("frmMain.mnuPasteImage", "Paste image data"); //v2.0 final
             this.Items.Add("frmMain.mnuCopy", "Copy"); //v2.0 final
             this.Items.Add("frmMain.mnuMultiCopy", "Copy multiple files"); //v2.0 final
             this.Items.Add("frmMain.mnuCut", "Cut"); //v2.0 final
             this.Items.Add("frmMain.mnuMultiCut", "Cut multiple files"); //v2.0 final
+            this.Items.Add("frmMain.mnuClearClipboard", "Clear clipboard"); //v2.0 final
 
             this.Items.Add("frmMain.mnuMoveRecycle", "Move to recycle bin");
             this.Items.Add("frmMain.mnuDelete", "Delete from hard disk");

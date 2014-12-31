@@ -458,46 +458,14 @@ namespace ImageGlass
         {
             //this.Text = e.KeyValue.ToString();
 
-            //===================================\\'
-            //=       Do loading image by       =\\'
-            //=  looking for data in Clipboard  =\\'
-            //===================================\\'
-            #region Ctrl + V
-            if (e.KeyCode == Keys.V && e.Control && !e.Shift && !e.Alt)//Ctrl + V
-            {
-                //Is there a file in clipboard ?--------------------------------------------------
-                if (Clipboard.ContainsFileDropList())
-                {
-                    string[] sFile = (string[])Clipboard.GetData(System.Windows.Forms.DataFormats.FileDrop);
-                    int fileCount = 0;
-
-                    fileCount = sFile.Length;
-
-                    //neu co file thi load
-                    Prepare(sFile[0]);
-                }
-
-
-                //Is there a image in clipboard ?-------------------------------------------------
-                //CheckImageInClipboard: ;
-                else if (Clipboard.ContainsImage())
-                {
-                    picMain.Image = Clipboard.GetImage();
-                }
-
-                //Is there a filename in clipboard?-----------------------------------------------
-                //CheckPathInClipboard: ;
-                else if (Clipboard.ContainsText())
-                {
-                    if (File.Exists(Clipboard.GetText()) || Directory.Exists(Clipboard.GetText()))
-                    {
-                        Prepare(Clipboard.GetText());
-                    }
-                }
-
-
-            }
-            #endregion
+            // Paste image data from clipboard----------------------------------------------
+            //#region Ctrl + V
+            //if (e.KeyCode == Keys.V && e.Control && !e.Shift && !e.Alt)//Ctrl + V
+            //{
+            //    mnuPasteImage_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             // Rotation Counterclockwise----------------------------------------------------
@@ -558,13 +526,7 @@ namespace ImageGlass
             #region CTRL + `
             if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)
             {
-                //clear copied files in clipboard
-                if (GlobalSetting.StringClipboard.Count > 0)
-                {
-                    GlobalSetting.StringClipboard = new StringCollection();
-                    Clipboard.Clear();
-                    this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
-                }
+                mnuClearClipboard_Click(null, null);
                 return;
             }
             #endregion
@@ -1540,10 +1502,13 @@ namespace ImageGlass
                 mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
                 mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
 
+                mnuPasteImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuPasteImage"];
                 mnuCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopy"];
                 mnuMultiCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCopy"];
                 mnuCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuCut"];
                 mnuMultiCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCut"];
+                mnuClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuClearClipboard"];
+
                 mnuMoveRecycle.Text = GlobalSetting.LangPack.Items["frmMain.mnuMoveRecycle"];
                 mnuDelete.Text = GlobalSetting.LangPack.Items["frmMain.mnuDelete"];
                 mnuRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuRename"];
@@ -2321,8 +2286,51 @@ namespace ImageGlass
         }
 
 
+
         #endregion
 
-        
+        private void mnuClearClipboard_Click(object sender, EventArgs e)
+        {
+            //clear copied files in clipboard
+            if (GlobalSetting.StringClipboard.Count > 0)
+            {
+                GlobalSetting.StringClipboard = new StringCollection();
+                Clipboard.Clear();
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
+            }
+        }
+
+        private void mnuPasteImage_Click(object sender, EventArgs e)
+        {
+            //Is there a file in clipboard ?--------------------------------------------------
+            if (Clipboard.ContainsFileDropList())
+            {
+                string[] sFile = (string[])Clipboard.GetData(System.Windows.Forms.DataFormats.FileDrop);
+                int fileCount = 0;
+
+                fileCount = sFile.Length;
+
+                //neu co file thi load
+                Prepare(sFile[0]);
+            }
+
+
+            //Is there a image in clipboard ?-------------------------------------------------
+            //CheckImageInClipboard: ;
+            else if (Clipboard.ContainsImage())
+            {
+                picMain.Image = Clipboard.GetImage();
+            }
+
+            //Is there a filename in clipboard?-----------------------------------------------
+            //CheckPathInClipboard: ;
+            else if (Clipboard.ContainsText())
+            {
+                if (File.Exists(Clipboard.GetText()) || Directory.Exists(Clipboard.GetText()))
+                {
+                    Prepare(Clipboard.GetText());
+                }
+            }
+        }
     }
 }
