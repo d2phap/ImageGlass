@@ -1,7 +1,0 @@
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\bin\Debug\adtasks.exe
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\bin\Debug\adtasks.pdb
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\obj\Debug\adtasks.csprojResolveAssemblyReference.cache
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\obj\Debug\adtasks.Properties.Resources.resources
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\obj\Debug\adtasks.csproj.GenerateResource.Cache
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\obj\Debug\adtasks.exe
-F:\My Software\ImageGlass\ImageGlass\Source\Commands\adtasks\adtasks\obj\Debug\adtasks.pdb
