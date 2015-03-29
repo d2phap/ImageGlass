@@ -264,12 +264,13 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             this.Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
-            this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:");
+            //this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //removed 2.1
             this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
             this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
             this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels");
             this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0}");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
+            this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); //add 2.1
             this.Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order:");
             this.Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
             this.Items.Add("frmSetting.cmbImageOrder._Length", "Length");

@@ -195,9 +195,9 @@ namespace ImageGlass
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
 
-            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
+            lblGeneral_ThumbnailSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ThumbnailSize"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
 
@@ -313,28 +313,8 @@ namespace ImageGlass
             //Get value of IsPressESCToQuit
             chkESCToQuit.Checked = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "true"));
 
-            //Load items of cmbZoomOptimization
-            cmbZoomOptimization.Items.Clear();
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
-
-            //Get value of cmbZoomOptimization
-            s = GlobalSetting.GetConfig("ZoomOptimize", "0");
-            int i = 0;
-            if (int.TryParse(s, out i))
-            {
-                if (-1 < i && i < cmbZoomOptimization.Items.Count)
-                {}
-                else
-                {
-                    i = 0;
-                }
-            }
-            cmbZoomOptimization.SelectedIndex = i;
-
             //Get value of barInterval
-            i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
+            int i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
             if (0 < i && i < 61)
             {
                 barInterval.Value = i;
@@ -346,6 +326,11 @@ namespace ImageGlass
 
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
                                         barInterval.Value);
+
+            //load thumbnail dimension
+            i = int.Parse(GlobalSetting.GetConfig("ThumbnailDimension", "48"));
+            GlobalSetting.ThumbnailDimension = i;
+            cmbThumbnailDimension.SelectedItem = i.ToString();
             
             //Load items of cmbImageOrder
             cmbImageOrder.Items.Clear();
@@ -398,22 +383,6 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsHideToolBar.ToString());
         }
 
-        private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbZoomOptimization.SelectedIndex == 1)
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
-            }
-            else if (cmbZoomOptimization.SelectedIndex == 2)
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
-            }
-            else
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
-            }
-        }
-
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
@@ -447,6 +416,11 @@ namespace ImageGlass
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
         {
             GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
+        }
+
+        private void cmbThumbnailDimension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.SetConfig("ThumbnailDimension", cmbThumbnailDimension.SelectedItem.ToString());
         }
 
         private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
@@ -643,5 +617,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
+        
     }
 }

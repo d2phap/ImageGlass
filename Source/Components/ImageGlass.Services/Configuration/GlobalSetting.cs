@@ -70,6 +70,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isLoopBackSlideShow = false;
         private static bool _isImageBoosterBack = false;
         private static bool _isPressESCToQuit = true;
+        private static int _thumbnailDimension = 48;
         private static StringCollection _stringClipboard = new StringCollection();
 
         private static Library.Language _langPack = new Library.Language();
@@ -353,6 +354,22 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 _isFullScreen = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value of thumbnail dimension in pixel
+        /// </summary>
+        public static int ThumbnailDimension
+        {
+            get
+            {
+                return _thumbnailDimension;
+            }
+
+            set
+            {
+                _thumbnailDimension = value;
             }
         }
 

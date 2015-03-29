@@ -106,7 +106,7 @@
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
-            this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
             this.picMain.Size = new System.Drawing.Size(873, 438);
@@ -365,7 +365,7 @@
             this.thumbBar.LoadingImageThumbnail = ((System.Drawing.Image)(resources.GetObject("thumbBar.LoadingImageThumbnail")));
             this.thumbBar.Location = new System.Drawing.Point(0, 0);
             this.thumbBar.Name = "thumbBar";
-            this.thumbBar.Size = new System.Drawing.Size(150, 46);
+            this.thumbBar.Size = new System.Drawing.Size(873, 73);
             this.thumbBar.TabIndex = 0;
             this.thumbBar.ThumbnailMaxLoadingSize = 5;
             this.thumbBar.ThumbnailWidthAndHeight = 40;
@@ -846,7 +846,7 @@
             this.sp0.Panel2.Controls.Add(this.thumbBar);
             this.sp0.Panel2Collapsed = true;
             this.sp0.Size = new System.Drawing.Size(873, 438);
-            this.sp0.SplitterDistance = 362;
+            this.sp0.SplitterDistance = 364;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;

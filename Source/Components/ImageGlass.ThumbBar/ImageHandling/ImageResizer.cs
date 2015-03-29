@@ -91,12 +91,22 @@ namespace ImageGlass.ThumbBar
             try
             {
                 using (Graphics graphics = Graphics.FromImage(thumbnail))
+                {
+                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                     graphics.DrawImage(image, 0, 0, width, height);
+                }
             }
             catch
             {
                 using (Graphics graphics = Graphics.FromImage(thumbnail))
+                {
+                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                     graphics.DrawImage(GlobalData.InvalidImage, 0, 0, width, height);
+                }
             }
 
             return thumbnail;

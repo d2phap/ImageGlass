@@ -55,6 +55,8 @@
             this.lblExtensions = new System.Windows.Forms.Label();
             this.txtExtensions = new System.Windows.Forms.TextBox();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
+            this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
             this.chkESCToQuit = new System.Windows.Forms.CheckBox();
             this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
@@ -67,8 +69,6 @@
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
             this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
-            this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
-            this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
@@ -163,7 +163,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(20, 387);
+            this.picBackgroundColor.Location = new System.Drawing.Point(20, 382);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -183,7 +183,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 456);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 507);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -291,7 +291,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 456);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 507);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -383,6 +383,8 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.lblGeneral_ThumbnailSize);
+            this.tabGeneral.Controls.Add(this.cmbThumbnailDimension);
             this.tabGeneral.Controls.Add(this.chkESCToQuit);
             this.tabGeneral.Controls.Add(this.chkImageBoosterBack);
             this.tabGeneral.Controls.Add(this.chkLoopSlideshow);
@@ -396,8 +398,6 @@
             this.tabGeneral.Controls.Add(this.cmbImageOrder);
             this.tabGeneral.Controls.Add(this.barInterval);
             this.tabGeneral.Controls.Add(this.lblSlideshowInterval);
-            this.tabGeneral.Controls.Add(this.lblGeneral_ZoomOptimization);
-            this.tabGeneral.Controls.Add(this.cmbZoomOptimization);
             this.tabGeneral.Controls.Add(this.chkFindChildFolder);
             this.tabGeneral.Controls.Add(this.chkAutoUpdate);
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
@@ -407,6 +407,31 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // lblGeneral_ThumbnailSize
+            // 
+            this.lblGeneral_ThumbnailSize.AutoSize = true;
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 253);
+            this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
+            this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
+            this.lblGeneral_ThumbnailSize.TabIndex = 15;
+            this.lblGeneral_ThumbnailSize.Text = "Thumbnail dimension (in pixel):";
+            // 
+            // cmbThumbnailDimension
+            // 
+            this.cmbThumbnailDimension.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThumbnailDimension.FormattingEnabled = true;
+            this.cmbThumbnailDimension.Items.AddRange(new object[] {
+            "32",
+            "48",
+            "64",
+            "96",
+            "128"});
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 271);
+            this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
+            this.cmbThumbnailDimension.Size = new System.Drawing.Size(279, 23);
+            this.cmbThumbnailDimension.TabIndex = 16;
+            this.cmbThumbnailDimension.SelectedIndexChanged += new System.EventHandler(this.cmbThumbnailDimension_SelectedIndexChanged);
             // 
             // chkESCToQuit
             // 
@@ -443,7 +468,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 273);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 219);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -468,7 +493,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 255);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 201);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 14;
@@ -488,7 +513,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 366);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 361);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -508,7 +533,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 310);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 305);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -526,7 +551,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(20, 328);
+            this.cmbImageOrder.Location = new System.Drawing.Point(20, 323);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 14;
@@ -535,7 +560,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
-            this.barInterval.Location = new System.Drawing.Point(14, 218);
+            this.barInterval.Location = new System.Drawing.Point(14, 164);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -548,34 +573,11 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 200);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 146);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(171, 15);
             this.lblSlideshowInterval.TabIndex = 5;
             this.lblSlideshowInterval.Text = "Slide show interval (seconds): 5";
-            // 
-            // lblGeneral_ZoomOptimization
-            // 
-            this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 146);
-            this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
-            this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(112, 15);
-            this.lblGeneral_ZoomOptimization.TabIndex = 4;
-            this.lblGeneral_ZoomOptimization.Text = "Zoom optimization:";
-            // 
-            // cmbZoomOptimization
-            // 
-            this.cmbZoomOptimization.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbZoomOptimization.FormattingEnabled = true;
-            this.cmbZoomOptimization.Items.AddRange(new object[] {
-            "Auto",
-            "Smooth pixels",
-            "Clear pixels"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 164);
-            this.cmbZoomOptimization.Name = "cmbZoomOptimization";
-            this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
-            this.cmbZoomOptimization.TabIndex = 11;
-            this.cmbZoomOptimization.SelectedIndexChanged += new System.EventHandler(this.cmbZoomOptimization_SelectedIndexChanged);
             // 
             // chkFindChildFolder
             // 
@@ -701,8 +703,6 @@
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.TrackBar barInterval;
         private System.Windows.Forms.Label lblSlideshowInterval;
-        private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
-        private System.Windows.Forms.ComboBox cmbZoomOptimization;
         private System.Windows.Forms.CheckBox chkFindChildFolder;
         private System.Windows.Forms.CheckBox chkAutoUpdate;
         private System.Windows.Forms.TabControl tab1;
@@ -717,5 +717,7 @@
         private System.Windows.Forms.Label lblFileAssociationsMng;
         private System.Windows.Forms.Button btnSetAssociations;
         private System.Windows.Forms.Label lblContextMenu;
+        private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
+        private System.Windows.Forms.ComboBox cmbThumbnailDimension;
     }
 }
