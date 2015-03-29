@@ -27,11 +27,11 @@ namespace adtasks
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //Lay param dau tien
+            //Command
             string topcmd = args[0].ToLower().Trim();
 
 
-            //Them menu 'Open with ImageGlass'
+            //Add menu 'Open with ImageGlass'
             #region addext <string igPath> [string ext]
             if (topcmd == "addext")
             {
@@ -56,7 +56,7 @@ namespace adtasks
             }
             #endregion
 
-            //Xoa menu 'Open with ImageGlass'
+            //Remove menu 'Open with ImageGlass'
             #region removeext
             else if (topcmd == "removeext")
             {
@@ -67,7 +67,7 @@ namespace adtasks
             }
             #endregion
 
-            //Cap nhat extension cho Menu
+            //Update extension cho Menu
             #region updateext <string exePath> <string exts>
             else if (topcmd == "updateext")
             {
@@ -91,7 +91,7 @@ namespace adtasks
             }
             #endregion
 
-            //Thiet dat hinh nen wallpaper
+            //Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             else if (topcmd == "setwallpaper")
             {
@@ -128,27 +128,20 @@ namespace adtasks
             #endregion
 
             //Register file association
-            #region regassociations <string ext> <string programID> <string description> <string icon> <string igPath> <string appName>
+            #region regassociations <string appPath> <string exts>
             else if (topcmd == "regassociations")
             {
-                //get Extension
-                string ext = args[1];
-                //get Program ID
-                string programID = args[2];
-                //get Extension description
-                string description = args[3];
-                //get .ICO path
-                string icon = args[4];
                 //get Executable file
-                string igPath = args[5];
-                //get Application name
-                string appName = args[6];
+                string appPath = args[1];
+                //get Extension
+                string exts = args[2];
 
-                Functions.RegisterAssociation(ext, programID, description, icon, igPath, appName);
+                Functions.RegisterAssociation(appPath, exts);
 
                 Application.Exit();
             }
             #endregion
+
             //Install new language packs
             #region iginstalllang
             else if (topcmd == "iginstalllang")
@@ -167,30 +160,6 @@ namespace adtasks
             }
             #endregion
 
-            //Them menu 'Open with ImageGlass'
-            #region setassociations <string igPath> [string ext]
-            else if (topcmd == "setassociations")
-            {
-                //Lay duong dan exe
-                string exePath = args[1];
-
-                if (args.Length > 2)
-                {
-                    //Lay extension
-                    string ext = args[2];
-
-                    //Ap dung
-                    Functions.SetAssociations(exePath, ext);
-                }
-                else
-                {
-                    //Ap dung
-                    Functions.SetAssociations(exePath);
-                }
-
-                Application.Exit();
-            }
-            #endregion
 
         }
 

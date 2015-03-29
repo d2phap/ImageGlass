@@ -8,9 +8,10 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Configuration;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Library.FileAssociations;
+using ImageGlass.Library;
 using System.IO;
 using System.Reflection;
+using ImageGlass.Library.FileAssociations;
 
 namespace igtasks
 {
@@ -115,32 +116,6 @@ namespace igtasks
         }
 
         /// <summary>
-        /// Register file association
-        /// </summary>
-        /// <param name="ext">Extension, for ex: .png</param>
-        /// <param name="programID">Program ID, for ex: ImageGlass.PNG</param>
-        /// <param name="description">Extension description</param>
-        /// <param name="icon">.ICO path</param>
-        /// <param name="igPath">Executable file</param>
-        /// <param name="appName">Application name</param>
-        public static void RegisterAssociation(string ext, string programID,
-            string description, string icon, string igPath, string appName)
-        {
-            // Initializes a new FileAssociator to associate the .ABC file extension.
-            FileAssociator assoc = new FileAssociator(ext);
-
-            // Creates a new file association for the .ABC file extension. Data is overwritten if it already exists.
-            assoc.Create(programID,
-                description,
-                new ProgramIcon(icon),
-                new ExecApplication(igPath),
-                new OpenWithList(new string[] { appName }));
-
-            MessageBox.Show("dsgsdg");
-        }
-
-
-        /// <summary>
         /// Install new extensions
         /// </summary>
         public static void InstallExtensions()
@@ -204,41 +179,7 @@ namespace igtasks
                                                          "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                          "*.exif;*.wmf;*.emf;";
                 supportedExts = GlobalSetting.GetConfig("SupportedExtensions", supportedExts);
-                Functions.SetAssociations(igPath, supportedExts);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Set file associations
-        /// </summary>
-        /// <param name="igPath">ImageGlass.exe path</param>
-        /// <param name="extensions">Supported extensions, such as: *.png;*.jpg</param>
-        public static void SetAssociations(string igPath, string extensions)
-        {
-            try
-            {
-                string[] exts = extensions.Replace("*", "").Split(new char[] { ';' },
-                                                StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string ext in exts)
-                {
-                    var imgKey = Registry.ClassesRoot.OpenSubKey(ext);
-                    var imgType = imgKey.GetValue("");
-
-                    String command = "\"" + igPath + "\"" + " \"%1\"";
-
-                    String keyName = imgType + @"\shell\Open\command";
-                    using (var key = Registry.ClassesRoot.CreateSubKey(keyName))
-                    {
-                        key.SetValue("", command);
-                    }
-                }
-
-                GlobalSetting.SetConfig("ContextMenuExtensions", extensions);
+                Functions.RegisterAssociation(supportedExts, igPath);
             }
             catch (Exception ex)
             {
@@ -247,16 +188,63 @@ namespace igtasks
         }
 
         #region General functions
-            /// <summary>
-            /// Thêm menu vào menu ngữ cảnh
-            /// </summary>
-            /// <param name="extension">Tên thành phần mở rộng, ví dụ .png</param>
-            /// <param name="menuName">Tên của menu mới</param>
-            /// <param name="menuDescription">Miêu tả của menu mới</param>
-            /// <param name="exePath">Đường dẫn ứng dụng + command</param>
-            /// <param name="iconFile">Đường dẫn tập tin icon, có thể là thư viện icon DLL, EXE, ...</param>
-            /// <param name="iconIndex">Chỉ số icon sẽ hiển thị, mặc định là 0</param>
-            /// <returns></returns>
+        /// <summary>
+        /// Register file association
+        /// </summary>
+        /// <param name="exts">Extensions, for ex: *.png;*.jpg</param>
+        /// <param name="appPath">Executable file</param>
+        public static void RegisterAssociation(string appPath, string exts)
+        {
+            string[] ext_list = exts.Replace("*", "").Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string ext in ext_list)
+            {
+                FileAssociationInfo fa = new FileAssociationInfo(ext);
+                if (!fa.Exists)
+                {
+                    return;
+                }
+
+                ProgramAssociationInfo pa = new ProgramAssociationInfo(fa.ProgID);
+
+                if (!pa.Exists)
+                {
+                    return;
+                }
+
+                ProgramVerb[] verbs = pa.Verbs;
+                List<ProgramVerb> l = new List<ProgramVerb>();
+                l.AddRange(verbs);
+
+                //remove existed verb
+                ProgramVerb openVerb = l.SingleOrDefault(v => v.Name == "open");
+                if (openVerb != null)
+                {
+                    l.Remove(openVerb);
+                }
+
+                //add new value
+                openVerb = new ProgramVerb("open", "\"" + appPath + "\" \"%1\"");
+                l.Add(openVerb);
+
+                //save & apply changes
+                pa.Verbs = l.ToArray();
+
+                GlobalSetting.SetConfig("ContextMenuExtensions", exts);
+            }
+        }
+
+
+        /// <summary>
+        /// Thêm menu vào menu ngữ cảnh
+        /// </summary>
+        /// <param name="extension">Tên thành phần mở rộng, ví dụ .png</param>
+        /// <param name="menuName">Tên của menu mới</param>
+        /// <param name="menuDescription">Miêu tả của menu mới</param>
+        /// <param name="exePath">Đường dẫn ứng dụng + command</param>
+        /// <param name="iconFile">Đường dẫn tập tin icon, có thể là thư viện icon DLL, EXE, ...</param>
+        /// <param name="iconIndex">Chỉ số icon sẽ hiển thị, mặc định là 0</param>
+        /// <returns></returns>
         public static bool AddContextMenuItem(string extension, string menuName,
                                             string menuDescription, string exePath,
                                             string iconFile, string iconIndex)

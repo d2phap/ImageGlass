@@ -631,7 +631,7 @@ namespace ImageGlass
         {
             Process p = new Process();
             p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            p.StartInfo.Arguments = "setassociations " + //name of param
+            p.StartInfo.Arguments = "regassociations " + //name of param
                                     "\"" + Application.ExecutablePath + "\" " + //arg 1
                                     "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
             p.EnableRaisingEvents = true;

@@ -25,7 +25,6 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.sp0 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuStartSlideshow = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +57,6 @@
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.sysWatch = new System.IO.FileSystemWatcher();
-            this.spMain = new System.Windows.Forms.SplitContainer();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -90,46 +88,15 @@
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnReport = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
+            this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.mnuPopup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
+            this.toolMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            this.mnuPopup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spMain)).BeginInit();
-            this.spMain.Panel1.SuspendLayout();
-            this.spMain.Panel2.SuspendLayout();
-            this.spMain.SuspendLayout();
-            this.toolMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // sp0
-            // 
-            this.sp0.AllowDrop = true;
-            this.sp0.BackColor = System.Drawing.Color.White;
-            this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.sp0.IsSplitterFixed = true;
-            this.sp0.Location = new System.Drawing.Point(0, 0);
-            this.sp0.Name = "sp0";
-            this.sp0.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // sp0.Panel1
-            // 
-            this.sp0.Panel1.AllowDrop = true;
-            this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.sp0.Panel1.Controls.Add(this.picMain);
-            // 
-            // sp0.Panel2
-            // 
-            this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
-            this.sp0.Panel2.Controls.Add(this.thumbBar);
-            this.sp0.Panel2Collapsed = true;
-            this.sp0.Size = new System.Drawing.Size(864, 437);
-            this.sp0.SplitterDistance = 362;
-            this.sp0.SplitterWidth = 1;
-            this.sp0.TabIndex = 1;
-            this.sp0.TabStop = false;
             // 
             // picMain
             // 
@@ -142,7 +109,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(864, 437);
+            this.picMain.Size = new System.Drawing.Size(873, 438);
             this.picMain.TabIndex = 1;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
@@ -150,7 +117,7 @@
             // 
             // mnuPopup
             // 
-            this.mnuPopup.BackColor = System.Drawing.Color.White;
+            this.mnuPopup.BackColor = System.Drawing.SystemColors.Menu;
             this.mnuPopup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuStartSlideshow,
             this.mnuStopSlideshow,
@@ -180,7 +147,7 @@
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(258, 502);
+            this.mnuPopup.Size = new System.Drawing.Size(258, 480);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -418,33 +385,11 @@
             this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
-            // spMain
-            // 
-            this.spMain.BackColor = System.Drawing.Color.Transparent;
-            this.spMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.spMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.spMain.IsSplitterFixed = true;
-            this.spMain.Location = new System.Drawing.Point(0, 0);
-            this.spMain.Name = "spMain";
-            this.spMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // spMain.Panel1
-            // 
-            this.spMain.Panel1.Controls.Add(this.toolMain);
-            // 
-            // spMain.Panel2
-            // 
-            this.spMain.Panel2.Controls.Add(this.sp0);
-            this.spMain.Size = new System.Drawing.Size(864, 471);
-            this.spMain.SplitterDistance = 33;
-            this.spMain.SplitterWidth = 1;
-            this.spMain.TabIndex = 2;
-            this.spMain.TabStop = false;
-            // 
             // toolMain
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
+            this.toolMain.BackColor = System.Drawing.Color.Transparent;
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -481,7 +426,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(864, 33);
+            this.toolMain.Size = new System.Drawing.Size(873, 33);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -878,6 +823,34 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 30);
             // 
+            // sp0
+            // 
+            this.sp0.AllowDrop = true;
+            this.sp0.BackColor = System.Drawing.Color.Transparent;
+            this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.sp0.IsSplitterFixed = true;
+            this.sp0.Location = new System.Drawing.Point(0, 33);
+            this.sp0.Name = "sp0";
+            this.sp0.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // sp0.Panel1
+            // 
+            this.sp0.Panel1.AllowDrop = true;
+            this.sp0.Panel1.BackColor = System.Drawing.Color.Transparent;
+            this.sp0.Panel1.Controls.Add(this.picMain);
+            // 
+            // sp0.Panel2
+            // 
+            this.sp0.Panel2.BackgroundImage = global::ImageGlass.Properties.Resources.bottombar;
+            this.sp0.Panel2.Controls.Add(this.thumbBar);
+            this.sp0.Panel2Collapsed = true;
+            this.sp0.Size = new System.Drawing.Size(873, 438);
+            this.sp0.SplitterDistance = 362;
+            this.sp0.SplitterWidth = 1;
+            this.sp0.TabIndex = 1;
+            this.sp0.TabStop = false;
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -885,32 +858,29 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(864, 471);
-            this.Controls.Add(this.spMain);
+            this.ClientSize = new System.Drawing.Size(873, 471);
+            this.Controls.Add(this.sp0);
+            this.Controls.Add(this.toolMain);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
-            this.Text = "ImageGlass 2";
+            this.Text = "ImageGlass 2.1";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
+            this.mnuPopup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
+            this.toolMain.ResumeLayout(false);
+            this.toolMain.PerformLayout();
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            this.mnuPopup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
-            this.spMain.Panel1.ResumeLayout(false);
-            this.spMain.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.spMain)).EndInit();
-            this.spMain.ResumeLayout(false);
-            this.toolMain.ResumeLayout(false);
-            this.toolMain.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -969,8 +939,6 @@
         private System.Windows.Forms.ToolStripButton btnExtension;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
         private System.IO.FileSystemWatcher sysWatch;
-        private System.Windows.Forms.SplitContainer sp0;
-        private System.Windows.Forms.SplitContainer spMain;
         private System.Windows.Forms.ToolStripMenuItem mnuShowToolBar;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private ImageBox picMain;
@@ -982,6 +950,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuClearClipboard;
         private System.Windows.Forms.ToolStripMenuItem mnuPasteImage;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.SplitContainer sp0;
     }
 }
 

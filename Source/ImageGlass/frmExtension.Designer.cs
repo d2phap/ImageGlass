@@ -147,6 +147,7 @@
             // 
             // tvExtension
             // 
+            this.tvExtension.BackColor = System.Drawing.Color.White;
             this.tvExtension.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvExtension.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvExtension.ImageKey = "empty.png";

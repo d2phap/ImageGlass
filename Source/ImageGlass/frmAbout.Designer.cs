@@ -85,6 +85,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(21, 82);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 15);
@@ -95,6 +96,7 @@
             // 
             this.lnkCheckUpdate.AutoSize = true;
             this.lnkCheckUpdate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkCheckUpdate.ForeColor = System.Drawing.Color.Black;
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -112,6 +114,7 @@
             // 
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
+            this.lblUpdate.ForeColor = System.Drawing.Color.Black;
             this.lblUpdate.Location = new System.Drawing.Point(20, 311);
             this.lblUpdate.Name = "lblUpdate";
             this.lblUpdate.Size = new System.Drawing.Size(101, 15);
@@ -122,6 +125,7 @@
             // 
             this.lnkFacebook.AutoSize = true;
             this.lnkFacebook.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkFacebook.ForeColor = System.Drawing.Color.Black;
             this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -139,6 +143,7 @@
             // 
             this.lnkProjectPage.AutoSize = true;
             this.lnkProjectPage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkProjectPage.ForeColor = System.Drawing.Color.Black;
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -156,6 +161,7 @@
             // 
             this.lnkIGHomepage.AutoSize = true;
             this.lnkIGHomepage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkIGHomepage.ForeColor = System.Drawing.Color.Black;
             this.lnkIGHomepage.LinkArea = new System.Windows.Forms.LinkArea(22, 99);
             this.lnkIGHomepage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -173,6 +179,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(20, 210);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 15);
@@ -183,6 +190,7 @@
             // 
             this.linkLabel4.AutoSize = true;
             this.linkLabel4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.linkLabel4.ForeColor = System.Drawing.Color.Black;
             this.linkLabel4.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkLabel4.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -200,6 +208,7 @@
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.linkLabel2.ForeColor = System.Drawing.Color.Black;
             this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -217,6 +226,7 @@
             // 
             this.lnkEmail.AutoSize = true;
             this.lnkEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkEmail.ForeColor = System.Drawing.Color.Black;
             this.lnkEmail.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.lnkEmail.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEmail.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
@@ -234,6 +244,7 @@
             // 
             this.lblInfoContact.AutoSize = true;
             this.lblInfoContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
+            this.lblInfoContact.ForeColor = System.Drawing.Color.Black;
             this.lblInfoContact.Location = new System.Drawing.Point(20, 109);
             this.lblInfoContact.Name = "lblInfoContact";
             this.lblInfoContact.Size = new System.Drawing.Size(52, 15);
@@ -244,6 +255,7 @@
             // 
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblCopyright.ForeColor = System.Drawing.Color.Black;
             this.lblCopyright.Location = new System.Drawing.Point(20, 32);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(246, 30);
@@ -254,6 +266,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(20, 5);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(79, 15);
@@ -265,11 +278,11 @@
             this.fileList1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileList1.BackColor = System.Drawing.Color.Transparent;
+            this.fileList1.BackColor = System.Drawing.Color.White;
             this.fileList1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileList1.Location = new System.Drawing.Point(20, 5);
             this.fileList1.Name = "fileList1";
-            this.fileList1.Size = new System.Drawing.Size(488, 388);
+            this.fileList1.Size = new System.Drawing.Size(488, 386);
             this.fileList1.TabIndex = 0;
             this.fileList1.Title = "";
             this.fileList1.Load += new System.EventHandler(this.fileList1_Load);
@@ -341,7 +354,7 @@
             // 
             // sp0.Panel1
             // 
-            this.sp0.Panel1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.sp0.Panel1.Controls.Add(this.lblReferences);
             this.sp0.Panel1.Controls.Add(this.lblInfo);
             this.sp0.Panel1.Controls.Add(this.lblComponent);
@@ -357,14 +370,14 @@
             // 
             this.lblReferences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblReferences.BackColor = System.Drawing.SystemColors.Control;
+            this.lblReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblReferences.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblReferences.ForeColor = System.Drawing.Color.Black;
             this.lblReferences.Location = new System.Drawing.Point(0, 80);
             this.lblReferences.Name = "lblReferences";
             this.lblReferences.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblReferences.Size = new System.Drawing.Size(147, 40);
+            this.lblReferences.Size = new System.Drawing.Size(150, 40);
             this.lblReferences.TabIndex = 20;
             this.lblReferences.Tag = "3";
             this.lblReferences.Text = "References";
@@ -382,10 +395,11 @@
             this.lblInfo.BackColor = System.Drawing.Color.Gainsboro;
             this.lblInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblInfo.ForeColor = System.Drawing.Color.Black;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblInfo.Size = new System.Drawing.Size(147, 40);
+            this.lblInfo.Size = new System.Drawing.Size(150, 40);
             this.lblInfo.TabIndex = 18;
             this.lblInfo.Tag = "1";
             this.lblInfo.Text = "Info";
@@ -400,14 +414,14 @@
             // 
             this.lblComponent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblComponent.BackColor = System.Drawing.SystemColors.Control;
+            this.lblComponent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblComponent.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblComponent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblComponent.ForeColor = System.Drawing.Color.Black;
             this.lblComponent.Location = new System.Drawing.Point(0, 40);
             this.lblComponent.Name = "lblComponent";
             this.lblComponent.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblComponent.Size = new System.Drawing.Size(147, 40);
+            this.lblComponent.Size = new System.Drawing.Size(150, 40);
             this.lblComponent.TabIndex = 19;
             this.lblComponent.Tag = "2";
             this.lblComponent.Text = "Components";
@@ -435,6 +449,7 @@
             // 
             // tpInfo
             // 
+            this.tpInfo.BackColor = System.Drawing.Color.White;
             this.tpInfo.Controls.Add(this.label1);
             this.tpInfo.Controls.Add(this.lblVersion);
             this.tpInfo.Controls.Add(this.lnkCheckUpdate);
@@ -454,29 +469,29 @@
             this.tpInfo.Size = new System.Drawing.Size(516, 402);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
-            this.tpInfo.UseVisualStyleBackColor = true;
             // 
             // tpComponents
             // 
             this.tpComponents.BackColor = System.Drawing.Color.White;
             this.tpComponents.Controls.Add(this.fileList1);
-            this.tpComponents.Location = new System.Drawing.Point(4, 24);
+            this.tpComponents.ForeColor = System.Drawing.Color.Black;
+            this.tpComponents.Location = new System.Drawing.Point(4, 22);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(3);
-            this.tpComponents.Size = new System.Drawing.Size(516, 402);
+            this.tpComponents.Size = new System.Drawing.Size(516, 404);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
             // tpReferences
             // 
+            this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 24);
+            this.tpReferences.Location = new System.Drawing.Point(4, 22);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tpReferences.Size = new System.Drawing.Size(516, 402);
+            this.tpReferences.Size = new System.Drawing.Size(516, 404);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
-            this.tpReferences.UseVisualStyleBackColor = true;
             // 
             // txtReferences
             // 
@@ -486,12 +501,13 @@
             this.txtReferences.BackColor = System.Drawing.Color.White;
             this.txtReferences.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtReferences.ForeColor = System.Drawing.Color.Black;
             this.txtReferences.Location = new System.Drawing.Point(20, 5);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(488, 389);
+            this.txtReferences.Size = new System.Drawing.Size(488, 387);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 

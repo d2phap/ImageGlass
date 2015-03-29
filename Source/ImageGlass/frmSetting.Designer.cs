@@ -96,7 +96,7 @@
             // 
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLanguage.BackColor = System.Drawing.SystemColors.Control;
+            this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblLanguage.ForeColor = System.Drawing.Color.Black;
@@ -118,7 +118,7 @@
             // 
             this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFileAssociations.BackColor = System.Drawing.SystemColors.Control;
+            this.lblFileAssociations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblFileAssociations.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblFileAssociations.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFileAssociations.ForeColor = System.Drawing.Color.Black;
@@ -143,6 +143,7 @@
             this.lblGeneral.BackColor = System.Drawing.Color.Gainsboro;
             this.lblGeneral.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblGeneral.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblGeneral.ForeColor = System.Drawing.Color.Black;
             this.lblGeneral.Location = new System.Drawing.Point(0, 0);
             this.lblGeneral.Name = "lblGeneral";
             this.lblGeneral.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
@@ -290,7 +291,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 454);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 456);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -623,7 +624,7 @@
             // 
             // sp0.Panel1
             // 
-            this.sp0.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.sp0.Panel1.Controls.Add(this.lblLanguage);
             this.sp0.Panel1.Controls.Add(this.lblGeneral);
             this.sp0.Panel1.Controls.Add(this.lblFileAssociations);

@@ -1131,10 +1131,10 @@ namespace ImageGlass
         {
             // <main>
             toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar;
-            sp0.Panel2.BackgroundImage = ImageGlass.Properties.Resources.bottombar;
+            thumbBar.BackgroundImage = ImageGlass.Properties.Resources.bottombar;
             lblInfo.ForeColor = Color.Black;
 
-            picMain.BackColor = Color.White;
+            picMain.BackColor = this.BackColor;
 
             // <toolbar_icon>
             btnBack.Image = ImageGlass.Properties.Resources.back;
@@ -1183,9 +1183,9 @@ namespace ImageGlass
                 try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
                 catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
 
-                try { sp0.Panel2.BackgroundImage = Image.FromFile(dir + t.bottombar); }
-                catch { sp0.Panel2.BackgroundImage = ImageGlass.Properties.Resources.bottombar; }
-
+                try { thumbBar.BackgroundImage = Image.FromFile(dir + t.bottombar); }
+                catch { thumbBar.BackgroundImage = ImageGlass.Properties.Resources.bottombar; }
+                
                 try
                 {
                     lblInfo.ForeColor = t.statuscolor;
@@ -1384,7 +1384,7 @@ namespace ImageGlass
             if (GlobalSetting.IsHideToolBar)
             {
                 //hide tool bar
-                spMain.Panel1Collapsed = true;
+                toolMain.Visible = false;
                 mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
             }
 
@@ -1652,7 +1652,7 @@ namespace ImageGlass
             }
 
             // Scale to Width
-            double frac = sp0.Panel1.Width / (1.0 * picMain.Image.Width);
+            double frac = picMain.Width / (1.0 * picMain.Image.Width);
             picMain.Zoom = (int)(frac * 100);
         }
 
@@ -1664,7 +1664,7 @@ namespace ImageGlass
             }
 
             // Scale to Height
-            double frac = sp0.Panel1.Height / (1.0 * picMain.Image.Height);
+            double frac = picMain.Height / (1.0 * picMain.Image.Height);
             picMain.Zoom = (int)(frac * 100);
         }
 
@@ -1678,8 +1678,8 @@ namespace ImageGlass
             // Window adapt to image
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             this.WindowState = FormWindowState.Normal;
-            this.Size = new Size(Width += picMain.Image.Width - sp0.Panel1.Width,
-                                Height += picMain.Image.Height - sp0.Panel1.Height);
+            this.Size = new Size(Width += picMain.Image.Width - picMain.Width,
+                                Height += picMain.Image.Height - picMain.Height);
             //Application.DoEvents();
             picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
             this.Top = (screen.Height - this.Height) / 2 + screen.Top;
@@ -1777,7 +1777,7 @@ namespace ImageGlass
             //stop slide show
             if (!GlobalSetting.IsPlaySlideShow)
             {
-                sp0.BackColor = Color.Black;
+                this.BackColor = Color.Black;
                 btnFullScreen.PerformClick();
 
                 timSlideShow.Start();
@@ -1815,7 +1815,7 @@ namespace ImageGlass
                 this.Bounds = Screen.FromControl(this).Bounds;
 
                 //Hide
-                spMain.Panel1Collapsed = true;
+                toolMain.Visible = false;
                 mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
 
                 this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
@@ -1846,7 +1846,7 @@ namespace ImageGlass
                 //Show
                 if (!GlobalSetting.IsHideToolBar)
                 {
-                    spMain.Panel1Collapsed = false;
+                    toolMain.Visible = true;
                     mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
                 }
             }
@@ -1909,14 +1909,14 @@ namespace ImageGlass
             if (GlobalSetting.IsHideToolBar)//Dang An
             {
                 //Hien
-                spMain.Panel1Collapsed = false;
+                toolMain.Visible = true;
                 mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
                 GlobalSetting.IsHideToolBar = false;
             }
             else//Dang Hien
             {
                 //An
-                spMain.Panel1Collapsed = true;
+                toolMain.Visible = false;
                 mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
                 GlobalSetting.IsHideToolBar = true;
             }
@@ -2181,7 +2181,7 @@ namespace ImageGlass
             timSlideShow.Enabled = false;
             GlobalSetting.IsPlaySlideShow = false;
 
-            sp0.BackColor = GlobalSetting.BackgroundColor;
+            this.BackColor = GlobalSetting.BackgroundColor;
             btnFullScreen.PerformClick();
 
             mnuStartSlideshow.Visible = false;
