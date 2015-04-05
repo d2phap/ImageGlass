@@ -53,7 +53,7 @@ font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&b
 <li><a title="ImageGlass extensions" href="http://www.imageglass.org/download/extensions" target="_blank"><strong><span style="color: #008080;">Download extensions&nbsp;</span></strong></a> </li>
 <li><a title="ImageGlass language packs" href="http://www.imageglass.org/download/languagepacks" target="_blank"><strong><span style="color: #008080;">Download language packs&nbsp;</span></strong></a> </li>
 </ul>
-<h3>Project Decription</h3>
+<h3>Project Description</h3>
 <p>ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.</p>
 <p><img style="vertical-align: middle;" src="https://camo.githubusercontent.com/28671deb9fd770629170ec9cbde8db15fac16575/687474703a2f2f69313231342e70686f746f6275636b65742e636f6d2f616c62756d732f63633438332f70686170737578656b6f2f496d616765476c6173732f323031355f325f7a707332373962623239332e706e67" alt="ImageGlass 2.0 final" /></p>
 
