@@ -1,0 +1,2934 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.WindowsAPICodePack</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager">
+            <summary>
+            Provides access to the Application Restart and Recovery
+            features available in Windows Vista or higher. Application Restart and Recovery lets an
+            application do some recovery work to save data before the process exits.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings)">
+            <summary>
+            Registers an application for recovery by Application Restart and Recovery.
+            </summary>
+            <param name="settings">An object that specifies
+            the callback method, an optional parameter to pass to the callback
+            method and a time interval.</param>
+            <exception cref="T:System.ArgumentException">
+            The registration failed due to an invalid parameter.
+            </exception>
+            <exception cref="T:System.ComponentModel.Win32Exception">
+            The registration failed.</exception>
+            <remarks>The time interval is the period of time within 
+            which the recovery callback method 
+            calls the <see cref="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method to indicate
+            that it is still performing recovery work.</remarks>        
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.UnregisterApplicationRecovery">
+            <summary>
+            Removes an application's recovery registration.
+            </summary>
+            <exception cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException">
+            The attempt to unregister for recovery failed.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.UnregisterApplicationRestart">
+            <summary>
+            Removes an application's restart registration.
+            </summary>
+            <exception cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException">
+            The attempt to unregister for restart failed.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress">
+            <summary>
+            Called by an application's <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback"/> method 
+            to indicate that it is still performing recovery work.
+            </summary>
+            <returns>A <see cref="T:System.Boolean"/> value indicating whether the user
+            canceled the recovery.</returns>
+            <exception cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException">
+            This method must be called from a registered callback method.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryFinished(System.Boolean)">
+            <summary>
+            Called by an application's <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback"/> method to 
+            indicate that the recovery work is complete.
+            </summary>
+            <remarks>
+            This should
+            be the last call made by the <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback"/> method because
+            Windows Error Reporting will terminate the application
+            after this method is invoked.
+            </remarks>
+            <param name="success"><b>true</b> to indicate the the program was able to complete its recovery
+            work before terminating; otherwise <b>false</b>.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.RegisterForApplicationRestart(Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings)">
+            <summary>
+            Registers an application for automatic restart if 
+            the application 
+            is terminated by Windows Error Reporting.
+            </summary>
+            <param name="settings">An object that specifies
+            the command line arguments used to restart the 
+            application, and 
+            the conditions under which the application should not be 
+            restarted.</param>
+            <exception cref="T:System.ArgumentException">Registration failed due to an invalid parameter.</exception>
+            <exception cref="T:System.InvalidOperationException">The attempt to register failed.</exception>
+            <remarks>A registered application will not be restarted if it executed for less than 60 seconds before terminating.</remarks>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException">
+            <summary>
+            This exception is thrown when there are problems with registering, unregistering or updating
+            applications using Application Restart Recovery.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException.#ctor(System.String)">
+            <summary>
+            Initializes an exception with a custom message.
+            </summary>
+            <param name="message">A custom message for the exception.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes an exception with custom message and inner exception.
+            </summary>
+            <param name="message">A custom message for the exception.</param>
+            <param name="innerException">Inner exception.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes an exception with custom message and error code.
+            </summary>
+            <param name="message">A custom message for the exception.</param>
+            <param name="errorCode">An error code (hresult) from which to generate the exception.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRecoveryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes an exception from serialization info and a context.
+            </summary>
+            <param name="info">Serialization info from which to create exception.</param>
+            <param name="context">Streaming context from which to create exception.</param>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback">
+            <summary>
+            The <see cref="T:System.Delegate"/> that represents the callback method invoked
+            by the system when an application has registered for 
+            application recovery. 
+            </summary>
+            <param name="state">An application-defined state object that is passed to the callback method.</param>
+            <remarks>The callback method will be invoked
+            prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
+            the callback method completes, the callback method must
+            periodically call the <see cref="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method. </remarks>
+            <seealso cref="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings)"/>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData">
+            <summary>
+            Defines a class that contains a callback delegate and properties of the application
+            as defined by the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData.#ctor(Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback,System.Object)">
+            <summary>
+            Initializes a recovery data wrapper with a callback method and the current
+            state of the application.
+            </summary>
+            <param name="callback">The callback delegate.</param>
+            <param name="state">The current state of the application.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData.Invoke">
+            <summary>
+            Invokes the recovery callback function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData.Callback">
+            <summary>
+            Gets or sets a value that determines the recovery callback function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData.State">
+            <summary>
+            Gets or sets a value that determines the application state.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings">
+            <summary>
+            Defines methods and properties for recovery settings, and specifies options for an application that attempts
+            to perform final actions after a fatal event, such as an
+            unhandled exception.
+            </summary>
+            <remarks>This class is used to register for application recovery.
+            See the <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager"/> class.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings.#ctor(Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryData,System.UInt32)">
+            <summary>
+            Initializes a new instance of the <b>RecoverySettings</b> class.
+            </summary>
+            <param name="data">A recovery data object that contains the callback method (invoked by the system
+            before Windows Error Reporting terminates the application) and an optional state object.</param>
+            <param name="interval">The time interval within which the 
+            callback method must invoke <see cref="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to 
+            prevent WER from terminating the application.</param>
+            <seealso cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager"/>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings.ToString">
+            <summary>
+            Returns a string representation of the current state
+            of this object.
+            </summary>
+            <returns>A <see cref="T:System.String"/> object.</returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings.RecoveryData">
+            <summary>
+            Gets the recovery data object that contains the callback method and an optional
+            parameter (usually the state of the application) to be passed to the 
+            callback method.
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings.RecoveryData"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RecoverySettings.PingInterval">
+            <summary>
+            Gets the time interval for notifying Windows Error Reporting.  
+            The <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.RecoveryCallback"/> method must invoke <see cref="M:Microsoft.WindowsAPICodePack.ApplicationServices.ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> 
+            within this interval to prevent WER from terminating the application.
+            </summary>
+            <remarks>        
+            The recovery ping interval is specified in milliseconds. 
+            By default, the interval is 5 seconds. 
+            If you specify zero, the default interval is used. 
+            </remarks>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions">
+            <summary>
+            Specifies the conditions when Windows Error Reporting
+            should not restart an application that has registered
+            for automatic restart.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions.None">
+            <summary>
+            Always restart the application.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions.NotOnCrash">
+            <summary>
+            Do not restart when the application has crashed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions.NotOnHang">
+            <summary>
+            Do not restart when the application is hung.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions.NotOnPatch">
+            <summary>
+            Do not restart when the application is terminated
+            due to a system update.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions.NotOnReboot">
+            <summary>
+            Do not restart when the application is terminated 
+            because of a system reboot.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings">
+            <summary>
+            Specifies the options for an application to be automatically
+            restarted by Windows Error Reporting. 
+            </summary>
+            <remarks>Regardless of these 
+            settings, the application
+            will not be restarted if it executed for less than 60 seconds before
+            terminating.</remarks>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings.#ctor(System.String,Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions)">
+            <summary>
+            Creates a new instance of the RestartSettings class.
+            </summary>
+            <param name="command">The command line arguments 
+            used to restart the application.</param>
+            <param name="restrictions">A bitwise combination of the RestartRestrictions 
+            values that specify  
+            when the application should not be restarted.
+            </param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings.ToString">
+            <summary>
+            Returns a string representation of the current state
+            of this object.
+            </summary>
+            <returns>A <see cref="T:System.String"/> that displays 
+            the command line arguments 
+            and restrictions for restarting the application.</returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings.Command">
+            <summary>
+            Gets the command line arguments used to restart the application.
+            </summary>
+            <value>A <see cref="T:System.String"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.RestartSettings.Restrictions">
+            <summary>
+            Gets the set of conditions when the application 
+            should not be restarted.
+            </summary>
+            <value>A set of <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.RestartRestrictions"/> values.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagerException">
+            <summary>
+            This exception is thrown when there are problems with getting piece of data within PowerManager.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagerException.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagerException.#ctor(System.String)">
+            <summary>
+            Initializes an excpetion with a custom message.
+            </summary>
+            <param name="message">A custom message for the exception.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagerException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes an exception with custom message and inner exception.
+            </summary>
+            <param name="message">A custom message for the exception.</param>
+            <param name="innerException">An inner exception on which to base this exception.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes an exception from serialization info and a context.
+            </summary>
+            <param name="info">SerializationInfo for the exception.</param>
+            <param name="context">StreamingContext for the exception.</param>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.DialogControl">
+            <summary>
+            Abstract base class for all dialog controls
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.#ctor">
+            <summary>
+            Creates a new instance of a dialog control
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.#ctor(System.String)">
+            <summary>
+            Creates a new instance of a dialog control with the specified name.
+            </summary>
+            <param name="name">The name for this dialog.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.CheckPropertyChangeAllowed(System.String)">
+            <summary>
+             Calls the hosting dialog, if it exists, to check whether the 
+             property can be set in the dialog's current state. 
+             The host should throw an exception if the change is not supported.
+             Note that if the dialog isn't set yet, 
+             there are no restrictions on setting the property.
+             </summary>
+             <param name="propName">The name of the property that is changing</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.ApplyPropertyChange(System.String)">
+            <summary>
+             Calls the hosting dialog, if it exists, to
+             to indicate that a property has changed, and that 
+             the dialog should do whatever is necessary 
+             to propagate the change to the native control.
+             Note that if the dialog isn't set yet, 
+             there are no restrictions on setting the property.
+             </summary>
+             <param name="propName">The name of the property that is changing.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.Equals(System.Object)">
+            <summary>
+            Compares two objects to determine whether they are equal
+            </summary>
+            <param name="obj">The object to compare against.</param>
+            <returns>A <see cref="T:System.Boolean"/> value.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. 
+            </summary>
+            <returns>An <see cref="T:System.Int32"/> hash code for this control.</returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.HostingDialog">
+            <summary>
+            The native dialog that is hosting this control. This property is null is
+            there is not associated dialog
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.Name">
+            <summary>
+            Gets the name for this control.
+            </summary>
+            <value>A <see cref="T:System.String"/> value.</value>        
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.DialogControl.Id">
+            <summary>
+            Gets the identifier for this control.
+            </summary>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.DialogControlCollection`1">
+            <summary>
+            Strongly typed collection for dialog controls.
+            </summary>
+            <typeparam name="T">DialogControl</typeparam>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControlCollection`1.InsertItem(System.Int32,`0)">
+            <summary>
+            Inserts an dialog control at the specified index.
+            </summary>
+            <param name="index">The location to insert the control.</param>
+            <param name="control">The item to insert.</param>
+            <permission cref="T:System.InvalidOperationException">A control with 
+            the same name already exists in this collection -or- 
+            the control is being hosted by another dialog -or- the associated dialog is 
+            showing and cannot be modified.</permission>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControlCollection`1.RemoveItem(System.Int32)">
+            <summary>
+            Removes the control at the specified index.
+            </summary>
+            <param name="index">The location of the control to remove.</param>
+            <permission cref="T:System.InvalidOperationException">
+            The associated dialog is 
+            showing and cannot be modified.</permission>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.DialogControlCollection`1.GetControlbyId(System.Int32)">
+            <summary>
+            Searches for the control who's id matches the value
+            passed in the <paramref name="id"/> parameter.
+            </summary>
+            
+            <param name="id">An integer containing the identifier of the 
+            control being searched for.</param>
+            
+            <returns>A DialogControl who's id matches the value of the
+            <paramref name="id"/> parameter.</returns>        
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.DialogControlCollection`1.Item(System.String)">
+             <summary>
+             Defines the indexer that supports accessing controls by name. 
+             </summary>
+             <remarks>
+             <para>Control names are case sensitive.</para>
+             <para>This indexer is useful when the dialog is created in XAML
+             rather than constructed in code.</para></remarks>
+            <exception cref="T:System.ArgumentException">
+             The name cannot be null or a zero-length string.</exception>
+             <remarks>If there is more than one control with the same name, only the <B>first control</B> will be returned.</remarks>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.IDialogControlHost">
+            <summary>
+            Indicates that the implementing class is a dialog that can host
+            customizable dialog controls (subclasses of DialogControl).
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.IDialogControlHost.IsCollectionChangeAllowed">
+            <summary>
+            Returns if changes to the collection are allowed.
+            </summary>
+            <returns>true if collection change is allowed.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.IDialogControlHost.ApplyCollectionChanged">
+            <summary>
+            Applies changes to the collection.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.IDialogControlHost.IsControlPropertyChangeAllowed(System.String,Microsoft.WindowsAPICodePack.Dialogs.DialogControl)">
+            <summary>
+            Handle notifications of individual child 
+            pseudo-controls' properties changing..
+            Prefilter should throw if the property 
+            cannot be set in the dialog's current state.
+            PostProcess should pass on changes to native control, 
+            if appropriate.
+            </summary>
+            <param name="propertyName">The name of the property.</param>
+            <param name="control">The control propertyName applies to.</param>
+            <returns>true if the property change is allowed.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.IDialogControlHost.ApplyControlPropertyChange(System.String,Microsoft.WindowsAPICodePack.Dialogs.DialogControl)">
+            <summary>
+            Called when a control currently in the collection 
+            has a property changed.
+            </summary>
+            <param name="propertyName">The name of the property changed.</param>
+            <param name="control">The control whose property has changed.</param>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.HResult">
+            <summary>
+            HRESULT Wrapper    
+            </summary>    
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.Ok">
+            <summary>     
+            S_OK          
+            </summary>    
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.False">
+            <summary>
+            S_FALSE
+            </summary>        
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.InvalidArguments">
+            <summary>
+            E_INVALIDARG
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.OutOfMemory">
+            <summary>
+            E_OUTOFMEMORY
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.NoInterface">
+            <summary>
+            E_NOINTERFACE
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.Fail">
+            <summary>
+            E_FAIL
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.ElementNotFound">
+            <summary>
+            E_ELEMENTNOTFOUND
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.TypeElementNotFound">
+            <summary>
+            TYPE_E_ELEMENTNOTFOUND
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.NoObject">
+            <summary>
+            NO_OBJECT
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.Win32ErrorCanceled">
+            <summary>
+            Win32 Error code: ERROR_CANCELLED
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.Canceled">
+            <summary>
+            ERROR_CANCELLED
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.ResourceInUse">
+            <summary>
+            The requested resource is in use
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.HResult.AccessDenied">
+            <summary>
+            The requested resources is read-only.
+            </summary>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.CoreErrorHelper">
+            <summary>
+            Provide Error Message Helper Methods.
+            This is intended for Library Internal use only.
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.CoreErrorHelper.FacilityWin32">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+        </member>
+        <member name="F:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Ignored">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.HResultFromWin32(System.Int32)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="win32ErrorCode">The Windows API error code.</param>
+            <returns>The equivalent HRESULT.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Succeeded(System.Int32)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="result">The error code.</param>
+            <returns>True if the error code indicates success.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Succeeded(MS.WindowsAPICodePack.Internal.HResult)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="result">The error code.</param>
+            <returns>True if the error code indicates success.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Failed(MS.WindowsAPICodePack.Internal.HResult)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="result">The error code.</param>
+            <returns>True if the error code indicates failure.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Failed(System.Int32)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="result">The error code.</param>
+            <returns>True if the error code indicates failure.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreErrorHelper.Matches(System.Int32,System.Int32)">
+            <summary>
+            This is intended for Library Internal use only.
+            </summary>
+            <param name="result">The COM error code.</param>
+            <param name="win32ErrorCode">The Win32 error code.</param>
+            <returns>Inticates that the Win32 error code corresponds to the COM error code.</returns>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.CoreHelpers">
+            <summary>
+            Common Helper methods
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreHelpers.ThrowIfNotXP">
+            <summary>
+            Throws PlatformNotSupportedException if the application is not running on Windows XP
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreHelpers.ThrowIfNotVista">
+            <summary>
+            Throws PlatformNotSupportedException if the application is not running on Windows Vista
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreHelpers.ThrowIfNotWin7">
+            <summary>
+            Throws PlatformNotSupportedException if the application is not running on Windows 7
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreHelpers.GetStringResource(System.String)">
+            <summary>
+            Get a string resource given a resource Id
+            </summary>
+            <param name="resourceId">The resource Id</param>
+            <returns>The string resource corresponding to the given resource Id. Returns null if the resource id
+            is invalid or the string cannot be retrieved for any other reason.</returns>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.CoreHelpers.RunningOnXP">
+            <summary>
+            Determines if the application is running on XP
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.CoreHelpers.RunningOnVista">
+            <summary>
+            Determines if the application is running on Vista
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.CoreHelpers.RunningOnWin7">
+            <summary>
+            Determines if the application is running on Windows 7
+            </summary>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.CoreNativeMethods">
+            <summary>
+            Wrappers for Native Methods and Structs.
+            This type is intended for internal use only
+            </summary>    
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.PostMessage(System.IntPtr,MS.WindowsAPICodePack.Internal.WindowMessage,System.IntPtr,System.IntPtr)">
+            <summary>
+            Places (posts) a message in the message queue associated with the thread that created
+            the specified window and returns without waiting for the thread to process the message.
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>     
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.SendMessage(System.IntPtr,MS.WindowsAPICodePack.Internal.WindowMessage,System.IntPtr,System.IntPtr)">
+            <summary>
+            Sends the specified message to a window or windows. The SendMessage function calls 
+            the window procedure for the specified window and does not return until the window 
+            procedure has processed the message. 
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>     
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.SendMessage(System.IntPtr,System.UInt32,System.IntPtr,System.IntPtr)">
+            <summary>
+            Sends the specified message to a window or windows. The SendMessage function calls 
+            the window procedure for the specified window and does not return until the window 
+            procedure has processed the message. 
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>        
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.SendMessage(System.IntPtr,System.UInt32,System.IntPtr,System.String)">
+            <summary>
+            Sends the specified message to a window or windows. The SendMessage function calls 
+            the window procedure for the specified window and does not return until the window 
+            procedure has processed the message. 
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.SendMessage(System.IntPtr,System.UInt32,System.Int32,System.String)">
+            <summary>
+            Sends the specified message to a window or windows. The SendMessage function calls 
+            the window procedure for the specified window and does not return until the window 
+            procedure has processed the message. 
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.SendMessage(System.IntPtr,System.UInt32,System.Int32@,System.Text.StringBuilder)">
+            <summary>
+            Sends the specified message to a window or windows. The SendMessage function calls 
+            the window procedure for the specified window and does not return until the window 
+            procedure has processed the message. 
+            </summary>
+            <param name="windowHandle">Handle to the window whose window procedure will receive the message. 
+            If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system, 
+            including disabled or invisible unowned windows, overlapped windows, and pop-up windows; 
+            but the message is not sent to child windows.
+            </param>
+            <param name="message">Specifies the message to be sent.</param>
+            <param name="wparam">Specifies additional message-specific information.</param>
+            <param name="lparam">Specifies additional message-specific information.</param>
+            <returns>A return code specific to the message being sent.</returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.DestroyIcon(System.IntPtr)">
+            <summary>
+            Destroys an icon and frees any memory the icon occupied.
+            </summary>
+            <param name="hIcon">Handle to the icon to be destroyed. The icon must not be in use. </param>
+            <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.GetHiWord(System.Int64,System.Int32)">
+            <summary>
+            Gets the HiWord
+            </summary>
+            <param name="value">The value to get the hi word from.</param>
+            <param name="size">Size</param>
+            <returns>The upper half of the dword.</returns>        
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.CoreNativeMethods.GetLoWord(System.Int64)">
+            <summary>
+            Gets the LoWord
+            </summary>
+            <param name="value">The value to get the low word from.</param>
+            <returns>The lower half of the dword.</returns>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.CoreNativeMethods.Size">
+            <summary>
+            A Wrapper for a SIZE struct
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.CoreNativeMethods.Size.Width">
+            <summary>
+            Width
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.CoreNativeMethods.Size.Height">
+            <summary>
+            Height
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.DialogShowState">
+            <summary>
+            Dialog Show State
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.DialogShowState.PreShow">
+            <summary>
+            Pre Show
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.DialogShowState.Showing">
+            <summary>
+            Currently Showing
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.DialogShowState.Closing">
+            <summary>
+            Currently Closing
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.DialogShowState.Closed">
+            <summary>
+            Closed
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManagementNativeMethods.PowerGetActiveScheme(System.IntPtr,System.Guid@)">
+            <summary>
+            Gets the Guid relating to the currently active power scheme.
+            </summary>
+            <param name="rootPowerKey">Reserved for future use, this must be set to IntPtr.Zero</param>
+            <param name="activePolicy">Returns a Guid referring to the currently active power scheme.</param>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.NativeTaskDialog">
+            <summary>
+            Encapsulates the native logic required to create, 
+            configure, and show a TaskDialog, 
+            via the TaskDialogIndirect() Win32 function.
+            </summary>
+            <remarks>A new instance of this class should 
+            be created for each messagebox show, as
+            the HWNDs for TaskDialogs do not remain constant 
+            across calls to TaskDialogIndirect.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.NativeTaskDialogSettings">
+            <summary>
+             Encapsulates additional configuration needed by NativeTaskDialog
+             that it can't get from the TASKDIALOGCONFIG struct.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogNativeMethods">
+            <summary>
+            Internal class containing most native interop declarations used
+            throughout the library.
+            Functions that are not performance intensive belong in this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogNativeMethods.IconUnion.MainIcon">
+            <summary>
+            Gets the handle to the Icon
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.Network">
+            <summary>
+            Represents a network on the local machine. 
+            It can also represent a collection of network 
+            connections with a similar network signature.
+            </summary>
+            <remarks>
+            Instances of this class are obtained by calling 
+            methods on the <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkListManager"/> class.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.Category">
+            <summary>
+            Gets or sets the category of a network. The 
+            categories are trusted, untrusted, or 
+            authenticated.
+            </summary>
+            <value>A <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkCategory"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.ConnectedTime">
+            <summary>
+            Gets the local date and time when the network 
+            was connected.
+            </summary>
+            <value>A <see cref="T:System.DateTime"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.Connections">
+            <summary>
+            Gets the network connections for the network.
+            </summary>
+            <value>A <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnectionCollection"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.Connectivity">
+            <summary>
+            Gets the connectivity state of the network.
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.Net.Network.Connectivity"/> value.</value>
+            <remarks>Connectivity provides information on whether
+            the network is connected, and the protocols
+            in use for network traffic.</remarks>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.CreatedTime">
+            <summary>
+            Gets the local date and time when the 
+            network was created.
+            </summary>
+            <value>A <see cref="T:System.DateTime"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.Description">
+            <summary>
+            Gets or sets a description for the network.
+            </summary>
+            <value>A <see cref="T:System.String"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.DomainType">
+            <summary>
+            Gets the domain type of the network. 
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.Net.Network.DomainType"/> value.</value>
+            <remarks>The domain
+            indictates whether the network is an Active
+            Directory Network, and whether the machine
+            has been authenticated by Active Directory.</remarks>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.IsConnected">
+            <summary>
+            Gets a value that indicates whether there is
+            network connectivity.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.IsConnectedToInternet">
+            <summary>
+            Gets a value that indicates whether there is 
+            Internet connectivity.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.Name">
+            <summary>
+            Gets or sets the name of the network.
+            </summary>
+            <value>A <see cref="T:System.String"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.Network.NetworkId">
+            <summary>
+            Gets a unique identifier for the network.
+            </summary>
+            <value>A <see cref="T:System.Guid"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkCollection">
+            <summary>
+            An enumerable collection of <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> objects.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkCollection.GetEnumerator">
+            <summary>
+            Returns the strongly typed enumerator for this collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerator`1"/>  object.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkCollection.System#Collections#IEnumerable#GetEnumerator">
+             <summary>
+             Returns the enumerator for this collection.
+             </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator"/> object.</returns> 
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkConnection">
+            <summary>
+            Represents a connection to a network.
+            </summary>
+            <remarks> A collection containing instances of this class is obtained by calling
+            the <see cref="P:Microsoft.WindowsAPICodePack.Net.Network.Connections"/> property.</remarks>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.Network">
+            <summary>
+            Retrieves an object that represents the network 
+            associated with this connection.
+            </summary>
+            <returns>A <see cref="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.Network"/> object.</returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.AdapterId">
+            <summary>
+            Gets the adapter identifier for this connection.
+            </summary>
+            <value>A <see cref="T:System.Guid"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.ConnectionId">
+            <summary>
+            Gets the unique identifier for this connection.
+            </summary>
+            <value>A <see cref="T:System.Guid"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.Connectivity">
+            <summary>
+            Gets a value that indicates the connectivity of this connection.
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.Connectivity"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.DomainType">
+            <summary>
+            Gets a value that indicates whether the network associated
+            with this connection is 
+            an Active Directory network and whether the machine
+            has been authenticated by Active Directory.
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.DomainType"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.IsConnectedToInternet">
+            <summary>
+            Gets a value that indicates whether this 
+            connection has Internet access.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkConnection.IsConnected">
+            <summary>
+            Gets a value that indicates whether this connection has
+            network connectivity.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkConnectionCollection">
+            <summary>
+            An enumerable collection of <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnection"/> objects.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkConnectionCollection.GetEnumerator">
+            <summary>
+            Returns the strongly typed enumerator for this collection.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1"/> object.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkConnectionCollection.System#Collections#IEnumerable#GetEnumerator">
+             <summary>
+             Returns the enumerator for this collection.
+             </summary>
+            <returns>A <see cref="T:System.Collections.IEnumerator"/> object.</returns> 
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.ConnectivityStates">
+            <summary>
+            Specifies types of network connectivity.
+            </summary>    
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.None">
+            <summary>
+            The underlying network interfaces have no 
+            connectivity to any network.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv4Internet">
+            <summary>
+            There is connectivity to the Internet 
+            using the IPv4 protocol.
+            </summary>        
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv4LocalNetwork">
+            <summary>
+            There is connectivity to a routed network
+            using the IPv4 protocol.
+            </summary>        
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv4NoTraffic">
+            <summary>
+            There is connectivity to a network, but 
+            the service cannot detect any IPv4 
+            network traffic.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv4Subnet">
+            <summary>
+            There is connectivity to the local 
+            subnet using the IPv4 protocol.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv6Internet">
+            <summary>
+            There is connectivity to the Internet 
+            using the IPv4 protocol.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv6LocalNetwork">
+            <summary>
+            There is connectivity to a local 
+            network using the IPv6 protocol.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv6NoTraffic">
+            <summary>
+            There is connectivity to a network, 
+            but the service cannot detect any 
+            IPv6 network traffic
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.ConnectivityStates.IPv6Subnet">
+            <summary>
+            There is connectivity to the local 
+            subnet using the IPv6 protocol.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.DomainType">
+            <summary>
+            Specifies the domain type of a network.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.DomainType.NonDomainNetwork">
+            <summary>
+            The network is not an Active Directory network.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.DomainType.DomainNetwork">
+            <summary>
+            The network is an Active Directory network, but this machine is not authenticated against it.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.DomainType.DomainAuthenticated">
+            <summary>
+            The network is an Active Directory network, and this machine is authenticated against it.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkCategory">
+            <summary>
+            Specifies the trust level for a 
+            network.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkCategory.Public">
+            <summary>
+            The network is a public (untrusted) network. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkCategory.Private">
+            <summary>
+            The network is a private (trusted) network. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkCategory.Authenticated">
+            <summary>
+            The network is authenticated against an Active Directory domain.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels">
+            <summary>
+            Specifies the level of connectivity for 
+            networks returned by the 
+            <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkListManager"/> 
+            class.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels.Connected">
+            <summary>
+            Networks that the machine is connected to.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels.Disconnected">
+            <summary>
+            Networks that the machine is not connected to.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels.All">
+            <summary>
+            All networks.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Net.NetworkListManager">
+            <summary>
+            Provides access to objects that represent networks and network connections.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkListManager.GetNetworks(Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels)">
+            <summary>
+            Retrieves a collection of <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> objects that represent the networks defined for this machine.
+            </summary>
+            <param name="level">
+            The <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnectivityLevels"/> that specify the connectivity level of the returned <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> objects.
+            </param>
+            <returns>
+            A <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkCollection"/> of <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> objects.
+            </returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkListManager.GetNetwork(System.Guid)">
+            <summary>
+            Retrieves the <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> identified by the specified network identifier.
+            </summary>
+            <param name="networkId">
+            A <see cref="T:System.Guid"/> that specifies the unique identifier for the network.
+            </param>
+            <returns>
+            The <see cref="T:Microsoft.WindowsAPICodePack.Net.Network"/> that represents the network identified by the identifier.
+            </returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkListManager.GetNetworkConnections">
+            <summary>
+            Retrieves a collection of <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnection"/> objects that represent the connections for this machine.
+            </summary>
+            <returns>
+            A <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnectionCollection"/> containing the network connections.
+            </returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Net.NetworkListManager.GetNetworkConnection(System.Guid)">
+            <summary>
+            Retrieves the <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnection"/> identified by the specified connection identifier.
+            </summary>
+            <param name="networkConnectionId">
+            A <see cref="T:System.Guid"/> that specifies the unique identifier for the network connection.
+            </param>
+            <returns>
+            The <see cref="T:Microsoft.WindowsAPICodePack.Net.NetworkConnection"/> identified by the specified identifier.
+            </returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkListManager.IsConnectedToInternet">
+            <summary>
+            Gets a value that indicates whether this machine 
+            has Internet connectivity.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkListManager.IsConnected">
+            <summary>
+            Gets a value that indicates whether this machine 
+            has network connectivity.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Net.NetworkListManager.Connectivity">
+            <summary>
+            Gets the connectivity state of this machine.
+            </summary>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.Net.NetworkListManager.Connectivity"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState">
+            <summary>
+            A snapshot of the state of the battery.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.ToString">
+            <summary>
+            Generates a string that represents this <b>BatteryState</b> object.
+            </summary>
+            <returns>A <see cref="T:System.String"/> representation of this object's current state.</returns>        
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.ACOnline">
+            <summary>
+            Gets a value that indicates whether the battery charger is 
+            operating on external power.
+            </summary>
+            <value>A <see cref="T:System.Boolean"/> value. <b>True</b> indicates the battery charger is operating on AC power.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.MaxCharge">
+            <summary>
+            Gets the maximum charge of the battery (in mW).
+            </summary>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.CurrentCharge">
+            <summary>
+            Gets the current charge of the battery (in mW).
+            </summary>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.ChargeRate">
+            <summary>
+            Gets the rate of discharge for the battery (in mW). 
+            </summary>
+            <remarks>
+            If plugged in, fully charged: DischargeRate = 0.
+            If plugged in, charging: DischargeRate = positive mW per hour.
+            If unplugged: DischargeRate = negative mW per hour.
+            </remarks>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.EstimatedTimeRemaining">
+            <summary>
+            Gets the estimated time remaining until the battery is empty.
+            </summary>
+            <value>A <see cref="T:System.TimeSpan"/> object.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.SuggestedCriticalBatteryCharge">
+            <summary>
+            Gets the manufacturer's suggested battery charge level 
+            that should cause a critical alert to be sent to the user.
+            </summary>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState.SuggestedBatteryWarningCharge">
+            <summary>
+            Gets the manufacturer's suggested battery charge level
+            that should cause a warning to be sent to the user.
+            </summary>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.EventManager">
+            <summary>
+            This class keeps track of the current state of each type of event.  
+            The MessageManager class tracks event handlers.  
+            This class only deals with each event type (i.e.
+            BatteryLifePercentChanged) as a whole.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.EventManager.IsMessageCaught(System.Guid)">
+            <summary>
+            Determines if a message should be caught, preventing
+            the event handler from executing. 
+            This is needed when an event is initially registered.
+            </summary>
+            <param name="eventGuid">The event to check.</param>
+            <returns>A boolean value. Returns true if the 
+            message should be caught.</returns>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates">
+            <summary>
+            Enumeration of execution states.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates.None">
+            <summary>
+            No state configured.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates.SystemRequired">
+            <summary>
+            Forces the system to be in the working state by resetting the system idle timer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates.DisplayRequired">
+            <summary>
+            Forces the display to be on by resetting the display idle timer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates.AwayModeRequired">
+            <summary>
+            Enables away mode. This value must be specified with ES_CONTINUOUS.
+            Away mode should be used only by media-recording and media-distribution applications that must perform critical background processing on desktop computers while the computer appears to be sleeping. See Remarks.
+            
+            Windows Server 2003 and Windows XP/2000:  ES_AWAYMODE_REQUIRED is not supported.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates.Continuous">
+            <summary>
+            Informs the system that the state being set should remain in effect until the next call that uses ES_CONTINUOUS and one of the other state flags is cleared.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager">
+            <summary>
+            This class generates .NET events based on Windows messages.  
+            The PowerRegWindow class processes the messages from Windows.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.RegisterPowerEvent(System.Guid,System.EventHandler)">
+            <summary>
+            Registers a callback for a power event.
+            </summary>
+            <param name="eventId">Guid for the event.</param>
+            <param name="eventToRegister">Event handler for the specified event.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.UnregisterPowerEvent(System.Guid,System.EventHandler)">
+            <summary>
+            Unregisters an event handler for a power event.
+            </summary>
+            <param name="eventId">Guid for the event.</param>
+            <param name="eventToUnregister">Event handler to unregister.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.EnsureInitialized">
+            <summary>
+            Ensures that the hidden window is initialized and 
+            listening for messages.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.PowerRegWindow">
+            <summary>
+            Catch Windows messages and generates events for power specific
+            messages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.PowerRegWindow.RegisterPowerEvent(System.Guid,System.EventHandler)">
+            <summary>
+            Adds an event handler to call when Windows sends 
+            a message for an event.
+            </summary>
+            <param name="eventId">Guid for the event.</param>
+            <param name="eventToRegister">Event handler for the event.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.PowerRegWindow.UnregisterPowerEvent(System.Guid,System.EventHandler)">
+            <summary>
+            Removes an event handler.
+            </summary>
+            <param name="eventId">Guid for the event.</param>
+            <param name="eventToUnregister">Event handler to remove.</param>
+            <exception cref="T:System.InvalidOperationException">Cannot unregister 
+            a function that is not registered.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.PowerRegWindow.ExecuteEvents(System.Collections.ArrayList)">
+            <summary>
+            Executes any registered event handlers.
+            </summary>
+            <param name="eventHandlerList">ArrayList of event handlers.</param>            
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.MessageManager.PowerRegWindow.WndProc(System.Windows.Forms.Message@)">
+            <summary>
+            This method is called when a Windows message 
+            is sent to this window.
+            The method calls the registered event handlers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.Power.RegisterPowerSettingNotification(System.IntPtr,System.Guid)">
+            <summary>
+            Registers the application to receive power setting notifications 
+            for the specific power setting event.
+            </summary>
+            <param name="handle">Handle indicating where the power setting 
+            notifications are to be sent.</param>
+            <param name="powerSetting">The GUID of the power setting for 
+            which notifications are to be sent.</param>
+            <returns>Returns a notification handle for unregistering 
+            power notifications.</returns>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager">
+            <summary>
+            Enables registration for 
+            power-related event notifications and provides access to power settings.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.GetCurrentBatteryState">
+            <summary>
+            Gets a snapshot of the current battery state.
+            </summary>
+            <returns>A <see cref="T:Microsoft.WindowsAPICodePack.ApplicationServices.BatteryState"/> instance that represents 
+            the state of the battery at the time this method was called.</returns>
+            <exception cref="T:System.InvalidOperationException">The system does not have a battery.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>        
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.SetThreadExecutionState(Microsoft.WindowsAPICodePack.ApplicationServices.ExecutionStates)">
+            <summary>
+            Allows an application to inform the system that it 
+            is in use, thereby preventing the system from entering 
+            the sleeping power state or turning off the display 
+            while the application is running.
+            </summary>
+            <param name="executionStateOptions">The thread's execution requirements.</param>
+            <exception cref="T:System.ComponentModel.Win32Exception">Thrown if the SetThreadExecutionState call fails.</exception>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerPersonalityChanged">
+            <summary>
+            Raised each time the active power scheme changes.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The event handler specified for removal was not registered.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerSourceChanged">
+            <summary>
+            Raised when the power source changes.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The event handler specified for removal was not registered.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.BatteryLifePercentChanged">
+            <summary>
+            Raised when the remaining battery life changes.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The event handler specified for removal was not registered.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.IsMonitorOnChanged">
+            <summary>
+            Raised when the monitor status changes.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The event handler specified for removal was not registered.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.SystemBusyChanged">
+            <summary>
+            Raised when the system will not be moving into an idle 
+            state in the near future so applications should
+            perform any tasks that 
+            would otherwise prevent the computer from entering an idle state. 
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The event handler specified for removal was not registered.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.MonitorRequired">
+            <summary>
+            Gets or sets a value that indicates whether the monitor is 
+            set to remain active.  
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
+            <exception cref="T:System.Security.SecurityException">The caller does not have sufficient privileges to set this property.
+            </exception>
+            <remarks>This information is typically used by applications
+            that display information but do not require 
+            user interaction. For example, video playback applications.</remarks>
+            <permission cref="T:System.Security.Permissions.SecurityPermission"> to set this property. Demand value: <see cref="F:System.Security.Permissions.SecurityAction.Demand"/>; Named Permission Sets: <b>FullTrust</b>.</permission>
+            <value>A <see cref="T:System.Boolean"/> value. <b>True</b> if the monitor
+            is required to remain on.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.RequestBlockSleep">
+            <summary>
+            Gets or sets a value that indicates whether the system 
+            is required to be in the working state.
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
+            <exception cref="T:System.Security.SecurityException">The caller does not have sufficient privileges to set this property.
+            </exception>
+            <permission cref="T:System.Security.Permissions.SecurityPermission"> to set this property. Demand value: <see cref="F:System.Security.Permissions.SecurityAction.Demand"/>; Named Permission Sets: <b>FullTrust</b>.</permission>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.IsBatteryPresent">
+            <summary>
+            Gets a value that indicates whether a battery is present.  
+            The battery can be a short term battery.
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.IsBatteryShortTerm">
+            <summary>
+            Gets a value that indicates whether the battery is a short term battery. 
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.IsUpsPresent">
+            <summary>
+            Gets a value that indicates a UPS is present to prevent 
+            sudden loss of power.
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires XP/Windows Server 2003 or higher.</exception>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerPersonality">
+            <summary>
+            Gets a value that indicates the current power scheme.  
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerPersonality"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.BatteryLifePercent">
+            <summary>
+            Gets a value that indicates the remaining battery life 
+            (as a percentage of the full battery charge). 
+            This value is in the range 0-100, 
+            where 0 is not charged and 100 is fully charged.  
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The system does not have a battery.</exception>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+            <value>An <see cref="T:System.Int32"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.IsMonitorOn">
+            <summary>
+            Gets a value that indictates whether the monitor is on. 
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+            <value>A <see cref="T:System.Boolean"/> value.</value>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerSource">
+            <summary>
+            Gets the current power source.  
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">Requires Vista/Windows Server 2008.</exception>
+            <value>A <see cref="P:Microsoft.WindowsAPICodePack.ApplicationServices.PowerManager.PowerSource"/> value.</value>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.PowerPersonality">
+            <summary>
+            Specifies the supported power personalities.  
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerPersonality.Unknown">
+            <summary>
+            The power personality Guid does not match a known value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerPersonality.HighPerformance">
+            <summary>
+            Power settings designed to deliver maximum performance
+            at the expense of power consumption savings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerPersonality.PowerSaver">
+            <summary>
+            Power settings designed consume minimum power
+            at the expense of system performance and responsiveness.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerPersonality.Automatic">
+            <summary>
+            Power settings designed to balance performance 
+            and power consumption.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.ApplicationServices.PowerSource">
+            <summary>
+            Specifies the power source currently supplying power to the system.
+            </summary>
+            <remarks>Application should be aware of the power source because 
+            some power sources provide a finite power supply.
+            An application might take steps to conserve power while 
+            the system is using such a source.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerSource.AC">
+            <summary>
+            The computer is powered by an AC power source 
+            or a similar device, such as a laptop powered 
+            by a 12V automotive adapter.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerSource.Battery">
+            <summary>
+            The computer is powered by a built-in battery. 
+            A battery has a limited 
+            amount of power; applications should conserve resources
+            where possible.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.ApplicationServices.PowerSource.Ups">
+            <summary>
+            The computer is powered by a short-term power source 
+            such as a UPS device.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey">
+            <summary>
+            Defines a unique key for a Shell Property
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.#ctor(System.Guid,System.Int32)">
+            <summary>
+            PropertyKey Constructor
+            </summary>
+            <param name="formatId">A unique GUID for the property</param>
+            <param name="propertyId">Property identifier (PID)</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.#ctor(System.String,System.Int32)">
+            <summary>
+            PropertyKey Constructor
+            </summary>
+            <param name="formatId">A string represenstion of a GUID for the property</param>
+            <param name="propertyId">Property identifier (PID)</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.Equals(Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey)">
+            <summary>
+            Returns whether this object is equal to another. This is vital for performance of value types.
+            </summary>
+            <param name="other">The object to compare against.</param>
+            <returns>Equality result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.GetHashCode">
+            <summary>
+            Returns the hash code of the object. This is vital for performance of value types.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.Equals(System.Object)">
+            <summary>
+            Returns whether this object is equal to another. This is vital for performance of value types.
+            </summary>
+            <param name="obj">The object to compare against.</param>
+            <returns>Equality result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.op_Equality(Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey,Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey)">
+            <summary>
+            Implements the == (equality) operator.
+            </summary>
+            <param name="propKey1">First property key to compare.</param>
+            <param name="propKey2">Second property key to compare.</param>
+            <returns>true if object a equals object b. false otherwise.</returns>        
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.op_Inequality(Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey,Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey)">
+            <summary>
+            Implements the != (inequality) operator.
+            </summary>
+            <param name="propKey1">First property key to compare</param>
+            <param name="propKey2">Second property key to compare.</param>
+            <returns>true if object a does not equal object b. false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.ToString">
+            <summary>
+            Override ToString() to provide a user friendly string representation
+            </summary>
+            <returns>String representing the property key</returns>        
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.FormatId">
+            <summary>
+            A unique GUID for the property
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Shell.PropertySystem.PropertyKey.PropertyId">
+            <summary>
+             Property identifier (PID)
+            </summary>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.PropVariant">
+            <summary>
+            Represents the OLE struct PROPVARIANT.
+            This class is intended for internal use only.
+            </summary>
+            <remarks>
+            Originally sourced from http://blogs.msdn.com/adamroot/pages/interop-with-propvariants-in-net.aspx
+            and modified to support additional types including vectors and ability to set values
+            </remarks>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.FromObject(System.Object)">
+            <summary>
+            Attempts to create a PropVariant by finding an appropriate constructor.
+            </summary>
+            <param name="value">Object from which PropVariant should be created.</param>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor">
+            <summary>
+            Default constrcutor
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.String)">
+            <summary>
+            Set a string value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.String[])">
+            <summary>
+            Set a string vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Boolean[])">
+            <summary>
+            Set a bool vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int16[])">
+            <summary>
+            Set a short vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt16[])">
+            <summary>
+            Set a short vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int32[])">
+            <summary>
+            Set an int vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt32[])">
+            <summary>
+            Set an uint vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int64[])">
+            <summary>
+            Set a long vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt64[])">
+            <summary>
+            Set a ulong vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Double[])">
+            <summary>>
+            Set a double vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.DateTime[])">
+            <summary>
+            Set a DateTime vector
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Boolean)">
+            <summary>
+            Set a bool value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.DateTime)">
+            <summary>
+            Set a DateTime value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Byte)">
+            <summary>
+            Set a byte value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.SByte)">
+            <summary>
+            Set a sbyte value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int16)">
+            <summary>
+            Set a short value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt16)">
+            <summary>
+            Set an unsigned short value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int32)">
+            <summary>
+            Set an int value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt32)">
+            <summary>
+            Set an unsigned int value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Decimal)">
+            <summary>
+            Set a decimal  value
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Decimal[])">
+            <summary>
+            Create a PropVariant with a contained decimal array.
+            </summary>
+            <param name="value">Decimal array to wrap.</param>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Single)">
+            <summary>
+            Create a PropVariant containing a float type.
+            </summary>        
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Single[])">
+            <summary>
+            Creates a PropVariant containing a float[] array.
+            </summary>        
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Int64)">
+            <summary>
+            Set a long
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.UInt64)">
+            <summary>
+            Set a ulong
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.#ctor(System.Double)">
+            <summary>
+            Set a double
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.SetIUnknown(System.Object)">
+            <summary>
+            Set an IUnknown value
+            </summary>
+            <param name="value">The new value to set.</param>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.SetSafeArray(System.Array)">
+            <summary>
+            Set a safe array value
+            </summary>
+            <param name="array">The new value to set.</param>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.Dispose">
+            <summary>
+            Disposes the object, calls the clear function.
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.PropVariant.ToString">
+            <summary>
+            Provides an simple string representation of the contained data and type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.PropVariant.VarType">
+            <summary>
+            Gets or sets the variant type.
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.PropVariant.IsNullOrEmpty">
+            <summary>
+            Checks if this has an empty or null value
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.PropVariant.Value">
+            <summary>
+            Gets the variant value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoverFailedToRegisterForRestartBadParameters">
+            <summary>
+              Looks up a localized string similar to Failed to register application for restart due to bad parameters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryBadParameters">
+            <summary>
+              Looks up a localized string similar to Application was not registered for recovery due to bad parameters..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryFailedToRegister">
+            <summary>
+              Looks up a localized string similar to Application failed to register for recovery..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryFailedToRegisterForRestart">
+            <summary>
+              Looks up a localized string similar to Application failed to registered for restart..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryFailedToUnregister">
+            <summary>
+              Looks up a localized string similar to Unregister for recovery failed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryFailedToUnregisterForRestart">
+            <summary>
+              Looks up a localized string similar to Unregister for restart failed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ApplicationRecoveryMustBeCalledFromCallback">
+            <summary>
+              Looks up a localized string similar to This method must be called from the registered callback method..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.BatteryStateStringRepresentation">
+            <summary>
+              Looks up a localized string similar to ACOnline: {1}{0}Max Charge: {2} mWh{0}Current Charge: {3} mWh{0}Discharge Rate: {4} mWh{0}Estimated Time Remaining: {5}{0}Suggested Critical Battery Charge: {6} mWh{0}Suggested Battery Warning Charge: {7} mWh{0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CancelableCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Cancelable cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CaptionCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Dialog caption cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CheckBoxCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to CheckBox text cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CollapsedTextCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Collapsed control text cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CoreHelpersRunningOn7">
+            <summary>
+              Looks up a localized string similar to Only supported on Windows 7 or newer..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CoreHelpersRunningOnVista">
+            <summary>
+              Looks up a localized string similar to Only supported on Windows Vista or newer..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.CoreHelpersRunningOnXp">
+            <summary>
+              Looks up a localized string similar to Only supported on Windows XP or newer..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogCollectionCannotHaveDuplicateNames">
+            <summary>
+              Looks up a localized string similar to Dialog cannot have more than one control with the same name..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogCollectionControlAlreadyHosted">
+            <summary>
+              Looks up a localized string similar to Dialog control must be removed from current collections first..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogCollectionControlNameNull">
+            <summary>
+              Looks up a localized string similar to Control name cannot be null or zero length..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogCollectionModifyShowingDialog">
+            <summary>
+              Looks up a localized string similar to Modifying controls collection while dialog is showing is not supported..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogControlNameCannotBeEmpty">
+            <summary>
+              Looks up a localized string similar to Dialog control name cannot be empty or null..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogControlsCannotBeRenamed">
+            <summary>
+              Looks up a localized string similar to Dialog controls cannot be renamed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogDefaultCaption">
+            <summary>
+              Looks up a localized string similar to Application.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogDefaultContent">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.DialogDefaultMainInstruction">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ExpandedDetailsCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Expanded information mode cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ExpandedLabelCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Expanded control label cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ExpandingStateCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Expanding state of the dialog cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.HyperlinksCannotBetSet">
+            <summary>
+              Looks up a localized string similar to Hyperlinks cannot be enabled/disabled while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.InvalidReferencePath">
+            <summary>
+              Looks up a localized string similar to Reference path is invalid..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.MessageManagerHandlerNotRegistered">
+            <summary>
+              Looks up a localized string similar to The specified event handler has not been registered..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.NativeTaskDialogConfigurationError">
+            <summary>
+              Looks up a localized string similar to An error has occurred in dialog configuration..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.NativeTaskDialogInternalErrorArgs">
+            <summary>
+              Looks up a localized string similar to Invalid arguments to Win32 call..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.NativeTaskDialogInternalErrorComplex">
+            <summary>
+              Looks up a localized string similar to Dialog contents too complex..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.NativeTaskDialogInternalErrorUnexpected">
+            <summary>
+              Looks up a localized string similar to An unexpected internal error occurred in the Win32 call: {0:x}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.NativeTaskDialogVersionError">
+            <summary>
+              Looks up a localized string similar to TaskDialog feature needs to load version 6 of comctl32.dll but a different version is current loaded in memory..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.OwnerCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Dialog owner cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PowerExecutionStateFailed">
+            <summary>
+              Looks up a localized string similar to SetThreadExecutionState call failed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PowerInsufficientAccessBatteryState">
+            <summary>
+              Looks up a localized string similar to The caller had insufficient access rights to get the system battery state..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PowerInsufficientAccessCapabilities">
+            <summary>
+              Looks up a localized string similar to The caller had insufficient access rights to get the system power capabilities..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PowerManagerActiveSchemeFailed">
+            <summary>
+              Looks up a localized string similar to Failed to get active power scheme..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PowerManagerBatteryNotPresent">
+            <summary>
+              Looks up a localized string similar to Battery is not present on this system..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ProgressBarCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Progress bar cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.ProgressBarCannotBeHostedInMultipleDialogs">
+            <summary>
+              Looks up a localized string similar to Progress bar cannot be hosted in multiple dialogs..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropertyKeyFormatString">
+            <summary>
+              Looks up a localized string similar to {0}, {1}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropVariantInitializationError">
+            <summary>
+              Looks up a localized string similar to Unable to initialize PropVariant..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropVariantMultiDimArray">
+            <summary>
+              Looks up a localized string similar to Multi-dimensional SafeArrays not supported..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropVariantNullString">
+            <summary>
+              Looks up a localized string similar to String argument cannot be null or empty..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropVariantTypeNotSupported">
+            <summary>
+              Looks up a localized string similar to This Value type is not supported..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.PropVariantUnsupportedType">
+            <summary>
+              Looks up a localized string similar to Cannot be cast to unsupported type..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.RecoverySettingsFormatString">
+            <summary>
+              Looks up a localized string similar to delegate: {0}, state: {1}, ping: {2}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.RestartSettingsFormatString">
+            <summary>
+              Looks up a localized string similar to command: {0} restrictions: {1}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.StandardButtonsCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to StandardButtons cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.StartupLocationCannotBeChanged">
+            <summary>
+              Looks up a localized string similar to Startup location cannot be changed while dialog is showing..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogBadButtonId">
+            <summary>
+              Looks up a localized string similar to Bad button ID in closing event..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogButtonTextEmpty">
+            <summary>
+              Looks up a localized string similar to Button text must be non-empty..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogCheckBoxTextRequiredToEnableCheckBox">
+            <summary>
+              Looks up a localized string similar to Check box text must be provided to enable the dialog check box..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogCloseNonShowing">
+            <summary>
+              Looks up a localized string similar to Attempting to close a non-showing dialog..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogDefaultCaption">
+            <summary>
+              Looks up a localized string similar to Application.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogDefaultContent">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogDefaultMainInstruction">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogOnlyOneDefaultControl">
+            <summary>
+              Looks up a localized string similar to Cannot have more than one default button of a given type..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogProgressBarMaxValueGreaterThanMin">
+            <summary>
+              Looks up a localized string similar to Maximum value provided must be greater than the minimum value..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogProgressBarMinValueGreaterThanZero">
+            <summary>
+              Looks up a localized string similar to Minimum value provided must be a positive number..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogProgressBarMinValueLessThanMax">
+            <summary>
+              Looks up a localized string similar to Minimum value provided must less than the maximum value..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogProgressBarValueInRange">
+            <summary>
+              Looks up a localized string similar to Value provided must be greater than equal to the minimum value and less than the maximum value..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogSupportedButtonsAndButtons">
+            <summary>
+              Looks up a localized string similar to Dialog cannot display both non-standard buttons and standard buttons..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogSupportedButtonsAndLinks">
+            <summary>
+              Looks up a localized string similar to Dialog cannot display both non-standard buttons and command links..
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Resources.LocalizedMessages.TaskDialogUnkownControl">
+            <summary>
+              Looks up a localized string similar to Unknown dialog control type..
+            </summary>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.ZeroInvalidHandle">
+            <summary>
+            Base class for Safe handles with Null IntPtr as invalid
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.ZeroInvalidHandle.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:MS.WindowsAPICodePack.Internal.ZeroInvalidHandle.IsInvalid">
+            <summary>
+            Determines if this is a valid handle
+            </summary>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.SafeIconHandle">
+            <summary>
+            Safe Icon Handle
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.SafeIconHandle.ReleaseHandle">
+            <summary>
+            Release the handle
+            </summary>
+            <returns>true if handled is release successfully, false otherwise</returns>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.SafeRegionHandle">
+            <summary>
+            Safe Region Handle
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.SafeRegionHandle.ReleaseHandle">
+            <summary>
+            Release the handle
+            </summary>
+            <returns>true if handled is release successfully, false otherwise</returns>
+        </member>
+        <member name="T:MS.WindowsAPICodePack.Internal.SafeWindowHandle">
+            <summary>
+            Safe Window Handle
+            </summary>
+        </member>
+        <member name="M:MS.WindowsAPICodePack.Internal.SafeWindowHandle.ReleaseHandle">
+            <summary>
+            Release the handle
+            </summary>
+            <returns>true if handled is release successfully, false otherwise</returns>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog">
+            <summary>
+            Encapsulates a new-to-Vista Win32 TaskDialog window 
+            - a powerful successor to the MessageBox available
+            in previous versions of Windows.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.#ctor">
+            <summary>
+            Creates a basic TaskDialog window 
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Show(System.String)">
+            <summary>
+            Creates and shows a task dialog with the specified message text.
+            </summary>
+            <param name="text">The text to display.</param>
+            <returns>The dialog result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Show(System.String,System.String)">
+            <summary>
+            Creates and shows a task dialog with the specified supporting text and main instruction.
+            </summary>
+            <param name="text">The supporting text to display.</param>
+            <param name="instructionText">The main instruction text to display.</param>
+            <returns>The dialog result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Show(System.String,System.String,System.String)">
+            <summary>
+            Creates and shows a task dialog with the specified supporting text, main instruction, and dialog caption.
+            </summary>
+            <param name="text">The supporting text to display.</param>
+            <param name="instructionText">The main instruction text to display.</param>
+            <param name="caption">The caption for the dialog.</param>
+            <returns>The dialog result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Show">
+            <summary>
+            Creates and shows a task dialog.
+            </summary>
+            <returns>The dialog result.</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Close">
+            <summary>
+            Close TaskDialog
+            </summary>
+            <exception cref="T:System.InvalidOperationException">if TaskDialog is not showing.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Close(Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult)">
+            <summary>
+            Close TaskDialog with a given TaskDialogResult
+            </summary>
+            <param name="closingResult">TaskDialogResult to return from the TaskDialog.Show() method</param>
+            <exception cref="T:System.InvalidOperationException">if TaskDialog is not showing.</exception>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.ApplyTextConfiguration(Microsoft.WindowsAPICodePack.Dialogs.TaskDialogNativeMethods.TaskDialogConfiguration)">
+            <summary>
+            Sets important text properties.
+            </summary>
+            <param name="dialogConfig">An instance of a <see cref="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogNativeMethods.TaskDialogConfiguration"/> object.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Dispose">
+            <summary>
+            Dispose TaskDialog Resources
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Finalize">
+            <summary>
+            TaskDialog Finalizer
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Dispose(System.Boolean)">
+            <summary>
+            Dispose TaskDialog Resources
+            </summary>
+            <param name="disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Tick">
+            <summary>
+            Occurs when a progress bar changes.
+            </summary>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.HyperlinkClick">
+            <summary>
+            Occurs when a user clicks a hyperlink.
+            </summary>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Closing">
+            <summary>
+            Occurs when the TaskDialog is closing.
+            </summary>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.HelpInvoked">
+            <summary>
+            Occurs when a user clicks on Help.
+            </summary>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Opened">
+            <summary>
+            Occurs when the TaskDialog is opened.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.OwnerWindowHandle">
+            <summary>
+            Gets or sets a value that contains the owner window's handle.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Text">
+            <summary>
+            Gets or sets a value that contains the message text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.InstructionText">
+            <summary>
+            Gets or sets a value that contains the instruction text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Caption">
+            <summary>
+            Gets or sets a value that contains the caption text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.FooterText">
+            <summary>
+            Gets or sets a value that contains the footer text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.FooterCheckBoxText">
+            <summary>
+            Gets or sets a value that contains the footer check box text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.DetailsExpandedText">
+            <summary>
+            Gets or sets a value that contains the expanded text in the details section.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.DetailsExpanded">
+            <summary>
+            Gets or sets a value that determines if the details section is expanded.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.DetailsExpandedLabel">
+            <summary>
+            Gets or sets a value that contains the expanded control text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.DetailsCollapsedLabel">
+            <summary>
+            Gets or sets a value that contains the collapsed control text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Cancelable">
+            <summary>
+            Gets or sets a value that determines if Cancelable is set.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Icon">
+            <summary>
+            Gets or sets a value that contains the TaskDialog main icon.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.FooterIcon">
+            <summary>
+            Gets or sets a value that contains the footer icon.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.StandardButtons">
+            <summary>
+            Gets or sets a value that contains the standard buttons.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Controls">
+            <summary>
+            Gets a value that contains the TaskDialog controls.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.HyperlinksEnabled">
+            <summary>
+            Gets or sets a value that determines if hyperlinks are enabled.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.FooterCheckBoxChecked">
+            <summary>
+            Gets or sets a value that indicates if the footer checkbox is checked.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.ExpansionMode">
+            <summary>
+            Gets or sets a value that contains the expansion mode for this dialog.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.StartupLocation">
+            <summary>
+            Gets or sets a value that contains the startup location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.ProgressBar">
+            <summary>
+            Gets or sets the progress bar on the taskdialog. ProgressBar a visual representation 
+            of the progress of a long running operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.IsPlatformSupported">
+            <summary>
+            Indicates whether this feature is supported on the current platform.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogBar">
+            <summary>
+            Defines a common class for all task dialog bar controls, such as the progress and marquee bars.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogControl">
+            <summary>
+            Declares the abstract base class for all custom task dialog controls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogControl.#ctor">
+            <summary>
+            Creates a new instance of a task dialog control.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogControl.#ctor(System.String)">
+            <summary>
+            Creates a new instance of a task dialog control with the specified name.
+            </summary>
+            <param name="name">The name for this control.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogBar.#ctor">
+            <summary>
+            Creates a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogBar.#ctor(System.String)">
+            <summary>
+            Creates a new instance of this class with the specified name.
+            </summary>
+            <param name="name">The name for this control.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogBar.Reset">
+            <summary>
+            Resets the state of the control to normal.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogBar.State">
+            <summary>
+            Gets or sets the state of the progress bar.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButton">
+            <summary>
+            Implements a button that can be hosted in a task dialog.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase">
+            <summary>
+            Defines the abstract base class for task dialog buttons. 
+            Classes that inherit from this class will inherit 
+            the Text property defined in this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.#ctor">
+            <summary>
+            Creates a new instance on a task dialog button.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance on a task dialog button with
+            the specified name and text.
+            </summary>
+            <param name="name">The name for this button.</param>
+            <param name="text">The label for this button.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.ToString">
+            <summary>
+            Returns the Text property value for this button.
+            </summary>
+            <returns>A <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Click">
+            <summary>
+            Raised when the task dialog button is clicked.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Text">
+            <summary>
+            Gets or sets the button text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Enabled">
+            <summary>
+            Gets or sets a value that determines whether the
+            button is enabled. The enabled state can cannot be changed
+            before the dialog is shown.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Default">
+            <summary>
+            Gets or sets a value that indicates whether
+            this button is the default button.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButton.#ctor">
+            <summary>
+            Creates a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButton.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of this class with the specified property settings.
+            </summary>
+            <param name="name">The name of the button.</param>
+            <param name="text">The button label.</param>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButton.UseElevationIcon">
+            <summary>
+            Gets or sets a value that controls whether the elevation icon is displayed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogClosingEventArgs">
+            <summary>
+            Data associated with <see cref="E:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog.Closing"/> event.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogClosingEventArgs.TaskDialogResult">
+            <summary>
+            Gets or sets the standard button that was clicked.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogClosingEventArgs.CustomButton">
+            <summary>
+            Gets or sets the text of the custom button that was clicked.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink">
+            <summary>
+            Represents a command-link. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink.#ctor">
+            <summary>
+            Creates a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of this class with the specified name and label.
+            </summary>
+            <param name="name">The name for this button.</param>
+            <param name="text">The label for this button.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new instance of this class with the specified name,label, and instruction.
+            </summary>
+            <param name="name">The name for this button.</param>
+            <param name="text">The label for this button.</param>
+            <param name="instruction">The instruction for this command link.</param>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink.ToString">
+            <summary>
+            Returns a string representation of this object.
+            </summary>
+            <returns>A <see cref="T:System.String"/></returns>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogCommandLink.Instruction">
+            <summary>
+            Gets or sets the instruction associated with this command link button.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogExpandedDetailsLocation">
+            <summary>
+            Specifies the options for expand/collapse sections in dialogs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogExpandedDetailsLocation.Hide">
+            <summary>
+            Do not show the content.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogExpandedDetailsLocation.ExpandContent">
+            <summary>
+            Show the content.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogExpandedDetailsLocation.ExpandFooter">
+            <summary>
+            Expand the footer content.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogHyperlinkClickedEventArgs">
+            <summary>
+            Defines event data associated with a HyperlinkClick event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogHyperlinkClickedEventArgs.#ctor(System.String)">
+            <summary>
+            Creates a new instance of this class with the specified link text.
+            </summary>
+            <param name="linkText">The text of the hyperlink that was clicked.</param>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogHyperlinkClickedEventArgs.LinkText">
+            <summary>
+            Gets or sets the text of the hyperlink that was clicked.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar">
+            <summary>
+            Provides a visual representation of the progress of a long running operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.#ctor">
+            <summary>
+            Creates a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.#ctor(System.String)">
+            <summary>
+            Creates a new instance of this class with the specified name.
+            And using the default values: Min = 0, Max = 100, Current = 0
+            </summary>
+            <param name="name">The name of the control.</param>        
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new instance of this class with the specified 
+            minimum, maximum and current values.
+            </summary>
+            <param name="minimum">The minimum value for this control.</param>
+            <param name="maximum">The maximum value for this control.</param>
+            <param name="value">The current value for this control.</param>        
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.Reset">
+            <summary>
+            Resets the control to its minimum value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.Minimum">
+            <summary>
+            Gets or sets the minimum value for the control.
+            </summary>                
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.Maximum">
+            <summary>
+            Gets or sets the maximum value for the control.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.Value">
+            <summary>
+            Gets or sets the current value for the control.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBar.HasValidValues">
+            <summary>
+            Verifies that the progress bar's value is between its minimum and maximum.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState">
+            <summary>
+            Sets the state of a task dialog progress bar.
+            </summary>        
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState.None">
+            <summary>
+            Uninitialized state, this should never occur.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState.Normal">
+            <summary>
+            Normal state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState.Error">
+            <summary>
+            An error occurred.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState.Paused">
+            <summary>
+            The progress is paused.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogProgressBarState.Marquee">
+            <summary>
+            Displays marquee (indeterminate) style progress
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogRadioButton">
+            <summary>
+            Defines a radio button that can be hosted in by a 
+            <see cref="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialog"/> object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogRadioButton.#ctor">
+            <summary>
+            Creates a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogRadioButton.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of this class with
+            the specified name and text.
+            </summary>
+            <param name="name">The name for this control.</param>
+            <param name="text">The value for this controls 
+            <see cref="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogButtonBase.Text"/> property.</param>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult">
+            <summary>
+            Indicates the various buttons and options clicked by the user on the task dialog.
+            </summary>        
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.None">
+            <summary>
+            No button was selected.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.Ok">
+            <summary>
+            "OK" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.Yes">
+            <summary>
+            "Yes" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.No">
+            <summary>
+            "No" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.Cancel">
+            <summary>
+            "Cancel" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.Retry">
+            <summary>
+            "Retry" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.Close">
+            <summary>
+            "Close" button was clicked
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogResult.CustomButtonClicked">
+            <summary>
+            A custom button was clicked.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons">
+            <summary>
+            Identifies one of the standard buttons that 
+            can be displayed via TaskDialog.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.None">
+            <summary>
+            No buttons on the dialog.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.Ok">
+            <summary>
+            An "OK" button.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.Yes">
+            <summary>
+            A "Yes" button.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.No">
+            <summary>
+            A "No" button.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.Cancel">
+            <summary>
+            A "Cancel" button.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.Retry">
+            <summary>
+            A "Retry" button.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardButtons.Close">
+            <summary>
+            A "Close" button.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon">
+            <summary>
+            Specifies the icon displayed in a task dialog.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon.None">
+            <summary>
+            Displays no icons (default).
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon.Warning">
+            <summary>
+            Displays the warning icon.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon.Error">
+            <summary>
+            Displays the error icon.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon.Information">
+            <summary>
+            Displays the Information icon.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStandardIcon.Shield">
+            <summary>
+            Displays the User Account Control shield.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStartupLocation">
+            <summary>
+            Specifies the initial display location for a task dialog. 
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStartupLocation.CenterScreen">
+            <summary>
+            The window placed in the center of the screen.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogStartupLocation.CenterOwner">
+            <summary>
+            The window centered relative to the window that launched the dialog.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogTickEventArgs">
+            <summary>
+            The event data for a TaskDialogTick event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogTickEventArgs.#ctor(System.Int32)">
+            <summary>
+            Initializes the data associated with the TaskDialog tick event.
+            </summary>
+            <param name="ticks">The total number of ticks since the control was activated.</param>
+        </member>
+        <member name="P:Microsoft.WindowsAPICodePack.Dialogs.TaskDialogTickEventArgs.Ticks">
+            <summary>
+            Gets a value that determines the current number of ticks.
+            </summary>
+        </member>
+    </members>
+</doc>

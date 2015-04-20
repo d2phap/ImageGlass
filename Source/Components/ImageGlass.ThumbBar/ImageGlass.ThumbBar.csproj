@@ -90,6 +90,7 @@
     <Compile Include="Controls\ThumbnailBox.Designer.cs">
       <DependentUpon>ThumbnailBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageHandling\ExifThumbReader.cs" />
     <Compile Include="ImageHandling\GeneratingEventArgs.cs" />
     <Compile Include="ImageHandling\ImageFile.cs" />
     <Compile Include="ImageHandling\ImageResizer.cs" />
@@ -129,7 +130,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

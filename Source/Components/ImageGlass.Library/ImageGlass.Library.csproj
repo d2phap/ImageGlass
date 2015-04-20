@@ -72,6 +72,7 @@
     <Compile Include="FileAssociations\RegistryException.cs" />
     <Compile Include="FileAssociations\RegistryWrapper.cs" />
     <Compile Include="FileAssociations\ShellNotification.cs" />
+    <Compile Include="Image\ExifThumbReader.cs" />
     <Compile Include="Language\Language.cs" />
     <Compile Include="Net\DownloadFile.cs" />
     <Compile Include="Image\Animation.cs" />

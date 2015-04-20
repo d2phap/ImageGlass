@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.ThumbBar.ImageHandling;
 using System;
 using System.Drawing;
 using System.IO;
@@ -57,7 +58,12 @@ namespace ImageGlass.ThumbBar
         /// </summary>
         public void GetImageFromFile()
         {
-            this.anImage = this.FullSizeImage;
+            this.anImage = ExifThumbReader.ReadThumb(this.fileName);
+
+            if (this.anImage == null)
+            {
+                this.anImage = this.FullSizeImage;
+            }
         }
 
         /// <summary>
@@ -92,8 +98,11 @@ namespace ImageGlass.ThumbBar
         public Image Thumbnail
         {
             get
-            { 
-                Image thumbnail;
+            {
+                Image thumbnail = null;
+
+                //thumbnail = ExifThumbReader.ReadThumb(this.fileName);
+                //if (thumbnail != null) return thumbnail;
 
                 System.IO.FileInfo Fi = new System.IO.FileInfo(this.fileName);
                 double _size = Math.Round((Fi.Length * 1.0) / 1024 / 1024, 2); //in MB

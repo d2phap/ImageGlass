@@ -183,6 +183,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmExtension.resx">
       <DependentUpon>frmExtension.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFacebook.resx">
       <DependentUpon>frmFacebook.cs</DependentUpon>
@@ -206,6 +207,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -295,6 +297,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj">
+      <Project>{0c295fb8-c6c6-4a40-9f19-05a43f353a04}</Project>
+      <Name>ImageGlass.ImageListView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
       <Project>{CC391E3E-9137-4857-85DC-C4CF6DF37584}</Project>
       <Name>igcmd</Name>

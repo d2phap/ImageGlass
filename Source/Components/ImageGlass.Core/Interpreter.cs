@@ -14,12 +14,15 @@ namespace ImageGlass.Core
         {
             if (path.ToLower().EndsWith(".tga")) return Targa(path);
             if (path.ToLower().EndsWith(".gif")) return new Bitmap(path);
-            
-            using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+
+            Bitmap bmp = null;
+
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return new Bitmap(fs);
+                bmp = new Bitmap(fs, true);
             }
-            
+
+            return bmp;
         }
 
         // Tested on files created by:

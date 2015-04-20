@@ -1,0 +1,13 @@
+Contributors to ImageListView
+=============================
+
+ * Ozgur Ozcitak
+ * Robby 
+   - Thumbnail extraction fallback with shell icons
+   - Theming support with the ImageListViewColor class.
+   - Checkboxes for imagelistview items.
+   - File icons for imagelistview items.
+ * Uwe Keim (http://uwe.co/)
+   - German translations
+ * Jens
+   - Thumbnail and metadata extraction via WIC.
