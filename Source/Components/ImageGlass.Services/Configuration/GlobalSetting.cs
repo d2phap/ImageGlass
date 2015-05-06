@@ -72,6 +72,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
         private static StringCollection _stringClipboard = new StringCollection();
+        private static bool _isAllowMultiInstances = true;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -370,6 +371,22 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 _thumbnailDimension = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that multi instances is allowed or not
+        /// </summary>
+        public static bool IsAllowMultiInstances
+        {
+            get
+            {
+                return _isAllowMultiInstances;
+            }
+
+            set
+            {
+                _isAllowMultiInstances = value;
             }
         }
 

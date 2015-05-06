@@ -34,6 +34,7 @@ using ImageGlass.Library;
 using ImageGlass.ThumbBar.ImageHandling;
 using ImageGlass.ThumbBar;
 using System.Collections.Specialized;
+using ImageGlass.Services.InstanceManagement;
 
 namespace ImageGlass
 {
@@ -47,8 +48,6 @@ namespace ImageGlass
 
         #region Local variables
         private string imageInfo = "";
-        //private delegate void DelegateAddImage(string imageFilename);
-        //private DelegateAddImage m_AddImageDelegate;
         #endregion
 
 
@@ -88,7 +87,7 @@ namespace ImageGlass
         /// Prepare to load image
         /// </summary>
         /// <param name="path">Path</param>
-        private void Prepare(string path)
+        public void Prepare(string path)
         {
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
@@ -430,6 +429,8 @@ namespace ImageGlass
 
 
         #region Key event
+
+
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
@@ -1373,6 +1374,27 @@ namespace ImageGlass
 
 
         #region Form events
+        protected override void WndProc(ref Message m)
+        {
+            //Check if the received message is WM_SHOWME
+            if (m.Msg == NativeMethods.WM_SHOWME)
+            {
+                //Set frmMain of the first instance to TopMost
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    WindowState = FormWindowState.Normal;
+                }
+                // get our current "TopMost" value (ours will always be false though)
+                bool top = TopMost;
+                // make our form jump to the top of everything
+                TopMost = true;
+                // set it back to whatever it was
+                TopMost = top;
+
+            }
+            base.WndProc(ref m);
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Remove white line under tool strip
@@ -1382,10 +1404,19 @@ namespace ImageGlass
             Application.DoEvents();
 
             //Load image from param
-            if (Program.args.Length > 0)
+            LoadFromParams(Environment.GetCommandLineArgs());
+
+            sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
+            sp1.SplitterWidth = 1;
+        }
+
+        public void LoadFromParams(string[] args)
+        {
+            //Load image from param
+            if (args.Length >= 2)
             {
                 string filename = "";
-                Program.args.ToList().ForEach(i => filename += " " + i);
+                filename = args[1];
 
                 if (File.Exists(filename))
                 {
@@ -1398,10 +1429,6 @@ namespace ImageGlass
                     Prepare(d.FullName);
                 }
             }
-
-            sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
-            sp1.SplitterWidth = 1;
-
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -1563,7 +1590,6 @@ namespace ImageGlass
             {
                 sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + 40;
                 sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
-
             }
         }
 

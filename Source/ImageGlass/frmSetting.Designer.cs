@@ -55,6 +55,7 @@
             this.lblExtensions = new System.Windows.Forms.Label();
             this.txtExtensions = new System.Windows.Forms.TextBox();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkAllowMultiInstances = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
             this.chkESCToQuit = new System.Windows.Forms.CheckBox();
@@ -163,7 +164,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(20, 382);
+            this.picBackgroundColor.Location = new System.Drawing.Point(20, 408);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -183,7 +184,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 507);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 456);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -291,7 +292,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 507);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 456);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -383,6 +384,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chkAllowMultiInstances);
             this.tabGeneral.Controls.Add(this.lblGeneral_ThumbnailSize);
             this.tabGeneral.Controls.Add(this.cmbThumbnailDimension);
             this.tabGeneral.Controls.Add(this.chkESCToQuit);
@@ -403,15 +405,26 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(551, 454);
+            this.tabGeneral.Size = new System.Drawing.Size(551, 479);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // chkAllowMultiInstances
+            // 
+            this.chkAllowMultiInstances.AutoSize = true;
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(20, 142);
+            this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
+            this.chkAllowMultiInstances.Size = new System.Drawing.Size(238, 19);
+            this.chkAllowMultiInstances.TabIndex = 17;
+            this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
+            this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
+            this.chkAllowMultiInstances.CheckedChanged += new System.EventHandler(this.chkAllowMultiInstances_CheckedChanged);
+            // 
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 253);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 279);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
             this.lblGeneral_ThumbnailSize.TabIndex = 15;
@@ -427,7 +440,7 @@
             "64",
             "96",
             "128"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 271);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 297);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(279, 23);
             this.cmbThumbnailDimension.TabIndex = 16;
@@ -468,7 +481,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 219);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 245);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -493,7 +506,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 201);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 227);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 14;
@@ -513,7 +526,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 361);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 387);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -533,7 +546,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 305);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 331);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -551,7 +564,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(20, 323);
+            this.cmbImageOrder.Location = new System.Drawing.Point(20, 349);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 14;
@@ -560,7 +573,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.Color.White;
-            this.barInterval.Location = new System.Drawing.Point(14, 164);
+            this.barInterval.Location = new System.Drawing.Point(14, 190);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -573,7 +586,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 146);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 172);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(171, 15);
             this.lblSlideshowInterval.TabIndex = 5;
@@ -614,7 +627,7 @@
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(559, 482);
+            this.tab1.Size = new System.Drawing.Size(559, 507);
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
@@ -634,7 +647,7 @@
             // sp0.Panel2
             // 
             this.sp0.Panel2.Controls.Add(this.tab1);
-            this.sp0.Size = new System.Drawing.Size(704, 441);
+            this.sp0.Size = new System.Drawing.Size(704, 466);
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
@@ -644,12 +657,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(704, 441);
+            this.ClientSize = new System.Drawing.Size(704, 466);
             this.Controls.Add(this.sp0);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(720, 480);
+            this.MinimumSize = new System.Drawing.Size(720, 505);
             this.Name = "frmSetting";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSetting_FormClosing);
@@ -719,5 +732,6 @@
         private System.Windows.Forms.Label lblContextMenu;
         private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
+        private System.Windows.Forms.CheckBox chkAllowMultiInstances;
     }
 }

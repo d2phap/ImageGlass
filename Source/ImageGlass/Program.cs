@@ -18,12 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using System.Diagnostics;
-using System.IO;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Services.InstanceManagement;
 
 namespace ImageGlass
 {
@@ -32,39 +30,83 @@ namespace ImageGlass
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        public static string[] args;
-        public static string igPath = (Application.StartupPath + "\\").Replace("\\\\", "\\");
+        private static string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        private static frmMain formMain;
+
         [STAThread]
         static void Main(string[] argv)
         {
-            args = argv;
+            Guid guid = new Guid(appGuid);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
 
-
-            //autoupdate----------------------------------------------------------------
+            //auto update----------------------------------------------------------------
             string s = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
 
             if (s != "0")
             {
                 DateTime lastUpdate = DateTime.Now;
 
-                if(DateTime.TryParse(s, out lastUpdate))
+                if (DateTime.TryParse(s, out lastUpdate))
                 {
                     //Check for update every 7 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
                     {
                         Process.Start(char.ConvertFromUtf32(34) +
-                                Program.igPath + "igcmd.exe" +
+                                GlobalSetting.StartUpDir + "igcmd.exe" +
                                 char.ConvertFromUtf32(34), "igautoupdate");
                     }
                 }
             }
 
+            //get current config
+            GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
 
+            //check if allows multi instances
+            if (GlobalSetting.IsAllowMultiInstances)
+            {
+                Application.Run(formMain = new frmMain());
+            }
+            else
+            {
+                //single instance is required
+                using (SingleInstance singleInstance = new SingleInstance(guid))
+                {
+                    if (singleInstance.IsFirstInstance)
+                    {
+                        singleInstance.ArgumentsReceived += SingleInstance_ArgumentsReceived;
+                        singleInstance.ListenForArgumentsFromSuccessiveInstances();
+
+                        Application.Run(formMain = new frmMain());
+                    }
+                    else
+                    {
+                        singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
+                    }
+                }
+            } //end check multi instances
 
         }
+
+        private static void SingleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)
+        {
+            if (formMain == null)
+                return;
+
+            Action<String[]> updateForm = arguments =>
+            {
+                formMain.WindowState = FormWindowState.Normal;
+                formMain.LoadFromParams(arguments);
+            };
+
+            //Execute our delegate on the forms thread!
+            formMain.Invoke(updateForm, (Object)e.Args); 
+
+            // send our Win32 message to bring ImageGlass dialog to top
+            NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+        }
     }
+
+
 }

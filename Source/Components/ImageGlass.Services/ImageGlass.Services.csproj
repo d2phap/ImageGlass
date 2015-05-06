@@ -63,6 +63,9 @@
     <Compile Include="Configuration\GlobalSetting.cs" />
     <Compile Include="HotfixItemUpdate.cs" />
     <Compile Include="HotfixUpdate.cs" />
+    <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
+    <Compile Include="InstanceManagement\NativeMethods.cs" />
+    <Compile Include="InstanceManagement\SingleInstance.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InfoUpdate.cs" />

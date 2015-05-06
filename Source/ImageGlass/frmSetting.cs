@@ -194,6 +194,7 @@ namespace ImageGlass
             chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
+            chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
 
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
@@ -313,6 +314,9 @@ namespace ImageGlass
             //Get value of IsPressESCToQuit
             chkESCToQuit.Checked = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "true"));
 
+            //Get value of IsPressESCToQuit
+            chkAllowMultiInstances.Checked = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
+
             //Get value of barInterval
             int i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
             if (0 < i && i < 61)
@@ -398,6 +402,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
+        }
+
+        private void chkAllowMultiInstances_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
+            GlobalSetting.SetConfig("IsAllowMultiInstances", GlobalSetting.IsAllowMultiInstances.ToString());
         }
 
         private void chkESCToQuit_CheckedChanged(object sender, EventArgs e)
@@ -619,5 +629,6 @@ namespace ImageGlass
         }
 
         
+
     }
 }

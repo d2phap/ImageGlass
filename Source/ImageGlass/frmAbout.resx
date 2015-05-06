@@ -213,10 +213,27 @@
   </data>
   <data name="txtReferences.Text" xml:space="preserve">
     <value>DotNetZip Library: copyright (c) 2006 - 2011 Dino Chiesa
+License: Microsoft Public License (Ms-PL)
+
+-----------------------------------------
 Imaeg: copyright (c) 2011 ed &lt;tripflag@gmail.com&gt;
-ImageGlass ImageBox based on Cyotek ImageBox Control. Copyright (c) 2010-2014 Cyotek.
+License: GNU GPL v2
+
+-----------------------------------------
+ImageGlass.ImageBox based on Cyotek ImageBox Control. Copyright (c) 2010-2014 Cyotek.
+License: MIT License
+
+-----------------------------------------
 IconLib: copyright (c) 2006 Franco, Gustavo
-Facebook SDK: copyright (c) 2011 The Outercurve Foundation</value>
+License: Creative Commons Attribution-Share Alike 3.0 Unported License.
+
+-----------------------------------------
+Facebook SDK: copyright (c) 2011 The Outercurve Foundation.
+License: Apache 2.0
+
+-----------------------------------------
+ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
+License: Apache-2.0</value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
