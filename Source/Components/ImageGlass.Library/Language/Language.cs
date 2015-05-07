@@ -175,7 +175,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             this.Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
             this.Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)");
-            this.Items.Add("frmMain.btnFullScreen", "Full sreen (Alt + Enter)");
+            this.Items.Add("frmMain.btnFullScreen", "Full screen (Alt + Enter)");
             this.Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             this.Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
             this.Items.Add("frmMain.btnPrintImage", "Print image (Ctrl + P)");
