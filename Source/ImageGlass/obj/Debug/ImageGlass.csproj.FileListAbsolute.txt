@@ -96,3 +96,6 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.config
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
