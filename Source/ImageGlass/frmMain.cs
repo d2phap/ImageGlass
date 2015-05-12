@@ -466,13 +466,13 @@ namespace ImageGlass
 
 
             //Play slideshow----------------------------------------------------------------
-            #region F11
-            if (e.KeyValue == 122 && !e.Control && !e.Shift && !e.Alt)//F11
-            {
-                btnSlideShow_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region F11
+            //if (e.KeyValue == 122 && !e.Control && !e.Shift && !e.Alt)//F11
+            //{
+            //    btnSlideShow_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //ESC ultility------------------------------------------------------------------
@@ -564,8 +564,7 @@ namespace ImageGlass
             if ((e.KeyValue == 36 || e.KeyValue == 39) &&
                 !e.Control && !e.Shift && !e.Alt)
             {
-                GlobalSetting.CurrentIndex = 0;
-                NextPic(0);
+                mnuMainGotoFirst_Click(null, e);
                 return;
             }
             #endregion
@@ -575,8 +574,7 @@ namespace ImageGlass
             if ((e.KeyValue == 35 || e.KeyValue == 39) &&
                 !e.Control && !e.Shift && !e.Alt)
             {
-                GlobalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
-                NextPic(0);
+                mnuMainGotoLast_Click(null, e);
                 return;
             }
             #endregion
@@ -603,33 +601,33 @@ namespace ImageGlass
 
 
             //Scale to Width------------------------------------------------------------------
-            #region Ctrl + W
-            if (e.KeyCode == Keys.W && e.Control && !e.Shift && !e.Alt)// Ctrl + W
-            {
-                btnScaletoWidth_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + W
+            //if (e.KeyCode == Keys.W && e.Control && !e.Shift && !e.Alt)// Ctrl + W
+            //{
+            //    btnScaletoWidth_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Scale to Height-----------------------------------------------------------------
-            #region Ctrl + H
-            if (e.KeyCode == Keys.H && e.Control && !e.Shift && !e.Alt)// Ctrl + H
-            {
-                btnScaletoHeight_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + H
+            //if (e.KeyCode == Keys.H && e.Control && !e.Shift && !e.Alt)// Ctrl + H
+            //{
+            //    btnScaletoHeight_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Auto size window----------------------------------------------------------------
-            #region Ctrl + M
-            if (e.KeyCode == Keys.M && e.Control && !e.Shift && !e.Alt)// Ctrl + M
-            {
-                btnWindowAutosize_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + M
+            //if (e.KeyCode == Keys.M && e.Control && !e.Shift && !e.Alt)// Ctrl + M
+            //{
+            //    btnWindowAutosize_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Actual size image -------------------------------------------------------------
@@ -643,13 +641,13 @@ namespace ImageGlass
 
 
             //Lock zoom ratio-----------------------------------------------------------------
-            #region Ctrl + R
-            if (e.KeyData == Keys.R && e.Control && !e.Shift && !e.Alt)// Ctrl + R
-            {
-                btnZoomLock.PerformClick();
-                return;
-            }
-            #endregion
+            //#region Ctrl + R
+            //if (e.KeyData == Keys.R && e.Control && !e.Shift && !e.Alt)// Ctrl + R
+            //{
+            //    btnZoomLock.PerformClick();
+            //    return;
+            //}
+            //#endregion
 
 
             //Full screen--------------------------------------------------------------------
@@ -663,98 +661,98 @@ namespace ImageGlass
 
 
             //Open file----------------------------------------------------------------------
-            #region Ctrl + O
-            if (e.KeyValue == 79 && e.Control && !e.Shift && !e.Alt)// Ctrl + O
-            {
-                OpenFile();
-                return;
-            }
-            #endregion
+            //#region Ctrl + O
+            //if (e.KeyValue == 79 && e.Control && !e.Shift && !e.Alt)// Ctrl + O
+            //{
+            //    OpenFile();
+            //    return;
+            //}
+            //#endregion
 
 
             //Convert file-------------------------------------------------------------------
-            #region Ctrl + S
-            if (e.KeyValue == 83 && e.Control && !e.Shift && !e.Alt)// Ctrl + S
-            {
-                btnConvert_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + S
+            //if (e.KeyValue == 83 && e.Control && !e.Shift && !e.Alt)// Ctrl + S
+            //{
+            //    btnConvert_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Refresh Image------------------------------------------------------------------
-            #region F5
-            if (e.KeyValue == 116 && !e.Control && !e.Shift && !e.Alt)//F5
-            {
-                btnRefresh_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region F5
+            //if (e.KeyValue == 116 && !e.Control && !e.Shift && !e.Alt)//F5
+            //{
+            //    btnRefresh_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Goto image---------------------------------------------------------------------
-            #region Ctrl + G
-            if (e.KeyValue == 71 && e.Control && !e.Shift && !e.Alt)//Ctrl + G
-            {
-                btnGoto_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + G
+            //if (e.KeyValue == 71 && e.Control && !e.Shift && !e.Alt)//Ctrl + G
+            //{
+            //    btnGoto_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Extract frames-----------------------------------------------------------------
-            #region Ctrl + E
-            if (e.KeyCode == Keys.E && e.Control && !e.Shift && !e.Alt)//Ctrl + E
-            {
-                try
-                {
-                    GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
-                    mnuExtractFrames_Click(null, null);
-                }
-                catch { }
-                return;
-            }
-            #endregion
+            //#region Ctrl + E
+            //if (e.KeyCode == Keys.E && e.Control && !e.Shift && !e.Alt)//Ctrl + E
+            //{
+            //    try
+            //    {
+            //        GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
+            //        mnuExtractFrames_Click(null, null);
+            //    }
+            //    catch { }
+            //    return;
+            //}
+            //#endregion
 
 
             //Detele to Recycle bin----------------------------------------------------------
-            #region DELETE
-            if (e.KeyCode == Keys.Delete && !e.Control && !e.Shift && !e.Alt)//Delete
-            {
-                mnuRecycleBin_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region DELETE
+            //if (e.KeyCode == Keys.Delete && !e.Control && !e.Shift && !e.Alt)//Delete
+            //{
+            //    mnuRecycleBin_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Detele From Hark disk----------------------------------------------------------
-            #region SHIFT + DELETE
-            if (e.KeyCode == Keys.Delete && !e.Control && e.Shift && !e.Alt)//Shift + Delete
-            {
-                mnuDelete_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region SHIFT + DELETE
+            //if (e.KeyCode == Keys.Delete && !e.Control && e.Shift && !e.Alt)//Shift + Delete
+            //{
+            //    mnuDelete_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Lock zoom ratio----------------------------------------------------------------
-            #region Ctrl + L
-            if (e.KeyCode == Keys.L && e.Control && !e.Shift && !e.Alt)//Ctrl + L
-            {
-                btnZoomLock.PerformClick();
-                return;
-            }
-            #endregion
+            //#region Ctrl + L
+            //if (e.KeyCode == Keys.L && e.Control && !e.Shift && !e.Alt)//Ctrl + L
+            //{
+            //    btnZoomLock.PerformClick();
+            //    return;
+            //}
+            //#endregion
 
 
             //Image properties----------------------------------------------------------------
-            #region Ctrl + I
-            if (e.KeyCode == Keys.I && e.Control && !e.Shift && !e.Alt)//Ctrl + I
-            {
-                mnuProperties_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + I
+            //if (e.KeyCode == Keys.I && e.Control && !e.Shift && !e.Alt)//Ctrl + I
+            //{
+            //    mnuProperties_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Show thumbnail-------------------------------------------------------------------
@@ -778,13 +776,13 @@ namespace ImageGlass
 
 
             //Print Image-----------------------------------------------------------------------
-            #region Ctrl + P
-            if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
-            {
-                btnPrintImage_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + P
+            //if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
+            //{
+            //    btnPrintImage_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
             //Show / Hide Toolbar-----------------------------------------------------------------
@@ -798,23 +796,23 @@ namespace ImageGlass
 
 
             //Upload image to Facebook------------------------------------------------------------
-            #region Ctrl + U
-            if (e.KeyCode == Keys.U && e.Control && !e.Shift && !e.Alt)// Ctrl + U
-            {
-                btnFacebook_Click(btnFacebook, e);
-                return;
-            }
-            #endregion
+            //#region Ctrl + U
+            //if (e.KeyCode == Keys.U && e.Control && !e.Shift && !e.Alt)// Ctrl + U
+            //{
+            //    btnFacebook_Click(btnFacebook, e);
+            //    return;
+            //}
+            //#endregion
             
 
             //Rename image----------------------------------------------------------------------
-            #region F2
-            if (e.KeyValue == 113 && !e.Control && !e.Shift && !e.Alt)//F2
-            {
-                RenameImage();
-                return;
-            }
-            #endregion
+            //#region F2
+            //if (e.KeyValue == 113 && !e.Control && !e.Shift && !e.Alt)//F2
+            //{
+            //    RenameImage();
+            //    return;
+            //}
+            //#endregion
 
             //Show Settings dialog--------------------------------------------------------------
             #region Ctrl + Shift + P
@@ -837,13 +835,13 @@ namespace ImageGlass
 
 
             //Image location--------------------------------------------------------------------
-            #region Ctrl + Shift + L
-            if (e.KeyCode == Keys.L && e.Control && e.Shift && !e.Alt)//Ctrl + Shift + L
-            {
-                mnuImageLocation_Click(null, null);
-                return;
-            }
-            #endregion
+            //#region Ctrl + Shift + L
+            //if (e.KeyCode == Keys.L && e.Control && e.Shift && !e.Alt)//Ctrl + Shift + L
+            //{
+            //    mnuImageLocation_Click(null, null);
+            //    return;
+            //}
+            //#endregion
 
 
         }
@@ -1508,77 +1506,32 @@ namespace ImageGlass
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1)
-            {
-                return;
-            }
-
-            NextPic(1); 
+            mnuMainViewNext_Click(null, e);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1)
-            {
-                return;
-            }
-
-            NextPic(-1); //xem anh truoc do
+            mnuMainViewPrevious_Click(null, e);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
-
-            NextPic(0);
+            mnuMainRefresh_Click(null, e);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            Bitmap bmp = new Bitmap(picMain.Image);
-            bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            picMain.Image = bmp;
-
-            try
-            {
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
-            }
-            catch { }
+            mnuMainRotateClockwise_Click(null, e);
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            Bitmap bmp = new Bitmap(picMain.Image);
-            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            picMain.Image = bmp;
-
-            try
-            {
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
-            }
-            catch { }
+            mnuMainRotateCounterclockwise_Click(null, e);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            OpenFile();
+            mnuMainOpenFile_Click(null, e);
         }
 
         private void btnThumb_Click(object sender, EventArgs e)
@@ -1595,76 +1548,27 @@ namespace ImageGlass
 
         private void btnActualSize_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            picMain.ActualSize();
+            mnuMainActualSize_Click(null, e);
         }
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            // Scale to Width
-            double frac = picMain.Width / (1.0 * picMain.Image.Width);
-            picMain.Zoom = (int)(frac * 100);
+            mnuMainScaleToWidth_Click(null, e);
         }
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            // Scale to Height
-            double frac = picMain.Height / (1.0 * picMain.Image.Height);
-            picMain.Zoom = (int)(frac * 100);
+            mnuMainScaleToHeight_Click(null, e);
         }
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            // Window adapt to image
-            Rectangle screen = Screen.FromControl(this).WorkingArea;
-            this.WindowState = FormWindowState.Normal;
-            this.Size = new Size(Width += picMain.Image.Width - picMain.Width,
-                                Height += picMain.Image.Height - picMain.Height);
-            //Application.DoEvents();
-            picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
-            this.Top = (screen.Height - this.Height) / 2 + screen.Top;
-            this.Left = (screen.Width - this.Width) / 2 + screen.Left;
+            mnuMainWindowAdaptImage_Click(null, e);
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
         {
-            int n = GlobalSetting.CurrentIndex;
-            string s = "0";
-            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"],
-                                    "0", true) == System.Windows.Forms.DialogResult.OK)
-            {
-                s = InputBox.Message;
-            }
-
-            if (int.TryParse(s, out n))
-            {
-                n--;
-
-                if (-1 < n && n < GlobalSetting.ImageList.Length)
-                {
-                    GlobalSetting.CurrentIndex = n;
-                    NextPic(0);
-                }
-            }
+            mnuMainGoto_Click(null, e);
         }
 
         private void btnCaro_Click(object sender, EventArgs e)
@@ -1681,35 +1585,17 @@ namespace ImageGlass
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            picMain.ZoomIn();
+            mnuMainZoomIn_Click(null, e);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            picMain.ZoomOut();
+            mnuMainZoomOut_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
-            if (btnZoomLock.Checked)
-            {
-                GlobalSetting.ZoomLockValue = picMain.Zoom;
-            }
-            else
-            {
-                GlobalSetting.ZoomLockValue = 100;
-                btnZoomLock.Checked = false;
-            }
+            mnuMainLockZoomRatio_Click(null, e);
         }
 
         private void timSlideShow_Tick(object sender, EventArgs e)
@@ -1728,116 +1614,22 @@ namespace ImageGlass
 
         private void btnSlideShow_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1)
-            {
-                return;
-            }
-
-            //stop slide show
-            if (!GlobalSetting.IsPlaySlideShow)
-            {
-                this.BackColor = Color.Black;
-                btnFullScreen.PerformClick();
-
-                timSlideShow.Start();
-                timSlideShow.Enabled = true;
-
-                GlobalSetting.IsPlaySlideShow = true;
-                mnuStartSlideshow.Visible = true;
-                mnuStopSlideshow.Visible = true;
-                mnuExitSlideshow.Visible = true;
-                mnuPhanCach.Visible = true;
-                mnuStartSlideshow.Enabled = false;
-                mnuStopSlideshow.Enabled = true;
-            }
-            else
-            {
-                btnFullScreen.PerformClick();
-                btnSlideShow_Click(sender, e);
-            }
-
-            this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
-                    , 5000);
+            mnuMainSlideShow_Click(null, e);
         }
 
         private void btnFullScreen_Click(object sender, EventArgs e)
         {
-            //full screen
-            if (!GlobalSetting.IsFullScreen)
-            {
-                SaveConfig();
-
-                this.FormBorderStyle = FormBorderStyle.None;
-                this.WindowState = FormWindowState.Normal;
-                GlobalSetting.IsFullScreen = true;
-                Application.DoEvents();
-                this.Bounds = Screen.FromControl(this).Bounds;
-
-                //Hide
-                toolMain.Visible = false;
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
-
-                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
-                    , 5000);
-            }
-            //exit full screen
-            else
-            {
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-
-                //windows state
-                string state_str = GlobalSetting.GetConfig("WindowsState", "Normal");
-                if (state_str == "Normal")
-                {
-                    this.WindowState = FormWindowState.Normal;
-                }
-                else if (state_str == "Maximized")
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-
-                //Windows Bound (Position + Size
-                this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
-
-                GlobalSetting.IsFullScreen = false;
-                Application.DoEvents();
-
-                //Show
-                if (!GlobalSetting.IsHideToolBar)
-                {
-                    toolMain.Visible = true;
-                    mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
-                }
-            }
+            mnuMainFullScreen_Click(null, e);
         }
 
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
-            {
-                return;
-            }
-
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-            p.StartInfo.Verb = "print";
-            p.Start();
+            mnuMainPrint_Click(null, e);
         }
 
         private void btnFacebook_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length > 0 && File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-            {
-                if (LocalSetting.FFacebook.IsDisposed)
-                {
-                    LocalSetting.FFacebook = new frmFacebook();
-                }
-
-                LocalSetting.FFacebook.Filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                GlobalSetting.IsForcedActive = false;
-                LocalSetting.FFacebook.Show();
-                LocalSetting.FFacebook.Activate();
-            }
+            mnuMainShareFacebook_Click(null, e);
         }
 
         private void btnExtension_Click(object sender, EventArgs e)
@@ -1891,171 +1683,52 @@ namespace ImageGlass
 
         private void mnuProperties_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length > 0)
-            {
-                ImageInfo.DisplayFileProperties(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
-                                                this.Handle);
-            }
+            mnuMainImageProperties_Click(null, e);
         }
 
         private void mnuImageLocation_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length > 0)
-            {
-                System.Diagnostics.Process.Start("explorer.exe", "/select,\"" + 
-                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\"");
-            }
+            mnuMainImageLocation_Click(null, e);
         }
 
         private void mnuCut_Click(object sender, EventArgs e)
         {
-            CutFile();
+            mnuMainCut_Click(null, e);
         }
 
         private void mnuMultiCut_Click(object sender, EventArgs e)
         {
-            CutMultiFile();
+            mnuMainCutMulti_Click(null, e);
         }
 
         private void mnuMultiCopy_Click(object sender, EventArgs e)
         {
-            CopyMultiFile();
+            mnuMainCopyMulti_Click(null, e);
         }
 
         private void mnuCopy_Click(object sender, EventArgs e)
         {
-            CopyFile();
+            mnuMainCopy_Click(null, e);
         }
 
         private void mnuDelete_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
-
-            DialogResult msg = MessageBox.Show(
-                                string.Format(GlobalSetting.LangPack.Items["frmMain._DeleteDialogText"], 
-                                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
-                                GlobalSetting.LangPack.Items["frmMain._DeleteDialogTitle"], 
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (msg == DialogResult.Yes)
-            {
-                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                try
-                {
-                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
-                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                    if (ext == ".gif")
-                    {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
-                        }
-                        catch { }
-
-                        //delete image list
-                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
-
-                        NextPic(0);
-                    }
-
-                    ImageInfo.DeleteFile(f);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            mnuMainDeleteFromHardDisk_Click(null, e);
         }
 
         private void mnuRecycleBin_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
-
-            DialogResult msg = MessageBox.Show(
-                                string.Format(GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogText"],
-                                                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
-                                GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogTitle"],
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (msg == DialogResult.Yes)
-            {
-                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                try
-                {
-                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
-                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                    if (ext == ".gif")
-                    {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
-                        }
-                        catch { }
-
-                        //delete image list
-                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);                        
-                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
-
-                        NextPic(0);
-                    }
-
-                    ImageInfo.DeleteFile(f, true);
-                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            mnuMainMoveToRecycleBin_Click(null, e);
         }
 
         private void mnuWallpaper_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
-            {
-                Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-                p.StartInfo.Arguments = "setwallpaper " + //name of param
-                                        "\"" + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\" " + //arg 1
-                                        "\"" + "0" + "\" "; //arg 2
-                
-                p.Start();
-            }
+            mnuMainSetAsDesktop_Click(null, e);
         }
 
         private void mnuExtractFrames_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
-            {
-                FolderBrowserDialog f = new FolderBrowserDialog();
-                f.Description = GlobalSetting.LangPack.Items["frmMain._ExtractFrameText"];
-                f.ShowNewFolderButton = true;
-                DialogResult res = f.ShowDialog();
-
-                if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
-                {
-                    Animation ani = new Animation();
-                    ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), 
-                                                f.SelectedPath);                    
-                }
-
-                f = null;
-            }
+            mnuMainExtractFrames_Click(null, e);
         }
 
         private void btnHelp_Click(object sender, EventArgs e)
@@ -2066,18 +1739,7 @@ namespace ImageGlass
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-            if (filename == "")
-            {
-                filename = "untitled.png";
-            }
-
-            Library.Image.ImageInfo.ConvertImage(picMain.Image, filename);
+            mnuMainSaveAs_Click(null, e);
         }
 
 
@@ -2131,7 +1793,7 @@ namespace ImageGlass
 
         private void mnuRename_Click(object sender, EventArgs e)
         {
-            RenameImage();
+            mnuMainRename_Click(null, e);
         }
 
         private void mnuExitSlideshow_Click(object sender, EventArgs e)
@@ -2151,11 +1813,7 @@ namespace ImageGlass
 
         private void mnuCopyImagePath_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Clipboard.SetText(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-            }
-            catch { }
+            mnuMainCopyImagePath_Click(null, e);
         }
 
         private void mnuStartSlideshow_Click(object sender, EventArgs e)
@@ -2247,16 +1905,30 @@ namespace ImageGlass
 
         private void mnuClearClipboard_Click(object sender, EventArgs e)
         {
-            //clear copied files in clipboard
-            if (GlobalSetting.StringClipboard.Count > 0)
-            {
-                GlobalSetting.StringClipboard = new StringCollection();
-                Clipboard.Clear();
-                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
-            }
+            mnuMainClearClipboard_Click(null, e);
         }
 
         private void mnuPasteImage_Click(object sender, EventArgs e)
+        {
+            mnuMainOpenImageData_Click(null, e);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        private void mnuMainOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void mnuMainOpenImageData_Click(object sender, EventArgs e)
         {
             //Is there a file in clipboard ?--------------------------------------------------
             if (Clipboard.ContainsFileDropList())
@@ -2289,7 +1961,552 @@ namespace ImageGlass
             }
         }
 
+        private void mnuMainSaveAs_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
 
-        
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            if (filename == "")
+            {
+                filename = "untitled.png";
+            }
+
+            Library.Image.ImageInfo.ConvertImage(picMain.Image, filename);
+        }
+
+        private void mnuMainRefresh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            NextPic(0);
+        }
+
+        private void mnuMainOpenWith_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainViewNext_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length < 1)
+            {
+                return;
+            }
+
+            NextPic(1);
+        }
+
+        private void mnuMainViewPrevious_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length < 1)
+            {
+                return;
+            }
+
+            NextPic(-1);
+        }
+
+        private void mnuMainGoto_Click(object sender, EventArgs e)
+        {
+            int n = GlobalSetting.CurrentIndex;
+            string s = "0";
+            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"],
+                                    "0", true) == System.Windows.Forms.DialogResult.OK)
+            {
+                s = InputBox.Message;
+            }
+
+            if (int.TryParse(s, out n))
+            {
+                n--;
+
+                if (-1 < n && n < GlobalSetting.ImageList.Length)
+                {
+                    GlobalSetting.CurrentIndex = n;
+                    NextPic(0);
+                }
+            }
+        }
+
+        private void mnuMainGotoFirst_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.CurrentIndex = 0;
+            NextPic(0);
+        }
+
+        private void mnuMainGotoLast_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
+            NextPic(0);
+        }
+
+        private void mnuMainFullScreen_Click(object sender, EventArgs e)
+        {
+            //full screen
+            if (!GlobalSetting.IsFullScreen)
+            {
+                SaveConfig();
+
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.WindowState = FormWindowState.Normal;
+                GlobalSetting.IsFullScreen = true;
+                Application.DoEvents();
+                this.Bounds = Screen.FromControl(this).Bounds;
+
+                //Hide
+                toolMain.Visible = false;
+                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
+
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
+                    , 5000);
+            }
+            //exit full screen
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+
+                //windows state
+                string state_str = GlobalSetting.GetConfig("WindowsState", "Normal");
+                if (state_str == "Normal")
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+                else if (state_str == "Maximized")
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+
+                //Windows Bound (Position + Size
+                this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
+
+                GlobalSetting.IsFullScreen = false;
+                Application.DoEvents();
+
+                //Show
+                if (!GlobalSetting.IsHideToolBar)
+                {
+                    toolMain.Visible = true;
+                    mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
+                }
+            }
+        }
+
+        private void mnuMainSlideShow_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length < 1)
+            {
+                return;
+            }
+
+            //stop slide show
+            if (!GlobalSetting.IsPlaySlideShow)
+            {
+                this.BackColor = Color.Black;
+                btnFullScreen.PerformClick();
+
+                timSlideShow.Start();
+                timSlideShow.Enabled = true;
+
+                GlobalSetting.IsPlaySlideShow = true;
+                mnuStartSlideshow.Visible = true;
+                mnuStopSlideshow.Visible = true;
+                mnuExitSlideshow.Visible = true;
+                mnuPhanCach.Visible = true;
+                mnuStartSlideshow.Enabled = false;
+                mnuStopSlideshow.Enabled = true;
+            }
+            else
+            {
+                btnFullScreen.PerformClick();
+                btnSlideShow_Click(sender, e);
+            }
+
+            this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
+                    , 5000);
+        }
+
+        private void mnuMainPrint_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            {
+                return;
+            }
+
+            Process p = new Process();
+            p.StartInfo.FileName = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            p.StartInfo.Verb = "print";
+            p.Start();
+        }
+
+        private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            Bitmap bmp = new Bitmap(picMain.Image);
+            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            picMain.Image = bmp;
+
+            try
+            {
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+            }
+            catch { }
+        }
+
+        private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            Bitmap bmp = new Bitmap(picMain.Image);
+            bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            picMain.Image = bmp;
+
+            try
+            {
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+            }
+            catch { }
+        }
+
+        private void mnuMainZoomIn_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            picMain.ZoomIn();
+        }
+
+        private void mnuMainZoomOut_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            picMain.ZoomOut();
+        }
+
+        private void mnuMainActualSize_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            picMain.ActualSize();
+        }
+
+        private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
+        {
+            if (btnZoomLock.Checked)
+            {
+                GlobalSetting.ZoomLockValue = picMain.Zoom;
+            }
+            else
+            {
+                GlobalSetting.ZoomLockValue = 100;
+                btnZoomLock.Checked = false;
+            }
+        }
+
+        private void mnuMainScaleToWidth_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            // Scale to Width
+            double frac = picMain.Width / (1.0 * picMain.Image.Width);
+            picMain.Zoom = (int)(frac * 100);
+        }
+
+        private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            // Scale to Height
+            double frac = picMain.Height / (1.0 * picMain.Image.Height);
+            picMain.Zoom = (int)(frac * 100);
+        }
+
+        private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            // Window adapt to image
+            Rectangle screen = Screen.FromControl(this).WorkingArea;
+            this.WindowState = FormWindowState.Normal;
+            this.Size = new Size(Width += picMain.Image.Width - picMain.Width,
+                                Height += picMain.Image.Height - picMain.Height);
+            //Application.DoEvents();
+            picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
+            this.Top = (screen.Height - this.Height) / 2 + screen.Top;
+            this.Left = (screen.Width - this.Width) / 2 + screen.Left;
+        }
+
+        private void mnuMainRename_Click(object sender, EventArgs e)
+        {
+            RenameImage();
+        }
+
+        private void mnuMainMoveToRecycleBin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            DialogResult msg = MessageBox.Show(
+                                string.Format(GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogText"],
+                                                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
+                                GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogTitle"],
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (msg == DialogResult.Yes)
+            {
+                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                try
+                {
+                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
+                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
+                    if (ext == ".gif")
+                    {
+                        try
+                        {
+                            //delete thumbnail list
+                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
+                        }
+                        catch { }
+
+                        //delete image list
+                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
+                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+
+                        NextPic(0);
+                    }
+
+                    ImageInfo.DeleteFile(f, true);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void mnuMainDeleteFromHardDisk_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                {
+                    return;
+                }
+            }
+            catch { return; }
+
+            DialogResult msg = MessageBox.Show(
+                                string.Format(GlobalSetting.LangPack.Items["frmMain._DeleteDialogText"],
+                                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
+                                GlobalSetting.LangPack.Items["frmMain._DeleteDialogTitle"],
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (msg == DialogResult.Yes)
+            {
+                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                try
+                {
+                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
+                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
+                    if (ext == ".gif")
+                    {
+                        try
+                        {
+                            //delete thumbnail list
+                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
+                        }
+                        catch { }
+
+                        //delete image list
+                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
+                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+
+                        NextPic(0);
+                    }
+
+                    ImageInfo.DeleteFile(f);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void mnuMainExtractFrames_Click(object sender, EventArgs e)
+        {
+            if (!GlobalSetting.IsImageError)
+            {
+                FolderBrowserDialog f = new FolderBrowserDialog();
+                f.Description = GlobalSetting.LangPack.Items["frmMain._ExtractFrameText"];
+                f.ShowNewFolderButton = true;
+                DialogResult res = f.ShowDialog();
+
+                if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
+                {
+                    Animation ani = new Animation();
+                    ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
+                                                f.SelectedPath);
+                }
+
+                f = null;
+            }
+        }
+
+        private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
+        {
+            if (!GlobalSetting.IsImageError)
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+                p.StartInfo.Arguments = "setwallpaper " + //name of param
+                                        "\"" + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\" " + //arg 1
+                                        "\"" + "0" + "\" "; //arg 2
+
+                p.Start();
+            }
+        }
+
+        private void mnuMainImageLocation_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length > 0)
+            {
+                System.Diagnostics.Process.Start("explorer.exe", "/select,\"" +
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\"");
+            }
+        }
+
+        private void mnuMainImageProperties_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length > 0)
+            {
+                ImageInfo.DisplayFileProperties(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
+                                                this.Handle);
+            }
+        }
+
+        private void mnuMainCopy_Click(object sender, EventArgs e)
+        {
+            CopyFile();
+        }
+
+        private void mnuMainCopyMulti_Click(object sender, EventArgs e)
+        {
+            CopyMultiFile();
+        }
+
+        private void mnuMainCut_Click(object sender, EventArgs e)
+        {
+            CutFile();
+        }
+
+        private void mnuMainCutMulti_Click(object sender, EventArgs e)
+        {
+            CutMultiFile();
+        }
+
+        private void mnuMainCopyImagePath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            }
+            catch { }
+        }
+
+        private void mnuMainClearClipboard_Click(object sender, EventArgs e)
+        {
+            //clear copied files in clipboard
+            if (GlobalSetting.StringClipboard.Count > 0)
+            {
+                GlobalSetting.StringClipboard = new StringCollection();
+                Clipboard.Clear();
+                this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
+            }
+        }
+
+        private void mnuMainShareFacebook_Click(object sender, EventArgs e)
+        {
+            if (GlobalSetting.ImageList.Length > 0 && File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+            {
+                if (LocalSetting.FFacebook.IsDisposed)
+                {
+                    LocalSetting.FFacebook = new frmFacebook();
+                }
+
+                LocalSetting.FFacebook.Filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                GlobalSetting.IsForcedActive = false;
+                LocalSetting.FFacebook.Show();
+                LocalSetting.FFacebook.Activate();
+            }
+        }
+
+        private void mnuMainToolbar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainCheckBackground_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainSettings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainAbout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuMainReportIssue_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
