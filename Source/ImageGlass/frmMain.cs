@@ -1747,7 +1747,7 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("https://code.google.com/p/imageglass/issues/list");
+                Process.Start("https://github.com/d2phap/ImageGlass/issues");
             }
             catch { }
         }
