@@ -45,7 +45,7 @@ namespace ImageGlass.Core
             {
                 im = Interpreter.load(path);
             }
-            catch
+            catch (Exception ex)
             { }
             Set(im);
         }

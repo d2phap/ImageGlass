@@ -4,6 +4,8 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Drawing.IconLib;
 
 namespace ImageGlass.Core
 {
@@ -12,17 +14,39 @@ namespace ImageGlass.Core
 
         public static Bitmap load(string path)
         {
-            if (path.ToLower().EndsWith(".tga")) return Targa(path);
-            if (path.ToLower().EndsWith(".gif")) return new Bitmap(path);
+            if (path.ToLower().EndsWith(".tga")) return TargaWhatTheFuck(path);
 
             Bitmap bmp = null;
 
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 bmp = new Bitmap(fs, true);
+
+                if (bmp.RawFormat.Equals(ImageFormat.Gif))
+                {
+                    bmp = new Bitmap(path);
+                }
+                else if (bmp.RawFormat.Equals(ImageFormat.Icon))
+                {
+                    bmp = ReadIconFile(path);
+                }
             }
 
             return bmp;
+        }
+
+
+        public static Bitmap ReadIconFile(string path)
+        {
+            MultiIcon mIcon = new MultiIcon();
+            mIcon.Load(path);
+
+            //Try to get the largest image of it
+            SingleIcon sIcon = mIcon[0];
+            IconImage iImage = sIcon.OrderByDescending(ico => ico.Size.Width).ToList()[0];
+
+            //Convert to bitmap
+            return iImage.Icon.ToBitmap();
         }
 
         // Tested on files created by:

@@ -276,31 +276,8 @@ namespace ImageGlass
 
             try
             {
-                //Check if the image is a icon or not
-                if (Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower() == ".ico")
-                {
-                    try
-                    {
-                        MultiIcon mIcon = new MultiIcon();
-                        mIcon.Load(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-                        
-                        //Try to get the largest image of it
-                        SingleIcon sIcon = mIcon[0];
-                        IconImage iImage = sIcon.OrderByDescending(ico => ico.Size.Width).ToList()[0];
-
-                        //Convert to bitmap
-                        im = iImage.Icon.ToBitmap();
-                    }
-                    catch //If a invalid icon
-                    {
-                        im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                        
-                    }
-                }
-                else //If a normal image
-                {
-                    im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                }
+                //Read imaeg data
+                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
@@ -1406,6 +1383,11 @@ namespace ImageGlass
 
             sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
             sp1.SplitterWidth = 1;
+
+
+
+            
+
         }
 
         public void LoadFromParams(string[] args)
@@ -1958,6 +1940,21 @@ namespace ImageGlass
                 {
                     Prepare(Clipboard.GetText());
                 }
+                    //get image from Base64string 
+                else
+                {
+                    try
+                    {
+                        // data:image/jpeg;base64,xxxxxxxx
+                        string base64str = Clipboard.GetText().Substring(Clipboard.GetText().LastIndexOf(',') + 1);
+                        var file_bytes = Convert.FromBase64String(base64str);
+                        var file_stream = new MemoryStream(file_bytes);
+                        var file_image = Image.FromStream(file_stream);
+
+                        picMain.Image = file_image;
+                    }
+                    catch { }
+                }                
             }
         }
 

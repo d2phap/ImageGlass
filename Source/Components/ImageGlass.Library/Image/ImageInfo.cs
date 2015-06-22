@@ -85,7 +85,7 @@ namespace ImageGlass.Library.Image
         public static void ConvertImage(System.Drawing.Image pic, string filename)
         {
             SaveFileDialog s = new SaveFileDialog();
-            s.Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf";
+            s.Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.txt)|*.txt";
             s.FileName = Path.GetFileNameWithoutExtension(filename);
             string ext = Path.GetExtension(filename).Substring(1);
 
@@ -151,6 +151,27 @@ namespace ImageGlass.Library.Image
                         break;
                     case 9:
                         pic.Save(s.FileName, ImageFormat.Wmf);
+                        break;
+                    case 10:
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            try
+                            {
+                                pic.Save(ms, pic.RawFormat);
+                                string base64string = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+
+                                using (StreamWriter fs = new StreamWriter(s.FileName))
+                                {
+                                    fs.Write(base64string);
+                                    fs.Flush();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        
                         break;
                 }
             }

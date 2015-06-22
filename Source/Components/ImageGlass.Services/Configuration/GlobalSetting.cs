@@ -56,7 +56,7 @@ namespace ImageGlass.Services.Configuration
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _supportedExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;";
+                                                     "*.exif;*.wmf;*.emf;*.tga";
         private static string _contextMenuExtensions = "";
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;

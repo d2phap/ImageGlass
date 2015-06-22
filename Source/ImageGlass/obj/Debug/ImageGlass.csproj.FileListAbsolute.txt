@@ -110,12 +110,10 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageListView.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageListView.xml
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.pdb
-F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.xml
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.pdb
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.pdb
