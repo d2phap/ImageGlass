@@ -224,6 +224,12 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
             this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             this.Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
+
+
+            this.Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v2.1 
+            this.Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v2.1 
+
+
             this.Items.Add("frmExtension._Text", "Extension Manager");
             //this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions"); //removed v2.0 final
             this.Items.Add("frmExtension.btnGetMoreExt", "Get more extensions"); //v2.0 final

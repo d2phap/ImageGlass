@@ -205,7 +205,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -297,6 +299,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
+      <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>
+      <Name>ImageGlass.ImageBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj">
       <Project>{0c295fb8-c6c6-4a40-9f19-05a43f353a04}</Project>
       <Name>ImageGlass.ImageListView</Name>
@@ -312,10 +318,6 @@
     <ProjectReference Include="..\Components\ImageGlass.Core\ImageGlass.Core.csproj">
       <Project>{8540D406-E362-4ECC-9761-F978996354DF}</Project>
       <Name>ImageGlass.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
-      <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>
-      <Name>ImageGlass.ImageBox</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>

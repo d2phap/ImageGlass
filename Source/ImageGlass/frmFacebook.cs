@@ -42,7 +42,7 @@ namespace ImageGlass
 
         
         private const string AppId = "435065586551768";
-        private const string ExtendedPermissions = "user_about_me,publish_stream,offline_access";
+        private const string ExtendedPermissions = "user_about_me,publish_actions";
         private FacebookClient _fb;
         private string _filename = "";
 

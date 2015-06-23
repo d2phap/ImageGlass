@@ -144,8 +144,8 @@
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainExtensionManager = new System.Windows.Forms.ToolStripMenuItem();
-            this.extensionManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
@@ -870,7 +870,7 @@
             this.mnuMainShare,
             this.toolStripSeparator9,
             this.mnuMainLayout,
-            this.mnuMainExtensionManager,
+            this.mnuMainTools,
             this.mnuMainSettings,
             this.mnuMainAbout,
             this.toolStripMenuItem21,
@@ -1347,45 +1347,51 @@
             // 
             // mnuMainToolbar
             // 
+            this.mnuMainToolbar.Checked = true;
+            this.mnuMainToolbar.CheckOnClick = true;
+            this.mnuMainToolbar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mnuMainToolbar.Name = "mnuMainToolbar";
             this.mnuMainToolbar.ShortcutKeyDisplayString = "";
             this.mnuMainToolbar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mnuMainToolbar.Size = new System.Drawing.Size(258, 22);
-            this.mnuMainToolbar.Text = "Hide toolbar";
+            this.mnuMainToolbar.Size = new System.Drawing.Size(228, 22);
+            this.mnuMainToolbar.Text = "Toolbar";
             this.mnuMainToolbar.Click += new System.EventHandler(this.mnuMainToolbar_Click);
             // 
             // mnuMainThumbnailBar
             // 
+            this.mnuMainThumbnailBar.CheckOnClick = true;
             this.mnuMainThumbnailBar.Name = "mnuMainThumbnailBar";
             this.mnuMainThumbnailBar.ShortcutKeyDisplayString = "";
             this.mnuMainThumbnailBar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.mnuMainThumbnailBar.Size = new System.Drawing.Size(258, 22);
-            this.mnuMainThumbnailBar.Text = "Show Thumbnail panel";
+            this.mnuMainThumbnailBar.Size = new System.Drawing.Size(228, 22);
+            this.mnuMainThumbnailBar.Text = "Thumbnail panel";
             this.mnuMainThumbnailBar.Click += new System.EventHandler(this.mnuMainThumbnailBar_Click);
             // 
             // mnuMainCheckBackground
             // 
+            this.mnuMainCheckBackground.CheckOnClick = true;
             this.mnuMainCheckBackground.Name = "mnuMainCheckBackground";
             this.mnuMainCheckBackground.ShortcutKeyDisplayString = "";
             this.mnuMainCheckBackground.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.mnuMainCheckBackground.Size = new System.Drawing.Size(258, 22);
-            this.mnuMainCheckBackground.Text = "Show checked background";
+            this.mnuMainCheckBackground.Size = new System.Drawing.Size(228, 22);
+            this.mnuMainCheckBackground.Text = "Checked background";
             this.mnuMainCheckBackground.Click += new System.EventHandler(this.mnuMainCheckBackground_Click);
+            // 
+            // mnuMainTools
+            // 
+            this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainExtensionManager});
+            this.mnuMainTools.Name = "mnuMainTools";
+            this.mnuMainTools.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainTools.Text = "&Tools";
             // 
             // mnuMainExtensionManager
             // 
-            this.mnuMainExtensionManager.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.extensionManagerToolStripMenuItem});
             this.mnuMainExtensionManager.Name = "mnuMainExtensionManager";
-            this.mnuMainExtensionManager.Size = new System.Drawing.Size(288, 22);
-            this.mnuMainExtensionManager.Text = "&Tools";
-            // 
-            // extensionManagerToolStripMenuItem
-            // 
-            this.extensionManagerToolStripMenuItem.Name = "extensionManagerToolStripMenuItem";
-            this.extensionManagerToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Shift+E";
-            this.extensionManagerToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.extensionManagerToolStripMenuItem.Text = "&Extension manager";
+            this.mnuMainExtensionManager.ShortcutKeyDisplayString = "Ctrl+Shift+E";
+            this.mnuMainExtensionManager.Size = new System.Drawing.Size(246, 22);
+            this.mnuMainExtensionManager.Text = "&Extension manager";
+            this.mnuMainExtensionManager.Click += new System.EventHandler(this.mnuMainExtensionManager_Click);
             // 
             // mnuMainSettings
             // 
@@ -1460,7 +1466,7 @@
             this.sp0.Panel2.Controls.Add(this.bookmarksBar);
             this.sp0.Panel2Collapsed = true;
             this.sp0.Size = new System.Drawing.Size(762, 471);
-            this.sp0.SplitterDistance = 596;
+            this.sp0.SplitterDistance = 595;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;
@@ -1496,11 +1502,13 @@
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
+            this.picMain.HorizontalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
             this.picMain.Size = new System.Drawing.Size(762, 438);
             this.picMain.TabIndex = 1;
+            this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
@@ -1653,7 +1661,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainOpenWith;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainExtensionManager;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainTools;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSettings;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateCounterclockwise;
@@ -1676,7 +1684,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainCopyImagePath;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem mnuMainClearClipboard;
-        private System.Windows.Forms.ToolStripMenuItem extensionManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainExtensionManager;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRename;
         private System.Windows.Forms.ToolStripMenuItem mnuMainMoveToRecycleBin;

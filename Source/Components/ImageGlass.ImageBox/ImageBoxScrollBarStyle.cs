@@ -1,4 +1,8 @@
-﻿namespace ImageGlass
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ImageGlass
 {
   // Cyotek ImageBox
   // Copyright (c) 2010-2015 Cyotek Ltd.
@@ -10,23 +14,23 @@
   // If you use this control in your applications, attribution, donations or contributions are welcome.
 
   /// <summary>
-  ///   Specifies the display styles for the background texture grid
+  /// Specifies the style of a scroll bar
   /// </summary>
-  public enum ImageBoxGridDisplayMode
+  public enum ImageBoxScrollBarStyle
   {
     /// <summary>
-    ///   No background.
+    /// The scroll bar is automatically displayed when needed.
     /// </summary>
-    None,
+    Auto,
 
     /// <summary>
-    ///   Background is displayed in the control's client area.
+    /// The scroll bar is always shown
     /// </summary>
-    Client,
+    Show,
 
     /// <summary>
-    ///   Background is displayed only in the image region.
+    /// The scroll bar is hidden
     /// </summary>
-    Image
+    Hide
   }
 }

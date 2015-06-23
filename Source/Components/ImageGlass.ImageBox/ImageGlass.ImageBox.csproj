@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageBox.cs">
-      <SubType>component</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ImageBoxMouseWheelMessageFilter.cs" />
+    <Compile Include="ImageBoxScrollBarStyle.cs" />
+    <Compile Include="ImageBoxScrollProperties.cs" />
     <Compile Include="ImageBoxZoomActions.cs" />
     <Compile Include="ImageBoxActionSources.cs" />
     <Compile Include="ImageBoxBorderStyle.cs" />
@@ -59,16 +62,7 @@
     <Compile Include="ImageBoxNativeMethods.cs" />
     <Compile Include="ImageBoxSizeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScrollControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ScrollProperties.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="VirtualScrollableControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ZoomLevelCollection.cs" />
+    <Compile Include="ImageBoxZoomLevelCollection.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>

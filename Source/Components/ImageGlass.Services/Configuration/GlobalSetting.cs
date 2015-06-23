@@ -66,13 +66,16 @@ namespace ImageGlass.Services.Configuration
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
         private static Color _backgroundColor = Color.White;
-        private static bool _isHideToolBar = false;
+        private static bool _isShowToolBar = true;
         private static bool _isLoopBackSlideShow = false;
         private static bool _isImageBoosterBack = false;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
         private static StringCollection _stringClipboard = new StringCollection();
         private static bool _isAllowMultiInstances = true;
+        private static bool _isShowCheckedBackground = false;
+        private static bool _isTempMemoryData = false;
+
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -265,15 +268,15 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
-        public static bool IsHideToolBar
+        public static bool IsShowToolBar
         {
             get
             {
-                return GlobalSetting._isHideToolBar;
+                return GlobalSetting._isShowToolBar;
             }
             set
             {
-                GlobalSetting._isHideToolBar = value;
+                GlobalSetting._isShowToolBar = value;
             }
         }
 
@@ -388,6 +391,24 @@ namespace ImageGlass.Services.Configuration
             {
                 _isAllowMultiInstances = value;
             }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that checked background is shown or not
+        /// </summary>
+        public static bool IsShowCheckedBackground
+        {
+            get { return GlobalSetting._isShowCheckedBackground; }
+            set { GlobalSetting._isShowCheckedBackground = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
+        /// </summary>
+        public static bool IsTempMemoryData
+        {
+            get { return GlobalSetting._isTempMemoryData; }
+            set { GlobalSetting._isTempMemoryData = value; }
         }
 
         #endregion

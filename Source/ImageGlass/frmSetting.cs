@@ -383,8 +383,8 @@ namespace ImageGlass
 
         private void chkHideToolBar_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.IsHideToolBar = chkHideToolBar.Checked;
-            GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsHideToolBar.ToString());
+            GlobalSetting.IsShowToolBar = chkHideToolBar.Checked;
+            GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsShowToolBar.ToString());
         }
 
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
