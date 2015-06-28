@@ -1086,7 +1086,6 @@ namespace ImageGlass
             btnExtension.Image = ImageGlass.Properties.Resources.extension;
             btnSetting.Image = ImageGlass.Properties.Resources.settings;
             btnHelp.Image = ImageGlass.Properties.Resources.about;
-            btnReport.Image = ImageGlass.Properties.Resources.report;
 
             GlobalSetting.SetConfig("Theme", "default");
         }
@@ -1096,7 +1095,7 @@ namespace ImageGlass
         /// Apply changing theme
         /// </summary>
         private void LoadTheme()
-        {
+        { 
             string themeFile = GlobalSetting.GetConfig("Theme", "default");
 
             if (File.Exists(themeFile))
@@ -1179,7 +1178,7 @@ namespace ImageGlass
                 try { btnThumb.Image = Image.FromFile(dir + t.thumbnail); }
                 catch { btnThumb.Image = ImageGlass.Properties.Resources.thumbnail; }
 
-                try { btnCaro.Image = Image.FromFile(dir + t.caro); }
+                try { btnCaro.Image = Image.FromFile(dir + t.checkBackground); }
                 catch { btnCaro.Image = ImageGlass.Properties.Resources.background; }
 
                 try { btnFullScreen.Image = Image.FromFile(dir + t.fullscreen); }
@@ -1206,8 +1205,8 @@ namespace ImageGlass
                 try { btnHelp.Image = Image.FromFile(dir + t.about); }
                 catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
 
-                try { btnReport.Image = Image.FromFile(dir + t.report); }
-                catch { btnReport.Image = ImageGlass.Properties.Resources.report; }
+                try { btnMenu.Image = Image.FromFile(dir + t.about); }
+                catch { btnMenu.Image = ImageGlass.Properties.Resources.about; }
 
                 GlobalSetting.SetConfig("Theme", themeFile);
             }
@@ -1460,12 +1459,11 @@ namespace ImageGlass
                 btnExtension.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnExtension"];
                 btnSetting.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSetting"];
                 btnHelp.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnHelp"];
-                btnReport.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnReport"];
 
                 mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
                 mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
                 mnuExitSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuExitSlideshow"];
-                mnuEditWithPaint.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditWithPaint"];
+                mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditWithPaint"];
                 mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
                 mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
 
@@ -1628,7 +1626,7 @@ namespace ImageGlass
             mnuMainToolbar_Click(null, e);
         }
 
-        private void mnuEditWithPaint_Click(object sender, EventArgs e)
+        private void mnuEditImage_Click(object sender, EventArgs e)
         {
             if (!GlobalSetting.IsImageError)
             {

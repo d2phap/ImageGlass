@@ -249,6 +249,7 @@
     <None Include="Resources\scaletoheight.png" />
     <None Include="Resources\scaletowidth.png" />
     <None Include="Resources\report.png" />
+    <None Include="Resources\menu.png" />
     <Content Include="Resources\top3.png" />
     <Content Include="imageglass.ico" />
     <None Include="Resources\Hand_Down.png" />

@@ -501,13 +501,13 @@
             this.txtReferences.BackColor = System.Drawing.Color.White;
             this.txtReferences.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtReferences.ForeColor = System.Drawing.Color.Black;
+            this.txtReferences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtReferences.Location = new System.Drawing.Point(20, 5);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(488, 385);
+            this.txtReferences.Size = new System.Drawing.Size(488, 381);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 

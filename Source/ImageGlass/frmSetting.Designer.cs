@@ -74,6 +74,16 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.lblOpenWith = new System.Windows.Forms.Label();
+            this.tabOpenWith = new System.Windows.Forms.TabPage();
+            this.lvOpenWith = new System.Windows.Forms.ListView();
+            this.lblOpwnWithDescription = new System.Windows.Forms.Label();
+            this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
+            this.clnIcon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnOpenWithAdd = new System.Windows.Forms.Button();
+            this.btnOpenWithRemove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -85,6 +95,7 @@
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
+            this.tabOpenWith.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -184,7 +195,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 481);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 479);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -292,7 +303,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 481);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 479);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -623,6 +634,7 @@
             this.tab1.Controls.Add(this.tabGeneral);
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Controls.Add(this.tabLanguage);
+            this.tab1.Controls.Add(this.tabOpenWith);
             this.tab1.Location = new System.Drawing.Point(-7, -6);
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
@@ -640,6 +652,7 @@
             // sp0.Panel1
             // 
             this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.sp0.Panel1.Controls.Add(this.lblOpenWith);
             this.sp0.Panel1.Controls.Add(this.lblLanguage);
             this.sp0.Panel1.Controls.Add(this.lblGeneral);
             this.sp0.Panel1.Controls.Add(this.lblFileAssociations);
@@ -651,6 +664,108 @@
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
+            // 
+            // lblOpenWith
+            // 
+            this.lblOpenWith.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOpenWith.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblOpenWith.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblOpenWith.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblOpenWith.ForeColor = System.Drawing.Color.Black;
+            this.lblOpenWith.Location = new System.Drawing.Point(0, 120);
+            this.lblOpenWith.Name = "lblOpenWith";
+            this.lblOpenWith.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblOpenWith.Size = new System.Drawing.Size(155, 40);
+            this.lblOpenWith.TabIndex = 4;
+            this.lblOpenWith.Tag = "0";
+            this.lblOpenWith.Text = "Open with...";
+            this.lblOpenWith.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblOpenWith.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblOpenWith.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblOpenWith.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblOpenWith.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            // 
+            // tabOpenWith
+            // 
+            this.tabOpenWith.Controls.Add(this.btnOpenWithRemove);
+            this.tabOpenWith.Controls.Add(this.btnOpenWithAdd);
+            this.tabOpenWith.Controls.Add(this.lblOpwnWithDescription);
+            this.tabOpenWith.Controls.Add(this.lvOpenWith);
+            this.tabOpenWith.Location = new System.Drawing.Point(4, 4);
+            this.tabOpenWith.Name = "tabOpenWith";
+            this.tabOpenWith.Size = new System.Drawing.Size(551, 479);
+            this.tabOpenWith.TabIndex = 3;
+            this.tabOpenWith.Text = "tabPage1";
+            this.tabOpenWith.UseVisualStyleBackColor = true;
+            // 
+            // lvOpenWith
+            // 
+            this.lvOpenWith.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvOpenWith.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clnIcon,
+            this.clnName,
+            this.clnPath});
+            this.lvOpenWith.FullRowSelect = true;
+            this.lvOpenWith.LargeImageList = this.imglOpenWith;
+            this.lvOpenWith.Location = new System.Drawing.Point(21, 42);
+            this.lvOpenWith.Name = "lvOpenWith";
+            this.lvOpenWith.Size = new System.Drawing.Size(512, 375);
+            this.lvOpenWith.TabIndex = 0;
+            this.lvOpenWith.UseCompatibleStateImageBehavior = false;
+            this.lvOpenWith.View = System.Windows.Forms.View.Details;
+            // 
+            // lblOpwnWithDescription
+            // 
+            this.lblOpwnWithDescription.AutoSize = true;
+            this.lblOpwnWithDescription.Location = new System.Drawing.Point(18, 18);
+            this.lblOpwnWithDescription.Name = "lblOpwnWithDescription";
+            this.lblOpwnWithDescription.Size = new System.Drawing.Size(225, 15);
+            this.lblOpwnWithDescription.TabIndex = 20;
+            this.lblOpwnWithDescription.Text = "Drag an item up or down to set the order.";
+            // 
+            // imglOpenWith
+            // 
+            this.imglOpenWith.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imglOpenWith.ImageSize = new System.Drawing.Size(16, 16);
+            this.imglOpenWith.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // clnIcon
+            // 
+            this.clnIcon.Text = "";
+            this.clnIcon.Width = 40;
+            // 
+            // clnName
+            // 
+            this.clnName.Text = "Display name";
+            this.clnName.Width = 200;
+            // 
+            // clnPath
+            // 
+            this.clnPath.Text = "Path";
+            this.clnPath.Width = 250;
+            // 
+            // btnOpenWithAdd
+            // 
+            this.btnOpenWithAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenWithAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenWithAdd.Image")));
+            this.btnOpenWithAdd.Location = new System.Drawing.Point(463, 427);
+            this.btnOpenWithAdd.Name = "btnOpenWithAdd";
+            this.btnOpenWithAdd.Size = new System.Drawing.Size(32, 29);
+            this.btnOpenWithAdd.TabIndex = 21;
+            this.btnOpenWithAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenWithRemove
+            // 
+            this.btnOpenWithRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenWithRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenWithRemove.Image")));
+            this.btnOpenWithRemove.Location = new System.Drawing.Point(501, 427);
+            this.btnOpenWithRemove.Name = "btnOpenWithRemove";
+            this.btnOpenWithRemove.Size = new System.Drawing.Size(32, 29);
+            this.btnOpenWithRemove.TabIndex = 22;
+            this.btnOpenWithRemove.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
@@ -683,6 +798,8 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
+            this.tabOpenWith.ResumeLayout(false);
+            this.tabOpenWith.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -733,5 +850,15 @@
         private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
         private System.Windows.Forms.CheckBox chkAllowMultiInstances;
+        private System.Windows.Forms.Label lblOpenWith;
+        private System.Windows.Forms.TabPage tabOpenWith;
+        private System.Windows.Forms.Label lblOpwnWithDescription;
+        private System.Windows.Forms.ListView lvOpenWith;
+        private System.Windows.Forms.ImageList imglOpenWith;
+        private System.Windows.Forms.ColumnHeader clnIcon;
+        private System.Windows.Forms.ColumnHeader clnName;
+        private System.Windows.Forms.ColumnHeader clnPath;
+        private System.Windows.Forms.Button btnOpenWithRemove;
+        private System.Windows.Forms.Button btnOpenWithAdd;
     }
 }

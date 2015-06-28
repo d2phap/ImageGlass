@@ -31,22 +31,22 @@ namespace ImageGlass.Theme
     public class Theme
     {
         //Info
-        public string name = string.Empty;                     //tên của theme
-        public string version = string.Empty;                  //phiên bản của theme
-        public string author = string.Empty;                   //tác giả
-        public string email = string.Empty;                    //email
-        public string website = string.Empty;                  //website
-        public string description = string.Empty;              //miêu tả
-        public string type = string.Empty;                     //loại tập tin thiết lập
-        public string compatibility = string.Empty;            //yêu cầu tương thích với phiên bản thấp nhất
-        public string preview = string.Empty;                  //ảnh thu nhỏ của theme
+        public string name = string.Empty;                  
+        public string version = string.Empty;               
+        public string author = string.Empty;                
+        public string email = string.Empty;                 
+        public string website = string.Empty;               
+        public string description = string.Empty;           
+        public string type = string.Empty;                     //config file type
+        public string compatibility = string.Empty;            //minimum version requirement
+        public string preview = string.Empty;                  //preview photo file
 
         //main
-        public string topbar = string.Empty;                   //ảnh nền thanh công cụ
-        public int topbartransparent = 0;                      //0 - không aero glass, 1 - có aero glass
-        public Color backcolor = Color.White;                  //màu nền vùng xem ảnh
-        public string bottombar = string.Empty;                //ảnh nền thanh thumbnail
-        public Color statuscolor = Color.Black;                //màu chữ của thông tin hình ảnh
+        public string topbar = string.Empty;                   
+        public int topbartransparent = 0;                      //v1.2 only
+        public Color backcolor = Color.White;                  
+        public string bottombar = string.Empty;                
+        public Color statuscolor = Color.Black;                
 
         //toolbar icon
         public string back = string.Empty;
@@ -56,7 +56,7 @@ namespace ImageGlass.Theme
         public string zoomin = string.Empty;
         public string zoomout = string.Empty;
         public string scaletofit = string.Empty;
-        public string zoomlock = string.Empty;                  //v1.5+ only
+        public string zoomlock = string.Empty;                  //v1.5+
         public string scaletowidth = string.Empty;
         public string scaletoheight = string.Empty;
         public string autosizewindow = string.Empty;
@@ -64,18 +64,19 @@ namespace ImageGlass.Theme
         public string refresh = string.Empty;
         public string gotoimage = string.Empty;
         public string thumbnail = string.Empty;
-        public string caro = string.Empty;
+        public string checkBackground = string.Empty;
         public string fullscreen = string.Empty;
         public string slideshow = string.Empty;
         public string convert = string.Empty;
-        public string print = string.Empty;                     //v1.5+ only
-        public string uploadfb = string.Empty;                  //v1.5+ only
-        public string extension = string.Empty;                 //v1.5+ only
+        public string print = string.Empty;                     //v1.5+
+        public string uploadfb = string.Empty;                  //v1.5+
+        public string extension = string.Empty;                 //v1.5+
         public string settings = string.Empty;
         public string about = string.Empty;
-        public string like = string.Empty;
-        public string dislike = string.Empty;
-        public string report = string.Empty;
+        public string like = string.Empty;                      //v2.0-
+        public string dislike = string.Empty;                   //v2.0-
+        public string report = string.Empty;                    //v2.0-
+        public string menu = string.Empty;                      //v2.1+
 
         public Theme() { }
 
@@ -134,7 +135,7 @@ namespace ImageGlass.Theme
             try { preview = n.GetAttribute("preview"); }
             catch { };
 
-            n = (XmlElement)nType.SelectNodes("main")[0]; //đọc thẻ <main>
+            n = (XmlElement)nType.SelectNodes("main")[0]; //<main>
             try { topbar = n.GetAttribute("topbar"); }
             catch { };
             try { topbartransparent = int.Parse(n.GetAttribute("topbartransparent")); }
@@ -146,7 +147,7 @@ namespace ImageGlass.Theme
             try { statuscolor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor"))); }
             catch { };
 
-            n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //đọc thẻ <toolbar_icon>
+            n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
             try { back = n.GetAttribute("back"); }
             catch { };
             try { next = n.GetAttribute("next"); }
@@ -177,7 +178,7 @@ namespace ImageGlass.Theme
             catch { };
             try { thumbnail = n.GetAttribute("thumbnail"); }
             catch { };
-            try { caro = n.GetAttribute("caro"); }
+            try { checkBackground = n.GetAttribute("caro"); }
             catch { };
             try { fullscreen = n.GetAttribute("fullscreen"); }
             catch { };
@@ -195,11 +196,13 @@ namespace ImageGlass.Theme
             catch { };
             try { about = n.GetAttribute("about"); }
             catch { };
-            try { like = n.GetAttribute("like"); }
-            catch { };
-            try { dislike = n.GetAttribute("dislike"); }
-            catch { };
-            try { report = n.GetAttribute("report"); }
+            //try { like = n.GetAttribute("like"); }
+            //catch { };
+            //try { dislike = n.GetAttribute("dislike"); }
+            //catch { };
+            //try { report = n.GetAttribute("report"); }
+            //catch { };
+            try { report = n.GetAttribute("menu"); }
             catch { };
 
             return true;
@@ -236,7 +239,7 @@ namespace ImageGlass.Theme
             try { preview = n.GetAttribute("preview"); }
             catch { };
 
-            n = (XmlElement)root.SelectNodes("main")[0]; //đọc thẻ <main>
+            n = (XmlElement)root.SelectNodes("main")[0]; //<main>
             try { topbar = n.GetAttribute("topbar"); }
             catch { };
             try { topbartransparent = int.Parse(n.GetAttribute("topbartransparent")); }
@@ -248,7 +251,7 @@ namespace ImageGlass.Theme
             try { statuscolor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor"))); }
             catch { };
 
-            n = (XmlElement)root.SelectNodes("toolbar_icon")[0]; //đọc thẻ <toolbar_icon>
+            n = (XmlElement)root.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
             try { back = n.GetAttribute("back"); }
             catch { };
             try { next = n.GetAttribute("next"); }
@@ -279,7 +282,7 @@ namespace ImageGlass.Theme
             catch { };
             try { thumbnail = n.GetAttribute("thumbnail"); }
             catch { };
-            try { caro = n.GetAttribute("caro"); }
+            try { checkBackground = n.GetAttribute("caro"); }
             catch { };
             try { fullscreen = n.GetAttribute("fullscreen"); }
             catch { };
@@ -297,17 +300,18 @@ namespace ImageGlass.Theme
             catch { };
             try { about = n.GetAttribute("about"); }
             catch { };
-            try { like = n.GetAttribute("like"); }
+            //try { like = n.GetAttribute("like"); }
+            //catch { };
+            //try { dislike = n.GetAttribute("dislike"); }
+            //catch { };
+            //try { report = n.GetAttribute("report"); }
+            //catch { };
+            try { report = n.GetAttribute("menu"); }
             catch { };
-            try { dislike = n.GetAttribute("dislike"); }
-            catch { };
-            try { report = n.GetAttribute("report"); }
-            catch { };
-
         }
 
         /// <summary>
-        /// Save theme compatible with v1.5
+        /// Save theme compatible with v1.5+
         /// </summary>
         /// <param name="dir"></param>
         public void SaveAsTheme(string dir)
@@ -353,7 +357,7 @@ namespace ImageGlass.Theme
             n.SetAttribute("refresh", this.refresh);
             n.SetAttribute("gotoimage", this.gotoimage);
             n.SetAttribute("thumbnail", this.thumbnail);
-            n.SetAttribute("caro", this.caro);
+            n.SetAttribute("caro", this.checkBackground);
             n.SetAttribute("fullscreen", this.fullscreen);
             n.SetAttribute("slideshow", this.slideshow);
             n.SetAttribute("convert", this.convert);
@@ -362,9 +366,10 @@ namespace ImageGlass.Theme
             n.SetAttribute("extension", this.extension);
             n.SetAttribute("settings", this.settings);
             n.SetAttribute("about", this.about);
-            n.SetAttribute("like", this.like);
-            n.SetAttribute("dislike", this.dislike);
-            n.SetAttribute("report", this.report);
+            //n.SetAttribute("like", this.like);
+            //n.SetAttribute("dislike", this.dislike);
+            //n.SetAttribute("report", this.report);
+            n.SetAttribute("menu", this.report);
             nType.AppendChild(n);
 
             root.AppendChild(nType);
@@ -380,15 +385,15 @@ namespace ImageGlass.Theme
         }
 
         /// <summary>
-        /// Áp dụng giao diện mới
+        /// Apply the new theme
         /// </summary>
         /// <param name="themePath">Đường dẫn đầy đủ của *.igtheme</param>
         public void ApplyTheme(string themePath)
         {
-            //Lưu đường dẫn theme
+            //Save theme path
             GlobalSetting.SetConfig("Theme", themePath);
 
-            //Lưu màu nền
+            //Save background color
             try
             {
                 ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme(themePath);
@@ -398,7 +403,6 @@ namespace ImageGlass.Theme
             {
                 GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString());
             }
-            
         }
 
 

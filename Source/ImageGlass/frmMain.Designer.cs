@@ -32,7 +32,7 @@
             this.mnuPhanCach = new System.Windows.Forms.ToolStripSeparator();
             this.mnuShowToolBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuEditWithPaint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEditImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSetWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -150,13 +150,13 @@
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainReportIssue = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnReport = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
             this.bookmarksBar = new ImageGlass.ImageListView.ImageListView();
+            this.sdgfsdgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -181,7 +181,7 @@
             this.mnuPhanCach,
             this.mnuShowToolBar,
             this.toolStripMenuItem4,
-            this.mnuEditWithPaint,
+            this.mnuEditImage,
             this.mnuExtractFrames,
             this.mnuSetWallpaper,
             this.toolStripMenuItem1,
@@ -253,13 +253,15 @@
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(254, 6);
             // 
-            // mnuEditWithPaint
+            // mnuEditImage
             // 
-            this.mnuEditWithPaint.Image = ((System.Drawing.Image)(resources.GetObject("mnuEditWithPaint.Image")));
-            this.mnuEditWithPaint.Name = "mnuEditWithPaint";
-            this.mnuEditWithPaint.Size = new System.Drawing.Size(257, 22);
-            this.mnuEditWithPaint.Text = "&Edit with Paint";
-            this.mnuEditWithPaint.Click += new System.EventHandler(this.mnuEditWithPaint_Click);
+            this.mnuEditImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sdgfsdgToolStripMenuItem});
+            this.mnuEditImage.Image = ((System.Drawing.Image)(resources.GetObject("mnuEditImage.Image")));
+            this.mnuEditImage.Name = "mnuEditImage";
+            this.mnuEditImage.Size = new System.Drawing.Size(257, 22);
+            this.mnuEditImage.Text = "&Edit image";
+            this.mnuEditImage.Click += new System.EventHandler(this.mnuEditImage_Click);
             // 
             // mnuExtractFrames
             // 
@@ -457,7 +459,6 @@
             this.btnSetting,
             this.btnHelp,
             this.btnMenu,
-            this.btnReport,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
@@ -876,8 +877,9 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 424);
+            this.mnuMain.Size = new System.Drawing.Size(289, 402);
             // 
             // mnuMainOpenFile
             // 
@@ -1422,21 +1424,6 @@
             this.mnuMainReportIssue.Text = "Report an iss&ue";
             this.mnuMainReportIssue.Click += new System.EventHandler(this.mnuMainReportIssue_Click);
             // 
-            // btnReport
-            // 
-            this.btnReport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnReport.AutoSize = false;
-            this.btnReport.BackColor = System.Drawing.Color.Transparent;
-            this.btnReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnReport.Image = global::ImageGlass.Properties.Resources.report;
-            this.btnReport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnReport.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(25, 28);
-            this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
-            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
-            // 
             // lblInfo
             // 
             this.lblInfo.BackColor = System.Drawing.Color.Transparent;
@@ -1548,6 +1535,12 @@
             this.bookmarksBar.Size = new System.Drawing.Size(96, 100);
             this.bookmarksBar.TabIndex = 0;
             // 
+            // sdgfsdgToolStripMenuItem
+            // 
+            this.sdgfsdgToolStripMenuItem.Name = "sdgfsdgToolStripMenuItem";
+            this.sdgfsdgToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sdgfsdgToolStripMenuItem.Text = "sdgfsdg";
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1613,11 +1606,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnSetting;
         private System.Windows.Forms.ToolStripButton btnHelp;
-        private System.Windows.Forms.ToolStripButton btnReport;
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;
-        private System.Windows.Forms.ToolStripMenuItem mnuEditWithPaint;
+        private System.Windows.Forms.ToolStripMenuItem mnuEditImage;
         private System.Windows.Forms.ToolStripMenuItem mnuExtractFrames;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuSetWallpaper;
@@ -1720,6 +1712,7 @@
         private System.Windows.Forms.SplitContainer sp1;
         private ImageListView.ImageListView thumbnailBar;
         private ImageListView.ImageListView bookmarksBar;
+        private System.Windows.Forms.ToolStripMenuItem sdgfsdgToolStripMenuItem;
     }
 }
 

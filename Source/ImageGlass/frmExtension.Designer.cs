@@ -60,6 +60,7 @@
             // btnInstallExt
             // 
             this.btnInstallExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnInstallExt.ForeColor = System.Drawing.Color.Black;
             this.btnInstallExt.Image = ((System.Drawing.Image)(resources.GetObject("btnInstallExt.Image")));
             this.btnInstallExt.Location = new System.Drawing.Point(133, 5);
             this.btnInstallExt.Name = "btnInstallExt";
@@ -74,6 +75,7 @@
             // btnGetMoreExt
             // 
             this.btnGetMoreExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGetMoreExt.ForeColor = System.Drawing.Color.Black;
             this.btnGetMoreExt.Image = ((System.Drawing.Image)(resources.GetObject("btnGetMoreExt.Image")));
             this.btnGetMoreExt.Location = new System.Drawing.Point(254, 5);
             this.btnGetMoreExt.Name = "btnGetMoreExt";
@@ -88,6 +90,7 @@
             // btnRefreshAllExt
             // 
             this.btnRefreshAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRefreshAllExt.ForeColor = System.Drawing.Color.Black;
             this.btnRefreshAllExt.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshAllExt.Image")));
             this.btnRefreshAllExt.Location = new System.Drawing.Point(12, 5);
             this.btnRefreshAllExt.Name = "btnRefreshAllExt";
@@ -103,6 +106,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
             this.btnClose.Location = new System.Drawing.Point(730, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(86, 28);
@@ -114,6 +118,7 @@
             // panExtension
             // 
             this.panExtension.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panExtension.ForeColor = System.Drawing.Color.Black;
             this.panExtension.Location = new System.Drawing.Point(4, 0);
             this.panExtension.Margin = new System.Windows.Forms.Padding(0);
             this.panExtension.Name = "panExtension";
@@ -150,6 +155,7 @@
             this.tvExtension.BackColor = System.Drawing.Color.White;
             this.tvExtension.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvExtension.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvExtension.ForeColor = System.Drawing.Color.Black;
             this.tvExtension.ImageKey = "empty.png";
             this.tvExtension.ItemHeight = 25;
             this.tvExtension.Location = new System.Drawing.Point(0, 50);

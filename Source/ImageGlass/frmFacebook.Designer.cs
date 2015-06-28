@@ -125,6 +125,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
             this.btnClose.Location = new System.Drawing.Point(394, 11);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(74, 28);
@@ -137,6 +138,7 @@
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpload.ForeColor = System.Drawing.Color.Black;
             this.btnUpload.Location = new System.Drawing.Point(285, 11);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(103, 28);
