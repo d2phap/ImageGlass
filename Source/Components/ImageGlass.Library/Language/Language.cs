@@ -159,8 +159,8 @@ namespace ImageGlass.Library
         {
             //frmMain
             this.Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0 beta
-            this.Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageDown)");
-            this.Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageUp)");
+            this.Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)");
+            this.Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)");
             this.Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
             this.Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             this.Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
@@ -193,6 +193,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuShowToolBar._Show", "Show toolbar");
             this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint");
             this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})");
+            this.Items.Add("frmMain.mnuStartStopAnimating", "Start / Stop animating image"); //v2.1
             this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background");
 
             this.Items.Add("frmMain.mnuPasteImage", "Paste image data"); //v2.0 final
@@ -275,7 +276,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
             this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
             this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels");
-            this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0}");
+            this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
             this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); //add 2.1
             this.Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order:");

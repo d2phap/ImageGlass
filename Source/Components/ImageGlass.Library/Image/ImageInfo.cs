@@ -53,7 +53,7 @@ namespace ImageGlass.Library.Image
             public IntPtr hProcess;
         }
 
-        [DllImport("shell32.dll", EntryPoint = "ShellExecuteEx")]
+        [DllImport("shell32.dll", EntryPoint = "ShellExecuteEx", CharSet =CharSet.Unicode)]
         private static extern int ShellExecute(ref SHELLEXECUTEINFO s);
 
         /// <summary>

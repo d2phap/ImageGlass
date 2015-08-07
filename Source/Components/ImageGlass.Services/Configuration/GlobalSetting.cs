@@ -483,8 +483,16 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string GetConfig(string key, string defaultValue)
         {
-            string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
-            return Registry.GetValue(hkey, key, defaultValue).ToString();
+            try
+            {
+                // If the registry key doesn't exist, this would crash
+                string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
+                return Registry.GetValue(hkey, key, defaultValue).ToString();
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
         }
 
         /// <summary>

@@ -1862,7 +1862,7 @@ namespace ImageGlass
         ///   Gets or sets the zoom levels.
         /// </summary>
         /// <value>The zoom levels.</value>
-        [Browsable(false) /*Category("Behavior"), DefaultValue(typeof(ZoomLevelCollection), "7, 10, 15, 20, 25, 30, 50, 70, 100, 150, 200, 300, 400, 500, 600, 700, 800, 1200, 1600")*/]
+        [Browsable(false) /*Category("Behavior"), DefaultValue(typeof(ZoomLevelCollection), "7, 10, 15, 20, 25, 30, 50, 70, 100, 150, 200, 300, 400, 500, 600, 700, 800, 1200, 1600, 2000, 2500, 3000, 3500")*/]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual ImageBoxZoomLevelCollection ZoomLevels
         {
@@ -1894,10 +1894,10 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the current image is animated.
+        /// [PHAP] Gets or sets a value indicating whether the current image is animated.
         /// </summary>
         /// <value><c>true</c> if the current image is animated; otherwise, <c>false</c>.</value>
-        protected bool IsAnimating { get; set; }
+        public bool IsAnimating { get; protected set; }
 
         /// <summary>
         ///   Gets the height of the scaled image.
@@ -1962,6 +1962,28 @@ namespace ImageGlass
         public virtual void BeginUpdate()
         {
             _updateCount++;
+        }
+
+        /// <summary>
+        /// Start animating 
+        /// </summary>
+        public void StopAnimating()
+        {
+            if (!IsAnimating)
+                return;
+            ImageAnimator.StopAnimate(Image, OnFrameChangedHandler);
+            IsAnimating = false;
+        }
+
+        /// <summary>
+        /// Stop animating
+        /// </summary>
+        public void StartAnimating()
+        {
+            if (IsAnimating || !ImageAnimator.CanAnimate(Image))
+                return;
+            ImageAnimator.Animate(Image, OnFrameChangedHandler);
+            IsAnimating = true;
         }
 
         /// <summary>
@@ -4530,14 +4552,14 @@ namespace ImageGlass
 
             switch (e.KeyCode)
             {
-                case Keys.Home:
-                    if (this.AllowZoom)
-                    {
-                        this.PerformActualSize(ImageBoxActionSources.User);
-                    }
-                    break;
+                //case Keys.Home:
+                //    if (this.AllowZoom)
+                //    {
+                //        this.PerformActualSize(ImageBoxActionSources.User);
+                //    }
+                //    break;
 
-                case Keys.PageDown:
+                //case Keys.PageDown:
                 case Keys.Oemplus:
                     if (this.AllowZoom)
                     {
@@ -4545,7 +4567,7 @@ namespace ImageGlass
                     }
                     break;
 
-                case Keys.PageUp:
+                //case Keys.PageUp:
                 case Keys.OemMinus:
                     if (this.AllowZoom)
                     {

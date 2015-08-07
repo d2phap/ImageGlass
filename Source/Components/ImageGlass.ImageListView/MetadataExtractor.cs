@@ -573,18 +573,25 @@ namespace ImageGlass.ImageListView
                 FocalLength = ExifDouble(BitConverter.GetBytes((ulong)val));
         }
         /// <summary>
-        /// Returns the metadata for the given query.
+        /// [PHAP] Returns the metadata for the given query.
         /// </summary>
         /// <param name="metadata">The image metadata.</param>
         /// <param name="query">A list of query strings.</param>
         /// <returns>Metadata object or null if the metadata is not found.</returns>
         private object GetMetadataObject(BitmapMetadata metadata, params string[] query)
         {
-            foreach (string q in query)
+            try
             {
-                object val = metadata.GetQuery(q);
-                if (val != null)
-                    return val;
+                foreach (string q in query)
+                {
+                    object val = metadata.GetQuery(q);
+                    if (val != null)
+                        return val;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
             return null;
         }

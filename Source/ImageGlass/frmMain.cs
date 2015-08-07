@@ -35,6 +35,7 @@ using ImageGlass.ThumbBar.ImageHandling;
 using ImageGlass.ThumbBar;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
+using System.Drawing.Imaging;
 
 namespace ImageGlass
 {
@@ -124,7 +125,7 @@ namespace ImageGlass
             GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(initFile);
 
             //Load thumnbnail
-            LoadThumnailImage();
+            LoadThumbnails();
 
             //Cannot find the index
             if (GlobalSetting.CurrentIndex == -1)
@@ -149,6 +150,20 @@ namespace ImageGlass
         }
 
         /// <summary>
+        /// Select current thumbnail
+        /// </summary>
+        private void SelectCurrentThumbnail()
+        {
+            if (thumbnailBar.Items.Count > 0)
+            {
+                thumbnailBar.ClearSelection();
+                thumbnailBar.Items[GlobalSetting.CurrentIndex].Selected = true;
+                thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
+                thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
+            }
+        }
+
+        /// <summary>
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
@@ -162,7 +177,7 @@ namespace ImageGlass
             //Get files from dir
             var dsFile = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursive,
-                new Predicate<string>(delegate(String f)
+                new Predicate<string>(delegate (String f)
                 {
                     Application.DoEvents();
                     if (GlobalSetting.SupportedExtensions.Contains(Path.GetExtension(f).ToLower()))
@@ -215,7 +230,7 @@ namespace ImageGlass
         /// <summary>
         /// Clear and reload all thumbnail image
         /// </summary>
-        private void LoadThumnailImage()
+        private void LoadThumbnails()
         {
             thumbnailBar.Items.Clear();
 
@@ -281,6 +296,7 @@ namespace ImageGlass
 
                 //Show image
                 picMain.Image = im;
+                picMain.ScrollTo(0, 0, 0, 0); // Any scrolling from prior image would 'stick': reset here
 
                 //Zoom condition
                 if (btnZoomLock.Checked)
@@ -323,16 +339,10 @@ namespace ImageGlass
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
-
             }
 
             //Select thumbnail item
-            if (thumbnailBar.Items.Count > 0)
-            {
-                thumbnailBar.ClearSelection();
-                thumbnailBar.Items[GlobalSetting.CurrentIndex].Selected = true;
-                thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
-            }
+            SelectCurrentThumbnail();
 
             //Collect system garbage
             System.GC.Collect();
@@ -1684,6 +1694,11 @@ namespace ImageGlass
             mnuMainExtractFrames_Click(null, e);
         }
 
+        private void mnuStartStopAnimating_Click(object sender, EventArgs e)
+        {
+            mnuMainStartStopAnimating_Click(null, null);
+        }
+
         private void btnHelp_Click(object sender, EventArgs e)
         {
             mnuMainAbout_Click(null, e);
@@ -1724,13 +1739,23 @@ namespace ImageGlass
 
             try
             {
-                int i = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
-                mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], i);
-                mnuExtractFrames.Enabled = true;
+                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                int frameCount = img.GetFrameCount(dim);
+
+                if (frameCount > 1)
+                {
+                    mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
+                    mnuStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartStopAnimating"];
+                }
+
+                mnuExtractFrames.Enabled = frameCount > 1;
+                mnuStartStopAnimating.Enabled = frameCount > 1;
             }
             catch
             {
                 mnuExtractFrames.Enabled = false;
+                mnuStartStopAnimating.Enabled = false;
             }
         }
 
@@ -2361,6 +2386,9 @@ namespace ImageGlass
 
         private void mnuMainExtractFrames_Click(object sender, EventArgs e)
         {
+            if (!(sender as MenuItem).Enabled) // Shortcut keys still work even when menu is disabled!
+                return;
+
             if (!GlobalSetting.IsImageError)
             {
                 FolderBrowserDialog f = new FolderBrowserDialog();
@@ -2379,17 +2407,23 @@ namespace ImageGlass
             }
         }
 
+        // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
+            if (GlobalSetting.IsImageError)
+                return;
+
+            try
             {
                 Process p = new Process();
                 p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
                 p.StartInfo.Arguments = "setwallpaper " + //name of param
                                         "\"" + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\" " + //arg 1
                                         "\"" + "0" + "\" "; //arg 2
-
                 p.Start();
+            }
+            catch (Exception)
+            {
             }
         }
 
@@ -2499,6 +2533,7 @@ namespace ImageGlass
             }
 
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
+            SelectCurrentThumbnail();
         }
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
@@ -2558,7 +2593,18 @@ namespace ImageGlass
             catch { }
         }
 
-        
+        private void mnuMainStartStopAnimating_Click(object sender, EventArgs e)
+        {
+            if (picMain.IsAnimating)
+            {
+                picMain.StopAnimating();
+            }
+            else
+            {
+                picMain.StartAnimating();
+            }
+        }
 
+        
     }
 }

@@ -153,7 +153,7 @@ namespace ImageGlass.ImageListView
 
             #region Instance Methods
             /// <summary>
-            /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
+            /// [PHAP] Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
             /// <param name="item">The <see cref="ImageListViewItem"/> to add to the <see cref="ImageListViewItemCollection"/>.</param>
             /// <param name="adaptor">The adaptor associated with this item.</param>
@@ -164,8 +164,15 @@ namespace ImageGlass.ImageListView
                 if (mImageListView != null)
                 {
                     if (item.Selected)
+                    {
                         mImageListView.OnSelectionChangedInternal();
-                    mImageListView.Refresh();
+                    }
+
+                    if (mImageListView.IsItemVisible(mItems.Count) != ItemVisibility.NotVisible)
+                    {
+                        mImageListView.Refresh();
+                    }
+                        
                 }
             }
             /// <summary>
