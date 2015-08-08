@@ -27,9 +27,12 @@ namespace ImageGlass.Core
 {
     public class ImgMan
     {
-        private List<Img> image; //luu danh sach img chua load
-        private List<Img> queue; //load 1 so img vao bo nho
+        private List<Img> lstImage; //image list
+        private List<Img> lstQueue; //loading image queue
         private bool isErrorImage = false;
+
+        public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
+        public event FinishLoadingImageHandler OnFinishLoadingImage;
 
         public bool IsErrorImage
         {
@@ -39,18 +42,18 @@ namespace ImageGlass.Core
 
         public ImgMan()
         {
-            image = new List<Img>();
-            queue = new List<Img>();
+            lstImage = new List<Img>();
+            lstQueue = new List<Img>();
         }
 		
         public ImgMan(string[] filenames)
         {
-            image = new List<Img>();
-            queue = new List<Img>();
+            lstImage = new List<Img>();
+            lstQueue = new List<Img>();
 
             foreach (string name in filenames)
 			{
-                image.Add(new Img(name));
+                lstImage.Add(new Img(name));
 			}
 
             Thread tLoader = new Thread(new ThreadStart(Loader));
@@ -67,34 +70,47 @@ namespace ImageGlass.Core
         /// <returns>Image i</returns>
         public Image GetImage(int i)
         {
+            Image img = null;
+
             // Start off with unloading excessive images
             for (int a = 0; a < i - 2; a++)
             {
-                image[a].Dispose();
+                lstImage[a].Dispose();
             }
-            for (int a = i + 2; a < image.Count; a++)
+            for (int a = i + 2; a < lstImage.Count; a++)
             {
-                image[a].Dispose();
+                lstImage[a].Dispose();
             }
 
-            queue.Clear();
-            queue.Add(image[i]);
+            lstQueue.Clear();
+            lstQueue.Add(lstImage[i]);
             Enqueue(i + 1);
             Enqueue(i - 1);
 
-            while (!image[i].IsFinished)
+            while (!lstImage[i].IsFinished)
+            {
                 Thread.Sleep(1);
+            }
 
-			if (image[i].IsFailed)
+			if (lstImage[i].IsFailed)
             {
                 isErrorImage = true;
-                return new Bitmap(1, 1);
+                img = new Bitmap(1, 1);
             }
             else
             {
-                isErrorImage = false;                
-                return (Image)image[i].Get();
+                isErrorImage = false;
+                img = (Image)lstImage[i].Get();
             }
+
+            // Make sure someone is listening to event
+            if (OnFinishLoadingImage != null)
+            {
+                //Raise event
+                OnFinishLoadingImage(this, new EventArgs());
+            }
+
+            return img;
         }
 
         /// <summary>
@@ -103,10 +119,10 @@ namespace ImageGlass.Core
         /// <param name="i"></param>
         private void Enqueue(int i)
         {
-            if (i < 0 || i >= image.Count) return;
-            if (!image[i].IsFinished)
+            if (i < 0 || i >= lstImage.Count) return;
+            if (!lstImage[i].IsFinished)
             {
-                queue.Add(image[i]);
+                lstQueue.Add(lstImage[i]);
             }
         }
 
@@ -117,10 +133,10 @@ namespace ImageGlass.Core
         {
             while (true)
             {
-                if (queue.Count > 0)
+                if (lstQueue.Count > 0)
                 {
-                    Img i = queue[0];
-                    queue.RemoveAt(0);
+                    Img i = lstQueue[0];
+                    lstQueue.RemoveAt(0);
 
                     if (!i.IsFinished)
                     {
@@ -136,32 +152,32 @@ namespace ImageGlass.Core
 
         public int Length
         {
-            get { return image.Count; }
+            get { return lstImage.Count; }
             set { }
         }
         public string GetFileName(int i)
         {
-            if (i < 0 || i > image.Count)
+            if (i < 0 || i > lstImage.Count)
                 return "";
 
-            return image[i].GetFileName();
+            return lstImage[i].GetFileName();
         }
 
         public void SetFileName(int i, string s)
         {
-            image[i].SetFileName(s);
+            lstImage[i].SetFileName(s);
         }
 
         public void Unload(int i)
         {
-            if (image[i] != null)
-                image[i].Dispose();
+            if (lstImage[i] != null)
+                lstImage[i].Dispose();
         }
 
         public void Remove(int i)
         {
             Unload(i);
-            image.RemoveAt(i);
+            lstImage.RemoveAt(i);
         }
 
 		public void Dispose()
@@ -170,8 +186,8 @@ namespace ImageGlass.Core
             {
                 Remove(i);
             }
-            image.Clear();
-            queue.Clear();
+            lstImage.Clear();
+            lstQueue.Clear();
         }
     }
 }

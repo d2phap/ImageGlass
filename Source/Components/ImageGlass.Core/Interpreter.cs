@@ -6,31 +6,56 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Drawing.IconLib;
+using Paloma;
+using System.Drawing.Drawing2D;
 
 namespace ImageGlass.Core
 {
     public class Interpreter
     {
+        private const int TAG_ORIENTATION = 0x0112;
 
         public static Bitmap load(string path)
         {
-            if (path.ToLower().EndsWith(".tga")) return TargaWhatTheFuck(path);
-
             Bitmap bmp = null;
 
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            //TARGA file *.tga
+            if (path.ToLower().EndsWith(".tga"))
             {
-                bmp = new Bitmap(fs, true);
-
-                if (bmp.RawFormat.Equals(ImageFormat.Gif))
+                using (Paloma.TargaImage tar = new Paloma.TargaImage(path))
                 {
-                    bmp = new Bitmap(path);
-                }
-                else if (bmp.RawFormat.Equals(ImageFormat.Icon))
-                {
-                    bmp = ReadIconFile(path);
+                    bmp = new Bitmap(tar.Image);
                 }
             }
+            else
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    bmp = new Bitmap(fs, true);
+
+                    //GIF file *.gif
+                    if (bmp.RawFormat.Equals(ImageFormat.Gif))
+                    {
+                        bmp = new Bitmap(path);
+                    }
+                    //ICON file *.ico
+                    else if (bmp.RawFormat.Equals(ImageFormat.Icon))
+                    {
+                        bmp = ReadIconFile(path);
+                    }
+                    else if (bmp.RawFormat.Equals(ImageFormat.Jpeg))
+                    {
+                        //read Exif rotation
+                        int rotation = GetRotation(bmp);
+                        if (rotation != 0)
+                        {
+                            bmp = ScaleDownRotateBitmap(bmp, 1.0f, rotation);
+                        }
+                    }
+                }
+            }
+
+            
 
             return bmp;
         }
@@ -49,64 +74,104 @@ namespace ImageGlass.Core
             return iImage.Icon.ToBitmap();
         }
 
-        // Tested on files created by:
-        // - photoshop
-        // - mspaint
-        // - TF2
-        public static Bitmap Targa(string path)
+        /// <summary>
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// does not exist or could not be read. A negative value means
+        /// the image needs to be mirrored about the vertical axis.
+        /// </summary>
+        /// <param name="img">Image.</param>
+        public static int GetRotation(Bitmap img)
         {
-            byte[] src = System.IO.File.ReadAllBytes(path);
-            int w = src[0x0D] * 256 + src[0x0C];
-            int h = src[0x0F] * 256 + src[0x0E];
-            bool flip = src[0x11] == 0x20;
-            Bitmap bm = new Bitmap(w, h);
-            BitmapData bd = bm.LockBits(new Rectangle(0, 0, w, h),
-                System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            int sp;
-            unsafe
+            try
             {
-                for (int y = 0; y < h; y++)
+                foreach (PropertyItem prop in img.PropertyItems)
                 {
-                    if (flip) sp = 0x12 + 3 * w * y;
-                    else sp = 0x12 + 3 * w * (h - y - 1);
-                    byte* dst = (byte*)bd.Scan0 + (bd.Stride * y);
-                    for (int n = 0; n < 3 * w; n++)
+                    if (prop.Id == TAG_ORIENTATION)
                     {
-                        dst[n] = src[n + sp];
+                        ushort orientationFlag = BitConverter.ToUInt16(prop.Value, 0);
+                        if (orientationFlag == 1)
+                            return 0;
+                        else if (orientationFlag == 2)
+                            return -360;
+                        else if (orientationFlag == 3)
+                            return 180;
+                        else if (orientationFlag == 4)
+                            return -180;
+                        else if (orientationFlag == 5)
+                            return -90;
+                        else if (orientationFlag == 6)
+                            return 90;
+                        else if (orientationFlag == 7)
+                            return -270;
+                        else if (orientationFlag == 8)
+                            return 270;
                     }
                 }
             }
-            bm.UnlockBits(bd);
-            return bm;
+            catch
+            {
+                ;
+            }
+
+            return 0;
         }
 
-        public static Bitmap TargaWhatTheFuck(string path)
+
+        /// <summary>
+        /// Scales down and rotates an image.
+        /// </summary>
+        /// <param name="source">Original image</param>
+        /// <param name="scale">Uniform scaling factor</param>
+        /// <param name="angle">Rotation angle</param>
+        /// <returns>Scaled and rotated image</returns>
+        public static Bitmap ScaleDownRotateBitmap(Bitmap source, double scale, int angle)
         {
-            byte[] src = System.IO.File.ReadAllBytes(path);
-            int w = src[0x0D] * 256 + src[0x0C];
-            int h = src[0x0F] * 256 + src[0x0E];
-            Bitmap bm = new Bitmap(w, h);
-            BitmapData bd = bm.LockBits(new Rectangle(0, 0, w, h),
-                System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            unsafe
+            if (angle % 90 != 0)
             {
-                int dstptr = 0;
-                byte* dst = (byte*)bd.Scan0;
-                for (int a = 0x12; a < src.Length; a += 4)
-                {
-                    //for (int b = 0; b < src[a]; b++)
-                    //{
-                    dst[dstptr + 0] = src[a + 1];
-                    dst[dstptr + 1] = src[a + 2];
-                    dst[dstptr + 2] = src[a + 3];
-                    dstptr += 3;
-                    //}
-                }
+                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", "angle");
             }
-            bm.UnlockBits(bd);
-            return bm;
+
+            // Do not upscale and no rotation.
+            if ((float)scale >= 1.0f && angle == 0)
+            {
+                return new Bitmap(source);
+            }
+
+            int sourceWidth = source.Width;
+            int sourceHeight = source.Height;
+
+            // Scale
+            double xScale = Math.Min(1.0, Math.Max(1.0 / (double)sourceWidth, scale));
+            double yScale = Math.Min(1.0, Math.Max(1.0 / (double)sourceHeight, scale));
+
+            int width = (int)((double)sourceWidth * xScale);
+            int height = (int)((double)sourceHeight * yScale);
+            int thumbWidth = Math.Abs(angle) % 180 == 0 ? width : height;
+            int thumbHeight = Math.Abs(angle) % 180 == 0 ? height : width;
+
+            Bitmap thumb = new Bitmap(thumbWidth, thumbHeight);
+            thumb.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+            using (Graphics g = Graphics.FromImage(thumb))
+            {
+                g.PixelOffsetMode = PixelOffsetMode.None;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.Clear(System.Drawing.Color.Transparent);
+
+                g.TranslateTransform(-sourceWidth / 2, -sourceHeight / 2, MatrixOrder.Append);
+                if (Math.Abs(angle) % 360 != 0)
+                    g.RotateTransform(Math.Abs(angle), MatrixOrder.Append);
+                if (angle < 0)
+                    xScale = -xScale;
+                g.ScaleTransform((float)xScale, (float)yScale, MatrixOrder.Append);
+                g.TranslateTransform(thumbWidth / 2, thumbHeight / 2, MatrixOrder.Append);
+
+                g.DrawImage(source, 0, 0);
+            }
+
+            return thumb;
         }
+
+
+
     }
 }

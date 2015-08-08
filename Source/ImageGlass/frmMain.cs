@@ -260,6 +260,9 @@ namespace ImageGlass
                 return;
             }
 
+            this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._Loading"], 5000);
+            Application.DoEvents();
+
             picMain.Text = "";
             GlobalSetting.IsTempMemoryData = false;
 
@@ -289,6 +292,9 @@ namespace ImageGlass
 
             try
             {
+                //Track image loading progress
+                GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
+
                 //Read imaeg data
                 im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
 
@@ -296,7 +302,9 @@ namespace ImageGlass
 
                 //Show image
                 picMain.Image = im;
-                picMain.ScrollTo(0, 0, 0, 0); // Any scrolling from prior image would 'stick': reset here
+
+                // Any scrolling from prior image would 'stick': reset here
+                picMain.ScrollTo(0, 0, 0, 0); 
 
                 //Zoom condition
                 if (btnZoomLock.Checked)
@@ -346,6 +354,12 @@ namespace ImageGlass
 
             //Collect system garbage
             System.GC.Collect();
+        }
+
+        private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
+        {
+            //clear text when finishing
+            picMain.Text = "";
         }
 
 
