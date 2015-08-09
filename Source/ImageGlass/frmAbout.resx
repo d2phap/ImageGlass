@@ -220,7 +220,7 @@ Imaeg: copyright (c) 2011 ed &lt;tripflag@gmail.com&gt;
 License: GNU GPL v2
 
 -----------------------------------------
-ImageGlass.ImageBox based on Cyotek ImageBox Control v2.0.0.0. Copyright (c) 2010-20154 Cyotek.
+ImageGlass.ImageBox based on Cyotek ImageBox Control v2.0.0.0. Copyright (c) 2010-2015 Cyotek.
 License: MIT License
 
 -----------------------------------------
@@ -233,7 +233,15 @@ License: Apache 2.0
 
 -----------------------------------------
 ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
-License: Apache-2.0</value>
+License: Apache-2.0
+
+-----------------------------------------
+TargaImage v1.0: copyright (c) 2008 David Polomis.
+License: The Code Project Open License (CPOL)
+
+-----------------------------------------
+System.Drawing.PSD v1.0: copyright (c) 2013 Darren Horrocks. Background alpha supported by Mikael Porttila.
+License:  GNU GPL v2</value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

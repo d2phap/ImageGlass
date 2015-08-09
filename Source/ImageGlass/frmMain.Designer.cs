@@ -206,7 +206,7 @@
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(292, 524);
+            this.mnuPopup.Size = new System.Drawing.Size(292, 502);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -481,7 +481,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(762, 33);
+            this.toolMain.Size = new System.Drawing.Size(836, 33);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -494,7 +494,7 @@
             this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBack.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(25, 28);
+            this.btnBack.Size = new System.Drawing.Size(28, 28);
             this.btnBack.ToolTipText = "Go to previous image (Left arrow / PageDown)";
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
@@ -508,7 +508,7 @@
             this.btnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNext.Margin = new System.Windows.Forms.Padding(0);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(25, 28);
+            this.btnNext.Size = new System.Drawing.Size(28, 28);
             this.btnNext.ToolTipText = "Go to next image (Right arrow / PageUp)";
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
@@ -529,7 +529,7 @@
             this.btnRotateLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateLeft.Margin = new System.Windows.Forms.Padding(0);
             this.btnRotateLeft.Name = "btnRotateLeft";
-            this.btnRotateLeft.Size = new System.Drawing.Size(25, 28);
+            this.btnRotateLeft.Size = new System.Drawing.Size(28, 28);
             this.btnRotateLeft.ToolTipText = "Rotate Counterclockwise (Ctrl + ,)";
             this.btnRotateLeft.Click += new System.EventHandler(this.btnRotateLeft_Click);
             // 
@@ -543,7 +543,7 @@
             this.btnRotateRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateRight.Margin = new System.Windows.Forms.Padding(0);
             this.btnRotateRight.Name = "btnRotateRight";
-            this.btnRotateRight.Size = new System.Drawing.Size(25, 28);
+            this.btnRotateRight.Size = new System.Drawing.Size(28, 28);
             this.btnRotateRight.Text = "Next";
             this.btnRotateRight.ToolTipText = "Rotate Clockwise (Ctrl + .)";
             this.btnRotateRight.Click += new System.EventHandler(this.btnRotateRight_Click);
@@ -558,7 +558,7 @@
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomIn.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomIn.Size = new System.Drawing.Size(28, 28);
             this.btnZoomIn.Tag = "0";
             this.btnZoomIn.ToolTipText = "Zoom in (Ctrl + =)";
             this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
@@ -573,7 +573,7 @@
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomOut.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomOut.Size = new System.Drawing.Size(28, 28);
             this.btnZoomOut.ToolTipText = "Zoom out (Ctrl + -)";
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
@@ -587,7 +587,7 @@
             this.btnActualSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActualSize.Margin = new System.Windows.Forms.Padding(0);
             this.btnActualSize.Name = "btnActualSize";
-            this.btnActualSize.Size = new System.Drawing.Size(25, 28);
+            this.btnActualSize.Size = new System.Drawing.Size(28, 28);
             this.btnActualSize.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnActualSize.Click += new System.EventHandler(this.btnActualSize_Click);
             // 
@@ -602,7 +602,7 @@
             this.btnZoomLock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomLock.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomLock.Name = "btnZoomLock";
-            this.btnZoomLock.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomLock.Size = new System.Drawing.Size(28, 28);
             this.btnZoomLock.Tag = "";
             this.btnZoomLock.ToolTipText = "Lock zoom ratio";
             this.btnZoomLock.Click += new System.EventHandler(this.btnZoomLock_Click);
@@ -617,7 +617,7 @@
             this.btnScaletoWidth.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoWidth.Margin = new System.Windows.Forms.Padding(0);
             this.btnScaletoWidth.Name = "btnScaletoWidth";
-            this.btnScaletoWidth.Size = new System.Drawing.Size(25, 28);
+            this.btnScaletoWidth.Size = new System.Drawing.Size(28, 28);
             this.btnScaletoWidth.ToolTipText = "Scale to Width (Ctrl + W)";
             this.btnScaletoWidth.Click += new System.EventHandler(this.btnScaletoWidth_Click);
             // 
@@ -631,7 +631,7 @@
             this.btnScaletoHeight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoHeight.Margin = new System.Windows.Forms.Padding(0);
             this.btnScaletoHeight.Name = "btnScaletoHeight";
-            this.btnScaletoHeight.Size = new System.Drawing.Size(25, 28);
+            this.btnScaletoHeight.Size = new System.Drawing.Size(28, 28);
             this.btnScaletoHeight.ToolTipText = "Scale to Height (Ctrl + H)";
             this.btnScaletoHeight.Click += new System.EventHandler(this.btnScaletoHeight_Click);
             // 
@@ -645,7 +645,7 @@
             this.btnWindowAutosize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnWindowAutosize.Margin = new System.Windows.Forms.Padding(0);
             this.btnWindowAutosize.Name = "btnWindowAutosize";
-            this.btnWindowAutosize.Size = new System.Drawing.Size(25, 28);
+            this.btnWindowAutosize.Size = new System.Drawing.Size(28, 28);
             this.btnWindowAutosize.ToolTipText = "Window adapt to image (Ctrl + M)";
             this.btnWindowAutosize.Click += new System.EventHandler(this.btnWindowAutosize_Click);
             // 
@@ -667,7 +667,7 @@
             this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOpen.Margin = new System.Windows.Forms.Padding(0);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(25, 28);
+            this.btnOpen.Size = new System.Drawing.Size(28, 28);
             this.btnOpen.ToolTipText = "Open file (Ctrl + O)";
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
@@ -681,7 +681,7 @@
             this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(25, 28);
+            this.btnRefresh.Size = new System.Drawing.Size(28, 28);
             this.btnRefresh.ToolTipText = "Refresh (F5)";
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -695,7 +695,7 @@
             this.btnGoto.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGoto.Margin = new System.Windows.Forms.Padding(0);
             this.btnGoto.Name = "btnGoto";
-            this.btnGoto.Size = new System.Drawing.Size(25, 28);
+            this.btnGoto.Size = new System.Drawing.Size(28, 28);
             this.btnGoto.ToolTipText = "Go to ... (Ctrl + G)";
             this.btnGoto.Click += new System.EventHandler(this.btnGoto_Click);
             // 
@@ -710,7 +710,7 @@
             this.btnThumb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnThumb.Margin = new System.Windows.Forms.Padding(0);
             this.btnThumb.Name = "btnThumb";
-            this.btnThumb.Size = new System.Drawing.Size(25, 28);
+            this.btnThumb.Size = new System.Drawing.Size(28, 28);
             this.btnThumb.ToolTipText = "Show thumbnail (Ctrl + T)";
             this.btnThumb.Click += new System.EventHandler(this.btnThumb_Click);
             // 
@@ -732,7 +732,7 @@
             this.btnCaro.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCaro.Margin = new System.Windows.Forms.Padding(0);
             this.btnCaro.Name = "btnCaro";
-            this.btnCaro.Size = new System.Drawing.Size(25, 28);
+            this.btnCaro.Size = new System.Drawing.Size(28, 28);
             this.btnCaro.ToolTipText = "Show checked background (Ctrl + B)";
             this.btnCaro.Click += new System.EventHandler(this.btnCaro_Click);
             // 
@@ -747,7 +747,7 @@
             this.btnFullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
             this.btnFullScreen.Name = "btnFullScreen";
-            this.btnFullScreen.Size = new System.Drawing.Size(25, 28);
+            this.btnFullScreen.Size = new System.Drawing.Size(28, 28);
             this.btnFullScreen.ToolTipText = "Full sreen (Alt + Enter)";
             this.btnFullScreen.Click += new System.EventHandler(this.btnFullScreen_Click);
             // 
@@ -761,7 +761,7 @@
             this.btnSlideShow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSlideShow.Margin = new System.Windows.Forms.Padding(0);
             this.btnSlideShow.Name = "btnSlideShow";
-            this.btnSlideShow.Size = new System.Drawing.Size(25, 28);
+            this.btnSlideShow.Size = new System.Drawing.Size(28, 28);
             this.btnSlideShow.ToolTipText = "Play slideshow (F11, ESC to exit)";
             this.btnSlideShow.Click += new System.EventHandler(this.btnSlideShow_Click);
             // 
@@ -775,7 +775,7 @@
             this.btnConvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConvert.Margin = new System.Windows.Forms.Padding(0);
             this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(25, 28);
+            this.btnConvert.Size = new System.Drawing.Size(28, 28);
             this.btnConvert.ToolTipText = "Convert image (Ctrl + S)";
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
@@ -789,7 +789,7 @@
             this.btnPrintImage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrintImage.Margin = new System.Windows.Forms.Padding(0);
             this.btnPrintImage.Name = "btnPrintImage";
-            this.btnPrintImage.Size = new System.Drawing.Size(25, 28);
+            this.btnPrintImage.Size = new System.Drawing.Size(28, 28);
             this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnPrintImage_Click);
             // 
@@ -803,7 +803,7 @@
             this.btnFacebook.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFacebook.Margin = new System.Windows.Forms.Padding(0);
             this.btnFacebook.Name = "btnFacebook";
-            this.btnFacebook.Size = new System.Drawing.Size(25, 28);
+            this.btnFacebook.Size = new System.Drawing.Size(28, 28);
             this.btnFacebook.ToolTipText = "Upload to Facebook (Ctrl + U)";
             this.btnFacebook.Click += new System.EventHandler(this.btnFacebook_Click);
             // 
@@ -824,7 +824,7 @@
             this.btnExtension.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExtension.Margin = new System.Windows.Forms.Padding(0);
             this.btnExtension.Name = "btnExtension";
-            this.btnExtension.Size = new System.Drawing.Size(25, 28);
+            this.btnExtension.Size = new System.Drawing.Size(28, 28);
             this.btnExtension.ToolTipText = "Extension Manager (Ctrl + Shift + E)";
             this.btnExtension.Click += new System.EventHandler(this.btnExtension_Click);
             // 
@@ -838,7 +838,7 @@
             this.btnSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(25, 28);
+            this.btnSetting.Size = new System.Drawing.Size(28, 28);
             this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + Shift + P)";
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
@@ -852,7 +852,7 @@
             this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(25, 28);
+            this.btnHelp.Size = new System.Drawing.Size(28, 28);
             this.btnHelp.ToolTipText = "Help (F1)";
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
@@ -867,7 +867,7 @@
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.ShowDropDownArrow = false;
-            this.btnMenu.Size = new System.Drawing.Size(25, 28);
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
             // 
             // mnuMain
             // 
@@ -1479,7 +1479,7 @@
             this.sp0.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel2.Controls.Add(this.bookmarksBar);
             this.sp0.Panel2Collapsed = true;
-            this.sp0.Size = new System.Drawing.Size(762, 471);
+            this.sp0.Size = new System.Drawing.Size(836, 471);
             this.sp0.SplitterDistance = 595;
             this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
@@ -1502,7 +1502,7 @@
             // 
             this.sp1.Panel2.Controls.Add(this.thumbnailBar);
             this.sp1.Panel2Collapsed = true;
-            this.sp1.Size = new System.Drawing.Size(762, 438);
+            this.sp1.Size = new System.Drawing.Size(836, 438);
             this.sp1.SplitterDistance = 349;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
@@ -1520,7 +1520,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(762, 438);
+            this.picMain.Size = new System.Drawing.Size(836, 438);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1569,7 +1569,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(762, 471);
+            this.ClientSize = new System.Drawing.Size(836, 471);
             this.Controls.Add(this.sp0);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

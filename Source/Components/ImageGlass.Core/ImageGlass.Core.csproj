@@ -80,6 +80,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.PSD">
+      <HintPath>..\..\ImageGlass\bin\Debug\System.Drawing.PSD.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TargaImage">

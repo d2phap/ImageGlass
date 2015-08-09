@@ -9,6 +9,7 @@ using System.Drawing.IconLib;
 using Paloma;
 using System.Drawing.Drawing2D;
 
+
 namespace ImageGlass.Core
 {
     public class Interpreter
@@ -26,6 +27,12 @@ namespace ImageGlass.Core
                 {
                     bmp = new Bitmap(tar.Image);
                 }
+            }
+            //PHOTOSHOP file *.PSD
+            else if (path.ToLower().EndsWith(".psd"))
+            {
+                System.Drawing.PSD.PsdFile psd = (new System.Drawing.PSD.PsdFile()).Load(path);
+                bmp = System.Drawing.PSD.ImageDecoder.DecodeImage(psd);
             }
             else
             {

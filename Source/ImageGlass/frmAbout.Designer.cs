@@ -505,9 +505,9 @@
             this.txtReferences.Location = new System.Drawing.Point(20, 5);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
-            this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(488, 381);
+            this.txtReferences.Size = new System.Drawing.Size(490, 379);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 

@@ -415,14 +415,9 @@ namespace ImageGlass
                 }
             }
 
-            lblInfo.Text = fileinfo;
+            //Move image information to Window title
+            this.Text += "  |  " + fileinfo;
 
-            //Check if Toolbar is hide or not
-            if (GlobalSetting.IsShowToolBar)
-            {
-                //Move image information to Window title
-                this.Text += "  |  " + fileinfo;
-            }
         }
         #endregion
 
