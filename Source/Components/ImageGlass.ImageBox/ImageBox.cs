@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ImageGlass
@@ -89,6 +90,14 @@ namespace ImageGlass
                     this.OnBorderStyleChanged(EventArgs.Empty);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets value whether the image can animate or not
+        /// </summary>
+        public bool CanAnimate
+        {
+            get { return ImageAnimator.CanAnimate(Image); }
         }
 
         #endregion
@@ -1980,10 +1989,15 @@ namespace ImageGlass
         /// </summary>
         public void StartAnimating()
         {
-            if (IsAnimating || !ImageAnimator.CanAnimate(Image))
+            if (IsAnimating || !CanAnimate)
                 return;
-            ImageAnimator.Animate(Image, OnFrameChangedHandler);
-            IsAnimating = true;
+
+            try
+            {
+                ImageAnimator.Animate(Image, OnFrameChangedHandler);
+                IsAnimating = true;
+            }
+            catch (Exception) { }
         }
 
         /// <summary>
@@ -3244,6 +3258,12 @@ namespace ImageGlass
             {
                 // also ignore errors that occur due to running out of memory
             }
+            catch (ExternalException)
+            {
+                // stop the animation and reset to the first frame.
+                IsAnimating = false;
+                ImageAnimator.StopAnimate(this.Image, OnFrameChangedHandler);
+            }
 
             g.PixelOffsetMode = currentPixelOffsetMode;
             g.InterpolationMode = currentInterpolationMode;
@@ -3891,6 +3911,7 @@ namespace ImageGlass
                 handler(this, e);
             }
         }
+        
 
         /// <summary>
         ///   Raises the <see cref="ImageChanged" /> event.
@@ -3907,18 +3928,20 @@ namespace ImageGlass
 
             if (this.Image != null)
             {
-                try
-                {
-                    this.IsAnimating = ImageAnimator.CanAnimate(this.Image);
-                    if (this.IsAnimating)
-                    {
-                        ImageAnimator.Animate(this.Image, this.OnFrameChangedHandler);
-                    }
-                }
-                catch (ArgumentException)
-                {
-                    // probably a disposed image, ignore
-                }
+                //try
+                //{
+                //    this.IsAnimating = ImageAnimator.CanAnimate(this.Image);
+                //    if (this.IsAnimating)
+                //    {
+                //        ImageAnimator.Animate(this.Image, this.OnFrameChangedHandler);
+                //    }
+                //}
+                //catch (ArgumentException)
+                //{
+                //    // probably a disposed image, ignore
+                //}
+
+                StartAnimating();
             }
 
             this.AdjustLayout();

@@ -216,8 +216,8 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");
             this.Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             this.Items.Add("frmMain._DeleteDialogTitle", "Confirm");
-            this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?");
-            this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm");
+            //this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?"); //removed v2.1
+            //this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm"); //remove v2.1
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
             this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta

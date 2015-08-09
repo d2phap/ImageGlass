@@ -76,7 +76,7 @@
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
             this.btnThumb = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCaro = new System.Windows.Forms.ToolStripButton();
+            this.btnCheckedBackground = new System.Windows.Forms.ToolStripButton();
             this.btnFullScreen = new System.Windows.Forms.ToolStripButton();
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
@@ -466,7 +466,7 @@
             this.btnGoto,
             this.btnThumb,
             this.toolStripSeparator3,
-            this.btnCaro,
+            this.btnCheckedBackground,
             this.btnFullScreen,
             this.btnSlideShow,
             this.btnConvert,
@@ -721,20 +721,20 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(5, 28);
             // 
-            // btnCaro
+            // btnCheckedBackground
             // 
-            this.btnCaro.AutoSize = false;
-            this.btnCaro.BackColor = System.Drawing.Color.Transparent;
-            this.btnCaro.CheckOnClick = true;
-            this.btnCaro.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCaro.Image = global::ImageGlass.Properties.Resources.background;
-            this.btnCaro.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCaro.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCaro.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCaro.Name = "btnCaro";
-            this.btnCaro.Size = new System.Drawing.Size(28, 28);
-            this.btnCaro.ToolTipText = "Show checked background (Ctrl + B)";
-            this.btnCaro.Click += new System.EventHandler(this.btnCaro_Click);
+            this.btnCheckedBackground.AutoSize = false;
+            this.btnCheckedBackground.BackColor = System.Drawing.Color.Transparent;
+            this.btnCheckedBackground.CheckOnClick = true;
+            this.btnCheckedBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCheckedBackground.Image = global::ImageGlass.Properties.Resources.background;
+            this.btnCheckedBackground.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCheckedBackground.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCheckedBackground.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCheckedBackground.Name = "btnCheckedBackground";
+            this.btnCheckedBackground.Size = new System.Drawing.Size(28, 28);
+            this.btnCheckedBackground.ToolTipText = "Show checked background (Ctrl + B)";
+            this.btnCheckedBackground.Click += new System.EventHandler(this.btnCheckedBackground_Click);
             // 
             // btnFullScreen
             // 
@@ -896,14 +896,15 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 402);
+            this.mnuMain.Size = new System.Drawing.Size(289, 424);
+            this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
             // 
             this.mnuMainOpenFile.Name = "mnuMainOpenFile";
             this.mnuMainOpenFile.ShortcutKeyDisplayString = "";
             this.mnuMainOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.mnuMainOpenFile.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainOpenFile.Size = new System.Drawing.Size(263, 22);
             this.mnuMainOpenFile.Text = "&Open file";
             this.mnuMainOpenFile.Click += new System.EventHandler(this.mnuMainOpenFile_Click);
             // 
@@ -912,7 +913,7 @@
             this.mnuMainOpenImageData.Name = "mnuMainOpenImageData";
             this.mnuMainOpenImageData.ShortcutKeyDisplayString = "";
             this.mnuMainOpenImageData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mnuMainOpenImageData.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainOpenImageData.Size = new System.Drawing.Size(263, 22);
             this.mnuMainOpenImageData.Text = "Open image &data from clipboard";
             this.mnuMainOpenImageData.Click += new System.EventHandler(this.mnuMainOpenImageData_Click);
             // 
@@ -921,7 +922,7 @@
             this.mnuMainSaveAs.Name = "mnuMainSaveAs";
             this.mnuMainSaveAs.ShortcutKeyDisplayString = "";
             this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mnuMainSaveAs.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainSaveAs.Size = new System.Drawing.Size(263, 22);
             this.mnuMainSaveAs.Text = "&Save file as ...";
             this.mnuMainSaveAs.Click += new System.EventHandler(this.mnuMainSaveAs_Click);
             // 
@@ -930,7 +931,7 @@
             this.mnuMainRefresh.Name = "mnuMainRefresh";
             this.mnuMainRefresh.ShortcutKeyDisplayString = "";
             this.mnuMainRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnuMainRefresh.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainRefresh.Size = new System.Drawing.Size(263, 22);
             this.mnuMainRefresh.Text = "&Refresh";
             this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
             // 
@@ -939,7 +940,7 @@
             this.mnuMainOpenWith.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.paintToolStripMenuItem});
             this.mnuMainOpenWith.Name = "mnuMainOpenWith";
-            this.mnuMainOpenWith.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainOpenWith.Size = new System.Drawing.Size(263, 22);
             this.mnuMainOpenWith.Text = "O&pen with ...";
             this.mnuMainOpenWith.Click += new System.EventHandler(this.mnuMainOpenWith_Click);
             // 
@@ -952,7 +953,7 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(285, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(260, 6);
             // 
             // mnuMainNavigation
             // 
@@ -964,7 +965,7 @@
             this.mnuMainGotoFirst,
             this.mnuMainGotoLast});
             this.mnuMainNavigation.Name = "mnuMainNavigation";
-            this.mnuMainNavigation.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainNavigation.Size = new System.Drawing.Size(263, 22);
             this.mnuMainNavigation.Text = "&Navigation";
             // 
             // mnuMainViewNext
@@ -1017,7 +1018,7 @@
             // 
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";
             this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
-            this.mnuMainFullScreen.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainFullScreen.Size = new System.Drawing.Size(263, 22);
             this.mnuMainFullScreen.Text = "&Full screen";
             this.mnuMainFullScreen.Click += new System.EventHandler(this.mnuMainFullScreen_Click);
             // 
@@ -1028,16 +1029,16 @@
             this.mnuMainSlideShowPause,
             this.mnuMainSlideShowExit});
             this.mnuMainSlideShow.Name = "mnuMainSlideShow";
-            this.mnuMainSlideShow.ShortcutKeyDisplayString = "";
-            this.mnuMainSlideShow.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.mnuMainSlideShow.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainSlideShow.ShortcutKeyDisplayString = "F11";
+            this.mnuMainSlideShow.Size = new System.Drawing.Size(263, 22);
             this.mnuMainSlideShow.Text = "Sl&ide show";
             this.mnuMainSlideShow.Click += new System.EventHandler(this.mnuMainSlideShow_Click);
             // 
             // mnuMainSlideShowStart
             // 
             this.mnuMainSlideShowStart.Name = "mnuMainSlideShowStart";
-            this.mnuMainSlideShowStart.ShortcutKeyDisplayString = "F11";
+            this.mnuMainSlideShowStart.ShortcutKeyDisplayString = "";
+            this.mnuMainSlideShowStart.ShortcutKeys = System.Windows.Forms.Keys.F11;
             this.mnuMainSlideShowStart.Size = new System.Drawing.Size(196, 22);
             this.mnuMainSlideShowStart.Text = "&Start";
             // 
@@ -1060,14 +1061,14 @@
             this.mnuMainPrint.Name = "mnuMainPrint";
             this.mnuMainPrint.ShortcutKeyDisplayString = "";
             this.mnuMainPrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mnuMainPrint.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainPrint.Size = new System.Drawing.Size(263, 22);
             this.mnuMainPrint.Text = "&Print";
             this.mnuMainPrint.Click += new System.EventHandler(this.mnuMainPrint_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(285, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(260, 6);
             // 
             // mnuMainManipulation
             // 
@@ -1094,7 +1095,7 @@
             this.mnuMainImageLocation,
             this.mnuMainImageProperties});
             this.mnuMainManipulation.Name = "mnuMainManipulation";
-            this.mnuMainManipulation.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainManipulation.Size = new System.Drawing.Size(263, 22);
             this.mnuMainManipulation.Text = "&Manipulation";
             // 
             // mnuMainRotateCounterclockwise
@@ -1276,7 +1277,7 @@
             this.toolStripMenuItem14,
             this.mnuMainClearClipboard});
             this.mnuMainClipboard.Name = "mnuMainClipboard";
-            this.mnuMainClipboard.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainClipboard.Size = new System.Drawing.Size(263, 22);
             this.mnuMainClipboard.Text = "&Clipboard";
             // 
             // mnuMainCopy
@@ -1347,7 +1348,7 @@
             this.mnuMainShare.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainShareFacebook});
             this.mnuMainShare.Name = "mnuMainShare";
-            this.mnuMainShare.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainShare.Size = new System.Drawing.Size(263, 22);
             this.mnuMainShare.Text = "S&hare ...";
             // 
             // mnuMainShareFacebook
@@ -1362,7 +1363,7 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(285, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(260, 6);
             // 
             // mnuMainLayout
             // 
@@ -1371,7 +1372,7 @@
             this.mnuMainThumbnailBar,
             this.mnuMainCheckBackground});
             this.mnuMainLayout.Name = "mnuMainLayout";
-            this.mnuMainLayout.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainLayout.Size = new System.Drawing.Size(263, 22);
             this.mnuMainLayout.Text = "&Layout";
             // 
             // mnuMainToolbar
@@ -1411,7 +1412,7 @@
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainExtensionManager});
             this.mnuMainTools.Name = "mnuMainTools";
-            this.mnuMainTools.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainTools.Size = new System.Drawing.Size(263, 22);
             this.mnuMainTools.Text = "&Tools";
             // 
             // mnuMainExtensionManager
@@ -1426,7 +1427,7 @@
             // 
             this.mnuMainSettings.Name = "mnuMainSettings";
             this.mnuMainSettings.ShortcutKeyDisplayString = "Ctrl+Shift+P";
-            this.mnuMainSettings.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainSettings.Size = new System.Drawing.Size(263, 22);
             this.mnuMainSettings.Text = "S&ettings";
             this.mnuMainSettings.Click += new System.EventHandler(this.mnuMainSettings_Click);
             // 
@@ -1435,19 +1436,19 @@
             this.mnuMainAbout.Name = "mnuMainAbout";
             this.mnuMainAbout.ShortcutKeyDisplayString = "";
             this.mnuMainAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mnuMainAbout.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainAbout.Size = new System.Drawing.Size(263, 22);
             this.mnuMainAbout.Text = "&About";
             this.mnuMainAbout.Click += new System.EventHandler(this.mnuMainAbout_Click);
             // 
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(285, 6);
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(260, 6);
             // 
             // mnuMainReportIssue
             // 
             this.mnuMainReportIssue.Name = "mnuMainReportIssue";
-            this.mnuMainReportIssue.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainReportIssue.Size = new System.Drawing.Size(263, 22);
             this.mnuMainReportIssue.Text = "Report an iss&ue";
             this.mnuMainReportIssue.Click += new System.EventHandler(this.mnuMainReportIssue_Click);
             // 
@@ -1620,7 +1621,7 @@
         private System.Windows.Forms.ToolStripButton btnGoto;
         private System.Windows.Forms.ToolStripButton btnThumb;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton btnCaro;
+        private System.Windows.Forms.ToolStripButton btnCheckedBackground;
         private System.Windows.Forms.ToolStripButton btnFullScreen;
         private System.Windows.Forms.ToolStripButton btnSlideShow;
         private System.Windows.Forms.ToolStripButton btnConvert;

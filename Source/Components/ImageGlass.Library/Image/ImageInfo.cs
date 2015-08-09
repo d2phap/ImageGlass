@@ -57,9 +57,9 @@ namespace ImageGlass.Library.Image
         private static extern int ShellExecute(ref SHELLEXECUTEINFO s);
 
         /// <summary>
-        /// Hiển thị hộp thoại Properties của tập tin, thư mục
+        /// Show file property dialog
         /// </summary>
-        /// <param name="fileName">Đường dẫn của tập tin</param>
+        /// <param name="fileName">file name</param>
         /// <param name="hwnd"></param>
         public static void DisplayFileProperties(string fileName, IntPtr hwnd)
         {
@@ -221,9 +221,9 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Lấy tên loại định dạng của hình ảnh
+        /// Get image type name
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename">file name</param>
         /// <returns></returns>
         public static string GetImageFileType(string filename)
         {
@@ -265,10 +265,10 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Lấy tên loại định dạng của hình ảnh
+        /// Get image file type
         /// </summary>
-        /// <param name="extension"></param>
-        /// <param name="extensionOnly"></param>
+        /// <param name="extension">extension code</param>
+        /// <param name="extensionOnly">Always true</param>
         /// <returns></returns>
         public static string GetImageFileType(string extension, bool extensionOnly)
         {
@@ -308,39 +308,39 @@ namespace ImageGlass.Library.Image
                     return ext.ToUpper() + " File";
             }
         }
-
+        
         /// <summary>
-        /// Lấy dung lượng của tập tin kèm theo đơn vị
+        /// Get file size format
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename"></param>
         /// <returns></returns>
         public static string GetFileSize(string filename)
         {
             try
             {
-                System.IO.FileInfo Fi = new System.IO.FileInfo(filename);
-                double Size = Math.Round((Fi.Length*1.0) / 1024, 2);
+                double mod = 1024;
+                string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
-                //get the size in KB
-                if (Size < 1024)
+                System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+                double sized = fi.Length * 1.0f;
+                int i;
+
+                for (i = 0; sized > mod; i++)
                 {
-                    return Convert.ToString(Size) + " KB";
+                    sized /= mod;
                 }
-                else //get the size in MB
-                {
-                    return Convert.ToString(Math.Round(Size / 1024, 2)) + " MB";
-                }
+
+                return string.Format("{0} {1}", Math.Round(sized, 2), units[i]);
             }
-            catch
-            {
-                return " ";
-            }
+            catch { }
+
+            return " ";
         }
 
         /// <summary>
-        /// Lấy kích thước của tập tin hình ảnh, bao gồm W x H
+        /// Get image size, Width x height string
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename">file name</param>
         /// <returns></returns>
         public static string GetWxHSize(string filename)
         {
@@ -367,65 +367,50 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Lấy độ phân giải ngang của hình ảnh
+        /// Get image resolution
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename"></param>
         /// <returns></returns>
-        public static double GetHorizontalResolution(string filename)
+        public static string GetImageResolution(string filename)
         {
             try
             {
+                double h = 0;
+                double v = 0;
+
                 if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
                 {
                     System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
+
                     //get HorizontalResolution 
-                    return Math.Round((double)img.HorizontalResolution, 2);
+                    h = Math.Round((double)img.HorizontalResolution, 2);
+
+                    //get VerticalResolution
+                    v = Math.Round((double)img.VerticalResolution, 2);
                 }
                 else
                 {
                     Icon ico = new Icon(filename);
+
                     //get HorizontalResolution 
-                    return Math.Round(ico.ToBitmap().HorizontalResolution, 2);
+                    h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
+
+                    //get VerticalResolution
+                    v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
                 }
+
+                return string.Format("{0} x {1}", h, v);
             }
-            catch
-            {
-                return 0;
-            }
+            catch {}
+
+            return " ";
         }
+        
 
         /// <summary>
-        /// Lấy độ phân giải dọc của hình ảnh
+        /// Get file creation time
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
-        /// <returns></returns>
-        public static double GetVerticalResolution(string filename)
-        {
-            try
-            {
-                if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
-                {
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
-                    //get HorizontalResolution 
-                    return Math.Round((double)img.VerticalResolution, 2);
-                }
-                else
-                {
-                    Icon ico = new Icon(filename);
-                    //get HorizontalResolution 
-                    return Math.Round(ico.ToBitmap().VerticalResolution, 2);
-                }
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// Lấy thời gian tạo ra tập tin
-        /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename">file name</param>
         /// <returns></returns>
         public static System.DateTime GetCreateTime(string filename)
         {
@@ -436,9 +421,9 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Lấy thời gian truy cập mới nhất của tập tin
+        /// Get file last access
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename">file name</param>
         /// <returns></returns>
         public static System.DateTime GetLastAccess(string filename)
         {
@@ -448,9 +433,9 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Lấy thời gian ghi tập tin
+        /// Get file write time
         /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
+        /// <param name="filename">file name</param>
         /// <returns></returns>
         public static System.DateTime GetWriteTime(string filename)
         {
@@ -460,10 +445,10 @@ namespace ImageGlass.Library.Image
         }
 
         /// <summary>
-        /// Đổi tên tập tin
+        /// Rename file
         /// </summary>
-        /// <param name="oldFileName">Đường dẫn tập tin cũ</param>
-        /// <param name="newFileName">ĐƯờng dẫn tập tin mới</param>
+        /// <param name="oldFileName">old file name</param>
+        /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName)
         {
             File.Move(oldFileName, newFileName);
@@ -471,9 +456,9 @@ namespace ImageGlass.Library.Image
                 
 
         /// <summary>
-        /// Xoá 1 tập tin (hiện hộp thoại)
+        /// Delete file
         /// </summary>
-        /// <param name="fileName">Đường dẫn tập tin</param>
+        /// <param name="fileName">file name</param>
         /// <returns></returns>
         public static void DeleteFile(string fileName)
         {
@@ -482,10 +467,10 @@ namespace ImageGlass.Library.Image
 
 
         /// <summary>
-        /// Xoá 1 tập tin (hiện hộp thoại | tuỳ chọn)
+        /// Delete file
         /// </summary>
-        /// <param name="fileName">Đường dẫn tập tin</param>
-        /// <param name="isMoveToRecycleBin">True: Di chuyển vào Thùng rác | False: Xoá tức thì</param>
+        /// <param name="fileName">file name</param>
+        /// <param name="isMoveToRecycleBin">True: Move to Recycle bin | False: Delete permanently</param>
         /// <returns></returns>
         public static void DeleteFile(string fileName, bool isMoveToRecycleBin)
         {

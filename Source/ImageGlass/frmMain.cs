@@ -52,6 +52,7 @@ namespace ImageGlass
         #endregion
 
 
+
         #region Drag - drop
         private void picMain_DragOver(object sender, DragEventArgs e)
         {
@@ -63,6 +64,7 @@ namespace ImageGlass
             Prepare(((string[])e.Data.GetData(DataFormats.FileDrop))[0]);
         }
         #endregion
+
 
 
         #region Preparing image
@@ -422,22 +424,13 @@ namespace ImageGlass
         #endregion
 
 
-        #region Key event
 
+        #region Key event
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
-
-            // Paste image data from clipboard----------------------------------------------
-            //#region Ctrl + V
-            //if (e.KeyCode == Keys.V && e.Control && !e.Shift && !e.Alt)//Ctrl + V
-            //{
-            //    mnuPasteImage_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
+            
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -457,16 +450,6 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //Play slideshow----------------------------------------------------------------
-            //#region F11
-            //if (e.KeyValue == 122 && !e.Control && !e.Shift && !e.Alt)//F11
-            //{
-            //    btnSlideShow_Click(null, null);
-            //    return;
-            //}
-            //#endregion
 
 
             //ESC ultility------------------------------------------------------------------
@@ -519,17 +502,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            // Help ------------------------------------------------------------------------
-            #region F1
-            if (e.KeyValue == 112 && !e.Control && !e.Shift && !e.Alt)//F1
-            {
-                btnHelp_Click(null, null);
-                return;
-            }
-            #endregion
-
+            
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
@@ -592,37 +565,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //Scale to Width------------------------------------------------------------------
-            //#region Ctrl + W
-            //if (e.KeyCode == Keys.W && e.Control && !e.Shift && !e.Alt)// Ctrl + W
-            //{
-            //    btnScaletoWidth_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Scale to Height-----------------------------------------------------------------
-            //#region Ctrl + H
-            //if (e.KeyCode == Keys.H && e.Control && !e.Shift && !e.Alt)// Ctrl + H
-            //{
-            //    btnScaletoHeight_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Auto size window----------------------------------------------------------------
-            //#region Ctrl + M
-            //if (e.KeyCode == Keys.M && e.Control && !e.Shift && !e.Alt)// Ctrl + M
-            //{
-            //    btnWindowAutosize_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
+            
 
             //Actual size image -------------------------------------------------------------
             #region Ctrl + 0
@@ -632,17 +575,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //Lock zoom ratio-----------------------------------------------------------------
-            //#region Ctrl + R
-            //if (e.KeyData == Keys.R && e.Control && !e.Shift && !e.Alt)// Ctrl + R
-            //{
-            //    btnZoomLock.PerformClick();
-            //    return;
-            //}
-            //#endregion
-
+            
 
             //Full screen--------------------------------------------------------------------
             #region ALT + ENTER
@@ -652,195 +585,11 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //Open file----------------------------------------------------------------------
-            //#region Ctrl + O
-            //if (e.KeyValue == 79 && e.Control && !e.Shift && !e.Alt)// Ctrl + O
-            //{
-            //    OpenFile();
-            //    return;
-            //}
-            //#endregion
-
-
-            //Convert file-------------------------------------------------------------------
-            //#region Ctrl + S
-            //if (e.KeyValue == 83 && e.Control && !e.Shift && !e.Alt)// Ctrl + S
-            //{
-            //    btnConvert_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Refresh Image------------------------------------------------------------------
-            //#region F5
-            //if (e.KeyValue == 116 && !e.Control && !e.Shift && !e.Alt)//F5
-            //{
-            //    btnRefresh_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Goto image---------------------------------------------------------------------
-            //#region Ctrl + G
-            //if (e.KeyValue == 71 && e.Control && !e.Shift && !e.Alt)//Ctrl + G
-            //{
-            //    btnGoto_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Extract frames-----------------------------------------------------------------
-            //#region Ctrl + E
-            //if (e.KeyCode == Keys.E && e.Control && !e.Shift && !e.Alt)//Ctrl + E
-            //{
-            //    try
-            //    {
-            //        GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
-            //        mnuExtractFrames_Click(null, null);
-            //    }
-            //    catch { }
-            //    return;
-            //}
-            //#endregion
-
-
-            //Detele to Recycle bin----------------------------------------------------------
-            //#region DELETE
-            //if (e.KeyCode == Keys.Delete && !e.Control && !e.Shift && !e.Alt)//Delete
-            //{
-            //    mnuRecycleBin_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Detele From Hark disk----------------------------------------------------------
-            //#region SHIFT + DELETE
-            //if (e.KeyCode == Keys.Delete && !e.Control && e.Shift && !e.Alt)//Shift + Delete
-            //{
-            //    mnuDelete_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Lock zoom ratio----------------------------------------------------------------
-            //#region Ctrl + L
-            //if (e.KeyCode == Keys.L && e.Control && !e.Shift && !e.Alt)//Ctrl + L
-            //{
-            //    btnZoomLock.PerformClick();
-            //    return;
-            //}
-            //#endregion
-
-
-            //Image properties----------------------------------------------------------------
-            //#region Ctrl + I
-            //if (e.KeyCode == Keys.I && e.Control && !e.Shift && !e.Alt)//Ctrl + I
-            //{
-            //    mnuProperties_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Show thumbnail-------------------------------------------------------------------
-            #region Ctrl + T
-            if (e.KeyCode == Keys.T && e.Control && !e.Shift && !e.Alt)// Ctrl + T
-            {
-                btnThumb.PerformClick();
-                return;
-            }
-            #endregion
-
-
-            //Caro background------------------------------------------------------------------
-            #region Ctrl + B
-            if (e.KeyCode == Keys.B && e.Control && !e.Shift && !e.Alt)// Ctrl + B
-            {
-                btnCaro.PerformClick();
-                return;
-            }
-            #endregion
-
-
-            //Print Image-----------------------------------------------------------------------
-            //#region Ctrl + P
-            //if (e.KeyCode == Keys.P && e.Control && !e.Shift && !e.Alt)// Ctrl + P
-            //{
-            //    btnPrintImage_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Show / Hide Toolbar-----------------------------------------------------------------
-            #region Ctrl + F1
-            if (e.KeyCode == Keys.F1 && e.Control && !e.Shift && !e.Alt)// Ctrl + F1
-            {
-                mnuShowToolBar_Click(null, null);
-                return;
-            }
-            #endregion
-
-
-            //Upload image to Facebook------------------------------------------------------------
-            //#region Ctrl + U
-            //if (e.KeyCode == Keys.U && e.Control && !e.Shift && !e.Alt)// Ctrl + U
-            //{
-            //    btnFacebook_Click(btnFacebook, e);
-            //    return;
-            //}
-            //#endregion
-
-
-            //Rename image----------------------------------------------------------------------
-            //#region F2
-            //if (e.KeyValue == 113 && !e.Control && !e.Shift && !e.Alt)//F2
-            //{
-            //    RenameImage();
-            //    return;
-            //}
-            //#endregion
-
-            //Show Settings dialog--------------------------------------------------------------
-            #region Ctrl + Shift + P
-            if (e.KeyCode == Keys.P && e.Control && e.Shift && !e.Alt)// Ctrl + Shift + P
-            {
-                btnSetting_Click(null, null);
-                return;
-            }
-            #endregion
-
-
-            //Show Extension Manager dialog-----------------------------------------------------
-            #region Ctrl + Shift + E
-            if (e.KeyCode == Keys.E && e.Control && e.Shift && !e.Alt)// Ctrl + Shift + P
-            {
-                btnExtension_Click(null, null);
-                return;
-            }
-            #endregion
-
-
-            //Image location--------------------------------------------------------------------
-            //#region Ctrl + Shift + L
-            //if (e.KeyCode == Keys.L && e.Control && e.Shift && !e.Alt)//Ctrl + Shift + L
-            //{
-            //    mnuImageLocation_Click(null, null);
-            //    return;
-            //}
-            //#endregion
-
-
+            
         }
 
         #endregion
+
 
 
         #region Private functions
@@ -1067,6 +816,7 @@ namespace ImageGlass
         #endregion
 
 
+
         #region Configurations
         /// <summary>
         /// Load default theme
@@ -1096,7 +846,7 @@ namespace ImageGlass
             btnRefresh.Image = ImageGlass.Properties.Resources.refresh;
             btnGoto.Image = ImageGlass.Properties.Resources.gotoimage;
             btnThumb.Image = ImageGlass.Properties.Resources.thumbnail;
-            btnCaro.Image = ImageGlass.Properties.Resources.background;
+            btnCheckedBackground.Image = ImageGlass.Properties.Resources.background;
             btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen;
             btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow;
             btnConvert.Image = ImageGlass.Properties.Resources.convert;
@@ -1197,8 +947,8 @@ namespace ImageGlass
                 try { btnThumb.Image = Image.FromFile(dir + t.thumbnail); }
                 catch { btnThumb.Image = ImageGlass.Properties.Resources.thumbnail; }
 
-                try { btnCaro.Image = Image.FromFile(dir + t.checkBackground); }
-                catch { btnCaro.Image = ImageGlass.Properties.Resources.background; }
+                try { btnCheckedBackground.Image = Image.FromFile(dir + t.checkBackground); }
+                catch { btnCheckedBackground.Image = ImageGlass.Properties.Resources.background; }
 
                 try { btnFullScreen.Image = Image.FromFile(dir + t.fullscreen); }
                 catch { btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen; }
@@ -1370,6 +1120,7 @@ namespace ImageGlass
         #endregion
 
 
+
         #region Form events
         protected override void WndProc(ref Message m)
         {
@@ -1405,11 +1156,6 @@ namespace ImageGlass
 
             sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
             sp1.SplitterWidth = 1;
-
-
-
-
-
         }
 
         public void LoadFromParams(string[] args)
@@ -1441,8 +1187,7 @@ namespace ImageGlass
             if (Directory.Exists(temp_dir))
             {
                 Directory.Delete(temp_dir, true);
-            }
-                            
+            }            
 
             SaveConfig();
         }
@@ -1469,7 +1214,7 @@ namespace ImageGlass
                 btnRefresh.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRefresh"];
                 btnGoto.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnGoto"];
                 btnThumb.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnThumb"];
-                btnCaro.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnCaro"];
+                btnCheckedBackground.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnCaro"];
                 btnFullScreen.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFullScreen"];
                 btnSlideShow.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSlideShow"];
                 btnConvert.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnConvert"];
@@ -1516,6 +1261,86 @@ namespace ImageGlass
             NextPic(0);
         }
 
+        private void timSlideShow_Tick(object sender, EventArgs e)
+        {
+            NextPic(1);
+
+            //stop playing slideshow at last image
+            if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
+            {
+                if (!GlobalSetting.IsLoopBackSlideShow)
+                {
+                    mnuStopSlideshow_Click(null, null);
+                }
+            }
+        }
+
+        private void sysWatch_Renamed(object sender, RenamedEventArgs e)
+        {
+            string newName = e.FullPath;
+            string oldName = e.OldFullPath;
+
+            //Get index of renamed image
+            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(oldName);
+            if (imgIndex > -1)
+            {
+                //Rename image list
+                GlobalSetting.ImageList.SetFileName(imgIndex, newName);
+                GlobalSetting.ImageFilenameList[imgIndex] = newName;
+
+                //Cap nhat lai tieu de
+                this.UpdateStatusBar();
+
+                try
+                {
+                    //Rename image in thumbnail bar
+                    thumbnailBar.Items[imgIndex].Text = e.Name;
+                    thumbnailBar.Items[imgIndex].Tag = newName;
+                }
+                catch { }
+            }
+        }
+
+        private void sysWatch_Deleted(object sender, FileSystemEventArgs e)
+        {
+            //Get index of deleted image
+            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
+
+            if (imgIndex > -1)
+            {
+                //delete image list
+                GlobalSetting.ImageList.Remove(imgIndex);
+                GlobalSetting.ImageFilenameList.RemoveAt(imgIndex);
+
+                try
+                {
+                    //delete thumbnail list
+                    thumbnailBar.Items.RemoveAt(imgIndex);
+                }
+                catch { }
+
+                NextPic(0);
+            }
+        }
+
+        private void sysWatch_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                NextPic(0);
+            }
+        }
+
+        private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
+        {
+            this.UpdateStatusBar(true);
+        }
+        #endregion
+
+        
+
+        #region Toolbar Button
         private void btnNext_Click(object sender, EventArgs e)
         {
             mnuMainViewNext_Click(null, e);
@@ -1576,7 +1401,7 @@ namespace ImageGlass
             mnuMainGoto_Click(null, e);
         }
 
-        private void btnCaro_Click(object sender, EventArgs e)
+        private void btnCheckedBackground_Click(object sender, EventArgs e)
         {
             mnuMainCheckBackground_Click(null, e);
         }
@@ -1594,20 +1419,6 @@ namespace ImageGlass
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
             mnuMainLockZoomRatio_Click(null, e);
-        }
-
-        private void timSlideShow_Tick(object sender, EventArgs e)
-        {
-            NextPic(1);
-
-            //stop playing slideshow at last image
-            if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
-            {
-                if (!GlobalSetting.IsLoopBackSlideShow)
-                {
-                    mnuStopSlideshow_Click(null, null);
-                }
-            }
         }
 
         private void btnSlideShow_Click(object sender, EventArgs e)
@@ -1638,6 +1449,75 @@ namespace ImageGlass
         private void btnSetting_Click(object sender, EventArgs e)
         {
             mnuMainSettings_Click(null, e);
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            mnuMainAbout_Click(null, e);
+        }
+
+        private void btnConvert_Click(object sender, EventArgs e)
+        {
+            mnuMainSaveAs_Click(null, e);
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            mnuMainReportIssue_Click(null, e);
+        }
+        #endregion
+        
+
+
+        #region Popup Menu
+        private void mnuPopup_Opening(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                                 GlobalSetting.IsImageError)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            catch { e.Cancel = true; return; }
+
+            if (GlobalSetting.IsShowToolBar)
+            {
+                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
+            }
+            else
+            {
+                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
+            }
+
+            try
+            {
+                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                int frameCount = img.GetFrameCount(dim);
+
+                if (frameCount > 1)
+                {
+                    mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
+                    mnuStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartStopAnimating"];
+                }
+
+                mnuExtractFrames.Enabled = frameCount > 1;
+                mnuStartStopAnimating.Enabled = frameCount > 1;
+            }
+            catch
+            {
+                mnuExtractFrames.Enabled = false;
+                mnuStartStopAnimating.Enabled = false;
+            }
+        }
+
+        private void mnuPopup_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            mnuExtractFrames.Enabled = false;
+            mnuStartStopAnimating.Enabled = false;
         }
 
         private void mnuShowToolBar_Click(object sender, EventArgs e)
@@ -1708,71 +1588,6 @@ namespace ImageGlass
             mnuMainStartStopAnimating_Click(null, null);
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
-        {
-            mnuMainAbout_Click(null, e);
-        }
-
-        private void btnConvert_Click(object sender, EventArgs e)
-        {
-            mnuMainSaveAs_Click(null, e);
-        }
-
-
-        private void btnReport_Click(object sender, EventArgs e)
-        {
-            mnuMainReportIssue_Click(null, e);
-        }
-
-        private void mnuPopup_Opening(object sender, CancelEventArgs e)
-        {
-            try
-            {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
-                                 GlobalSetting.IsImageError)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-            }
-            catch { e.Cancel = true; return; }
-
-            if (GlobalSetting.IsShowToolBar)
-            {
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
-            }
-            else
-            {
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
-            }
-
-            try
-            {
-                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                int frameCount = img.GetFrameCount(dim);
-
-                if (frameCount > 1)
-                {
-                    mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
-                    mnuStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartStopAnimating"];
-                }
-
-                mnuExtractFrames.Enabled = frameCount > 1;
-                mnuStartStopAnimating.Enabled = frameCount > 1;
-            }
-            catch
-            {
-                mnuExtractFrames.Enabled = false;
-                mnuStartStopAnimating.Enabled = false;
-            }
-        }
-
-        private void mnuPopup_Closing(object sender, ToolStripDropDownClosingEventArgs e)
-        {
-            mnuExtractFrames.Enabled = false;
-        }
-
         private void mnuRename_Click(object sender, EventArgs e)
         {
             mnuMainRename_Click(null, e);
@@ -1819,72 +1634,6 @@ namespace ImageGlass
             btnFacebook_Click(btnFacebook, e);
         }
 
-        private void sysWatch_Renamed(object sender, RenamedEventArgs e)
-        {
-            string newName = e.FullPath;
-            string oldName = e.OldFullPath;
-
-            //Get index of renamed image
-            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(oldName);
-            if (imgIndex > -1)
-            {
-                //Rename image list
-                GlobalSetting.ImageList.SetFileName(imgIndex, newName);
-                GlobalSetting.ImageFilenameList[imgIndex] = newName;
-
-                //Cap nhat lai tieu de
-                this.UpdateStatusBar();
-
-                try
-                {
-                    //Rename image in thumbnail bar
-                    thumbnailBar.Items[imgIndex].Text = e.Name;
-                    thumbnailBar.Items[imgIndex].Tag = newName;
-                }
-                catch { }
-            }
-        }
-
-        private void sysWatch_Deleted(object sender, FileSystemEventArgs e)
-        {
-            //Get index of deleted image
-            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
-
-            if (imgIndex > -1)
-            {
-                //delete image list
-                GlobalSetting.ImageList.Remove(imgIndex);
-                GlobalSetting.ImageFilenameList.RemoveAt(imgIndex);
-
-                try
-                {
-                    //delete thumbnail list
-                    thumbnailBar.Items.RemoveAt(imgIndex);
-                }
-                catch { }
-
-                NextPic(0);
-            }
-        }
-
-        private void sysWatch_Changed(object sender, FileSystemEventArgs e)
-        {
-            if (e.ChangeType == WatcherChangeTypes.Changed)
-            {
-                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
-                NextPic(0);
-            }
-        }
-
-        private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
-        {
-            this.UpdateStatusBar(true);
-        }
-
-
-
-        #endregion
-
         private void mnuClearClipboard_Click(object sender, EventArgs e)
         {
             mnuMainClearClipboard_Click(null, e);
@@ -1894,16 +1643,11 @@ namespace ImageGlass
         {
             mnuMainOpenImageData_Click(null, e);
         }
+        #endregion
 
 
 
-
-
-
-
-
-
-
+        #region Main Menu (Main function)
 
         private void mnuMainOpenFile_Click(object sender, EventArgs e)
         {
@@ -2166,13 +1910,12 @@ namespace ImageGlass
             p.StartInfo.FileName = filename;
             p.StartInfo.Verb = "print";
             p.Start();
-
             
         }
 
         private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
+            if (picMain.Image == null || picMain.CanAnimate)
             {
                 return;
             }
@@ -2190,7 +1933,7 @@ namespace ImageGlass
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
+            if (picMain.Image == null || picMain.CanAnimate)
             {
                 return;
             }
@@ -2307,42 +2050,35 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show(
-                                string.Format(GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogText"],
-                                                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
-                                GlobalSetting.LangPack.Items["frmMain._RecycleBinDialogTitle"],
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (msg == DialogResult.Yes)
+            string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            try
             {
-                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                try
+                //in case of GIF file...
+                string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
+                if (ext == ".gif")
                 {
-                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
-                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                    if (ext == ".gif")
+                    try
                     {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
-                        }
-                        catch { }
-
-                        //delete image list
-                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
-
-                        NextPic(0);
+                        //delete thumbnail list
+                        thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
                     }
+                    catch { }
 
-                    ImageInfo.DeleteFile(f, true);
+                    //delete image list
+                    GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
+                    GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
 
+                    NextPic(0);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
+                ImageInfo.DeleteFile(f, true);
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void mnuMainDeleteFromHardDisk_Click(object sender, EventArgs e)
@@ -2548,9 +2284,9 @@ namespace ImageGlass
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
         {
             GlobalSetting.IsShowCheckedBackground = !GlobalSetting.IsShowCheckedBackground;
-            btnCaro.Checked = GlobalSetting.IsShowCheckedBackground;
+            btnCheckedBackground.Checked = GlobalSetting.IsShowCheckedBackground;
 
-            if (btnCaro.Checked)
+            if (btnCheckedBackground.Checked)
             {
                 //show
                 picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
@@ -2561,7 +2297,7 @@ namespace ImageGlass
                 picMain.GridDisplayMode = ImageBoxGridDisplayMode.None;
             }
 
-            mnuMainCheckBackground.Checked = btnCaro.Checked;
+            mnuMainCheckBackground.Checked = btnCheckedBackground.Checked;
         }
 
         private void mnuMainExtensionManager_Click(object sender, EventArgs e)
@@ -2614,6 +2350,13 @@ namespace ImageGlass
             }
         }
 
-        
+        private void mnuMain_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+        #endregion
+
+
+
     }
 }
