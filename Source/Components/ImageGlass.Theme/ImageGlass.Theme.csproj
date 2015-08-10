@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModernMenuRenderer.cs" />
     <Compile Include="RenderTheme.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

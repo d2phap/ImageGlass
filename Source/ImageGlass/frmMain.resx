@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="mnuPopup.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>584, 10</value>
+    <value>584, 6</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="mnuEditImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -203,13 +203,13 @@
 </value>
   </data>
   <metadata name="timSlideShow.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>217, 10</value>
+    <value>318, 6</value>
   </metadata>
   <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>701, 10</value>
+    <value>701, 6</value>
   </metadata>
   <metadata name="sysWatch.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>774, 10</value>
+    <value>774, 6</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>35</value>
@@ -218,10 +218,10 @@
     <value>ControlBackColor = ButtonFace; BorderColor = 406d6d6d; UnFocusedColor1 = 106d6d6d; UnFocusedColor2 = 406d6d6d; UnFocusedBorderColor = 806d6d6d; HoverColor1 = 83399ff; HoverColor2 = 403399ff; HoverBorderColor = 403399ff; SelectedColor1 = 103399ff; SelectedColor2 = 803399ff; SelectedBorderColor = 803399ff; DisabledColor1 = 6d6d6d; DisabledColor2 = 206d6d6d; DisabledBorderColor = 206d6d6d; DisabledForeColor = ff808080; ColumnHeaderBackColor1 = 20f0f0f0; ColumnHeaderBackColor2 = c4f0f0f0; ColumnHeaderHoverColor1 = 103399ff; ColumnHeaderHoverColor2 = 403399ff; ColumnSelectColor = 106d6d6d; ColumnSeparatorColor = 206d6d6d; PaneBackColor = 106d6d6d; PaneSeparatorColor = 806d6d6d; SelectionRectangleColor1 = 803399ff; SelectionRectangleColor2 = 803399ff</value>
   </data>
   <metadata name="toolMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>11, 11</value>
+    <value>9, 5</value>
   </metadata>
   <metadata name="mnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>479, 9</value>
+    <value>475, 4</value>
   </metadata>
   <data name="btnMenu.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -44,6 +44,8 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
+            mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
+            mnuMainOpenFile.TextAlign = ContentAlignment.BottomRight;
         }
 
 
@@ -2359,9 +2361,9 @@ namespace ImageGlass
         {
 
         }
+
+
         #endregion
-
-
-
+        
     }
 }
