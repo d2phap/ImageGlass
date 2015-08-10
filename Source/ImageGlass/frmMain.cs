@@ -305,23 +305,9 @@ namespace ImageGlass
                 //Show image
                 picMain.Image = im;
 
-                // Any scrolling from prior image would 'stick': reset here
-                picMain.ScrollTo(0, 0, 0, 0); 
-
-                //Zoom condition
-                if (btnZoomLock.Checked)
-                {
-                    picMain.Zoom = GlobalSetting.ZoomLockValue;
-                }
-                else
-                {
-                    //Reset zoom
-                    picMain.ZoomToFit();
-                }
-
-                //Get image file information
-                this.UpdateStatusBar();
-
+                //refresh image
+                mnuMainRefresh_Click(null, null);
+                
                 //Release unused images
                 if (GlobalSetting.CurrentIndex - 2 >= 0)
                 {
@@ -1252,6 +1238,8 @@ namespace ImageGlass
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
+            mnuMainRefresh_Click(null, null);
+
             SaveConfig();
         }
 
@@ -1722,16 +1710,22 @@ namespace ImageGlass
 
         private void mnuMainRefresh_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
+            // Any scrolling from prior image would 'stick': reset here
+            picMain.ScrollTo(0, 0, 0, 0);
 
-            NextPic(0);
+            //Zoom condition
+            if (btnZoomLock.Checked)
+            {
+                picMain.Zoom = GlobalSetting.ZoomLockValue;
+            }
+            else
+            {
+                //Reset zoom
+                picMain.ZoomToFit();
+            }
+
+            //Get image file information
+            this.UpdateStatusBar();
         }
 
         private void mnuMainOpenWith_Click(object sender, EventArgs e)
@@ -2022,16 +2016,27 @@ namespace ImageGlass
             {
                 return;
             }
-
-            // Window adapt to image
+            
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             this.WindowState = FormWindowState.Normal;
-            this.Size = new Size(Width += picMain.Image.Width - picMain.Width,
+
+            //if image size is bigger than screen
+            if (picMain.Image.Width >= screen.Width || picMain.Height >= screen.Height)
+            {
+                this.Left = this.Top = 0;
+                this.Width = screen.Width;
+                this.Height = screen.Height;
+            }
+            else
+            {
+                this.Size = new Size(Width += picMain.Image.Width - picMain.Width,
                                 Height += picMain.Image.Height - picMain.Height);
-            //Application.DoEvents();
-            picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
-            this.Top = (screen.Height - this.Height) / 2 + screen.Top;
-            this.Left = (screen.Width - this.Width) / 2 + screen.Left;
+
+                picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
+                this.Top = (screen.Height - this.Height) / 2 + screen.Top;
+                this.Left = (screen.Width - this.Width) / 2 + screen.Left;
+            }
+            
         }
 
         private void mnuMainRename_Click(object sender, EventArgs e)
