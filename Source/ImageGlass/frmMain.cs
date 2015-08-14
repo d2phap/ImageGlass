@@ -1043,6 +1043,7 @@ namespace ImageGlass
             string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
             {
+                //Do not show welcome image if params exist.
                 if(Environment.GetCommandLineArgs().Count() < 2)
                 {
                     Prepare(GlobalSetting.StartUpDir + "default.png");
