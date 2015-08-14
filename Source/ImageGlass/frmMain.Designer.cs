@@ -896,8 +896,9 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 441);
+            this.mnuMain.Size = new System.Drawing.Size(289, 419);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -956,7 +957,7 @@
             // 
             this.paintToolStripMenuItem.Name = "paintToolStripMenuItem";
             this.paintToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.paintToolStripMenuItem.Size = new System.Drawing.Size(152, 23);
+            this.paintToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
             this.paintToolStripMenuItem.Text = "Paint";
             // 
             // toolStripSeparator6
@@ -1584,6 +1585,7 @@
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
+            this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
             // 
             // thumbnailBar
             // 

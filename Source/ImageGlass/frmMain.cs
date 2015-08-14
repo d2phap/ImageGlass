@@ -1340,9 +1340,31 @@ namespace ImageGlass
         {
             this.UpdateStatusBar(true);
         }
+
+        private void picMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Middle: //Refresh
+                    mnuMainRefresh_Click(null, null);
+                    break;
+
+                case MouseButtons.XButton1: //Back
+                    mnuMainViewPrevious_Click(null, null);
+                    break;
+
+                case MouseButtons.XButton2: //Next
+                    mnuMainViewNext_Click(null, null);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
         #endregion
 
-        
+
 
         #region Toolbar Button
         private void btnNext_Click(object sender, EventArgs e)
@@ -2375,6 +2397,8 @@ namespace ImageGlass
         {
 
         }
+
+
 
 
         #endregion
