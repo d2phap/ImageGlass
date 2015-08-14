@@ -1043,7 +1043,11 @@ namespace ImageGlass
             string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
             {
-                Prepare(GlobalSetting.StartUpDir + "default.png");
+                if(Environment.GetCommandLineArgs().Count() < 2)
+                {
+                    Prepare(GlobalSetting.StartUpDir + "default.png");
+                }
+                
             }
 
             //Load is loop back slideshow---------------------------------------------------
