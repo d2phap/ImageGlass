@@ -349,7 +349,7 @@ namespace ImageGlass
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
             //clear text when finishing
-            picMain.Text = "";
+            this.DisplayTextMessage("", 0);
         }
 
 
@@ -649,6 +649,15 @@ namespace ImageGlass
         /// <param name="duration">Duration (milisecond)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
+            if(duration == 0)
+            {
+                picMain.TextBackColor = Color.Transparent;
+                picMain.Font = this.Font;
+                picMain.ForeColor = Color.Black;
+                picMain.Text = string.Empty;
+                return;
+            }
+
             System.Windows.Forms.Timer tmsg = new System.Windows.Forms.Timer();
             tmsg.Enabled = false;
             tmsg.Tick += tmsg_Tick;
@@ -668,6 +677,11 @@ namespace ImageGlass
         {
             System.Windows.Forms.Timer tmsg = (System.Windows.Forms.Timer)sender;
             tmsg.Stop();
+
+            if(GlobalSetting.IsImageError)
+            {
+                return;
+            }
 
             picMain.TextBackColor = Color.Transparent;
             picMain.Font = this.Font;
