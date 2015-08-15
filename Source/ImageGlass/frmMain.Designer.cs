@@ -91,6 +91,7 @@
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainEditImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainViewNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -203,7 +204,7 @@
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(292, 524);
+            this.mnuPopup.Size = new System.Drawing.Size(292, 502);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -866,6 +867,7 @@
             this.mnuMainOpenImageData,
             this.mnuMainSaveAs,
             this.mnuMainRefresh,
+            this.mnuMainEditImage,
             this.toolStripSeparator6,
             this.mnuMainNavigation,
             this.mnuMainFullScreen,
@@ -883,8 +885,9 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 396);
+            this.mnuMain.Size = new System.Drawing.Size(289, 418);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -928,6 +931,14 @@
             this.mnuMainRefresh.Size = new System.Drawing.Size(288, 23);
             this.mnuMainRefresh.Text = "&Refresh";
             this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
+            // 
+            // mnuMainEditImage
+            // 
+            this.mnuMainEditImage.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainEditImage.Image")));
+            this.mnuMainEditImage.Name = "mnuMainEditImage";
+            this.mnuMainEditImage.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainEditImage.Text = "&Edit image";
+            this.mnuMainEditImage.Click += new System.EventHandler(this.mnuMainEditImage_Click);
             // 
             // toolStripSeparator6
             // 
@@ -1612,6 +1623,7 @@
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.ResizeBegin += new System.EventHandler(this.frmMain_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.mnuPopup.ResumeLayout(false);
@@ -1764,6 +1776,7 @@
         private ImageListView.ImageListView bookmarksBar;
         private System.Windows.Forms.ToolStripMenuItem mnuStartStopAnimating;
         private System.Windows.Forms.ToolStripMenuItem mnuMainStartStopAnimating;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainEditImage;
     }
 }
 

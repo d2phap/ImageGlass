@@ -50,7 +50,13 @@ namespace ImageGlass
 
 
         #region Local variables
-        private string imageInfo = "";
+        private string _imageInfo = "";
+
+        // window size value before resizing
+        private Size _windowSize = new Size();
+
+        // determine if the image is zoomed
+        private bool _isZoomed = false;
         #endregion
 
 
@@ -381,7 +387,7 @@ namespace ImageGlass
                     fileinfo = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
                     fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
                     fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
-                    this.imageInfo = fileinfo;
+                    this._imageInfo = fileinfo;
                 }
                 catch { fileinfo = ""; }
             }
@@ -391,7 +397,7 @@ namespace ImageGlass
 
                 if (zoomOnly)
                 {
-                    fileinfo = picMain.Zoom.ToString() + "%  |  " + imageInfo;
+                    fileinfo = picMain.Zoom.ToString() + "%  |  " + _imageInfo;
                 }
                 else
                 {
@@ -399,7 +405,7 @@ namespace ImageGlass
                     //fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
                     fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
 
-                    this.imageInfo = fileinfo;
+                    this._imageInfo = fileinfo;
 
                     fileinfo = picMain.Zoom.ToString() + "%  |  " + fileinfo;
                 }
@@ -1257,11 +1263,20 @@ namespace ImageGlass
             GlobalSetting.IsForcedActive = false;
         }
 
+        private void frmMain_ResizeBegin(object sender, EventArgs e)
+        {
+            this._windowSize = this.Size;
+        }
+
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
-            mnuMainRefresh_Click(null, null);
+            if (this.Size != this._windowSize && !this._isZoomed)
+            {
+                mnuMainRefresh_Click(null, null);
 
-            SaveConfig();
+                SaveConfig();
+            }
+            
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
@@ -1343,6 +1358,7 @@ namespace ImageGlass
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
+            this._isZoomed = true;
             this.UpdateStatusBar(true);
         }
 
@@ -1503,6 +1519,13 @@ namespace ImageGlass
         #region Popup Menu
         private void mnuPopup_Opening(object sender, CancelEventArgs e)
         {
+            //clear current items
+            mnuPopup.Items.Clear();
+
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainReportIssue));
+            
+
+
             try
             {
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
@@ -1558,26 +1581,7 @@ namespace ImageGlass
 
         private void mnuEditImage_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.IsImageError)
-            {
-                return;
-            }
-
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-
-            Process p = new Process();
-            p.StartInfo.FileName = filename;
-            p.StartInfo.Verb = "edit";
-
-            //show error dialog
-            p.StartInfo.ErrorDialog = true;
-
-            try
-            {
-                p.Start();
-            }
-            catch (Exception)
-            { }
+            mnuMainEditImage_Click(null, null);
         }
 
         private void mnuProperties_Click(object sender, EventArgs e)
@@ -1781,15 +1785,36 @@ namespace ImageGlass
             {
                 //Reset zoom
                 picMain.ZoomToFit();
+
+                this._isZoomed = false;
             }
 
             //Get image file information
             this.UpdateStatusBar();
         }
 
-        private void mnuMainOpenWith_Click(object sender, EventArgs e)
+        private void mnuMainEditImage_Click(object sender, EventArgs e)
         {
+            if (GlobalSetting.IsImageError)
+            {
+                return;
+            }
 
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+            Process p = new Process();
+            p.StartInfo.FileName = filename;
+            p.StartInfo.Verb = "edit";
+
+            //show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try
+            {
+                p.Start();
+            }
+            catch (Exception)
+            { }
         }
 
         private void mnuMainViewNext_Click(object sender, EventArgs e)
@@ -2449,7 +2474,10 @@ namespace ImageGlass
 
 
 
+
         #endregion
+        
+
         
     }
 }

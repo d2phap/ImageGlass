@@ -191,7 +191,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuExitSlideshow", "Exit slideshow");
             this.Items.Add("frmMain.mnuShowToolBar._Hide", "Hide toolbar");
             this.Items.Add("frmMain.mnuShowToolBar._Show", "Show toolbar");
-            this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint"); //remove 2.1
+            //this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint"); //remove 2.1
             this.Items.Add("frmMain.mnuEditImage", "Edit image"); //v2.1            
             this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})");
             this.Items.Add("frmMain.mnuStartStopAnimating", "Start / Stop animating image"); //v2.1
