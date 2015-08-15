@@ -56,7 +56,8 @@ namespace ImageGlass.Services.Configuration
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _supportedExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;*.tga;*.psd";
+                                                     "*.exif;*.wmf;*.emf;";
+        private static string _supportedExtraExtensions = "*.tga;*.psd";
         private static string _contextMenuExtensions = "";
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;
@@ -152,15 +153,26 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                GlobalSetting._supportedExtensions = GlobalSetting.GetConfig("SupportedExtensions",
-                                                        GlobalSetting._supportedExtensions);
-
-                return GlobalSetting._supportedExtensions;
+                return GlobalSetting._supportedExtensions + GlobalSetting.SupportedExtraExtensions;
             }
             set
             {
                 GlobalSetting._supportedExtensions = value;
-                GlobalSetting.SetConfig("SupportedExtensions", GlobalSetting._supportedExtensions);
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets supported extra extensions
+        /// </summary>
+        public static string SupportedExtraExtensions
+        {
+            get
+            {
+                return _supportedExtraExtensions;
+            }
+            set
+            {
+                _supportedExtraExtensions = value;
             }
         }
 
@@ -410,6 +422,8 @@ namespace ImageGlass.Services.Configuration
             get { return GlobalSetting._isTempMemoryData; }
             set { GlobalSetting._isTempMemoryData = value; }
         }
+
+        
 
         #endregion
 

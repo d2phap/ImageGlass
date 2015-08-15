@@ -1915,25 +1915,36 @@ namespace ImageGlass
                     , 5000);
         }
 
+        /// <summary>
+        /// Save current loaded image to file and print it
+        /// </summary>
+        private string SaveTemporaryMemoryData()
+        {
+            //save temp file
+            string temp_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                        "\\ImageGlass\\Temp\\";
+            if (!Directory.Exists(temp_dir))
+            {
+                Directory.CreateDirectory(temp_dir);
+            }
+
+            string filename = temp_dir + "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png";
+
+            picMain.Image.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+
+            return filename;
+        }
+
         private void mnuMainPrint_Click(object sender, EventArgs e)
         {
             string filename = "";
 
             //save image from memory
-            if(GlobalSetting.IsTempMemoryData)
+            if (GlobalSetting.IsTempMemoryData)
             {
-                //save temp file
-                string temp_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                            "\\ImageGlass\\Temp\\";
-                if (!Directory.Exists(temp_dir))
-                {
-                    Directory.CreateDirectory(temp_dir);
-                }
-
-                filename = temp_dir + "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png";
-
-                picMain.Image.Save(filename, System.Drawing.Imaging.ImageFormat.Png);                
+                filename = this.SaveTemporaryMemoryData();
             }
+            //image error
             else if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
             {
                 return;
@@ -1941,13 +1952,29 @@ namespace ImageGlass
             else
             {
                 filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                // check if file extension is NOT supported for native print
+                // these extensions will not be printed by its associated app.
+                if (GlobalSetting.SupportedExtraExtensions.Contains(Path.GetExtension(filename).ToLower()))
+                {
+                    filename = this.SaveTemporaryMemoryData();
+                }
             }
 
             Process p = new Process();
             p.StartInfo.FileName = filename;
             p.StartInfo.Verb = "print";
-            p.Start();
-            
+
+            //show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try
+            {
+                p.Start();
+            }
+            catch (Exception)
+            { }
+
         }
 
         private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
