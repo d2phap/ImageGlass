@@ -33,7 +33,6 @@
             this.mnuShowToolBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuEditImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.sdgfsdgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStartStopAnimating = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSetWallpaper = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,8 +91,6 @@
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainOpenWith = new System.Windows.Forms.ToolStripMenuItem();
-            this.paintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainViewNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +203,7 @@
             this.mnuImageProperties});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(292, 502);
+            this.mnuPopup.Size = new System.Drawing.Size(292, 524);
             this.mnuPopup.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.mnuPopup_Closing);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
             // 
@@ -258,20 +255,11 @@
             // 
             // mnuEditImage
             // 
-            this.mnuEditImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sdgfsdgToolStripMenuItem});
             this.mnuEditImage.Image = ((System.Drawing.Image)(resources.GetObject("mnuEditImage.Image")));
             this.mnuEditImage.Name = "mnuEditImage";
             this.mnuEditImage.Size = new System.Drawing.Size(291, 22);
             this.mnuEditImage.Text = "&Edit image";
             this.mnuEditImage.Click += new System.EventHandler(this.mnuEditImage_Click);
-            // 
-            // sdgfsdgToolStripMenuItem
-            // 
-            this.sdgfsdgToolStripMenuItem.BackColor = System.Drawing.Color.White;
-            this.sdgfsdgToolStripMenuItem.Name = "sdgfsdgToolStripMenuItem";
-            this.sdgfsdgToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.sdgfsdgToolStripMenuItem.Text = "sdgfsdg";
             // 
             // mnuExtractFrames
             // 
@@ -878,7 +866,6 @@
             this.mnuMainOpenImageData,
             this.mnuMainSaveAs,
             this.mnuMainRefresh,
-            this.mnuMainOpenWith,
             this.toolStripSeparator6,
             this.mnuMainNavigation,
             this.mnuMainFullScreen,
@@ -896,9 +883,8 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 419);
+            this.mnuMain.Size = new System.Drawing.Size(289, 396);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -942,23 +928,6 @@
             this.mnuMainRefresh.Size = new System.Drawing.Size(288, 23);
             this.mnuMainRefresh.Text = "&Refresh";
             this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
-            // 
-            // mnuMainOpenWith
-            // 
-            this.mnuMainOpenWith.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.paintToolStripMenuItem});
-            this.mnuMainOpenWith.Name = "mnuMainOpenWith";
-            this.mnuMainOpenWith.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainOpenWith.Size = new System.Drawing.Size(288, 23);
-            this.mnuMainOpenWith.Text = "O&pen with ...";
-            this.mnuMainOpenWith.Click += new System.EventHandler(this.mnuMainOpenWith_Click);
-            // 
-            // paintToolStripMenuItem
-            // 
-            this.paintToolStripMenuItem.Name = "paintToolStripMenuItem";
-            this.paintToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.paintToolStripMenuItem.Size = new System.Drawing.Size(101, 23);
-            this.paintToolStripMenuItem.Text = "Paint";
             // 
             // toolStripSeparator6
             // 
@@ -1482,7 +1451,9 @@
             // 
             this.mnuMainSettings.Name = "mnuMainSettings";
             this.mnuMainSettings.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainSettings.ShortcutKeyDisplayString = "Ctrl+Shift+P";
+            this.mnuMainSettings.ShortcutKeyDisplayString = "";
+            this.mnuMainSettings.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
             this.mnuMainSettings.Size = new System.Drawing.Size(288, 23);
             this.mnuMainSettings.Text = "S&ettings";
             this.mnuMainSettings.Click += new System.EventHandler(this.mnuMainSettings_Click);
@@ -1731,7 +1702,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem mnuMainManipulation;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainOpenWith;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mnuMainTools;
@@ -1763,7 +1733,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainMoveToRecycleBin;
         private System.Windows.Forms.ToolStripMenuItem mnuMainDeleteFromHardDisk;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem21;
-        private System.Windows.Forms.ToolStripMenuItem paintToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem mnuMainExtractFrames;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsDesktop;
@@ -1793,7 +1762,6 @@
         private System.Windows.Forms.SplitContainer sp1;
         private ImageListView.ImageListView thumbnailBar;
         private ImageListView.ImageListView bookmarksBar;
-        private System.Windows.Forms.ToolStripMenuItem sdgfsdgToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuStartStopAnimating;
         private System.Windows.Forms.ToolStripMenuItem mnuMainStartStopAnimating;
     }

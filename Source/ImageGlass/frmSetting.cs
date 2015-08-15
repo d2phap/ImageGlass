@@ -203,13 +203,7 @@ namespace ImageGlass
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
 
             //File Associations tab
-            lblExtensions.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensions"];
-            btnAddDefaultExtension.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddDefaultExtension"];
-            lblContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.lblContextMenu"];
-            btnUpdateContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.btnUpdateContextMenu"];
-            btnRemoveAllContextMenu.Text = GlobalSetting.LangPack.Items["frmSetting.btnRemoveAllContextMenu"];
-            lblFileAssociationsMng.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociationsMng"];
-            btnSetAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnSetAssociations"];
+            lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
             btnOpenFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
 
             //Language tab
@@ -272,7 +266,8 @@ namespace ImageGlass
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
-                txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
+                txtSupportedExtension.Text = GlobalSetting.SupportedExtensions;
+                
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -468,59 +463,7 @@ namespace ImageGlass
         }
         #endregion
 
-
-        #region TAB CONTEXT MENU
-        private void btnAddDefaultExtension_Click(object sender, EventArgs e)
-        {
-            string supportedExts = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;";
-
-            txtExtensions.Text = supportedExts;
-        }
-
-        private void btnUpdateContextMenu_Click(object sender, EventArgs e)
-        {
-            //Update context menu
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            p.StartInfo.Arguments = "updateext " + //name of param
-                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
-                                    "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
-            p.EnableRaisingEvents = true;
-            p.Exited += p_Exited;
-
-            try
-            {
-                p.Start();
-            }
-            catch { }
-        }
-
-        private void btnRemoveAllContextMenu_Click(object sender, EventArgs e)
-        {
-            //Remove all context menu
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            p.StartInfo.Arguments = "removeext ";
-            p.EnableRaisingEvents = true;
-            p.Exited += p_Exited;
-
-            try
-            {
-                p.Start();
-            }
-            catch { }
-
-            txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
-        }
-
-        void p_Exited(object sender, EventArgs e)
-        {
-            txtExtensions.Text = GlobalSetting.ContextMenuExtensions;
-        }
-
-        #endregion
-
-
+        
         #region TAB LANGUAGE
         private void lnkGetMoreLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -617,31 +560,17 @@ namespace ImageGlass
 
         #endregion
 
+
+        #region TAB FILE ASSOCIATIONS
         private void btnOpenFileAssociations_Click(object sender, EventArgs e)
         {
             string controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); // path to %windir%\system32\control.exe (ensures the correct control.exe)
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+        #endregion
 
-        private void btnSetAssociations_Click(object sender, EventArgs e)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-            p.StartInfo.Arguments = "regassociations " + //name of param
-                                    "\"" + Application.ExecutablePath + "\" " + //arg 1
-                                    "\"" + txtExtensions.Text.Trim() + "\" "; //arg 2
-            p.EnableRaisingEvents = true;
-            p.Exited += p_Exited;
 
-            try
-            {
-                p.Start();
-            }
-            catch { }
-        }
-
-        
 
     }
 }

@@ -1234,7 +1234,7 @@ namespace ImageGlass
                 mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
                 mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
                 mnuExitSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuExitSlideshow"];
-                mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditWithPaint"];
+                mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditImage"];
                 mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
                 mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
 
@@ -1558,10 +1558,26 @@ namespace ImageGlass
 
         private void mnuEditImage_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsImageError)
+            if (GlobalSetting.IsImageError)
             {
-                System.Diagnostics.Process.Start("mspaint.exe", char.ConvertFromUtf32(34) + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + char.ConvertFromUtf32(34));
+                return;
             }
+
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+            Process p = new Process();
+            p.StartInfo.FileName = filename;
+            p.StartInfo.Verb = "edit";
+
+            //show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try
+            {
+                p.Start();
+            }
+            catch (Exception)
+            { }
         }
 
         private void mnuProperties_Click(object sender, EventArgs e)
