@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2014 DUONG DIEU PHAP
+Copyright (C) 2015 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,6 @@ namespace ImageGlass
         {
             InitializeComponent();
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-            mnuMainOpenFile.TextAlign = ContentAlignment.BottomRight;
         }
 
 
@@ -423,7 +422,10 @@ namespace ImageGlass
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
-            
+            if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
+            {
+                mnuMain.Show(picMain, 0, picMain.Top);
+            }
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -471,7 +473,7 @@ namespace ImageGlass
 
             //Clear clipboard----------------------------------------------------------------
             #region CTRL + `
-            if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)
+            if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)//CTRL + `
             {
                 mnuMainClearClipboard_Click(null, null);
                 return;
@@ -578,8 +580,7 @@ namespace ImageGlass
 
 
         #region Private functions
-
-
+        
         /// <summary>
         /// Rename image
         /// </summary>
@@ -1202,7 +1203,7 @@ namespace ImageGlass
             {
                 picMain.BackColor = GlobalSetting.BackgroundColor;
 
-                //Change language
+                //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
                 btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
@@ -1227,6 +1228,72 @@ namespace ImageGlass
                 btnExtension.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnExtension"];
                 btnSetting.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSetting"];
                 btnHelp.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnHelp"];
+                btnMenu.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnMenu"];
+
+                //Main menu
+                mnuMainOpenFile.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenFile"];
+                mnuMainOpenImageData.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenImageData"];
+                mnuMainSaveAs.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSaveAs"];
+                mnuMainRefresh.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRefresh"];
+                mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
+
+                mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
+                mnuMainViewNext.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"];
+                mnuMainViewPrevious.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"];
+                mnuMainGoto.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGoto"];
+                mnuMainGotoFirst.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoFirst"];
+                mnuMainGotoLast.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoLast"];
+
+                mnuMainFullScreen.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFullScreen"];
+
+                mnuMainSlideShow.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSlideShow"];
+                mnuMainSlideShowStart.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSlideShowStart"];
+                mnuMainSlideShowPause.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSlideShowPause"];
+                mnuMainSlideShowExit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSlideShowExit"];
+
+                mnuMainPrint.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainPrint"];
+
+                mnuMainManipulation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainManipulation"];
+                mnuMainRotateCounterclockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateCounterclockwise"];
+                mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateClockwise"];
+                mnuMainZoomIn.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomIn"];
+                mnuMainZoomOut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomOut"];
+                mnuMainActualSize.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainActualSize"];
+                mnuMainLockZoomRatio.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLockZoomRatio"];
+                mnuMainScaleToWidth.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToWidth"];
+                mnuMainScaleToHeight.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToHeight"];
+                mnuMainWindowAdaptImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainWindowAdaptImage"];
+                mnuMainRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRename"];
+                mnuMainMoveToRecycleBin.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"];
+                mnuMainDeleteFromHardDisk.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainDeleteFromHardDisk"];
+                mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"];
+                mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainStartStopAnimating"];
+                mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsDesktop"];
+                mnuMainImageLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageLocation"];
+                mnuMainImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageProperties"];
+
+                mnuMainClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClipboard"];
+                mnuMainCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopy"];
+                mnuMainCopyMulti.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyMulti"];
+                mnuMainCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCut"];
+                mnuMainCutMulti.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCutMulti"];
+                mnuMainCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImagePath"];
+                mnuMainClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClearClipboard"];
+
+                mnuMainShare.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainShare"];
+                mnuMainShareFacebook.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainShareFacebook"];
+
+                mnuMainLayout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLayout"];
+                mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
+                mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
+                mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
+
+                mnuMainTools.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainTools"];
+                mnuMainExtensionManager.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtensionManager"];
+
+                mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
+                mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
+                mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
 
                 //mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
                 //mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
@@ -1536,6 +1603,8 @@ namespace ImageGlass
             mnuPopup.Items.Add(new ToolStripSeparator());//---------------
 
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
+            
+            //check if image can animate (GIF)
             try
             {
                 Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
@@ -2158,7 +2227,7 @@ namespace ImageGlass
 
         private void mnuMainExtractFrames_Click(object sender, EventArgs e)
         {
-            if (!(sender as MenuItem).Enabled) // Shortcut keys still work even when menu is disabled!
+            if (!(sender as ToolStripMenuItem).Enabled) // Shortcut keys still work even when menu is disabled!
                 return;
 
             if (!GlobalSetting.IsImageError)
@@ -2195,8 +2264,7 @@ namespace ImageGlass
                 p.Start();
             }
             catch (Exception)
-            {
-            }
+            { }
         }
 
         private void mnuMainImageLocation_Click(object sender, EventArgs e)
@@ -2280,13 +2348,11 @@ namespace ImageGlass
             {
                 //Hien
                 toolMain.Visible = true;
-                //mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
             }
             else
             {
                 //An
                 toolMain.Visible = false;
-                //mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
             }
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
         }
@@ -2379,13 +2445,26 @@ namespace ImageGlass
 
         private void mnuMain_Opening(object sender, CancelEventArgs e)
         {
+            try
+            {
+                mnuMainExtractFrames.Enabled = false;
+                mnuMainStartStopAnimating.Enabled = false;
 
+                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                int frameCount = img.GetFrameCount(dim);
+
+                mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+
+                if (frameCount > 1)
+                {
+                    mnuMainExtractFrames.Enabled = true;
+                    mnuMainStartStopAnimating.Enabled = true;
+                }
+
+            }
+            catch { }
         }
-
-
-
-
-
 
 
         #endregion

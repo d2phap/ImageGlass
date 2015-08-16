@@ -115,6 +115,7 @@ namespace ImageGlass
             //Load language
             lblMessage.Text = GlobalSetting.LangPack.Items["frmFacebook.lblMessage"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmFacebook.btnClose"];
+            btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload"];
             lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"],
                                             btnUpload.Text);
             lblPercent.Text = "";

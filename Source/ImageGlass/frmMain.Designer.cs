@@ -26,6 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.sysWatch = new System.IO.FileSystemWatcher();
@@ -129,15 +130,12 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.bookmarksBar = new ImageGlass.ImageListView.ImageListView();
-            this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
-            this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -152,8 +150,14 @@
             this.sampleMenuItemToolStripMenuItem});
             this.mnuPopup.Name = "mnuPopup";
             this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(174, 48);
+            this.mnuPopup.Size = new System.Drawing.Size(174, 26);
             this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
+            // 
+            // sampleMenuItemToolStripMenuItem
+            // 
+            this.sampleMenuItemToolStripMenuItem.Name = "sampleMenuItemToolStripMenuItem";
+            this.sampleMenuItemToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.sampleMenuItemToolStripMenuItem.Text = "sample menu item";
             // 
             // timSlideShow
             // 
@@ -596,6 +600,7 @@
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.ShowDropDownArrow = false;
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.Text = "Menu (Hotkey: `)";
             // 
             // mnuMain
             // 
@@ -623,8 +628,9 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 418);
+            this.mnuMain.Size = new System.Drawing.Size(289, 440);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -657,7 +663,7 @@
             this.mnuMainSaveAs.ShortcutKeyDisplayString = "";
             this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.mnuMainSaveAs.Size = new System.Drawing.Size(288, 23);
-            this.mnuMainSaveAs.Text = "&Save file as ...";
+            this.mnuMainSaveAs.Text = "&Save image as ...";
             this.mnuMainSaveAs.Click += new System.EventHandler(this.mnuMainSaveAs_Click);
             // 
             // mnuMainRefresh
@@ -1202,7 +1208,9 @@
             // 
             this.mnuMainExtensionManager.Name = "mnuMainExtensionManager";
             this.mnuMainExtensionManager.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainExtensionManager.ShortcutKeyDisplayString = "Ctrl+Shift+E";
+            this.mnuMainExtensionManager.ShortcutKeyDisplayString = "";
+            this.mnuMainExtensionManager.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.E)));
             this.mnuMainExtensionManager.Size = new System.Drawing.Size(246, 23);
             this.mnuMainExtensionManager.Text = "&Extension manager";
             this.mnuMainExtensionManager.Click += new System.EventHandler(this.mnuMainExtensionManager_Click);
@@ -1268,7 +1276,6 @@
             // sp0.Panel2
             // 
             this.sp0.Panel2.BackColor = System.Drawing.Color.Transparent;
-            this.sp0.Panel2.Controls.Add(this.bookmarksBar);
             this.sp0.Panel2Collapsed = true;
             this.sp0.Size = new System.Drawing.Size(836, 450);
             this.sp0.SplitterDistance = 595;
@@ -1338,28 +1345,6 @@
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
             // 
-            // bookmarksBar
-            // 
-            this.bookmarksBar.BackColor = System.Drawing.SystemColors.Menu;
-            this.bookmarksBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.bookmarksBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("bookmarksBar.Colors"));
-            this.bookmarksBar.ColumnHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.bookmarksBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bookmarksBar.EnableKeyNavigation = true;
-            this.bookmarksBar.GroupHeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bookmarksBar.Location = new System.Drawing.Point(0, 0);
-            this.bookmarksBar.Name = "bookmarksBar";
-            this.bookmarksBar.PersistentCacheFile = "";
-            this.bookmarksBar.PersistentCacheSize = ((long)(100));
-            this.bookmarksBar.Size = new System.Drawing.Size(96, 100);
-            this.bookmarksBar.TabIndex = 0;
-            // 
-            // sampleMenuItemToolStripMenuItem
-            // 
-            this.sampleMenuItemToolStripMenuItem.Name = "sampleMenuItemToolStripMenuItem";
-            this.sampleMenuItemToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.sampleMenuItemToolStripMenuItem.Text = "sample menu item";
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1388,7 +1373,6 @@
             this.toolMain.PerformLayout();
             this.mnuMain.ResumeLayout(false);
             this.sp0.Panel1.ResumeLayout(false);
-            this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
             this.sp1.Panel1.ResumeLayout(false);
@@ -1503,7 +1487,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainOpenImageData;
         private System.Windows.Forms.SplitContainer sp1;
         private ImageListView.ImageListView thumbnailBar;
-        private ImageListView.ImageListView bookmarksBar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainStartStopAnimating;
         private System.Windows.Forms.ToolStripMenuItem mnuMainEditImage;
         private System.Windows.Forms.ToolStripMenuItem sampleMenuItemToolStripMenuItem;

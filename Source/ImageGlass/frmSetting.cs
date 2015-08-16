@@ -236,10 +236,6 @@ namespace ImageGlass
             {
                 tab1.SelectedTab = tabLanguage;
             }
-            else if (lbl.Name == "lblOpenWith")
-            {
-                tab1.SelectedTab = tabOpenWith;
-            }
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,12 +243,10 @@ namespace ImageGlass
             lblGeneral.Tag = 0;
             lblFileAssociations.Tag = 0;
             lblLanguage.Tag = 0;
-            lblOpenWith.Tag = 0;
 
             lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
             lblFileAssociations.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
-            lblOpenWith.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -275,13 +269,6 @@ namespace ImageGlass
                 lblLanguage.BackColor = M_COLOR_MENU_ACTIVE;
 
                 lnkRefresh_LinkClicked(null, null);
-            }
-            else if (tab1.SelectedTab == tabOpenWith)
-            {
-                lblOpenWith.Tag = 1;
-                lblOpenWith.BackColor = M_COLOR_MENU_ACTIVE;
-
-                
             }
         }
 
