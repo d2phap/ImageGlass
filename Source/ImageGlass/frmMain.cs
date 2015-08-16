@@ -27,12 +27,9 @@ using ImageGlass.Core;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.Comparer;
 using System.IO;
-using System.Drawing.IconLib;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
-using ImageGlass.ThumbBar.ImageHandling;
-using ImageGlass.ThumbBar;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
@@ -57,6 +54,9 @@ namespace ImageGlass
 
         // determine if the image is zoomed
         private bool _isZoomed = false;
+
+        //determine if toolbar is shown
+        private bool _isShownToolbar = true;
         #endregion
 
 
@@ -402,7 +402,6 @@ namespace ImageGlass
                 else
                 {
                     fileinfo += ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
-                    //fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
                     fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
 
                     this._imageInfo = fileinfo;
@@ -430,7 +429,7 @@ namespace ImageGlass
             #region Ctrl + ,
             if (e.KeyValue == 188 && e.Control && !e.Shift && !e.Alt)//Ctrl + ,
             {
-                btnRotateLeft_Click(null, null);
+                mnuMainRotateCounterclockwise_Click(null, null);
                 return;
             }
             #endregion
@@ -440,7 +439,7 @@ namespace ImageGlass
             #region Ctrl + .
             if (e.KeyValue == 190 && e.Control && !e.Shift && !e.Alt)//Ctrl + .
             {
-                btnRotateRight_Click(null, null);
+                mnuMainRotateClockwise_Click(null, null);
                 return;
             }
             #endregion
@@ -453,7 +452,7 @@ namespace ImageGlass
                 //exit slideshow
                 if (GlobalSetting.IsPlaySlideShow)
                 {
-                    mnuExitSlideshow_Click(null, null);
+                    mnuMainSlideShowExit_Click(null, null);
                 }
                 //exit full screen
                 else if (GlobalSetting.IsFullScreen)
@@ -474,7 +473,7 @@ namespace ImageGlass
             #region CTRL + `
             if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)
             {
-                mnuClearClipboard_Click(null, null);
+                mnuMainClearClipboard_Click(null, null);
                 return;
             }
             #endregion
@@ -484,15 +483,7 @@ namespace ImageGlass
             #region SPACE
             if (GlobalSetting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
             {
-                if (timSlideShow.Enabled)//stop
-                {
-                    mnuStopSlideshow_Click(null, null);
-                }
-                else//start
-                {
-                    mnuStartSlideshow_Click(null, null);
-                }
-
+                mnuMainSlideShowPause_Click(null, null);
                 return;
             }
             #endregion
@@ -1237,27 +1228,27 @@ namespace ImageGlass
                 btnSetting.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSetting"];
                 btnHelp.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnHelp"];
 
-                mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
-                mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
-                mnuExitSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuExitSlideshow"];
-                mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditImage"];
-                mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
-                mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
+                //mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
+                //mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
+                //mnuExitSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuExitSlideshow"];
+                //mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditImage"];
+                //mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
+                //mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
 
-                mnuPasteImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuPasteImage"];
-                mnuCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopy"];
-                mnuMultiCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCopy"];
-                mnuCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuCut"];
-                mnuMultiCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCut"];
-                mnuClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuClearClipboard"];
+                //mnuPasteImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuPasteImage"];
+                //mnuCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopy"];
+                //mnuMultiCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCopy"];
+                //mnuCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuCut"];
+                //mnuMultiCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCut"];
+                //mnuClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuClearClipboard"];
 
-                mnuMoveRecycle.Text = GlobalSetting.LangPack.Items["frmMain.mnuMoveRecycle"];
-                mnuDelete.Text = GlobalSetting.LangPack.Items["frmMain.mnuDelete"];
-                mnuRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuRename"];
-                mnuUploadFacebook.Text = GlobalSetting.LangPack.Items["frmMain.mnuUploadFacebook"];
-                mnuCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopyImagePath"];
-                mnuOpenLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuOpenLocation"];
-                mnuImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuImageProperties"];
+                //mnuMoveRecycle.Text = GlobalSetting.LangPack.Items["frmMain.mnuMoveRecycle"];
+                //mnuDelete.Text = GlobalSetting.LangPack.Items["frmMain.mnuDelete"];
+                //mnuRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuRename"];
+                //mnuUploadFacebook.Text = GlobalSetting.LangPack.Items["frmMain.mnuUploadFacebook"];
+                //mnuCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopyImagePath"];
+                //mnuOpenLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuOpenLocation"];
+                //mnuImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuImageProperties"];
             }
 
             GlobalSetting.IsForcedActive = false;
@@ -1294,7 +1285,7 @@ namespace ImageGlass
             {
                 if (!GlobalSetting.IsLoopBackSlideShow)
                 {
-                    mnuStopSlideshow_Click(null, null);
+                    mnuMainSlideShowPause_Click(null, null);
                 }
             }
         }
@@ -1470,7 +1461,7 @@ namespace ImageGlass
 
         private void btnSlideShow_Click(object sender, EventArgs e)
         {
-            mnuMainSlideShow_Click(null, e);
+            mnuMainSlideShowStart_Click(null, null);
         }
 
         private void btnFullScreen_Click(object sender, EventArgs e)
@@ -1519,13 +1510,6 @@ namespace ImageGlass
         #region Popup Menu
         private void mnuPopup_Opening(object sender, CancelEventArgs e)
         {
-            //clear current items
-            mnuPopup.Items.Clear();
-
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainReportIssue));
-            
-
-
             try
             {
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
@@ -1537,15 +1521,21 @@ namespace ImageGlass
             }
             catch { e.Cancel = true; return; }
 
-            if (GlobalSetting.IsShowToolBar)
-            {
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
-            }
-            else
-            {
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
-            }
+            //clear current items
+            mnuPopup.Items.Clear();
 
+            if (GlobalSetting.IsPlaySlideShow)
+            {
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
+                mnuPopup.Items.Add(new ToolStripSeparator());//---------------
+            }
+            
+            //toolbar menu
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainToolbar));
+            mnuPopup.Items.Add(new ToolStripSeparator());//---------------
+
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
             try
             {
                 Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
@@ -1554,145 +1544,37 @@ namespace ImageGlass
 
                 if (frameCount > 1)
                 {
-                    mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
-                    mnuStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartStopAnimating"];
+                    var mi = Library.Menu.Clone(mnuMainExtractFrames);
+                    mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
+
+                    mnuPopup.Items.Add(Library.Menu.Clone(mi));
+                    mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
                 }
 
-                mnuExtractFrames.Enabled = frameCount > 1;
-                mnuStartStopAnimating.Enabled = frameCount > 1;
             }
-            catch
-            {
-                mnuExtractFrames.Enabled = false;
-                mnuStartStopAnimating.Enabled = false;
-            }
-        }
+            catch { }
 
-        private void mnuPopup_Closing(object sender, ToolStripDropDownClosingEventArgs e)
-        {
-            mnuExtractFrames.Enabled = false;
-            mnuStartStopAnimating.Enabled = false;
-        }
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
-        private void mnuShowToolBar_Click(object sender, EventArgs e)
-        {
-            mnuMainToolbar_Click(null, e);
-        }
+            mnuPopup.Items.Add(new ToolStripSeparator());//------------
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
 
-        private void mnuEditImage_Click(object sender, EventArgs e)
-        {
-            mnuMainEditImage_Click(null, null);
-        }
+            mnuPopup.Items.Add(new ToolStripSeparator());//------------
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
 
-        private void mnuProperties_Click(object sender, EventArgs e)
-        {
-            mnuMainImageProperties_Click(null, e);
-        }
+            mnuPopup.Items.Add(new ToolStripSeparator());//------------
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainShareFacebook));
 
-        private void mnuImageLocation_Click(object sender, EventArgs e)
-        {
-            mnuMainImageLocation_Click(null, e);
-        }
+            mnuPopup.Items.Add(new ToolStripSeparator());//------------
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
 
-        private void mnuCut_Click(object sender, EventArgs e)
-        {
-            mnuMainCut_Click(null, e);
-        }
-
-        private void mnuMultiCut_Click(object sender, EventArgs e)
-        {
-            mnuMainCutMulti_Click(null, e);
-        }
-
-        private void mnuMultiCopy_Click(object sender, EventArgs e)
-        {
-            mnuMainCopyMulti_Click(null, e);
-        }
-
-        private void mnuCopy_Click(object sender, EventArgs e)
-        {
-            mnuMainCopy_Click(null, e);
-        }
-
-        private void mnuDelete_Click(object sender, EventArgs e)
-        {
-            mnuMainDeleteFromHardDisk_Click(null, e);
-        }
-
-        private void mnuRecycleBin_Click(object sender, EventArgs e)
-        {
-            mnuMainMoveToRecycleBin_Click(null, e);
-        }
-
-        private void mnuWallpaper_Click(object sender, EventArgs e)
-        {
-            mnuMainSetAsDesktop_Click(null, e);
-        }
-
-        private void mnuExtractFrames_Click(object sender, EventArgs e)
-        {
-            mnuMainExtractFrames_Click(null, e);
-        }
-
-        private void mnuStartStopAnimating_Click(object sender, EventArgs e)
-        {
-            mnuMainStartStopAnimating_Click(null, null);
-        }
-
-        private void mnuRename_Click(object sender, EventArgs e)
-        {
-            mnuMainRename_Click(null, e);
-        }
-
-        private void mnuExitSlideshow_Click(object sender, EventArgs e)
-        {
-            timSlideShow.Stop();
-            timSlideShow.Enabled = false;
-            GlobalSetting.IsPlaySlideShow = false;
-
-            this.BackColor = GlobalSetting.BackgroundColor;
-            btnFullScreen.PerformClick();
-
-            mnuStartSlideshow.Visible = false;
-            mnuStopSlideshow.Visible = false;
-            mnuExitSlideshow.Visible = false;
-            mnuPhanCach.Visible = false;
-        }
-
-        private void mnuCopyImagePath_Click(object sender, EventArgs e)
-        {
-            mnuMainCopyImagePath_Click(null, e);
-        }
-
-        private void mnuStartSlideshow_Click(object sender, EventArgs e)
-        {
-            timSlideShow.Enabled = true;
-            timSlideShow.Start();
-            mnuStartSlideshow.Enabled = false;
-            mnuStopSlideshow.Enabled = true;
-        }
-
-        private void mnuStopSlideshow_Click(object sender, EventArgs e)
-        {
-            timSlideShow.Enabled = false;
-            timSlideShow.Stop();
-            mnuStartSlideshow.Enabled = true;
-            mnuStopSlideshow.Enabled = false;
-        }
-
-        private void mnuUploadFacebook_Click(object sender, EventArgs e)
-        {
-            btnFacebook_Click(btnFacebook, e);
-        }
-
-        private void mnuClearClipboard_Click(object sender, EventArgs e)
-        {
-            mnuMainClearClipboard_Click(null, e);
-        }
-
-        private void mnuPasteImage_Click(object sender, EventArgs e)
-        {
-            mnuMainOpenImageData_Click(null, e);
         }
         #endregion
 
@@ -1878,6 +1760,9 @@ namespace ImageGlass
             {
                 SaveConfig();
 
+                //save last state of toolbar
+                this._isShownToolbar = GlobalSetting.IsShowToolBar;
+
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.WindowState = FormWindowState.Normal;
                 GlobalSetting.IsFullScreen = true;
@@ -1886,7 +1771,8 @@ namespace ImageGlass
 
                 //Hide
                 toolMain.Visible = false;
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
+                GlobalSetting.IsShowToolBar = false;
+                mnuMainToolbar.Checked = false;
 
                 this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
                     , 5000);
@@ -1894,6 +1780,9 @@ namespace ImageGlass
             //exit full screen
             else
             {
+                //restore last state of toolbar
+                GlobalSetting.IsShowToolBar = this._isShownToolbar;
+
                 this.FormBorderStyle = FormBorderStyle.Sizable;
 
                 //windows state
@@ -1907,53 +1796,75 @@ namespace ImageGlass
                     this.WindowState = FormWindowState.Maximized;
                 }
 
-                //Windows Bound (Position + Size
+                //Windows Bound (Position + Size)
                 this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
 
                 GlobalSetting.IsFullScreen = false;
                 Application.DoEvents();
 
-                //Show
-                if (!GlobalSetting.IsShowToolBar)
+                if (GlobalSetting.IsShowToolBar)
                 {
+                    //Show toolbar
                     toolMain.Visible = true;
-                    mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
+                    mnuMainToolbar.Checked = true;
                 }
             }
         }
+        
 
-        private void mnuMainSlideShow_Click(object sender, EventArgs e)
+        private void mnuMainSlideShowStart_Click(object sender, EventArgs e)
         {
             if (GlobalSetting.ImageList.Length < 1)
             {
                 return;
             }
 
-            //stop slide show
+            //not performing
             if (!GlobalSetting.IsPlaySlideShow)
             {
-                this.BackColor = Color.Black;
+                //perform slideshow
+                picMain.BackColor = Color.Black;
                 btnFullScreen.PerformClick();
 
                 timSlideShow.Start();
                 timSlideShow.Enabled = true;
 
                 GlobalSetting.IsPlaySlideShow = true;
-                mnuStartSlideshow.Visible = true;
-                mnuStopSlideshow.Visible = true;
-                mnuExitSlideshow.Visible = true;
-                mnuPhanCach.Visible = true;
-                mnuStartSlideshow.Enabled = false;
-                mnuStopSlideshow.Enabled = true;
             }
+            //performing
             else
             {
-                btnFullScreen.PerformClick();
-                btnSlideShow_Click(sender, e);
+                mnuMainSlideShowExit_Click(null, null);
             }
 
             this.DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
                     , 5000);
+        }
+
+        private void mnuMainSlideShowPause_Click(object sender, EventArgs e)
+        {
+            //performing
+            if (timSlideShow.Enabled)
+            {
+                timSlideShow.Enabled = false;
+                timSlideShow.Stop();
+            }
+            else
+            {
+                timSlideShow.Enabled = true;
+                timSlideShow.Start();
+            }
+
+        }
+
+        private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
+        {
+            timSlideShow.Stop();
+            timSlideShow.Enabled = false;
+            GlobalSetting.IsPlaySlideShow = false;
+
+            picMain.BackColor = GlobalSetting.BackgroundColor;
+            btnFullScreen.PerformClick();
         }
 
         /// <summary>
@@ -2369,13 +2280,13 @@ namespace ImageGlass
             {
                 //Hien
                 toolMain.Visible = true;
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
+                //mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Show"];
             }
             else
             {
                 //An
                 toolMain.Visible = false;
-                mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
+                //mnuShowToolBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuShowToolBar._Hide"];
             }
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
         }
@@ -2475,8 +2386,9 @@ namespace ImageGlass
 
 
 
+
+
         #endregion
-        
 
         
     }

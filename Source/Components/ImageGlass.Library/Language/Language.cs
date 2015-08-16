@@ -211,6 +211,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuCopyImagePath", "Copy image path");
             this.Items.Add("frmMain.mnuOpenLocation", "Open image location");
             this.Items.Add("frmMain.mnuImageProperties", "Image properties");
+
             this.Items.Add("frmMain._OpenFileDialog", "All supported files");
             this.Items.Add("frmMain._Text", "file(s)");
             this.Items.Add("frmMain._RenameDialog", "Enter new filename");

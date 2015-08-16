@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -28,7 +29,7 @@ namespace ImageGlass.Library
             m.Anchor = mnu.Anchor;
             m.AutoSize = mnu.AutoSize;
             m.AutoToolTip = mnu.AutoToolTip;
-            m.BackColor = mnu.BackColor;
+            m.BackColor = Color.Transparent;
             m.BackgroundImage = mnu.BackgroundImage;
             m.BackgroundImageLayout = mnu.BackgroundImageLayout;
             m.Checked = mnu.Checked;
