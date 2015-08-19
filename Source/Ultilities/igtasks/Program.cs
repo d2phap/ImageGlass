@@ -151,6 +151,27 @@ namespace adtasks
             }
             #endregion
 
+            //Create new language packs
+            #region ignewlang
+            else if (topcmd == "ignewlang")
+            {
+                Functions.CreateNewLanguagePacks();
+                Application.Exit();
+            }
+            #endregion
+
+            //Edit language packs
+            #region igeditlang <string filename>
+            else if (topcmd == "igeditlang")
+            {
+                //get Executable file
+                string filename = args[1];
+
+                Functions.EditLanguagePacks(filename);
+                Application.Exit();
+            }
+            #endregion
+
             //Install new extensions
             #region iginstallext
             else if (topcmd == "iginstallext")

@@ -12,6 +12,7 @@ using ImageGlass.Library;
 using System.IO;
 using System.Reflection;
 using ImageGlass.Library.FileAssociations;
+using System.Diagnostics;
 
 namespace igtasks
 {
@@ -165,6 +166,47 @@ namespace igtasks
 
                 }
             }
+        }
+
+        /// <summary>
+        /// Create new language packs
+        /// </summary>
+        public static void CreateNewLanguagePacks()
+        {
+            SaveFileDialog s = new SaveFileDialog();
+            s.Filter = "ImageGlass language pack (*.iglang)|*.iglang";
+
+            if (s.ShowDialog() == DialogResult.OK)
+            {
+                Language l = new Language();
+                l.ExportLanguageToXML(s.FileName);
+
+                try
+                {
+                    Process p = new Process();
+                    p.StartInfo.ErrorDialog = true;
+                    p.StartInfo.FileName = "notepad.exe";
+                    p.StartInfo.Arguments = "\"" + s.FileName + "\"";
+                    p.Start();
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
+        /// Edit language packs
+        /// </summary>
+        public static void EditLanguagePacks(string filename)
+        {
+            try
+            {
+                Process p = new Process();
+                p.StartInfo.ErrorDialog = true;
+                p.StartInfo.FileName = "notepad.exe";
+                p.StartInfo.Arguments = "\"" + filename + "\"";
+                p.Start();
+            }
+            catch { }
         }
 
         /// <summary>

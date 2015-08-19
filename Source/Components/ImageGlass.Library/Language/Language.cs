@@ -28,6 +28,7 @@ namespace ImageGlass.Library
         private string _langName;
         private string _author;
         private string _description;
+        private string _minVersion;
         private string _fileName;
         private Dictionary<string, string> _Items;
 
@@ -81,6 +82,21 @@ namespace ImageGlass.Library
             get { return _Items; }
             set { _Items = value; }
         }
+
+        /// <summary>
+        /// Gets, sets minimum version of ImageGlass that compatible with.
+        /// </summary>
+        public string MinVersion
+        {
+            get
+            {
+                return _minVersion;
+            }
+            set
+            {
+                _minVersion = value;
+            }
+        }
         #endregion
 
 
@@ -93,6 +109,7 @@ namespace ImageGlass.Library
             _langName = "English";
             _author = "Dương Diệu Pháp";
             _description = "English";
+            _minVersion = "2.0.1.5";
             _fileName = "";
 
             _Items = new Dictionary<string, string>();
@@ -149,6 +166,40 @@ namespace ImageGlass.Library
                 }
                 catch { }
             }
+        }
+
+        /// <summary>
+        /// Export all language strings to xml file
+        /// </summary>
+        /// <param name="filename"></param>
+        public void ExportLanguageToXML(string filename)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
+            XmlElement nType = doc.CreateElement("Language");// <Language>
+
+            XmlElement nInfo = doc.CreateElement("Info");// <Info>
+            nInfo.SetAttribute("langCode", this.LangCode);
+            nInfo.SetAttribute("langName", this.LangName);
+            nInfo.SetAttribute("author", this.Author);
+            nInfo.SetAttribute("description", this.Description);
+            nInfo.SetAttribute("minVersion", this.MinVersion);
+            nType.AppendChild(nInfo);// <Info />
+
+            XmlElement nContent = doc.CreateElement("Content");// <Content>
+            foreach (var item in this.Items)
+            {
+                XmlElement n = doc.CreateElement("Item"); // <Item>
+                n.SetAttribute("key", item.Key);
+                n.SetAttribute("value", item.Value);
+                nContent.AppendChild(n);// <Item />
+            }
+            nType.AppendChild(nContent);
+
+            root.AppendChild(nType);// </Content>
+            doc.AppendChild(root);// </ImageGlass>
+
+            doc.Save(filename);
         }
 
 

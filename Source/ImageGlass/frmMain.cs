@@ -1614,7 +1614,7 @@ namespace ImageGlass
                 if (frameCount > 1)
                 {
                     var mi = Library.Menu.Clone(mnuMainExtractFrames);
-                    mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], frameCount);
+                    mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
 
                     mnuPopup.Items.Add(Library.Menu.Clone(mi));
                     mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
