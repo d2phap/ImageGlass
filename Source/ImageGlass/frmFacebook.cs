@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2015 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using Facebook;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-//using System.Dynamic;
 using System.IO;
 using ImageGlass.Services.Configuration;
 
@@ -78,7 +71,7 @@ namespace ImageGlass
                 btnUpload.Tag = 1;
                 UploadPhoto();
             }
-            else if (btnUpload.Tag.ToString().Length == 15)
+            else if (btnUpload.Tag.ToString().Length > 1)
             {
                 string photoLink = "https://www.facebook.com/photo.php?fbid=" + btnUpload.Tag.ToString();
                 System.Diagnostics.Process.Start(photoLink);
@@ -88,8 +81,7 @@ namespace ImageGlass
                 txtMessage.Enabled = true;
                 btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
                 btnUpload.Tag = 0;
-                lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"], 
-                                                btnUpload.Text);
+                lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"], btnUpload.Text);
 
                 if (_fb != null)
                 {
@@ -115,7 +107,7 @@ namespace ImageGlass
             //Load language
             lblMessage.Text = GlobalSetting.LangPack.Items["frmFacebook.lblMessage"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmFacebook.btnClose"];
-            btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload"];
+            btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
             lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"],
                                             btnUpload.Text);
             lblPercent.Text = "";
@@ -174,8 +166,8 @@ namespace ImageGlass
 
             // for cancellation
             _fb = fb;
-
-            fb.PostAsync("/me/photos", new Dictionary<string, object> 
+            
+            fb.PostTaskAsync("/me/photos", new Dictionary<string, object> 
             { 
                 { "source", mediaObject }, 
                 { "message", txtMessage.Text.Trim() }
@@ -192,9 +184,8 @@ namespace ImageGlass
 
         public void fb_PostCompleted(object sender, FacebookApiEventArgs e)
         {
-            picStatus.Visible = false;
-            
             btnUpload.Tag = 0;
+            picStatus.Visible = false;
             btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
 
             if (e.Cancelled)
@@ -205,14 +196,15 @@ namespace ImageGlass
             {
                 // upload successful.
                 lblStatus.Text = GlobalSetting.LangPack.Items["frmFacebook._StatusSuccessful"];
-                btnUpload.Tag = e.GetResultData().ToString().Substring(7, 15);//Get Post ID
+                btnUpload.Tag = ((IDictionary<string, object>)e.GetResultData())["id"].ToString(); //Get Post ID
                 btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._ViewImage"];
             }
             else
             {
                 // upload failed
                 lblStatus.Text = e.Error.Message;
-            }
+                
+            }            
         }
 
         private void btnClose_Click(object sender, EventArgs e)

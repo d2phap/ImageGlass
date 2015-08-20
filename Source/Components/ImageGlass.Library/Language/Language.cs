@@ -363,7 +363,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmFacebook.btnClose", "Close");
             this.Items.Add("frmFacebook._StatusBegin", "Click '{0}' to begin");
             this.Items.Add("frmFacebook._StatusInvalid", "Invalid filename");
-            this.Items.Add("frmFacebook._StatusUploading", "Iploading...");
+            this.Items.Add("frmFacebook._StatusUploading", "Uploading...");
             this.Items.Add("frmFacebook._StatusCancel", "Cancelled");
             this.Items.Add("frmFacebook._StatusSuccessful", "Successful");
             this.Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ...");

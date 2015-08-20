@@ -2334,7 +2334,32 @@ namespace ImageGlass
                     LocalSetting.FFacebook = new frmFacebook();
                 }
 
-                LocalSetting.FFacebook.Filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                //CHECK FILE EXTENSION BEFORE UPLOADING
+                string filename = "";
+
+                //save image from memory
+                if (GlobalSetting.IsTempMemoryData)
+                {
+                    filename = this.SaveTemporaryMemoryData();
+                }
+                //image error
+                else if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+                {
+                    return;
+                }
+                else
+                {
+                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                    // check if file extension is NOT supported for native print
+                    // these extensions will not be printed by its associated app.
+                    if (GlobalSetting.SupportedExtraExtensions.Contains(Path.GetExtension(filename).ToLower()))
+                    {
+                        filename = this.SaveTemporaryMemoryData();
+                    }
+                }
+
+                LocalSetting.FFacebook.Filename = filename;
                 GlobalSetting.IsForcedActive = false;
                 LocalSetting.FFacebook.Show();
                 LocalSetting.FFacebook.Activate();
