@@ -76,7 +76,7 @@ namespace ImageGlass.Theme
         public string like = string.Empty;                      //v2.0-
         public string dislike = string.Empty;                   //v2.0-
         public string report = string.Empty;                    //v2.0-
-        public string menu = string.Empty;                      //v2.1+
+        public string menu = string.Empty;                      //v3.0+
 
         public Theme() { }
 

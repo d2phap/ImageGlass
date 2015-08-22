@@ -30,3 +30,47 @@ F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.ex
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.pdb
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\igtasks.exe
 F:\My Software\ImageGlass\ImageGlass\Source\ImageGlass\bin\Release\igtasks.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.exe.config
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\Facebook.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\IconLib.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\igcmd.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\igtasks.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Core.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.FileList.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageBox.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageListView.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Library.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Plugins.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Services.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\Ionic.Zip.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\System.Drawing.PSD.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\TargaImage.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageBox.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageBox.xml
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageListView.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.ImageListView.xml
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\igcmd.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\igtasks.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Core.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Library.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Plugins.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Services.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Theme.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.FileList.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\Facebook.xml
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\de\ImageGlass.ImageListView.resources.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\tr\ImageGlass.ImageListView.resources.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.csprojResolveAssemblyReference.cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmAbout.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmExtension.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmFacebook.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmFaceBookLogin.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmMain.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.Properties.Resources.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.frmSetting.resources
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.csproj.GenerateResource.Cache
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.exe
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.pdb

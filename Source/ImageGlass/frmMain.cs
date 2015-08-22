@@ -855,6 +855,7 @@ namespace ImageGlass
             btnExtension.Image = ImageGlass.Properties.Resources.extension;
             btnSetting.Image = ImageGlass.Properties.Resources.settings;
             btnHelp.Image = ImageGlass.Properties.Resources.about;
+            btnMenu.Image = ImageGlass.Properties.Resources.menu;
 
             GlobalSetting.SetConfig("Theme", "default");
         }
@@ -974,8 +975,8 @@ namespace ImageGlass
                 try { btnHelp.Image = Image.FromFile(dir + t.about); }
                 catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
 
-                try { btnMenu.Image = Image.FromFile(dir + t.about); }
-                catch { btnMenu.Image = ImageGlass.Properties.Resources.about; }
+                try { btnMenu.Image = Image.FromFile(dir + t.menu); }
+                catch { btnMenu.Image = ImageGlass.Properties.Resources.menu; }
 
                 GlobalSetting.SetConfig("Theme", themeFile);
             }
@@ -1151,7 +1152,7 @@ namespace ImageGlass
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Remove white line under tool strip
-            toolMain.Renderer = new ImageGlass.Theme.ToolStripRenderer();
+            toolMain.Renderer = new Theme.ToolStripRenderer();
 
             LoadConfig();
             Application.DoEvents();
@@ -1294,28 +1295,6 @@ namespace ImageGlass
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
-
-                //mnuStartSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStartSlideshow"];
-                //mnuStopSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuStopSlideshow"];
-                //mnuExitSlideshow.Text = GlobalSetting.LangPack.Items["frmMain.mnuExitSlideshow"];
-                //mnuEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuEditImage"];
-                //mnuExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuExtractFrames"], 0);
-                //mnuSetWallpaper.Text = GlobalSetting.LangPack.Items["frmMain.mnuSetWallpaper"];
-
-                //mnuPasteImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuPasteImage"];
-                //mnuCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopy"];
-                //mnuMultiCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCopy"];
-                //mnuCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuCut"];
-                //mnuMultiCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMultiCut"];
-                //mnuClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuClearClipboard"];
-
-                //mnuMoveRecycle.Text = GlobalSetting.LangPack.Items["frmMain.mnuMoveRecycle"];
-                //mnuDelete.Text = GlobalSetting.LangPack.Items["frmMain.mnuDelete"];
-                //mnuRename.Text = GlobalSetting.LangPack.Items["frmMain.mnuRename"];
-                //mnuUploadFacebook.Text = GlobalSetting.LangPack.Items["frmMain.mnuUploadFacebook"];
-                //mnuCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuCopyImagePath"];
-                //mnuOpenLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuOpenLocation"];
-                //mnuImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuImageProperties"];
             }
 
             GlobalSetting.IsForcedActive = false;

@@ -630,7 +630,7 @@
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 440);
+            this.mnuMain.Size = new System.Drawing.Size(289, 418);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1360,7 +1360,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
-            this.Text = "ImageGlass 2.1";
+            this.Text = "ImageGlass 3";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);

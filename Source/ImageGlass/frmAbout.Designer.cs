@@ -486,10 +486,10 @@
             // 
             this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 24);
+            this.tpReferences.Location = new System.Drawing.Point(4, 22);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tpReferences.Size = new System.Drawing.Size(516, 402);
+            this.tpReferences.Size = new System.Drawing.Size(516, 404);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
