@@ -41,7 +41,13 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
+
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
+
+            //Check and perform DPI Scaling
+            LocalSetting.OldDPI = LocalSetting.CurrentDPI;
+            LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
+            Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
         }
 
 
@@ -49,7 +55,7 @@ namespace ImageGlass
         private string _imageInfo = "";
 
         // window size value before resizing
-        private Size _windowSize = new Size();
+        private Size _windowSize = new Size(600, 500);
 
         // determine if the image is zoomed
         private bool _isZoomed = false;
@@ -1001,7 +1007,7 @@ namespace ImageGlass
             {
                 GlobalSetting.LangPack = new Library.Language(s);
             }
-
+            
             //Windows Bound (Position + Size)------------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
             this.Bounds = rc;
@@ -1144,10 +1150,24 @@ namespace ImageGlass
                 TopMost = true;
                 // set it back to whatever it was
                 TopMost = top;
+            }
+            //This message is sent when the form is dragged to a different monitor i.e. when
+            //the bigger part of its are is on the new monitor. 
+            else if (m.Msg == Theme.DPIScaling.WM_DPICHANGED)
+            {
+                LocalSetting.OldDPI = LocalSetting.CurrentDPI;
+                LocalSetting.CurrentDPI = Theme.DPIScaling.LOWORD((int)m.WParam);
 
+                if (LocalSetting.OldDPI != LocalSetting.CurrentDPI)
+                {
+                    Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
+
+                    toolMain.Height = 33;
+                }
             }
             base.WndProc(ref m);
         }
+        
 
         private void frmMain_Load(object sender, EventArgs e)
         {
