@@ -102,7 +102,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ImageGlass\bin\Debug\ImageGlass.Services.dll</HintPath>
     </Reference>
-    <Reference Include="ImageGlass.Theme, Version=1.5.4999.39423, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ImageGlass.Theme, Version=1.5.5717.39170, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ImageGlass\bin\Debug\ImageGlass.Theme.dll</HintPath>
     </Reference>

@@ -248,7 +248,7 @@ namespace ThemeConfig
                 n.SetAttribute("refresh", btnRefresh.Tag.ToString());
                 n.SetAttribute("gotoimage", btnGoto.Tag.ToString());
                 n.SetAttribute("thumbnail", btnThumb.Tag.ToString());
-                n.SetAttribute("caro", btnCaro.Tag.ToString());
+                n.SetAttribute("checkedbackground", btnCheckedBackground.Tag.ToString());
                 n.SetAttribute("fullscreen", btnFullScreen.Tag.ToString());
                 n.SetAttribute("slideshow", btnSlideShow.Tag.ToString());
                 n.SetAttribute("convert", btnConvert.Tag.ToString());
@@ -257,7 +257,7 @@ namespace ThemeConfig
                 n.SetAttribute("extension", btnExtension.Tag.ToString());
                 n.SetAttribute("settings", btnSetting.Tag.ToString());
                 n.SetAttribute("about", btnHelp.Tag.ToString());
-                n.SetAttribute("report", btnReport.Tag.ToString());
+                n.SetAttribute("menu", btnMenu.Tag.ToString());
                 nType.AppendChild(n);
 
                 root.AppendChild(nType);
@@ -375,8 +375,8 @@ namespace ThemeConfig
                 try { btnThumb.Image = Image.FromFile(themedir + t.thumbnail); btnThumb.Tag = t.thumbnail; }
                 catch { btnThumb.Image = ThemeConfig.Properties.Resources.noimg; }
 
-                try { btnCaro.Image = Image.FromFile(themedir + t.caro); btnCaro.Tag = t.caro; }
-                catch { btnCaro.Image = ThemeConfig.Properties.Resources.noimg; }
+                try { btnCheckedBackground.Image = Image.FromFile(themedir + t.checkBackground); btnCheckedBackground.Tag = t.checkBackground; }
+                catch { btnCheckedBackground.Image = ThemeConfig.Properties.Resources.noimg; }
 
                 try { btnFullScreen.Image = Image.FromFile(themedir + t.fullscreen); btnFullScreen.Tag = t.fullscreen; }
                 catch { btnFullScreen.Image = ThemeConfig.Properties.Resources.noimg; }
@@ -402,8 +402,8 @@ namespace ThemeConfig
                 try { btnHelp.Image = Image.FromFile(themedir + t.about); btnHelp.Tag = t.about; }
                 catch { btnHelp.Image = ThemeConfig.Properties.Resources.noimg; }
 
-                try { btnReport.Image = Image.FromFile(themedir + t.report); btnReport.Tag = t.report; }
-                catch { btnReport.Image = ThemeConfig.Properties.Resources.noimg; }
+                try { btnMenu.Image = Image.FromFile(themedir + t.report); btnMenu.Tag = t.report; }
+                catch { btnMenu.Image = ThemeConfig.Properties.Resources.noimg; }
 
                 //add ds
                 foreach (ToolStripButton b in toolMain.Items)
@@ -413,7 +413,6 @@ namespace ThemeConfig
                 ds.Add(themedir + toolMain.Tag.ToString());
                 ds.Add(themedir + panThumbnail.Tag.ToString());
                 ds.Add(picPreview.Tag.ToString());
-
             }
             else
             {

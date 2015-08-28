@@ -95,5 +95,6 @@ namespace ImageGlass.Theme
                 return Color.Transparent;
             }
         }
+
     }
 }

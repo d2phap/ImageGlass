@@ -45,7 +45,7 @@
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
             this.btnThumb = new System.Windows.Forms.ToolStripButton();
-            this.btnCaro = new System.Windows.Forms.ToolStripButton();
+            this.btnCheckedBackground = new System.Windows.Forms.ToolStripButton();
             this.btnFullScreen = new System.Windows.Forms.ToolStripButton();
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
@@ -54,7 +54,7 @@
             this.btnExtension = new System.Windows.Forms.ToolStripButton();
             this.btnSetting = new System.Windows.Forms.ToolStripButton();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
-            this.btnReport = new System.Windows.Forms.ToolStripButton();
+            this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.btnStatus = new System.Windows.Forms.ToolStripButton();
             this.panThumbnail = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -110,7 +110,7 @@
             this.btnRefresh,
             this.btnGoto,
             this.btnThumb,
-            this.btnCaro,
+            this.btnCheckedBackground,
             this.btnFullScreen,
             this.btnSlideShow,
             this.btnConvert,
@@ -119,7 +119,7 @@
             this.btnExtension,
             this.btnSetting,
             this.btnHelp,
-            this.btnReport,
+            this.btnMenu,
             this.btnStatus});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
@@ -340,19 +340,19 @@
             this.btnThumb.ToolTipText = "Show thumbnail (Ctrl + T)";
             this.btnThumb.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // btnCaro
+            // btnCheckedBackground
             // 
-            this.btnCaro.AutoSize = false;
-            this.btnCaro.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCaro.Image = ((System.Drawing.Image)(resources.GetObject("btnCaro.Image")));
-            this.btnCaro.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCaro.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCaro.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.btnCaro.Name = "btnCaro";
-            this.btnCaro.Size = new System.Drawing.Size(25, 28);
-            this.btnCaro.Tag = "x";
-            this.btnCaro.ToolTipText = "Show checked background (Ctrl + B)";
-            this.btnCaro.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnCheckedBackground.AutoSize = false;
+            this.btnCheckedBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCheckedBackground.Image = ((System.Drawing.Image)(resources.GetObject("btnCheckedBackground.Image")));
+            this.btnCheckedBackground.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCheckedBackground.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCheckedBackground.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.btnCheckedBackground.Name = "btnCheckedBackground";
+            this.btnCheckedBackground.Size = new System.Drawing.Size(25, 28);
+            this.btnCheckedBackground.Tag = "x";
+            this.btnCheckedBackground.ToolTipText = "Show checked background (Ctrl + B)";
+            this.btnCheckedBackground.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnFullScreen
             // 
@@ -466,20 +466,20 @@
             this.btnHelp.ToolTipText = "Help (F1)";
             this.btnHelp.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // btnReport
+            // btnMenu
             // 
-            this.btnReport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnReport.AutoSize = false;
-            this.btnReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
-            this.btnReport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnReport.Margin = new System.Windows.Forms.Padding(0);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(25, 28);
-            this.btnReport.Tag = "x";
-            this.btnReport.ToolTipText = "Report a bug or comment about ImageGlass";
-            this.btnReport.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnMenu.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnMenu.AutoSize = false;
+            this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnMenu.Image")));
+            this.btnMenu.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(25, 28);
+            this.btnMenu.Tag = "x";
+            this.btnMenu.ToolTipText = "Show Main Menu";
+            this.btnMenu.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnStatus
             // 
@@ -531,7 +531,7 @@
             this.lnkToolBar.TabIndex = 6;
             this.lnkToolBar.TabStop = true;
             this.lnkToolBar.Tag = "x";
-            this.lnkToolBar.Text = "2. Change toolbar background (... x 31px)";
+            this.lnkToolBar.Text = "2. Change toolbar background (... x 33px)";
             this.lnkToolBar.UseCompatibleTextRendering = true;
             this.lnkToolBar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkToolBar_LinkClicked);
             // 
@@ -542,11 +542,11 @@
             this.lnkThumbnail.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
             this.lnkThumbnail.Location = new System.Drawing.Point(247, 141);
             this.lnkThumbnail.Name = "lnkThumbnail";
-            this.lnkThumbnail.Size = new System.Drawing.Size(268, 21);
+            this.lnkThumbnail.Size = new System.Drawing.Size(275, 21);
             this.lnkThumbnail.TabIndex = 7;
             this.lnkThumbnail.TabStop = true;
             this.lnkThumbnail.Tag = "x";
-            this.lnkThumbnail.Text = "3. Change thumbnail bar background (.... x 70px)";
+            this.lnkThumbnail.Text = "3. Change thumbnail bar background (.... x 140px)";
             this.lnkThumbnail.UseCompatibleTextRendering = true;
             this.lnkThumbnail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkThumbnail_LinkClicked);
             // 
@@ -850,13 +850,13 @@
         private System.Windows.Forms.ToolStripButton btnRefresh;
         private System.Windows.Forms.ToolStripButton btnGoto;
         private System.Windows.Forms.ToolStripButton btnThumb;
-        private System.Windows.Forms.ToolStripButton btnCaro;
+        private System.Windows.Forms.ToolStripButton btnCheckedBackground;
         private System.Windows.Forms.ToolStripButton btnFullScreen;
         private System.Windows.Forms.ToolStripButton btnSlideShow;
         private System.Windows.Forms.ToolStripButton btnConvert;
         private System.Windows.Forms.ToolStripButton btnSetting;
         private System.Windows.Forms.ToolStripButton btnHelp;
-        private System.Windows.Forms.ToolStripButton btnReport;
+        private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.Panel panThumbnail;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel lnkToolBar;

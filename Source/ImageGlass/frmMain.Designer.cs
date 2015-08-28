@@ -609,8 +609,8 @@
             this.mnuMainOpenFile,
             this.mnuMainOpenImageData,
             this.mnuMainSaveAs,
-            this.mnuMainRefresh,
             this.mnuMainEditImage,
+            this.mnuMainRefresh,
             this.toolStripSeparator6,
             this.mnuMainNavigation,
             this.mnuMainFullScreen,
@@ -628,13 +628,13 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mnuMain.Size = new System.Drawing.Size(289, 418);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
             // 
+            this.mnuMainOpenFile.ForeColor = System.Drawing.Color.Black;
             this.mnuMainOpenFile.Name = "mnuMainOpenFile";
             this.mnuMainOpenFile.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainOpenFile.ShortcutKeyDisplayString = "";
@@ -647,6 +647,7 @@
             // 
             // mnuMainOpenImageData
             // 
+            this.mnuMainOpenImageData.ForeColor = System.Drawing.Color.Black;
             this.mnuMainOpenImageData.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainOpenImageData.Image")));
             this.mnuMainOpenImageData.Name = "mnuMainOpenImageData";
             this.mnuMainOpenImageData.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -658,6 +659,7 @@
             // 
             // mnuMainSaveAs
             // 
+            this.mnuMainSaveAs.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSaveAs.Name = "mnuMainSaveAs";
             this.mnuMainSaveAs.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSaveAs.ShortcutKeyDisplayString = "";
@@ -668,6 +670,7 @@
             // 
             // mnuMainRefresh
             // 
+            this.mnuMainRefresh.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRefresh.Name = "mnuMainRefresh";
             this.mnuMainRefresh.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainRefresh.ShortcutKeyDisplayString = "";
@@ -678,6 +681,7 @@
             // 
             // mnuMainEditImage
             // 
+            this.mnuMainEditImage.ForeColor = System.Drawing.Color.Black;
             this.mnuMainEditImage.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainEditImage.Image")));
             this.mnuMainEditImage.Name = "mnuMainEditImage";
             this.mnuMainEditImage.Size = new System.Drawing.Size(288, 22);
@@ -696,8 +700,9 @@
             this.mnuMainViewPrevious,
             this.toolStripMenuItem24,
             this.mnuMainGoto,
-            this.mnuMainGotoFirst,
-            this.mnuMainGotoLast});
+            this.mnuMainGotoLast,
+            this.mnuMainGotoFirst});
+            this.mnuMainNavigation.ForeColor = System.Drawing.Color.Black;
             this.mnuMainNavigation.Name = "mnuMainNavigation";
             this.mnuMainNavigation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainNavigation.Size = new System.Drawing.Size(288, 23);
@@ -705,6 +710,7 @@
             // 
             // mnuMainViewNext
             // 
+            this.mnuMainViewNext.ForeColor = System.Drawing.Color.Black;
             this.mnuMainViewNext.Name = "mnuMainViewNext";
             this.mnuMainViewNext.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainViewNext.ShortcutKeyDisplayString = "Next / PageUp";
@@ -714,6 +720,7 @@
             // 
             // mnuMainViewPrevious
             // 
+            this.mnuMainViewPrevious.ForeColor = System.Drawing.Color.Black;
             this.mnuMainViewPrevious.Name = "mnuMainViewPrevious";
             this.mnuMainViewPrevious.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainViewPrevious.ShortcutKeyDisplayString = "Back / PageDown";
@@ -728,6 +735,7 @@
             // 
             // mnuMainGoto
             // 
+            this.mnuMainGoto.ForeColor = System.Drawing.Color.Black;
             this.mnuMainGoto.Name = "mnuMainGoto";
             this.mnuMainGoto.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGoto.ShortcutKeyDisplayString = "";
@@ -738,6 +746,7 @@
             // 
             // mnuMainGotoFirst
             // 
+            this.mnuMainGotoFirst.ForeColor = System.Drawing.Color.Black;
             this.mnuMainGotoFirst.Name = "mnuMainGotoFirst";
             this.mnuMainGotoFirst.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGotoFirst.ShortcutKeyDisplayString = "Home";
@@ -747,6 +756,7 @@
             // 
             // mnuMainGotoLast
             // 
+            this.mnuMainGotoLast.ForeColor = System.Drawing.Color.Black;
             this.mnuMainGotoLast.Name = "mnuMainGotoLast";
             this.mnuMainGotoLast.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGotoLast.ShortcutKeyDisplayString = "End";
@@ -756,6 +766,7 @@
             // 
             // mnuMainFullScreen
             // 
+            this.mnuMainFullScreen.ForeColor = System.Drawing.Color.Black;
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";
             this.mnuMainFullScreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
@@ -769,6 +780,7 @@
             this.mnuMainSlideShowStart,
             this.mnuMainSlideShowPause,
             this.mnuMainSlideShowExit});
+            this.mnuMainSlideShow.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSlideShow.Name = "mnuMainSlideShow";
             this.mnuMainSlideShow.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSlideShow.ShortcutKeyDisplayString = "";
@@ -777,6 +789,7 @@
             // 
             // mnuMainSlideShowStart
             // 
+            this.mnuMainSlideShowStart.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSlideShowStart.Name = "mnuMainSlideShowStart";
             this.mnuMainSlideShowStart.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSlideShowStart.ShortcutKeyDisplayString = "";
@@ -787,6 +800,7 @@
             // 
             // mnuMainSlideShowPause
             // 
+            this.mnuMainSlideShowPause.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSlideShowPause.Name = "mnuMainSlideShowPause";
             this.mnuMainSlideShowPause.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSlideShowPause.ShortcutKeyDisplayString = "Space";
@@ -796,6 +810,7 @@
             // 
             // mnuMainSlideShowExit
             // 
+            this.mnuMainSlideShowExit.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSlideShowExit.Name = "mnuMainSlideShowExit";
             this.mnuMainSlideShowExit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSlideShowExit.ShortcutKeyDisplayString = "ESC";
@@ -805,6 +820,7 @@
             // 
             // mnuMainPrint
             // 
+            this.mnuMainPrint.ForeColor = System.Drawing.Color.Black;
             this.mnuMainPrint.Name = "mnuMainPrint";
             this.mnuMainPrint.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainPrint.ShortcutKeyDisplayString = "";
@@ -842,6 +858,7 @@
             this.mnuMainSetAsDesktop,
             this.mnuMainImageLocation,
             this.mnuMainImageProperties});
+            this.mnuMainManipulation.ForeColor = System.Drawing.Color.Black;
             this.mnuMainManipulation.Name = "mnuMainManipulation";
             this.mnuMainManipulation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainManipulation.Size = new System.Drawing.Size(288, 23);
@@ -849,6 +866,7 @@
             // 
             // mnuMainRotateCounterclockwise
             // 
+            this.mnuMainRotateCounterclockwise.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRotateCounterclockwise.Name = "mnuMainRotateCounterclockwise";
             this.mnuMainRotateCounterclockwise.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainRotateCounterclockwise.ShortcutKeyDisplayString = "Ctrl+,";
@@ -858,6 +876,7 @@
             // 
             // mnuMainRotateClockwise
             // 
+            this.mnuMainRotateClockwise.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRotateClockwise.Name = "mnuMainRotateClockwise";
             this.mnuMainRotateClockwise.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainRotateClockwise.ShortcutKeyDisplayString = "Ctrl+.";
@@ -872,6 +891,7 @@
             // 
             // mnuMainZoomIn
             // 
+            this.mnuMainZoomIn.ForeColor = System.Drawing.Color.Black;
             this.mnuMainZoomIn.Name = "mnuMainZoomIn";
             this.mnuMainZoomIn.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomIn.ShortcutKeyDisplayString = "Ctrl+=";
@@ -881,6 +901,7 @@
             // 
             // mnuMainZoomOut
             // 
+            this.mnuMainZoomOut.ForeColor = System.Drawing.Color.Black;
             this.mnuMainZoomOut.Name = "mnuMainZoomOut";
             this.mnuMainZoomOut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomOut.ShortcutKeyDisplayString = "Ctrl+-";
@@ -890,6 +911,7 @@
             // 
             // mnuMainActualSize
             // 
+            this.mnuMainActualSize.ForeColor = System.Drawing.Color.Black;
             this.mnuMainActualSize.Name = "mnuMainActualSize";
             this.mnuMainActualSize.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainActualSize.ShortcutKeyDisplayString = "Ctrl+0";
@@ -899,6 +921,7 @@
             // 
             // mnuMainLockZoomRatio
             // 
+            this.mnuMainLockZoomRatio.ForeColor = System.Drawing.Color.Black;
             this.mnuMainLockZoomRatio.Name = "mnuMainLockZoomRatio";
             this.mnuMainLockZoomRatio.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLockZoomRatio.ShortcutKeyDisplayString = "";
@@ -914,6 +937,7 @@
             // 
             // mnuMainScaleToWidth
             // 
+            this.mnuMainScaleToWidth.ForeColor = System.Drawing.Color.Black;
             this.mnuMainScaleToWidth.Name = "mnuMainScaleToWidth";
             this.mnuMainScaleToWidth.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToWidth.ShortcutKeyDisplayString = "";
@@ -924,6 +948,7 @@
             // 
             // mnuMainScaleToHeight
             // 
+            this.mnuMainScaleToHeight.ForeColor = System.Drawing.Color.Black;
             this.mnuMainScaleToHeight.Name = "mnuMainScaleToHeight";
             this.mnuMainScaleToHeight.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToHeight.ShortcutKeyDisplayString = "";
@@ -934,6 +959,7 @@
             // 
             // mnuMainWindowAdaptImage
             // 
+            this.mnuMainWindowAdaptImage.ForeColor = System.Drawing.Color.Black;
             this.mnuMainWindowAdaptImage.Name = "mnuMainWindowAdaptImage";
             this.mnuMainWindowAdaptImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainWindowAdaptImage.ShortcutKeyDisplayString = "";
@@ -949,6 +975,7 @@
             // 
             // mnuMainRename
             // 
+            this.mnuMainRename.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRename.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainRename.Image")));
             this.mnuMainRename.Name = "mnuMainRename";
             this.mnuMainRename.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -960,6 +987,7 @@
             // 
             // mnuMainMoveToRecycleBin
             // 
+            this.mnuMainMoveToRecycleBin.ForeColor = System.Drawing.Color.Black;
             this.mnuMainMoveToRecycleBin.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
             this.mnuMainMoveToRecycleBin.Name = "mnuMainMoveToRecycleBin";
             this.mnuMainMoveToRecycleBin.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -971,6 +999,7 @@
             // 
             // mnuMainDeleteFromHardDisk
             // 
+            this.mnuMainDeleteFromHardDisk.ForeColor = System.Drawing.Color.Black;
             this.mnuMainDeleteFromHardDisk.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainDeleteFromHardDisk.Image")));
             this.mnuMainDeleteFromHardDisk.Name = "mnuMainDeleteFromHardDisk";
             this.mnuMainDeleteFromHardDisk.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -987,6 +1016,7 @@
             // 
             // mnuMainExtractFrames
             // 
+            this.mnuMainExtractFrames.ForeColor = System.Drawing.Color.Black;
             this.mnuMainExtractFrames.Name = "mnuMainExtractFrames";
             this.mnuMainExtractFrames.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainExtractFrames.ShortcutKeyDisplayString = "";
@@ -997,6 +1027,7 @@
             // 
             // mnuMainStartStopAnimating
             // 
+            this.mnuMainStartStopAnimating.ForeColor = System.Drawing.Color.Black;
             this.mnuMainStartStopAnimating.Name = "mnuMainStartStopAnimating";
             this.mnuMainStartStopAnimating.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainStartStopAnimating.ShortcutKeyDisplayString = "";
@@ -1045,6 +1076,7 @@
             this.mnuMainCopyImagePath,
             this.toolStripMenuItem14,
             this.mnuMainClearClipboard});
+            this.mnuMainClipboard.ForeColor = System.Drawing.Color.Black;
             this.mnuMainClipboard.Name = "mnuMainClipboard";
             this.mnuMainClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainClipboard.Size = new System.Drawing.Size(288, 23);
@@ -1052,6 +1084,7 @@
             // 
             // mnuMainCopy
             // 
+            this.mnuMainCopy.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCopy.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainCopy.Image")));
             this.mnuMainCopy.Name = "mnuMainCopy";
             this.mnuMainCopy.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1063,6 +1096,7 @@
             // 
             // mnuMainCopyMulti
             // 
+            this.mnuMainCopyMulti.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCopyMulti.Name = "mnuMainCopyMulti";
             this.mnuMainCopyMulti.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCopyMulti.ShortcutKeyDisplayString = "";
@@ -1074,6 +1108,7 @@
             // 
             // mnuMainCut
             // 
+            this.mnuMainCut.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCut.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainCut.Image")));
             this.mnuMainCut.Name = "mnuMainCut";
             this.mnuMainCut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1085,6 +1120,7 @@
             // 
             // mnuMainCutMulti
             // 
+            this.mnuMainCutMulti.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCutMulti.Name = "mnuMainCutMulti";
             this.mnuMainCutMulti.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCutMulti.ShortcutKeyDisplayString = "";
@@ -1101,6 +1137,7 @@
             // 
             // mnuMainCopyImagePath
             // 
+            this.mnuMainCopyImagePath.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCopyImagePath.Name = "mnuMainCopyImagePath";
             this.mnuMainCopyImagePath.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCopyImagePath.Size = new System.Drawing.Size(247, 23);
@@ -1114,6 +1151,7 @@
             // 
             // mnuMainClearClipboard
             // 
+            this.mnuMainClearClipboard.ForeColor = System.Drawing.Color.Black;
             this.mnuMainClearClipboard.Name = "mnuMainClearClipboard";
             this.mnuMainClearClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainClearClipboard.ShortcutKeyDisplayString = "Ctrl+`";
@@ -1125,6 +1163,7 @@
             // 
             this.mnuMainShare.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainShareFacebook});
+            this.mnuMainShare.ForeColor = System.Drawing.Color.Black;
             this.mnuMainShare.Name = "mnuMainShare";
             this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainShare.Size = new System.Drawing.Size(288, 23);
@@ -1132,6 +1171,7 @@
             // 
             // mnuMainShareFacebook
             // 
+            this.mnuMainShareFacebook.ForeColor = System.Drawing.Color.Black;
             this.mnuMainShareFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainShareFacebook.Image")));
             this.mnuMainShareFacebook.Name = "mnuMainShareFacebook";
             this.mnuMainShareFacebook.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1152,6 +1192,7 @@
             this.mnuMainToolbar,
             this.mnuMainThumbnailBar,
             this.mnuMainCheckBackground});
+            this.mnuMainLayout.ForeColor = System.Drawing.Color.Black;
             this.mnuMainLayout.Name = "mnuMainLayout";
             this.mnuMainLayout.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLayout.Size = new System.Drawing.Size(288, 23);
@@ -1163,6 +1204,7 @@
             this.mnuMainToolbar.Checked = true;
             this.mnuMainToolbar.CheckOnClick = true;
             this.mnuMainToolbar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuMainToolbar.ForeColor = System.Drawing.Color.Black;
             this.mnuMainToolbar.Name = "mnuMainToolbar";
             this.mnuMainToolbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainToolbar.ShortcutKeyDisplayString = "";
@@ -1175,6 +1217,7 @@
             // 
             this.mnuMainThumbnailBar.BackColor = System.Drawing.Color.Transparent;
             this.mnuMainThumbnailBar.CheckOnClick = true;
+            this.mnuMainThumbnailBar.ForeColor = System.Drawing.Color.Black;
             this.mnuMainThumbnailBar.Name = "mnuMainThumbnailBar";
             this.mnuMainThumbnailBar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainThumbnailBar.ShortcutKeyDisplayString = "";
@@ -1187,6 +1230,7 @@
             // 
             this.mnuMainCheckBackground.BackColor = System.Drawing.Color.Transparent;
             this.mnuMainCheckBackground.CheckOnClick = true;
+            this.mnuMainCheckBackground.ForeColor = System.Drawing.Color.Black;
             this.mnuMainCheckBackground.Name = "mnuMainCheckBackground";
             this.mnuMainCheckBackground.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCheckBackground.ShortcutKeyDisplayString = "";
@@ -1199,6 +1243,7 @@
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainExtensionManager});
+            this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.Name = "mnuMainTools";
             this.mnuMainTools.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainTools.Size = new System.Drawing.Size(288, 23);
@@ -1206,6 +1251,7 @@
             // 
             // mnuMainExtensionManager
             // 
+            this.mnuMainExtensionManager.ForeColor = System.Drawing.Color.Black;
             this.mnuMainExtensionManager.Name = "mnuMainExtensionManager";
             this.mnuMainExtensionManager.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainExtensionManager.ShortcutKeyDisplayString = "";
@@ -1217,6 +1263,7 @@
             // 
             // mnuMainSettings
             // 
+            this.mnuMainSettings.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSettings.Name = "mnuMainSettings";
             this.mnuMainSettings.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSettings.ShortcutKeyDisplayString = "";
@@ -1228,6 +1275,7 @@
             // 
             // mnuMainAbout
             // 
+            this.mnuMainAbout.ForeColor = System.Drawing.Color.Black;
             this.mnuMainAbout.Name = "mnuMainAbout";
             this.mnuMainAbout.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAbout.ShortcutKeyDisplayString = "";
@@ -1243,6 +1291,7 @@
             // 
             // mnuMainReportIssue
             // 
+            this.mnuMainReportIssue.ForeColor = System.Drawing.Color.Black;
             this.mnuMainReportIssue.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainReportIssue.Image")));
             this.mnuMainReportIssue.Name = "mnuMainReportIssue";
             this.mnuMainReportIssue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);

@@ -26,3 +26,6 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\R
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.Properties.Resources.resources
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\Release\ThemeConfig.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\TargaImage.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\System.Drawing.PSD.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\IconLib.dll

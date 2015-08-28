@@ -437,7 +437,6 @@ namespace ThemeConfig
                         char.ConvertFromUtf32(34) + s.FileName + char.ConvertFromUtf32(34);
 
                     System.Diagnostics.Process.Start(exe, cmd);
-
                 }
             }
         }

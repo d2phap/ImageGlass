@@ -236,109 +236,107 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.btnHelp", "Help (F1)");
             //this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet"); //removed v2.0 final
             //this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email"); //removed v2.0 final
-            //this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks"); //removed v2.1
-            this.Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v2.1
+            //this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks"); //removed v3.0
+            this.Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
 
 
-            this.Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v2.1
-            this.Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v2.1
-            this.Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v2.1
-            this.Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v2.1
-            this.Items.Add("frmMain.mnuMainEditImage", "Edit image"); //v2.1
+            this.Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
+            this.Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
+            this.Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
+            this.Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
+            this.Items.Add("frmMain.mnuMainEditImage", "Edit image"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v2.1
-            this.Items.Add("frmMain.mnuMainViewNext", "View next image"); //v2.1
-            this.Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v2.1
-            this.Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v2.1
-            this.Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v2.1
-            this.Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v2.1
+            this.Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
+            this.Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
+            this.Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v3.0
+            this.Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v3.0
+            this.Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
+            this.Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v2.1
+            this.Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainSlideShow", "Slideshow"); //v2.1
-            this.Items.Add("frmMain.mnuMainSlideShowStart", "Start slideshow"); //v2.1
-            this.Items.Add("frmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v2.1
-            this.Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v2.1
+            this.Items.Add("frmMain.mnuMainSlideShow", "Slideshow"); //v3.0
+            this.Items.Add("frmMain.mnuMainSlideShowStart", "Start slideshow"); //v3.0
+            this.Items.Add("frmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v3.0
+            this.Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainPrint", "Print"); //v2.1
+            this.Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainManipulation", "Manipulation"); //v2.1
-            this.Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v2.1
-            this.Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v2.1
-            this.Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v2.1
-            this.Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v2.1
-            this.Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v2.1
-            this.Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v2.1
-            this.Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v2.1
-            this.Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v2.1
-            this.Items.Add("frmMain.mnuMainWindowAdaptImage", "Window adapt to image"); //v2.1
-            this.Items.Add("frmMain.mnuMainRename", "Rename image"); //v2.1
-            this.Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v2.1
-            this.Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v2.1
-            this.Items.Add("frmMain.mnuMainExtractFrames", "Extract image frames ({0})"); //v2.1
-            this.Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v2.1
-            this.Items.Add("frmMain.mnuMainSetAsDesktop", "Set as desktop background"); //v2.1
-            this.Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v2.1
-            this.Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v2.1
+            this.Items.Add("frmMain.mnuMainManipulation", "Manipulation"); //v3.0
+            this.Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
+            this.Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
+            this.Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
+            this.Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
+            this.Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
+            this.Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
+            this.Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
+            this.Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
+            this.Items.Add("frmMain.mnuMainWindowAdaptImage", "Window adapt to image"); //v3.0
+            this.Items.Add("frmMain.mnuMainRename", "Rename image"); //v3.0
+            this.Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
+            this.Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
+            this.Items.Add("frmMain.mnuMainExtractFrames", "Extract image frames ({0})"); //v3.0
+            this.Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
+            this.Items.Add("frmMain.mnuMainSetAsDesktop", "Set as desktop background"); //v3.0
+            this.Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
+            this.Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainClipboard", "Clipboard"); //v2.1
-            this.Items.Add("frmMain.mnuMainCopy", "Copy"); //v2.1
-            this.Items.Add("frmMain.mnuMainCopyMulti", "Copy multiple files"); //v2.1
-            this.Items.Add("frmMain.mnuMainCut", "Cut"); //v2.1
-            this.Items.Add("frmMain.mnuMainCutMulti", "Cut multiple files"); //v2.1
-            this.Items.Add("frmMain.mnuMainCopyImagePath", "Copy image path"); //v2.1
-            this.Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v2.1
+            this.Items.Add("frmMain.mnuMainClipboard", "Clipboard"); //v3.0
+            this.Items.Add("frmMain.mnuMainCopy", "Copy"); //v3.0
+            this.Items.Add("frmMain.mnuMainCopyMulti", "Copy multiple files"); //v3.0
+            this.Items.Add("frmMain.mnuMainCut", "Cut"); //v3.0
+            this.Items.Add("frmMain.mnuMainCutMulti", "Cut multiple files"); //v3.0
+            this.Items.Add("frmMain.mnuMainCopyImagePath", "Copy image path"); //v3.0
+            this.Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainShare", "Share ..."); //v2.1
-            this.Items.Add("frmMain.mnuMainShareFacebook", "Upload to Facebook"); //v2.1
+            this.Items.Add("frmMain.mnuMainShare", "Share ..."); //v3.0
+            this.Items.Add("frmMain.mnuMainShareFacebook", "Upload to Facebook"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainLayout", "Layout"); //v2.1
-            this.Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v2.1
-            this.Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v2.1
-            this.Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v2.1
+            this.Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
+            this.Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
+            this.Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
+            this.Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainTools", "Tools"); //v2.1
-            this.Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v2.1
+            this.Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
+            this.Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0
 
-            this.Items.Add("frmMain.mnuMainSettings", "Settings"); //v2.1
-            this.Items.Add("frmMain.mnuMainAbout", "About"); //v2.1
-            this.Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v2.1
+            this.Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
+            this.Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
+            this.Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
             
 
-            //this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow"); //remove 2.1
-            //this.Items.Add("frmMain.mnuStopSlideshow", "Stop slideshow"); //remove 2.1
-            //this.Items.Add("frmMain.mnuExitSlideshow", "Exit slideshow"); //remove 2.1
-            //this.Items.Add("frmMain.mnuShowToolBar._Hide", "Hide toolbar"); //remove 2.1
-            //this.Items.Add("frmMain.mnuShowToolBar._Show", "Show toolbar"); //remove 2.1
-            ////this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint"); //remove 2.1      
-            //this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})"); //remove 2.1
-            //this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background"); //remove 2.1
+            //this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow"); //remove 3.0
+            //this.Items.Add("frmMain.mnuStopSlideshow", "Stop slideshow"); //remove 3.0
+            //this.Items.Add("frmMain.mnuExitSlideshow", "Exit slideshow"); //remove 3.0
+            //this.Items.Add("frmMain.mnuShowToolBar._Hide", "Hide toolbar"); //remove 3.0
+            //this.Items.Add("frmMain.mnuShowToolBar._Show", "Show toolbar"); //remove 3.0
+            ////this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint"); //remove 3.0      
+            //this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})"); //remove 3.0
+            //this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background"); //remove 3.0
 
-            //this.Items.Add("frmMain.mnuPasteImage", "Paste image data"); //v2.0, remove 2.1
-            //this.Items.Add("frmMain.mnuCopy", "Copy"); //v2.0, remove 2.1
-            //this.Items.Add("frmMain.mnuMultiCopy", "Copy multiple files"); //v2.0, remove 2.1
-            //this.Items.Add("frmMain.mnuCut", "Cut"); //v2.0, remove 2.1
-            //this.Items.Add("frmMain.mnuMultiCut", "Cut multiple files"); //v2.0, remove 2.1
-            //this.Items.Add("frmMain.mnuClearClipboard", "Clear clipboard"); //v2.0, remove 2.1
+            //this.Items.Add("frmMain.mnuPasteImage", "Paste image data"); //v2.0, remove 3.0
+            //this.Items.Add("frmMain.mnuCopy", "Copy"); //v2.0, remove 3.0
+            //this.Items.Add("frmMain.mnuMultiCopy", "Copy multiple files"); //v2.0, remove 3.0
+            //this.Items.Add("frmMain.mnuCut", "Cut"); //v2.0, remove 3.0
+            //this.Items.Add("frmMain.mnuMultiCut", "Cut multiple files"); //v2.0, remove 3.0
+            //this.Items.Add("frmMain.mnuClearClipboard", "Clear clipboard"); //v2.0, remove 3.0
 
-            //this.Items.Add("frmMain.mnuMoveRecycle", "Move to recycle bin"); //remove 2.1
-            //this.Items.Add("frmMain.mnuDelete", "Delete from hard disk"); //remove 2.1
-            //this.Items.Add("frmMain.mnuRename", "Rename image"); //remove 2.1
-            //this.Items.Add("frmMain.mnuUploadFacebook", "Upload to Facebook"); //remove 2.1
-            //this.Items.Add("frmMain.mnuCopyImagePath", "Copy image path"); //remove 2.1
-            //this.Items.Add("frmMain.mnuOpenLocation", "Open image location"); //remove 2.1
-            //this.Items.Add("frmMain.mnuImageProperties", "Image properties"); //remove 2.1
-
+            //this.Items.Add("frmMain.mnuMoveRecycle", "Move to recycle bin"); //remove 3.0
+            //this.Items.Add("frmMain.mnuDelete", "Delete from hard disk"); //remove 3.0
+            //this.Items.Add("frmMain.mnuRename", "Rename image"); //remove 3.0
+            //this.Items.Add("frmMain.mnuUploadFacebook", "Upload to Facebook"); //remove 3.0
+            //this.Items.Add("frmMain.mnuCopyImagePath", "Copy image path"); //remove 3.0
+            //this.Items.Add("frmMain.mnuOpenLocation", "Open image location"); //remove 3.0
+            //this.Items.Add("frmMain.mnuImageProperties", "Image properties"); //remove 3.0
             
-
             this.Items.Add("frmMain._OpenFileDialog", "All supported files");
             this.Items.Add("frmMain._Text", "file(s)");
             this.Items.Add("frmMain._RenameDialog", "Enter new filename");
             this.Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");
             this.Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             this.Items.Add("frmMain._DeleteDialogTitle", "Confirm");
-            //this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?"); //removed v2.1
-            //this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm"); //remove v2.1
+            //this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?"); //removed v3.0
+            //this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm"); //remove v3.0
             this.Items.Add("frmMain._ExtractFrameText", "Select output folder");
             this.Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             this.Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
@@ -346,7 +344,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
             this.Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             this.Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
-            this.Items.Add("frmMain._Loading", "Loading..."); //v2.1
+            this.Items.Add("frmMain._Loading", "Loading..."); //v3.0
             
 
             this.Items.Add("frmExtension._Text", "Extension Manager");
@@ -385,18 +383,18 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             this.Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             this.Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
-            this.Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when start up");
+            this.Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when starting up");
             this.Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             this.Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
-            //this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //removed 2.1
-            this.Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v2.1
+            //this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //removed 3.0
+            this.Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
             this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
             this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels");
             this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
-            this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v2.1
+            this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
             this.Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order:");
             this.Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
             this.Items.Add("frmSetting.cmbImageOrder._Length", "Length");
@@ -407,20 +405,20 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.cmbImageOrder._Random", "Random");
             this.Items.Add("frmSetting.lblBackGroundColor", "Background color:");
             this.Items.Add("frmSetting.btnClose", "Close");
-            //this.Items.Add("frmSetting._OpenWithImageGlass", "Open with ImageGlass"); //remove 2.1
+            //this.Items.Add("frmSetting._OpenWithImageGlass", "Open with ImageGlass"); //remove 3.0
             //this.Items.Add("frmSetting.lbl_ContextMenu_Description", "This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu."); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblExtensions", "Extensions:"); //remove 2.1
-            //this.Items.Add("frmSetting.btnAddDefaultExtension", "Add default"); //2.0 final, remove 2.1
+            //this.Items.Add("frmSetting.lblExtensions", "Extensions:"); //remove 3.0
+            //this.Items.Add("frmSetting.btnAddDefaultExtension", "Add default"); //2.0 final, remove 3.0
             //this.Items.Add("frmSetting.lblAddDefaultContextMenu", "Add default"); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblContextMenu", "Context menu:"); //2.0 final, remove 2.1
-            //this.Items.Add("frmSetting.btnUpdateContextMenu", "Update"); //2.0 final, remove 2.1
-            //this.Items.Add("frmSetting.btnRemoveAllContextMenu", "Remove all"); //2.0 final, remove 2.1
+            //this.Items.Add("frmSetting.lblContextMenu", "Context menu:"); //2.0 final, remove 3.0
+            //this.Items.Add("frmSetting.btnUpdateContextMenu", "Update"); //2.0 final, remove 3.0
+            //this.Items.Add("frmSetting.btnRemoveAllContextMenu", "Remove all"); //2.0 final, remove 3.0
             //this.Items.Add("frmSetting.lblUpdateContextMenu", "Update"); //removed 2.0 final
             //this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all"); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final, remove 2.1
-            //this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //v2.0 final, remove 2.1
+            //this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final, remove 3.0
+            //this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //v2.0 final, remove 3.0
             this.Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final
-            this.Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v2.1
+            this.Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v3.0
 
             this.Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             this.Items.Add("frmSetting.lnkRefresh", "> Refresh");
