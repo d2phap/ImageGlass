@@ -816,7 +816,12 @@ namespace ImageGlass
         /// </summary>
         private void ImageSaveChange()
         {
-            Library.Image.ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+            try
+            {
+                Library.Image.ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+            }
+            catch { }
+
             LocalSetting.ImageModifiedPath = "";
         }
         #endregion
@@ -1022,6 +1027,9 @@ namespace ImageGlass
             {
                 this.WindowState = FormWindowState.Maximized;
             }
+
+            //Load Extra extensions
+            GlobalSetting.SupportedExtraExtensions = GlobalSetting.GetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
 
             //Load theme--------------------------------------------------------------------
             LoadTheme();

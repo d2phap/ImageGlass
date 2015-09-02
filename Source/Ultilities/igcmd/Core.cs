@@ -110,7 +110,7 @@ namespace igcmd
                                 DateTime.Now.Year.ToString());
             
             if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe") &&
-                up.Info.VersionType.ToLower() != "stable")
+                up.Info.VersionType.ToLower() == "stable")
             {
                 frmCheckForUpdate f = new frmCheckForUpdate();
                 f.ShowDialog();

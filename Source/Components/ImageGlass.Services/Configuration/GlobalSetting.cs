@@ -54,7 +54,8 @@ namespace ImageGlass.Services.Configuration
         private static int _currentIndex = -1;
         private static bool _isRecursive = false;
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
-        private static string _supportedExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
+        private static string _supportedExtensions = "";
+        private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;";
         private static string _supportedExtraExtensions = "*.tga;*.psd";
@@ -147,17 +148,24 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets, sets supported extension string
+        /// Gets all supported extensions string
         /// </summary>
         public static string SupportedExtensions
         {
             get
             {
-                return GlobalSetting._supportedExtensions + GlobalSetting.SupportedExtraExtensions;
+                return GlobalSetting._supportedDefaultExtensions + GlobalSetting.SupportedExtraExtensions;
             }
-            set
+        }
+
+        /// <summary>
+        /// Gets default supported extension string
+        /// </summary>
+        public static string SupportedDefaultExtensions
+        {
+            get
             {
-                GlobalSetting._supportedExtensions = value;
+                return _supportedDefaultExtensions;
             }
         }
 
@@ -424,6 +432,8 @@ namespace ImageGlass.Services.Configuration
         }
 
         
+
+
 
         #endregion
 

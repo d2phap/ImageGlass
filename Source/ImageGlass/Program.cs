@@ -53,9 +53,10 @@ namespace ImageGlass
                     //Check for update every 7 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
                     {
-                        Process.Start(char.ConvertFromUtf32(34) +
-                                GlobalSetting.StartUpDir + "igcmd.exe" +
-                                char.ConvertFromUtf32(34), "igautoupdate");
+                        Process p = new Process();
+                        p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+                        p.StartInfo.Arguments = "igautoupdate";
+                        p.Start();
                     }
                 }
             }

@@ -45,7 +45,7 @@
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
-            this.txtSupportedExtension = new System.Windows.Forms.TextBox();
+            this.txtSupportedExtensionDefault = new System.Windows.Forms.TextBox();
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.tabGeneral = new System.Windows.Forms.TabPage();
@@ -69,6 +69,7 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.txtSupportedExtensionExtra = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -179,7 +180,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 512);
+            this.tabLanguage.Size = new System.Drawing.Size(551, 511);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -275,31 +276,33 @@
             // 
             // tabFileAssociation
             // 
-            this.tabFileAssociation.Controls.Add(this.txtSupportedExtension);
+            this.tabFileAssociation.Controls.Add(this.txtSupportedExtensionExtra);
+            this.tabFileAssociation.Controls.Add(this.txtSupportedExtensionDefault);
             this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
             this.tabFileAssociation.Controls.Add(this.btnOpenFileAssociations);
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 512);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 509);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
             // 
-            // txtSupportedExtension
+            // txtSupportedExtensionDefault
             // 
-            this.txtSupportedExtension.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtSupportedExtensionDefault.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSupportedExtension.BackColor = System.Drawing.Color.White;
-            this.txtSupportedExtension.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSupportedExtension.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSupportedExtension.ForeColor = System.Drawing.Color.Black;
-            this.txtSupportedExtension.Location = new System.Drawing.Point(23, 55);
-            this.txtSupportedExtension.Multiline = true;
-            this.txtSupportedExtension.Name = "txtSupportedExtension";
-            this.txtSupportedExtension.ReadOnly = true;
-            this.txtSupportedExtension.Size = new System.Drawing.Size(513, 52);
-            this.txtSupportedExtension.TabIndex = 22;
+            this.txtSupportedExtensionDefault.BackColor = System.Drawing.Color.White;
+            this.txtSupportedExtensionDefault.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSupportedExtensionDefault.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSupportedExtensionDefault.ForeColor = System.Drawing.Color.Black;
+            this.txtSupportedExtensionDefault.Location = new System.Drawing.Point(23, 55);
+            this.txtSupportedExtensionDefault.Multiline = true;
+            this.txtSupportedExtensionDefault.Name = "txtSupportedExtensionDefault";
+            this.txtSupportedExtensionDefault.ReadOnly = true;
+            this.txtSupportedExtensionDefault.Size = new System.Drawing.Size(502, 38);
+            this.txtSupportedExtensionDefault.TabIndex = 22;
+            this.txtSupportedExtensionDefault.Text = "jpg\r\npng\r\n";
             // 
             // lblSupportedExtension
             // 
@@ -312,7 +315,7 @@
             // 
             // btnOpenFileAssociations
             // 
-            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 113);
+            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 157);
             this.btnOpenFileAssociations.Name = "btnOpenFileAssociations";
             this.btnOpenFileAssociations.Size = new System.Drawing.Size(199, 29);
             this.btnOpenFileAssociations.TabIndex = 20;
@@ -596,6 +599,19 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
+            // txtSupportedExtensionExtra
+            // 
+            this.txtSupportedExtensionExtra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSupportedExtensionExtra.BackColor = System.Drawing.Color.White;
+            this.txtSupportedExtensionExtra.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSupportedExtensionExtra.ForeColor = System.Drawing.Color.Black;
+            this.txtSupportedExtensionExtra.Location = new System.Drawing.Point(23, 99);
+            this.txtSupportedExtensionExtra.Multiline = true;
+            this.txtSupportedExtensionExtra.Name = "txtSupportedExtensionExtra";
+            this.txtSupportedExtensionExtra.Size = new System.Drawing.Size(502, 52);
+            this.txtSupportedExtensionExtra.TabIndex = 23;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -670,7 +686,8 @@
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
         private System.Windows.Forms.CheckBox chkAllowMultiInstances;
         private System.Windows.Forms.ImageList imglOpenWith;
-        private System.Windows.Forms.TextBox txtSupportedExtension;
+        private System.Windows.Forms.TextBox txtSupportedExtensionDefault;
         private System.Windows.Forms.Label lblSupportedExtension;
+        private System.Windows.Forms.TextBox txtSupportedExtensionExtra;
     }
 }
