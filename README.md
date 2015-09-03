@@ -55,7 +55,7 @@ font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&b
 </ul>
 <h3>Project Description</h3>
 <p>ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.</p>
-<p><img style="vertical-align: middle;" src="https://camo.githubusercontent.com/28671deb9fd770629170ec9cbde8db15fac16575/687474703a2f2f69313231342e70686f746f6275636b65742e636f6d2f616c62756d732f63633438332f70686170737578656b6f2f496d616765476c6173732f323031355f325f7a707332373962623239332e706e67" alt="ImageGlass 2.0 final" /></p>
+<p><img style="vertical-align: middle;" src="https://cloud.githubusercontent.com/assets/3154213/9609181/dd984a3a-5104-11e5-8747-c52ae7f115aa.png" alt="ImageGlass 3.0.9.2" /></p>
 
 <h3>ImageGlass Features</h3>
 
@@ -63,7 +63,7 @@ The unique features of ImageGlass are the following:
 <ul>
 <li>ImageGlass works great with GIF, ICO and PNG formats, among others</li>
 <li>Various zoom options: zoom in or zoom out, scale to height, scale to width, lock zoom ratio, etc.</li>
-<li>14 image formats supported, including GIF</li>
+<li>16 image formats supported, including JPG, JPE, JFIF, JPEG, PNG, GIF, ICO, BMP, DIB, TIF, TIFF, EXIF, WMF, EMF, TGA, PSD</li>
 <li>Fast switch between images</li>
 <li>Image frames extraction from GIF files</li>
 <li>Thumbnail images can be shown in the current viewing folder</li>
