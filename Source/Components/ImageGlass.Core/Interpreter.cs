@@ -8,6 +8,7 @@ using System.Linq;
 using System.Drawing.IconLib;
 using Paloma;
 using System.Drawing.Drawing2D;
+using FreeImageAPI;
 
 
 namespace ImageGlass.Core
@@ -33,6 +34,18 @@ namespace ImageGlass.Core
             {
                 System.Drawing.PSD.PsdFile psd = (new System.Drawing.PSD.PsdFile()).Load(path);
                 bmp = System.Drawing.PSD.ImageDecoder.DecodeImage(psd);
+            }
+            //file *.hdr
+            else if (path.ToLower().EndsWith(".hdr"))
+            {
+                FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
+                bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+            }
+            //file *.exr
+            else if (path.ToLower().EndsWith(".exr"))
+            {
+                FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
+                bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
             }
             else
             {
