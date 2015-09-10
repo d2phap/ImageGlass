@@ -130,15 +130,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.PSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\System.Drawing.PSD.dll</HintPath>
+    <Reference Include="System.Drawing.PSD">
+      <HintPath>..\packages\System.Drawing.PSD.0.1.0\lib\net40\System.Drawing.PSD.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TargaImage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\TargaImage.dll</HintPath>
+      <HintPath>..\packages\TargaImage\TargaImage.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +234,9 @@
     <None Include="Resources\autosizewindow.png" />
     <None Include="Resources\back.png" />
     <None Include="Resources\background.png" />
+    <Content Include="FreeImage.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\bot3.png" />
     <None Include="Resources\print.png" />
     <None Include="Resources\convert.png" />

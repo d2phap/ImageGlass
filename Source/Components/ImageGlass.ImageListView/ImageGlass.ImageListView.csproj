@@ -73,6 +73,9 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FreeImageNET">
+      <HintPath>..\..\packages\FreeImage\FreeImageNET.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -136,7 +139,9 @@
     <Compile Include="HitInfo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ImageListView.cs" />
+    <Compile Include="ImageListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ImageListViewColumnHeader.cs">
       <SubType>component</SubType>
     </Compile>

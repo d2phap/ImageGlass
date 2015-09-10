@@ -135,3 +135,47 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe.config
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\FreeImage.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.exe
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\Facebook.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.exe
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.exe
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageListView.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\System.Drawing.PSD.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\TargaImage.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\FreeImageNET.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageBox.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageListView.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.ImageListView.xml
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\igcmd.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\igtasks.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Core.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Library.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Plugins.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Theme.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.FileList.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\ImageGlass.Services.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\Facebook.xml
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\System.Drawing.PSD.pdb
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\de\ImageGlass.ImageListView.resources.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\bin\Debug\tr\ImageGlass.ImageListView.resources.dll
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csprojResolveAssemblyReference.cache
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmAbout.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmExtension.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFacebook.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmFaceBookLogin.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmMain.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.Properties.Resources.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.frmSetting.resources
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.csproj.GenerateResource.Cache
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.exe
+C:\Users\L\Documents\Visual Studio 2013\Projects\ImageGlass\Source\ImageGlass\obj\Debug\ImageGlass.pdb

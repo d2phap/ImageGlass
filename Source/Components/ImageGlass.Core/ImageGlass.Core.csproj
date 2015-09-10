@@ -74,6 +74,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FreeImageNET">
+      <HintPath>..\..\packages\FreeImage\FreeImageNET.dll</HintPath>
+    </Reference>
     <Reference Include="IconLib">
       <HintPath>..\..\ImageGlass\bin\Debug\IconLib.dll</HintPath>
     </Reference>
@@ -82,13 +85,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.PSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ImageGlass\bin\Debug\System.Drawing.PSD.dll</HintPath>
+      <HintPath>..\..\packages\System.Drawing.PSD.0.1.0\lib\net40\System.Drawing.PSD.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="TargaImage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ImageGlass\bin\Debug\TargaImage.dll</HintPath>
+      <HintPath>..\..\packages\TargaImage\TargaImage.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +144,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
