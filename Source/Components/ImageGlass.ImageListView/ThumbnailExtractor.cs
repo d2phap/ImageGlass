@@ -27,6 +27,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 #endif
+using FreeImageAPI;
 
 namespace ImageGlass.ImageListView
 {
@@ -237,7 +238,8 @@ namespace ImageGlass.ImageListView
                 using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
                     if (!Utility.IsImage(stream))
-                        return null;
+                        if (!filename.ToLower().EndsWith(".exr"))
+                            return null;
                 }
             }
             catch
@@ -349,6 +351,22 @@ namespace ImageGlass.ImageListView
                     source = null;
                     sourceStream = null;
                 }
+            }
+
+            //HDR
+            if (filename.ToLower().EndsWith(".hdr"))
+            {
+                FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
+                source = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                FreeImage.Unload(hdr);
+            }
+
+            //EXR
+            if (filename.ToLower().EndsWith(".exr"))
+            {
+                FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
+                source = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                FreeImage.Unload(exr);
             }
 
             // If all failed, return null.

@@ -241,7 +241,7 @@ namespace ImageGlass.ImageListView
             // Sniff some bytes from the start of the stream
             // and check against magic numbers of supported 
             // image file formats
-            byte[] header = new byte[8];
+            byte[] header = new byte[10];
             stream.Seek(0, SeekOrigin.Begin);
             if (stream.Read(header, 0, header.Length) != header.Length)
                 return false;
@@ -294,6 +294,11 @@ namespace ImageGlass.ImageListView
             if (header[0] == 0x00 && header[1] == 0x00 && header[2] == 0x01 && header[3] == 0x00) // ICO
                 return true;
             else if (header[0] == 0x00 && header[1] == 0x00 && header[2] == 0x02 && header[3] == 0x00) // CUR
+                return true;
+
+            // HDR
+            string hdrHeader = Encoding.ASCII.GetString(header, 2, 8);
+            if (hdrHeader == "RADIANCE")
                 return true;
 
             return false;
