@@ -74,7 +74,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FreeImageNET">
-      <HintPath>..\..\packages\FreeImage\FreeImageNET.dll</HintPath>
+      <HintPath>..\..\ImageGlass\FreeImageNET.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>

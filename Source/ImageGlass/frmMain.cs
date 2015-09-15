@@ -1011,6 +1011,10 @@ namespace ImageGlass
             if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
             {
                 GlobalSetting.LangPack = new Library.Language(s);
+
+                //force update language pack
+                GlobalSetting.IsForcedActive = true;
+                frmMain_Activated(null, null);
             }
             
             //Windows Bound (Position + Size)------------------------------------------------

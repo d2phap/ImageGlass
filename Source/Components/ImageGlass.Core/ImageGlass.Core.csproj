@@ -74,8 +74,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET">
-      <HintPath>..\..\packages\FreeImage\FreeImageNET.dll</HintPath>
+    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ImageGlass\FreeImageNET.dll</HintPath>
     </Reference>
     <Reference Include="IconLib">
       <HintPath>..\..\ImageGlass\bin\Debug\IconLib.dll</HintPath>
@@ -89,9 +90,8 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TargaImage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\TargaImage\TargaImage.dll</HintPath>
+    <Reference Include="TargaImage">
+      <HintPath>..\..\ImageGlass\TargaImage.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
