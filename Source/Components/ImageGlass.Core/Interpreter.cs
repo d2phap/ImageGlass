@@ -9,7 +9,7 @@ using System.Drawing.IconLib;
 using Paloma;
 using System.Drawing.Drawing2D;
 using FreeImageAPI;
-
+using Svg;
 
 namespace ImageGlass.Core
 {
@@ -32,6 +32,12 @@ namespace ImageGlass.Core
             {
                 FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
                 bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+            }
+            //file *.svg
+            else if (path.ToLower().EndsWith(".svg"))
+            {
+                SvgDocument svg = SvgDocument.Open(path);
+                bmp = svg.Draw();
             }
             //TARGA file *.tga
             else if (path.ToLower().EndsWith(".tga"))

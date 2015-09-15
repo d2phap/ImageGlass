@@ -81,6 +81,9 @@
     <Reference Include="IconLib">
       <HintPath>..\..\ImageGlass\bin\Debug\IconLib.dll</HintPath>
     </Reference>
+    <Reference Include="Svg">
+      <HintPath>..\..\ImageGlass\Svg.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
