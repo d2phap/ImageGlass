@@ -26,12 +26,14 @@ namespace ImageGlass.Core
             {
                 FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
                 bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                FreeImage.Unload(hdr);
             }
             //file *.exr
             else if (path.ToLower().EndsWith(".exr"))
             {
                 FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
                 bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                FreeImage.Unload(exr);
             }
             //file *.svg
             else if (path.ToLower().EndsWith(".svg"))

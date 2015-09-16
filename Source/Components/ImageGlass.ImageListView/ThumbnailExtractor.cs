@@ -23,6 +23,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using Svg;
 #if USEWIC
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -232,142 +233,166 @@ namespace ImageGlass.ImageListView
             if (size.Width <= 0 || size.Height <= 0)
                 throw new ArgumentException();
 
-            // Check if this is an image file
-            try
-            {
-                using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                {
-                    if (!Utility.IsImage(stream))
-                        if (!filename.ToLower().EndsWith(".exr"))
-                            return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
             Image source = null;
             Image thumb = null;
 
-            // Try to read the exif thumbnail
-            if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
+            
+            // Revert to source image if an embedded thumbnail of required size was not found.
+            FileStream sourceStream = null;
+
+            // Fix for the missing semicolon in GIF files
+            MemoryStream streamCopy = null;
+
+            //*.SVG
+            if (filename.ToLower().EndsWith(".svg"))
             {
+                try
+                {
+                    SvgDocument svg = SvgDocument.Open(filename);
+                    source = svg.Draw();
+                }
+                catch { return null; }
+            }
+            //HDR
+            else if (filename.ToLower().EndsWith(".hdr"))
+            {
+                try
+                {
+                    FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
+                    source = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                    FreeImage.Unload(hdr);
+                }
+                catch { return null; }
+            }
+            //EXR
+            else if (filename.ToLower().EndsWith(".exr"))
+            {
+                try
+                {
+                    FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
+                    source = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
+                    FreeImage.Unload(exr);
+                }
+                catch { return null; }
+            }
+            //OTHER FORMATS
+            else
+            {
+                // Check if this is an image file
                 try
                 {
                     using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
-                        using (Image img = Image.FromStream(stream, false, false))
+                        if (!Utility.IsImage(stream))
+                            if (!filename.ToLower().EndsWith(".exr"))
+                                return null;
+                    }
+                }
+                catch { return null; }
+
+
+
+                // Try to read the exif thumbnail
+                if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
+                {
+                    try
+                    {
+                        using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                         {
-                            foreach (int index in img.PropertyIdList)
+                            using (Image img = Image.FromStream(stream, false, false))
                             {
-                                if (index == TagThumbnailData)
+                                foreach (int index in img.PropertyIdList)
                                 {
-                                    // Fetch the embedded thumbnail
-                                    byte[] rawImage = img.GetPropertyItem(TagThumbnailData).Value;
-                                    using (MemoryStream memStream = new MemoryStream(rawImage))
+                                    if (index == TagThumbnailData)
                                     {
-                                        source = Image.FromStream(memStream);
-                                    }
-                                    if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Auto)
-                                    {
-                                        // Check that the embedded thumbnail is large enough.
-                                        if (Math.Max((float)source.Width / (float)size.Width,
-                                            (float)source.Height / (float)size.Height) < 1.0f)
+                                        // Fetch the embedded thumbnail
+                                        byte[] rawImage = img.GetPropertyItem(TagThumbnailData).Value;
+                                        using (MemoryStream memStream = new MemoryStream(rawImage))
                                         {
-                                            source.Dispose();
-                                            source = null;
+                                            source = Image.FromStream(memStream);
                                         }
+                                        if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Auto)
+                                        {
+                                            // Check that the embedded thumbnail is large enough.
+                                            if (Math.Max((float)source.Width / (float)size.Width,
+                                                (float)source.Height / (float)size.Height) < 1.0f)
+                                            {
+                                                source.Dispose();
+                                                source = null;
+                                            }
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
                         }
                     }
-                }
-                catch
-                {
-                    if (source != null)
-                        source.Dispose();
-                    source = null;
-                }
-            }
-
-            // Fix for the missing semicolon in GIF files
-            MemoryStream streamCopy = null;
-            try
-            {
-                if (source == null)
-                {
-                    using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                    catch
                     {
-                        byte[] gifSignature = new byte[4];
-                        stream.Read(gifSignature, 0, 4);
-                        if (Encoding.ASCII.GetString(gifSignature) == "GIF8")
+                        if (source != null)
+                            source.Dispose();
+                        source = null;
+                    }
+                }
+
+                // Fix for the missing semicolon in GIF files
+                try
+                {
+                    if (source == null)
+                    {
+                        using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                         {
-                            stream.Seek(0, SeekOrigin.Begin);
-                            streamCopy = new MemoryStream();
-                            byte[] buffer = new byte[32768];
-                            int read = 0;
-                            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                            byte[] gifSignature = new byte[4];
+                            stream.Read(gifSignature, 0, 4);
+                            if (Encoding.ASCII.GetString(gifSignature) == "GIF8")
                             {
-                                streamCopy.Write(buffer, 0, read);
+                                stream.Seek(0, SeekOrigin.Begin);
+                                streamCopy = new MemoryStream();
+                                byte[] buffer = new byte[32768];
+                                int read = 0;
+                                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                                {
+                                    streamCopy.Write(buffer, 0, read);
+                                }
+                                // Append the missing semicolon
+                                streamCopy.Seek(-1, SeekOrigin.End);
+                                if (streamCopy.ReadByte() != 0x3b)
+                                    streamCopy.WriteByte(0x3b);
+                                source = Image.FromStream(streamCopy);
                             }
-                            // Append the missing semicolon
-                            streamCopy.Seek(-1, SeekOrigin.End);
-                            if (streamCopy.ReadByte() != 0x3b)
-                                streamCopy.WriteByte(0x3b);
-                            source = Image.FromStream(streamCopy);
                         }
                     }
                 }
-            }
-            catch
-            {
-                if (source != null)
-                    source.Dispose();
-                source = null;
-                if (streamCopy != null)
-                    streamCopy.Dispose();
-                streamCopy = null;
-            }
-
-            // Revert to source image if an embedded thumbnail of required size
-            // was not found.
-            FileStream sourceStream = null;
-            if (source == null)
-            {
-                try
-                {
-                    sourceStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                    source = Image.FromStream(sourceStream);
-                }
                 catch
                 {
                     if (source != null)
                         source.Dispose();
-                    if (sourceStream != null)
-                        sourceStream.Dispose();
                     source = null;
-                    sourceStream = null;
+                    if (streamCopy != null)
+                        streamCopy.Dispose();
+                    streamCopy = null;
                 }
-            }
 
-            //HDR
-            if (filename.ToLower().EndsWith(".hdr"))
-            {
-                FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
-                source = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                FreeImage.Unload(hdr);
-            }
-
-            //EXR
-            if (filename.ToLower().EndsWith(".exr"))
-            {
-                FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
-                source = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                FreeImage.Unload(exr);
-            }
+                // Revert to source image if an embedded thumbnail of required size was not found.
+                if (source == null)
+                {
+                    try
+                    {
+                        sourceStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                        source = Image.FromStream(sourceStream);
+                    }
+                    catch
+                    {
+                        if (source != null)
+                            source.Dispose();
+                        if (sourceStream != null)
+                            sourceStream.Dispose();
+                        source = null;
+                        sourceStream = null;
+                    }
+                }
+            } //END OTHER FORMATS
+            
 
             // If all failed, return null.
             if (source == null) return null;

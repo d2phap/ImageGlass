@@ -486,10 +486,10 @@
             // 
             this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 22);
+            this.tpReferences.Location = new System.Drawing.Point(4, 24);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tpReferences.Size = new System.Drawing.Size(516, 404);
+            this.tpReferences.Size = new System.Drawing.Size(516, 402);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -507,7 +507,7 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(490, 377);
+            this.txtReferences.Size = new System.Drawing.Size(490, 373);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 

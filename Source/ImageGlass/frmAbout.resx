@@ -212,23 +212,23 @@
 </value>
   </data>
   <data name="txtReferences.Text" xml:space="preserve">
-    <value>DotNetZip Library: copyright (c) 2006 - 2011 Dino Chiesa
+    <value>DotNetZip Library: copyright © 2006 - 2011 Dino Chiesa
 License: Microsoft Public License (Ms-PL)
 
 -----------------------------------------
-Imaeg: copyright (c) 2011 ed &lt;tripflag@gmail.com&gt;
+Imaeg: copyright © 2011 ed &lt;tripflag@gmail.com&gt;
 License: GNU GPL v2
 
 -----------------------------------------
-ImageGlass.ImageBox based on Cyotek ImageBox Control v2.0.0.0. Copyright (c) 2010-2015 Cyotek.
+ImageGlass.ImageBox based on Cyotek ImageBox Control v2.0.0.0. Copyright © 2010-2015 Cyotek.
 License: MIT License
 
 -----------------------------------------
-IconLib: copyright (c) 2006 Franco, Gustavo
+IconLib v0.73: copyright © 2006 Franco, Gustavo
 License: Creative Commons Attribution-Share Alike 3.0 Unported License.
 
 -----------------------------------------
-Facebook SDK v6.2.1.0 beta: copyright (c) 2011 The Outercurve Foundation.
+Facebook SDK v7.0.6.0: copyright © 2011 by The Outercurve Foundation.
 License: Apache 2.0
 
 -----------------------------------------
@@ -236,12 +236,20 @@ ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
 License: Apache-2.0
 
 -----------------------------------------
-TargaImage v1.0: copyright (c) 2008 David Polomis.
+TargaImage v1.0: copyright © 2008 David Polomis.
 License: The Code Project Open License (CPOL)
 
 -----------------------------------------
-System.Drawing.PSD v1.0: copyright (c) 2013 Darren Horrocks. Background alpha supported by Mikael Porttila.
-License:  GNU GPL v2</value>
+System.Drawing.PSD v1.0: copyright © 2013 Darren Horrocks. Background alpha supported by Mikael Porttila.
+License:  GNU GPL v2
+
+-----------------------------------------
+FreeImage v3.17: copyright © 2003-2015 by FreeImage.
+License:  GNU GPL v2
+
+-----------------------------------------
+SVG v2.0.0.42482: copyright © 2006 by Microsoft.
+License:  Microsoft Public License (Ms-PL)</value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
