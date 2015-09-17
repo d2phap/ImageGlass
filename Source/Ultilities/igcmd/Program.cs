@@ -43,11 +43,7 @@ namespace igcmd
             Application.SetCompatibleTextRenderingDefault(false);
             string topcmd = args[0].ToLower().Trim();
 
-            if (topcmd == "igsocial")
-            {
-                Core.Social();
-            }
-            else if (topcmd == "igupdate")//kiem tra phien ban
+            if (topcmd == "igupdate")//kiem tra phien ban
             {
                 Core.CheckForUpdate();
             }
@@ -67,19 +63,6 @@ namespace igcmd
             else if (topcmd == "iginstalltheme")//cai dat theme
             {
                 Core.InstallTheme(args[1]);
-            }
-            else if (topcmd == "igfollow")//đăng ký theo dõi thông tin ImageGlass
-            {
-                Core.Follow();
-            }
-            else if (topcmd == "ignewlang")//tạo mới 1 gói ngôn ngữ
-            {
-                Core.NewLanguage();
-            }
-            else if (topcmd == "igeditlang")//chỉnh sửa gói ngôn ngữ
-            {
-                //cmd: igcmd.exe igeditlang "srcFile"
-                Core.EditLanguage(args[1]);
             }
         }
 

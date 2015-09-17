@@ -45,7 +45,7 @@ namespace igcmd
         }
 
         /// <summary>
-        /// Đóng gói theme thành *.igtheme
+        /// Pack theme *.igtheme
         /// </summary>
         /// <param name="dir">Thư mục chứa tập tin</param>
         /// <param name="des">Đường dẫn tập tin *.igtheme</param>
@@ -93,7 +93,7 @@ namespace igcmd
         }
 
         /// <summary>
-        /// Tính năng tự động kiểm tra cập nhật
+        /// Check for update
         /// </summary>
         public static void AutoUpdate()
         {
@@ -105,9 +105,8 @@ namespace igcmd
                 File.Delete(GlobalSetting.StartUpDir + "update.xml");
             }
 
-            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.Day.ToString() + "/" +
-                                DateTime.Now.Month.ToString() + "/" +
-                                DateTime.Now.Year.ToString());
+            //save last update
+            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             
             if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe") &&
                 up.Info.VersionType.ToLower() == "stable")
@@ -120,7 +119,7 @@ namespace igcmd
         }
 
         /// <summary>
-        /// Kiểm tra cập nhật
+        /// Check for update
         /// </summary>
         public static void CheckForUpdate()
         {
@@ -138,48 +137,12 @@ namespace igcmd
         }
 
         /// <summary>
-        /// Cài đặt theme
+        /// Install theme
         /// </summary>
         public static void InstallTheme(string filename)
         {
             Application.Run(new frmInstallTheme(filename));
         }
-
-        /// <summary>
-        /// Đăng ký theo dõi thông tin từ ImageGlass
-        /// </summary>
-        public static void Follow()
-        {
-            Application.Run(new frmFollow());
-        }
-
-        /// <summary>
-        /// Tạo mới gói ngôn ngữ
-        /// </summary>
-        public static void NewLanguage()
-        {
-
-        }
-
-        /// <summary>
-        /// Chỉnh sửa gói ngôn ngữ
-        /// </summary>
-        /// <param name="filename">Đường dẫn của tập tin</param>
-        public static void EditLanguage(string filename)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = "notepad.exe";
-            p.StartInfo.Arguments = "\"" + filename + "\"";
-            p.Start();
-        }
-
-        /// <summary>
-        /// Viết review
-        /// </summary>
-        public static void Social()
-        {
-            Application.Run(new frmReview());
-        }
-
+        
     }
 }

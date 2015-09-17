@@ -1004,8 +1004,6 @@ namespace ImageGlass
         /// </summary>
         private void LoadConfig()
         {
-            GlobalSetting.SetConfig("igVersion", Application.ProductVersion.ToString());
-
             //Load language pack-------------------------------------------------------------
             string s = GlobalSetting.GetConfig("Language", "English");
             if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
@@ -1018,7 +1016,7 @@ namespace ImageGlass
             }
             
             //Windows Bound (Position + Size)------------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,850,550"));
             this.Bounds = rc;
 
             //windows state--------------------------------------------------------------
@@ -1032,8 +1030,13 @@ namespace ImageGlass
                 this.WindowState = FormWindowState.Maximized;
             }
 
-            //Load Extra extensions
-            GlobalSetting.SupportedExtraExtensions = GlobalSetting.GetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
+            //check current version for the first time running
+            s = GlobalSetting.GetConfig("igVersion", Application.ProductVersion);
+            if (s.CompareTo(Application.ProductVersion) == 0) //Old version
+            {
+                //Load Extra extensions
+                GlobalSetting.SupportedExtraExtensions = GlobalSetting.GetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
+            }
 
             //Load theme--------------------------------------------------------------------
             LoadTheme();
@@ -1113,6 +1116,8 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
+            GlobalSetting.SetConfig("igVersion", Application.ProductVersion.ToString());
+
             if (this.WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------

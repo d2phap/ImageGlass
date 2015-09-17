@@ -42,7 +42,7 @@ namespace ImageGlass
             Application.SetCompatibleTextRenderingDefault(false);
 
             //auto update----------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
+            string s = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
 
             if (s != "0")
             {
@@ -54,12 +54,12 @@ namespace ImageGlass
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
                     {
                         Process p = new Process();
-                        p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+                        p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
                         p.StartInfo.Arguments = "igautoupdate";
                         p.Start();
                     }
                 }
-            }
+            }            
 
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
