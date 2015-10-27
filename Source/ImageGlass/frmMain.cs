@@ -1386,7 +1386,7 @@ namespace ImageGlass
                 GlobalSetting.ImageList.SetFileName(imgIndex, newName);
                 GlobalSetting.ImageFilenameList[imgIndex] = newName;
 
-                //Cap nhat lai tieu de
+                //Update status bar title
                 this.UpdateStatusBar();
 
                 try
