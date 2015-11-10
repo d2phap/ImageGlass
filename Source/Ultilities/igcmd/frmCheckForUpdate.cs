@@ -75,28 +75,43 @@ namespace igcmd
                 File.Delete(tempDir + "update.xml");
             }
 
-            lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
-            lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
-            lblUpdateImportance.Text = "Importance: " + up.Info.Level;
-            lblUpdateSize.Text = "Size: " + up.Info.Size;
-            lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
-
-            this.Text = "";
-
-            if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+            if (up.IsError)
             {
-                if (up.Info.VersionType.ToLower() == "stable")
-                {
-                    this.Text = "Your ImageGlass is outdate!";
-                }
+                lblUpdateVersion.Text = "Not available.";
+                lblUpdateVersionType.Text =
+                    lblUpdateImportance.Text =
+                    lblUpdateSize.Text =
+                    lblUpdatePubDate.Text =
+                    String.Empty;
 
+                this.Text = "Cannot connect to server.";
                 picStatus.Image = igcmd.Properties.Resources.warning;
-                btnDownload.Enabled = true;
             }
             else
             {
-                btnDownload.Enabled = false;
-                picStatus.Image = igcmd.Properties.Resources.ok;
+                lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
+                lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
+                lblUpdateImportance.Text = "Importance: " + up.Info.Level;
+                lblUpdateSize.Text = "Size: " + up.Info.Size;
+                lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
+
+                this.Text = "";
+
+                if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+                {
+                    if (up.Info.VersionType.ToLower() == "stable")
+                    {
+                        this.Text = "Your ImageGlass is outdate!";
+                    }
+
+                    picStatus.Image = igcmd.Properties.Resources.warning;
+                    btnDownload.Enabled = true;
+                }
+                else
+                {
+                    btnDownload.Enabled = false;
+                    picStatus.Image = igcmd.Properties.Resources.ok;
+                }
             }
 
             //save last update

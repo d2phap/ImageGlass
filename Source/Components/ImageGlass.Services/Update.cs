@@ -32,6 +32,7 @@ namespace ImageGlass.Services
     public class Update
     {
         private InfoUpdate _info;
+        private bool _isError;
 
         #region Properties
         /// <summary>
@@ -41,6 +42,14 @@ namespace ImageGlass.Services
         {
             get { return _info; }
             set { _info = value; }
+        }
+
+        /// <summary>
+        /// Gets value if checking for update is error
+        /// </summary>
+        public bool IsError
+        {
+            get { return _isError; }
         }
         #endregion
 
@@ -52,7 +61,7 @@ namespace ImageGlass.Services
             _info = new InfoUpdate();
 
             //Get information update pack
-            GetUpdateConfig(link, savedPath);
+            this._isError = !GetUpdateConfig(link, savedPath);
         }
 
         /// <summary>
@@ -60,6 +69,7 @@ namespace ImageGlass.Services
         /// </summary>
         public Update()
         {
+            _isError = true;
             _info = new InfoUpdate();
         }
 
@@ -88,7 +98,13 @@ namespace ImageGlass.Services
             //Init
             LoadUpdateConfig(savedPath);
 
-            return true;
+            //error on downloading
+            if (this._info.NewVersion.ToString() == "1.0.0.0")
+            {
+                return false;
+            }
+
+            return true;    
         }
 
         /// <summary>
