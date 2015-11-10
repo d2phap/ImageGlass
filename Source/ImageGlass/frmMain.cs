@@ -2081,6 +2081,9 @@ namespace ImageGlass
             }
 
             picMain.ActualSize();
+
+            // Any scrolling from prior image would 'stick': reset here
+            picMain.ScrollTo(0, 0, 0, 0);
         }
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
