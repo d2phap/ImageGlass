@@ -195,10 +195,13 @@ namespace ImageGlass
                 new Predicate<string>(delegate (String f)
                 {
                     Application.DoEvents();
-                    if (GlobalSetting.SupportedExtensions.Contains(Path.GetExtension(f).ToLower()))
+
+                    string extension = (Path.GetExtension(f) ?? "").ToLower(); //remove blank extension
+                    if (extension.Length > 0 && GlobalSetting.SupportedExtensions.Contains(extension))
                     {
                         return true;
                     }
+
                     return false;
                 }));
 
