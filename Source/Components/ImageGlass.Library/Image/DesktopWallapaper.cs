@@ -60,35 +60,49 @@ namespace ImageGlass.Library.Image
         /// <param name="style">Style of wallpaper</param>
         public static void Set(Uri uri, Style style)
         {
-            System.IO.Stream s = new System.Net.WebClient().OpenRead(uri.ToString());
+            Stream s = new System.Net.WebClient().OpenRead(uri.ToString());
 
             System.Drawing.Image img = System.Drawing.Image.FromStream(s);
-            string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
-            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
+            Set(img, style);
+        }
 
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-            if (style == Style.Stretched)
+        /// <summary>
+        /// Set desktop wallpaper
+        /// </summary>
+        /// <param name="img">Image data</param>
+        /// <param name="style">Style of wallpaper</param>
+        public static void Set(System.Drawing.Image img, Style style)
+        {
+            try
             {
-                key.SetValue(@"WallpaperStyle", 2.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
+                string tempPath = Path.Combine(Path.GetTempPath(), "imageglass.jpg");
+                img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-            if (style == Style.Centered)
-            {
-                key.SetValue(@"WallpaperStyle", 1.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+                if (key == null)
+                    return;
 
-            if (style == Style.Tiled)
-            {
-                key.SetValue(@"WallpaperStyle", 1.ToString());
-                key.SetValue(@"TileWallpaper", 1.ToString());
-            }
+                if (style == Style.Stretched)
+                {
+                    key.SetValue(@"WallpaperStyle", "2");
+                    key.SetValue(@"TileWallpaper", "0");
+                }
 
-            SystemParametersInfo(SPI_SETDESKWALLPAPER,
-                                    0,
-                                    tempPath,
-                                    SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                if (style == Style.Centered)
+                {
+                    key.SetValue(@"WallpaperStyle", "1");
+                    key.SetValue(@"TileWallpaper", "0");
+                }
+
+                if (style == Style.Tiled)
+                {
+                    key.SetValue(@"WallpaperStyle", "1");
+                    key.SetValue(@"TileWallpaper", "1");
+                }
+
+                SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            }
+            catch (Exception) { }
         }
     }
 }
