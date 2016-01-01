@@ -39,9 +39,13 @@ namespace ImageGlass.Library.Image
             public int cbSize;
             public int fMask;
             public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string lpVerb;
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string lpFile;
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string lpParameters;
+            [MarshalAs(UnmanagedType.LPWStr)]
             public string lpDirectory;
             public int nShow;
             public IntPtr hInstApp;
@@ -53,8 +57,8 @@ namespace ImageGlass.Library.Image
             public IntPtr hProcess;
         }
 
-        [DllImport("shell32.dll", EntryPoint = "ShellExecuteEx")]
-        private static extern int ShellExecute(ref SHELLEXECUTEINFO s);
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        private static extern int ShellExecuteEx(ref SHELLEXECUTEINFO s);
 
         /// <summary>
         /// Show file property dialog
@@ -74,7 +78,7 @@ namespace ImageGlass.Library.Image
             shInfo.lpVerb = "properties";
             shInfo.hwnd = hwnd;
 
-            ShellExecute(ref shInfo);
+            ShellExecuteEx(ref shInfo);
         }
 
         /// <summary>
