@@ -36,7 +36,7 @@
             this.lblUpdateSize = new System.Windows.Forms.Label();
             this.lblCurentVersion = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.lnkUpdateReadMore = new System.Windows.Forms.LinkLabel();
             this.lblUpdatePubDate = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
@@ -51,20 +51,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 127);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(216, 15);
+            this.label1.Size = new System.Drawing.Size(249, 21);
             this.label1.TabIndex = 6;
-            this.label1.Text = "▶ The latest ImageGlass information:";
+            this.label1.Text = "The latest ImageGlass information:";
             // 
             // lblUpdateVersion
             // 
             this.lblUpdateVersion.AutoSize = true;
             this.lblUpdateVersion.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdateVersion.Location = new System.Drawing.Point(30, 152);
+            this.lblUpdateVersion.Location = new System.Drawing.Point(30, 154);
             this.lblUpdateVersion.Name = "lblUpdateVersion";
-            this.lblUpdateVersion.Size = new System.Drawing.Size(52, 15);
+            this.lblUpdateVersion.Size = new System.Drawing.Size(51, 15);
             this.lblUpdateVersion.TabIndex = 7;
             this.lblUpdateVersion.Text = "Version: ";
             // 
@@ -72,9 +72,9 @@
             // 
             this.lblUpdateVersionType.AutoSize = true;
             this.lblUpdateVersionType.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdateVersionType.Location = new System.Drawing.Point(30, 172);
+            this.lblUpdateVersionType.Location = new System.Drawing.Point(30, 174);
             this.lblUpdateVersionType.Name = "lblUpdateVersionType";
-            this.lblUpdateVersionType.Size = new System.Drawing.Size(78, 15);
+            this.lblUpdateVersionType.Size = new System.Drawing.Size(77, 15);
             this.lblUpdateVersionType.TabIndex = 8;
             this.lblUpdateVersionType.Text = "Version type: ";
             // 
@@ -82,7 +82,7 @@
             // 
             this.lblUpdateImportance.AutoSize = true;
             this.lblUpdateImportance.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdateImportance.Location = new System.Drawing.Point(30, 192);
+            this.lblUpdateImportance.Location = new System.Drawing.Point(30, 194);
             this.lblUpdateImportance.Name = "lblUpdateImportance";
             this.lblUpdateImportance.Size = new System.Drawing.Size(71, 15);
             this.lblUpdateImportance.TabIndex = 9;
@@ -92,7 +92,7 @@
             // 
             this.lblUpdateSize.AutoSize = true;
             this.lblUpdateSize.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdateSize.Location = new System.Drawing.Point(30, 212);
+            this.lblUpdateSize.Location = new System.Drawing.Point(30, 214);
             this.lblUpdateSize.Name = "lblUpdateSize";
             this.lblUpdateSize.Size = new System.Drawing.Size(33, 15);
             this.lblUpdateSize.TabIndex = 10;
@@ -102,9 +102,9 @@
             // 
             this.lblCurentVersion.AutoSize = true;
             this.lblCurentVersion.BackColor = System.Drawing.Color.Transparent;
-            this.lblCurentVersion.Location = new System.Drawing.Point(30, 94);
+            this.lblCurentVersion.Location = new System.Drawing.Point(30, 96);
             this.lblCurentVersion.Name = "lblCurentVersion";
-            this.lblCurentVersion.Size = new System.Drawing.Size(52, 15);
+            this.lblCurentVersion.Size = new System.Drawing.Size(51, 15);
             this.lblCurentVersion.TabIndex = 12;
             this.lblCurentVersion.Text = "Version: ";
             // 
@@ -112,23 +112,23 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(12, 69);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(204, 15);
+            this.label7.Size = new System.Drawing.Size(236, 21);
             this.label7.TabIndex = 11;
-            this.label7.Text = "▶ Current ImageGlass information:";
+            this.label7.Text = "Current ImageGlass information:";
             // 
-            // label8
+            // lblStatus
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
-            this.label8.Location = new System.Drawing.Point(46, 18);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(200, 30);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "ImageGlass Update";
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.lblStatus.Location = new System.Drawing.Point(46, 18);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(225, 30);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.Text = "Checking for update...";
             // 
             // lnkUpdateReadMore
             // 
@@ -149,7 +149,7 @@
             // 
             this.lblUpdatePubDate.AutoSize = true;
             this.lblUpdatePubDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdatePubDate.Location = new System.Drawing.Point(30, 232);
+            this.lblUpdatePubDate.Location = new System.Drawing.Point(30, 234);
             this.lblUpdatePubDate.Name = "lblUpdatePubDate";
             this.lblUpdatePubDate.Size = new System.Drawing.Size(75, 15);
             this.lblUpdatePubDate.TabIndex = 15;
@@ -195,7 +195,7 @@
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnDownload);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 305);
+            this.panel1.Location = new System.Drawing.Point(0, 304);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(324, 52);
             this.panel1.TabIndex = 4;
@@ -207,10 +207,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(324, 357);
+            this.ClientSize = new System.Drawing.Size(324, 356);
             this.Controls.Add(this.picStatus);
             this.Controls.Add(this.lblUpdatePubDate);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lnkUpdateReadMore);
             this.Controls.Add(this.lblCurentVersion);
             this.Controls.Add(this.label7);
@@ -223,7 +223,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(340, 395);
+            this.MaximumSize = new System.Drawing.Size(505, 395);
             this.MinimumSize = new System.Drawing.Size(340, 395);
             this.Name = "frmCheckForUpdate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -248,7 +248,7 @@
         private System.Windows.Forms.Label lblUpdateSize;
         private System.Windows.Forms.Label lblCurentVersion;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.LinkLabel lnkUpdateReadMore;
         private System.Windows.Forms.Label lblUpdatePubDate;
         private System.Windows.Forms.PictureBox picStatus;
