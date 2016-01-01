@@ -1547,7 +1547,7 @@ namespace ImageGlass.ImageListView
                 }
             }
             /// <summary>
-            /// Draws the large preview image of the focused item in Gallery mode.
+            /// [PHAP - Hide preview image] Draws the large preview image of the focused item in Gallery mode.
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
@@ -1555,24 +1555,24 @@ namespace ImageGlass.ImageListView
             /// <param name="bounds">The bounding rectangle of the preview area.</param>
             public virtual void DrawGalleryImage(Graphics g, ImageListViewItem item, Image image, Rectangle bounds)
             {
-                if (item != null && image != null)
-                {
-                    // Calculate image bounds
-                    Size itemMargin = MeasureItemMargin(ImageListView.View);
-                    Rectangle pos = Utility.GetSizedImageBounds(image, new Rectangle(bounds.Location + itemMargin, bounds.Size - itemMargin - itemMargin));
-                    // Draw image
-                    g.DrawImage(image, pos);
-                    // Draw image border
-                    if (Math.Min(pos.Width, pos.Height) > 32)
-                    {
-                        using (Pen pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor))
-                        using (Pen pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor))
-                        {
-                            g.DrawRectangle(pOuterBorder, pos);
-                            g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
-                        }
-                    }
-                }
+                //if (item != null && image != null)
+                //{
+                //    // Calculate image bounds
+                //    Size itemMargin = MeasureItemMargin(ImageListView.View);
+                //    Rectangle pos = Utility.GetSizedImageBounds(image, new Rectangle(bounds.Location + itemMargin, bounds.Size - itemMargin - itemMargin));
+                //    // Draw image
+                //    g.DrawImage(image, pos);
+                //    // Draw image border
+                //    if (Math.Min(pos.Width, pos.Height) > 32)
+                //    {
+                //        using (Pen pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor))
+                //        using (Pen pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor))
+                //        {
+                //            g.DrawRectangle(pOuterBorder, pos);
+                //            g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
+                //        }
+                //    }
+                //}
             }
             /// <summary>
             /// Draws the extender after the last column.
