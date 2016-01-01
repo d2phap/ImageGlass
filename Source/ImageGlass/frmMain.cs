@@ -62,6 +62,9 @@ namespace ImageGlass
 
         //determine if toolbar is shown
         private bool _isShownToolbar = true;
+
+        // in "Gallery" mode, need to allow for horizontal scrollbar. In "vertical scroll" mode, a value of 40 appears adequate.
+        private const int THUMBNAIL_BAR_EXTRA = 57; 
         #endregion
 
 
@@ -195,10 +198,13 @@ namespace ImageGlass
                 new Predicate<string>(delegate (String f)
                 {
                     Application.DoEvents();
-                    if (GlobalSetting.SupportedExtensions.Contains(Path.GetExtension(f).ToLower()))
+
+                    string extension = (Path.GetExtension(f) ?? "").ToLower(); //remove blank extension
+                    if (extension.Length > 0 && GlobalSetting.SupportedExtensions.Contains(extension))
                     {
                         return true;
                     }
+
                     return false;
                 }));
 
@@ -2078,6 +2084,9 @@ namespace ImageGlass
             }
 
             picMain.ActualSize();
+
+            // Any scrolling from prior image would 'stick': reset here
+            picMain.ScrollTo(0, 0, 0, 0);
         }
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
@@ -2406,9 +2415,10 @@ namespace ImageGlass
 
             if (GlobalSetting.IsShowThumbnail)
             {
-                //hien
-                sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + 40;
-                sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
+                //show
+                sp1.SplitterWidth = 1;
+                sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + THUMBNAIL_BAR_EXTRA;
+                sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA - 1;
             }
 
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;

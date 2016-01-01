@@ -857,7 +857,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         internal ScrollOrientation ScrollOrientation
         {
-            get { return (mView == View.Gallery ? ScrollOrientation.HorizontalScroll : ScrollOrientation.VerticalScroll); }
+            get { return ((mView == View.Gallery) ? ScrollOrientation.HorizontalScroll : ScrollOrientation.VerticalScroll); }
         }
         #endregion
 
