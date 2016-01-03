@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2014 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
         private static bool _isTempMemoryData = false;
-
+        private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -431,7 +431,15 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isTempMemoryData = value; }
         }
 
-        
+        /// <summary>
+        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\
+        /// </summary>
+        public static string TempDir
+        {
+            get { return _tempDir; }
+        }
+
+
 
 
 

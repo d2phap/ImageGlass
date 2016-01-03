@@ -43,7 +43,7 @@ namespace ImageGlass
 
             //auto update----------------------------------------------------------------
             string s = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
-
+            
             if (s != "0")
             {
                 DateTime lastUpdate = DateTime.Now;

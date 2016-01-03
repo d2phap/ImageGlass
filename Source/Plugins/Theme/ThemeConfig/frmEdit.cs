@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using ImageGlass.Services.Configuration;
 
 namespace ThemeConfig
 {
@@ -191,7 +189,7 @@ namespace ThemeConfig
         {
             if (txtName.Text.Trim().Length == 0)
             {
-                MessageBox.Show("Enter the name of theme to continous", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Enter the name of theme to continue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -264,22 +262,21 @@ namespace ThemeConfig
                 doc.AppendChild(root);
 
                 //create temp directory of theme
-                string dir = (Application.StartupPath + "\\").Replace("\\\\", "\\") + 
-                                "Temp\\" + txtName.Text.Trim(); 
-                Directory.CreateDirectory(dir);
+                string temp_dir = GlobalSetting.TempDir + txtName.Text.Trim() + "\\";
+                Directory.CreateDirectory(temp_dir);
 
-                doc.Save(dir + "\\config.xml");//save file
+                doc.Save(temp_dir + "config.xml");//save file
                 //copy image
                 foreach (string i in ds)
                 {
                     if (File.Exists(i))
                     {
-                        File.Copy(i, dir + "\\" + Path.GetFileName(i), true);
+                        File.Copy(i, temp_dir + Path.GetFileName(i), true);
                     }
                 }
 
-                string exe = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
-                string cmd = "igpacktheme " + char.ConvertFromUtf32(34) + dir +
+                string exe = GlobalSetting.StartUpDir + "igcmd.exe";
+                string cmd = "igpacktheme " + char.ConvertFromUtf32(34) + temp_dir +
                     char.ConvertFromUtf32(34) + " " +
                     char.ConvertFromUtf32(34) + s.FileName + char.ConvertFromUtf32(34);
                 

@@ -43,7 +43,7 @@ namespace ImageGlass
             InitializeComponent();
 
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-
+            
             //Check and perform DPI Scaling
             LocalSetting.OldDPI = LocalSetting.CurrentDPI;
             LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
@@ -1746,7 +1746,7 @@ namespace ImageGlass
 
         private void mnuMainRefresh_Click(object sender, EventArgs e)
         {
-            // Any scrolling from prior image would 'stick': reset here
+            // Reset scrollbar position
             picMain.ScrollTo(0, 0, 0, 0);
 
             //Zoom condition
@@ -2084,9 +2084,7 @@ namespace ImageGlass
             }
 
             picMain.ActualSize();
-
-            // Any scrolling from prior image would 'stick': reset here
-            picMain.ScrollTo(0, 0, 0, 0);
+            picMain.CenterToImage();            
         }
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
@@ -2518,8 +2516,8 @@ namespace ImageGlass
         }
 
 
+
         #endregion
 
-        
     }
 }

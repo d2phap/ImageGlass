@@ -29,3 +29,6 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\obj\R
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\TargaImage.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\System.Drawing.PSD.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\IconLib.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\FreeImageNET.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\Svg.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\ThemeConfig\bin\Release\System.Drawing.PSD.pdb

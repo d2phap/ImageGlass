@@ -513,7 +513,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.label1.Location = new System.Drawing.Point(239, 58);
+            this.label1.Location = new System.Drawing.Point(239, 47);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(210, 25);
             this.label1.TabIndex = 4;
@@ -525,7 +525,7 @@
             this.lnkToolBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkToolBar.AutoSize = true;
             this.lnkToolBar.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkToolBar.Location = new System.Drawing.Point(247, 120);
+            this.lnkToolBar.Location = new System.Drawing.Point(247, 109);
             this.lnkToolBar.Name = "lnkToolBar";
             this.lnkToolBar.Size = new System.Drawing.Size(228, 21);
             this.lnkToolBar.TabIndex = 6;
@@ -540,7 +540,7 @@
             this.lnkThumbnail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkThumbnail.AutoSize = true;
             this.lnkThumbnail.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkThumbnail.Location = new System.Drawing.Point(247, 141);
+            this.lnkThumbnail.Location = new System.Drawing.Point(247, 130);
             this.lnkThumbnail.Name = "lnkThumbnail";
             this.lnkThumbnail.Size = new System.Drawing.Size(275, 21);
             this.lnkThumbnail.TabIndex = 7;
@@ -555,7 +555,7 @@
             this.linkLabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
-            this.linkLabel3.Location = new System.Drawing.Point(247, 100);
+            this.linkLabel3.Location = new System.Drawing.Point(247, 89);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(239, 15);
             this.linkLabel3.TabIndex = 8;
@@ -567,13 +567,13 @@
             this.lnkBackColor.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkBackColor.AutoSize = true;
             this.lnkBackColor.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkBackColor.Location = new System.Drawing.Point(247, 162);
+            this.lnkBackColor.Location = new System.Drawing.Point(247, 151);
             this.lnkBackColor.Name = "lnkBackColor";
-            this.lnkBackColor.Size = new System.Drawing.Size(115, 21);
+            this.lnkBackColor.Size = new System.Drawing.Size(159, 21);
             this.lnkBackColor.TabIndex = 9;
             this.lnkBackColor.TabStop = true;
             this.lnkBackColor.Tag = "x";
-            this.lnkBackColor.Text = "4. Change backcolor";
+            this.lnkBackColor.Text = "4. Change background color";
             this.lnkBackColor.UseCompatibleTextRendering = true;
             this.lnkBackColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkBackColor_LinkClicked);
             // 
@@ -582,7 +582,7 @@
             this.lnkSave.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkSave.AutoSize = true;
             this.lnkSave.LinkArea = new System.Windows.Forms.LinkArea(3, 7);
-            this.lnkSave.Location = new System.Drawing.Point(247, 419);
+            this.lnkSave.Location = new System.Drawing.Point(247, 439);
             this.lnkSave.Name = "lnkSave";
             this.lnkSave.Size = new System.Drawing.Size(161, 21);
             this.lnkSave.TabIndex = 10;
@@ -596,15 +596,13 @@
             // 
             this.lnkUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkUpload.AutoSize = true;
-            this.lnkUpload.LinkArea = new System.Windows.Forms.LinkArea(4, 6);
-            this.lnkUpload.Location = new System.Drawing.Point(247, 440);
+            this.lnkUpload.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
+            this.lnkUpload.Location = new System.Drawing.Point(247, 460);
             this.lnkUpload.Name = "lnkUpload";
-            this.lnkUpload.Size = new System.Drawing.Size(223, 21);
+            this.lnkUpload.Size = new System.Drawing.Size(379, 15);
             this.lnkUpload.TabIndex = 11;
-            this.lnkUpload.TabStop = true;
             this.lnkUpload.Tag = "x";
-            this.lnkUpload.Text = "    Upload to ImageGlass site for sharing";
-            this.lnkUpload.UseCompatibleTextRendering = true;
+            this.lnkUpload.Text = "    Send *.igtheme file to phap@imageglass.org for sharing. Thank you!";
             this.lnkUpload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUpload_LinkClicked);
             // 
             // linkLabel4
@@ -612,12 +610,12 @@
             this.linkLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.linkLabel4.AutoSize = true;
             this.linkLabel4.LinkArea = new System.Windows.Forms.LinkArea(3, 0);
-            this.linkLabel4.Location = new System.Drawing.Point(247, 183);
+            this.linkLabel4.Location = new System.Drawing.Point(247, 172);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(127, 21);
+            this.linkLabel4.Size = new System.Drawing.Size(121, 21);
             this.linkLabel4.TabIndex = 12;
             this.linkLabel4.Tag = "x";
-            this.linkLabel4.Text = "5. Theme informations";
+            this.linkLabel4.Text = "5. Theme information";
             this.linkLabel4.UseCompatibleTextRendering = true;
             // 
             // lnkPreview
@@ -625,7 +623,7 @@
             this.lnkPreview.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkPreview.AutoSize = true;
             this.lnkPreview.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkPreview.Location = new System.Drawing.Point(247, 292);
+            this.lnkPreview.Location = new System.Drawing.Point(247, 312);
             this.lnkPreview.Name = "lnkPreview";
             this.lnkPreview.Size = new System.Drawing.Size(303, 21);
             this.lnkPreview.TabIndex = 14;
@@ -653,9 +651,9 @@
             this.panInfo.Controls.Add(this.label3);
             this.panInfo.Controls.Add(this.txtName);
             this.panInfo.Controls.Add(this.label2);
-            this.panInfo.Location = new System.Drawing.Point(259, 207);
+            this.panInfo.Location = new System.Drawing.Point(259, 196);
             this.panInfo.Name = "panInfo";
-            this.panInfo.Size = new System.Drawing.Size(291, 82);
+            this.panInfo.Size = new System.Drawing.Size(291, 113);
             this.panInfo.TabIndex = 15;
             this.panInfo.Tag = "x";
             // 
@@ -790,7 +788,7 @@
             // 
             this.picPreview.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picPreview.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPreview.BackgroundImage")));
-            this.picPreview.Location = new System.Drawing.Point(259, 316);
+            this.picPreview.Location = new System.Drawing.Point(259, 336);
             this.picPreview.Name = "picPreview";
             this.picPreview.Size = new System.Drawing.Size(253, 100);
             this.picPreview.TabIndex = 8;
