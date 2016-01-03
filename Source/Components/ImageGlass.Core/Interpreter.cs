@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Drawing.IconLib;
-using Paloma;
 using System.Drawing.Drawing2D;
 using FreeImageAPI;
 using Svg;
+using Imazen.WebP;
 
 namespace ImageGlass.Core
 {
@@ -17,40 +15,46 @@ namespace ImageGlass.Core
     {
         private const int TAG_ORIENTATION = 0x0112;
 
-        public static Bitmap load(string path)
+        public static Bitmap Load(string path)
         {
+            path = path.ToLower();
             Bitmap bmp = null;
-            
+
             //file *.hdr
-            if (path.ToLower().EndsWith(".hdr"))
+            if (path.EndsWith(".hdr"))
             {
                 FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
                 bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
                 FreeImage.Unload(hdr);
             }
             //file *.exr
-            else if (path.ToLower().EndsWith(".exr"))
+            else if (path.EndsWith(".exr"))
             {
                 FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
                 bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
                 FreeImage.Unload(exr);
             }
             //file *.svg
-            else if (path.ToLower().EndsWith(".svg"))
+            else if (path.EndsWith(".svg"))
             {
                 SvgDocument svg = SvgDocument.Open(path);
                 bmp = svg.Draw();
             }
             //TARGA file *.tga
-            else if (path.ToLower().EndsWith(".tga"))
+            else if (path.EndsWith(".tga"))
             {
                 using (Paloma.TargaImage tar = new Paloma.TargaImage(path))
                 {
                     bmp = new Bitmap(tar.Image);
                 }
             }
+            //WEBP file *.webp
+            else if (path.EndsWith(".webp"))
+            {
+                bmp = ReadWebpFile(path);
+            }
             //PHOTOSHOP file *.PSD
-            else if (path.ToLower().EndsWith(".psd"))
+            else if (path.EndsWith(".psd"))
             {
                 System.Drawing.PSD.PsdFile psd = (new System.Drawing.PSD.PsdFile()).Load(path);
                 bmp = System.Drawing.PSD.ImageDecoder.DecodeImage(psd);
@@ -83,12 +87,15 @@ namespace ImageGlass.Core
                 }
             }
 
-            
 
             return bmp;
         }
 
-
+        /// <summary>
+        /// Read icon *.ICO file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static Bitmap ReadIconFile(string path)
         {
             MultiIcon mIcon = new MultiIcon();
@@ -200,6 +207,33 @@ namespace ImageGlass.Core
         }
 
 
+        /// <summary>
+        /// Read non-animated WEBP format
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Bitmap ReadWebpFile(string path)
+        {
+            var webpDecoder = new SimpleDecoder();
+            
+            using (Stream inputStream = File.Open(path, FileMode.Open))
+            {
+                byte[] buffer = new byte[16 * 1024];
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int read;
+                    while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ms.Write(buffer, 0, read);
+                    }
 
+                    var bytes = ms.ToArray();
+                    Bitmap outBitmap = webpDecoder.DecodeFromBytes(bytes, bytes.LongLength);
+
+                    return outBitmap;
+                }                
+            }
+        }
+        
     }
 }
