@@ -78,6 +78,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isShowCheckedBackground = false;
         private static bool _isTempMemoryData = false;
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
+        private static bool _isWindowAlwaysOnTop = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -437,6 +438,15 @@ namespace ImageGlass.Services.Configuration
         public static string TempDir
         {
             get { return _tempDir; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that frmMain is always on top or not.
+        /// </summary>
+        public static bool IsWindowAlwaysOnTop
+        {
+            get { return _isWindowAlwaysOnTop; }
+            set { _isWindowAlwaysOnTop = value; }
         }
 
 

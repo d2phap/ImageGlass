@@ -635,7 +635,8 @@ namespace ImageGlass
             }
 
             newName = str + ext;
-            //Neu ten giong nhau thi return;
+
+            //duplicated name
             if (oldName == newName)
             {
                 return;
@@ -643,7 +644,7 @@ namespace ImageGlass
 
             try
             {
-                //Doi ten tap tin
+                //Rename file
                 ImageInfo.RenameFile(currentPath + oldName, currentPath + newName);
             }
             catch (Exception ex)
@@ -668,13 +669,13 @@ namespace ImageGlass
                 return;
             }
 
-            System.Windows.Forms.Timer tmsg = new System.Windows.Forms.Timer();
+            Timer tmsg = new Timer();
             tmsg.Enabled = false;
             tmsg.Tick += tmsg_Tick;
             tmsg.Interval = duration; //display in xxx mili seconds
 
             picMain.TextBackColor = Color.Black;
-            picMain.Font = new System.Drawing.Font(this.Font.FontFamily, 12);
+            picMain.Font = new Font(this.Font.FontFamily, 12);
             picMain.ForeColor = Color.White;
             picMain.Text = msg;
 
@@ -685,7 +686,7 @@ namespace ImageGlass
 
         private void tmsg_Tick(object sender, EventArgs e)
         {
-            System.Windows.Forms.Timer tmsg = (System.Windows.Forms.Timer)sender;
+            Timer tmsg = (Timer)sender;
             tmsg.Stop();
 
             if(GlobalSetting.IsImageError)
@@ -827,7 +828,7 @@ namespace ImageGlass
                 Library.Image.ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
             }
             catch { }
-
+            
             LocalSetting.ImageModifiedPath = "";
         }
         #endregion
@@ -1114,6 +1115,10 @@ namespace ImageGlass
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+
+            //Load state of IsWindowAlwaysOnTop value-----------------------------------------
+            GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
+            this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
         }
 
 
@@ -1141,6 +1146,9 @@ namespace ImageGlass
 
             //Thumbnail panel
             GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
+
+            //Window always on top
+            GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -1331,6 +1339,7 @@ namespace ImageGlass
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
                 mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
                 mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
+                mnuMainAlwaysOnTop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAlwaysOnTop"];
 
                 mnuMainTools.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainTools"];
                 mnuMainExtensionManager.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtensionManager"];
@@ -1622,6 +1631,7 @@ namespace ImageGlass
             
             //toolbar menu
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainToolbar));
+            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
             mnuPopup.Items.Add(new ToolStripSeparator());//---------------
 
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
@@ -1683,12 +1693,12 @@ namespace ImageGlass
             //Is there a file in clipboard ?--------------------------------------------------
             if (Clipboard.ContainsFileDropList())
             {
-                string[] sFile = (string[])Clipboard.GetData(System.Windows.Forms.DataFormats.FileDrop);
+                string[] sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
                 int fileCount = 0;
 
                 fileCount = sFile.Length;
 
-                //neu co file thi load
+                // load file
                 Prepare(sFile[0]);
             }
 
@@ -2221,7 +2231,7 @@ namespace ImageGlass
                 string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
-                    //Neu la anh GIF thi giai phong bo nho truoc khi xoa
+                    //If ext == GIF, release memory before deleting
                     string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
                     if (ext == ".gif")
                     {
@@ -2442,6 +2452,13 @@ namespace ImageGlass
             mnuMainCheckBackground.Checked = btnCheckedBackground.Checked;
         }
 
+        private void mnuMainAlwaysOnTop_Click(object sender, EventArgs e)
+        {
+            this.TopMost = 
+                mnuMainAlwaysOnTop.Checked = 
+                GlobalSetting.IsWindowAlwaysOnTop = !GlobalSetting.IsWindowAlwaysOnTop;
+        }
+
         private void mnuMainExtensionManager_Click(object sender, EventArgs e)
         {
             if (LocalSetting.FExtension.IsDisposed)
@@ -2519,5 +2536,6 @@ namespace ImageGlass
 
         #endregion
 
+        
     }
 }

@@ -296,6 +296,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             this.Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
             this.Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v3.0
+            this.Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
             this.Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             this.Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0
