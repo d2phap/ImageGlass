@@ -77,3 +77,4 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGla
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.csproj.GenerateResource.Cache
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.exe
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\obj\Release\ImageGlass.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\ImageGlass\bin\Release\Imazen.WebP.dll

@@ -433,7 +433,7 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            //this.Text = e.KeyValue.ToString();
+            // this.Text = e.KeyValue.ToString();
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
             {
                 mnuMain.Show(picMain, 0, picMain.Top);
@@ -567,8 +567,8 @@ namespace ImageGlass
             
 
             //Actual size image -------------------------------------------------------------
-            #region Ctrl + 0
-            if (e.KeyValue == 48 && e.Control && !e.Shift && !e.Alt)// Ctrl + 0
+            #region Ctrl + 0 / Ctrl + Num0
+            if ((e.KeyValue == 48 || e.KeyValue == 96) && e.Control && !e.Shift && !e.Alt)// Ctrl + 0 || Ctrl + Num0
             {
                 btnActualSize_Click(null, null);
                 return;
