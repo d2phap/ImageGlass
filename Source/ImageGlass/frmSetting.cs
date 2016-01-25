@@ -127,8 +127,7 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound",
-                                                "280,125,610, 570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound", "280,125,610, 570"));
             this.Bounds = rc;
 
             //windows state--------------------------------------------------------------
@@ -185,6 +184,8 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
+            this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+
             this.Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
             lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
             lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];

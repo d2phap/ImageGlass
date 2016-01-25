@@ -119,6 +119,8 @@
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainExtensionManager = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,8 +132,6 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -632,7 +632,7 @@
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 440);
+            this.mnuMain.Size = new System.Drawing.Size(289, 418);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1244,6 +1244,23 @@
             this.mnuMainCheckBackground.Text = "&Check background";
             this.mnuMainCheckBackground.Click += new System.EventHandler(this.mnuMainCheckBackground_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(218, 6);
+            // 
+            // mnuMainAlwaysOnTop
+            // 
+            this.mnuMainAlwaysOnTop.BackColor = System.Drawing.Color.Transparent;
+            this.mnuMainAlwaysOnTop.CheckOnClick = true;
+            this.mnuMainAlwaysOnTop.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainAlwaysOnTop.Name = "mnuMainAlwaysOnTop";
+            this.mnuMainAlwaysOnTop.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainAlwaysOnTop.ShortcutKeyDisplayString = "";
+            this.mnuMainAlwaysOnTop.Size = new System.Drawing.Size(221, 23);
+            this.mnuMainAlwaysOnTop.Text = "Keep window always on top";
+            this.mnuMainAlwaysOnTop.Click += new System.EventHandler(this.mnuMainAlwaysOnTop_Click);
+            // 
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1404,23 +1421,6 @@
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
             // 
-            // mnuMainAlwaysOnTop
-            // 
-            this.mnuMainAlwaysOnTop.BackColor = System.Drawing.Color.Transparent;
-            this.mnuMainAlwaysOnTop.CheckOnClick = true;
-            this.mnuMainAlwaysOnTop.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainAlwaysOnTop.Name = "mnuMainAlwaysOnTop";
-            this.mnuMainAlwaysOnTop.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainAlwaysOnTop.ShortcutKeyDisplayString = "";
-            this.mnuMainAlwaysOnTop.Size = new System.Drawing.Size(221, 23);
-            this.mnuMainAlwaysOnTop.Text = "Keep window always on top";
-            this.mnuMainAlwaysOnTop.Click += new System.EventHandler(this.mnuMainAlwaysOnTop_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(218, 6);
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1436,6 +1436,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "frmMain";
+            this.RightToLeftLayout = true;
             this.Text = "ImageGlass 3";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);

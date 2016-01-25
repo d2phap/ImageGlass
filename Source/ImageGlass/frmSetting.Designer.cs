@@ -45,6 +45,7 @@
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
+            this.txtSupportedExtensionExtra = new System.Windows.Forms.TextBox();
             this.txtSupportedExtensionDefault = new System.Windows.Forms.TextBox();
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
@@ -69,7 +70,6 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.txtSupportedExtensionExtra = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -283,10 +283,23 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 509);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 511);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
+            // 
+            // txtSupportedExtensionExtra
+            // 
+            this.txtSupportedExtensionExtra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSupportedExtensionExtra.BackColor = System.Drawing.Color.White;
+            this.txtSupportedExtensionExtra.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSupportedExtensionExtra.ForeColor = System.Drawing.Color.Black;
+            this.txtSupportedExtensionExtra.Location = new System.Drawing.Point(23, 99);
+            this.txtSupportedExtensionExtra.Multiline = true;
+            this.txtSupportedExtensionExtra.Name = "txtSupportedExtensionExtra";
+            this.txtSupportedExtensionExtra.Size = new System.Drawing.Size(502, 52);
+            this.txtSupportedExtensionExtra.TabIndex = 23;
             // 
             // txtSupportedExtensionDefault
             // 
@@ -599,19 +612,6 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
-            // txtSupportedExtensionExtra
-            // 
-            this.txtSupportedExtensionExtra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSupportedExtensionExtra.BackColor = System.Drawing.Color.White;
-            this.txtSupportedExtensionExtra.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSupportedExtensionExtra.ForeColor = System.Drawing.Color.Black;
-            this.txtSupportedExtensionExtra.Location = new System.Drawing.Point(23, 99);
-            this.txtSupportedExtensionExtra.Multiline = true;
-            this.txtSupportedExtensionExtra.Name = "txtSupportedExtensionExtra";
-            this.txtSupportedExtensionExtra.Size = new System.Drawing.Size(502, 52);
-            this.txtSupportedExtensionExtra.TabIndex = 23;
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -624,6 +624,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(720, 535);
             this.Name = "frmSetting";
+            this.RightToLeftLayout = true;
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSetting_FormClosing);
             this.Load += new System.EventHandler(this.frmSetting_Load);

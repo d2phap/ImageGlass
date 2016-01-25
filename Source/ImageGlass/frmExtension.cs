@@ -112,6 +112,7 @@ namespace ImageGlass
             btnInstallExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnInstallExt"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmExtension.btnClose"];
 
+            this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
         }
 
         private void tvExtension_AfterSelect(object sender, TreeViewEventArgs e)

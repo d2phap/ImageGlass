@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ImageGlass.Library
@@ -30,6 +31,7 @@ namespace ImageGlass.Library
         private string _description;
         private string _minVersion;
         private string _fileName;
+        private RightToLeft _isRightToLeftLayout;
         private Dictionary<string, string> _Items;
 
         #region Properties
@@ -88,14 +90,17 @@ namespace ImageGlass.Library
         /// </summary>
         public string MinVersion
         {
-            get
-            {
-                return _minVersion;
-            }
-            set
-            {
-                _minVersion = value;
-            }
+            get { return _minVersion; }
+            set { _minVersion = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets the value that indicates right-to-left layout style
+        /// </summary>
+        public RightToLeft IsRightToLeftLayout
+        {
+            get { return _isRightToLeftLayout; } 
+            set { _isRightToLeftLayout = value; }
         }
         #endregion
 
@@ -111,6 +116,7 @@ namespace ImageGlass.Library
             _description = "English";
             _minVersion = "2.0.1.5";
             _fileName = "";
+            _isRightToLeftLayout = RightToLeft.No;
 
             _Items = new Dictionary<string, string>();
             InitDefaultLanguageDictionary();
@@ -148,6 +154,10 @@ namespace ImageGlass.Library
             this.Author = n.GetAttribute("author");
             this.Description = n.GetAttribute("description");
 
+            bool _isRightToLeftLayout = false;
+            bool.TryParse(n.GetAttribute("isRightToLeftLayout"), out _isRightToLeftLayout);
+            this.IsRightToLeftLayout = _isRightToLeftLayout ? RightToLeft.Yes : RightToLeft.No; //v3.2
+
             //Get <Content> element
             XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
 
@@ -184,6 +194,7 @@ namespace ImageGlass.Library
             nInfo.SetAttribute("author", this.Author);
             nInfo.SetAttribute("description", this.Description);
             nInfo.SetAttribute("minVersion", this.MinVersion);
+            nInfo.SetAttribute("isRightToLeftLayout", this.IsRightToLeftLayout.ToString());
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>

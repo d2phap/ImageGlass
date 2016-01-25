@@ -1213,6 +1213,7 @@ namespace ImageGlass
 
             sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
             sp1.SplitterWidth = 1;
+            
         }
 
         public void LoadFromParams(string[] args)
@@ -1254,6 +1255,7 @@ namespace ImageGlass
             if (GlobalSetting.IsForcedActive)
             {
                 picMain.BackColor = GlobalSetting.BackgroundColor;
+                this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
 
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];

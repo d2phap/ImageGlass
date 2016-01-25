@@ -261,7 +261,7 @@
             this.fileList1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileList1.Location = new System.Drawing.Point(20, 0);
             this.fileList1.Name = "fileList1";
-            this.fileList1.Size = new System.Drawing.Size(493, 403);
+            this.fileList1.Size = new System.Drawing.Size(493, 401);
             this.fileList1.TabIndex = 0;
             this.fileList1.Title = "";
             this.fileList1.Load += new System.EventHandler(this.fileList1_Load);
@@ -455,10 +455,10 @@
             this.tpComponents.BackColor = System.Drawing.Color.White;
             this.tpComponents.Controls.Add(this.fileList1);
             this.tpComponents.ForeColor = System.Drawing.Color.Black;
-            this.tpComponents.Location = new System.Drawing.Point(4, 22);
+            this.tpComponents.Location = new System.Drawing.Point(4, 24);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(20, 0, 3, 1);
-            this.tpComponents.Size = new System.Drawing.Size(516, 404);
+            this.tpComponents.Size = new System.Drawing.Size(516, 402);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -522,6 +522,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(675, 525);
             this.Name = "frmAbout";
+            this.RightToLeftLayout = true;
             this.Text = "About";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
