@@ -45,7 +45,6 @@
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
-            this.txtSupportedExtensionExtra = new System.Windows.Forms.TextBox();
             this.txtSupportedExtensionDefault = new System.Windows.Forms.TextBox();
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
@@ -70,6 +69,11 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.chkExtraExtsPSD = new System.Windows.Forms.CheckBox();
+            this.chkExtraExtsEXR = new System.Windows.Forms.CheckBox();
+            this.chkExtraExtsTGA = new System.Windows.Forms.CheckBox();
+            this.chkExtraExtsHDR = new System.Windows.Forms.CheckBox();
+            this.panExtraExts = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -81,6 +85,7 @@
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
+            this.panExtraExts.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -276,30 +281,17 @@
             // 
             // tabFileAssociation
             // 
-            this.tabFileAssociation.Controls.Add(this.txtSupportedExtensionExtra);
+            this.tabFileAssociation.Controls.Add(this.panExtraExts);
             this.tabFileAssociation.Controls.Add(this.txtSupportedExtensionDefault);
             this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
             this.tabFileAssociation.Controls.Add(this.btnOpenFileAssociations);
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 511);
+            this.tabFileAssociation.Size = new System.Drawing.Size(551, 509);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
-            // 
-            // txtSupportedExtensionExtra
-            // 
-            this.txtSupportedExtensionExtra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSupportedExtensionExtra.BackColor = System.Drawing.Color.White;
-            this.txtSupportedExtensionExtra.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSupportedExtensionExtra.ForeColor = System.Drawing.Color.Black;
-            this.txtSupportedExtensionExtra.Location = new System.Drawing.Point(23, 99);
-            this.txtSupportedExtensionExtra.Multiline = true;
-            this.txtSupportedExtensionExtra.Name = "txtSupportedExtensionExtra";
-            this.txtSupportedExtensionExtra.Size = new System.Drawing.Size(502, 52);
-            this.txtSupportedExtensionExtra.TabIndex = 23;
             // 
             // txtSupportedExtensionDefault
             // 
@@ -328,7 +320,7 @@
             // 
             // btnOpenFileAssociations
             // 
-            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 157);
+            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 215);
             this.btnOpenFileAssociations.Name = "btnOpenFileAssociations";
             this.btnOpenFileAssociations.Size = new System.Drawing.Size(199, 29);
             this.btnOpenFileAssociations.TabIndex = 20;
@@ -612,6 +604,61 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
+            // chkExtraExtsPSD
+            // 
+            this.chkExtraExtsPSD.AutoSize = true;
+            this.chkExtraExtsPSD.Location = new System.Drawing.Point(3, 3);
+            this.chkExtraExtsPSD.Name = "chkExtraExtsPSD";
+            this.chkExtraExtsPSD.Size = new System.Drawing.Size(55, 19);
+            this.chkExtraExtsPSD.TabIndex = 24;
+            this.chkExtraExtsPSD.Tag = "*.psd";
+            this.chkExtraExtsPSD.Text = "*.PSD";
+            this.chkExtraExtsPSD.UseVisualStyleBackColor = true;
+            // 
+            // chkExtraExtsEXR
+            // 
+            this.chkExtraExtsEXR.AutoSize = true;
+            this.chkExtraExtsEXR.Location = new System.Drawing.Point(3, 28);
+            this.chkExtraExtsEXR.Name = "chkExtraExtsEXR";
+            this.chkExtraExtsEXR.Size = new System.Drawing.Size(54, 19);
+            this.chkExtraExtsEXR.TabIndex = 25;
+            this.chkExtraExtsEXR.Tag = "*.exr";
+            this.chkExtraExtsEXR.Text = "*.EXR";
+            this.chkExtraExtsEXR.UseVisualStyleBackColor = true;
+            // 
+            // chkExtraExtsTGA
+            // 
+            this.chkExtraExtsTGA.AutoSize = true;
+            this.chkExtraExtsTGA.Location = new System.Drawing.Point(3, 53);
+            this.chkExtraExtsTGA.Name = "chkExtraExtsTGA";
+            this.chkExtraExtsTGA.Size = new System.Drawing.Size(56, 19);
+            this.chkExtraExtsTGA.TabIndex = 26;
+            this.chkExtraExtsTGA.Tag = "*.tga";
+            this.chkExtraExtsTGA.Text = "*.TGA";
+            this.chkExtraExtsTGA.UseVisualStyleBackColor = true;
+            // 
+            // chkExtraExtsHDR
+            // 
+            this.chkExtraExtsHDR.AutoSize = true;
+            this.chkExtraExtsHDR.Location = new System.Drawing.Point(3, 78);
+            this.chkExtraExtsHDR.Name = "chkExtraExtsHDR";
+            this.chkExtraExtsHDR.Size = new System.Drawing.Size(58, 19);
+            this.chkExtraExtsHDR.TabIndex = 27;
+            this.chkExtraExtsHDR.Tag = "*.hdr";
+            this.chkExtraExtsHDR.Text = "*.HDR";
+            this.chkExtraExtsHDR.UseVisualStyleBackColor = true;
+            // 
+            // panExtraExts
+            // 
+            this.panExtraExts.Controls.Add(this.chkExtraExtsPSD);
+            this.panExtraExts.Controls.Add(this.chkExtraExtsHDR);
+            this.panExtraExts.Controls.Add(this.chkExtraExtsEXR);
+            this.panExtraExts.Controls.Add(this.chkExtraExtsTGA);
+            this.panExtraExts.Location = new System.Drawing.Point(23, 99);
+            this.panExtraExts.Name = "panExtraExts";
+            this.panExtraExts.Size = new System.Drawing.Size(502, 110);
+            this.panExtraExts.TabIndex = 28;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -644,6 +691,8 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
+            this.panExtraExts.ResumeLayout(false);
+            this.panExtraExts.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -689,6 +738,10 @@
         private System.Windows.Forms.ImageList imglOpenWith;
         private System.Windows.Forms.TextBox txtSupportedExtensionDefault;
         private System.Windows.Forms.Label lblSupportedExtension;
-        private System.Windows.Forms.TextBox txtSupportedExtensionExtra;
+        private System.Windows.Forms.CheckBox chkExtraExtsPSD;
+        private System.Windows.Forms.CheckBox chkExtraExtsHDR;
+        private System.Windows.Forms.CheckBox chkExtraExtsTGA;
+        private System.Windows.Forms.CheckBox chkExtraExtsEXR;
+        private System.Windows.Forms.Panel panExtraExts;
     }
 }

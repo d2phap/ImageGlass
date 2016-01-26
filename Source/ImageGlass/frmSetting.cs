@@ -163,10 +163,20 @@ namespace ImageGlass
             GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
 
             //Save extra supported extensions
-            GlobalSetting.SupportedExtraExtensions = txtSupportedExtensionExtra.Text.Trim();
+            string extraExts = "";
+            foreach (var control in panExtraExts.Controls)
+            {
+                var chk = (CheckBox)control;
+                
+                if(chk.Checked)
+                {
+                    extraExts += chk.Tag.ToString() + ";";
+                }
+            }
+            GlobalSetting.SupportedExtraExtensions = extraExts;
             GlobalSetting.SetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
 
-            //Ép thực thi các thiết lập
+            //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
         }
 
@@ -266,8 +276,13 @@ namespace ImageGlass
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
                 txtSupportedExtensionDefault.Text = GlobalSetting.SupportedDefaultExtensions;
-                txtSupportedExtensionExtra.Text = GlobalSetting.SupportedExtraExtensions;
+                
+                foreach (var control in panExtraExts.Controls)
+                {
+                    var chk = (CheckBox)control;
 
+                    chk.Checked = GlobalSetting.SupportedExtraExtensions.Contains(chk.Tag.ToString());
+                }
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
