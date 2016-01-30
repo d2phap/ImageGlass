@@ -153,6 +153,7 @@ namespace ImageGlass.Library
             this.LangName = n.GetAttribute("langName");
             this.Author = n.GetAttribute("author");
             this.Description = n.GetAttribute("description");
+            this.MinVersion = n.GetAttribute("minVersion");
 
             bool _isRightToLeftLayout = false;
             bool.TryParse(n.GetAttribute("isRightToLeftLayout"), out _isRightToLeftLayout);

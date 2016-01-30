@@ -460,7 +460,7 @@ namespace ImageGlass
                 picBackgroundColor.BackColor = c.Color;
                 GlobalSetting.BackgroundColor = c.Color;
 
-                //Luu background color
+                //Save background color
                 GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
             }
         }
