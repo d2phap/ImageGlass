@@ -114,7 +114,7 @@ namespace ImageGlass.Library
             _langName = "English";
             _author = "Dương Diệu Pháp";
             _description = "English";
-            _minVersion = "2.0.1.5";
+            _minVersion = "3.2.0.16";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -401,9 +401,9 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             //this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //removed 3.0
             this.Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
-            this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
-            this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
-            this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels");
+            //this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //removed 3.2
+            //this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //removed 3.2
+            //this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //removed 3.2
             this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
             this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
@@ -434,6 +434,7 @@ namespace ImageGlass.Library
 
             this.Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             this.Items.Add("frmSetting.lnkRefresh", "> Refresh");
+            this.Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
             this.Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)"); //v2.0 final
             this.Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             this.Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");

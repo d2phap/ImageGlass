@@ -17,20 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Security.Principal;
-using System.Security.Permissions;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Library.Image;
+using ImageGlass.Library;
 
 namespace ImageGlass
 {
@@ -224,6 +218,7 @@ namespace ImageGlass
             //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
             lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
+            lblLanguageWarning.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
             lnkInstallLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkInstallLanguage"];
             lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
             lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
@@ -530,7 +525,7 @@ namespace ImageGlass
                         int iLang = cmbLanguage.Items.Add(l.LangName);
                         string curLang = GlobalSetting.LangPack.FileName;
 
-                        //Nếu là ngôn ngữ đang dùng
+                        //using current language pack
                         if (f.CompareTo(curLang) == 0)
                         {
                             cmbLanguage.SelectedIndex = iLang;
@@ -547,7 +542,15 @@ namespace ImageGlass
         
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblLanguageWarning.Visible = false;
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+
+            //check compatibility
+            var lang = new Language();
+            if(lang.MinVersion.CompareTo(GlobalSetting.LangPack.MinVersion) != 0)
+            {
+                lblLanguageWarning.Visible = true;
+            }
         }
 
 
