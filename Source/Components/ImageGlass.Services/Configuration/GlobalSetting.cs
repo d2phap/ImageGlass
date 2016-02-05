@@ -70,7 +70,7 @@ namespace ImageGlass.Services.Configuration
         private static Color _backgroundColor = Color.White;
         private static bool _isShowToolBar = true;
         private static bool _isLoopBackSlideShow = false;
-        private static bool _isImageBoosterBack = false;
+        private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
         private static StringCollection _stringClipboard = new StringCollection();

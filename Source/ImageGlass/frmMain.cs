@@ -1087,6 +1087,9 @@ namespace ImageGlass
             //Load image order config------------------------------------------------------
             GlobalSetting.LoadImageOrderConfig();
 
+            //Load state of Image Booster --------------------------------------------------
+            GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
+
             //Load background---------------------------------------------------------------
             string z = GlobalSetting.GetConfig("BackgroundColor", "-1");
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
