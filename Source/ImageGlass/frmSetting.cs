@@ -17,20 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Security.Principal;
-using System.Security.Permissions;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Library.Image;
+using ImageGlass.Library;
 
 namespace ImageGlass
 {
@@ -127,8 +121,7 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound",
-                                                "280,125,610, 570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound", "280,125,610, 570"));
             this.Bounds = rc;
 
             //windows state--------------------------------------------------------------
@@ -164,10 +157,20 @@ namespace ImageGlass
             GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
 
             //Save extra supported extensions
-            GlobalSetting.SupportedExtraExtensions = txtSupportedExtensionExtra.Text.Trim();
+            string extraExts = "";
+            foreach (var control in panExtraExts.Controls)
+            {
+                var chk = (CheckBox)control;
+                
+                if(chk.Checked)
+                {
+                    extraExts += chk.Tag.ToString() + ";";
+                }
+            }
+            GlobalSetting.SupportedExtraExtensions = extraExts;
             GlobalSetting.SetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
 
-            //Ép thực thi các thiết lập
+            //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
         }
 
@@ -185,6 +188,8 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
+            this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+
             this.Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
             lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
             lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];
@@ -213,6 +218,7 @@ namespace ImageGlass
             //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
             lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
+            lblLanguageWarning.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
             lnkInstallLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkInstallLanguage"];
             lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
             lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
@@ -265,8 +271,13 @@ namespace ImageGlass
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
                 txtSupportedExtensionDefault.Text = GlobalSetting.SupportedDefaultExtensions;
-                txtSupportedExtensionExtra.Text = GlobalSetting.SupportedExtraExtensions;
+                
+                foreach (var control in panExtraExts.Controls)
+                {
+                    var chk = (CheckBox)control;
 
+                    chk.Checked = GlobalSetting.SupportedExtraExtensions.Contains(chk.Tag.ToString());
+                }
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -449,7 +460,7 @@ namespace ImageGlass
                 picBackgroundColor.BackColor = c.Color;
                 GlobalSetting.BackgroundColor = c.Color;
 
-                //Luu background color
+                //Save background color
                 GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
             }
         }
@@ -514,7 +525,7 @@ namespace ImageGlass
                         int iLang = cmbLanguage.Items.Add(l.LangName);
                         string curLang = GlobalSetting.LangPack.FileName;
 
-                        //Nếu là ngôn ngữ đang dùng
+                        //using current language pack
                         if (f.CompareTo(curLang) == 0)
                         {
                             cmbLanguage.SelectedIndex = iLang;
@@ -531,7 +542,15 @@ namespace ImageGlass
         
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblLanguageWarning.Visible = false;
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+
+            //check compatibility
+            var lang = new Language();
+            if(lang.MinVersion.CompareTo(GlobalSetting.LangPack.MinVersion) != 0)
+            {
+                lblLanguageWarning.Visible = true;
+            }
         }
 
 

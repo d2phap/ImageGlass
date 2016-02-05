@@ -235,7 +235,7 @@ namespace ImageGlass.ImageListView
 
             Image source = null;
             Image thumb = null;
-
+            filename = filename.ToLower();
             
             // Revert to source image if an embedded thumbnail of required size was not found.
             FileStream sourceStream = null;
@@ -243,35 +243,15 @@ namespace ImageGlass.ImageListView
             // Fix for the missing semicolon in GIF files
             MemoryStream streamCopy = null;
 
-            //*.SVG
-            if (filename.ToLower().EndsWith(".svg"))
+            // *.SVG, *.WEBP, *.HDR, *.EXR
+            if (filename.EndsWith(".svg") ||
+                filename.EndsWith(".webp") ||
+                filename.EndsWith(".hdr") ||
+                filename.EndsWith(".exr"))
             {
                 try
                 {
-                    SvgDocument svg = SvgDocument.Open(filename);
-                    source = svg.Draw();
-                }
-                catch { return null; }
-            }
-            //HDR
-            else if (filename.ToLower().EndsWith(".hdr"))
-            {
-                try
-                {
-                    FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
-                    source = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                    FreeImage.Unload(hdr);
-                }
-                catch { return null; }
-            }
-            //EXR
-            else if (filename.ToLower().EndsWith(".exr"))
-            {
-                try
-                {
-                    FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, filename, FREE_IMAGE_LOAD_FLAGS.RAW_PREVIEW);
-                    source = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                    FreeImage.Unload(exr);
+                    source = ImageGlass.Core.Interpreter.Load(filename);
                 }
                 catch { return null; }
             }
@@ -284,7 +264,7 @@ namespace ImageGlass.ImageListView
                     using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
                         if (!Utility.IsImage(stream))
-                            if (!filename.ToLower().EndsWith(".exr"))
+                            if (!filename.EndsWith(".exr"))
                                 return null;
                     }
                 }

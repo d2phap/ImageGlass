@@ -66,9 +66,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmEditLanguagePack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditLanguagePack.Designer.cs">
+      <DependentUpon>frmEditLanguagePack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmEditLanguagePack.resx">
+      <DependentUpon>frmEditLanguagePack.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

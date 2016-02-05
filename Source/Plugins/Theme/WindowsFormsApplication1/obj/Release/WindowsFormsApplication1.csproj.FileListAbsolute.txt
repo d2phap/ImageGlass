@@ -33,3 +33,6 @@ F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsAppli
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\IconLib.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Theme.dll
 F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\ImageGlass.Theme.pdb
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\FreeImageNET.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\Svg.dll
+F:\PHAPSOFTWARE\ImageGlass\Git\ImageGlass\Source\Plugins\Theme\WindowsFormsApplication1\bin\Release\System.Drawing.PSD.pdb

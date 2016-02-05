@@ -43,7 +43,7 @@ namespace ImageGlass.Core
             Image im = null;
             try
             {
-                im = Interpreter.load(path);
+                im = Interpreter.Load(path);
             }
             catch (Exception ex)
             { }

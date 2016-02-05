@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2014 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -57,8 +57,8 @@ namespace ImageGlass.Services.Configuration
         private static string _supportedExtensions = "";
         private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;";
-        private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;*.svg;";
+                                                     "*.exif;*.wmf;*.emf;*.svg;*.webp;";
+        private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;";
         private static string _contextMenuExtensions = "";
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;
@@ -70,14 +70,15 @@ namespace ImageGlass.Services.Configuration
         private static Color _backgroundColor = Color.White;
         private static bool _isShowToolBar = true;
         private static bool _isLoopBackSlideShow = false;
-        private static bool _isImageBoosterBack = false;
+        private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
         private static StringCollection _stringClipboard = new StringCollection();
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
         private static bool _isTempMemoryData = false;
-
+        private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
+        private static bool _isWindowAlwaysOnTop = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -431,7 +432,24 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isTempMemoryData = value; }
         }
 
-        
+        /// <summary>
+        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\
+        /// </summary>
+        public static string TempDir
+        {
+            get { return _tempDir; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that frmMain is always on top or not.
+        /// </summary>
+        public static bool IsWindowAlwaysOnTop
+        {
+            get { return _isWindowAlwaysOnTop; }
+            set { _isWindowAlwaysOnTop = value; }
+        }
+
+
 
 
 

@@ -35,20 +35,20 @@ namespace adtasks
             #region addext <string igPath> [string ext]
             if (topcmd == "addext")
             {
-                //Lay duong dan exe
+                //Get executable file path
                 string exePath = args[1];
 
                 if (args.Length > 2)
                 {
-                    //Lay extension
+                    //Get extension
                     string ext = args[2];
 
-                    //Ap dung
+                    //Apply changes
                     Functions.AddImageGlassToContextMenu(exePath, ext);
                 }
                 else
                 {
-                    //Ap dung
+                    //Apply changes
                     Functions.AddImageGlassToContextMenu(exePath);
                 }
 
@@ -60,30 +60,30 @@ namespace adtasks
             #region removeext
             else if (topcmd == "removeext")
             {
-                //Ap dung
+                //Apply changes
                 Functions.RemoveImageGlassToContextMenu();
 
                 Application.Exit();
             }
             #endregion
 
-            //Update extension cho Menu
+            //Update extension for Menu
             #region updateext <string exePath> <string exts>
             else if (topcmd == "updateext")
             {
-                //Xoa tat ca
+                //Remove all
                 Functions.RemoveImageGlassToContextMenu();
 
-                //Them moi
+                //Add new
                 if (args.Length > 2)
                 {
-                    //Lay duong dan ImageGlass.exe
+                    //Get executable file path
                     string exePath = args[1];
 
-                    //Lay extension
+                    //Get extension
                     string ext = args[2];
 
-                    //Ap dung
+                    //Apply changes
                     Functions.AddImageGlassToContextMenu(exePath, ext);
                 }
 
@@ -95,15 +95,15 @@ namespace adtasks
             #region setwallpaper <string imgPath> [int style]
             else if (topcmd == "setwallpaper")
             {
-                //Lay duong dan img
+                //Get image's path
                 string imgPath = args[1];
 
                 if (args.Length > 2)
                 {
-                    //Lay style
+                    //Get style
                     string style = args[2];
 
-                    //Ap dung
+                    //Apply changes
                     if (style == "1")
                     {
                         DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Stretched);
@@ -119,7 +119,7 @@ namespace adtasks
                 }
                 else
                 {
-                    //Ap dung
+                    //Apply changes
                     DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
                 }
 

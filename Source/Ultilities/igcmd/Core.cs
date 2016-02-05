@@ -108,7 +108,8 @@ namespace igcmd
             //save last update
             GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             
-            if (up.CheckForUpdate(Application.StartupPath + "\\ImageGlass.exe") &&
+            if (!up.IsError &&
+                up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe") &&
                 up.Info.VersionType.ToLower() == "stable")
             {
                 frmCheckForUpdate f = new frmCheckForUpdate();

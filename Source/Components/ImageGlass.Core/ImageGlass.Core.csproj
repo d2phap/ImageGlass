@@ -81,6 +81,9 @@
     <Reference Include="IconLib">
       <HintPath>..\..\ImageGlass\bin\Debug\IconLib.dll</HintPath>
     </Reference>
+    <Reference Include="Imazen.WebP">
+      <HintPath>..\..\ImageGlass\Imazen.WebP.dll</HintPath>
+    </Reference>
     <Reference Include="Svg">
       <HintPath>..\..\ImageGlass\Svg.dll</HintPath>
     </Reference>

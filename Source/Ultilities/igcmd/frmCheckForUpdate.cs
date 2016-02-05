@@ -52,7 +52,6 @@ namespace igcmd
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            this.Text = "Connecting to server, please wait...";
             picStatus.Image = igcmd.Properties.Resources.loading;
             Thread t = new Thread(new ThreadStart(CheckForUpdate));
             t.Priority = ThreadPriority.BelowNormal;
@@ -75,28 +74,53 @@ namespace igcmd
                 File.Delete(tempDir + "update.xml");
             }
 
-            lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
-            lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
-            lblUpdateImportance.Text = "Importance: " + up.Info.Level;
-            lblUpdateSize.Text = "Size: " + up.Info.Size;
-            lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
-
-            this.Text = "";
-
-            if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+            if (up.IsError)
             {
-                if (up.Info.VersionType.ToLower() == "stable")
-                {
-                    this.Text = "Your ImageGlass is outdate!";
-                }
+                this.Size = this.MaximumSize;
+                lblUpdateVersion.Text = "Please visit http://imageglass.org/download to check for updates.";
+                lblUpdateVersionType.Text =
+                    lblUpdateImportance.Text =
+                    lblUpdateSize.Text =
+                    lblUpdatePubDate.Text =
+                    lnkUpdateReadMore.Text =
+                    String.Empty;
 
+                lblStatus.Text = "Unable to check for current version online.";
+                lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
                 picStatus.Image = igcmd.Properties.Resources.warning;
-                btnDownload.Enabled = true;
             }
             else
             {
-                btnDownload.Enabled = false;
-                picStatus.Image = igcmd.Properties.Resources.ok;
+                this.Size = this.MinimumSize;
+                lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
+                lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
+                lblUpdateImportance.Text = "Importance: " + up.Info.Level;
+                lblUpdateSize.Text = "Size: " + up.Info.Size;
+                lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
+                lnkUpdateReadMore.Text = "Read more...";
+
+                if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+                {
+                    if (up.Info.VersionType.ToLower() == "stable")
+                    {
+                        lblStatus.Text = "ImageGlass is out of date!";
+                        lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
+                    }
+                    else
+                    {
+                        lblStatus.Text = "ImageGlass is up to date!";
+                        lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
+                    }
+                    picStatus.Image = igcmd.Properties.Resources.warning;
+                    btnDownload.Enabled = true;
+                }
+                else
+                {
+                    lblStatus.Text = "ImageGlass is up to date!";
+                    lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
+                    btnDownload.Enabled = false;
+                    picStatus.Image = igcmd.Properties.Resources.ok;
+                }
             }
 
             //save last update

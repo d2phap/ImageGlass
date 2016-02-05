@@ -112,6 +112,7 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
+            //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], 
                                             Application.ProductVersion);
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
@@ -137,7 +138,7 @@ namespace ImageGlass
             lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
             lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
             this.Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
-
+            
         }
 
         #region IMAGEGLASS INFORMATION PANEL

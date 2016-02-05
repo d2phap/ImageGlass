@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ImageGlass.Library
@@ -30,6 +31,7 @@ namespace ImageGlass.Library
         private string _description;
         private string _minVersion;
         private string _fileName;
+        private RightToLeft _isRightToLeftLayout;
         private Dictionary<string, string> _Items;
 
         #region Properties
@@ -88,14 +90,17 @@ namespace ImageGlass.Library
         /// </summary>
         public string MinVersion
         {
-            get
-            {
-                return _minVersion;
-            }
-            set
-            {
-                _minVersion = value;
-            }
+            get { return _minVersion; }
+            set { _minVersion = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets the value that indicates right-to-left layout style
+        /// </summary>
+        public RightToLeft IsRightToLeftLayout
+        {
+            get { return _isRightToLeftLayout; } 
+            set { _isRightToLeftLayout = value; }
         }
         #endregion
 
@@ -109,8 +114,9 @@ namespace ImageGlass.Library
             _langName = "English";
             _author = "Dương Diệu Pháp";
             _description = "English";
-            _minVersion = "2.0.1.5";
+            _minVersion = "3.2.0.16";
             _fileName = "";
+            _isRightToLeftLayout = RightToLeft.No;
 
             _Items = new Dictionary<string, string>();
             InitDefaultLanguageDictionary();
@@ -147,6 +153,11 @@ namespace ImageGlass.Library
             this.LangName = n.GetAttribute("langName");
             this.Author = n.GetAttribute("author");
             this.Description = n.GetAttribute("description");
+            this.MinVersion = n.GetAttribute("minVersion");
+
+            bool _isRightToLeftLayout = false;
+            bool.TryParse(n.GetAttribute("isRightToLeftLayout"), out _isRightToLeftLayout);
+            this.IsRightToLeftLayout = _isRightToLeftLayout ? RightToLeft.Yes : RightToLeft.No; //v3.2
 
             //Get <Content> element
             XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
@@ -184,6 +195,7 @@ namespace ImageGlass.Library
             nInfo.SetAttribute("author", this.Author);
             nInfo.SetAttribute("description", this.Description);
             nInfo.SetAttribute("minVersion", this.MinVersion);
+            nInfo.SetAttribute("isRightToLeftLayout", this.IsRightToLeftLayout.ToString());
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>
@@ -296,6 +308,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             this.Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
             this.Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v3.0
+            this.Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
             this.Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             this.Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0
@@ -389,9 +402,9 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             //this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //removed 3.0
             this.Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
-            this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto");
-            this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels");
-            this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels");
+            //this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //removed 3.2
+            //this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //removed 3.2
+            //this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //removed 3.2
             this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
             this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
@@ -422,6 +435,7 @@ namespace ImageGlass.Library
 
             this.Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             this.Items.Add("frmSetting.lnkRefresh", "> Refresh");
+            this.Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
             this.Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)"); //v2.0 final
             this.Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             this.Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");

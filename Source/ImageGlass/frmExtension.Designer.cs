@@ -177,6 +177,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(440, 200);
             this.Name = "frmExtension";
+            this.RightToLeftLayout = true;
             this.Text = "Extension Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExtension_FormClosing);
             this.Load += new System.EventHandler(this.frmExtension_Load);

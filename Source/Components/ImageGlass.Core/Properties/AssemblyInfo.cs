@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass.Core")]
-[assembly: AssemblyCopyright("Copyright © 2014 - 2015 Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2014 - 2016 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
