@@ -200,7 +200,7 @@ namespace ImageGlass
         private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.FileName = Path.Combine(Application.StartupPath, "igcmd.exe");
             p.StartInfo.Arguments = "igupdate";
             p.Start();
         }
