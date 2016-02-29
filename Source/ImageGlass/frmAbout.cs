@@ -38,9 +38,9 @@ namespace ImageGlass
             InitializeComponent();
         }
 
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
-        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
+        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
+        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
+        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
