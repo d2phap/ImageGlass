@@ -18,15 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.IO;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ImageGlass;
-using ImageGlass.Plugins;
 using ImageGlass.Theme;
 using ImageGlass.Services.Configuration;
 using System.Diagnostics;
@@ -151,24 +145,23 @@ namespace ImageGlass
         {
             tvExtension.Nodes.Clear();
 
-            if (!System.IO.Directory.Exists(Application.StartupPath + @"\Plugins"))
+            string pluginsDir = Path.Combine(Application.StartupPath, "Plugins");
+
+            if (!Directory.Exists(pluginsDir))
             {
-                System.IO.Directory.CreateDirectory(Application.StartupPath + @"\Plugins");
+                Directory.CreateDirectory(pluginsDir);
             }
             else
             {
-                Global.Plugins.FindPlugins(Application.StartupPath + @"\Plugins");
+                Global.Plugins.FindPlugins(pluginsDir);
 
                 foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
                 {
                     TreeNode n = new TreeNode(p.Instance.Name);
                     tvExtension.Nodes.Add(n);
                     n = null;
-
                 }
             }
         }
-
-       
     }
 }
