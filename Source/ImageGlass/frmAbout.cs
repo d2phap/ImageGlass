@@ -211,11 +211,6 @@ namespace ImageGlass
             this.Close();
         }
 
-        private void fileList1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblInfo.Tag = 0;
