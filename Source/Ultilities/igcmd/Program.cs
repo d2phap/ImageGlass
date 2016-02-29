@@ -18,13 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using Ionic.Zip;
-using System.Text;
-using ImageGlass.Theme;
 
 
 namespace igcmd
@@ -34,11 +28,9 @@ namespace igcmd
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        public static string[] args;
         [STAThread]
-        static void Main(string[] argv)
+        static void Main(string[] args)
         {
-            args = argv;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             string topcmd = args[0].ToLower().Trim();
@@ -65,12 +57,5 @@ namespace igcmd
                 Core.InstallTheme(args[1]);
             }
         }
-
-
-
-        
-                
-
-
     }
 }
