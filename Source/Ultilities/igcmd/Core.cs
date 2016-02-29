@@ -34,17 +34,6 @@ namespace igcmd
     public static class Core
     {
         /// <summary>
-        /// Get directory of exe file (include \)
-        /// </summary>
-        public static string Path
-        {
-            get
-            {
-                return (Application.StartupPath + "\\").Replace("\\\\", "\\");
-            }
-        }
-
-        /// <summary>
         /// Pack theme *.igtheme
         /// </summary>
         /// <param name="dir">Thư mục chứa tập tin</param>

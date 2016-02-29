@@ -38,9 +38,9 @@ namespace ImageGlass
             InitializeComponent();
         }
 
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
-        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
+        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
+        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
+        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
@@ -200,7 +200,7 @@ namespace ImageGlass
         private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "igcmd.exe";
+            p.StartInfo.FileName = Path.Combine(Application.StartupPath, "igcmd.exe");
             p.StartInfo.Arguments = "igupdate";
             p.Start();
         }
@@ -209,11 +209,6 @@ namespace ImageGlass
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void fileList1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)

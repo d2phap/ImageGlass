@@ -264,7 +264,6 @@
             this.fileList1.Size = new System.Drawing.Size(493, 401);
             this.fileList1.TabIndex = 0;
             this.fileList1.Title = "";
-            this.fileList1.Load += new System.EventHandler(this.fileList1_Load);
             // 
             // label4
             // 
