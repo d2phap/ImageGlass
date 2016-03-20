@@ -48,7 +48,7 @@ The unique features of ImageGlass are the following:
 <ul>
 <li>ImageGlass works great with GIF, ICO and PNG formats, among others</li>
 <li>Various zoom options: zoom in or zoom out, scale to height, scale to width, lock zoom ratio, etc.</li>
-<li>20 image formats supported, including JPG, JPE, JFIF, JPEG, PNG, GIF, ICO, BMP, DIB, TIF, TIFF, EXIF, WMF, EMF, TGA, PSD, HDR, EXR, SGV, WEBP (non-animated).</li>
+<li>20 image formats supported, including JPG, JPE, JFIF, JPEG, PNG, GIF, ICO, BMP, DIB, TIF, TIFF, EXIF, WMF, EMF, TGA, PSD, HDR, EXR, SGV, WEBP (non-animated)</li>
 <li>Fast switch between images</li>
 <li>Image frames extraction from GIF files</li>
 <li>Thumbnail images can be shown in the current viewing folder</li>
