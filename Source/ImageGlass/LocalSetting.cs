@@ -39,7 +39,6 @@ namespace ImageGlass
         private static int _oldDPI = 96;
         private static int _currentDPI = 96;
 
-
         #region "Properties"
         /// <summary>
         /// Form frmFacebook

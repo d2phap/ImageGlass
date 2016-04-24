@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2014 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -26,17 +26,7 @@ namespace ImageGlass.Core
 {
     public class InputBox
     {
-        private static bool _isNumberOnly = false;
-        private static string _message = "";
-        
-        /// <summary>
-        /// Get, set input style
-        /// </summary>
-        public static bool IsNumberOnly
-        {
-            get { return _isNumberOnly; }
-            set { _isNumberOnly = value; }
-        }
+        private static string _message = string.Empty;
 
         /// <summary>
         /// Get, set the message user inputs
@@ -55,41 +45,41 @@ namespace ImageGlass.Core
         /// <returns></returns>
         public static DialogResult ShowDiaLog(string title, string message)
         {
-            frmDialogBox f = new frmDialogBox(title, message);
-            f.Title = title;
-            f.IsNumberOnly = false;
-            f.ShowDialog();
-
-            //Lưu nội dung vừa nhập
-            InputBox.Message = f.Content;
-
-            return f.DialogResult;
+            return InputBox.ShowDiaLog(title, message, string.Empty, false);
         }
 
+        /// <summary>
+        /// Show input dialog box
+        /// </summary>
+        /// <param name="title">Title</param>
+        /// <param name="message">Message</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <returns></returns>
         public static DialogResult ShowDiaLog(string title, string message, string defaultValue)
         {
-            frmDialogBox f = new frmDialogBox(title, message);
-            f.Title = title;
-            f.IsNumberOnly = false;
-            f.Content = defaultValue;
-            f.ShowDialog();
-
-            //Lưu nội dung vừa nhập
-            InputBox.Message = f.Content;
-
-            return f.DialogResult;
+            return InputBox.ShowDiaLog(title, message, defaultValue, false);
         }
 
+        /// <summary>
+        /// Show input dialog box
+        /// </summary>
+        /// <param name="title">Title</param>
+        /// <param name="message">Message</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <param name="isNumberOnly">Number input</param>
+        /// <returns></returns>
         public static DialogResult ShowDiaLog(string title, string message, string defaultValue, bool isNumberOnly)
         {
             frmDialogBox f = new frmDialogBox(title, message);
             f.Title = title;
             f.IsNumberOnly = isNumberOnly;
             f.Content = defaultValue;
-            f.ShowDialog();
 
-            //Lưu nội dung vừa nhập
-            InputBox.Message = f.Content;
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                //Save input data
+                InputBox.Message = f.Content;
+            }
 
             return f.DialogResult;
         }

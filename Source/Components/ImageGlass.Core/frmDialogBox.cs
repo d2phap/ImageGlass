@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ImageGlass.Core
@@ -78,7 +73,7 @@ namespace ImageGlass.Core
         }
 
         /// <summary>
-        /// Di chuyển form 
+        /// Moving form 
         /// </summary>
         /// <param name="m"></param>
         protected override void WndProc(ref Message m)
@@ -97,12 +92,12 @@ namespace ImageGlass.Core
 
         private void lblClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
         }
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -114,7 +109,7 @@ namespace ImageGlass.Core
                 { }
                 else
                 {
-                    //Không cho nhập
+                    //Prevent input char
                     e.Handled = true;
                 }
             }
@@ -125,12 +120,18 @@ namespace ImageGlass.Core
             txtValue.Focus();
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // disable parent form shotcuts
+            return false;
+        }
+
         private void frmDialogBox_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                this.DialogResult = DialogResult.Cancel;
             }
         }
     }
