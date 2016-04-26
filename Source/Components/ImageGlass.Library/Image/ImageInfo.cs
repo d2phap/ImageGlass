@@ -463,7 +463,17 @@ namespace ImageGlass.Library.Image
         /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName)
         {
-            File.Move(oldFileName, newFileName);
+            // Issue 73: Windows ignores case-only changes
+            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant())
+            {
+                // user changing only the case of the filename. Need to perform a trick.
+                File.Move(oldFileName, oldFileName + "_imgglass_extra");
+                File.Move(oldFileName + "_imgglass_extra", newFileName);
+            }
+            else
+            {
+                File.Move(oldFileName, newFileName);
+            }
         }
                 
 
