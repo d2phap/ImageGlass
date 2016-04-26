@@ -1114,6 +1114,9 @@ namespace ImageGlass
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer());
             thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension + GlobalSetting.ThumbnailDimension / 3, GlobalSetting.ThumbnailDimension);
 
+            // Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
+            GlobalSetting.ThumbnailIsHorizontal = bool.Parse(GlobalSetting.GetConfig("ThumbnailIsHorizontal", "True"));
+
             //Load state of Thumbnail---------------------------------------------------------
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
@@ -1152,6 +1155,9 @@ namespace ImageGlass
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
+
+            // Save thumbnail bar orientation state
+            GlobalSetting.SetConfig("ThumbnailIsHorizontal", GlobalSetting.ThumbnailIsHorizontal.ToString());
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -1213,10 +1219,6 @@ namespace ImageGlass
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
-
-            sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
-            sp1.SplitterWidth = 1;
-            
         }
 
         public void LoadFromParams(string[] args)
@@ -2431,9 +2433,22 @@ namespace ImageGlass
                 //show
                 sp1.SplitterWidth = 1;
                 sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + THUMBNAIL_BAR_EXTRA;
-                sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA - 1;
-            }
 
+                if (GlobalSetting.ThumbnailIsHorizontal)
+                {
+                    // BOTTOM
+                    sp1.Orientation = Orientation.Horizontal;
+                    sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA - 1;
+                    thumbnailBar.View = ImageListView.View.Gallery;
+                }
+                else
+                {
+                    // RIGHT
+                    sp1.Orientation = Orientation.Vertical;
+                    sp1.SplitterDistance = sp1.Parent.Size.Width - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA;
+                    thumbnailBar.View = ImageListView.View.Thumbnails;
+                }
+            }
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
             SelectCurrentThumbnail();
         }

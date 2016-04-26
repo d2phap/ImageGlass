@@ -211,6 +211,8 @@ namespace ImageGlass
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
 
+            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
+
             //File Associations tab
             lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
             btnOpenFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
@@ -373,6 +375,8 @@ namespace ImageGlass
 
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
+
+            chkThumbnailVertical.Checked = !GlobalSetting.ThumbnailIsHorizontal;
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -464,6 +468,12 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
             }
         }
+
+        private void chkThumbnailVertical_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.ThumbnailIsHorizontal = !chkThumbnailVertical.Checked;
+        }
+
         #endregion
 
         
