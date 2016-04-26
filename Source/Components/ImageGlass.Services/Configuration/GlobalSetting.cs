@@ -449,9 +449,10 @@ namespace ImageGlass.Services.Configuration
             set { _isWindowAlwaysOnTop = value; }
         }
 
-
-
-
+        /// <summary>
+        /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
+        /// </summary>
+        public static bool ThumbnailIsHorizontal { get; set; }
 
         #endregion
 

@@ -54,6 +54,7 @@
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
             this.chkAllowMultiInstances = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
@@ -387,6 +388,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chkThumbnailVertical);
             this.tabGeneral.Controls.Add(this.chkAllowMultiInstances);
             this.tabGeneral.Controls.Add(this.lblGeneral_ThumbnailSize);
             this.tabGeneral.Controls.Add(this.cmbThumbnailDimension);
@@ -412,6 +414,17 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkThumbnailVertical
+            // 
+            this.chkThumbnailVertical.AutoSize = true;
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(254, 295);
+            this.chkThumbnailVertical.Name = "chkThumbnailVertical";
+            this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
+            this.chkThumbnailVertical.TabIndex = 18;
+            this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
+            this.chkThumbnailVertical.UseVisualStyleBackColor = true;
+            this.chkThumbnailVertical.CheckedChanged += new System.EventHandler(this.chkThumbnailVertical_CheckedChanged);
             // 
             // chkAllowMultiInstances
             // 
@@ -757,5 +770,6 @@
         private System.Windows.Forms.CheckBox chkExtraExtsEXR;
         private System.Windows.Forms.Panel panExtraExts;
         private System.Windows.Forms.Label lblLanguageWarning;
+        private System.Windows.Forms.CheckBox chkThumbnailVertical;
     }
 }
