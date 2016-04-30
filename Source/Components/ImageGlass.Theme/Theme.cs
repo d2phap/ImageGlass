@@ -45,7 +45,8 @@ namespace ImageGlass.Theme
         public string topbar = string.Empty;                   
         public int topbartransparent = 0;                      //v1.2 only
         public Color backcolor = Color.White;                  
-        public string bottombar = string.Empty;                
+        public string bottombar = string.Empty;                 //v3.2-
+        public Color bottomBarColor = Color.FromArgb(234, 234, 242);    //v3.3+
         public Color statuscolor = Color.Black;                
 
         //toolbar icon
@@ -91,7 +92,7 @@ namespace ImageGlass.Theme
 
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+). 
-        /// Return TRUE if sucessful, FALSE if the theme is older version
+        /// Return TRUE if sucessful, FALSE if the theme format is older version
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
@@ -106,7 +107,7 @@ namespace ImageGlass.Theme
 
             try
             {
-                //Load theme version 1.5 as default
+                //Load theme version 1.5+ as default
                 nType = (XmlElement)root.SelectNodes("Theme")[0]; //<Theme>
                 n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
             }
@@ -140,9 +141,9 @@ namespace ImageGlass.Theme
             catch { };
             try { topbartransparent = int.Parse(n.GetAttribute("topbartransparent")); }
             catch { };
-            try { backcolor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
+            try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
             catch { };
-            try { bottombar = n.GetAttribute("bottombar"); }
+            try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor"))); }
             catch { };
             try { statuscolor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor"))); }
             catch { };
