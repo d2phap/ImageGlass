@@ -45,6 +45,78 @@ namespace ImageGlass.Services.Configuration
         ClearPixels
     }
 
+    public class ThumbnailItemInfo
+    {
+        /// <summary>
+        /// Gets actual thumbnail dimension
+        /// </summary>
+        public int Dimension { get; }
+
+        /// <summary>
+        /// Gets extra space to adapt minimum width / height of thumbnail bar
+        /// </summary>
+        public int ExtraSpace { get; }
+
+        /// <summary>
+        /// Gets total dimension needed for minimum width / height of thumbnail bar
+        /// </summary>
+        public int TotalDimension
+        {
+            get
+            {
+                return this.Dimension + this.ExtraSpace;
+            }
+        }
+
+        /// <summary>
+        /// Thumbnail item information
+        /// </summary>
+        /// <param name="dimension">Thumbnail size</param>
+        /// <param name="isHorizontalView">Horizontal or Verticle view</param>
+        public ThumbnailItemInfo(int dimension, bool isHorizontalView)
+        {
+            if (isHorizontalView)
+            {
+                this.Dimension = dimension;
+                this.ExtraSpace = 58;
+            }
+            else {
+                switch (dimension)
+                {
+                    case 32:
+                        this.Dimension = 32;
+                        this.ExtraSpace = 48;
+                        break;
+
+                    case 48:
+                        this.Dimension = 48;
+                        this.ExtraSpace = 52;
+                        break;
+
+                    case 64:
+                        this.Dimension = 64;
+                        this.ExtraSpace = 57;
+                        break;
+
+                    case 96:
+                        this.Dimension = 96;
+                        this.ExtraSpace = 69;
+                        break;
+
+                    case 128:
+                        this.Dimension = 128;
+                        this.ExtraSpace = 79;
+                        break;
+
+                    default:
+                        this.Dimension = 48;
+                        this.ExtraSpace = 57;
+                        break;
+                }
+            }
+        }
+    }
+
     public static class GlobalSetting
     {
         private static ImgMan _imageList = new ImgMan();
@@ -73,6 +145,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
+        private static bool _isThumbnailHorizontal = false;
         private static StringCollection _stringClipboard = new StringCollection();
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
@@ -452,7 +525,19 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
         /// </summary>
-        public static bool ThumbnailIsHorizontal { get; set; }
+        public static bool IsThumbnailHorizontal
+        {
+            get
+            {
+                return _isThumbnailHorizontal;
+            }
+
+            set
+            {
+                _isThumbnailHorizontal = value;
+            }
+        }
+
 
         #endregion
 

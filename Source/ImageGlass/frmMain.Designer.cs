@@ -1375,11 +1375,13 @@
             this.sp1.Panel2.Controls.Add(this.thumbnailBar);
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2Collapsed = true;
+            this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(836, 417);
-            this.sp1.SplitterDistance = 349;
+            this.sp1.SplitterDistance = 25;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
+            this.sp1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.sp1_SplitterMoved);
             // 
             // picMain
             // 

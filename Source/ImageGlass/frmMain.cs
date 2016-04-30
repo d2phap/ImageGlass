@@ -62,9 +62,6 @@ namespace ImageGlass
 
         //determine if toolbar is shown
         private bool _isShownToolbar = true;
-
-        // in "Gallery" mode, need to allow for horizontal scrollbar. In "vertical scroll" mode, a value of 40 appears adequate.
-        private const int THUMBNAIL_BAR_EXTRA = 57; 
         #endregion
 
 
@@ -1115,7 +1112,7 @@ namespace ImageGlass
             thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension + GlobalSetting.ThumbnailDimension / 3, GlobalSetting.ThumbnailDimension);
 
             // Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
-            GlobalSetting.ThumbnailIsHorizontal = bool.Parse(GlobalSetting.GetConfig("ThumbnailIsHorizontal", "True"));
+            GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("ThumbnailIsHorizontal", "True"));
 
             //Load state of Thumbnail---------------------------------------------------------
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
@@ -1157,7 +1154,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
 
             // Save thumbnail bar orientation state
-            GlobalSetting.SetConfig("ThumbnailIsHorizontal", GlobalSetting.ThumbnailIsHorizontal.ToString());
+            GlobalSetting.SetConfig("ThumbnailIsHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -2431,21 +2428,24 @@ namespace ImageGlass
             if (GlobalSetting.IsShowThumbnail)
             {
                 //show
-                sp1.SplitterWidth = 1;
-                sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + THUMBNAIL_BAR_EXTRA;
+                var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
+                sp1.Panel2MinSize = tb.TotalDimension;
 
-                if (GlobalSetting.ThumbnailIsHorizontal)
+                if (GlobalSetting.IsThumbnailHorizontal)
                 {
                     // BOTTOM
+                    sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
-                    sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA - 1;
+                    sp1.SplitterDistance = sp1.Height - tb.TotalDimension;
                     thumbnailBar.View = ImageListView.View.Gallery;
                 }
                 else
                 {
                     // RIGHT
+                    sp1.IsSplitterFixed = false; //Allow user to resize
+                    sp1.SplitterWidth = 2;
                     sp1.Orientation = Orientation.Vertical;
-                    sp1.SplitterDistance = sp1.Parent.Size.Width - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA;
+                    sp1.SplitterDistance = sp1.Width - tb.TotalDimension;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }
@@ -2554,8 +2554,12 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-        
+        private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            this.Text = sp1.Width.ToString() + "_" + sp1.SplitterDistance.ToString();
+        }
     }
 }

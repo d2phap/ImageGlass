@@ -376,7 +376,7 @@ namespace ImageGlass
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
 
-            chkThumbnailVertical.Checked = !GlobalSetting.ThumbnailIsHorizontal;
+            chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -471,7 +471,7 @@ namespace ImageGlass
 
         private void chkThumbnailVertical_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.ThumbnailIsHorizontal = !chkThumbnailVertical.Checked;
+            GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
         }
 
         #endregion
