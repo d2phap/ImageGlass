@@ -136,6 +136,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
+        private static bool _isEnableZoomLock = false;
         private static int _zoomLockValue = 100;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
@@ -302,6 +303,15 @@ namespace ImageGlass.Services.Configuration
         {
             get { return GlobalSetting._isImageError; }
             set { GlobalSetting._isImageError = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that Zoom Lock enabled
+        /// </summary>
+        public static bool IsEnabledZoomLock
+        {
+            get { return _isEnableZoomLock; }
+            set { _isEnableZoomLock = value; }
         }
 
         /// <summary>

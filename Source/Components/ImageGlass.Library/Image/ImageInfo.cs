@@ -475,7 +475,7 @@ namespace ImageGlass.Library.Image
                 File.Move(oldFileName, newFileName);
             }
         }
-                
+
 
         /// <summary>
         /// Delete file

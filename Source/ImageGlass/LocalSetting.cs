@@ -38,7 +38,7 @@ namespace ImageGlass
         private static string _imageModifiedPath = "";
         private static int _oldDPI = 96;
         private static int _currentDPI = 96;
-
+        private static bool _isResetScrollPosition = true;
 
         #region "Properties"
         /// <summary>
@@ -106,6 +106,22 @@ namespace ImageGlass
             set
             {
                 _currentDPI = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that picmain's scrollbar need to be reset
+        /// </summary>
+        public static bool IsResetScrollPosition
+        {
+            get
+            {
+                return _isResetScrollPosition;
+            }
+
+            set
+            {
+                _isResetScrollPosition = value;
             }
         }
         #endregion

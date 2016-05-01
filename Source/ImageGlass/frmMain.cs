@@ -268,6 +268,16 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         private void NextPic(int step)
         {
+            NextPic(step, false);
+        }
+
+        /// <summary>
+        /// Change image
+        /// </summary>
+        /// <param name="step">Image step to change. Zero is reload the current image.</param>
+        /// <param name="configs">Configuration for the next load</param>
+        private void NextPic(int step, bool isKeepZoomRatio)
+        {
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
             {
@@ -318,12 +328,32 @@ namespace ImageGlass
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
+                //Lock zoom ratio if required
+                bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
+                if (isKeepZoomRatio)
+                {
+                    GlobalSetting.IsEnabledZoomLock = true;
+                    GlobalSetting.ZoomLockValue = picMain.Zoom;
+
+                    //prevent scrollbar position reset
+                    LocalSetting.IsResetScrollPosition = false;
+                }
+
                 //Show image
                 picMain.Image = im;
 
                 //refresh image
                 mnuMainRefresh_Click(null, null);
-                
+
+                //Unlock zoom ratio before
+                if (isKeepZoomRatio)
+                {
+                    //reset to default values
+                    GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
+                    GlobalSetting.ZoomLockValue = 100;
+                    LocalSetting.IsResetScrollPosition = true;
+                }
+
                 //Release unused images
                 if (GlobalSetting.CurrentIndex - 2 >= 0)
                 {
@@ -430,11 +460,14 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            // this.Text = e.KeyValue.ToString();
+            //this.Text = e.KeyValue.ToString();
+            
+            #region Ctrl + `
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
             {
                 mnuMain.Show(picMain, 0, picMain.Top);
             }
+            #endregion
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -606,7 +639,7 @@ namespace ImageGlass
             }
             catch { return; }
 
-            //Lay ten file
+            //Get filename
             string oldName;
             string newName;
             oldName = newName = Path.GetFileName(
@@ -615,18 +648,19 @@ namespace ImageGlass
                 GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\\")
                 .Replace("\\\\", "\\");
 
-            //Lay ext
+            //Get file extension
             string ext = newName.Substring(newName.LastIndexOf("."));
             newName = newName.Substring(0, newName.Length - ext.Length);
 
-            //Hien input box
-            string str = null;
-            if (InputBox.ShowDiaLog("Rename", GlobalSetting.LangPack.Items["frmMain._RenameDialog"],
-                                    newName) == System.Windows.Forms.DialogResult.OK)
+            //Show input box
+            string str = null;            
+
+            if (InputBox.ShowDiaLog(GlobalSetting.LangPack.Items["frmMain._RenameDialogText"], GlobalSetting.LangPack.Items["frmMain._RenameDialog"], newName, false) == DialogResult.OK)
             {
                 str = InputBox.Message;
             }
-            if (str == null)
+
+            if (string.IsNullOrWhiteSpace(str))
             {
                 return;
             }
@@ -657,7 +691,7 @@ namespace ImageGlass
         /// <param name="duration">Duration (milisecond)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
-            if(duration == 0)
+            if (duration == 0)
             {
                 picMain.TextBackColor = Color.Transparent;
                 picMain.Font = this.Font;
@@ -1458,7 +1492,7 @@ namespace ImageGlass
             if (e.ChangeType == WatcherChangeTypes.Changed)
             {
                 GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
-                NextPic(0);
+                NextPic(0, true);
             }
         }
 
@@ -1774,10 +1808,13 @@ namespace ImageGlass
         private void mnuMainRefresh_Click(object sender, EventArgs e)
         {
             // Reset scrollbar position
-            picMain.ScrollTo(0, 0, 0, 0);
-
+            if (LocalSetting.IsResetScrollPosition)
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
+            
             //Zoom condition
-            if (btnZoomLock.Checked)
+            if (GlobalSetting.IsEnabledZoomLock)
             {
                 picMain.Zoom = GlobalSetting.ZoomLockValue;
             }
@@ -2116,14 +2153,15 @@ namespace ImageGlass
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
         {
-            if (btnZoomLock.Checked)
+            if (!GlobalSetting.IsEnabledZoomLock)
             {
+                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = true;
                 GlobalSetting.ZoomLockValue = picMain.Zoom;
             }
             else
             {
+                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = false;
                 GlobalSetting.ZoomLockValue = 100;
-                btnZoomLock.Checked = false;
             }
         }
 
@@ -2575,6 +2613,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
 
 
