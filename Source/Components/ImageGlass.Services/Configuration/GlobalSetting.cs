@@ -145,6 +145,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
+        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).TotalDimension;
         private static bool _isThumbnailHorizontal = false;
         private static StringCollection _stringClipboard = new StringCollection();
         private static bool _isAllowMultiInstances = true;
@@ -535,6 +536,22 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 _isThumbnailHorizontal = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets width of horizontal thumbnail bar
+        /// </summary>
+        public static int ThumbnailBarWidth
+        {
+            get
+            {
+                return _thumbnailBarWidth;
+            }
+
+            set
+            {
+                _thumbnailBarWidth = value;
             }
         }
 

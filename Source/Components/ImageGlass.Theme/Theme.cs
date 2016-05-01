@@ -141,7 +141,7 @@ namespace ImageGlass.Theme
             catch { };
             try { topbartransparent = int.Parse(n.GetAttribute("topbartransparent")); }
             catch { };
-            try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
+            try { backcolor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
             catch { };
             try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor"))); }
             catch { };
