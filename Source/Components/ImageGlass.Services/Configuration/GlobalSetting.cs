@@ -137,6 +137,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
         private static bool _isEnableZoomLock = false;
+        private static bool _isZoomToFit = false;
         private static int _zoomLockValue = 100;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
@@ -239,10 +240,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string SupportedDefaultExtensions
         {
-            get
-            {
-                return _supportedDefaultExtensions;
-            }
+            get { return _supportedDefaultExtensions; }
         }
 
         /// <summary>
@@ -250,14 +248,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string SupportedExtraExtensions
         {
-            get
-            {
-                return _supportedExtraExtensions;
-            }
-            set
-            {
-                _supportedExtraExtensions = value;
-            }
+            get { return _supportedExtraExtensions; }
+            set { _supportedExtraExtensions = value; }
         }
 
         /// <summary>
@@ -375,14 +367,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowToolBar
         {
-            get
-            {
-                return GlobalSetting._isShowToolBar;
-            }
-            set
-            {
-                GlobalSetting._isShowToolBar = value;
-            }
+            get { return GlobalSetting._isShowToolBar; }
+            set { GlobalSetting._isShowToolBar = value; }
         }
 
         /// <summary>
@@ -455,15 +441,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsFullScreen
         {
-            get
-            {
-                return _isFullScreen;
-            }
-
-            set
-            {
-                _isFullScreen = value;
-            }
+            get { return _isFullScreen; }
+            set { _isFullScreen = value; }
         }
 
         /// <summary>
@@ -471,15 +450,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int ThumbnailDimension
         {
-            get
-            {
-                return _thumbnailDimension;
-            }
-
-            set
-            {
-                _thumbnailDimension = value;
-            }
+            get { return _thumbnailDimension; }
+            set { _thumbnailDimension = value; }
         }
 
         /// <summary>
@@ -487,15 +459,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsAllowMultiInstances
         {
-            get
-            {
-                return _isAllowMultiInstances;
-            }
-
-            set
-            {
-                _isAllowMultiInstances = value;
-            }
+            get { return _isAllowMultiInstances; }
+            set { _isAllowMultiInstances = value; }
         }
 
         /// <summary>
@@ -538,15 +503,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsThumbnailHorizontal
         {
-            get
-            {
-                return _isThumbnailHorizontal;
-            }
-
-            set
-            {
-                _isThumbnailHorizontal = value;
-            }
+            get { return _isThumbnailHorizontal; }
+            set { _isThumbnailHorizontal = value; }
         }
 
         /// <summary>
@@ -554,15 +512,17 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int ThumbnailBarWidth
         {
-            get
-            {
-                return _thumbnailBarWidth;
-            }
+            get { return _thumbnailBarWidth; }
+            set { _thumbnailBarWidth = value; }
+        }
 
-            set
-            {
-                _thumbnailBarWidth = value;
-            }
+        /// <summary>
+        /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
+        /// </summary>
+        public static bool IsZoomToFit
+        {
+            get { return _isZoomToFit; }
+            set { _isZoomToFit = value; }
         }
 
 

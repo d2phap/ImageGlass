@@ -2856,7 +2856,7 @@ namespace ImageGlass
             this.PerformZoomOut(ImageBoxActionSources.Unknown, preservePosition);
         }
         /// <summary>
-        ///   [Modified by PHAP] Zooms to the maximum size for displaying the entire image within the bounds of the control.
+        ///   Zooms to the maximum size for displaying the entire image within the bounds of the control.
         /// </summary>
         public virtual void ZoomToFit()
         {
@@ -2868,7 +2868,46 @@ namespace ImageGlass
 
                 innerRectangle = this.GetInsideViewPort(true);
 
-                #region [Modified by PHAP] ////////////////////////////
+                if (this.ViewSize.Width > this.ViewSize.Height)
+                {
+                    aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
+                    zoom = aspectRatio * 100.0;
+
+                    if (innerRectangle.Height < ((this.ViewSize.Height * zoom) / 100.0))
+                    {
+                        aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
+                        zoom = aspectRatio * 100.0;
+                    }
+                }
+                else
+                {
+                    aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
+                    zoom = aspectRatio * 100.0;
+
+                    if (innerRectangle.Width < ((this.ViewSize.Width * zoom) / 100.0))
+                    {
+                        aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
+                        zoom = aspectRatio * 100.0;
+                    }
+                }
+
+                this.Zoom = (int)Math.Round(Math.Floor(zoom));
+            }
+        }
+
+        /// <summary>
+        /// [PHAP] Zooms to the maximum size for displaying the entire image within the bounds of the control. If image size is smaller than viewer size, keep its original size.
+        /// </summary>
+        public virtual void ZoomAuto()
+        {
+            if (!this.ViewSize.IsEmpty)
+            {
+                Rectangle innerRectangle;
+                double zoom;
+                double aspectRatio;
+
+                innerRectangle = this.GetInsideViewPort(true);
+                
                 if (this.ViewSize.Width <= innerRectangle.Width && this.ViewSize.Height <= innerRectangle.Height)
                 {
                     zoom = 100.0;
@@ -2898,30 +2937,6 @@ namespace ImageGlass
                         }
                     }
                 }
-                #endregion
-
-                //if (this.ViewSize.Width > this.ViewSize.Height)
-                //{
-                //    aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
-                //    zoom = aspectRatio * 100.0;
-
-                //    if (innerRectangle.Height < ((this.ViewSize.Height * zoom) / 100.0))
-                //    {
-                //        aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
-                //        zoom = aspectRatio * 100.0;
-                //    }
-                //}
-                //else
-                //{
-                //    aspectRatio = (double)innerRectangle.Height / this.ViewSize.Height;
-                //    zoom = aspectRatio * 100.0;
-
-                //    if (innerRectangle.Width < ((this.ViewSize.Width * zoom) / 100.0))
-                //    {
-                //        aspectRatio = (double)innerRectangle.Width / this.ViewSize.Width;
-                //        zoom = aspectRatio * 100.0;
-                //    }
-                //}
 
                 this.Zoom = (int)Math.Round(Math.Floor(zoom));
             }

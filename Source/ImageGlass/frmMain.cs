@@ -328,6 +328,8 @@ namespace ImageGlass
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
+                //picMain.ZoomToFit();
+
                 //Lock zoom ratio if required
                 bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
                 if (isKeepZoomRatio)
@@ -1084,7 +1086,7 @@ namespace ImageGlass
 
             //Get welcome screen------------------------------------------------------------
             GlobalSetting.IsWelcomePicture = bool.Parse(GlobalSetting.GetConfig("Welcome", "True"));
-
+            
             //Load default image------------------------------------------------------------
             string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
@@ -1112,6 +1114,10 @@ namespace ImageGlass
             GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
             GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
             mnuMainToolbar_Click(null, EventArgs.Empty);
+
+            //Load Zoom to Fit value---------------------------------------------------------
+            GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
+            mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
             //Load theme--------------------------------------------------------------------
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
@@ -1185,6 +1191,9 @@ namespace ImageGlass
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
+
+            //Zoom to fit
+            GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
 
             //Thumbnail panel
             GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
@@ -1361,6 +1370,7 @@ namespace ImageGlass
                 mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateClockwise"];
                 mnuMainZoomIn.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomIn"];
                 mnuMainZoomOut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomOut"];
+                mnuMainZoomToFit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomToFit"];
                 mnuMainActualSize.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainActualSize"];
                 mnuMainLockZoomRatio.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLockZoomRatio"];
                 mnuMainScaleToWidth.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToWidth"];
@@ -1521,8 +1531,8 @@ namespace ImageGlass
                 default:
                     break;
             }
-
         }
+        
         #endregion
 
 
@@ -1821,7 +1831,14 @@ namespace ImageGlass
             else
             {
                 //Reset zoom
-                picMain.ZoomToFit();
+                if (GlobalSetting.IsZoomToFit)
+                {
+                    picMain.ZoomToFit();
+                }
+                else
+                {
+                    picMain.ZoomAuto();
+                }
 
                 this._isZoomed = false;
             }
@@ -2138,6 +2155,12 @@ namespace ImageGlass
             }
 
             picMain.ZoomOut();
+        }
+
+        private void mnuMainZoomToFit_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsZoomToFit = mnuMainZoomToFit.Checked;
+            mnuMainRefresh_Click(null, null);
         }
 
         private void mnuMainActualSize_Click(object sender, EventArgs e)
@@ -2617,6 +2640,13 @@ namespace ImageGlass
 
 
 
+
+
+
         #endregion
+
+       
+
+        
     }
 }

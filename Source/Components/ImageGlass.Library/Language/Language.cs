@@ -279,6 +279,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             this.Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             this.Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
+            this.Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.3
             this.Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             this.Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
             this.Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
