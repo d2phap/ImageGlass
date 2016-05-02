@@ -327,15 +327,15 @@ namespace ImageGlass.Services.Configuration
 
                 if (value == ZoomOptimizationValue.SmoothPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "1");
+                    GlobalSetting.SetConfig("ZoomOptimization", "1");
                 }
                 else if (value == ZoomOptimizationValue.ClearPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "2");
+                    GlobalSetting.SetConfig("ZoomOptimization", "2");
                 }
                 else
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "0");
+                    GlobalSetting.SetConfig("ZoomOptimization", "0");
                 }
             }
         }

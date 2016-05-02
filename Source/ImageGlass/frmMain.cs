@@ -624,7 +624,33 @@ namespace ImageGlass
 
 
         #region Private functions
-        
+
+        /// <summary>
+        /// Start Zoom optimization
+        /// </summary>
+        private void ZoomOptimization()
+        {
+            if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.Auto)
+            {
+                if (picMain.Zoom > 100)
+                {
+                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                }
+                else if (picMain.Zoom < 100)
+                {
+                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+                }
+            }
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.ClearPixels)
+            {
+                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            }
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.SmoothPixels)
+            {
+                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            }
+        }
+
         /// <summary>
         /// Rename image
         /// </summary>
@@ -1119,6 +1145,21 @@ namespace ImageGlass
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
             mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
+            //Zoom optimization method-------------------------------------------------------
+            string z = GlobalSetting.GetConfig("ZoomOptimization", "0");
+            if (z == "1")
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
+            }
+            else if (z == "2")
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
+            }
+            else //auto
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
+            }
+
             //Load theme--------------------------------------------------------------------
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
             LoadTheme();
@@ -1157,7 +1198,7 @@ namespace ImageGlass
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
 
             //Load background---------------------------------------------------------------
-            string z = GlobalSetting.GetConfig("BackgroundColor", "-1");
+            z = GlobalSetting.GetConfig("BackgroundColor", "-1");
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
@@ -1191,7 +1232,7 @@ namespace ImageGlass
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
-
+            
             //Zoom to fit
             GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
 
@@ -1509,6 +1550,10 @@ namespace ImageGlass
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
             this._isZoomed = true;
+            
+            //Zoom optimization
+            ZoomOptimization();
+            
             this.UpdateStatusBar(true);
         }
 

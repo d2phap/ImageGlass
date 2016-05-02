@@ -156,3 +156,5 @@ $RECYCLE.BIN/
 .DS_Store
 *.cache
 *.cache
+*.cache
+Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache

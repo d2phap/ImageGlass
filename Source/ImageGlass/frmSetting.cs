@@ -330,8 +330,28 @@ namespace ImageGlass
             //Get value of IsPressESCToQuit
             chkAllowMultiInstances.Checked = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
 
+            //Load items of cmbZoomOptimization
+            cmbZoomOptimization.Items.Clear();
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
+
+            //Get value of cmbZoomOptimization
+            s = GlobalSetting.GetConfig("ZoomOptimization", "0");
+            int i = 0;
+            if (int.TryParse(s, out i))
+            {
+                if (-1 < i && i < cmbZoomOptimization.Items.Count)
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+            cmbZoomOptimization.SelectedIndex = i;
+
             //Get value of barInterval
-            int i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
+            i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
             if (0 < i && i < 61)
             {
                 barInterval.Value = i;
@@ -341,8 +361,7 @@ namespace ImageGlass
                 barInterval.Value = 5;
             }
 
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], 
-                                        barInterval.Value);
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
             //load thumbnail dimension
             i = int.Parse(GlobalSetting.GetConfig("ThumbnailDimension", "48"));
@@ -436,6 +455,22 @@ namespace ImageGlass
             GlobalSetting.SetConfig("Interval", barInterval.Value.ToString());
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"],
                                         barInterval.Value);
+        }
+
+        private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbZoomOptimization.SelectedIndex == 1)
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
+            }
+            else if (cmbZoomOptimization.SelectedIndex == 2)
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
+            }
+            else
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
+            }
         }
 
         private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
