@@ -209,8 +209,11 @@ namespace ImageGlass
             //Sort image file
             if (GlobalSetting.ImageOrderBy == ImageOrderBy.Name)
             {
-                list.AddRange(FileLogicalComparer
-                    .Sort(dsFile.ToArray()));
+                var arr = dsFile.ToArray();
+                Array.Sort(arr, new WindowsNaturalSort());
+                list.AddRange(arr);
+
+                //list.AddRange(FileLogicalComparer.Sort(dsFile.ToArray()));
             }
             else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
             {

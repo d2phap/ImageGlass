@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparer\WindowsNaturalSort.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Comparer\DictionaryEntryComparer.cs" />
     <Compile Include="Comparer\FileLogicalComparer.cs" />
