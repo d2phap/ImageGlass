@@ -204,14 +204,16 @@ namespace ImageGlass
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
+            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
 
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblGeneral_ThumbnailSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ThumbnailSize"];
+            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
+            chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-
-            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
+            
 
             //File Associations tab
             lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
@@ -313,7 +315,7 @@ namespace ImageGlass
             }
 
             //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = bool.Parse(GlobalSetting.GetConfig("Welcome", "true"));
+            chkWelcomePicture.Checked = GlobalSetting.IsWelcomePicture;
 
             //Get value of chkHideToolBar
             chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
@@ -395,7 +397,11 @@ namespace ImageGlass
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
 
+            //Thumbnail bar on right side
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
+
+            //Use mouse wheel to browse images
+            chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -424,6 +430,7 @@ namespace ImageGlass
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
+            GlobalSetting.SetConfig("Welcome", GlobalSetting.IsWelcomePicture.ToString());
         }
 
         private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
@@ -509,9 +516,15 @@ namespace ImageGlass
             GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
         }
 
+        private void chkMouseNavigation_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
+            GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
+        }
+
         #endregion
 
-        
+
         #region TAB LANGUAGE
         private void lnkGetMoreLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -624,9 +637,10 @@ namespace ImageGlass
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+
+
         #endregion
 
-
-
+        
     }
 }

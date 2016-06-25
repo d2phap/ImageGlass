@@ -41,14 +41,15 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-            
+
             //Check and perform DPI Scaling
             LocalSetting.OldDPI = LocalSetting.CurrentDPI;
             LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
             Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
         }
+
+        
 
 
         #region Local variables
@@ -616,9 +617,40 @@ namespace ImageGlass
                 return;
             }
             #endregion
-            
+
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.Control && !e.Alt && !e.Shift)//Ctrl
+            {
+                if (GlobalSetting.IsMouseNavigation)
+                {
+                    this._isZoomed = true;
+                    picMain.AllowZoom = true;
+                }
+                return;
+            }
+            #endregion
+
         }
 
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            //this.Text = e.KeyValue.ToString();
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
+            {
+                if (GlobalSetting.IsMouseNavigation)
+                {
+                    this._isZoomed = false;
+                    picMain.AllowZoom = false;
+                }
+                return;
+            }
+            #endregion
+        }
         #endregion
 
 
@@ -1205,6 +1237,10 @@ namespace ImageGlass
             //Load state of IsWindowAlwaysOnTop value-----------------------------------------
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
+
+            //Load state of IsMouseNavigation value-------------------------------------------
+            GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
+            picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
         }
 
 
@@ -1294,12 +1330,16 @@ namespace ImageGlass
             }
             base.WndProc(ref m);
         }
+
         
 
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
+
+            //Trigger Mouse Wheel event
+            picMain.MouseWheel += picMain_MouseWheel;
 
             LoadConfig();
             Application.DoEvents();
@@ -1355,6 +1395,10 @@ namespace ImageGlass
 
                 //Update language pack------------------
                 this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+
+                //Prevent zooming by scrolling mouse
+                this._isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+                
 
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
@@ -1547,14 +1591,38 @@ namespace ImageGlass
             }
         }
 
+        // Use mouse wheel to navigate images
+        private void picMain_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (GlobalSetting.IsMouseNavigation && !this._isZoomed)
+            {
+                //Prevent picmain zooming
+                picMain.AllowZoom = false;
+
+                if (e.Delta > 0)
+                {
+                    //Next pic
+                    mnuMainViewNext_Click(null, null);
+                }
+                else
+                {
+                    //Previous pic
+                    mnuMainViewPrevious_Click(null, null);
+                }
+            }
+        }
+
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
-            this._isZoomed = true;
-            
-            //Zoom optimization
-            ZoomOptimization();
-            
-            this.UpdateStatusBar(true);
+            if (!GlobalSetting.IsMouseNavigation)
+            {
+                this._isZoomed = true;
+
+                //Zoom optimization
+                ZoomOptimization();
+
+                this.UpdateStatusBar(true);
+            }            
         }
 
         private void picMain_MouseClick(object sender, MouseEventArgs e)
@@ -2688,9 +2756,10 @@ namespace ImageGlass
 
 
 
-        #endregion
 
-       
+
+
+        #endregion
 
         
     }

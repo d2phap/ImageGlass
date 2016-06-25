@@ -153,6 +153,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
         private static bool _isTempMemoryData = false;
+        private static bool _isMouseNavigation = false;
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
         private static bool _isWindowAlwaysOnTop = false;
 
@@ -525,6 +526,15 @@ namespace ImageGlass.Services.Configuration
             set { _isZoomToFit = value; }
         }
 
+        /// <summary>
+        /// Gets, sets value indicating that using mouse wheel to navigate image or not
+        /// </summary>
+        public static bool IsMouseNavigation
+        {
+            get { return _isMouseNavigation; }
+            set { _isMouseNavigation = value; }
+        }
+
 
         #endregion
 
@@ -543,7 +553,7 @@ namespace ImageGlass.Services.Configuration
 
             if (int.TryParse(s, out i))
             {
-                if (-1 < i && i < 7) //<=== Số lượng phần tử
+                if (-1 < i && i < 7) //<=== Number of items in array
                 { }
                 else
                 {

@@ -88,6 +88,7 @@
             this.mnuMainZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainActualSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainZoomToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainLockZoomRatio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem27 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainScaleToWidth = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +133,6 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.mnuMainZoomToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -631,8 +631,9 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 440);
+            this.mnuMain.Size = new System.Drawing.Size(289, 418);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -922,6 +923,17 @@
             this.mnuMainActualSize.Size = new System.Drawing.Size(291, 23);
             this.mnuMainActualSize.Text = "&Actual size";
             this.mnuMainActualSize.Click += new System.EventHandler(this.mnuMainActualSize_Click);
+            // 
+            // mnuMainZoomToFit
+            // 
+            this.mnuMainZoomToFit.CheckOnClick = true;
+            this.mnuMainZoomToFit.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainZoomToFit.Name = "mnuMainZoomToFit";
+            this.mnuMainZoomToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "";
+            this.mnuMainZoomToFit.Size = new System.Drawing.Size(291, 23);
+            this.mnuMainZoomToFit.Text = "Zoom to &fit";
+            this.mnuMainZoomToFit.Click += new System.EventHandler(this.mnuMainZoomToFit_Click);
             // 
             // mnuMainLockZoomRatio
             // 
@@ -1378,7 +1390,7 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(836, 417);
-            this.sp1.SplitterDistance = 339;
+            this.sp1.SplitterDistance = 342;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1395,7 +1407,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(836, 339);
+            this.picMain.Size = new System.Drawing.Size(836, 342);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1417,22 +1429,11 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(836, 77);
+            this.thumbnailBar.Size = new System.Drawing.Size(836, 74);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
-            // 
-            // mnuMainZoomToFit
-            // 
-            this.mnuMainZoomToFit.CheckOnClick = true;
-            this.mnuMainZoomToFit.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainZoomToFit.Name = "mnuMainZoomToFit";
-            this.mnuMainZoomToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "";
-            this.mnuMainZoomToFit.Size = new System.Drawing.Size(291, 23);
-            this.mnuMainZoomToFit.Text = "Zoom to &fit";
-            this.mnuMainZoomToFit.Click += new System.EventHandler(this.mnuMainZoomToFit_Click);
             // 
             // frmMain
             // 
@@ -1457,6 +1458,7 @@
             this.ResizeBegin += new System.EventHandler(this.frmMain_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
             this.mnuPopup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.toolMain.ResumeLayout(false);
