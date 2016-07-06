@@ -35,24 +35,20 @@ namespace igcmd
             Application.SetCompatibleTextRenderingDefault(false);
             string topcmd = args[0].ToLower().Trim();
 
-            if (topcmd == "igupdate")//kiem tra phien ban
+            if (topcmd == "igupdate")// check for update
             {
                 Core.CheckForUpdate();
             }
-            else if (topcmd == "igupload")
-            {
-                Core.Upload(args[1], args[2]);
-            }
-            else if (topcmd == "igautoupdate")//tu dong kiem tra phien ban
+            else if (topcmd == "igautoupdate")// auto check for update
             {
                 Core.AutoUpdate();
             }
-            else if (topcmd == "igpacktheme")//dong goi theme thanh *.igtheme
+            else if (topcmd == "igpacktheme")// pack theme *.igtheme
             {
                 //cmd: igcmd.exe igpacktheme "srcDir" "desFile"
                 Core.PackTheme(args[1], args[2]);
             }
-            else if (topcmd == "iginstalltheme")//cai dat theme
+            else if (topcmd == "iginstalltheme")//install theme
             {
                 Core.InstallTheme(args[1]);
             }
