@@ -82,11 +82,13 @@
       <HintPath>..\..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Imazen.WebP">
+    <Reference Include="Imazen.WebP, Version=9.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ImageGlass\Imazen.WebP.dll</HintPath>
     </Reference>
-    <Reference Include="Svg">
-      <HintPath>..\..\ImageGlass\Svg.dll</HintPath>
+    <Reference Include="Svg, Version=2.2.1.1459, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Svg.2.2.1\lib\net35\Svg.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

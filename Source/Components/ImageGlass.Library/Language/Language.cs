@@ -279,7 +279,7 @@ namespace ImageGlass.Library
             this.Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             this.Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             this.Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            this.Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.3
+            this.Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5
             this.Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             this.Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
             this.Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
@@ -345,7 +345,7 @@ namespace ImageGlass.Library
             
             this.Items.Add("frmMain._OpenFileDialog", "All supported files");
             this.Items.Add("frmMain._Text", "file(s)");
-            this.Items.Add("frmMain._RenameDialogText", "Rename"); //v3.3
+            this.Items.Add("frmMain._RenameDialogText", "Rename"); //v3.5
             this.Items.Add("frmMain._RenameDialog", "Enter new filename");
             this.Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");
             this.Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
@@ -402,12 +402,12 @@ namespace ImageGlass.Library
             this.Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             this.Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             this.Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
-            this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //-3.0, +3.3
-            this.Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.3
+            this.Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //-3.0, +3.5
+            this.Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             this.Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
-            this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.3
-            this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.3
-            this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.3
+            this.Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
+            this.Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
+            this.Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
             this.Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             this.Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
             this.Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
