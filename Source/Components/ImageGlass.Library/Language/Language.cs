@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,9 @@ namespace ImageGlass.Library
         private string _minVersion;
         private string _fileName;
         private RightToLeft _isRightToLeftLayout;
-        private Dictionary<string, string> _Items;
+        //private Dictionary<string, string> _Items;
+
+        private LanguageItem<string, string> _Items;
 
         #region Properties
         /// <summary>
@@ -79,7 +81,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get, set list of language string
         /// </summary>
-        public Dictionary<string, string> Items
+        public LanguageItem<string, string> Items
         {
             get { return _Items; }
             set { _Items = value; }
@@ -114,11 +116,11 @@ namespace ImageGlass.Library
             _langName = "English";
             _author = "Dương Diệu Pháp";
             _description = "English";
-            _minVersion = "3.2.0.16";
+            _minVersion = "3.5.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
-            _Items = new Dictionary<string, string>();
+            _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
         }
 
@@ -129,7 +131,7 @@ namespace ImageGlass.Library
         /// <param name="fileName">*.igLang path</param>
         public Language(string fileName)
         {
-            _Items = new Dictionary<string, string>();
+            _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
             _fileName = fileName;
@@ -250,7 +252,6 @@ namespace ImageGlass.Library
             //this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email"); //removed v2.0 final
             //this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks"); //removed v3.0
             this.Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
-
 
             this.Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             this.Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0

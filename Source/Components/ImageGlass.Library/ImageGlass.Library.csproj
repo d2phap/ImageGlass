@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparer\WindowsNaturalSort.cs" />
+    <Compile Include="Language\LanguageItem.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Comparer\DictionaryEntryComparer.cs" />
     <Compile Include="Comparer\FileLogicalComparer.cs" />
