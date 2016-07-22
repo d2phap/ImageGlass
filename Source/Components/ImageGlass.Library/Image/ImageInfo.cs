@@ -127,41 +127,46 @@ namespace ImageGlass.Library.Image
 
             if (s.ShowDialog() == DialogResult.OK)
             {
+                // used to avoid the following consecutive exceptions:
+                // System.ObjectDisposedException
+                // System.Runtime.InteropServices.ExternalException
+                var clonedPic = new Bitmap(pic);
+
                 switch (s.FilterIndex)
                 {
                     case 1:
-                        pic.Save(s.FileName, ImageFormat.Bmp);
+                        clonedPic.Save(s.FileName, ImageFormat.Bmp);
                         break;
                     case 2:
-                        pic.Save(s.FileName, ImageFormat.Emf);
+                        clonedPic.Save(s.FileName, ImageFormat.Emf);
                         break;
                     case 3:
-                        pic.Save(s.FileName, ImageFormat.Exif);
+                        clonedPic.Save(s.FileName, ImageFormat.Exif);
                         break;
                     case 4:
-                        pic.Save(s.FileName, ImageFormat.Gif);
+                        clonedPic.Save(s.FileName, ImageFormat.Gif);
                         break;
                     case 5:
-                        pic.Save(s.FileName, ImageFormat.Icon);
+                        clonedPic.Save(s.FileName, ImageFormat.Icon);
                         break;
                     case 6:
-                        pic.Save(s.FileName, ImageFormat.Jpeg);
+                        clonedPic.Save(s.FileName, ImageFormat.Jpeg);
                         break;
                     case 7:
-                        pic.Save(s.FileName, ImageFormat.Png);
+                        clonedPic.Save(s.FileName, ImageFormat.Png);
                         break;
                     case 8:
-                        pic.Save(s.FileName, ImageFormat.Tiff);
+                        clonedPic.Save(s.FileName, ImageFormat.Tiff);
                         break;
                     case 9:
-                        pic.Save(s.FileName, ImageFormat.Wmf);
+                        clonedPic.Save(s.FileName, ImageFormat.Wmf);
                         break;
                     case 10:
                         using (MemoryStream ms = new MemoryStream())
                         {
                             try
                             {
-                                pic.Save(ms, pic.RawFormat);
+                                clonedPic.Save(ms, pic.RawFormat);
                                 string base64string = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
 
                                 using (StreamWriter fs = new StreamWriter(s.FileName))
@@ -178,6 +183,9 @@ namespace ImageGlass.Library.Image
                         
                         break;
                 }
+
+                // free resources
+                clonedPic.Dispose();
             }
         }
 
@@ -455,9 +463,19 @@ namespace ImageGlass.Library.Image
         /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName)
         {
-            File.Move(oldFileName, newFileName);
+            // Issue 73: Windows ignores case-only changes
+            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant())
+            {
+                // user changing only the case of the filename. Need to perform a trick.
+                File.Move(oldFileName, oldFileName + "_imgglass_extra");
+                File.Move(oldFileName + "_imgglass_extra", newFileName);
+            }
+            else
+            {
+                File.Move(oldFileName, newFileName);
+            }
         }
-                
+
 
         /// <summary>
         /// Delete file

@@ -41,14 +41,15 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-            
+
             //Check and perform DPI Scaling
             LocalSetting.OldDPI = LocalSetting.CurrentDPI;
             LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
             Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
         }
+
+        
 
 
         #region Local variables
@@ -62,9 +63,6 @@ namespace ImageGlass
 
         //determine if toolbar is shown
         private bool _isShownToolbar = true;
-
-        // in "Gallery" mode, need to allow for horizontal scrollbar. In "vertical scroll" mode, a value of 40 appears adequate.
-        private const int THUMBNAIL_BAR_EXTRA = 57; 
         #endregion
 
 
@@ -211,8 +209,11 @@ namespace ImageGlass
             //Sort image file
             if (GlobalSetting.ImageOrderBy == ImageOrderBy.Name)
             {
-                list.AddRange(FileLogicalComparer
-                    .Sort(dsFile.ToArray()));
+                var arr = dsFile.ToArray();
+                Array.Sort(arr, new WindowsNaturalSort());
+                list.AddRange(arr);
+
+                //list.AddRange(FileLogicalComparer.Sort(dsFile.ToArray()));
             }
             else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
             {
@@ -271,6 +272,16 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         private void NextPic(int step)
         {
+            NextPic(step, false);
+        }
+
+        /// <summary>
+        /// Change image
+        /// </summary>
+        /// <param name="step">Image step to change. Zero is reload the current image.</param>
+        /// <param name="configs">Configuration for the next load</param>
+        private void NextPic(int step, bool isKeepZoomRatio)
+        {
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
             {
@@ -321,12 +332,34 @@ namespace ImageGlass
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
+                //picMain.ZoomToFit();
+
+                //Lock zoom ratio if required
+                bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
+                if (isKeepZoomRatio)
+                {
+                    GlobalSetting.IsEnabledZoomLock = true;
+                    GlobalSetting.ZoomLockValue = picMain.Zoom;
+
+                    //prevent scrollbar position reset
+                    LocalSetting.IsResetScrollPosition = false;
+                }
+
                 //Show image
                 picMain.Image = im;
 
                 //refresh image
                 mnuMainRefresh_Click(null, null);
-                
+
+                //Unlock zoom ratio before
+                if (isKeepZoomRatio)
+                {
+                    //reset to default values
+                    GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
+                    GlobalSetting.ZoomLockValue = 100;
+                    LocalSetting.IsResetScrollPosition = true;
+                }
+
                 //Release unused images
                 if (GlobalSetting.CurrentIndex - 2 >= 0)
                 {
@@ -433,11 +466,14 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            // this.Text = e.KeyValue.ToString();
+            //this.Text = e.KeyValue.ToString();
+            
+            #region Ctrl + `
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
             {
                 mnuMain.Show(picMain, 0, picMain.Top);
             }
+            #endregion
 
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
@@ -584,15 +620,72 @@ namespace ImageGlass
                 return;
             }
             #endregion
-            
+
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.Control && !e.Alt && !e.Shift)//Ctrl
+            {
+                if (GlobalSetting.IsMouseNavigation)
+                {
+                    this._isZoomed = true;
+                    picMain.AllowZoom = true;
+                }
+                return;
+            }
+            #endregion
+
         }
 
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            //this.Text = e.KeyValue.ToString();
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
+            {
+                if (GlobalSetting.IsMouseNavigation)
+                {
+                    this._isZoomed = false;
+                    picMain.AllowZoom = false;
+                }
+                return;
+            }
+            #endregion
+        }
         #endregion
 
 
 
         #region Private functions
-        
+
+        /// <summary>
+        /// Start Zoom optimization
+        /// </summary>
+        private void ZoomOptimization()
+        {
+            if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.Auto)
+            {
+                if (picMain.Zoom > 100)
+                {
+                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                }
+                else if (picMain.Zoom < 100)
+                {
+                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+                }
+            }
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.ClearPixels)
+            {
+                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            }
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.SmoothPixels)
+            {
+                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            }
+        }
+
         /// <summary>
         /// Rename image
         /// </summary>
@@ -609,7 +702,7 @@ namespace ImageGlass
             }
             catch { return; }
 
-            //Lay ten file
+            //Get filename
             string oldName;
             string newName;
             oldName = newName = Path.GetFileName(
@@ -618,18 +711,19 @@ namespace ImageGlass
                 GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\\")
                 .Replace("\\\\", "\\");
 
-            //Lay ext
+            //Get file extension
             string ext = newName.Substring(newName.LastIndexOf("."));
             newName = newName.Substring(0, newName.Length - ext.Length);
 
-            //Hien input box
-            string str = null;
-            if (InputBox.ShowDiaLog("Rename", GlobalSetting.LangPack.Items["frmMain._RenameDialog"],
-                                    newName) == System.Windows.Forms.DialogResult.OK)
+            //Show input box
+            string str = null;            
+
+            if (InputBox.ShowDiaLog(GlobalSetting.LangPack.Items["frmMain._RenameDialogText"], GlobalSetting.LangPack.Items["frmMain._RenameDialog"], newName, false) == DialogResult.OK)
             {
                 str = InputBox.Message;
             }
-            if (str == null)
+
+            if (string.IsNullOrWhiteSpace(str))
             {
                 return;
             }
@@ -660,7 +754,7 @@ namespace ImageGlass
         /// <param name="duration">Duration (milisecond)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
-            if(duration == 0)
+            if (duration == 0)
             {
                 picMain.TextBackColor = Color.Transparent;
                 picMain.Font = this.Font;
@@ -843,7 +937,7 @@ namespace ImageGlass
         {
             // <main>
             toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar;
-            thumbnailBar.BackgroundImage = ImageGlass.Properties.Resources.bottombar;
+            thumbnailBar.BackColor = Color.FromArgb(234, 234, 242);
             lblInfo.ForeColor = Color.Black;
 
             picMain.BackColor = this.BackColor;
@@ -895,19 +989,12 @@ namespace ImageGlass
                 try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
                 catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
 
-                try { thumbnailBar.BackgroundImage = Image.FromFile(dir + t.bottombar); }
-                catch { thumbnailBar.BackgroundImage = ImageGlass.Properties.Resources.bottombar; }
+                try { thumbnailBar.BackColor = t.bottomBarColor; }
+                catch { thumbnailBar.BackColor = Color.FromArgb(234, 234, 242); }
 
-                try
-                {
-                    lblInfo.ForeColor = t.statuscolor;
-                }
-                catch
-                {
-                    lblInfo.ForeColor = Color.White;
-                }
-
-
+                try { lblInfo.ForeColor = t.statuscolor; }
+                catch { lblInfo.ForeColor = Color.White; }
+                
                 try
                 {
                     picMain.BackColor = t.backcolor;
@@ -1045,10 +1132,6 @@ namespace ImageGlass
                 GlobalSetting.SupportedExtraExtensions = GlobalSetting.GetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
             }
 
-            //Load theme--------------------------------------------------------------------
-            LoadTheme();
-            Application.DoEvents();
-
             //Slideshow Interval-----------------------------------------------------------
             int i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
             if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds
@@ -1058,14 +1141,13 @@ namespace ImageGlass
             GlobalSetting.IsShowCheckedBackground = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
             GlobalSetting.IsShowCheckedBackground = !GlobalSetting.IsShowCheckedBackground;
             mnuMainCheckBackground_Click(null, EventArgs.Empty);
-            
 
             //Recursive loading--------------------------------------------------------------
             GlobalSetting.IsRecursive = bool.Parse(GlobalSetting.GetConfig("Recursive", "False"));
 
             //Get welcome screen------------------------------------------------------------
             GlobalSetting.IsWelcomePicture = bool.Parse(GlobalSetting.GetConfig("Welcome", "True"));
-
+            
             //Load default image------------------------------------------------------------
             string y = GlobalSetting.GetConfig("Welcome", "True");
             if (y.ToLower() == "true")
@@ -1075,7 +1157,6 @@ namespace ImageGlass
                 {
                     Prepare(GlobalSetting.StartUpDir + "default.png");
                 }
-                
             }
 
             //Load is loop back slideshow---------------------------------------------------
@@ -1090,16 +1171,34 @@ namespace ImageGlass
             //Load state of Image Booster --------------------------------------------------
             GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
 
-            //Load background---------------------------------------------------------------
-            string z = GlobalSetting.GetConfig("BackgroundColor", "-1");
-            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
-            picMain.BackColor = GlobalSetting.BackgroundColor;
-
             //Load state of Toolbar---------------------------------------------------------
             GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
             GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
             mnuMainToolbar_Click(null, EventArgs.Empty);
 
+            //Load Zoom to Fit value---------------------------------------------------------
+            GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
+            mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
+
+            //Zoom optimization method-------------------------------------------------------
+            string z = GlobalSetting.GetConfig("ZoomOptimization", "0");
+            if (z == "1")
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
+            }
+            else if (z == "2")
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
+            }
+            else //auto
+            {
+                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
+            }
+
+            //Load theme--------------------------------------------------------------------
+            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
+            LoadTheme();
+            Application.DoEvents();
 
             //Load Thumbnail dimension
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
@@ -1111,17 +1210,40 @@ namespace ImageGlass
                 GlobalSetting.ThumbnailDimension = 48;
             }
 
-            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer());
+            //Load thumbnail bar width
+            int tb_width = 0;
+            if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
+            {
+                tb_width = 0;
+            }
+
+            //Get minimum width needed for thumbnail dimension
+            var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).TotalDimension;
+            //Get the greater width value
+            GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
+
             thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension + GlobalSetting.ThumbnailDimension / 3, GlobalSetting.ThumbnailDimension);
+
+            //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
+            GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
 
             //Load state of Thumbnail---------------------------------------------------------
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
 
+            //Load background---------------------------------------------------------------
+            z = GlobalSetting.GetConfig("BackgroundColor", "-1");
+            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
+            picMain.BackColor = GlobalSetting.BackgroundColor;
+
             //Load state of IsWindowAlwaysOnTop value-----------------------------------------
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
+
+            //Load state of IsMouseNavigation value-------------------------------------------
+            GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
+            picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
         }
 
 
@@ -1147,11 +1269,21 @@ namespace ImageGlass
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
 
-            //Thumbnail panel
-            GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
-
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
+            
+            //Zoom to fit
+            GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
+
+            //Thumbnail panel
+            GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
+            
+            // Save thumbnail bar orientation state
+            GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
+
+            //Save thumbnail bar width
+            GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
+            GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString());
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -1201,6 +1333,7 @@ namespace ImageGlass
             }
             base.WndProc(ref m);
         }
+
         
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -1208,15 +1341,14 @@ namespace ImageGlass
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
 
+            //Trigger Mouse Wheel event
+            picMain.MouseWheel += picMain_MouseWheel;
+
             LoadConfig();
             Application.DoEvents();
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
-
-            sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - 41;
-            sp1.SplitterWidth = 1;
-            
         }
 
         public void LoadFromParams(string[] args)
@@ -1257,8 +1389,19 @@ namespace ImageGlass
         {
             if (GlobalSetting.IsForcedActive)
             {
+                //Update thumbnail bar position--------
+                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                mnuMainThumbnailBar_Click(null, null);
+
+                //Update background---------------------
                 picMain.BackColor = GlobalSetting.BackgroundColor;
+
+                //Update language pack------------------
                 this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+
+                //Prevent zooming by scrolling mouse
+                this._isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+                
 
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
@@ -1315,6 +1458,7 @@ namespace ImageGlass
                 mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateClockwise"];
                 mnuMainZoomIn.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomIn"];
                 mnuMainZoomOut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomOut"];
+                mnuMainZoomToFit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomToFit"];
                 mnuMainActualSize.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainActualSize"];
                 mnuMainLockZoomRatio.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLockZoomRatio"];
                 mnuMainScaleToWidth.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToWidth"];
@@ -1406,7 +1550,7 @@ namespace ImageGlass
                 GlobalSetting.ImageList.SetFileName(imgIndex, newName);
                 GlobalSetting.ImageFilenameList[imgIndex] = newName;
 
-                //Cap nhat lai tieu de
+                //Update status bar title
                 this.UpdateStatusBar();
 
                 try
@@ -1446,14 +1590,42 @@ namespace ImageGlass
             if (e.ChangeType == WatcherChangeTypes.Changed)
             {
                 GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
-                NextPic(0);
+                NextPic(0, true);
+            }
+        }
+
+        // Use mouse wheel to navigate images
+        private void picMain_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (GlobalSetting.IsMouseNavigation && !this._isZoomed)
+            {
+                //Prevent picmain zooming
+                picMain.AllowZoom = false;
+
+                if (e.Delta > 0)
+                {
+                    //Next pic
+                    mnuMainViewNext_Click(null, null);
+                }
+                else
+                {
+                    //Previous pic
+                    mnuMainViewPrevious_Click(null, null);
+                }
             }
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
-            this._isZoomed = true;
-            this.UpdateStatusBar(true);
+            if (!GlobalSetting.IsMouseNavigation)
+            {
+                this._isZoomed = true;
+
+                //Zoom optimization
+                ZoomOptimization();
+
+                this.UpdateStatusBar(true);
+            }            
         }
 
         private void picMain_MouseClick(object sender, MouseEventArgs e)
@@ -1475,8 +1647,8 @@ namespace ImageGlass
                 default:
                     break;
             }
-
         }
+        
         #endregion
 
 
@@ -1762,17 +1934,27 @@ namespace ImageGlass
         private void mnuMainRefresh_Click(object sender, EventArgs e)
         {
             // Reset scrollbar position
-            picMain.ScrollTo(0, 0, 0, 0);
-
+            if (LocalSetting.IsResetScrollPosition)
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
+            
             //Zoom condition
-            if (btnZoomLock.Checked)
+            if (GlobalSetting.IsEnabledZoomLock)
             {
                 picMain.Zoom = GlobalSetting.ZoomLockValue;
             }
             else
             {
                 //Reset zoom
-                picMain.ZoomToFit();
+                if (GlobalSetting.IsZoomToFit)
+                {
+                    picMain.ZoomToFit();
+                }
+                else
+                {
+                    picMain.ZoomAuto();
+                }
 
                 this._isZoomed = false;
             }
@@ -1988,7 +2170,7 @@ namespace ImageGlass
 
             string filename = temp_dir + "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png";
 
-            picMain.Image.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+            picMain.Image.Save(filename, ImageFormat.Png);
 
             return filename;
         }
@@ -2091,6 +2273,12 @@ namespace ImageGlass
             picMain.ZoomOut();
         }
 
+        private void mnuMainZoomToFit_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsZoomToFit = mnuMainZoomToFit.Checked;
+            mnuMainRefresh_Click(null, null);
+        }
+
         private void mnuMainActualSize_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
@@ -2104,14 +2292,15 @@ namespace ImageGlass
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
         {
-            if (btnZoomLock.Checked)
+            if (!GlobalSetting.IsEnabledZoomLock)
             {
+                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = true;
                 GlobalSetting.ZoomLockValue = picMain.Zoom;
             }
             else
             {
+                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = false;
                 GlobalSetting.ZoomLockValue = 100;
-                btnZoomLock.Checked = false;
             }
         }
 
@@ -2226,11 +2415,8 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show(
-                                string.Format(GlobalSetting.LangPack.Items["frmMain._DeleteDialogText"],
-                                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)),
-                                GlobalSetting.LangPack.Items["frmMain._DeleteDialogTitle"],
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = MessageBox.Show(string.Format(GlobalSetting.LangPack.Items["frmMain._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.LangPack.Items["frmMain._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
             if (msg == DialogResult.Yes)
             {
                 string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
@@ -2429,11 +2615,41 @@ namespace ImageGlass
             if (GlobalSetting.IsShowThumbnail)
             {
                 //show
-                sp1.SplitterWidth = 1;
-                sp1.Panel2MinSize = GlobalSetting.ThumbnailDimension + THUMBNAIL_BAR_EXTRA;
-                sp1.SplitterDistance = sp1.Height - GlobalSetting.ThumbnailDimension - THUMBNAIL_BAR_EXTRA - 1;
-            }
+                var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
+                sp1.Panel2MinSize = tb.TotalDimension;
 
+                if (GlobalSetting.IsThumbnailHorizontal)
+                {
+                    // BOTTOM
+                    sp1.SplitterWidth = 1;
+                    sp1.Orientation = Orientation.Horizontal;
+                    sp1.SplitterDistance = sp1.Height - tb.TotalDimension;
+                    thumbnailBar.View = ImageListView.View.Gallery;
+
+                    //hide splitter color
+                    sp1.BackColor = Color.White;
+                }
+                else
+                {
+                    // RIGHT
+                    sp1.IsSplitterFixed = false; //Allow user to resize
+                    sp1.SplitterWidth = 2;
+                    sp1.Orientation = Orientation.Vertical;
+                    sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, tb.TotalDimension);
+                    thumbnailBar.View = ImageListView.View.Thumbnails;
+
+                    //theme for splitter of horizontal bar
+                    sp1.BackColor = thumbnailBar.BackColor;
+                }
+            }
+            else
+            {
+                //Save thumbnail bar width when closing
+                if (!GlobalSetting.IsThumbnailHorizontal)
+                {
+                    GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
+                }
+            }
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
             SelectCurrentThumbnail();
         }
@@ -2536,6 +2752,13 @@ namespace ImageGlass
             }
             catch { }
         }
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -51,7 +47,7 @@ namespace igcmd
         }
 
         /// <summary>
-        /// Cài đặt theme
+        /// Install theme
         /// </summary>
         private void InstallTheme()
         {
@@ -78,7 +74,7 @@ namespace igcmd
         private void z_ZipError(object sender, ZipErrorEventArgs e)
         {
             picStatus.Image = igcmd.Properties.Resources.warning;
-            lblStatus.Text = "Theme was error!";
+            lblStatus.Text = "Invalid theme!";
         }
 
         private void z_ExtractProgress(object sender, ExtractProgressEventArgs e)
@@ -86,7 +82,7 @@ namespace igcmd
             if (e.EntriesExtracted == e.EntriesTotal)
             {
                 picStatus.Image = igcmd.Properties.Resources.ok;
-                lblStatus.Text = "Install successful!";
+                lblStatus.Text = "Installed successfully!";
             }
         }
 

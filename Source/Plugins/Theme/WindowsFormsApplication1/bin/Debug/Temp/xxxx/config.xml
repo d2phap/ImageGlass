@@ -1,7 +1,0 @@
-<ImageGlass>
-  <Theme>
-    <Info name="xxxx" version="jhjk" author="iu" email=" kjh" website="k j" description=" " type="ImageGlass Theme Configuration" compatibility=" " preview="x" />
-    <main topbar="x" topbartransparent="0" bottombar="x" backcolor="-1" statuscolor="-16777216" />
-    <toolbar_icon back="phap.png" next="logo222.png" leftrotate="x" rightrotate="x" zoomin="x" zoomout="x" zoomlock="sharp_ad.png" scaletofit="x" scaletowidth="x" scaletoheight="x" autosizewindow="x" open="x" refresh="x" gotoimage="x" thumbnail="x" caro="x" fullscreen="x" slideshow="x" convert="x" print="x" uploadfb="x" extension="x" settings="x" about="x" like="x" dislike="x" report="x" />
-  </Theme>
-</ImageGlass>

@@ -18,13 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using Ionic.Zip;
-using System.Text;
-using ImageGlass.Theme;
 
 
 namespace igcmd
@@ -34,43 +28,30 @@ namespace igcmd
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        public static string[] args;
         [STAThread]
-        static void Main(string[] argv)
+        static void Main(string[] args)
         {
-            args = argv;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             string topcmd = args[0].ToLower().Trim();
 
-            if (topcmd == "igupdate")//kiem tra phien ban
+            if (topcmd == "igupdate")// check for update
             {
                 Core.CheckForUpdate();
             }
-            else if (topcmd == "igupload")
-            {
-                Core.Upload(args[1], args[2]);
-            }
-            else if (topcmd == "igautoupdate")//tu dong kiem tra phien ban
+            else if (topcmd == "igautoupdate")// auto check for update
             {
                 Core.AutoUpdate();
             }
-            else if (topcmd == "igpacktheme")//dong goi theme thanh *.igtheme
+            else if (topcmd == "igpacktheme")// pack theme *.igtheme
             {
                 //cmd: igcmd.exe igpacktheme "srcDir" "desFile"
                 Core.PackTheme(args[1], args[2]);
             }
-            else if (topcmd == "iginstalltheme")//cai dat theme
+            else if (topcmd == "iginstalltheme")//install theme
             {
                 Core.InstallTheme(args[1]);
             }
         }
-
-
-
-        
-                
-
-
     }
 }

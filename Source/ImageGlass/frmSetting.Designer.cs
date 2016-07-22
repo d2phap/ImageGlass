@@ -37,6 +37,7 @@
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.tabLanguage = new System.Windows.Forms.TabPage();
+            this.lblLanguageWarning = new System.Windows.Forms.Label();
             this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
             this.lnkRefresh = new System.Windows.Forms.LinkLabel();
             this.lnkEdit = new System.Windows.Forms.LinkLabel();
@@ -54,6 +55,9 @@
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
+            this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
+            this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
             this.chkAllowMultiInstances = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
@@ -74,7 +78,7 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.lblLanguageWarning = new System.Windows.Forms.Label();
+            this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -166,7 +170,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(20, 458);
+            this.picBackgroundColor.Location = new System.Drawing.Point(20, 577);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -187,10 +191,21 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(551, 509);
+            this.tabLanguage.Size = new System.Drawing.Size(554, 574);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
+            // 
+            // lblLanguageWarning
+            // 
+            this.lblLanguageWarning.AutoSize = true;
+            this.lblLanguageWarning.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(160)))), ((int)(((byte)(31)))));
+            this.lblLanguageWarning.Location = new System.Drawing.Point(20, 76);
+            this.lblLanguageWarning.Name = "lblLanguageWarning";
+            this.lblLanguageWarning.Size = new System.Drawing.Size(368, 15);
+            this.lblLanguageWarning.TabIndex = 25;
+            this.lblLanguageWarning.Text = "This language pack may be not compatible with ImageGlass 3.2.0.16.";
             // 
             // lnkInstallLanguage
             // 
@@ -290,7 +305,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(551, 511);
+            this.tabFileAssociation.Size = new System.Drawing.Size(554, 574);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -362,7 +377,7 @@
             this.txtSupportedExtensionDefault.Multiline = true;
             this.txtSupportedExtensionDefault.Name = "txtSupportedExtensionDefault";
             this.txtSupportedExtensionDefault.ReadOnly = true;
-            this.txtSupportedExtensionDefault.Size = new System.Drawing.Size(502, 38);
+            this.txtSupportedExtensionDefault.Size = new System.Drawing.Size(479, 38);
             this.txtSupportedExtensionDefault.TabIndex = 22;
             this.txtSupportedExtensionDefault.Text = "jpg\r\npng\r\n";
             // 
@@ -387,6 +402,11 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.chkMouseNavigation);
+            this.tabGeneral.Controls.Add(this.lblGeneral_ZoomOptimization);
+            this.tabGeneral.Controls.Add(this.cmbZoomOptimization);
+            this.tabGeneral.Controls.Add(this.chkThumbnailVertical);
             this.tabGeneral.Controls.Add(this.chkAllowMultiInstances);
             this.tabGeneral.Controls.Add(this.lblGeneral_ThumbnailSize);
             this.tabGeneral.Controls.Add(this.cmbThumbnailDimension);
@@ -408,10 +428,42 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(551, 509);
+            this.tabGeneral.Size = new System.Drawing.Size(550, 614);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // lblGeneral_ZoomOptimization
+            // 
+            this.lblGeneral_ZoomOptimization.AutoSize = true;
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 420);
+            this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
+            this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
+            this.lblGeneral_ZoomOptimization.TabIndex = 19;
+            this.lblGeneral_ZoomOptimization.Text = "Zoom optimization";
+            // 
+            // cmbZoomOptimization
+            // 
+            this.cmbZoomOptimization.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbZoomOptimization.FormattingEnabled = true;
+            this.cmbZoomOptimization.Items.AddRange(new object[] {
+            "(loaded from code)"});
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 438);
+            this.cmbZoomOptimization.Name = "cmbZoomOptimization";
+            this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
+            this.cmbZoomOptimization.TabIndex = 20;
+            this.cmbZoomOptimization.SelectedIndexChanged += new System.EventHandler(this.cmbZoomOptimization_SelectedIndexChanged);
+            // 
+            // chkThumbnailVertical
+            // 
+            this.chkThumbnailVertical.AutoSize = true;
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(20, 231);
+            this.chkThumbnailVertical.Name = "chkThumbnailVertical";
+            this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
+            this.chkThumbnailVertical.TabIndex = 18;
+            this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
+            this.chkThumbnailVertical.UseVisualStyleBackColor = true;
+            this.chkThumbnailVertical.CheckedChanged += new System.EventHandler(this.chkThumbnailVertical_CheckedChanged);
             // 
             // chkAllowMultiInstances
             // 
@@ -427,7 +479,7 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 329);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 309);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
             this.lblGeneral_ThumbnailSize.TabIndex = 15;
@@ -443,7 +495,7 @@
             "64",
             "96",
             "128"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 347);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 327);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(279, 23);
             this.cmbThumbnailDimension.TabIndex = 16;
@@ -484,7 +536,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 295);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 276);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -509,7 +561,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 277);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 258);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 14;
@@ -529,7 +581,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 437);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 556);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -549,7 +601,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 381);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 506);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -567,7 +619,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(20, 399);
+            this.cmbImageOrder.Location = new System.Drawing.Point(20, 524);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 14;
@@ -576,7 +628,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(14, 240);
+            this.barInterval.Location = new System.Drawing.Point(14, 390);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -589,7 +641,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 222);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 372);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(163, 15);
             this.lblSlideshowInterval.TabIndex = 5;
@@ -619,7 +671,7 @@
             // 
             // tab1
             // 
-            this.tab1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tab1.Alignment = System.Windows.Forms.TabAlignment.Right;
             this.tab1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -630,7 +682,7 @@
             this.tab1.Multiline = true;
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(559, 537);
+            this.tab1.Size = new System.Drawing.Size(581, 622);
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
@@ -656,33 +708,33 @@
             // sp0.Panel2
             // 
             this.sp0.Panel2.Controls.Add(this.tab1);
-            this.sp0.Size = new System.Drawing.Size(704, 496);
+            this.sp0.Size = new System.Drawing.Size(704, 611);
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
-            // lblLanguageWarning
+            // chkMouseNavigation
             // 
-            this.lblLanguageWarning.AutoSize = true;
-            this.lblLanguageWarning.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(160)))), ((int)(((byte)(31)))));
-            this.lblLanguageWarning.Location = new System.Drawing.Point(20, 76);
-            this.lblLanguageWarning.Name = "lblLanguageWarning";
-            this.lblLanguageWarning.Size = new System.Drawing.Size(368, 15);
-            this.lblLanguageWarning.TabIndex = 25;
-            this.lblLanguageWarning.Text = "This language pack may be not compatible with ImageGlass 3.2.0.16.";
+            this.chkMouseNavigation.AutoSize = true;
+            this.chkMouseNavigation.Location = new System.Drawing.Point(20, 467);
+            this.chkMouseNavigation.Name = "chkMouseNavigation";
+            this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
+            this.chkMouseNavigation.TabIndex = 21;
+            this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
+            this.chkMouseNavigation.UseVisualStyleBackColor = true;
+            this.chkMouseNavigation.CheckedChanged += new System.EventHandler(this.chkMouseNavigation_CheckedChanged);
             // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(704, 496);
+            this.ClientSize = new System.Drawing.Size(704, 611);
             this.Controls.Add(this.sp0);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(720, 535);
+            this.MinimumSize = new System.Drawing.Size(720, 650);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
             this.Text = "Settings";
@@ -757,5 +809,9 @@
         private System.Windows.Forms.CheckBox chkExtraExtsEXR;
         private System.Windows.Forms.Panel panExtraExts;
         private System.Windows.Forms.Label lblLanguageWarning;
+        private System.Windows.Forms.CheckBox chkThumbnailVertical;
+        private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
+        private System.Windows.Forms.ComboBox cmbZoomOptimization;
+        private System.Windows.Forms.CheckBox chkMouseNavigation;
     }
 }

@@ -55,7 +55,7 @@ namespace ImageGlass.Library.Comparer
         {
             if (_files != null)
             {
-                _files.Sort(new DictionaryEntryComparer(new ImageGlass.Library.Comparer.NumericComparer()));
+                _files.Sort(new DictionaryEntryComparer(new NumericComparer()));
             }
             return _files;
         }
