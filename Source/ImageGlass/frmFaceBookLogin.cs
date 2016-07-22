@@ -97,13 +97,13 @@ namespace ImageGlass
             if (_fb.TryParseOAuthCallbackUrl(e.Url, out oauthResult))
             {
                 // The url is the result of OAuth 2.0 authentication.
-                this.FacebookOAuthResult = oauthResult;
-                this.DialogResult = FacebookOAuthResult.IsSuccess ? DialogResult.OK : DialogResult.No;
+                FacebookOAuthResult = oauthResult;
+                DialogResult = FacebookOAuthResult.IsSuccess ? DialogResult.OK : DialogResult.No;
             }
             else
             {
                 // The url is NOT the result of OAuth 2.0 authentication.
-                this.FacebookOAuthResult = null;
+                FacebookOAuthResult = null;
             }
         }
 
@@ -113,7 +113,7 @@ namespace ImageGlass
             webBrowser1.Navigate(_loginUrl.AbsoluteUri);
 
             //Load language
-            this.Text = GlobalSetting.LangPack.Items["frmFaceBookLogin._Text"];
+            Text = GlobalSetting.LangPack.Items["frmFaceBookLogin._Text"];
         }
     }
 }

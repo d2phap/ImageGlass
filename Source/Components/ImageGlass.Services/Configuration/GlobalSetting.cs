@@ -64,7 +64,7 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                return this.Dimension + this.ExtraSpace;
+                return Dimension + ExtraSpace;
             }
         }
 
@@ -77,40 +77,40 @@ namespace ImageGlass.Services.Configuration
         {
             if (isHorizontalView)
             {
-                this.Dimension = dimension;
-                this.ExtraSpace = 58;
+                Dimension = dimension;
+                ExtraSpace = 58;
             }
             else {
                 switch (dimension)
                 {
                     case 32:
-                        this.Dimension = 32;
-                        this.ExtraSpace = 48;
+                        Dimension = 32;
+                        ExtraSpace = 48;
                         break;
 
                     case 48:
-                        this.Dimension = 48;
-                        this.ExtraSpace = 52;
+                        Dimension = 48;
+                        ExtraSpace = 52;
                         break;
 
                     case 64:
-                        this.Dimension = 64;
-                        this.ExtraSpace = 57;
+                        Dimension = 64;
+                        ExtraSpace = 57;
                         break;
 
                     case 96:
-                        this.Dimension = 96;
-                        this.ExtraSpace = 69;
+                        Dimension = 96;
+                        ExtraSpace = 69;
                         break;
 
                     case 128:
-                        this.Dimension = 128;
-                        this.ExtraSpace = 79;
+                        Dimension = 128;
+                        ExtraSpace = 79;
                         break;
 
                     default:
-                        this.Dimension = 48;
-                        this.ExtraSpace = 57;
+                        Dimension = 48;
+                        ExtraSpace = 57;
                         break;
                 }
             }
@@ -260,13 +260,13 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                GlobalSetting._contextMenuExtensions = GlobalSetting.GetConfig("ContextMenuExtensions", "");
-                return GlobalSetting._contextMenuExtensions;
+                _contextMenuExtensions = GetConfig("ContextMenuExtensions", "");
+                return _contextMenuExtensions;
             }
             set
             {
-                GlobalSetting._contextMenuExtensions = value;
-                GlobalSetting.SetConfig("ContextMenuExtensions", GlobalSetting._contextMenuExtensions);
+                _contextMenuExtensions = value;
+                GlobalSetting.SetConfig("ContextMenuExtensions", _contextMenuExtensions);
             }
         }
 
@@ -547,7 +547,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static void LoadImageOrderConfig()
         {
-            string s = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
+            string s = GetConfig("ImageLoadingOrder", "0");
 
             int i = 0;
 
@@ -562,31 +562,31 @@ namespace ImageGlass.Services.Configuration
             }
             if (i == 1)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Length;
+                ImageOrderBy = ImageOrderBy.Length;
             }
             else if (i == 2)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.CreationTime;
+                ImageOrderBy = ImageOrderBy.CreationTime;
             }
             else if (i == 3)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.LastAccessTime;
+                ImageOrderBy = ImageOrderBy.LastAccessTime;
             }
             else if (i == 4)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.LastWriteTime;
+                ImageOrderBy = ImageOrderBy.LastWriteTime;
             }
             else if (i == 5)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Extension;
+                ImageOrderBy = ImageOrderBy.Extension;
             }
             else if (i == 6)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Random;
+                ImageOrderBy = ImageOrderBy.Random;
             }
             else
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Name;
+                ImageOrderBy = ImageOrderBy.Name;
             }
         }
 
@@ -597,7 +597,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string GetConfig(string key)
         {
-            return GlobalSetting.GetConfig(key, "");
+            return GetConfig(key, "");
         }
 
         /// <summary>

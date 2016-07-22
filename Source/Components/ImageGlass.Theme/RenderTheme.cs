@@ -38,7 +38,7 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public int ApplyTheme(System.Windows.Forms.Control control)
         {
-            return this.ApplyTheme(control, "Explorer");
+            return ApplyTheme(control, "Explorer");
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public int ClearTheme(System.Windows.Forms.Control control)
         {
-            return this.ApplyTheme(control, string.Empty);
+            return ApplyTheme(control, string.Empty);
         }
     }
 }

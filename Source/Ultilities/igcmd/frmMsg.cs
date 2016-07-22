@@ -41,7 +41,7 @@ namespace igcmd
         {
             InitializeComponent();
 
-            this.Text = _title = title;
+            Text = _title = title;
             lblMessage.Text = _msg = msg;
             _icon = icon;
             btnClose.Text = _btnClose_Text = btnClose_Text;

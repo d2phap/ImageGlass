@@ -335,7 +335,7 @@ namespace ImageGlass.ImageListView
                         width += 16 + 2 * 2;
                 }
 
-                this.Width = width + 8;
+                Width = width + 8;
                 mImageListView.Refresh();
             }
             /// <summary>

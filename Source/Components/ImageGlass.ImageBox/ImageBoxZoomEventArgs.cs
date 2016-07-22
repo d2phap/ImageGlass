@@ -28,10 +28,10 @@ namespace ImageGlass
     public ImageBoxZoomEventArgs(ImageBoxZoomActions actions, ImageBoxActionSources source, int oldZoom, int newZoom)
       : this()
     {
-      this.Actions = actions;
-      this.Source = source;
-      this.OldZoom = oldZoom;
-      this.NewZoom = newZoom;
+            Actions = actions;
+            Source = source;
+            OldZoom = oldZoom;
+            NewZoom = newZoom;
     }
 
     #endregion

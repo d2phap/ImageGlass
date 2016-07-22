@@ -17,7 +17,7 @@ namespace ImageGlass.Core
             set
             {
                 _title = value;
-                this.Text = _title;
+                Text = _title;
             }
         }
 
@@ -52,11 +52,11 @@ namespace ImageGlass.Core
         {
             InitializeComponent();
 
-            this.Title = "";
-            this.Message = "";
-            this.IsNumberOnly = false;
+            Title = "";
+            Message = "";
+            IsNumberOnly = false;
 
-            this.Text = _title;
+            Text = _title;
             lblMessage.Text = _message;
         }
 
@@ -64,11 +64,11 @@ namespace ImageGlass.Core
         {
             InitializeComponent();
 
-            this.Title = title;
-            this.Message = message;
-            this.IsNumberOnly = false;
+            Title = title;
+            Message = message;
+            IsNumberOnly = false;
 
-            this.Text = _title;
+            Text = _title;
             lblMessage.Text = _message;
         }
 
@@ -92,17 +92,17 @@ namespace ImageGlass.Core
 
         private void lblClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (this.IsNumberOnly)
+            if (IsNumberOnly)
             {
                 if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)8 || e.KeyChar == (char)9 ||
                     e.KeyChar == (char)46 || e.KeyChar == (char)37 || e.KeyChar == (char)39)
@@ -131,7 +131,7 @@ namespace ImageGlass.Core
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
-                this.DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
         }
     }

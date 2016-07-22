@@ -20,9 +20,9 @@ namespace ImageGlass.Library
 
         public LanguageItem()
         {
-            this.Version = new Version("3.5.0.0");
-            this.State = LanguageItemState.Inactive;
-            this.Remarks = string.Empty;
+            Version = new Version("3.5.0.0");
+            State = LanguageItemState.Inactive;
+            Remarks = string.Empty;
         }
     }
     
