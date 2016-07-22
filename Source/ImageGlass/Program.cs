@@ -27,12 +27,12 @@ namespace ImageGlass
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         private static string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
         [STAThread]
         static void Main(string[] argv)
         {
