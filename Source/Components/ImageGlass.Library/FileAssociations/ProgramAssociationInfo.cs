@@ -198,10 +198,10 @@ namespace ImageGlass.Library.FileAssociations
                 RegistryKey root = Registry.ClassesRoot;
                 try
                 {
-                    if (this.progId == string.Empty)
+                    if (progId == string.Empty)
                         return false;
 
-                    RegistryKey key = root.OpenSubKey(this.progId);
+                    RegistryKey key = root.OpenSubKey(progId);
 
                     if (key == null)
                         return false;
@@ -225,12 +225,12 @@ namespace ImageGlass.Library.FileAssociations
         /// </summary>
         public void Create()
         {
-            if (this.Exists)
+            if (Exists)
                 return;
 
             RegistryKey root = Registry.ClassesRoot;
 
-            root.CreateSubKey(this.progId);
+            root.CreateSubKey(progId);
         }
 
         /// <summary>
@@ -296,20 +296,20 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns><see cref="ProgramAssociationInfo"/> instance referring to specified extension.</returns>
         public ProgramAssociationInfo Create(string description, EditFlags editFlags, ProgramVerb[] verbs)
         {
-            if (this.Exists)
+            if (Exists)
             {
-                this.Delete();
+                Delete();
             }
 
-            this.Create();
+            Create();
 
             if (description != string.Empty)
-                this.Description = description;
+                Description = description;
 
             if (editFlags != EditFlags.None)
-                this.EditFlags = editFlags;
+                EditFlags = editFlags;
 
-            this.Verbs = verbs;
+            Verbs = verbs;
 
             return this;
         }
@@ -323,12 +323,12 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns>Value that specifies if the file's extension is always displayed.</returns>
         protected bool GetAlwaysShowExt()
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             RegistryKey root = Registry.ClassesRoot;
 
-            RegistryKey key = root.OpenSubKey(this.progId);
+            RegistryKey key = root.OpenSubKey(progId);
 
             object o = key.GetValue("AlwaysShowExt", "ThisValueShouldNotExist");
             if (o.ToString() == "ThisValueShouldNotExist")
@@ -345,16 +345,16 @@ namespace ImageGlass.Library.FileAssociations
         /// <param name="value">Value that specifies if the file's extension should be always displayed.</param>
         protected void SetAlwaysShowExt(bool value)
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             if (value)
             {
-                registryWrapper.Write(this.progId, "AlwaysShowExt", string.Empty);
+                registryWrapper.Write(progId, "AlwaysShowExt", string.Empty);
             }
             else
             {
-                registryWrapper.Delete(this.progId, "AlwaysShowExt");
+                registryWrapper.Delete(progId, "AlwaysShowExt");
             }
 
             ShellNotification.NotifyOfChange();
@@ -366,10 +366,10 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns>Friendly description of file type.</returns>
         protected string GetDescription()
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
-            object val = registryWrapper.Read(this.progId, string.Empty);
+            object val = registryWrapper.Read(progId, string.Empty);
 
             if (val == null)
                 return string.Empty;
@@ -383,10 +383,10 @@ namespace ImageGlass.Library.FileAssociations
         /// <param name="description">Friendly description of file type.</param>
         protected void SetDescription(string description)
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
-            registryWrapper.Write(this.progId, string.Empty, description);
+            registryWrapper.Write(progId, string.Empty, description);
 
             ShellNotification.NotifyOfChange();
         }
@@ -398,10 +398,10 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns><see cref="EditFlags"/> for program file type.</returns>
         protected EditFlags GetEditFlags()
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
-            object val = registryWrapper.Read(this.progId, "EditFlags");
+            object val = registryWrapper.Read(progId, "EditFlags");
 
             if (val == null)
             {
@@ -438,11 +438,11 @@ namespace ImageGlass.Library.FileAssociations
         /// <param name="flags"><see cref="EditFlags"/> for program file type.</param>
         protected void SetEditFlags(EditFlags flags)
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             //registryWrapper.Write(info.progId, "EditFlags", (uint)flags);
-            registryWrapper.Write(this.progId, "EditFlags", flags);
+            registryWrapper.Write(progId, "EditFlags", flags);
 
             ShellNotification.NotifyOfChange();
         }
@@ -454,10 +454,10 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns></returns>
         protected ProgramIcon GetDefaultIcon()
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
-            object val = registryWrapper.Read(this.progId + "\\DefaultIcon", "");
+            object val = registryWrapper.Read(progId + "\\DefaultIcon", "");
 
             if (val == null)
                 return ProgramIcon.None;
@@ -471,12 +471,12 @@ namespace ImageGlass.Library.FileAssociations
         /// <param name="icon"></param>
         protected void SetDefaultIcon(ProgramIcon icon)
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             if (icon != ProgramIcon.None)
             {
-                registryWrapper.Write(this.progId, "DefaultIcon", icon.ToString());
+                registryWrapper.Write(progId, "DefaultIcon", icon.ToString());
 
                 ShellNotification.NotifyOfChange();
             }
@@ -488,12 +488,12 @@ namespace ImageGlass.Library.FileAssociations
         /// <returns>Array of <see cref="ProgramVerb"/> that contains supported verbs.</returns>
         protected ProgramVerb[] GetVerbs()
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             RegistryKey root = Registry.ClassesRoot;
 
-            RegistryKey key = root.OpenSubKey(this.progId);
+            RegistryKey key = root.OpenSubKey(progId);
             List<ProgramVerb> verbs = new List<ProgramVerb>();
 
             key = key.OpenSubKey("shell", false);
@@ -531,12 +531,12 @@ namespace ImageGlass.Library.FileAssociations
         /// <param name="verbs">Array of <see cref="ProgramVerb"/> that contains verbs to be set.</param>
         protected void SetVerbs(ProgramVerb[] verbs)
         {
-            if (!this.Exists)
+            if (!Exists)
                 throw new Exception("Extension does not exist");
 
             RegistryKey root = Registry.ClassesRoot;
 
-            RegistryKey key = root.OpenSubKey(this.progId, true);
+            RegistryKey key = root.OpenSubKey(progId, true);
 
             RegistryKey tmpKey = key.OpenSubKey("shell", true);
 
@@ -574,11 +574,11 @@ namespace ImageGlass.Library.FileAssociations
         {
             RegistryKey root = Registry.ClassesRoot;
 
-            RegistryKey key = root.OpenSubKey(this.progId).OpenSubKey("shell", true);
+            RegistryKey key = root.OpenSubKey(progId).OpenSubKey("shell", true);
 
             if (key == null)
             {
-                key = root.OpenSubKey(this.progId, true).CreateSubKey("shell");
+                key = root.OpenSubKey(progId, true).CreateSubKey("shell");
             }
 
             RegistryKey tmpkey = key.OpenSubKey(verb.Name, true);
@@ -612,7 +612,7 @@ namespace ImageGlass.Library.FileAssociations
         {
             RegistryKey root = Registry.ClassesRoot;
 
-            RegistryKey key = root.OpenSubKey(this.progId);
+            RegistryKey key = root.OpenSubKey(progId);
 
             key = key.OpenSubKey("shell", true);
 
@@ -643,14 +643,14 @@ namespace ImageGlass.Library.FileAssociations
         /// </summary>
         public void Delete()
         {
-            if (!this.Exists)
+            if (!Exists)
             {
                 throw new Exception("Key not found.");
             }
 
             RegistryKey root = Registry.ClassesRoot;
 
-            root.DeleteSubKeyTree(this.progId);
+            root.DeleteSubKeyTree(progId);
         }
 
         /// <summary>

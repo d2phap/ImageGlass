@@ -82,7 +82,7 @@ namespace ImageGlass.Library.FileAssociations
         public ProgramIcon(string path)
         {
             this.path = path;
-            this.index = 0;
+            index = 0;
         }
 
         /// <summary>
@@ -90,8 +90,8 @@ namespace ImageGlass.Library.FileAssociations
         /// </summary>
         public ProgramIcon()
         {
-            this.path = string.Empty;
-            this.index = 0;
+            path = string.Empty;
+            index = 0;
         }
 
         /// <summary>

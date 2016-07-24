@@ -37,7 +37,7 @@ namespace ImageGlass
         private void btnClose_Click(object sender, EventArgs e)
         {
             Global.Plugins.ClosePlugins();
-            this.Close();
+            Close();
         }
 
         private void btnRefreshAllExt_Click(object sender, EventArgs e)
@@ -77,19 +77,19 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound",
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound",
                                                 "280,125,840,500"));
-            this.Bounds = rc;
+            Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = GlobalSetting.GetConfig(this.Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig(Name + ".WindowsState", "Normal");
             if (s == "Normal")
             {
-                this.WindowState = FormWindowState.Normal;
+                WindowState = FormWindowState.Normal;
             }
             else if (s == "Maximized")
             {
-                this.WindowState = FormWindowState.Maximized;
+                WindowState = FormWindowState.Maximized;
             }
 
             //Apply Windows theme
@@ -100,13 +100,13 @@ namespace ImageGlass
             LoadExtensions();
 
             //Load language:
-            this.Text = GlobalSetting.LangPack.Items["frmExtension._Text"];
+            Text = GlobalSetting.LangPack.Items["frmExtension._Text"];
             btnRefreshAllExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnRefreshAllExt"];
             btnGetMoreExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnGetMoreExt"];
             btnInstallExt.Text = GlobalSetting.LangPack.Items["frmExtension.btnInstallExt"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmExtension.btnClose"];
 
-            this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+            RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
         }
 
         private void tvExtension_AfterSelect(object sender, TreeViewEventArgs e)
@@ -131,14 +131,14 @@ namespace ImageGlass
         private void frmExtension_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save config---------------------------------
-            if (this.WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig(this.Name + ".WindowsBound", GlobalSetting.RectToString(this.Bounds));
+                GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
+            GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
         }
 
         private void LoadExtensions()

@@ -26,7 +26,7 @@ namespace ImageGlass
     public ImageBoxCancelEventArgs(Point location)
       : this()
     {
-      this.Location = location;
+            Location = location;
     }
 
     #endregion

@@ -121,18 +121,18 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(this.Name + ".WindowsBound", "280,125,610, 570"));
-            this.Bounds = rc;
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound", "280,125,610, 570"));
+            Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = GlobalSetting.GetConfig(this.Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig(Name + ".WindowsState", "Normal");
             if (s == "Normal")
             {
-                this.WindowState = FormWindowState.Normal;
+                WindowState = FormWindowState.Normal;
             }
             else if (s == "Maximized")
             {
-                this.WindowState = FormWindowState.Maximized;
+                WindowState = FormWindowState.Maximized;
             }
 
             LoadTabGeneralConfig();
@@ -141,20 +141,20 @@ namespace ImageGlass
 
         private void frmSetting_SizeChanged(object sender, EventArgs e)
         {
-            this.Refresh();
+            Refresh();
         }
         
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save config---------------------------------
-            if (this.WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig(this.Name + ".WindowsBound", GlobalSetting.RectToString(this.Bounds));
+                GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            GlobalSetting.SetConfig(this.Name + ".WindowsState", this.WindowState.ToString());
+            GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
 
             //Save extra supported extensions
             string extraExts = "";
@@ -179,7 +179,7 @@ namespace ImageGlass
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -188,9 +188,9 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
-            this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+            RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
 
-            this.Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
+            Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
             lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
             lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];

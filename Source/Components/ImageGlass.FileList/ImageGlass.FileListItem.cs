@@ -110,25 +110,25 @@ namespace ImageGlass.FileList
         private void FileListItem_MouseLeave(object sender, EventArgs e)
         {
             _mouseEvent = 4;
-            this.Invalidate();
+            Invalidate();
         }
 
         private void FileListItem_MouseDown(object sender, MouseEventArgs e)
         {
             _mouseEvent = 2;
-            this.Invalidate();
+            Invalidate();
         }
 
         private void FileListItem_MouseUp(object sender, MouseEventArgs e)
         {
             _mouseEvent = 3;
-            this.Invalidate();
+            Invalidate();
         }
 
         private void FileListItem_MouseEnter(object sender, EventArgs e)
         {
-            _mouseEvent = 1;            
-            this.Invalidate();
+            _mouseEvent = 1;
+            Invalidate();
         }
         #endregion
 
@@ -194,7 +194,7 @@ namespace ImageGlass.FileList
                 str = _title + " - version: " + _currenVersion + "\r\n" + _path;
             }
 
-            this.tip1.SetToolTip(this, str);
+            tip1.SetToolTip(this, str);
         }
 
         
