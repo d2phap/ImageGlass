@@ -1,9 +1,15 @@
 ImageGlass
-==========
-http://www.imageglass.org/ <br/>
-Free and open source image viewer
+==
+www.imageglass.org
 
-<h3>Donation</h3>
+A lightweight, versatile image viewer
+
+##Need your help!
+- Localize / Translate ImageGlass via [Crowdin] (https://crowdin.com/project/imageglass/invite)
+
+- Fix [the stubborn bugs] (https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+is%3Aopen+label%3A%22Need+help%21%22)
+
+##Donation
 
 <a style="text-align: center;
 display: inline-block;
@@ -12,37 +18,16 @@ font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&b
 20 USD
 </a>
 
-
-<a style="text-align: center;
-display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=50%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-50 USD
-</a>
-
-
-<a style="text-align: center;
-display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=100%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-100 USD
-</a>
-
-<h3>Share ImageGlass</h3>
+##Share ImageGlass
 <a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
 
-<h3>Links</h3>
-<ul>
-<li><a title="ImageGlass homepage" href="http://www.imageglass.org/" target="_blank"><strong>Homepage</strong></a> </li>
-<li><a title="ImageGlass themes" href="http://www.imageglass.org/download/themes" target="_blank"><strong><span style="color: #008080;">Download themes&nbsp;</span></strong></a> </li>
-<li><a title="ImageGlass extensions" href="http://www.imageglass.org/download/extensions" target="_blank"><strong><span style="color: #008080;">Download extensions&nbsp;</span></strong></a> </li>
-<li><a title="ImageGlass language packs" href="http://www.imageglass.org/download/languagepacks" target="_blank"><strong><span style="color: #008080;">Download language packs&nbsp;</span></strong></a> </li>
-</ul>
-<h3>Project Description</h3>
-<p>ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.</p>
-<p><img style="vertical-align: middle;" src="https://cloud.githubusercontent.com/assets/3154213/12851190/7e0a583a-cc63-11e5-8627-9b9ef483b9d8.png" alt="ImageGlass 3.2.0.16" /></p>
+##Project Description
+ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.
 
-<h3>ImageGlass Features</h3>
+!["ImageGlass 3.2.0.16] (https://cloud.githubusercontent.com/assets/3154213/12851190/7e0a583a-cc63-11e5-8627-9b9ef483b9d8.png)
+
+
+##ImageGlass Features
 
 The unique features of ImageGlass are the following:
 <ul>
