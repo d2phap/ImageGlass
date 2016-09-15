@@ -55,6 +55,7 @@
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
             this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
             this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
@@ -78,7 +79,6 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -191,7 +191,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(554, 574);
+            this.tabLanguage.Size = new System.Drawing.Size(550, 614);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -305,7 +305,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 4);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(554, 574);
+            this.tabFileAssociation.Size = new System.Drawing.Size(554, 614);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -432,6 +432,17 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkMouseNavigation
+            // 
+            this.chkMouseNavigation.AutoSize = true;
+            this.chkMouseNavigation.Location = new System.Drawing.Point(20, 467);
+            this.chkMouseNavigation.Name = "chkMouseNavigation";
+            this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
+            this.chkMouseNavigation.TabIndex = 21;
+            this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
+            this.chkMouseNavigation.UseVisualStyleBackColor = true;
+            this.chkMouseNavigation.CheckedChanged += new System.EventHandler(this.chkMouseNavigation_CheckedChanged);
             // 
             // lblGeneral_ZoomOptimization
             // 
@@ -712,17 +723,6 @@
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
-            // 
-            // chkMouseNavigation
-            // 
-            this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(20, 467);
-            this.chkMouseNavigation.Name = "chkMouseNavigation";
-            this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
-            this.chkMouseNavigation.TabIndex = 21;
-            this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
-            this.chkMouseNavigation.UseVisualStyleBackColor = true;
-            this.chkMouseNavigation.CheckedChanged += new System.EventHandler(this.chkMouseNavigation_CheckedChanged);
             // 
             // frmSetting
             // 

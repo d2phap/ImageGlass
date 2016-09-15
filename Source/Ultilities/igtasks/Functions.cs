@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Security.Principal;
-using System.Security.Permissions;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using System.Configuration;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.IO;
-using System.Reflection;
 using ImageGlass.Library.FileAssociations;
 using System.Diagnostics;
 
