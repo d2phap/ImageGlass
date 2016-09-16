@@ -1180,6 +1180,12 @@ namespace ImageGlass
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
             mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
+            //Load Zoom lock value
+            int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"));
+            GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
+            mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
+            GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;            
+
             //Zoom optimization method-------------------------------------------------------
             string z = GlobalSetting.GetConfig("ZoomOptimization", "0");
             if (z == "1")
@@ -1274,6 +1280,9 @@ namespace ImageGlass
             
             //Zoom to fit
             GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
+
+            //Lock zoom ratio
+            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.IsEnabledZoomLock) ? GlobalSetting.ZoomLockValue.ToString() : "-1");
 
             //Thumbnail panel
             GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
@@ -1620,6 +1629,11 @@ namespace ImageGlass
             if (!GlobalSetting.IsMouseNavigation)
             {
                 _isZoomed = true;
+
+                if (GlobalSetting.IsEnabledZoomLock)
+                {
+                    GlobalSetting.ZoomLockValue = e.NewZoom;
+                }
 
                 //Zoom optimization
                 ZoomOptimization();
