@@ -504,11 +504,11 @@ namespace ImageGlass
                 return;
             }
             #endregion
-            
+
 
             //Zoom + ------------------------------------------------------------------------
-            #region Ctrl + =
-            if (e.KeyValue == 187 && e.Control && !e.Shift && !e.Alt)// Ctrl + =
+            #region Ctrl + = / = / + (numPad)
+            if (((e.KeyValue == 187 && e.Control) || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
                 return;
@@ -517,8 +517,8 @@ namespace ImageGlass
 
 
             //Zoom - ------------------------------------------------------------------------
-            #region Ctrl + -
-            if (e.KeyValue == 189 && e.Control && !e.Shift && !e.Alt)// Ctrl + -
+            #region Ctrl + - / - / - (numPad)
+            if (((e.KeyValue == 189 && e.Control) || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
                 return;
