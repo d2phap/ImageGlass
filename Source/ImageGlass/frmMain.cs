@@ -122,9 +122,6 @@ namespace ImageGlass
                 path = path.Replace("\\\\", "\\");
             }
 
-            //Set path as current image path
-            //GlobalSetting.CurrentPath = path;
-
             //Declare a new list to store filename
             GlobalSetting.ImageFilenameList = new List<string>();
 
@@ -160,7 +157,7 @@ namespace ImageGlass
             //Start loading image
             NextPic(0);
 
-            //Watch all change of current path
+            //Watch all changes of current path
             sysWatch.Path = Path.GetDirectoryName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             sysWatch.EnableRaisingEvents = true;
         }
@@ -413,13 +410,13 @@ namespace ImageGlass
 
             if (GlobalSetting.ImageList.Length < 1)
             {
-                Text = "ImageGlass";
+                this.Text = "ImageGlass ";
                 lblInfo.Text = fileinfo;
                 return;
             }
 
             //Set the text of Window title
-            Text = "ImageGlass - " +
+            this.Text = "ImageGlass - " +
                         (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.Length + " " +
                         GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
                         GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
@@ -437,7 +434,11 @@ namespace ImageGlass
             }
             else
             {
-                fileinfo += picMain.Image.Width + " x " + picMain.Image.Height + " px  |  ";
+                try
+                {
+                    fileinfo += picMain.Image.Width + " x " + picMain.Image.Height + " px  |  ";
+                }
+                catch { }
 
                 if (zoomOnly)
                 {
@@ -455,7 +456,7 @@ namespace ImageGlass
             }
 
             //Move image information to Window title
-            Text += "  |  " + fileinfo;
+            this.Text += "  |  " + fileinfo;
 
         }
         #endregion
@@ -1413,7 +1414,6 @@ namespace ImageGlass
 
                 //Prevent zooming by scrolling mouse
                 _isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
-                
 
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
@@ -1595,6 +1595,41 @@ namespace ImageGlass
 
                 NextPic(0);
             }
+        }
+
+        private void sysWatch_Created(object sender, FileSystemEventArgs e)
+        {
+            if (!File.Exists(e.FullPath))
+            {
+                return;
+            }
+
+            //Get the new folder path ----------------------------------
+            var path = Path.GetDirectoryName(e.FullPath);
+
+            //Reload the image list ------------------------------------
+            //Declare a new list to store filename
+            GlobalSetting.ImageFilenameList = new List<string>();
+
+            //Get supported image extensions from path
+            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(path);
+
+            //Dispose all garbage
+            GlobalSetting.ImageList.Dispose();
+
+            //Set filename to image list
+            GlobalSetting.ImageList = new ImgMan(GlobalSetting.ImageFilenameList.ToArray());
+
+
+            //Insert to the thumbnail -------------------------------------
+            int newFileIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
+            if (newFileIndex > -1)
+            {
+                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
+                lvi.Tag = e.FullPath;
+                thumbnailBar.Items.Insert(newFileIndex, lvi);
+            }
+            
         }
 
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
@@ -2769,6 +2804,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
 
 
