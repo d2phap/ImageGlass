@@ -475,6 +475,7 @@ namespace ImageGlass
             }
             #endregion
 
+
             // Rotation Counterclockwise----------------------------------------------------
             #region Ctrl + ,
             if (e.KeyValue == 188 && e.Control && !e.Shift && !e.Alt)//Ctrl + ,
@@ -493,31 +494,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //ESC ultility------------------------------------------------------------------
-            #region ESC
-            if (e.KeyValue == 27 && !e.Control && !e.Shift && !e.Alt)//ESC
-            {
-                //exit slideshow
-                if (GlobalSetting.IsPlaySlideShow)
-                {
-                    mnuMainSlideShowExit_Click(null, null);
-                }
-                //exit full screen
-                else if (GlobalSetting.IsFullScreen)
-                {
-                    btnFullScreen.PerformClick();
-                }
-                //Quit ImageGlass
-                else if (GlobalSetting.IsPressESCToQuit)
-                {
-                    Application.Exit();
-                }
-                return;
-            }
-            #endregion
-
+            
 
             //Clear clipboard----------------------------------------------------------------
             #region CTRL + `
@@ -527,60 +504,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //Start / stop slideshow---------------------------------------------------------
-            #region SPACE
-            if (GlobalSetting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
-            {
-                mnuMainSlideShowPause_Click(null, null);
-                return;
-            }
-            #endregion
             
-
-            //Previous Image----------------------------------------------------------------
-            #region LEFT ARROW / PAGE UP
-            if ((e.KeyValue == 33 || e.KeyValue == 37) &&
-                !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
-            {
-                NextPic(-1);
-                return;
-            }
-            #endregion
-
-
-            //Next Image---------------------------------------------------------------------
-            #region RIGHT ARROW / PAGE DOWN
-            if ((e.KeyValue == 34 || e.KeyValue == 39) &&
-                !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
-            {
-                NextPic(1);
-                return;
-            }
-            #endregion
-
-
-            //Goto the first Image---------------------------------------------------------------
-            #region HOME
-            if ((e.KeyValue == 36 || e.KeyValue == 39) &&
-                !e.Control && !e.Shift && !e.Alt)
-            {
-                mnuMainGotoFirst_Click(null, e);
-                return;
-            }
-            #endregion
-
-            //Goto the last Image---------------------------------------------------------------
-            #region END
-            if ((e.KeyValue == 35 || e.KeyValue == 39) &&
-                !e.Control && !e.Shift && !e.Alt)
-            {
-                mnuMainGotoLast_Click(null, e);
-                return;
-            }
-            #endregion
-
 
             //Zoom + ------------------------------------------------------------------------
             #region Ctrl + =
@@ -653,6 +577,85 @@ namespace ImageGlass
                 return;
             }
             #endregion
+
+
+            //ESC ultility------------------------------------------------------------------
+            #region ESC
+            if (e.KeyValue == 27 && !e.Control && !e.Shift && !e.Alt)//ESC
+            {
+                //exit slideshow
+                if (GlobalSetting.IsPlaySlideShow)
+                {
+                    mnuMainSlideShowExit_Click(null, null);
+                }
+                //exit full screen
+                else if (GlobalSetting.IsFullScreen)
+                {
+                    btnFullScreen.PerformClick();
+                }
+                //Quit ImageGlass
+                else if (GlobalSetting.IsPressESCToQuit)
+                {
+                    Application.Exit();
+                }
+                return;
+            }
+            #endregion
+
+
+            //Previous Image----------------------------------------------------------------
+            #region LEFT ARROW / PAGE UP
+            if ((e.KeyValue == 33 || e.KeyValue == 37) &&
+                !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
+            {
+                NextPic(-1);
+                return;
+            }
+            #endregion
+
+
+            //Next Image---------------------------------------------------------------------
+            #region RIGHT ARROW / PAGE DOWN
+            if ((e.KeyValue == 34 || e.KeyValue == 39) &&
+                !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
+            {
+                NextPic(1);
+                return;
+            }
+            #endregion
+
+
+            //Goto the first Image---------------------------------------------------------------
+            #region HOME
+            if ((e.KeyValue == 36 || e.KeyValue == 39) &&
+                !e.Control && !e.Shift && !e.Alt)
+            {
+                mnuMainGotoFirst_Click(null, e);
+                return;
+            }
+            #endregion
+
+
+            //Goto the last Image---------------------------------------------------------------
+            #region END
+            if ((e.KeyValue == 35 || e.KeyValue == 39) &&
+                !e.Control && !e.Shift && !e.Alt)
+            {
+                mnuMainGotoLast_Click(null, e);
+                return;
+            }
+            #endregion
+
+
+            //Start / stop slideshow---------------------------------------------------------
+            #region SPACE
+            if (GlobalSetting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
+            {
+                mnuMainSlideShowPause_Click(null, null);
+                return;
+            }
+            #endregion
+
         }
         #endregion
 
