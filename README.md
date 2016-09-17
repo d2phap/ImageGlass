@@ -7,10 +7,19 @@ www.imageglass.org
 
 ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.
 
+
+##Need your help!
+- Localize / Translate ImageGlass via [Crowdin] (https://crowdin.com/project/imageglass/invite)
+
+- Fix [the stubborn bugs] (https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+is%3Aopen+label%3A%22Need+help%21%22)
+
+
+
+
 !["ImageGlass 3.5.9.17] (https://cloud.githubusercontent.com/assets/3154213/18590815/d5831304-7c62-11e6-8946-5ef31dea1f0b.png)
 
 
-##ImageGlass Features
+##Features
 
 The unique features of ImageGlass are the following:
 <ul>
@@ -30,17 +39,10 @@ The unique features of ImageGlass are the following:
 </ul>
 
 
-##Need your help!
-- Localize / Translate ImageGlass via [Crowdin] (https://crowdin.com/project/imageglass/invite)
-
-- Fix [the stubborn bugs] (https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+is%3Aopen+label%3A%22Need+help%21%22)
-
-
 ##Donation
 
 <a style="text-align: center;
 display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=20%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-20 USD
+font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software%20donation&item_number=igdonation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
 </a>
