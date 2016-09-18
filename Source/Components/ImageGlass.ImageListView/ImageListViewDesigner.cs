@@ -46,7 +46,7 @@ namespace ImageGlass.ImageListView
                 if (actionLists == null)
                 {
                     actionLists = base.ActionLists;
-                    actionLists.Add(new ImageListViewActionLists(this.Component));
+                    actionLists.Add(new ImageListViewActionLists(Component));
                 }
                 return actionLists;
             }

@@ -262,9 +262,10 @@ namespace ThemeConfig
                 doc.AppendChild(root);
 
                 //create temp directory of theme
-                string temp_dir = GlobalSetting.TempDir + txtName.Text.Trim() + "\\";
+                string raw_temp_dir = GlobalSetting.TempDir + txtName.Text.Trim();
+                string temp_dir = raw_temp_dir + "\\";
                 Directory.CreateDirectory(temp_dir);
-
+                
                 doc.Save(temp_dir + "config.xml");//save file
                 //copy image
                 foreach (string i in ds)
@@ -276,14 +277,23 @@ namespace ThemeConfig
                 }
 
                 string exe = GlobalSetting.StartUpDir + "igcmd.exe";
-                string cmd = "igpacktheme " + char.ConvertFromUtf32(34) + temp_dir +
-                    char.ConvertFromUtf32(34) + " " +
+                string cmd = "igpacktheme " + 
+                    char.ConvertFromUtf32(34) + raw_temp_dir + char.ConvertFromUtf32(34) + " " +
                     char.ConvertFromUtf32(34) + s.FileName + char.ConvertFromUtf32(34);
+                //Clipboard.SetText(exe + " " + cmd);
+                //MessageBox.Show(exe + "__" + cmd);
                 
-                System.Diagnostics.Process.Start(exe, cmd);
-                               
-                //store file for upload
-                lnkSave.Tag = s.FileName;
+                try
+                {
+                    System.Diagnostics.Process.Start(exe, cmd);
+
+                    //store file for upload
+                    lnkSave.Tag = s.FileName;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }     
             }
 
 

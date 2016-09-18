@@ -45,6 +45,78 @@ namespace ImageGlass.Services.Configuration
         ClearPixels
     }
 
+    public class ThumbnailItemInfo
+    {
+        /// <summary>
+        /// Gets actual thumbnail dimension
+        /// </summary>
+        public int Dimension { get; }
+
+        /// <summary>
+        /// Gets extra space to adapt minimum width / height of thumbnail bar
+        /// </summary>
+        public int ExtraSpace { get; }
+
+        /// <summary>
+        /// Gets total dimension needed for minimum width / height of thumbnail bar
+        /// </summary>
+        public int TotalDimension
+        {
+            get
+            {
+                return Dimension + ExtraSpace;
+            }
+        }
+
+        /// <summary>
+        /// Thumbnail item information
+        /// </summary>
+        /// <param name="dimension">Thumbnail size</param>
+        /// <param name="isHorizontalView">Horizontal or Verticle view</param>
+        public ThumbnailItemInfo(int dimension, bool isHorizontalView)
+        {
+            if (isHorizontalView)
+            {
+                Dimension = dimension;
+                ExtraSpace = 58;
+            }
+            else {
+                switch (dimension)
+                {
+                    case 32:
+                        Dimension = 32;
+                        ExtraSpace = 48;
+                        break;
+
+                    case 48:
+                        Dimension = 48;
+                        ExtraSpace = 52;
+                        break;
+
+                    case 64:
+                        Dimension = 64;
+                        ExtraSpace = 57;
+                        break;
+
+                    case 96:
+                        Dimension = 96;
+                        ExtraSpace = 69;
+                        break;
+
+                    case 128:
+                        Dimension = 128;
+                        ExtraSpace = 79;
+                        break;
+
+                    default:
+                        Dimension = 48;
+                        ExtraSpace = 57;
+                        break;
+                }
+            }
+        }
+    }
+
     public static class GlobalSetting
     {
         private static ImgMan _imageList = new ImgMan();
@@ -64,6 +136,8 @@ namespace ImageGlass.Services.Configuration
         private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;
         private static bool _isImageError = false;
+        private static bool _isEnableZoomLock = false;
+        private static bool _isZoomToFit = false;
         private static int _zoomLockValue = 100;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
@@ -73,10 +147,13 @@ namespace ImageGlass.Services.Configuration
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
+        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).TotalDimension;
+        private static bool _isThumbnailHorizontal = false;
         private static StringCollection _stringClipboard = new StringCollection();
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
         private static bool _isTempMemoryData = false;
+        private static bool _isMouseNavigation = false;
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
         private static bool _isWindowAlwaysOnTop = false;
 
@@ -164,10 +241,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string SupportedDefaultExtensions
         {
-            get
-            {
-                return _supportedDefaultExtensions;
-            }
+            get { return _supportedDefaultExtensions; }
         }
 
         /// <summary>
@@ -175,14 +249,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string SupportedExtraExtensions
         {
-            get
-            {
-                return _supportedExtraExtensions;
-            }
-            set
-            {
-                _supportedExtraExtensions = value;
-            }
+            get { return _supportedExtraExtensions; }
+            set { _supportedExtraExtensions = value; }
         }
 
         /// <summary>
@@ -192,13 +260,13 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                GlobalSetting._contextMenuExtensions = GlobalSetting.GetConfig("ContextMenuExtensions", "");
-                return GlobalSetting._contextMenuExtensions;
+                _contextMenuExtensions = GetConfig("ContextMenuExtensions", "");
+                return _contextMenuExtensions;
             }
             set
             {
-                GlobalSetting._contextMenuExtensions = value;
-                GlobalSetting.SetConfig("ContextMenuExtensions", GlobalSetting._contextMenuExtensions);
+                _contextMenuExtensions = value;
+                GlobalSetting.SetConfig("ContextMenuExtensions", _contextMenuExtensions);
             }
         }
 
@@ -231,6 +299,15 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
+        /// Gets, sets value indicating that Zoom Lock enabled
+        /// </summary>
+        public static bool IsEnabledZoomLock
+        {
+            get { return _isEnableZoomLock; }
+            set { _isEnableZoomLock = value; }
+        }
+
+        /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
         public static int ZoomLockValue
@@ -251,15 +328,15 @@ namespace ImageGlass.Services.Configuration
 
                 if (value == ZoomOptimizationValue.SmoothPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "1");
+                    GlobalSetting.SetConfig("ZoomOptimization", "1");
                 }
                 else if (value == ZoomOptimizationValue.ClearPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "2");
+                    GlobalSetting.SetConfig("ZoomOptimization", "2");
                 }
                 else
                 {
-                    GlobalSetting.SetConfig("ZoomOptimize", "0");
+                    GlobalSetting.SetConfig("ZoomOptimization", "0");
                 }
             }
         }
@@ -291,14 +368,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowToolBar
         {
-            get
-            {
-                return GlobalSetting._isShowToolBar;
-            }
-            set
-            {
-                GlobalSetting._isShowToolBar = value;
-            }
+            get { return GlobalSetting._isShowToolBar; }
+            set { GlobalSetting._isShowToolBar = value; }
         }
 
         /// <summary>
@@ -371,15 +442,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsFullScreen
         {
-            get
-            {
-                return _isFullScreen;
-            }
-
-            set
-            {
-                _isFullScreen = value;
-            }
+            get { return _isFullScreen; }
+            set { _isFullScreen = value; }
         }
 
         /// <summary>
@@ -387,15 +451,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int ThumbnailDimension
         {
-            get
-            {
-                return _thumbnailDimension;
-            }
-
-            set
-            {
-                _thumbnailDimension = value;
-            }
+            get { return _thumbnailDimension; }
+            set { _thumbnailDimension = value; }
         }
 
         /// <summary>
@@ -403,15 +460,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsAllowMultiInstances
         {
-            get
-            {
-                return _isAllowMultiInstances;
-            }
-
-            set
-            {
-                _isAllowMultiInstances = value;
-            }
+            get { return _isAllowMultiInstances; }
+            set { _isAllowMultiInstances = value; }
         }
 
         /// <summary>
@@ -449,8 +499,41 @@ namespace ImageGlass.Services.Configuration
             set { _isWindowAlwaysOnTop = value; }
         }
 
+        /// <summary>
+        /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
+        /// </summary>
+        public static bool IsThumbnailHorizontal
+        {
+            get { return _isThumbnailHorizontal; }
+            set { _isThumbnailHorizontal = value; }
+        }
 
+        /// <summary>
+        /// Gets, sets width of horizontal thumbnail bar
+        /// </summary>
+        public static int ThumbnailBarWidth
+        {
+            get { return _thumbnailBarWidth; }
+            set { _thumbnailBarWidth = value; }
+        }
 
+        /// <summary>
+        /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
+        /// </summary>
+        public static bool IsZoomToFit
+        {
+            get { return _isZoomToFit; }
+            set { _isZoomToFit = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that using mouse wheel to navigate image or not
+        /// </summary>
+        public static bool IsMouseNavigation
+        {
+            get { return _isMouseNavigation; }
+            set { _isMouseNavigation = value; }
+        }
 
 
         #endregion
@@ -464,13 +547,13 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static void LoadImageOrderConfig()
         {
-            string s = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
+            string s = GetConfig("ImageLoadingOrder", "0");
 
             int i = 0;
 
             if (int.TryParse(s, out i))
             {
-                if (-1 < i && i < 7) //<=== Số lượng phần tử
+                if (-1 < i && i < 7) //<=== Number of items in array
                 { }
                 else
                 {
@@ -479,31 +562,31 @@ namespace ImageGlass.Services.Configuration
             }
             if (i == 1)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Length;
+                ImageOrderBy = ImageOrderBy.Length;
             }
             else if (i == 2)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.CreationTime;
+                ImageOrderBy = ImageOrderBy.CreationTime;
             }
             else if (i == 3)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.LastAccessTime;
+                ImageOrderBy = ImageOrderBy.LastAccessTime;
             }
             else if (i == 4)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.LastWriteTime;
+                ImageOrderBy = ImageOrderBy.LastWriteTime;
             }
             else if (i == 5)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Extension;
+                ImageOrderBy = ImageOrderBy.Extension;
             }
             else if (i == 6)
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Random;
+                ImageOrderBy = ImageOrderBy.Random;
             }
             else
             {
-                GlobalSetting.ImageOrderBy = ImageOrderBy.Name;
+                ImageOrderBy = ImageOrderBy.Name;
             }
         }
 
@@ -514,7 +597,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string GetConfig(string key)
         {
-            return GlobalSetting.GetConfig(key, "");
+            return GetConfig(key, "");
         }
 
         /// <summary>

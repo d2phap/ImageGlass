@@ -17,17 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ImageGlass.Core;
-using System.Drawing;
-using Microsoft.Win32;
-using System.Configuration;
-using System.Windows.Forms;
-using ImageGlass.Services.Configuration;
-
 namespace ImageGlass
 {
     public static class LocalSetting
@@ -38,7 +27,7 @@ namespace ImageGlass
         private static string _imageModifiedPath = "";
         private static int _oldDPI = 96;
         private static int _currentDPI = 96;
-
+        private static bool _isResetScrollPosition = true;
 
         #region "Properties"
         /// <summary>
@@ -46,8 +35,8 @@ namespace ImageGlass
         /// </summary>
         public static frmFacebook FFacebook
         {
-            get { return LocalSetting._fFacebook; }
-            set { LocalSetting._fFacebook = value; }
+            get { return _fFacebook; }
+            set { _fFacebook = value; }
         }
 
         /// <summary>
@@ -55,8 +44,8 @@ namespace ImageGlass
         /// </summary>
         public static frmSetting FSetting
         {
-            get { return LocalSetting._fSetting; }
-            set { LocalSetting._fSetting = value; }
+            get { return _fSetting; }
+            set { _fSetting = value; }
         }
 
         /// <summary>
@@ -64,8 +53,8 @@ namespace ImageGlass
         /// </summary>
         public static frmExtension FExtension
         {
-            get { return LocalSetting._fExtension; }
-            set { LocalSetting._fExtension = value; }
+            get { return _fExtension; }
+            set { _fExtension = value; }
         }
 
         /// <summary>
@@ -73,8 +62,8 @@ namespace ImageGlass
         /// </summary>
         public static string ImageModifiedPath
         {
-            get { return LocalSetting._imageModifiedPath; }
-            set { LocalSetting._imageModifiedPath = value; }
+            get { return _imageModifiedPath; }
+            set { _imageModifiedPath = value; }
         }
 
         /// <summary>
@@ -106,6 +95,22 @@ namespace ImageGlass
             set
             {
                 _currentDPI = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that picmain's scrollbar need to be reset
+        /// </summary>
+        public static bool IsResetScrollPosition
+        {
+            get
+            {
+                return _isResetScrollPosition;
+            }
+
+            set
+            {
+                _isResetScrollPosition = value;
             }
         }
         #endregion

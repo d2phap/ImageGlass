@@ -76,7 +76,7 @@ namespace igcmd
 
             if (up.IsError)
             {
-                this.Size = this.MaximumSize;
+                Size = MaximumSize;
                 lblUpdateVersion.Text = "Please visit http://imageglass.org/download to check for updates.";
                 lblUpdateVersionType.Text =
                     lblUpdateImportance.Text =
@@ -91,7 +91,7 @@ namespace igcmd
             }
             else
             {
-                this.Size = this.MinimumSize;
+                Size = MinimumSize;
                 lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
                 lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
                 lblUpdateImportance.Text = "Importance: " + up.Info.Level;

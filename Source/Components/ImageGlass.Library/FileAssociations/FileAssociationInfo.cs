@@ -439,7 +439,7 @@ namespace ImageGlass.Library.FileAssociations
             if (persistentHandler == Guid.Empty)
                 return;
 
-            this.registryWrapper.Write(file.extension + "\\" + PersistentHandler, string.Empty, persistentHandler);
+            registryWrapper.Write(file.extension + "\\" + PersistentHandler, string.Empty, persistentHandler);
 
             ShellNotification.NotifyOfChange();
         }

@@ -261,7 +261,7 @@
             this.fileList1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileList1.Location = new System.Drawing.Point(20, 0);
             this.fileList1.Name = "fileList1";
-            this.fileList1.Size = new System.Drawing.Size(493, 401);
+            this.fileList1.Size = new System.Drawing.Size(493, 403);
             this.fileList1.TabIndex = 0;
             this.fileList1.Title = "";
             // 
@@ -454,10 +454,10 @@
             this.tpComponents.BackColor = System.Drawing.Color.White;
             this.tpComponents.Controls.Add(this.fileList1);
             this.tpComponents.ForeColor = System.Drawing.Color.Black;
-            this.tpComponents.Location = new System.Drawing.Point(4, 24);
+            this.tpComponents.Location = new System.Drawing.Point(4, 22);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(20, 0, 3, 1);
-            this.tpComponents.Size = new System.Drawing.Size(516, 402);
+            this.tpComponents.Size = new System.Drawing.Size(516, 404);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -465,10 +465,10 @@
             // 
             this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 24);
+            this.tpReferences.Location = new System.Drawing.Point(4, 22);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(20, 0, 6, 4);
-            this.tpReferences.Size = new System.Drawing.Size(516, 402);
+            this.tpReferences.Size = new System.Drawing.Size(516, 404);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -484,7 +484,7 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(490, 398);
+            this.txtReferences.Size = new System.Drawing.Size(490, 400);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 

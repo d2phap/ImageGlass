@@ -137,7 +137,7 @@ namespace ImageGlass
             lblInfoContact.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfoContact"];
             lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
             lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
-            this.Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
+            Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
             
         }
 
@@ -208,7 +208,7 @@ namespace ImageGlass
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)

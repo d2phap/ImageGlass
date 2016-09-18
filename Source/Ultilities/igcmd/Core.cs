@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -36,8 +36,8 @@ namespace igcmd
         /// <summary>
         /// Pack theme *.igtheme
         /// </summary>
-        /// <param name="dir">Thư mục chứa tập tin</param>
-        /// <param name="des">Đường dẫn tập tin *.igtheme</param>
+        /// <param name="dir">Temporary folder path</param>
+        /// <param name="des">Destination *.igtheme file</param>
         public static void PackTheme(string src, string des)
         {
             if (!Directory.Exists(src))
@@ -47,10 +47,6 @@ namespace igcmd
 
             src = (src + "\\").Replace("\\\\", "\\");
             Theme th = new Theme(src + "config.xml");
-
-            //create dir if is not exist
-            //des = (Application.StartupPath + "\\").Replace("\\\\", "\\") + "Themes\\";
-            //Directory.CreateDirectory(des);
 
             //if file exist, rename & backup
             if (File.Exists(des))
@@ -65,9 +61,15 @@ namespace igcmd
                     z.AddDirectory(src, th.name);
                     z.Save();
                 };
+
+                frmMsg f = new frmMsg("ImageGlass theme", "ImageGlass theme has been successfully saved. \n\n" + des, FormMessageIcons.OK, "Close");
+                f.ShowDialog();
             }
-            catch
+            catch (Exception ex)
             {
+                frmMsg f = new frmMsg("ImageGlass theme", "Error: \n\n" + ex.Message, FormMessageIcons.Warning, "Close");
+                f.ShowDialog();
+
                 //if file exist, rename & backup
                 if (File.Exists(des + ".old"))
                 {
@@ -115,16 +117,7 @@ namespace igcmd
         {
             Application.Run(new frmCheckForUpdate());
         }
-
-        /// <summary>
-        /// Upload file
-        /// </summary>
-        /// <param name="cmd"></param>
-        /// <param name="filename"></param>
-        public static void Upload(string cmd, string filename)
-        {
-            Application.Run(new frmUpload(cmd, filename));
-        }
+        
 
         /// <summary>
         /// Install theme

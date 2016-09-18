@@ -45,7 +45,8 @@ namespace ImageGlass.Theme
         public string topbar = string.Empty;                   
         public int topbartransparent = 0;                      //v1.2 only
         public Color backcolor = Color.White;                  
-        public string bottombar = string.Empty;                
+        public string bottombar = string.Empty;                 //v3.2-
+        public Color bottomBarColor = Color.FromArgb(234, 234, 242);    //v3.3+
         public Color statuscolor = Color.Black;                
 
         //toolbar icon
@@ -91,7 +92,7 @@ namespace ImageGlass.Theme
 
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+). 
-        /// Return TRUE if sucessful, FALSE if the theme is older version
+        /// Return TRUE if sucessful, FALSE if the theme format is older version
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
@@ -106,7 +107,7 @@ namespace ImageGlass.Theme
 
             try
             {
-                //Load theme version 1.5 as default
+                //Load theme version 1.5+ as default
                 nType = (XmlElement)root.SelectNodes("Theme")[0]; //<Theme>
                 n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
             }
@@ -142,7 +143,7 @@ namespace ImageGlass.Theme
             catch { };
             try { backcolor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
             catch { };
-            try { bottombar = n.GetAttribute("bottombar"); }
+            try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor"))); }
             catch { };
             try { statuscolor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor"))); }
             catch { };
@@ -322,54 +323,54 @@ namespace ImageGlass.Theme
             XmlElement nType = doc.CreateElement("Theme");//<Theme>
 
             XmlElement n = doc.CreateElement("Info");// <Info>
-            n.SetAttribute("name", this.name);
-            n.SetAttribute("version", this.version);
-            n.SetAttribute("author", this.author);
-            n.SetAttribute("email", this.email);
-            n.SetAttribute("website", this.website);
-            n.SetAttribute("description", this.description);
+            n.SetAttribute("name", name);
+            n.SetAttribute("version", version);
+            n.SetAttribute("author", author);
+            n.SetAttribute("email", email);
+            n.SetAttribute("website", website);
+            n.SetAttribute("description", description);
             n.SetAttribute("type", "ImageGlass Theme Configuration");
-            n.SetAttribute("compatibility", this.compatibility);
-            n.SetAttribute("preview", this.preview);
+            n.SetAttribute("compatibility", compatibility);
+            n.SetAttribute("preview", preview);
             nType.AppendChild(n);
 
             n = doc.CreateElement("main");// <main>
-            n.SetAttribute("topbar", this.topbar);
+            n.SetAttribute("topbar", topbar);
             n.SetAttribute("topbartransparent", "0");
-            n.SetAttribute("bottombar", this.bottombar);
-            n.SetAttribute("backcolor", this.backcolor.ToArgb().ToString());
-            n.SetAttribute("statuscolor", this.statuscolor.ToArgb().ToString());
+            n.SetAttribute("bottombar", bottombar);
+            n.SetAttribute("backcolor", backcolor.ToArgb().ToString());
+            n.SetAttribute("statuscolor", statuscolor.ToArgb().ToString());
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
-            n.SetAttribute("back", this.back);
-            n.SetAttribute("next", this.next);
-            n.SetAttribute("leftrotate", this.leftrotate);
-            n.SetAttribute("rightrotate", this.rightrotate);
-            n.SetAttribute("zoomin", this.zoomin);
-            n.SetAttribute("zoomout", this.zoomout);
-            n.SetAttribute("zoomlock", this.zoomlock);
-            n.SetAttribute("scaletofit", this.scaletofit);
-            n.SetAttribute("scaletowidth", this.scaletowidth);
-            n.SetAttribute("scaletoheight", this.scaletoheight);
-            n.SetAttribute("autosizewindow", this.autosizewindow);
-            n.SetAttribute("open", this.open);
-            n.SetAttribute("refresh", this.refresh);
-            n.SetAttribute("gotoimage", this.gotoimage);
-            n.SetAttribute("thumbnail", this.thumbnail);
-            n.SetAttribute("caro", this.checkBackground);
-            n.SetAttribute("fullscreen", this.fullscreen);
-            n.SetAttribute("slideshow", this.slideshow);
-            n.SetAttribute("convert", this.convert);
-            n.SetAttribute("print", this.print);
-            n.SetAttribute("uploadfb", this.uploadfb);
-            n.SetAttribute("extension", this.extension);
-            n.SetAttribute("settings", this.settings);
-            n.SetAttribute("about", this.about);
+            n.SetAttribute("back", back);
+            n.SetAttribute("next", next);
+            n.SetAttribute("leftrotate", leftrotate);
+            n.SetAttribute("rightrotate", rightrotate);
+            n.SetAttribute("zoomin", zoomin);
+            n.SetAttribute("zoomout", zoomout);
+            n.SetAttribute("zoomlock", zoomlock);
+            n.SetAttribute("scaletofit", scaletofit);
+            n.SetAttribute("scaletowidth", scaletowidth);
+            n.SetAttribute("scaletoheight", scaletoheight);
+            n.SetAttribute("autosizewindow", autosizewindow);
+            n.SetAttribute("open", open);
+            n.SetAttribute("refresh", refresh);
+            n.SetAttribute("gotoimage", gotoimage);
+            n.SetAttribute("thumbnail", thumbnail);
+            n.SetAttribute("caro", checkBackground);
+            n.SetAttribute("fullscreen", fullscreen);
+            n.SetAttribute("slideshow", slideshow);
+            n.SetAttribute("convert", convert);
+            n.SetAttribute("print", print);
+            n.SetAttribute("uploadfb", uploadfb);
+            n.SetAttribute("extension", extension);
+            n.SetAttribute("settings", settings);
+            n.SetAttribute("about", about);
             //n.SetAttribute("like", this.like);
             //n.SetAttribute("dislike", this.dislike);
             //n.SetAttribute("report", this.report);
-            n.SetAttribute("menu", this.report);
+            n.SetAttribute("menu", report);
             nType.AppendChild(n);
 
             root.AppendChild(nType);

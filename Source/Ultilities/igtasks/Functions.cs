@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Security.Principal;
-using System.Security.Permissions;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using System.Configuration;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.IO;
-using System.Reflection;
 using ImageGlass.Library.FileAssociations;
 using System.Diagnostics;
 
@@ -35,7 +30,7 @@ namespace igtasks
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -60,7 +55,7 @@ namespace igtasks
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -90,7 +85,7 @@ namespace igtasks
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -112,7 +107,7 @@ namespace igtasks
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -189,7 +184,10 @@ namespace igtasks
                     p.StartInfo.Arguments = "\"" + s.FileName + "\"";
                     p.Start();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -206,7 +204,10 @@ namespace igtasks
                 p.StartInfo.Arguments = "\"" + filename + "\"";
                 p.Start();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -225,7 +226,7 @@ namespace igtasks
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

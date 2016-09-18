@@ -61,7 +61,7 @@ namespace ImageGlass.Services
             _info = new InfoUpdate();
 
             //Get information update pack
-            this._isError = !GetUpdateConfig(link, savedPath);
+            _isError = !GetUpdateConfig(link, savedPath);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ImageGlass.Services
             LoadUpdateConfig(savedPath);
 
             //error on downloading
-            if (this._info.NewVersion.ToString() == "1.0.0.0")
+            if (_info.NewVersion.ToString() == "1.0.0.0")
             {
                 return false;
             }
@@ -141,7 +141,7 @@ namespace ImageGlass.Services
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
 
             //There is a new version
-            if (this.Info.NewVersion.ToString().CompareTo(fv.FileVersion) != 0)
+            if (Info.NewVersion.ToString().CompareTo(fv.FileVersion) != 0)
             {
                 return true;
             }

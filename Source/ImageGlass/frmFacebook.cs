@@ -50,7 +50,7 @@ namespace ImageGlass
                 if (File.Exists(value))
                 {
                     _filename = value;
-                    this.Text = _filename;
+                    Text = _filename;
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace ImageGlass
             {
                 // the user closed the FacebookLoginDialog, so do nothing.
                 // MessageBox.Show("Cancelled!");
-                this.Close();
+                Close();
                 return;
             }
 
@@ -137,7 +137,7 @@ namespace ImageGlass
                 // for some reason we failed to get the access token.
                 // most likely the user clicked don't allow.
                 MessageBox.Show(facebookOAuthResult.ErrorDescription);
-                this.Close();
+                Close();
             }
         }
 
@@ -209,7 +209,7 @@ namespace ImageGlass
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
 

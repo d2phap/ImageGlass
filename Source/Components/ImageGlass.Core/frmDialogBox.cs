@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ImageGlass.Core
@@ -22,7 +17,7 @@ namespace ImageGlass.Core
             set
             {
                 _title = value;
-                this.Text = _title;
+                Text = _title;
             }
         }
 
@@ -57,11 +52,11 @@ namespace ImageGlass.Core
         {
             InitializeComponent();
 
-            this.Title = "";
-            this.Message = "";
-            this.IsNumberOnly = false;
+            Title = "";
+            Message = "";
+            IsNumberOnly = false;
 
-            this.Text = _title;
+            Text = _title;
             lblMessage.Text = _message;
         }
 
@@ -69,16 +64,16 @@ namespace ImageGlass.Core
         {
             InitializeComponent();
 
-            this.Title = title;
-            this.Message = message;
-            this.IsNumberOnly = false;
+            Title = title;
+            Message = message;
+            IsNumberOnly = false;
 
-            this.Text = _title;
+            Text = _title;
             lblMessage.Text = _message;
         }
 
         /// <summary>
-        /// Di chuyển form 
+        /// Moving form 
         /// </summary>
         /// <param name="m"></param>
         protected override void WndProc(ref Message m)
@@ -97,24 +92,24 @@ namespace ImageGlass.Core
 
         private void lblClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (this.IsNumberOnly)
+            if (IsNumberOnly)
             {
                 if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)8 || e.KeyChar == (char)9 ||
                     e.KeyChar == (char)46 || e.KeyChar == (char)37 || e.KeyChar == (char)39)
                 { }
                 else
                 {
-                    //Không cho nhập
+                    //Prevent input char
                     e.Handled = true;
                 }
             }
@@ -125,12 +120,18 @@ namespace ImageGlass.Core
             txtValue.Focus();
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // disable parent form shotcuts
+            return false;
+        }
+
         private void frmDialogBox_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
         }
     }

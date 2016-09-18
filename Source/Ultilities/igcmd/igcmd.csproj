@@ -17,6 +17,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,10 +31,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,6 +73,25 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.8.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
@@ -87,12 +106,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmFollow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFollow.Designer.cs">
-      <DependentUpon>frmFollow.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmInstallTheme.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,17 +118,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReview.cs">
+    <Compile Include="frmMsg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReview.Designer.cs">
-      <DependentUpon>frmReview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmUpload.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmUpload.Designer.cs">
-      <DependentUpon>frmUpload.cs</DependentUpon>
+    <Compile Include="frmMsg.Designer.cs">
+      <DependentUpon>frmMsg.cs</DependentUpon>
     </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="Program.cs" />
@@ -123,17 +130,11 @@
     <EmbeddedResource Include="frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFollow.resx">
-      <DependentUpon>frmFollow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmInstallTheme.resx">
       <DependentUpon>frmInstallTheme.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReview.resx">
-      <DependentUpon>frmReview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmUpload.resx">
-      <DependentUpon>frmUpload.cs</DependentUpon>
+    <EmbeddedResource Include="frmMsg.resx">
+      <DependentUpon>frmMsg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -147,6 +148,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\_del_2.png" />
