@@ -43,6 +43,6 @@ The unique features of ImageGlass are the following:
 
 <a style="text-align: center;
 display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software%20donation&item_number=igdonation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank">
+font-weight: bold;" href="https://www.paypal.me/d2phap" target="_blank">
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" />
 </a>
