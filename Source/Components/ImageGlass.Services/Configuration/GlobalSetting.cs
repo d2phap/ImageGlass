@@ -167,8 +167,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static ImgMan ImageList
         {
-            get { return GlobalSetting._imageList; }
-            set { GlobalSetting._imageList = value; }
+            get { return _imageList; }
+            set { _imageList = value; }
         }
 
         /// <summary>
@@ -176,8 +176,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static List<String> ImageFilenameList
         {
-            get { return GlobalSetting._imageFilenameList; }
-            set { GlobalSetting._imageFilenameList = value; }
+            get { return _imageFilenameList; }
+            set { _imageFilenameList = value; }
         }
 
         /// <summary>
@@ -185,8 +185,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string FacebookAccessToken
         {
-            get { return GlobalSetting._facebookAccessToken; }
-            set { GlobalSetting._facebookAccessToken = value; }
+            get { return _facebookAccessToken; }
+            set { _facebookAccessToken = value; }
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsForcedActive
         {
-            get { return GlobalSetting._isForcedActive; }
-            set { GlobalSetting._isForcedActive = value; }
+            get { return _isForcedActive; }
+            set { _isForcedActive = value; }
         }
 
         /// <summary>
@@ -203,8 +203,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int CurrentIndex
         {
-            get { return GlobalSetting._currentIndex; }
-            set { GlobalSetting._currentIndex = value; }
+            get { return _currentIndex; }
+            set { _currentIndex = value; }
         }
 
         /// <summary>
@@ -212,8 +212,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsRecursive
         {
-            get { return GlobalSetting._isRecursive; }
-            set { GlobalSetting._isRecursive = value; }
+            get { return _isRecursive; }
+            set { _isRecursive = value; }
         }
 
         /// <summary>
@@ -221,8 +221,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static ImageOrderBy ImageOrderBy
         {
-            get { return GlobalSetting._imageOrderBy; }
-            set { GlobalSetting._imageOrderBy = value; }
+            get { return _imageOrderBy; }
+            set { _imageOrderBy = value; }
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                return GlobalSetting._supportedDefaultExtensions + GlobalSetting.SupportedExtraExtensions;
+                return _supportedDefaultExtensions + SupportedExtraExtensions;
             }
         }
 
@@ -266,7 +266,7 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 _contextMenuExtensions = value;
-                GlobalSetting.SetConfig("ContextMenuExtensions", _contextMenuExtensions);
+                SetConfig("ContextMenuExtensions", _contextMenuExtensions);
             }
         }
 
@@ -275,8 +275,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsPlaySlideShow
         {
-            get { return GlobalSetting._isPlaySlideShow; }
-            set { GlobalSetting._isPlaySlideShow = value; }
+            get { return _isPlaySlideShow; }
+            set { _isPlaySlideShow = value; }
         }
 
 
@@ -285,8 +285,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowThumbnail
         {
-            get { return GlobalSetting._isShowThumbnail; }
-            set { GlobalSetting._isShowThumbnail = value; }
+            get { return _isShowThumbnail; }
+            set { _isShowThumbnail = value; }
         }
 
         /// <summary>
@@ -294,8 +294,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsImageError
         {
-            get { return GlobalSetting._isImageError; }
-            set { GlobalSetting._isImageError = value; }
+            get { return _isImageError; }
+            set { _isImageError = value; }
         }
 
         /// <summary>
@@ -312,8 +312,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int ZoomLockValue
         {
-            get { return GlobalSetting._zoomLockValue; }
-            set { GlobalSetting._zoomLockValue = value; }
+            get { return _zoomLockValue; }
+            set { _zoomLockValue = value; }
         }
 
         /// <summary>
@@ -321,22 +321,22 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static ZoomOptimizationValue ZoomOptimizationMethod
         {
-            get { return GlobalSetting._zoomOptimizationMethod; }
+            get { return _zoomOptimizationMethod; }
             set
             {
-                GlobalSetting._zoomOptimizationMethod = value;
+                _zoomOptimizationMethod = value;
 
                 if (value == ZoomOptimizationValue.SmoothPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimization", "1");
+                    SetConfig("ZoomOptimization", "1");
                 }
                 else if (value == ZoomOptimizationValue.ClearPixels)
                 {
-                    GlobalSetting.SetConfig("ZoomOptimization", "2");
+                    SetConfig("ZoomOptimization", "2");
                 }
                 else
                 {
-                    GlobalSetting.SetConfig("ZoomOptimization", "0");
+                    SetConfig("ZoomOptimization", "0");
                 }
             }
         }
@@ -346,11 +346,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsWelcomePicture
         {
-            get { return GlobalSetting._isWelcomePicture; }
+            get { return _isWelcomePicture; }
             set
             {
-                GlobalSetting._isWelcomePicture = value;
-                GlobalSetting.SetConfig("Welcome", value.ToString());
+                _isWelcomePicture = value;
+                SetConfig("Welcome", value.ToString());
             }
         }
 
@@ -359,8 +359,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static Color BackgroundColor
         {
-            get { return GlobalSetting._backgroundColor; }
-            set { GlobalSetting._backgroundColor = value; }
+            get { return _backgroundColor; }
+            set { _backgroundColor = value; }
         }
 
         /// <summary>
@@ -368,8 +368,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowToolBar
         {
-            get { return GlobalSetting._isShowToolBar; }
-            set { GlobalSetting._isShowToolBar = value; }
+            get { return _isShowToolBar; }
+            set { _isShowToolBar = value; }
         }
 
         /// <summary>
@@ -378,10 +378,10 @@ namespace ImageGlass.Services.Configuration
         public static bool IsLoopBackSlideShow
         {
             get { 
-                return GlobalSetting._isLoopBackSlideShow; 
+                return _isLoopBackSlideShow; 
             }
             set { 
-                GlobalSetting._isLoopBackSlideShow = value; 
+                _isLoopBackSlideShow = value; 
             }
         }
 
@@ -390,8 +390,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsImageBoosterBack
         {
-            get { return GlobalSetting._isImageBoosterBack; }
-            set { GlobalSetting._isImageBoosterBack = value; }
+            get { return _isImageBoosterBack; }
+            set { _isImageBoosterBack = value; }
         }
 
         /// <summary>
@@ -399,8 +399,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static StringCollection StringClipboard
         {
-            get { return GlobalSetting._stringClipboard; }
-            set { GlobalSetting._stringClipboard = value; }
+            get { return _stringClipboard; }
+            set { _stringClipboard = value; }
         }
 
         /// <summary>
@@ -408,8 +408,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsPressESCToQuit
         {
-            get { return GlobalSetting._isPressESCToQuit; }
-            set { GlobalSetting._isPressESCToQuit = value; }
+            get { return _isPressESCToQuit; }
+            set { _isPressESCToQuit = value; }
         }
 
         /// <summary>
@@ -417,11 +417,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static Library.Language LangPack
         {
-            get { return GlobalSetting._langPack; }
+            get { return _langPack; }
             set
             {
-                GlobalSetting._langPack = value;
-                GlobalSetting.SetConfig("Language", _langPack.FileName);
+                _langPack = value;
+                SetConfig("Language", _langPack.FileName);
             }
 
         }
@@ -469,8 +469,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowCheckedBackground
         {
-            get { return GlobalSetting._isShowCheckedBackground; }
-            set { GlobalSetting._isShowCheckedBackground = value; }
+            get { return _isShowCheckedBackground; }
+            set { _isShowCheckedBackground = value; }
         }
 
         /// <summary>
@@ -478,8 +478,8 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsTempMemoryData
         {
-            get { return GlobalSetting._isTempMemoryData; }
-            set { GlobalSetting._isTempMemoryData = value; }
+            get { return _isTempMemoryData; }
+            set { _isTempMemoryData = value; }
         }
 
         /// <summary>
