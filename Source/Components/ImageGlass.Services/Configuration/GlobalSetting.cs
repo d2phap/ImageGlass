@@ -397,45 +397,31 @@ namespace ImageGlass.Services.Configuration
         public static void LoadImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");
+            int i = int.TryParse(s, out i) ? i : 0;
 
-            int i = 0;
-
-            if (int.TryParse(s, out i))
+            switch(i)
             {
-                if (-1 < i && i < 7) //<=== Number of items in array
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-            if (i == 1)
-            {
-                ImageOrderBy = ImageOrderBy.Length;
-            }
-            else if (i == 2)
-            {
-                ImageOrderBy = ImageOrderBy.CreationTime;
-            }
-            else if (i == 3)
-            {
-                ImageOrderBy = ImageOrderBy.LastAccessTime;
-            }
-            else if (i == 4)
-            {
-                ImageOrderBy = ImageOrderBy.LastWriteTime;
-            }
-            else if (i == 5)
-            {
-                ImageOrderBy = ImageOrderBy.Extension;
-            }
-            else if (i == 6)
-            {
-                ImageOrderBy = ImageOrderBy.Random;
-            }
-            else
-            {
-                ImageOrderBy = ImageOrderBy.Name;
+                case 1:
+                    ImageOrderBy = ImageOrderBy.Length;
+                    break;
+                case 2:
+                    ImageOrderBy = ImageOrderBy.CreationTime;
+                    break;
+                case 3:
+                    ImageOrderBy = ImageOrderBy.LastAccessTime;
+                    break;
+                case 4:
+                    ImageOrderBy = ImageOrderBy.LastWriteTime;
+                    break;
+                case 5:
+                    ImageOrderBy = ImageOrderBy.Extension;
+                    break;
+                case 6:
+                    ImageOrderBy = ImageOrderBy.Random;
+                    break;
+                default:
+                    ImageOrderBy = ImageOrderBy.Name;
+                    break;
             }
         }
 
@@ -503,7 +489,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string RectToString(Rectangle rc)
         {
-            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
+            return $"{rc.Left},{rc.Top},{rc.Width},{rc.Height}";
         }
 
         #endregion
