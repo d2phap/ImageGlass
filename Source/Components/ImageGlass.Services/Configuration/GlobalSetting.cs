@@ -72,7 +72,7 @@ namespace ImageGlass.Services.Configuration
         /// Thumbnail item information
         /// </summary>
         /// <param name="dimension">Thumbnail size</param>
-        /// <param name="isHorizontalView">Horizontal or Verticle view</param>
+        /// <param name="isHorizontalView">Horizontal or Vertical view</param>
         public ThumbnailItemInfo(int dimension, bool isHorizontalView)
         {
             if (isHorizontalView)
