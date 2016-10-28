@@ -331,7 +331,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets, sets value indicating that wheather the window is full screen or not
+        /// Gets, sets value indicating that whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
 
