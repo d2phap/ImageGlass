@@ -21,8 +21,6 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.ComponentModel.Design;
 using System.Windows.Forms.Design;
-using System.Drawing;
-using System.Windows.Forms.Design.Behavior;
 
 namespace ImageGlass.ImageListView
 {

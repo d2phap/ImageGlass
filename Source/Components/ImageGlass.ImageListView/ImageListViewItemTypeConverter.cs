@@ -18,10 +18,7 @@
 using System;
 using System.Globalization;
 using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using System.Reflection;
-using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 
 namespace ImageGlass.ImageListView

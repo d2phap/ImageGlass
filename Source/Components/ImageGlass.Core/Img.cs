@@ -16,8 +16,6 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace ImageGlass.Core

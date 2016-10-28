@@ -23,12 +23,10 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
-using Svg;
 #if USEWIC
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 #endif
-using FreeImageAPI;
 
 namespace ImageGlass.ImageListView
 {

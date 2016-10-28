@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ImageGlass
+﻿namespace ImageGlass
 {
-  // Cyotek ImageBox
-  // Copyright (c) 2010-2015 Cyotek Ltd.
-  // http://cyotek.com
-  // http://cyotek.com/blog/tag/imagebox
+    // Cyotek ImageBox
+    // Copyright (c) 2010-2015 Cyotek Ltd.
+    // http://cyotek.com
+    // http://cyotek.com/blog/tag/imagebox
 
-  // Licensed under the MIT License. See license.txt for the full text.
+    // Licensed under the MIT License. See license.txt for the full text.
 
-  // If you use this control in your applications, attribution, donations or contributions are welcome.
+    // If you use this control in your applications, attribution, donations or contributions are welcome.
 
-  /// <summary>
-  /// Specifies the style of a scroll bar
-  /// </summary>
-  public enum ImageBoxScrollBarStyle
+    /// <summary>
+    /// Specifies the style of a scroll bar
+    /// </summary>
+    public enum ImageBoxScrollBarStyle
   {
     /// <summary>
     /// The scroll bar is automatically displayed when needed.
