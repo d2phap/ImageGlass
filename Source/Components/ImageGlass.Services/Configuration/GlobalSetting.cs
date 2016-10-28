@@ -119,43 +119,14 @@ namespace ImageGlass.Services.Configuration
 
     public static class GlobalSetting
     {
-        private static ImgMan _imageList = new ImgMan();
-        private static List<String> _imageFilenameList = new List<string>();
-        private static string _facebookAccessToken = "";
-        private static bool _isForcedActive = true;
-        private static int _currentIndex = -1;
-        private static bool _isRecursive = false;
-        private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _supportedExtensions = "";
         private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;*.svg;*.webp;";
         private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;";
         private static string _contextMenuExtensions = "";
-        private static bool _isPlaySlideShow = false;
-        private static bool _isFullScreen = false;
-        private static bool _isShowThumbnail = false;
-        private static bool _isImageError = false;
-        private static bool _isEnableZoomLock = false;
-        private static bool _isZoomToFit = false;
-        private static int _zoomLockValue = 100;
         private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
         private static bool _isWelcomePicture = true;
-        private static Color _backgroundColor = Color.White;
-        private static bool _isShowToolBar = true;
-        private static bool _isLoopBackSlideShow = false;
-        private static bool _isImageBoosterBack = true;
-        private static bool _isPressESCToQuit = true;
-        private static int _thumbnailDimension = 48;
-        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).TotalDimension;
-        private static bool _isThumbnailHorizontal = false;
-        private static StringCollection _stringClipboard = new StringCollection();
-        private static bool _isAllowMultiInstances = true;
-        private static bool _isShowCheckedBackground = false;
-        private static bool _isTempMemoryData = false;
-        private static bool _isMouseNavigation = false;
-        private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
-        private static bool _isWindowAlwaysOnTop = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -165,65 +136,37 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        public static ImgMan ImageList
-        {
-            get { return _imageList; }
-            set { _imageList = value; }
-        }
+        public static ImgMan ImageList { get; set; } = new ImgMan();
 
         /// <summary>
         /// Gets, sets filename list
         /// </summary>
-        public static List<String> ImageFilenameList
-        {
-            get { return _imageFilenameList; }
-            set { _imageFilenameList = value; }
-        }
+        public static List<String> ImageFilenameList { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets, sets Access token of Facebook
         /// </summary>
-        public static string FacebookAccessToken
-        {
-            get { return _facebookAccessToken; }
-            set { _facebookAccessToken = value; }
-        }
+        public static string FacebookAccessToken { get; set; } = "";
 
         /// <summary>
         /// Gets, sets active value whenever hover on picturebox
         /// </summary>
-        public static bool IsForcedActive
-        {
-            get { return _isForcedActive; }
-            set { _isForcedActive = value; }
-        }
+        public static bool IsForcedActive { get; set; } = true;
 
         /// <summary>
         /// Gets, sets current index of image
         /// </summary>
-        public static int CurrentIndex
-        {
-            get { return _currentIndex; }
-            set { _currentIndex = value; }
-        }
+        public static int CurrentIndex { get; set; } = -1;
 
         /// <summary>
         /// Gets, sets recursive value
         /// </summary>
-        public static bool IsRecursive
-        {
-            get { return _isRecursive; }
-            set { _isRecursive = value; }
-        }
+        public static bool IsRecursive { get; set; } = false;
 
         /// <summary>
         /// Gets, sets image order
         /// </summary>
-        public static ImageOrderBy ImageOrderBy
-        {
-            get { return _imageOrderBy; }
-            set { _imageOrderBy = value; }
-        }
+        public static ImageOrderBy ImageOrderBy { get; set; } = ImageOrderBy.Name;
 
         /// <summary>
         /// Gets all supported extensions string
@@ -273,48 +216,27 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value of slideshow state
         /// </summary>
-        public static bool IsPlaySlideShow
-        {
-            get { return _isPlaySlideShow; }
-            set { _isPlaySlideShow = value; }
-        }
-
+        public static bool IsPlaySlideShow { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value of thumbnail visibility
         /// </summary>
-        public static bool IsShowThumbnail
-        {
-            get { return _isShowThumbnail; }
-            set { _isShowThumbnail = value; }
-        }
+        public static bool IsShowThumbnail { get; set; } = false;
 
         /// <summary>
         /// Gets, sets image error value
         /// </summary>
-        public static bool IsImageError
-        {
-            get { return _isImageError; }
-            set { _isImageError = value; }
-        }
+        public static bool IsImageError { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value indicating that Zoom Lock enabled
         /// </summary>
-        public static bool IsEnabledZoomLock
-        {
-            get { return _isEnableZoomLock; }
-            set { _isEnableZoomLock = value; }
-        }
+        public static bool IsEnabledZoomLock { get; set; }
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
-        public static int ZoomLockValue
-        {
-            get { return _zoomLockValue; }
-            set { _zoomLockValue = value; }
-        }
+        public static int ZoomLockValue { get; set; } = 100;
 
         /// <summary>
         /// Gets, sets zoom optimization value
@@ -357,60 +279,32 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets background color
         /// </summary>
-        public static Color BackgroundColor
-        {
-            get { return _backgroundColor; }
-            set { _backgroundColor = value; }
-        }
+        public static Color BackgroundColor { get; set; } = Color.White;
 
         /// <summary>
         /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
-        public static bool IsShowToolBar
-        {
-            get { return _isShowToolBar; }
-            set { _isShowToolBar = value; }
-        }
+        public static bool IsShowToolBar { get; set; } = true;
 
         /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
-        public static bool IsLoopBackSlideShow
-        {
-            get { 
-                return _isLoopBackSlideShow; 
-            }
-            set { 
-                _isLoopBackSlideShow = value; 
-            }
-        }
+        public static bool IsLoopBackSlideShow { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value that allow user speed up image loading when navigate back
         /// </summary>
-        public static bool IsImageBoosterBack
-        {
-            get { return _isImageBoosterBack; }
-            set { _isImageBoosterBack = value; }
-        }
+        public static bool IsImageBoosterBack { get; set; } = true;
 
         /// <summary>
         /// Gets, sets copied filename collection (multi-copy)
         /// </summary>
-        public static StringCollection StringClipboard
-        {
-            get { return _stringClipboard; }
-            set { _stringClipboard = value; }
-        }
+        public static StringCollection StringClipboard { get; set; } = new StringCollection();
 
         /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
         /// </summary>
-        public static bool IsPressESCToQuit
-        {
-            get { return _isPressESCToQuit; }
-            set { _isPressESCToQuit = value; }
-        }
+        public static bool IsPressESCToQuit { get; set; } = true;
 
         /// <summary>
         /// Gets, sets language pack
@@ -440,101 +334,57 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value indicating that wheather the window is full screen or not
         /// </summary>
-        public static bool IsFullScreen
-        {
-            get { return _isFullScreen; }
-            set { _isFullScreen = value; }
-        }
+        public static bool IsFullScreen { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static int ThumbnailDimension
-        {
-            get { return _thumbnailDimension; }
-            set { _thumbnailDimension = value; }
-        }
+        public static int ThumbnailDimension { get; set; } = 48;
 
         /// <summary>
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
-        public static bool IsAllowMultiInstances
-        {
-            get { return _isAllowMultiInstances; }
-            set { _isAllowMultiInstances = value; }
-        }
+        public static bool IsAllowMultiInstances { get; set; } = true;
 
         /// <summary>
         /// Gets, sets value indicating that checked background is shown or not
         /// </summary>
-        public static bool IsShowCheckedBackground
-        {
-            get { return _isShowCheckedBackground; }
-            set { _isShowCheckedBackground = value; }
-        }
+        public static bool IsShowCheckedBackground { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
         /// </summary>
-        public static bool IsTempMemoryData
-        {
-            get { return _isTempMemoryData; }
-            set { _isTempMemoryData = value; }
-        }
+        public static bool IsTempMemoryData { get; set; } = false;
 
         /// <summary>
         /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\
         /// </summary>
-        public static string TempDir
-        {
-            get { return _tempDir; }
-        }
+        public static string TempDir { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
         /// </summary>
-        public static bool IsWindowAlwaysOnTop
-        {
-            get { return _isWindowAlwaysOnTop; }
-            set { _isWindowAlwaysOnTop = value; }
-        }
+        public static bool IsWindowAlwaysOnTop { get; set; } = false;
 
         /// <summary>
         /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
         /// </summary>
-        public static bool IsThumbnailHorizontal
-        {
-            get { return _isThumbnailHorizontal; }
-            set { _isThumbnailHorizontal = value; }
-        }
+        public static bool IsThumbnailHorizontal { get; set; } = false;
 
         /// <summary>
         /// Gets, sets width of horizontal thumbnail bar
         /// </summary>
-        public static int ThumbnailBarWidth
-        {
-            get { return _thumbnailBarWidth; }
-            set { _thumbnailBarWidth = value; }
-        }
+        public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(48, true).TotalDimension;
 
         /// <summary>
         /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
         /// </summary>
-        public static bool IsZoomToFit
-        {
-            get { return _isZoomToFit; }
-            set { _isZoomToFit = value; }
-        }
+        public static bool IsZoomToFit { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value indicating that using mouse wheel to navigate image or not
         /// </summary>
-        public static bool IsMouseNavigation
-        {
-            get { return _isMouseNavigation; }
-            set { _isMouseNavigation = value; }
-        }
-
+        public static bool IsMouseNavigation { get; set; } = false;
 
         #endregion
 
