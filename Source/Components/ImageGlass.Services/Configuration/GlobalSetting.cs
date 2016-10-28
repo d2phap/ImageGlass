@@ -119,7 +119,6 @@ namespace ImageGlass.Services.Configuration
 
     public static class GlobalSetting
     {
-        private static string _supportedExtensions = "";
         private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;*.svg;*.webp;";
