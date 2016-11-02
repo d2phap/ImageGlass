@@ -19,9 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Collections;
-using System.Drawing.Design;
-using System.Resources;
-using System.Reflection;
 
 namespace ImageGlass.ImageListView
 {

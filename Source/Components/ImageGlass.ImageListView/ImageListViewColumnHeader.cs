@@ -19,7 +19,6 @@ using System;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Resources;
-using System.Reflection;
 
 namespace ImageGlass.ImageListView
 {

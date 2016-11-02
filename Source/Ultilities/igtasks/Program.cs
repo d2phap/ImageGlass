@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using igtasks;
-using ImageGlass.Library;
 using ImageGlass.Library.Image;
-using ImageGlass.Library.FileAssociations;
 
 namespace adtasks
 {

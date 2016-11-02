@@ -3,8 +3,6 @@
 //
 using System;
 using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image

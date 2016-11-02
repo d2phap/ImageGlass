@@ -17,17 +17,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading;
-using System.IO;
 
 namespace ImageGlass.ImageListView
 {
-	/// <summary>
-	/// Represents the cache manager responsible for asynchronously loading
-	/// item metadata.
-	/// </summary>
-	internal class ImageListViewCacheMetadata : IDisposable
+    /// <summary>
+    /// Represents the cache manager responsible for asynchronously loading
+    /// item metadata.
+    /// </summary>
+    internal class ImageListViewCacheMetadata : IDisposable
 	{
 		#region Member Variables
 		private QueuedBackgroundWorker bw;
