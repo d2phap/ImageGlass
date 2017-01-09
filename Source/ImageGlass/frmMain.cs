@@ -2758,7 +2758,7 @@ namespace ImageGlass
         private void mnuMainAbout_Click(object sender, EventArgs e)
         {
             frmAbout f = new frmAbout();
-            f.ShowDialog();
+            f.Show();
         }
 
         private void mnuMainReportIssue_Click(object sender, EventArgs e)
