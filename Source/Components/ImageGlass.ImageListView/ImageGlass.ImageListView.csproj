@@ -131,16 +131,6 @@
       <SubType>component</SubType>
     </Compile>
     <Compile Include="ImageListViewColor.cs" />
-    <Compile Include="ImageListViewResources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageListViewResources.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ImageListViewResources.tr.Designer.cs">
-      <DependentUpon>ImageListViewResources.tr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="ImageListViewRenderers.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Events.cs" />
@@ -182,16 +172,6 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ImageListViewResources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImageListViewResources.tr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.tr.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ImageListView.bmp" />
     <EmbeddedResource Include="ImageListViewResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

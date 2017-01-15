@@ -24,6 +24,8 @@ using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Specialized;
+using System.Security;
+using System.IO;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -549,9 +551,7 @@ namespace ImageGlass.Services.Configuration
         {
             string s = GetConfig("ImageLoadingOrder", "0");
 
-            int i = 0;
-
-            if (int.TryParse(s, out i))
+            if (int.TryParse(s, out int i))
             {
                 if (-1 < i && i < 7) //<=== Number of items in array
                 { }
@@ -603,21 +603,47 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
-        /// <param name="key">Configuration key</param>
+        /// <param name="configParameter">Configuration key</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns></returns>
-        public static string GetConfig(string key, string defaultValue)
+        public static string GetConfig(string configParameter, string defaultValue)
         {
             try
             {
-                // If the registry key doesn't exist, this would crash
-                string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
-                return Registry.GetValue(hkey, key, defaultValue).ToString();
+                RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass"); // Work path in the registry.
+                object configValue = null; // Value of the configuration obtained.
+
+                if (workKey != null)
+                {
+                    configValue = workKey.GetValue(configParameter, defaultValue); // Get the config value.
+                }
+                else
+                {
+                    throw new Exception(); // Force catch.
+                }
+                return configValue.ToString();
+            }
+            catch (SecurityException)
+            {
+                // Repair(SecurityException);
+                return defaultValue;
+            }
+            catch (IOException)
+            {
+                // Reipair(IOException);
+                return defaultValue;
+            }
+            catch (ArgumentException)
+            {
+                // Repair(ArgumentException);
+                return defaultValue;
             }
             catch (Exception)
             {
+                // Need a repair function.
                 return defaultValue;
             }
+
         }
 
         /// <summary>
@@ -627,8 +653,20 @@ namespace ImageGlass.Services.Configuration
         /// <param name="value">Configuration value</param>
         public static void SetConfig(string key, string value)
         {
-            string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
-            Registry.SetValue(hkey, key, value);
+            RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree); // Work path in the registry.
+
+            if (workKey == null)
+            {
+                workKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree);
+            }
+
+            try
+            {
+                workKey.SetValue(key, value);
+            }
+#pragma warning disable CS0168 // Variable is declared but never used
+            catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
         }
 
         /// <summary>
