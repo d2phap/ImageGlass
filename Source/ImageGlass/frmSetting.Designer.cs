@@ -79,6 +79,7 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.chkConfirmationDelete = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -170,7 +171,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(20, 577);
+            this.picBackgroundColor.Location = new System.Drawing.Point(20, 592);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 19);
             this.picBackgroundColor.TabIndex = 12;
@@ -191,7 +192,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 4);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(550, 614);
+            this.tabLanguage.Size = new System.Drawing.Size(554, 614);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -403,6 +404,7 @@
             // tabGeneral
             // 
             this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.chkConfirmationDelete);
             this.tabGeneral.Controls.Add(this.chkMouseNavigation);
             this.tabGeneral.Controls.Add(this.lblGeneral_ZoomOptimization);
             this.tabGeneral.Controls.Add(this.cmbZoomOptimization);
@@ -436,7 +438,7 @@
             // chkMouseNavigation
             // 
             this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(20, 467);
+            this.chkMouseNavigation.Location = new System.Drawing.Point(20, 489);
             this.chkMouseNavigation.Name = "chkMouseNavigation";
             this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
             this.chkMouseNavigation.TabIndex = 21;
@@ -447,7 +449,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 420);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(17, 442);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
             this.lblGeneral_ZoomOptimization.TabIndex = 19;
@@ -459,7 +461,7 @@
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 438);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(20, 460);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(279, 23);
             this.cmbZoomOptimization.TabIndex = 20;
@@ -468,7 +470,7 @@
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(20, 231);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(20, 259);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
             this.chkThumbnailVertical.TabIndex = 18;
@@ -490,7 +492,7 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 309);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(17, 337);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
             this.lblGeneral_ThumbnailSize.TabIndex = 15;
@@ -506,7 +508,7 @@
             "64",
             "96",
             "128"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 327);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(20, 355);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(279, 23);
             this.cmbThumbnailDimension.TabIndex = 16;
@@ -547,7 +549,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 276);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(20, 304);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -572,7 +574,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 258);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(17, 286);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
             this.lblGeneral_MaxFileSize.TabIndex = 14;
@@ -592,7 +594,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 556);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(17, 571);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
             this.lblBackGroundColor.TabIndex = 11;
@@ -612,7 +614,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 506);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(17, 521);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
             this.lblImageLoadingOrder.TabIndex = 10;
@@ -630,7 +632,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(20, 524);
+            this.cmbImageOrder.Location = new System.Drawing.Point(20, 539);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(279, 23);
             this.cmbImageOrder.TabIndex = 14;
@@ -639,7 +641,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(14, 390);
+            this.barInterval.Location = new System.Drawing.Point(14, 412);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -652,7 +654,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 372);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(17, 394);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(163, 15);
             this.lblSlideshowInterval.TabIndex = 5;
@@ -723,6 +725,17 @@
             this.sp0.SplitterDistance = 155;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
+            // 
+            // chkConfirmationDelete
+            // 
+            this.chkConfirmationDelete.AutoSize = true;
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(20, 217);
+            this.chkConfirmationDelete.Name = "chkConfirmationDelete";
+            this.chkConfirmationDelete.Size = new System.Drawing.Size(211, 19);
+            this.chkConfirmationDelete.TabIndex = 22;
+            this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
+            this.chkConfirmationDelete.UseVisualStyleBackColor = true;
+            this.chkConfirmationDelete.CheckedChanged += new System.EventHandler(this.chkConfirmationDelete_CheckedChanged);
             // 
             // frmSetting
             // 
@@ -813,5 +826,6 @@
         private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
         private System.Windows.Forms.ComboBox cmbZoomOptimization;
         private System.Windows.Forms.CheckBox chkMouseNavigation;
+        private System.Windows.Forms.CheckBox chkConfirmationDelete;
     }
 }

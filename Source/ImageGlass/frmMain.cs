@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -1265,6 +1265,9 @@ namespace ImageGlass
             //Load state of IsMouseNavigation value-------------------------------------------
             GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
             picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+
+            //Get welcome screen------------------------------------------------------------
+            GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
         }
 
 
@@ -2436,35 +2439,45 @@ namespace ImageGlass
             }
             catch { return; }
 
-            string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-            try
+            DialogResult msg = DialogResult.Yes;
+
+            if (GlobalSetting.IsConfirmationDelete)
             {
-                //in case of GIF file...
-                string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                if (ext == ".gif")
+                msg = MessageBox.Show(string.Format(GlobalSetting.LangPack.Items["frmMain._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.LangPack.Items["frmMain._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
+
+            if (msg == DialogResult.Yes)
+            {
+
+                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                try
                 {
-                    try
+                    //in case of GIF file...
+                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
+                    if (ext == ".gif")
                     {
-                        //delete thumbnail list
-                        thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
+                        try
+                        {
+                            //delete thumbnail list
+                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
+                        }
+                        catch { }
+
+                        //delete image list
+                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
+                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+
+                        NextPic(0);
                     }
-                    catch { }
 
-                    //delete image list
-                    GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-                    GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
+                    ImageInfo.DeleteFile(f, true);
 
-                    NextPic(0);
                 }
-
-                ImageInfo.DeleteFile(f, true);
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
         }
 
         private void mnuMainDeleteFromHardDisk_Click(object sender, EventArgs e)

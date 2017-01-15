@@ -204,6 +204,7 @@ namespace ImageGlass
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
+            chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
             chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
 
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
@@ -332,6 +333,9 @@ namespace ImageGlass
             //Get value of IsPressESCToQuit
             chkAllowMultiInstances.Checked = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
 
+            //Get value of IsConfirmationDelete
+            chkConfirmationDelete.Checked = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "false"));
+
             //Load items of cmbZoomOptimization
             cmbZoomOptimization.Items.Clear();
             cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
@@ -449,6 +453,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             GlobalSetting.SetConfig("IsAllowMultiInstances", GlobalSetting.IsAllowMultiInstances.ToString());
+        }
+
+        private void chkConfirmationDelete_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
+            GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
         }
 
         private void chkESCToQuit_CheckedChanged(object sender, EventArgs e)
@@ -637,6 +647,7 @@ namespace ImageGlass
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+
 
 
         #endregion

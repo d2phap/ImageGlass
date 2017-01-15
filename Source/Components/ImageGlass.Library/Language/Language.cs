@@ -406,6 +406,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //-3.0, +3.5
             Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
+            Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v3.6
             Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5

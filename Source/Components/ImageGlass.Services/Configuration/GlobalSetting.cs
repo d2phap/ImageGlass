@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2016 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -158,6 +158,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isMouseNavigation = false;
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
         private static bool _isWindowAlwaysOnTop = false;
+        private static bool _isConfirmationDelete = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -535,6 +536,15 @@ namespace ImageGlass.Services.Configuration
         {
             get { return _isMouseNavigation; }
             set { _isMouseNavigation = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
+        /// </summary>
+        public static bool IsConfirmationDelete
+        {
+            get => _isConfirmationDelete;
+            set => _isConfirmationDelete = value;
         }
 
 
