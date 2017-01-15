@@ -289,7 +289,7 @@ namespace ImageGlass
                 return;
             }
 
-            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._Loading"], 5000);
+            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._Loading"], 3000);
             Application.DoEvents();
 
             picMain.Text = "";
@@ -2115,7 +2115,7 @@ namespace ImageGlass
                 mnuMainToolbar.Checked = false;
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
-                    , 5000);
+                    , 3000);
             }
             //exit full screen
             else
@@ -2178,7 +2178,7 @@ namespace ImageGlass
             }
 
             DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
-                    , 5000);
+                    , 3000);
         }
 
         private void mnuMainSlideShowPause_Click(object sender, EventArgs e)
