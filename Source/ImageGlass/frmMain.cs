@@ -63,6 +63,8 @@ namespace ImageGlass
 
         //determine if toolbar is shown
         private bool _isShownToolbar = true;
+
+        private bool _isWindowsKeyPressed = false;
         #endregion
 
 
@@ -468,6 +470,15 @@ namespace ImageGlass
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
+
+            #region Detect WIN logo key
+            _isWindowsKeyPressed = false;
+            if (e.KeyData == Keys.LWin || e.KeyData == Keys.RWin)
+            {
+                _isWindowsKeyPressed = true;
+            }
+            #endregion
+
             
             #region Ctrl + `
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
@@ -561,7 +572,7 @@ namespace ImageGlass
             #endregion
 
         }
-
+        
         private void frmMain_KeyUp(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
@@ -606,7 +617,7 @@ namespace ImageGlass
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if ((e.KeyValue == 33 || e.KeyValue == 37) &&
+            if (!_isWindowsKeyPressed && (e.KeyValue == 33 || e.KeyValue == 37) &&
                 !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
             {
                 NextPic(-1);
@@ -617,7 +628,7 @@ namespace ImageGlass
 
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if ((e.KeyValue == 34 || e.KeyValue == 39) &&
+            if (!_isWindowsKeyPressed && (e.KeyValue == 34 || e.KeyValue == 39) &&
                 !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
             {
                 NextPic(1);
