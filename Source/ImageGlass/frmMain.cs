@@ -65,6 +65,8 @@ namespace ImageGlass
         private bool _isShownToolbar = true;
 
         private bool _isWindowsKeyPressed = false;
+
+        private bool _isDraggingImage = false;
         #endregion
 
 
@@ -72,13 +74,45 @@ namespace ImageGlass
         #region Drag - drop
         private void picMain_DragOver(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.All;
-        }
+            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
 
+            // Drag file from DESKTOP to APP
+            if (GlobalSetting.ImageFilenameList.IndexOf(filePath) == -1)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            // Drag file from APP to DESKTOP
+            else
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+
+        }
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
-            Prepare(((string[])e.Data.GetData(DataFormats.FileDrop))[0]);
+            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+
+            // Drag file from DESKTOP to APP
+            if (GlobalSetting.ImageFilenameList.IndexOf(filePath) == -1)
+            {
+                Prepare(filePath);
+            }
         }
+
+        private void picMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_isDraggingImage)
+            {
+                string[] paths = new string[1];
+                paths[0] = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                var data = new DataObject(DataFormats.FileDrop, paths);
+                picMain.DoDragDrop(data, DragDropEffects.Copy);
+
+                _isDraggingImage = false;
+            }
+        }
+        
         #endregion
 
 
@@ -471,6 +505,8 @@ namespace ImageGlass
         {
             //this.Text = e.KeyValue.ToString();
 
+
+
             #region Detect WIN logo key
             _isWindowsKeyPressed = false;
             if (e.KeyData == Keys.LWin || e.KeyData == Keys.RWin)
@@ -480,6 +516,7 @@ namespace ImageGlass
             #endregion
 
             
+            //Show main menu
             #region Ctrl + `
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
             {
@@ -562,6 +599,9 @@ namespace ImageGlass
             #region CTRL (for Zooming)
             if (e.Control && !e.Alt && !e.Shift)//Ctrl
             {
+                //Enable dragging viewing image to desktop feature---------------------------
+                _isDraggingImage = true;
+
                 if (GlobalSetting.IsMouseNavigation)
                 {
                     _isZoomed = true;
@@ -667,7 +707,6 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
         }
         #endregion
 
@@ -2828,6 +2867,10 @@ namespace ImageGlass
             }
             catch { }
         }
+
+
+
+
 
 
 

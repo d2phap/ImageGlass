@@ -1391,7 +1391,7 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(836, 417);
-            this.sp1.SplitterDistance = 348;
+            this.sp1.SplitterDistance = 366;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1408,13 +1408,14 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(836, 348);
+            this.picMain.Size = new System.Drawing.Size(836, 366);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
             this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             // 
             // thumbnailBar
             // 
@@ -1430,7 +1431,7 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(836, 68);
+            this.thumbnailBar.Size = new System.Drawing.Size(836, 50);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
