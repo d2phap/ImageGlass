@@ -1702,7 +1702,7 @@ namespace ImageGlass
                 //Prevent picmain zooming
                 picMain.AllowZoom = false;
 
-                if (e.Delta > 0)
+                if (e.Delta < 0)
                 {
                     //Next pic
                     mnuMainViewNext_Click(null, null);
