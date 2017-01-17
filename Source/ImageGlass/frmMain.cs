@@ -47,6 +47,9 @@ namespace ImageGlass
             LocalSetting.OldDPI = LocalSetting.CurrentDPI;
             LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
             Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
+
+            //Track image loading progress
+            //GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
         }
 
         
@@ -169,6 +172,8 @@ namespace ImageGlass
 
             //Set filename to image list
             GlobalSetting.ImageList = new ImgMan(GlobalSetting.ImageFilenameList.ToArray());
+            //Track image loading progress
+            GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
             //Find the index of current image
             GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(initFile);
@@ -196,6 +201,12 @@ namespace ImageGlass
             //Watch all changes of current path
             sysWatch.Path = Path.GetDirectoryName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             sysWatch.EnableRaisingEvents = true;
+        }
+
+        private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
+        {
+            //clear text when finishing
+            DisplayTextMessage("", 0);
         }
 
         /// <summary>
@@ -358,7 +369,7 @@ namespace ImageGlass
             try
             {
                 //Track image loading progress
-                GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
+                //GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
                 //Read imaeg data
                 im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
@@ -428,13 +439,6 @@ namespace ImageGlass
             //Collect system garbage
             System.GC.Collect();
         }
-
-        private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
-        {
-            //clear text when finishing
-            DisplayTextMessage("", 0);
-        }
-
 
 
         /// <summary>
@@ -1672,7 +1676,8 @@ namespace ImageGlass
 
             //Set filename to image list
             GlobalSetting.ImageList = new ImgMan(GlobalSetting.ImageFilenameList.ToArray());
-
+            //Track image loading progress
+            GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
             //Insert to the thumbnail -------------------------------------
             int newFileIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
