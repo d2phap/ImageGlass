@@ -434,7 +434,8 @@ namespace ImageGlass
             SelectCurrentThumbnail();
 
             //Collect system garbage
-            System.GC.Collect();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
 

@@ -65,9 +65,6 @@ namespace ImageGlass.Core
                 {
                     bmp = new Bitmap(fs, true);
 
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
                     //GIF file *.gif
                     if (bmp.RawFormat.Equals(ImageFormat.Gif))
                     {
@@ -88,8 +85,8 @@ namespace ImageGlass.Core
                         }
                     }
 
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
+                    //GC.Collect();
+                    //GC.WaitForPendingFinalizers();
                 }
             }
 
