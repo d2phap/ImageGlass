@@ -335,8 +335,7 @@ namespace ImageGlass
                 ImageSaveChange();
                 return;
             }
-
-            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._Loading"], 3000);
+            
             Application.DoEvents();
 
             picMain.Text = "";
