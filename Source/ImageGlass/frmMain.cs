@@ -623,6 +623,9 @@ namespace ImageGlass
             #region CTRL (for Zooming)
             if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
             {
+                //Disable dragging viewing image to desktop feature--------------------------
+                _isDraggingImage = false;
+
                 if (GlobalSetting.IsMouseNavigation)
                 {
                     _isZoomed = false;
