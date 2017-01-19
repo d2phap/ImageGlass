@@ -354,14 +354,37 @@ namespace ImageGlass
                 return;
             }
 
-            //Update current index
-            GlobalSetting.CurrentIndex += step;
+            //temp index
+            int tempIndex = GlobalSetting.CurrentIndex + step;
+
+            if (!GlobalSetting.IsPlaySlideShow && !GlobalSetting.IsLoopBackViewer)
+            {
+                //Reach end of list
+                if (tempIndex >= GlobalSetting.ImageList.Length)
+                {
+                    DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._LastItemOfList"], 1000);
+                    return;
+                }
+
+                //Reach the first item of list
+                if (tempIndex < 0)
+                {
+                    DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FirstItemOfList"], 1000);
+                    return;
+                }
+            }
 
             //Check if current index is greater than upper limit
-            if (GlobalSetting.CurrentIndex >= GlobalSetting.ImageList.Length) GlobalSetting.CurrentIndex = 0;
+            if (tempIndex >= GlobalSetting.ImageList.Length)
+                tempIndex = 0;
 
             //Check if current index is less than lower limit
-            if (GlobalSetting.CurrentIndex < 0) GlobalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
+            if (tempIndex < 0)
+                tempIndex = GlobalSetting.ImageList.Length - 1;
+
+            //Update current index
+            GlobalSetting.CurrentIndex = tempIndex;
+
 
             //The image data will load
             Image im = null;
@@ -1219,6 +1242,9 @@ namespace ImageGlass
             }
 
             //Load is loop back slideshow---------------------------------------------------
+            GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
+
+            //Load is loop back slideshow---------------------------------------------------
             GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
 
             //Load IsPressESCToQuit---------------------------------------------------------
@@ -1695,8 +1721,11 @@ namespace ImageGlass
         {
             if (e.ChangeType == WatcherChangeTypes.Changed)
             {
-                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
-                NextPic(0, true);
+                if (GlobalSetting.ImageList.Length > 0)
+                {
+                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                }
+                NextPic(0);
             }
         }
 
@@ -2174,7 +2203,7 @@ namespace ImageGlass
                 mnuMainToolbar.Checked = false;
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
-                    , 3000);
+                    , 2000);
             }
             //exit full screen
             else
@@ -2237,7 +2266,7 @@ namespace ImageGlass
             }
 
             DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
-                    , 3000);
+                    , 2000);
         }
 
         private void mnuMainSlideShowPause_Click(object sender, EventArgs e)

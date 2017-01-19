@@ -146,6 +146,7 @@ namespace ImageGlass.Services.Configuration
         private static Color _backgroundColor = Color.White;
         private static bool _isShowToolBar = true;
         private static bool _isLoopBackSlideShow = false;
+        private static bool _isLoopBackViewer = true;
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
@@ -159,6 +160,7 @@ namespace ImageGlass.Services.Configuration
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
+        
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -546,6 +548,12 @@ namespace ImageGlass.Services.Configuration
             get => _isConfirmationDelete;
             set => _isConfirmationDelete = value;
         }
+
+        /// <summary>
+        /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list
+        /// </summary>
+        public static bool IsLoopBackViewer { get => _isLoopBackViewer; set => _isLoopBackViewer = value; }
+        
 
 
         #endregion

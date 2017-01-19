@@ -361,6 +361,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
             Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
             Items.Add("frmMain._Loading", "Loading..."); //v3.0
+            Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v3.6
+            Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v3.6
 
 
             Items.Add("frmExtension._Text", "Extension Manager");
@@ -400,6 +402,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
             Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when starting up");
+            Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v3.6
             Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final

@@ -200,6 +200,7 @@ namespace ImageGlass
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
             chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
+            chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
             chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
@@ -321,6 +322,9 @@ namespace ImageGlass
             //Get value of chkHideToolBar
             chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
 
+            //Get value of chkLoopViewer
+            chkLoopViewer.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "true"));
+
             //Get value of chkLoopSlideshow
             chkLoopSlideshow.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "true"));
 
@@ -435,6 +439,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
             GlobalSetting.SetConfig("Welcome", GlobalSetting.IsWelcomePicture.ToString());
+        }
+
+        private void chkLoopViewer_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
+            GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
         }
 
         private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
@@ -647,6 +657,7 @@ namespace ImageGlass
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+
 
 
 
