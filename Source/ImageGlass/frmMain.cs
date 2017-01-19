@@ -368,10 +368,7 @@ namespace ImageGlass
 
             try
             {
-                //Track image loading progress
-                //GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
-
-                //Read imaeg data
+                //Read image data
                 im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;

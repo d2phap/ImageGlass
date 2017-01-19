@@ -146,7 +146,7 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("mailto:d2phap@gmal.com");
+                Process.Start("mailto:d2phap@gmail.com");
             }
             catch { }
         }
@@ -160,14 +160,7 @@ namespace ImageGlass
             catch { }
         }
 
-        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                Process.Start("tel:+841674710360");
-            }
-            catch { }
-        }
+        
         private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try

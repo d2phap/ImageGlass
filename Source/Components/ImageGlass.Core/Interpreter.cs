@@ -65,6 +65,9 @@ namespace ImageGlass.Core
                 {
                     bmp = new Bitmap(fs, true);
 
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+
                     //GIF file *.gif
                     if (bmp.RawFormat.Equals(ImageFormat.Gif))
                     {
@@ -84,6 +87,9 @@ namespace ImageGlass.Core
                             bmp = ScaleDownRotateBitmap(bmp, 1.0f, rotation);
                         }
                     }
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
             }
 
