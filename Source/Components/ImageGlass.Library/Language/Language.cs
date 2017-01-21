@@ -234,7 +234,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
             Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
-            Items.Add("frmMain.btnWindowAutosize", "Window adapt to image (Ctrl + M)");
+            Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 3.6
             Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
             Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
