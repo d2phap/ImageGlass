@@ -2450,6 +2450,12 @@ namespace ImageGlass
                 return;
             }
 
+            // Reset scrollbar position
+            if (LocalSetting.IsResetScrollPosition)
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
+
             // Scale to Width
             double frac = picMain.Width / (1.0 * picMain.Image.Width);
             picMain.Zoom = (int)(frac * 100);
@@ -2460,6 +2466,12 @@ namespace ImageGlass
             if (picMain.Image == null)
             {
                 return;
+            }
+
+            // Reset scrollbar position
+            if (LocalSetting.IsResetScrollPosition)
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
             }
 
             // Scale to Height
@@ -2493,7 +2505,9 @@ namespace ImageGlass
                 Top = (screen.Height - Height) / 2 + screen.Top;
                 Left = (screen.Width - Width) / 2 + screen.Left;
             }
-            
+
+            //reset zoom
+            mnuMainRefresh_Click(null, null);
         }
 
         private void mnuMainRename_Click(object sender, EventArgs e)
