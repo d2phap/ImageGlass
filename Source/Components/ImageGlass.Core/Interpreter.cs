@@ -1,95 +1,51 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Drawing.IconLib;
-using System.Drawing.Drawing2D;
-using FreeImageAPI;
-using Svg;
-using Imazen.WebP;
+using ImageMagick;
 
 namespace ImageGlass.Core
 {
     public class Interpreter
     {
-        private const int TAG_ORIENTATION = 0x0112;
-
         public static Bitmap Load(string path)
         {
             path = path.ToLower();
             Bitmap bmp = null;
 
-            //file *.hdr
-            if (path.EndsWith(".hdr"))
-            {
-                FIBITMAP hdr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_HDR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
-                bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(hdr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                FreeImage.Unload(hdr);
-            }
-            //file *.exr
-            else if (path.EndsWith(".exr"))
-            {
-                FIBITMAP exr = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_EXR, path, FREE_IMAGE_LOAD_FLAGS.RAW_DISPLAY);
-                bmp = FreeImage.GetBitmap(FreeImage.ToneMapping(exr, FREE_IMAGE_TMO.FITMO_DRAGO03, 2.2, 0));
-                FreeImage.Unload(exr);
-            }
-            //file *.svg
-            else if (path.EndsWith(".svg"))
-            {
-                SvgDocument svg = SvgDocument.Open(path);
-                bmp = svg.Draw();
-            }
-            //TARGA file *.tga
-            else if (path.EndsWith(".tga"))
-            {
-                using (Paloma.TargaImage tar = new Paloma.TargaImage(path))
-                {
-                    bmp = new Bitmap(tar.Image);
-                }
-            }
-            //WEBP file *.webp
-            else if (path.EndsWith(".webp"))
-            {
-                bmp = ReadWebpFile(path);
-            }
-            //PHOTOSHOP file *.PSD
-            else if (path.EndsWith(".psd"))
-            {
-                System.Drawing.PSD.PsdFile psd = (new System.Drawing.PSD.PsdFile()).Load(path);
-                bmp = System.Drawing.PSD.ImageDecoder.DecodeImage(psd);
-            }
-            else
+            if (path.EndsWith(".gif"))
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    bmp = new Bitmap(fs, true);
-
-                    //GIF file *.gif
-                    if (bmp.RawFormat.Equals(ImageFormat.Gif))
-                    {
-                        bmp = new Bitmap(path);
-                    }
-                    //ICON file *.ico
-                    else if (bmp.RawFormat.Equals(ImageFormat.Icon))
-                    {
-                        bmp = ReadIconFile(path);
-                    }
-                    else if (bmp.RawFormat.Equals(ImageFormat.Jpeg))
-                    {
-                        //read Exif rotation
-                        int rotation = GetRotation(bmp);
-                        if (rotation != 0)
-                        {
-                            bmp = ScaleDownRotateBitmap(bmp, 1.0f, rotation);
-                        }
-                    }
-
-                    //GC.Collect();
-                    //GC.WaitForPendingFinalizers();
+                    bmp = new Bitmap(path, true);                    
                 }
             }
+            else if (path.EndsWith(".ico"))
+            {
+                bmp = ReadIconFile(path);
+            }
+            else
+            {
+                using (var magicImg = new MagickImage(path))
+                {
+                    //Get Exif information
+                    var profile = magicImg.GetExifProfile();
+                    if (profile != null)
+                    {
+                        //Get Orieantation Flag
+                        var orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
 
+                        var orientationDegree = GetOrientationDegree(orientationFlag);
+                        if (orientationDegree != 0)
+                        {
+                            //Rotate image accordingly
+                            magicImg.Rotate(orientationDegree);
+                        }
+                    }
+                    
+                    bmp = magicImg.ToBitmap();
+                }
+            }
 
             return bmp;
         }
@@ -117,126 +73,30 @@ namespace ImageGlass.Core
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
-        /// <param name="img">Image.</param>
-        public static int GetRotation(Bitmap img)
+        /// <param name="orientationFlag">Orientation Flag</param>
+        /// <returns></returns>
+        public static double GetOrientationDegree(int orientationFlag)
         {
-            try
-            {
-                foreach (PropertyItem prop in img.PropertyItems)
-                {
-                    if (prop.Id == TAG_ORIENTATION)
-                    {
-                        ushort orientationFlag = BitConverter.ToUInt16(prop.Value, 0);
-                        if (orientationFlag == 1)
-                            return 0;
-                        else if (orientationFlag == 2)
-                            return -360;
-                        else if (orientationFlag == 3)
-                            return 180;
-                        else if (orientationFlag == 4)
-                            return -180;
-                        else if (orientationFlag == 5)
-                            return -90;
-                        else if (orientationFlag == 6)
-                            return 90;
-                        else if (orientationFlag == 7)
-                            return -270;
-                        else if (orientationFlag == 8)
-                            return 270;
-                    }
-                }
-            }
-            catch
-            {
-                ;
-            }
+            if (orientationFlag == 1)
+                return 0;
+            else if (orientationFlag == 2)
+                return -360;
+            else if (orientationFlag == 3)
+                return 180;
+            else if (orientationFlag == 4)
+                return -180;
+            else if (orientationFlag == 5)
+                return -90;
+            else if (orientationFlag == 6)
+                return 90;
+            else if (orientationFlag == 7)
+                return -270;
+            else if (orientationFlag == 8)
+                return 270;
 
             return 0;
         }
 
 
-        /// <summary>
-        /// Scales down and rotates an image.
-        /// </summary>
-        /// <param name="source">Original image</param>
-        /// <param name="scale">Uniform scaling factor</param>
-        /// <param name="angle">Rotation angle</param>
-        /// <returns>Scaled and rotated image</returns>
-        public static Bitmap ScaleDownRotateBitmap(Bitmap source, double scale, int angle)
-        {
-            if (angle % 90 != 0)
-            {
-                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", "angle");
-            }
-
-            // Do not upscale and no rotation.
-            if ((float)scale >= 1.0f && angle == 0)
-            {
-                return new Bitmap(source);
-            }
-
-            int sourceWidth = source.Width;
-            int sourceHeight = source.Height;
-
-            // Scale
-            double xScale = Math.Min(1.0, Math.Max(1.0 / (double)sourceWidth, scale));
-            double yScale = Math.Min(1.0, Math.Max(1.0 / (double)sourceHeight, scale));
-
-            int width = (int)((double)sourceWidth * xScale);
-            int height = (int)((double)sourceHeight * yScale);
-            int thumbWidth = Math.Abs(angle) % 180 == 0 ? width : height;
-            int thumbHeight = Math.Abs(angle) % 180 == 0 ? height : width;
-
-            Bitmap thumb = new Bitmap(thumbWidth, thumbHeight);
-            thumb.SetResolution(source.HorizontalResolution, source.VerticalResolution);
-            using (Graphics g = Graphics.FromImage(thumb))
-            {
-                g.PixelOffsetMode = PixelOffsetMode.None;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.Clear(System.Drawing.Color.Transparent);
-
-                g.TranslateTransform(-sourceWidth / 2, -sourceHeight / 2, MatrixOrder.Append);
-                if (Math.Abs(angle) % 360 != 0)
-                    g.RotateTransform(Math.Abs(angle), MatrixOrder.Append);
-                if (angle < 0)
-                    xScale = -xScale;
-                g.ScaleTransform((float)xScale, (float)yScale, MatrixOrder.Append);
-                g.TranslateTransform(thumbWidth / 2, thumbHeight / 2, MatrixOrder.Append);
-
-                g.DrawImage(source, 0, 0);
-            }
-
-            return thumb;
-        }
-
-
-        /// <summary>
-        /// Read non-animated WEBP format
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static Bitmap ReadWebpFile(string path)
-        {
-            var webpDecoder = new SimpleDecoder();
-            
-            using (Stream inputStream = File.Open(path, FileMode.Open))
-            {
-                byte[] buffer = new byte[16 * 1024];
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    int read;
-                    while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        ms.Write(buffer, 0, read);
-                    }
-
-                    var bytes = ms.ToArray();
-                    Bitmap outBitmap = webpDecoder.DecodeFromBytes(bytes, bytes.LongLength);
-
-                    return outBitmap;
-                }                
-            }
-        }
-        
     }
 }

@@ -132,7 +132,7 @@ namespace ImageGlass.Services.Configuration
         private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;*.svg;*.webp;";
-        private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;";
+        private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
         private static string _contextMenuExtensions = "";
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;

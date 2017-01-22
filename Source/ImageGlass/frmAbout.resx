@@ -236,26 +236,7 @@ ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
 License: Apache 2.0
 
 -----------------------------------------
-TargaImage v1.0: copyright © 2008 David Polomis.
-License: The Code Project Open License (CPOL)
-
------------------------------------------
-System.Drawing.PSD v1.0: copyright © 2013 Darren Horrocks. Background alpha supported by Mikael Porttila.
-License: GNU GPL v2
-
------------------------------------------
-FreeImage v3.17: copyright © 2003-2015 by FreeImage.
-License: GNU GPL v2
-
------------------------------------------
-SVG v2.0.0.42482: copyright © 2006 by Microsoft.
-License: Microsoft Public License (Ms-PL)
-
------------------------------------------
-WebP v9.0.1: copyright © 2006 by Imazen.
-License: MIT License
-
-libwebp.dll v0.4.1 : copyright © 2014 by Google.
+Magick.NET v7.0.4.400: copyright © 2004 Dirk Lemstra
 License: Apache 2.0</value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

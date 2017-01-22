@@ -74,18 +74,11 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET">
-      <HintPath>..\..\ImageGlass\FreeImageNET.dll</HintPath>
-    </Reference>
-    <Reference Include="Imazen.WebP">
-      <HintPath>..\..\ImageGlass\Imazen.WebP.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.0.4.400\lib\net40-client\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Svg, Version=2.2.1.1459, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Svg.2.2.1\lib\net35\Svg.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
