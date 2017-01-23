@@ -160,7 +160,7 @@ namespace ImageGlass.Services.Configuration
         private static string _tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
-        
+        private static bool _isPortableMode = false;
 
         private static Library.Language _langPack = new Library.Language();
 
@@ -553,7 +553,13 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list
         /// </summary>
         public static bool IsLoopBackViewer { get => _isLoopBackViewer; set => _isLoopBackViewer = value; }
-        
+
+        /// <summary>
+        /// Gets, sets value indicating that ImageGlass will run in portable mode
+        /// All configurations will be written to XML file instead of registry
+        /// </summary>
+        public static bool IsPortableMode { get => _isPortableMode; set => _isPortableMode = value; }
+
 
 
         #endregion

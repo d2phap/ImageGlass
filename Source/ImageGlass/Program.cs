@@ -18,10 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
+using System.Collections.Generic;
 
 namespace ImageGlass
 {
@@ -41,14 +43,22 @@ namespace ImageGlass
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //check if portable mode ----------------------------------------------------
+            GlobalSetting.IsPortableMode = false;
+            if (argv.ToList().IndexOf("--portable") != -1)
+            {
+                GlobalSetting.IsPortableMode = true;
+            }
+
+
             //auto update----------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
+            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
             
-            if (s != "0")
+            if (lastUpdateConfig != "0")
             {
                 DateTime lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParse(s, out lastUpdate))
+                if (DateTime.TryParse(lastUpdateConfig, out lastUpdate))
                 {
                     //Check for update every 7 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)

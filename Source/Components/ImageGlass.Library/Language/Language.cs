@@ -392,6 +392,7 @@ namespace ImageGlass.Library
             Items.Add("frmAbout.lblSoftwareUpdate", "Software updates:");
             Items.Add("frmAbout.lnkCheckUpdate", "» Check for update");
             Items.Add("frmAbout._Text", "About");
+            Items.Add("frmAbout._PortableText", "[Portable]"); //v3.6
             Items.Add("frmSetting._Text", "Settings");
             Items.Add("frmSetting.lblGeneral", "General");
             //this.Items.Add("frmSetting.lblContextMenu", "Context menu"); //removed v2.0 final

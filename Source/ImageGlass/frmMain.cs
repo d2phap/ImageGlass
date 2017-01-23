@@ -33,6 +33,7 @@ using ImageGlass.Library;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
+using ImageMagick;
 
 namespace ImageGlass
 {
