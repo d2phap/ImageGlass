@@ -43,6 +43,9 @@ namespace ImageGlass.Core
                         }
                     }
                     
+                    //corect the image color 
+                    magicImg.AddProfile(ColorProfile.SRGB);
+
                     bmp = magicImg.ToBitmap();
                 }
             }

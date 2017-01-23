@@ -527,7 +527,7 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Text = e.KeyValue.ToString();
+            //this.Text = e.KeyValue.ToString();
 
 
 
