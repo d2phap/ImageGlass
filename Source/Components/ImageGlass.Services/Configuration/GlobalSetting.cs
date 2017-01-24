@@ -127,6 +127,8 @@ namespace ImageGlass.Services.Configuration
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;
         private static bool _isRecursive = false;
+
+
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _supportedExtensions = "";
         private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
@@ -612,6 +614,7 @@ namespace ImageGlass.Services.Configuration
             {
                 ImageOrderBy = ImageOrderBy.Name;
             }
+            
         }
 
         /// <summary>
@@ -632,6 +635,9 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string GetConfig(string configParameter, string defaultValue)
         {
+            //var con = new ConfigurationFile();
+            //var xxx = con["WindowsBound"];
+            //con.SetConfig("WindowsBound", xxx + "xxxx");
             try
             {
                 RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass"); // Work path in the registry.
@@ -667,7 +673,7 @@ namespace ImageGlass.Services.Configuration
                 // Need a repair function.
                 return defaultValue;
             }
-
+            
         }
 
         /// <summary>
