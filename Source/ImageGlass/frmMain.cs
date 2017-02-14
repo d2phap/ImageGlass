@@ -46,7 +46,7 @@ namespace ImageGlass
 
             //Check and perform DPI Scaling
             LocalSetting.OldDPI = LocalSetting.CurrentDPI;
-            LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
+            LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI();
             Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
 
             //Track image loading progress
@@ -1425,7 +1425,25 @@ namespace ImageGlass
                 {
                     Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
 
-                    toolMain.Height = 33;
+                    int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
+                    
+                    //Tool bar buttons
+                    foreach (var item in toolMain.Items.OfType<ToolStripButton>())
+                    {
+                        item.Size = new Size(height, height);
+                    }
+
+                    //Tool bar menu buttons
+                    foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
+                    {
+                        item.Size = new Size(height, height);
+                    }
+
+                    //Tool bar separators
+                    foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
+                    {
+                        item.Size = new Size(5, height);
+                    }
                 }
             }
             base.WndProc(ref m);
