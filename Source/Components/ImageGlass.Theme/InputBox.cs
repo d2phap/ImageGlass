@@ -74,6 +74,7 @@ namespace ImageGlass.Theme
             f.Title = title;
             f.IsNumberOnly = isNumberOnly;
             f.Content = defaultValue;
+            
 
             if (f.ShowDialog() == DialogResult.OK)
             {
@@ -83,6 +84,8 @@ namespace ImageGlass.Theme
 
             return f.DialogResult;
         }
+
+
 
     }
 }
