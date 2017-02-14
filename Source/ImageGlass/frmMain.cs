@@ -46,8 +46,8 @@ namespace ImageGlass
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
 
             //Check and perform DPI Scaling
-            LocalSetting.OldDPI = LocalSetting.CurrentDPI;
-            LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI();
+            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+            DPIScaling.CurrentDPI = DPIScaling.CalculateCurrentDPI();
             OnDpiChanged();
 
             //Track image loading progress
@@ -1015,9 +1015,9 @@ namespace ImageGlass
         /// </summary>
         private void OnDpiChanged()
         {
-            if (LocalSetting.OldDPI != LocalSetting.CurrentDPI)
+            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
             {
-                Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
+                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
 
                 #region change size of toolbar
                 int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
@@ -1451,10 +1451,10 @@ namespace ImageGlass
             }
             //This message is sent when the form is dragged to a different monitor i.e. when
             //the bigger part of its are is on the new monitor. 
-            else if (m.Msg == Theme.DPIScaling.WM_DPICHANGED)
+            else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
-                LocalSetting.OldDPI = LocalSetting.CurrentDPI;
-                LocalSetting.CurrentDPI = Theme.DPIScaling.LOWORD((int)m.WParam);
+                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+                DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
 
                 OnDpiChanged();
             }

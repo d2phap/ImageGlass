@@ -49,6 +49,43 @@ namespace ImageGlass.Theme
 
         public const int WM_DPICHANGED = 0x02E0;
 
+
+        private static int _oldDPI = 96;
+        private static int _currentDPI = 96;
+
+        /// <summary>
+        /// Gets, sets old DPI scaling value
+        /// </summary>
+        public static int OldDPI
+        {
+            get
+            {
+                return _oldDPI;
+            }
+
+            set
+            {
+                _oldDPI = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets current DPI scaling value
+        /// </summary>
+        public static int CurrentDPI
+        {
+            get
+            {
+                return _currentDPI;
+            }
+
+            set
+            {
+                _currentDPI = value;
+            }
+        }
+
+
         public static short LOWORD(int number)
         {
             return (short)number;
