@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2016 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace ImageGlass.Core
+namespace ImageGlass.Theme
 {
     public class InputBox
     {

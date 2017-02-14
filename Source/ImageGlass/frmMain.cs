@@ -34,6 +34,7 @@ using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageMagick;
+using ImageGlass.Theme;
 
 namespace ImageGlass
 {

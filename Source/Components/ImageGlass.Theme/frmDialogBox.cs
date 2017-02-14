@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ImageGlass.Core
+namespace ImageGlass.Theme
 {
     public partial class frmDialogBox : Form
     {
