@@ -327,7 +327,7 @@
             this.panExtraExts.Controls.Add(this.chkExtraExtsTGA);
             this.panExtraExts.Location = new System.Drawing.Point(23, 142);
             this.panExtraExts.Name = "panExtraExts";
-            this.panExtraExts.Size = new System.Drawing.Size(502, 110);
+            this.panExtraExts.Size = new System.Drawing.Size(502, 150);
             this.panExtraExts.TabIndex = 28;
             // 
             // chkExtraExtsPSD
@@ -344,7 +344,7 @@
             // chkExtraExtsHDR
             // 
             this.chkExtraExtsHDR.AutoSize = true;
-            this.chkExtraExtsHDR.Location = new System.Drawing.Point(3, 78);
+            this.chkExtraExtsHDR.Location = new System.Drawing.Point(3, 108);
             this.chkExtraExtsHDR.Name = "chkExtraExtsHDR";
             this.chkExtraExtsHDR.Size = new System.Drawing.Size(87, 29);
             this.chkExtraExtsHDR.TabIndex = 27;
@@ -355,7 +355,7 @@
             // chkExtraExtsEXR
             // 
             this.chkExtraExtsEXR.AutoSize = true;
-            this.chkExtraExtsEXR.Location = new System.Drawing.Point(3, 28);
+            this.chkExtraExtsEXR.Location = new System.Drawing.Point(3, 38);
             this.chkExtraExtsEXR.Name = "chkExtraExtsEXR";
             this.chkExtraExtsEXR.Size = new System.Drawing.Size(81, 29);
             this.chkExtraExtsEXR.TabIndex = 25;
@@ -366,7 +366,7 @@
             // chkExtraExtsTGA
             // 
             this.chkExtraExtsTGA.AutoSize = true;
-            this.chkExtraExtsTGA.Location = new System.Drawing.Point(3, 53);
+            this.chkExtraExtsTGA.Location = new System.Drawing.Point(2, 73);
             this.chkExtraExtsTGA.Name = "chkExtraExtsTGA";
             this.chkExtraExtsTGA.Size = new System.Drawing.Size(82, 29);
             this.chkExtraExtsTGA.TabIndex = 26;
@@ -402,7 +402,7 @@
             // btnOpenFileAssociations
             // 
             this.btnOpenFileAssociations.AutoSize = true;
-            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 258);
+            this.btnOpenFileAssociations.Location = new System.Drawing.Point(23, 298);
             this.btnOpenFileAssociations.Name = "btnOpenFileAssociations";
             this.btnOpenFileAssociations.Size = new System.Drawing.Size(258, 35);
             this.btnOpenFileAssociations.TabIndex = 20;
