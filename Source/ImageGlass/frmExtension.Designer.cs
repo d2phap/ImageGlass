@@ -60,7 +60,6 @@
             // btnInstallExt
             // 
             this.btnInstallExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnInstallExt.AutoEllipsis = true;
             this.btnInstallExt.AutoSize = true;
             this.btnInstallExt.ForeColor = System.Drawing.Color.Black;
             this.btnInstallExt.Image = ((System.Drawing.Image)(resources.GetObject("btnInstallExt.Image")));
@@ -77,13 +76,12 @@
             // btnGetMoreExt
             // 
             this.btnGetMoreExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGetMoreExt.AutoEllipsis = true;
             this.btnGetMoreExt.AutoSize = true;
             this.btnGetMoreExt.ForeColor = System.Drawing.Color.Black;
             this.btnGetMoreExt.Image = ((System.Drawing.Image)(resources.GetObject("btnGetMoreExt.Image")));
             this.btnGetMoreExt.Location = new System.Drawing.Point(254, 16);
             this.btnGetMoreExt.Name = "btnGetMoreExt";
-            this.btnGetMoreExt.Size = new System.Drawing.Size(200, 35);
+            this.btnGetMoreExt.Size = new System.Drawing.Size(238, 35);
             this.btnGetMoreExt.TabIndex = 3;
             this.btnGetMoreExt.Text = "Get more extensions";
             this.btnGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -94,7 +92,6 @@
             // btnRefreshAllExt
             // 
             this.btnRefreshAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRefreshAllExt.AutoEllipsis = true;
             this.btnRefreshAllExt.AutoSize = true;
             this.btnRefreshAllExt.ForeColor = System.Drawing.Color.Black;
             this.btnRefreshAllExt.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshAllExt.Image")));
@@ -111,7 +108,6 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.AutoEllipsis = true;
             this.btnClose.AutoSize = true;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
@@ -175,8 +171,8 @@
             // 
             // frmExtension
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(824, 462);
             this.Controls.Add(this.sp0);
