@@ -52,19 +52,20 @@
             this.panel1.Controls.Add(this.btnRefreshAllExt);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 420);
+            this.panel1.Location = new System.Drawing.Point(0, 394);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(824, 42);
+            this.panel1.Size = new System.Drawing.Size(824, 68);
             this.panel1.TabIndex = 14;
             // 
             // btnInstallExt
             // 
             this.btnInstallExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnInstallExt.AutoSize = true;
             this.btnInstallExt.ForeColor = System.Drawing.Color.Black;
             this.btnInstallExt.Image = ((System.Drawing.Image)(resources.GetObject("btnInstallExt.Image")));
-            this.btnInstallExt.Location = new System.Drawing.Point(133, 5);
+            this.btnInstallExt.Location = new System.Drawing.Point(133, 16);
             this.btnInstallExt.Name = "btnInstallExt";
-            this.btnInstallExt.Size = new System.Drawing.Size(115, 28);
+            this.btnInstallExt.Size = new System.Drawing.Size(115, 35);
             this.btnInstallExt.TabIndex = 2;
             this.btnInstallExt.Text = "Install";
             this.btnInstallExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -75,11 +76,12 @@
             // btnGetMoreExt
             // 
             this.btnGetMoreExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGetMoreExt.AutoSize = true;
             this.btnGetMoreExt.ForeColor = System.Drawing.Color.Black;
             this.btnGetMoreExt.Image = ((System.Drawing.Image)(resources.GetObject("btnGetMoreExt.Image")));
-            this.btnGetMoreExt.Location = new System.Drawing.Point(254, 5);
+            this.btnGetMoreExt.Location = new System.Drawing.Point(254, 16);
             this.btnGetMoreExt.Name = "btnGetMoreExt";
-            this.btnGetMoreExt.Size = new System.Drawing.Size(179, 28);
+            this.btnGetMoreExt.Size = new System.Drawing.Size(238, 35);
             this.btnGetMoreExt.TabIndex = 3;
             this.btnGetMoreExt.Text = "Get more extensions";
             this.btnGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -90,11 +92,12 @@
             // btnRefreshAllExt
             // 
             this.btnRefreshAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRefreshAllExt.AutoSize = true;
             this.btnRefreshAllExt.ForeColor = System.Drawing.Color.Black;
             this.btnRefreshAllExt.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshAllExt.Image")));
-            this.btnRefreshAllExt.Location = new System.Drawing.Point(12, 5);
+            this.btnRefreshAllExt.Location = new System.Drawing.Point(12, 16);
             this.btnRefreshAllExt.Name = "btnRefreshAllExt";
-            this.btnRefreshAllExt.Size = new System.Drawing.Size(115, 28);
+            this.btnRefreshAllExt.Size = new System.Drawing.Size(115, 35);
             this.btnRefreshAllExt.TabIndex = 1;
             this.btnRefreshAllExt.Text = "Refresh";
             this.btnRefreshAllExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -105,11 +108,12 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.AutoSize = true;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(730, 5);
+            this.btnClose.Location = new System.Drawing.Point(727, 16);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(86, 28);
+            this.btnClose.Size = new System.Drawing.Size(86, 35);
             this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -122,7 +126,7 @@
             this.panExtension.Location = new System.Drawing.Point(4, 0);
             this.panExtension.Margin = new System.Windows.Forms.Padding(0);
             this.panExtension.Name = "panExtension";
-            this.panExtension.Size = new System.Drawing.Size(602, 402);
+            this.panExtension.Size = new System.Drawing.Size(602, 376);
             this.panExtension.TabIndex = 0;
             // 
             // sp0
@@ -146,7 +150,7 @@
             this.sp0.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.sp0.Panel2.Controls.Add(this.panExtension);
             this.sp0.Panel2.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.sp0.Size = new System.Drawing.Size(806, 402);
+            this.sp0.Size = new System.Drawing.Size(806, 376);
             this.sp0.SplitterDistance = 196;
             this.sp0.TabIndex = 13;
             // 
@@ -161,14 +165,14 @@
             this.tvExtension.Location = new System.Drawing.Point(0, 50);
             this.tvExtension.Name = "tvExtension";
             this.tvExtension.ShowRootLines = false;
-            this.tvExtension.Size = new System.Drawing.Size(193, 352);
+            this.tvExtension.Size = new System.Drawing.Size(193, 326);
             this.tvExtension.TabIndex = 0;
             this.tvExtension.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvExtension_AfterSelect);
             // 
             // frmExtension
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(824, 462);
             this.Controls.Add(this.sp0);
@@ -182,6 +186,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExtension_FormClosing);
             this.Load += new System.EventHandler(this.frmExtension_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();

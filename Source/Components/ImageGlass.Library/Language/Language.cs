@@ -383,7 +383,7 @@ namespace ImageGlass.Library
             Items.Add("frmFacebook._StatusCancel", "Cancelled");
             Items.Add("frmFacebook._StatusSuccessful", "Successful");
             Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ...");
-            Items.Add("frmAbout.lblSlogant", "Free and open source image viewer");
+            Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 3.x
             Items.Add("frmAbout.lblInfo", "Information");
             Items.Add("frmAbout.lblComponent", "Components");
             Items.Add("frmAbout.lblReferences", "References");

@@ -34,6 +34,7 @@ using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageMagick;
+using ImageGlass.Theme;
 
 namespace ImageGlass
 {
@@ -45,9 +46,9 @@ namespace ImageGlass
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
 
             //Check and perform DPI Scaling
-            LocalSetting.OldDPI = LocalSetting.CurrentDPI;
-            LocalSetting.CurrentDPI = Theme.DPIScaling.CalculateCurrentDPI(this);
-            Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
+            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+            DPIScaling.CurrentDPI = DPIScaling.CalculateCurrentDPI();
+            OnDpiChanged();
 
             //Track image loading progress
             //GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
@@ -1007,8 +1008,42 @@ namespace ImageGlass
             
             LocalSetting.ImageModifiedPath = "";
         }
-        #endregion
+        
 
+        /// <summary>
+        /// Handle the event when Dpi changed
+        /// </summary>
+        private void OnDpiChanged()
+        {
+            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
+            {
+                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
+
+                #region change size of toolbar
+                int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
+
+                //Tool bar buttons
+                foreach (var item in toolMain.Items.OfType<ToolStripButton>())
+                {
+                    item.Size = new Size(height, height);
+                }
+
+                //Tool bar menu buttons
+                foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
+                {
+                    item.Size = new Size(height, height);
+                }
+
+                //Tool bar separators
+                foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
+                {
+                    item.Size = new Size(5, height);
+                }
+                #endregion
+
+            }
+        }
+        #endregion
 
 
         #region Configurations
@@ -1416,17 +1451,12 @@ namespace ImageGlass
             }
             //This message is sent when the form is dragged to a different monitor i.e. when
             //the bigger part of its are is on the new monitor. 
-            else if (m.Msg == Theme.DPIScaling.WM_DPICHANGED)
+            else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
-                LocalSetting.OldDPI = LocalSetting.CurrentDPI;
-                LocalSetting.CurrentDPI = Theme.DPIScaling.LOWORD((int)m.WParam);
+                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+                DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
 
-                if (LocalSetting.OldDPI != LocalSetting.CurrentDPI)
-                {
-                    Theme.DPIScaling.HandleDpiChanged(LocalSetting.OldDPI, LocalSetting.CurrentDPI, this);
-
-                    toolMain.Height = 33;
-                }
+                OnDpiChanged();
             }
             base.WndProc(ref m);
         }

@@ -25,8 +25,6 @@ namespace ImageGlass
         private static frmSetting _fSetting = new frmSetting();
         private static frmExtension _fExtension = new frmExtension();
         private static string _imageModifiedPath = "";
-        private static int _oldDPI = 96;
-        private static int _currentDPI = 96;
         private static bool _isResetScrollPosition = true;
 
         #region "Properties"
@@ -66,37 +64,7 @@ namespace ImageGlass
             set { _imageModifiedPath = value; }
         }
 
-        /// <summary>
-        /// Gets, sets old DPI scaling value
-        /// </summary>
-        public static int OldDPI
-        {
-            get
-            {
-                return _oldDPI;
-            }
-
-            set
-            {
-                _oldDPI = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets, sets current DPI scaling value
-        /// </summary>
-        public static int CurrentDPI
-        {
-            get
-            {
-                return _currentDPI;
-            }
-
-            set
-            {
-                _currentDPI = value;
-            }
-        }
+        
 
         /// <summary>
         /// Gets, sets value indicating that picmain's scrollbar need to be reset

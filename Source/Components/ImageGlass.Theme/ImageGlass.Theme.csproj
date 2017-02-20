@@ -59,6 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DPIScaling.cs" />
+    <Compile Include="frmDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDialogBox.Designer.cs">
+      <DependentUpon>frmDialogBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputBox.cs" />
     <Compile Include="ModernMenuRenderer.cs" />
     <Compile Include="RenderTheme.cs" />
     <Compile Include="Theme.cs" />
@@ -70,6 +77,11 @@
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmDialogBox.resx">
+      <DependentUpon>frmDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
