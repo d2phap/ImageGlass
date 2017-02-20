@@ -44,17 +44,18 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 123);
+            this.panel1.Location = new System.Drawing.Point(0, 113);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(409, 52);
+            this.panel1.Size = new System.Drawing.Size(409, 62);
             this.panel1.TabIndex = 7;
             // 
             // btnClose
             // 
+            this.btnClose.AutoSize = true;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(286, 11);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(111, 29);
+            this.btnClose.Size = new System.Drawing.Size(111, 35);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -65,7 +66,7 @@
             this.lblMessage.AutoSize = true;
             this.lblMessage.Location = new System.Drawing.Point(46, 21);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(14, 15);
+            this.lblMessage.Size = new System.Drawing.Size(23, 25);
             this.lblMessage.TabIndex = 5;
             this.lblMessage.Text = "#";
             // 
@@ -86,8 +87,8 @@
             // 
             // frmMsg
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(409, 175);
@@ -103,6 +104,7 @@
             this.Text = "#";
             this.Load += new System.EventHandler(this.frmMsg_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
