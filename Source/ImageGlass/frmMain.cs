@@ -2808,21 +2808,21 @@ namespace ImageGlass
 
             if (GlobalSetting.IsShowThumbnail)
             {
-                float scaleFactor = 1.11f;
-                int gap = 5;
+                float scaleFactor = ((float)DPIScaling.CurrentDPI) / 96;
+                int gap = (int)(SystemInformation.HorizontalScrollBarHeight * (scaleFactor + 0.1 - 1));
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = (int)(tb.TotalDimension * scaleFactor + gap);
+                sp1.Panel2MinSize = tb.TotalDimension + gap;
 
-                double splitterDistance = sp1.Height - sp1.Panel2MinSize;
+                int splitterDistance = sp1.Height - sp1.Panel2MinSize;
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
-                    sp1.SplitterDistance = (int)splitterDistance;
+                    sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
 
                     //hide splitter color
