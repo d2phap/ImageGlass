@@ -33,7 +33,6 @@ using ImageGlass.Library;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
-using ImageMagick;
 using ImageGlass.Theme;
 
 namespace ImageGlass
@@ -2808,16 +2807,21 @@ namespace ImageGlass
 
             if (GlobalSetting.IsShowThumbnail)
             {
+                float scaleFactor = ((float)DPIScaling.CurrentDPI) / 96;
+                int gap = (int)(SystemInformation.HorizontalScrollBarHeight * (scaleFactor + 0.1 - 1));
+
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = tb.TotalDimension;
+                sp1.Panel2MinSize = tb.TotalDimension + gap;
+
+                int splitterDistance = sp1.Height - sp1.Panel2MinSize;
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
-                    sp1.SplitterDistance = sp1.Height - tb.TotalDimension;
+                    sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
 
                     //hide splitter color
@@ -2829,7 +2833,7 @@ namespace ImageGlass
                     sp1.IsSplitterFixed = false; //Allow user to resize
                     sp1.SplitterWidth = 2;
                     sp1.Orientation = Orientation.Vertical;
-                    sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, tb.TotalDimension);
+                    sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
                     thumbnailBar.View = ImageListView.View.Thumbnails;
 
                     //theme for splitter of horizontal bar
