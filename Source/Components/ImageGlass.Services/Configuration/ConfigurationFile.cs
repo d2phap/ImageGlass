@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2017 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +38,14 @@ namespace ImageGlass.Services.Configuration
         public int Count => _dictionary.Count;
         public bool IsReadOnly { get; private set; }
 
-
+        /// <summary>
+        /// Get / Set configuration stored in memory
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public string this[string key]
         {
             get {
-                _dictionary[key] = GetConfig(key);
                 return _dictionary[key];
             }
             set => _dictionary[key] = value;
@@ -38,27 +59,69 @@ namespace ImageGlass.Services.Configuration
             Version = "4.0";
 
             // Init configs
-            this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
-            this["ExtraExtensions"] = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
-            this["WindowsBound"] = "214,85,855,597";
-            // ...
+            InitConfigs();
 
             //Read all configs from file
             ReadConfigFile();
         }
 
+        /// <summary>
+        /// Initiate all configuration strings
+        /// </summary>
+        private void InitConfigs()
+        {
+            this["AppVersion"] = "4.0.0.0";
+            this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
+            this["BackgroundColor"] = "-1";
+            this["DefaultImageFormats"] = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;";
+            this["OptionalImageFormats"] = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
+
+            this["frmMain.WindowsBound"] = "330,104,1307,830";
+            this["frmMain.WindowsState"] = "Normal";
+
+            this["frmSetting.WindowsBound"] = "280,125,927,793";
+            this["frmSetting.WindowsState"] = "Normal";
+
+            this["frmExtension.WindowsBound"] = "280,125,840,500";
+            this["frmExtension.WindowsState"] = "Normal";
+
+            this["Language"] = "";
+            this["Theme"] = "default";
+            this["ThumbnailBarWidth"] = "962";
+            this["ThumbnailDimension"] = "48";
+            this["IsShowThumbnail"] = "False";
+            this["IsThumbnailHorizontal"] = "True";
+            this["IsShowToolBar"] = "True";
+
+            this["ImageLoadingOrder"] = "0";
+            this["SlideShowInterval"] = "5";
+            this["IsAllowMultiInstances"] = "True";
+            this["IsLoopBackSlideShow"] = "True";
+            this["IsLoopBackViewer"] = "True";
+            this["IsPressESCToQuit"] = "True";
+            this["IsShowCheckedBackground"] = "False";
+            this["IsWindowAlwaysOnTop"] = "False";
+            this["IsShowWelcome"] = "True";
+
+            this["IsZoomToFit"] = "False";
+            this["ZoomLockValue"] = "-1";
+            this["ZoomOptimization"] = "0";
+        }
 
         /// <summary>
         /// Read configuration strings from file
         /// </summary>
         public void ReadConfigFile()
         {
-            //Clear all items
-            this.Clear();
+            // write default configs if not exist
+            if(!System.IO.File.Exists(Filename))
+            {
+                WriteConfigFile();
+            }
 
             XmlDocument doc = new XmlDocument();
             doc.Load(Filename);
-            XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
+            XmlElement root = doc.DocumentElement;// <ImageGlass>
             XmlElement nType = (XmlElement)root.SelectNodes("Configuration")[0]; //<Configuration>
             XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
@@ -120,16 +183,26 @@ namespace ImageGlass.Services.Configuration
             doc.AppendChild(root);// </ImageGlass>
 
             doc.Save(Filename);
+
+            doc = null;
+            root = null;
+            nType = null;
         }
 
         /// <summary>
-        /// Get configuration item
+        /// Read configuration item from igconfig.xml file
         /// </summary>
         /// <param name="key"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
         public string GetConfig(string key, string @defaultValue = null)
         {
+            // write default configs if not exist
+            if (!System.IO.File.Exists(Filename))
+            {
+                WriteConfigFile();
+            }
+
             XmlDocument doc = new XmlDocument();
             doc.Load(Filename);
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
@@ -152,45 +225,37 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-        public void SetConfig(string key, string value)
+        /// <summary>
+        /// Write configuration item to igconfig.xml file
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void SetConfig(string key, object value)
         {
+            // update memory config
+            this[key] = value.ToString();
+
+            // update file config
             XmlDocument doc = new XmlDocument();
             doc.Load(Filename);
-            XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
+            XmlElement root = doc.DocumentElement;// <ImageGlass>
             XmlElement nItem = (XmlElement)root.SelectNodes("//Configuration/Content/Item[@key = \"" + key + "\"]")[0]; //<Item />
 
-            nItem.SetAttribute("value", value);
-            doc.Save(Filename);
+            if (nItem != null)
+            {
+                nItem.SetAttribute("value", value.ToString());
+                doc.Save(Filename);
+            }
 
-
-            //XmlDocument doc = new XmlDocument();
-            //XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
-            //XmlElement nType = doc.CreateElement("Configuration");// <Configuration>
-
-            //XmlElement nInfo = doc.CreateElement("Info");// <Info>
-            //nInfo.SetAttribute("description", Description);
-            //nInfo.SetAttribute("version", Version);
-            //nType.AppendChild(nInfo);// <Info />
-
-            //XmlElement nContent = doc.CreateElement("Content");// <Content>
-            //foreach (var item in this)
-            //{
-            //    XmlElement n = doc.CreateElement("Item"); // <Item>
-            //    n.SetAttribute("key", item.Key);
-            //    n.SetAttribute("value", item.Value.ToString());
-            //    nContent.AppendChild(n);// <Item />
-            //}
-            //nType.AppendChild(nContent);
-
-            //root.AppendChild(nType);// </Content>
-            //doc.AppendChild(root);// </ImageGlass>
-
-            //doc.Save(Filename);
+            doc = null;
+            root = null;
+            nItem = null;
+            
         }
 
 
 
-
+        #region auto-generated functions
         public bool ContainsKey(string key)
         {
             return _dictionary.ContainsKey(key);
@@ -251,5 +316,6 @@ namespace ImageGlass.Services.Configuration
         {
             return GetEnumerator();
         }
+        #endregion
     }
 }
