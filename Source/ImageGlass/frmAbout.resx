@@ -237,7 +237,9 @@ License: Apache 2.0
 
 -----------------------------------------
 Magick.NET v7.0.4.400: copyright © 2017 Dirk Lemstra
-License: Apache 2.0</value>
+License: Apache 2.0
+
+</value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
