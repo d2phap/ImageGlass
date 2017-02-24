@@ -33,14 +33,20 @@ namespace ImageGlass.Core
                     if (profile != null)
                     {
                         //Get Orieantation Flag
-                        var orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+                        var exifTag = profile.GetValue(ExifTag.Orientation);
 
-                        var orientationDegree = GetOrientationDegree(orientationFlag);
-                        if (orientationDegree != 0)
+                        if (exifTag != null)
                         {
-                            //Rotate image accordingly
-                            magicImg.Rotate(orientationDegree);
+                            int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+
+                            var orientationDegree = GetOrientationDegree(orientationFlag);
+                            if (orientationDegree != 0)
+                            {
+                                //Rotate image accordingly
+                                magicImg.Rotate(orientationDegree);
+                            }
                         }
+
                     }
                     
                     //corect the image color 

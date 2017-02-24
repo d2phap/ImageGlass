@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@ using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Theme;
 
 namespace igcmd
 {
@@ -37,10 +38,42 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
+
+            //Check and perform DPI Scaling
+            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+            DPIScaling.CurrentDPI = DPIScaling.CalculateCurrentDPI();
+            
+            OnDpiChanged();
         }
 
         Update up = new Update();
         string tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+
+
+        /// <summary>
+        /// Handle the event when Dpi changed
+        /// </summary>
+        private void OnDpiChanged()
+        {
+            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
+            {
+                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
+                
+            }
+        }
+        protected override void WndProc(ref Message m)
+        {
+            //This message is sent when the form is dragged to a different monitor i.e. when
+            //the bigger part of its are is on the new monitor. 
+            if (m.Msg == DPIScaling.WM_DPICHANGED)
+            {
+                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
+                DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
+
+                OnDpiChanged();
+            }
+            base.WndProc(ref m);
+        }
 
         private void btnClose_Click(object sender, EventArgs e)
         {            
@@ -61,7 +94,8 @@ namespace igcmd
             //CheckForUpdate();
 
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir + "ImageGlass.exe");
-            lblCurentVersion.Text = "Version: " + fv.FileVersion;
+
+            txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
 
         }
 
@@ -74,16 +108,11 @@ namespace igcmd
                 File.Delete(tempDir + "update.xml");
             }
 
+            StringBuilder sb = new StringBuilder();
+
             if (up.IsError)
             {
-                Size = MaximumSize;
-                lblUpdateVersion.Text = "Please visit http://imageglass.org/download to check for updates.";
-                lblUpdateVersionType.Text =
-                    lblUpdateImportance.Text =
-                    lblUpdateSize.Text =
-                    lblUpdatePubDate.Text =
-                    lnkUpdateReadMore.Text =
-                    String.Empty;
+                sb.Append("Please visit http://imageglass.org/download to check for updates.");
 
                 lblStatus.Text = "Unable to check for current version online.";
                 lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
@@ -91,13 +120,13 @@ namespace igcmd
             }
             else
             {
-                Size = MinimumSize;
-                lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
-                lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
-                lblUpdateImportance.Text = "Importance: " + up.Info.Level;
-                lblUpdateSize.Text = "Size: " + up.Info.Size;
-                lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
-                lnkUpdateReadMore.Text = "Read more...";
+                sb.AppendLine($"The latest ImageGlass information:\r\n" +
+                    $"------------------------------\r\n" +
+                    $"Version: {up.Info.NewVersion.ToString()}\r\n" +
+                    $"Version type: {up.Info.VersionType}\r\n" +
+                    $"Importance: {up.Info.Level}\r\n" +
+                    $"Size: {up.Info.Size}\r\n" +
+                    $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
                 if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
                 {
@@ -122,6 +151,8 @@ namespace igcmd
                     picStatus.Image = igcmd.Properties.Resources.ok;
                 }
             }
+
+            txtUpdates.Text += sb.ToString();
 
             //save last update
             GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
