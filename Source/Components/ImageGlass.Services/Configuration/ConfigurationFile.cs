@@ -73,13 +73,12 @@ namespace ImageGlass.Services.Configuration
             this["AppVersion"] = "4.0.0.0";
             this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
             this["BackgroundColor"] = "-1";
-            this["DefaultImageFormats"] = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;";
             this["OptionalImageFormats"] = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
 
-            this["frmMain.WindowsBound"] = "330,104,1307,830";
+            this["frmMain.WindowsBound"] = "280,125,850,550";
             this["frmMain.WindowsState"] = "Normal";
 
-            this["frmSetting.WindowsBound"] = "280,125,927,793";
+            this["frmSetting.WindowsBound"] = "280,125,610,570";
             this["frmSetting.WindowsState"] = "Normal";
 
             this["frmExtension.WindowsBound"] = "280,125,840,500";
@@ -93,6 +92,7 @@ namespace ImageGlass.Services.Configuration
             this["IsThumbnailHorizontal"] = "True";
             this["IsShowToolBar"] = "True";
 
+            this["IsRecursiveLoading"] = "False";
             this["ImageLoadingOrder"] = "0";
             this["SlideShowInterval"] = "5";
             this["IsAllowMultiInstances"] = "True";
