@@ -166,8 +166,8 @@ namespace ImageGlass.Library.Image
                         {
                             try
                             {
-                                clonedPic.Save(ms, pic.RawFormat);
-                                string base64string = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+                                clonedPic.Save(ms, ImageFormat.Png);
+                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
 
                                 using (StreamWriter fs = new StreamWriter(s.FileName))
                                 {
