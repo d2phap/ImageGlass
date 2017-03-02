@@ -48,6 +48,7 @@ namespace ImageGlass
             if (argv.ToList().IndexOf("--portable") != -1)
             {
                 GlobalSetting.IsPortableMode = true;
+                GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
             }
 
 

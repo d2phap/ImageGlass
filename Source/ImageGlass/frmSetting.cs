@@ -196,6 +196,7 @@ namespace ImageGlass
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
+            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
@@ -302,6 +303,9 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
+            //Get Portable mode value
+            chkPortableMode.Checked = GlobalSetting.IsPortableMode;
+
             //Get value of chkFindChildFolder
             chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "false"));
 
@@ -410,6 +414,12 @@ namespace ImageGlass
 
             //Use mouse wheel to browse images
             chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
+        }
+
+        private void chkPortableMode_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsPortableMode = chkPortableMode.Checked;
+            GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -657,6 +667,7 @@ namespace ImageGlass
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+
 
 
 

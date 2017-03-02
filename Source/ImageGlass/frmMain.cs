@@ -1216,7 +1216,11 @@ namespace ImageGlass
         private void LoadConfig()
         {
             //Load language pack-------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("Language", "English");
+            string s = GlobalSetting.GetConfig("IsPortableMode", "False", true);
+            GlobalSetting.IsPortableMode = bool.Parse(s);
+
+            //Load language pack-------------------------------------------------------------
+            s = GlobalSetting.GetConfig("Language", "English");
             if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
             {
                 GlobalSetting.LangPack = new Library.Language(s);

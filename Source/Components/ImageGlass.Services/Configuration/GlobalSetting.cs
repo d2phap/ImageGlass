@@ -632,16 +632,18 @@ namespace ImageGlass.Services.Configuration
             return GetConfig(key, "");
         }
 
+
         /// <summary>
         /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
         /// <param name="configKey">Configuration key</param>
         /// <param name="defaultValue">Default value</param>
+        /// <param name="forceGetConfigsFromRegistry">True: always read configs from Registry</param>
         /// <returns></returns>
-        public static string GetConfig(string configKey, string @defaultValue = "")
+        public static string GetConfig(string configKey, string @defaultValue = "", bool forceGetConfigsFromRegistry = false)
         {
             // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode)
+            if (GlobalSetting.IsPortableMode && !forceGetConfigsFromRegistry)
             {
                 return _configFile.GetConfig(configKey, defaultValue);
             }
@@ -688,10 +690,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         /// <param name="configKey">Configuration key</param>
         /// <param name="value">Configuration value</param>
-        public static void SetConfig(string configKey, string value)
+        /// <param name="forceWriteConfigsToRegistry">True: always write configs to Registry</param>
+        public static void SetConfig(string configKey, string value, bool @forceWriteConfigsToRegistry = false)
         {
             // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode)
+            if (GlobalSetting.IsPortableMode && !@forceWriteConfigsToRegistry)
             {
                 _configFile.SetConfig(configKey, value);
                 return;
