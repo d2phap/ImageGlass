@@ -238,7 +238,7 @@ namespace ImageGlass.ImageListView
 
             try
             {
-                using (var magicImg = new MagickImage(filename))
+                using (var magicImg = new MagickImage(filename, new MagickReadSettings { BackgroundColor = MagickColors.Transparent }))
                 {
                     // Try to read the exif thumbnail
                     if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
