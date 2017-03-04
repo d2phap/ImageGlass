@@ -48,7 +48,8 @@ namespace ImageGlass
             DPIScaling.OldDPI = DPIScaling.CurrentDPI;
             DPIScaling.CurrentDPI = DPIScaling.CalculateCurrentDPI();
             OnDpiChanged();
-
+            
+            
             //Track image loading progress
             //GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
         }
@@ -129,7 +130,7 @@ namespace ImageGlass
         {
             OpenFileDialog o = new OpenFileDialog();
             o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.SupportedExtensions;
+                        GlobalSetting.AllImageFormats;
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
@@ -237,13 +238,13 @@ namespace ImageGlass
 
             //Get files from dir
             var dsFile = DirectoryFinder.FindFiles(path,
-                GlobalSetting.IsRecursive,
+                GlobalSetting.IsRecursiveLoading,
                 new Predicate<string>(delegate (String f)
                 {
                     Application.DoEvents();
 
                     string extension = (Path.GetExtension(f) ?? "").ToLower(); //remove blank extension
-                    if (extension.Length > 0 && GlobalSetting.SupportedExtensions.Contains(extension))
+                    if (extension.Length > 0 && GlobalSetting.AllImageFormats.Contains(extension))
                     {
                         return true;
                     }
@@ -1215,10 +1216,10 @@ namespace ImageGlass
         private void LoadConfig()
         {
             //Load language pack-------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("Language", "English");
-            if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
+            string configValue = GlobalSetting.GetConfig("Language", "English");
+            if (configValue.ToLower().CompareTo("english") != 0 && File.Exists(configValue))
             {
-                GlobalSetting.LangPack = new Library.Language(s);
+                GlobalSetting.LangPack = new Library.Language(configValue);
 
                 //force update language pack
                 GlobalSetting.IsForcedActive = true;
@@ -1226,30 +1227,30 @@ namespace ImageGlass
             }
             
             //Windows Bound (Position + Size)------------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,850,550"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
             Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            s = GlobalSetting.GetConfig("WindowsState", "Normal");
-            if (s == "Normal")
+            configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
+            if (configValue == "Normal")
             {
                 WindowState = FormWindowState.Normal;
             }
-            else if (s == "Maximized")
+            else if (configValue == "Maximized")
             {
                 WindowState = FormWindowState.Maximized;
             }
 
             //check current version for the first time running
-            s = GlobalSetting.GetConfig("igVersion", Application.ProductVersion);
-            if (s.CompareTo(Application.ProductVersion) == 0) //Old version
+            configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
+            if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
             {
                 //Load Extra extensions
-                GlobalSetting.SupportedExtraExtensions = GlobalSetting.GetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
+                GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
             }
 
             //Slideshow Interval-----------------------------------------------------------
-            int i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
+            int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
             if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds
             timSlideShow.Interval = 1000 * i;
 
@@ -1259,13 +1260,13 @@ namespace ImageGlass
             mnuMainCheckBackground_Click(null, EventArgs.Empty);
 
             //Recursive loading--------------------------------------------------------------
-            GlobalSetting.IsRecursive = bool.Parse(GlobalSetting.GetConfig("Recursive", "False"));
+            GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
 
             //Get welcome screen------------------------------------------------------------
-            GlobalSetting.IsWelcomePicture = bool.Parse(GlobalSetting.GetConfig("Welcome", "True"));
+            GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
             
             //Load default image------------------------------------------------------------
-            string y = GlobalSetting.GetConfig("Welcome", "True");
+            string y = GlobalSetting.GetConfig("IsShowWelcome", "True");
             if (y.ToLower() == "true")
             {
                 //Do not show welcome image if params exist.
@@ -1380,16 +1381,16 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
-            GlobalSetting.SetConfig("igVersion", Application.ProductVersion.ToString());
+            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
 
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig("WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            GlobalSetting.SetConfig("WindowsState", WindowState.ToString());
+            GlobalSetting.SetConfig($"{Name}.WindowsState", WindowState.ToString());
 
             //Checked background
             GlobalSetting.SetConfig("IsShowCheckedBackground", GlobalSetting.IsShowCheckedBackground.ToString());
@@ -1482,27 +1483,35 @@ namespace ImageGlass
             //Load image from param
             if (args.Length >= 2)
             {
-                string filename = "";
-                filename = args[1];
+                for (int i = 1; i < args.Length; i++)
+                {
+                    //only read the path, exclude configs parameter which starts with "--"
+                    if(!args[i].StartsWith("--"))
+                    {
+                        string filename = args[i];
 
-                if (File.Exists(filename))
-                {
-                    FileInfo f = new FileInfo(filename);
-                    Prepare(f.FullName);
+                        if (File.Exists(filename))
+                        {
+                            FileInfo f = new FileInfo(filename);
+                            Prepare(f.FullName);
+                        }
+                        else if (Directory.Exists(filename))
+                        {
+                            DirectoryInfo d = new DirectoryInfo(filename);
+                            Prepare(d.FullName);
+                        }
+
+                        break;
+                    }
                 }
-                else if (Directory.Exists(filename))
-                {
-                    DirectoryInfo d = new DirectoryInfo(filename);
-                    Prepare(d.FullName);
-                }
+                
             }
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //clear temp files
-            string temp_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                            "\\ImageGlass\\Temp\\";
+            string temp_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
             if (Directory.Exists(temp_dir))
             {
                 Directory.Delete(temp_dir, true);
@@ -2364,7 +2373,7 @@ namespace ImageGlass
 
                 // check if file extension is NOT supported for native print
                 // these extensions will not be printed by its associated app.
-                if (GlobalSetting.SupportedExtraExtensions.Contains(Path.GetExtension(filename).ToLower()))
+                if (GlobalSetting.OptionalImageFormats.Contains(Path.GetExtension(filename).ToLower()))
                 {
                     filename = SaveTemporaryMemoryData();
                 }
@@ -2770,7 +2779,7 @@ namespace ImageGlass
 
                     // check if file extension is NOT supported for native print
                     // these extensions will not be printed by its associated app.
-                    if (GlobalSetting.SupportedExtraExtensions.Contains(Path.GetExtension(filename).ToLower()))
+                    if (GlobalSetting.OptionalImageFormats.Contains(Path.GetExtension(filename).ToLower()))
                     {
                         filename = SaveTemporaryMemoryData();
                     }
@@ -2904,7 +2913,7 @@ namespace ImageGlass
         private void mnuMainAbout_Click(object sender, EventArgs e)
         {
             frmAbout f = new frmAbout();
-            f.Show();
+            f.ShowDialog();
         }
 
         private void mnuMainReportIssue_Click(object sender, EventArgs e)

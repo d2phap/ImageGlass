@@ -43,16 +43,21 @@ namespace ImageGlass
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //check if portable mode ----------------------------------------------------
+            //check if user enable TEMPORARY portable mode ------------------------------
             GlobalSetting.IsPortableMode = false;
             if (argv.ToList().IndexOf("--portable") != -1)
             {
                 GlobalSetting.IsPortableMode = true;
             }
+            else
+            {
+                string configValue = GlobalSetting.GetConfig("IsPortableMode", "False", true);
+                GlobalSetting.IsPortableMode = bool.Parse(configValue);
+            }
 
 
             //auto update----------------------------------------------------------------
-            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
+            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
             
             if (lastUpdateConfig != "0")
             {
@@ -69,7 +74,9 @@ namespace ImageGlass
                         p.Start();
                     }
                 }
-            }            
+            }
+            //save last update
+            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
