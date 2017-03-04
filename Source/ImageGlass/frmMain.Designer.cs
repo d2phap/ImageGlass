@@ -184,7 +184,7 @@
             this.toolMain.BackColor = System.Drawing.Color.Transparent;
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolMain.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolMain.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
             this.btnNext,
@@ -219,7 +219,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(836, 33);
+            this.toolMain.Size = new System.Drawing.Size(836, 40);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -1389,7 +1389,7 @@
             this.lblInfo.BackColor = System.Drawing.Color.Transparent;
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(0, 30);
+            this.lblInfo.Size = new System.Drawing.Size(0, 37);
             // 
             // sp0
             // 
@@ -1425,7 +1425,7 @@
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.sp1.IsSplitterFixed = true;
-            this.sp1.Location = new System.Drawing.Point(0, 33);
+            this.sp1.Location = new System.Drawing.Point(0, 40);
             this.sp1.Name = "sp1";
             this.sp1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -1440,8 +1440,8 @@
             this.sp1.Panel2.Controls.Add(this.thumbnailBar);
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
-            this.sp1.Size = new System.Drawing.Size(836, 417);
-            this.sp1.SplitterDistance = 384;
+            this.sp1.Size = new System.Drawing.Size(836, 410);
+            this.sp1.SplitterDistance = 380;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1458,7 +1458,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(836, 384);
+            this.picMain.Size = new System.Drawing.Size(836, 380);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1481,7 +1481,7 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(836, 32);
+            this.thumbnailBar.Size = new System.Drawing.Size(836, 29);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
