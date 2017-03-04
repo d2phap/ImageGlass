@@ -128,9 +128,9 @@ namespace ImageGlass.Services.Configuration
         private static int _currentIndex = -1;
         private static bool _isRecursiveLoading = false;
         private static StringCollection _stringClipboard = new StringCollection();
-        private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ImageGlass\\Temp");
+        private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
-        private static bool _isPortableMode = true; //enable by default
+        private static bool _isPortableMode = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
 
 

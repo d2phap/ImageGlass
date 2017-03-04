@@ -1216,14 +1216,10 @@ namespace ImageGlass
         private void LoadConfig()
         {
             //Load language pack-------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("IsPortableMode", "False", true);
-            GlobalSetting.IsPortableMode = bool.Parse(s);
-
-            //Load language pack-------------------------------------------------------------
-            s = GlobalSetting.GetConfig("Language", "English");
-            if (s.ToLower().CompareTo("english") != 0 && File.Exists(s))
+            string configValue = GlobalSetting.GetConfig("Language", "English");
+            if (configValue.ToLower().CompareTo("english") != 0 && File.Exists(configValue))
             {
-                GlobalSetting.LangPack = new Library.Language(s);
+                GlobalSetting.LangPack = new Library.Language(configValue);
 
                 //force update language pack
                 GlobalSetting.IsForcedActive = true;
@@ -1235,19 +1231,19 @@ namespace ImageGlass
             Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            s = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
-            if (s == "Normal")
+            configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
+            if (configValue == "Normal")
             {
                 WindowState = FormWindowState.Normal;
             }
-            else if (s == "Maximized")
+            else if (configValue == "Maximized")
             {
                 WindowState = FormWindowState.Maximized;
             }
 
             //check current version for the first time running
-            s = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
-            if (s.CompareTo(Application.ProductVersion) == 0) //Old version
+            configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
+            if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
             {
                 //Load Extra extensions
                 GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
@@ -1487,27 +1483,35 @@ namespace ImageGlass
             //Load image from param
             if (args.Length >= 2)
             {
-                string filename = "";
-                filename = args[1];
+                for (int i = 1; i < args.Length; i++)
+                {
+                    //only read the path, exclude configs parameter which starts with "--"
+                    if(!args[i].StartsWith("--"))
+                    {
+                        string filename = args[i];
 
-                if (File.Exists(filename))
-                {
-                    FileInfo f = new FileInfo(filename);
-                    Prepare(f.FullName);
+                        if (File.Exists(filename))
+                        {
+                            FileInfo f = new FileInfo(filename);
+                            Prepare(f.FullName);
+                        }
+                        else if (Directory.Exists(filename))
+                        {
+                            DirectoryInfo d = new DirectoryInfo(filename);
+                            Prepare(d.FullName);
+                        }
+
+                        break;
+                    }
                 }
-                else if (Directory.Exists(filename))
-                {
-                    DirectoryInfo d = new DirectoryInfo(filename);
-                    Prepare(d.FullName);
-                }
+                
             }
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //clear temp files
-            string temp_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                            "\\ImageGlass\\Temp\\";
+            string temp_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
             if (Directory.Exists(temp_dir))
             {
                 Directory.Delete(temp_dir, true);
