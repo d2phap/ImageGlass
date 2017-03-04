@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
+using System.Linq;
 
 namespace ImageGlass
 {
@@ -419,7 +420,13 @@ namespace ImageGlass
         private void chkPortableMode_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsPortableMode = chkPortableMode.Checked;
-            GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
+            
+
+            // Check if user ia using temporary Portable mode from param
+            if(Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1)
+            {
+                GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
+            }
         }
 
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)

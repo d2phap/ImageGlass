@@ -43,7 +43,7 @@ namespace ImageGlass
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //check if portable mode ----------------------------------------------------
+            //check if user enable TEMPORARY portable mode ------------------------------
             GlobalSetting.IsPortableMode = false;
             if (argv.ToList().IndexOf("--portable") != -1)
             {
