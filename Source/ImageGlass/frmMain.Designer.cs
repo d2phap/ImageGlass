@@ -657,7 +657,6 @@
             // mnuMainOpenImageData
             // 
             this.mnuMainOpenImageData.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainOpenImageData.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainOpenImageData.Image")));
             this.mnuMainOpenImageData.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainOpenImageData.Name = "mnuMainOpenImageData";
             this.mnuMainOpenImageData.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -682,7 +681,6 @@
             // mnuMainEditImage
             // 
             this.mnuMainEditImage.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainEditImage.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainEditImage.Image")));
             this.mnuMainEditImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainEditImage.Name = "mnuMainEditImage";
             this.mnuMainEditImage.Size = new System.Drawing.Size(421, 30);
@@ -1024,7 +1022,6 @@
             // mnuMainRename
             // 
             this.mnuMainRename.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainRename.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainRename.Image")));
             this.mnuMainRename.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainRename.Name = "mnuMainRename";
             this.mnuMainRename.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1037,7 +1034,6 @@
             // mnuMainMoveToRecycleBin
             // 
             this.mnuMainMoveToRecycleBin.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainMoveToRecycleBin.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
             this.mnuMainMoveToRecycleBin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainMoveToRecycleBin.Name = "mnuMainMoveToRecycleBin";
             this.mnuMainMoveToRecycleBin.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1050,7 +1046,6 @@
             // mnuMainDeleteFromHardDisk
             // 
             this.mnuMainDeleteFromHardDisk.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainDeleteFromHardDisk.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainDeleteFromHardDisk.Image")));
             this.mnuMainDeleteFromHardDisk.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainDeleteFromHardDisk.Name = "mnuMainDeleteFromHardDisk";
             this.mnuMainDeleteFromHardDisk.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1142,7 +1137,6 @@
             // mnuMainCopy
             // 
             this.mnuMainCopy.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainCopy.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainCopy.Image")));
             this.mnuMainCopy.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCopy.Name = "mnuMainCopy";
             this.mnuMainCopy.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1168,7 +1162,6 @@
             // mnuMainCut
             // 
             this.mnuMainCut.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainCut.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainCut.Image")));
             this.mnuMainCut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCut.Name = "mnuMainCut";
             this.mnuMainCut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1236,7 +1229,6 @@
             // mnuMainShareFacebook
             // 
             this.mnuMainShareFacebook.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainShareFacebook.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainShareFacebook.Image")));
             this.mnuMainShareFacebook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainShareFacebook.Name = "mnuMainShareFacebook";
             this.mnuMainShareFacebook.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1385,7 +1377,6 @@
             // mnuMainReportIssue
             // 
             this.mnuMainReportIssue.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainReportIssue.Image = ((System.Drawing.Image)(resources.GetObject("mnuMainReportIssue.Image")));
             this.mnuMainReportIssue.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainReportIssue.Name = "mnuMainReportIssue";
             this.mnuMainReportIssue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
@@ -1450,7 +1441,7 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(836, 417);
-            this.sp1.SplitterDistance = 375;
+            this.sp1.SplitterDistance = 384;
             this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1467,7 +1458,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(836, 375);
+            this.picMain.Size = new System.Drawing.Size(836, 384);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1490,7 +1481,7 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(836, 41);
+            this.thumbnailBar.Size = new System.Drawing.Size(836, 32);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;

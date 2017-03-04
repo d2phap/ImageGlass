@@ -1051,7 +1051,7 @@ namespace ImageGlass
                 mnuMainRotateCounterclockwise.Image = new Bitmap(newHeight, newHeight);
 
                 mnuMainClearClipboard.Image = new Bitmap(newHeight, newHeight);
-                mnuMainShareFacebook.Image = new Bitmap(mnuMainShareFacebook.Image, newHeight, newHeight);
+                mnuMainShareFacebook.Image = new Bitmap(newHeight, newHeight);
                 mnuMainToolbar.Image = new Bitmap(newHeight, newHeight);
                 mnuMainExtensionManager.Image = new Bitmap(newHeight, newHeight);
 
@@ -2982,8 +2982,8 @@ namespace ImageGlass
 
 
 
-        #endregion
 
+        #endregion
         
     }
 }
