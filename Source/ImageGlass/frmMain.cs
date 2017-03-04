@@ -1017,6 +1017,7 @@ namespace ImageGlass
             if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
             {
                 DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
+                int scaleFactor = (int)Math.Floor((float)DPIScaling.CurrentDPI / DPIScaling.OldDPI);
 
                 #region change size of toolbar
                 int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
@@ -1038,6 +1039,22 @@ namespace ImageGlass
                 {
                     item.Size = new Size(5, height);
                 }
+                #endregion
+
+                #region change size of menu items
+                int currentHeight = mnuMainAbout.Height;
+                int newHeight = mnuMainAbout.Height * scaleFactor;
+
+                mnuMainAbout.Image = new Bitmap(newHeight, newHeight);
+                mnuMainViewNext.Image = new Bitmap(newHeight, newHeight);
+                mnuMainSlideShowStart.Image = new Bitmap(newHeight, newHeight);
+                mnuMainRotateCounterclockwise.Image = new Bitmap(newHeight, newHeight);
+
+                mnuMainClearClipboard.Image = new Bitmap(newHeight, newHeight);
+                mnuMainShareFacebook.Image = new Bitmap(mnuMainShareFacebook.Image, newHeight, newHeight);
+                mnuMainToolbar.Image = new Bitmap(newHeight, newHeight);
+                mnuMainExtensionManager.Image = new Bitmap(newHeight, newHeight);
+
                 #endregion
 
             }
