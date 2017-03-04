@@ -160,10 +160,12 @@
             this.tvExtension.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvExtension.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvExtension.ForeColor = System.Drawing.Color.Black;
+            this.tvExtension.FullRowSelect = true;
             this.tvExtension.ImageKey = "empty.png";
-            this.tvExtension.ItemHeight = 25;
+            this.tvExtension.ItemHeight = 40;
             this.tvExtension.Location = new System.Drawing.Point(0, 50);
             this.tvExtension.Name = "tvExtension";
+            this.tvExtension.ShowNodeToolTips = true;
             this.tvExtension.ShowRootLines = false;
             this.tvExtension.Size = new System.Drawing.Size(193, 326);
             this.tvExtension.TabIndex = 0;
