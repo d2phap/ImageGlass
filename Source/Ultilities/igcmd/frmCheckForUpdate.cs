@@ -38,42 +38,12 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
-
-            //Check and perform DPI Scaling
-            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
-            DPIScaling.CurrentDPI = DPIScaling.CalculateCurrentDPI();
-            
-            OnDpiChanged();
         }
 
         Update up = new Update();
         string tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
 
-
-        /// <summary>
-        /// Handle the event when Dpi changed
-        /// </summary>
-        private void OnDpiChanged()
-        {
-            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
-            {
-                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
-                
-            }
-        }
-        protected override void WndProc(ref Message m)
-        {
-            //This message is sent when the form is dragged to a different monitor i.e. when
-            //the bigger part of its are is on the new monitor. 
-            if (m.Msg == DPIScaling.WM_DPICHANGED)
-            {
-                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
-                DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
-
-                OnDpiChanged();
-            }
-            base.WndProc(ref m);
-        }
+    
 
         private void btnClose_Click(object sender, EventArgs e)
         {            

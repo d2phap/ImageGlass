@@ -73,7 +73,7 @@
             this.btnDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDownload.AutoSize = true;
             this.btnDownload.Enabled = false;
-            this.btnDownload.Location = new System.Drawing.Point(304, 15);
+            this.btnDownload.Location = new System.Drawing.Point(271, 15);
             this.btnDownload.Name = "btnDownload";
             this.btnDownload.Size = new System.Drawing.Size(124, 35);
             this.btnDownload.TabIndex = 1;
@@ -86,7 +86,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.AutoSize = true;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(434, 15);
+            this.btnClose.Location = new System.Drawing.Point(401, 15);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(81, 35);
             this.btnClose.TabIndex = 2;
@@ -111,9 +111,9 @@
             this.panel1.Controls.Add(this.btnDownload);
             this.panel1.Controls.Add(this.lnkUpdateReadMore);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 381);
+            this.panel1.Location = new System.Drawing.Point(0, 400);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(526, 66);
+            this.panel1.Size = new System.Drawing.Size(493, 66);
             this.panel1.TabIndex = 4;
             // 
             // txtUpdates
@@ -131,18 +131,18 @@
             this.txtUpdates.ReadOnly = true;
             this.txtUpdates.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtUpdates.ShortcutsEnabled = false;
-            this.txtUpdates.Size = new System.Drawing.Size(498, 291);
+            this.txtUpdates.Size = new System.Drawing.Size(465, 310);
             this.txtUpdates.TabIndex = 17;
             this.txtUpdates.Text = "List of components here...";
             // 
             // frmCheckForUpdate
             // 
             this.AcceptButton = this.btnDownload;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(526, 447);
+            this.ClientSize = new System.Drawing.Size(493, 466);
             this.Controls.Add(this.txtUpdates);
             this.Controls.Add(this.picStatus);
             this.Controls.Add(this.lblStatus);
