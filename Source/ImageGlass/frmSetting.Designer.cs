@@ -82,6 +82,7 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.chkPortableMode = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -176,7 +177,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(22, 951);
+            this.picBackgroundColor.Location = new System.Drawing.Point(22, 978);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -196,10 +197,10 @@
             this.tabLanguage.Controls.Add(this.cmbLanguage);
             this.tabLanguage.Controls.Add(this.lblLanguageText);
             this.tabLanguage.Location = new System.Drawing.Point(4, 34);
-            this.tabLanguage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabLanguage.Margin = new System.Windows.Forms.Padding(4);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabLanguage.Size = new System.Drawing.Size(706, 682);
+            this.tabLanguage.Padding = new System.Windows.Forms.Padding(4);
+            this.tabLanguage.Size = new System.Drawing.Size(707, 682);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             this.tabLanguage.UseVisualStyleBackColor = true;
@@ -319,10 +320,10 @@
             this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
             this.tabFileAssociation.Controls.Add(this.btnOpenFileAssociations);
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 34);
-            this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(4);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabFileAssociation.Size = new System.Drawing.Size(706, 682);
+            this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(4);
+            this.tabFileAssociation.Size = new System.Drawing.Size(707, 682);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
@@ -429,6 +430,7 @@
             // tabGeneral
             // 
             this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.chkPortableMode);
             this.tabGeneral.Controls.Add(this.panel1);
             this.tabGeneral.Controls.Add(this.chkLoopViewer);
             this.tabGeneral.Controls.Add(this.chkConfirmationDelete);
@@ -455,7 +457,7 @@
             this.tabGeneral.Controls.Add(this.chkFindChildFolder);
             this.tabGeneral.Controls.Add(this.chkAutoUpdate);
             this.tabGeneral.Location = new System.Drawing.Point(4, 34);
-            this.tabGeneral.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabGeneral.Margin = new System.Windows.Forms.Padding(4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Size = new System.Drawing.Size(707, 682);
             this.tabGeneral.TabIndex = 0;
@@ -464,7 +466,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(20, 1034);
+            this.panel1.Location = new System.Drawing.Point(20, 1061);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -473,7 +475,7 @@
             // chkLoopViewer
             // 
             this.chkLoopViewer.AutoSize = true;
-            this.chkLoopViewer.Location = new System.Drawing.Point(22, 160);
+            this.chkLoopViewer.Location = new System.Drawing.Point(22, 194);
             this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopViewer.Name = "chkLoopViewer";
             this.chkLoopViewer.Size = new System.Drawing.Size(580, 29);
@@ -485,7 +487,7 @@
             // chkConfirmationDelete
             // 
             this.chkConfirmationDelete.AutoSize = true;
-            this.chkConfirmationDelete.Location = new System.Drawing.Point(22, 338);
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(22, 365);
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
@@ -497,7 +499,7 @@
             // chkMouseNavigation
             // 
             this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(22, 756);
+            this.chkMouseNavigation.Location = new System.Drawing.Point(22, 783);
             this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(2);
             this.chkMouseNavigation.Name = "chkMouseNavigation";
             this.chkMouseNavigation.Size = new System.Drawing.Size(550, 29);
@@ -509,7 +511,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(16, 692);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(16, 719);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(165, 25);
@@ -522,7 +524,7 @@
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(22, 718);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(22, 746);
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
@@ -532,7 +534,7 @@
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(22, 372);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(22, 398);
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 29);
@@ -544,7 +546,7 @@
             // chkAllowMultiInstances
             // 
             this.chkAllowMultiInstances.AutoSize = true;
-            this.chkAllowMultiInstances.Location = new System.Drawing.Point(22, 302);
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(22, 329);
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
@@ -556,7 +558,7 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(16, 504);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(16, 531);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(257, 25);
@@ -573,7 +575,7 @@
             "64",
             "96",
             "128"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(22, 531);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(22, 558);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
@@ -583,7 +585,7 @@
             // chkESCToQuit
             // 
             this.chkESCToQuit.AutoSize = true;
-            this.chkESCToQuit.Location = new System.Drawing.Point(22, 266);
+            this.chkESCToQuit.Location = new System.Drawing.Point(22, 296);
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
@@ -595,7 +597,7 @@
             // chkImageBoosterBack
             // 
             this.chkImageBoosterBack.AutoSize = true;
-            this.chkImageBoosterBack.Location = new System.Drawing.Point(22, 232);
+            this.chkImageBoosterBack.Location = new System.Drawing.Point(22, 263);
             this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
             this.chkImageBoosterBack.Size = new System.Drawing.Size(578, 29);
@@ -607,7 +609,7 @@
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(22, 196);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(22, 230);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
@@ -618,7 +620,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(22, 447);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(21, 477);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -643,7 +645,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(16, 422);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(16, 449);
             this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(274, 25);
@@ -653,7 +655,7 @@
             // chkHideToolBar
             // 
             this.chkHideToolBar.AutoSize = true;
-            this.chkHideToolBar.Location = new System.Drawing.Point(22, 128);
+            this.chkHideToolBar.Location = new System.Drawing.Point(22, 161);
             this.chkHideToolBar.Margin = new System.Windows.Forms.Padding(2);
             this.chkHideToolBar.Name = "chkHideToolBar";
             this.chkHideToolBar.Size = new System.Drawing.Size(276, 29);
@@ -665,7 +667,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(16, 924);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(16, 951);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -675,7 +677,7 @@
             // chkWelcomePicture
             // 
             this.chkWelcomePicture.AutoSize = true;
-            this.chkWelcomePicture.Location = new System.Drawing.Point(22, 92);
+            this.chkWelcomePicture.Location = new System.Drawing.Point(22, 125);
             this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(216, 29);
@@ -687,7 +689,7 @@
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(16, 826);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(16, 853);
             this.lblImageLoadingOrder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(179, 25);
@@ -706,7 +708,7 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(22, 854);
+            this.cmbImageOrder.Location = new System.Drawing.Point(21, 880);
             this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
@@ -716,7 +718,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(22, 620);
+            this.barInterval.Location = new System.Drawing.Point(22, 646);
             this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
@@ -730,7 +732,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(16, 592);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(16, 619);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
@@ -740,7 +742,7 @@
             // chkFindChildFolder
             // 
             this.chkFindChildFolder.AutoSize = true;
-            this.chkFindChildFolder.Location = new System.Drawing.Point(22, 56);
+            this.chkFindChildFolder.Location = new System.Drawing.Point(22, 89);
             this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(247, 29);
@@ -752,7 +754,7 @@
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(22, 20);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(22, 53);
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
@@ -770,7 +772,7 @@
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Controls.Add(this.tabLanguage);
             this.tab1.Location = new System.Drawing.Point(-10, -38);
-            this.tab1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tab1.Margin = new System.Windows.Forms.Padding(4);
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
             this.tab1.Size = new System.Drawing.Size(715, 720);
@@ -806,6 +808,18 @@
             this.sp0.SplitterDistance = 234;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
+            // 
+            // chkPortableMode
+            // 
+            this.chkPortableMode.AutoSize = true;
+            this.chkPortableMode.Location = new System.Drawing.Point(22, 20);
+            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
+            this.chkPortableMode.Name = "chkPortableMode";
+            this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
+            this.chkPortableMode.TabIndex = 25;
+            this.chkPortableMode.Text = "Enable Portable mode";
+            this.chkPortableMode.UseVisualStyleBackColor = true;
+            this.chkPortableMode.CheckedChanged += new System.EventHandler(this.chkPortableMode_CheckedChanged);
             // 
             // frmSetting
             // 
@@ -900,5 +914,6 @@
         private System.Windows.Forms.CheckBox chkConfirmationDelete;
         private System.Windows.Forms.CheckBox chkLoopViewer;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox chkPortableMode;
     }
 }

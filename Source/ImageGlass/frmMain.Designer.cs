@@ -600,7 +600,7 @@
             this.btnMenu.AutoSize = false;
             this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnMenu.DropDown = this.mnuMain;
-            this.btnMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnMenu.Image")));
+            this.btnMenu.Image = global::ImageGlass.Properties.Resources.menu;
             this.btnMenu.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
@@ -637,7 +637,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(422, 554);
+            this.mnuMain.Size = new System.Drawing.Size(422, 587);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile

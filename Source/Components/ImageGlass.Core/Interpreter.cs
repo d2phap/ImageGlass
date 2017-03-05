@@ -26,7 +26,7 @@ namespace ImageGlass.Core
             }
             else
             {
-                using (var magicImg = new MagickImage(path))
+                using (var magicImg = new MagickImage(path, new MagickReadSettings { BackgroundColor = MagickColors.Transparent }))
                 {
                     //Get Exif information
                     var profile = magicImg.GetExifProfile();

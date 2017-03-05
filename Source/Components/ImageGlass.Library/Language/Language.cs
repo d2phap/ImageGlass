@@ -399,6 +399,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
             Items.Add("frmSetting.lblLanguage", "Language");
             //this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge"); //removed v2.0 beta
+            Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //v3.x
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");

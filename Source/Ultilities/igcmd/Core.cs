@@ -95,9 +95,6 @@ namespace igcmd
             {
                 File.Delete(GlobalSetting.StartUpDir + "update.xml");
             }
-
-            //save last update
-            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             
             if (!up.IsError &&
                 up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe") &&

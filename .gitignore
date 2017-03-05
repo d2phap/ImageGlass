@@ -159,3 +159,4 @@ $RECYCLE.BIN/
 *.cache
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 Source/.vs/ImageGlass.sqlite
+*.cache

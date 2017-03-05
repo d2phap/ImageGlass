@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
+using System.Linq;
 
 namespace ImageGlass
 {
@@ -121,7 +122,7 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound", "280,125,610, 570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound", "280,125,610,570"));
             Bounds = rc;
 
             //windows state--------------------------------------------------------------
@@ -167,8 +168,8 @@ namespace ImageGlass
                     extraExts += chk.Tag.ToString() + ";";
                 }
             }
-            GlobalSetting.SupportedExtraExtensions = extraExts;
-            GlobalSetting.SetConfig("ExtraExtensions", GlobalSetting.SupportedExtraExtensions);
+            GlobalSetting.OptionalImageFormats = extraExts;
+            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
@@ -196,6 +197,7 @@ namespace ImageGlass
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
             //General tab
+            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
@@ -276,13 +278,13 @@ namespace ImageGlass
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
-                txtSupportedExtensionDefault.Text = GlobalSetting.SupportedDefaultExtensions;
+                txtSupportedExtensionDefault.Text = GlobalSetting.DefaultImageFormats;
                 
                 foreach (var control in panExtraExts.Controls)
                 {
                     var chk = (CheckBox)control;
 
-                    chk.Checked = GlobalSetting.SupportedExtraExtensions.Contains(chk.Tag.ToString());
+                    chk.Checked = GlobalSetting.OptionalImageFormats.Contains(chk.Tag.ToString());
                 }
             }
             else if (tab1.SelectedTab == tabLanguage)
@@ -302,8 +304,11 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
+            //Get Portable mode value
+            chkPortableMode.Checked = GlobalSetting.IsPortableMode;
+
             //Get value of chkFindChildFolder
-            chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("Recursive", "false"));
+            chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "false"));
 
             //Get value of cmbAutoUpdate
             string s = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
@@ -317,7 +322,7 @@ namespace ImageGlass
             }
 
             //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = GlobalSetting.IsWelcomePicture;
+            chkWelcomePicture.Checked = GlobalSetting.IsShowWelcome;
 
             //Get value of chkHideToolBar
             chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
@@ -361,7 +366,7 @@ namespace ImageGlass
             cmbZoomOptimization.SelectedIndex = i;
 
             //Get value of barInterval
-            i = int.Parse(GlobalSetting.GetConfig("Interval", "5"));
+            i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
             if (0 < i && i < 61)
             {
                 barInterval.Value = i;
@@ -412,6 +417,18 @@ namespace ImageGlass
             chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
         }
 
+        private void chkPortableMode_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsPortableMode = chkPortableMode.Checked;
+            
+
+            // Check if user ia using temporary Portable mode from param
+            if(Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1)
+            {
+                GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
+            }
+        }
+
         private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
         {
             if (chkAutoUpdate.Checked)
@@ -426,7 +443,7 @@ namespace ImageGlass
 
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.SetConfig("Recursive", chkFindChildFolder.Checked.ToString());
+            GlobalSetting.SetConfig("IsRecursiveLoading", chkFindChildFolder.Checked.ToString());
         }
 
         private void chkHideToolBar_CheckedChanged(object sender, EventArgs e)
@@ -437,8 +454,8 @@ namespace ImageGlass
 
         private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.IsWelcomePicture = chkWelcomePicture.Checked;
-            GlobalSetting.SetConfig("Welcome", GlobalSetting.IsWelcomePicture.ToString());
+            GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
+            GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
         }
 
         private void chkLoopViewer_CheckedChanged(object sender, EventArgs e)
@@ -479,7 +496,7 @@ namespace ImageGlass
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            GlobalSetting.SetConfig("Interval", barInterval.Value.ToString());
+            GlobalSetting.SetConfig("SlideShowInterval", barInterval.Value.ToString());
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"],
                                         barInterval.Value);
         }
@@ -521,7 +538,7 @@ namespace ImageGlass
             ColorDialog c = new ColorDialog();
             c.AllowFullOpen = true;
 
-            if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (c.ShowDialog() == DialogResult.OK)
             {
                 picBackgroundColor.BackColor = c.Color;
                 GlobalSetting.BackgroundColor = c.Color;
@@ -657,6 +674,7 @@ namespace ImageGlass
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
+
 
 
 
