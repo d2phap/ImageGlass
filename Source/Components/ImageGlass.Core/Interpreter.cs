@@ -8,7 +8,14 @@ namespace ImageGlass.Core
 {
     public class Interpreter
     {
-        public static Bitmap Load(string path)
+        /// <summary>
+        /// Load image from file
+        /// </summary>
+        /// <param name="path">Full path  of image file</param>
+        /// <param name="width">Width value of scalable image format</param>
+        /// <param name="height">Height value of scalable image format</param>
+        /// <returns></returns>
+        public static Bitmap Load(string path, int @width = 0, int @height = 0)
         {
             path = path.ToLower();
             Bitmap bmp = null;
@@ -17,7 +24,7 @@ namespace ImageGlass.Core
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    bmp = new Bitmap(path, true);                    
+                    bmp = new Bitmap(path, true);
                 }
             }
             else if (path.EndsWith(".ico"))
@@ -26,7 +33,17 @@ namespace ImageGlass.Core
             }
             else
             {
-                using (var magicImg = new MagickImage(path, new MagickReadSettings { BackgroundColor = MagickColors.Transparent }))
+                var settings = new MagickReadSettings();
+                settings.BackgroundColor = MagickColors.Transparent;
+
+                if (width > 0 && height > 0)
+                {
+                    settings.Width = width;
+                    settings.Height = height;
+                }
+
+
+                using (var magicImg = new MagickImage(path, settings))
                 {
                     //Get Exif information
                     var profile = magicImg.GetExifProfile();
@@ -48,7 +65,7 @@ namespace ImageGlass.Core
                         }
 
                     }
-                    
+
                     //corect the image color 
                     magicImg.AddProfile(ColorProfile.SRGB);
 
