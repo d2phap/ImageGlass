@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PhapSoftware")]
 [assembly: AssemblyProduct("igcmd")]
-[assembly: AssemblyCopyright("Copyright © 2013 - 2016 by Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2013 - 2017 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 

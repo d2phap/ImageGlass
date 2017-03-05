@@ -32,20 +32,35 @@ namespace ImageGlass.Theme
         public static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
 
         [DllImport("gdi32.dll")]
-        static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+        static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
 
         [DllImport("user32.dll")]
         static extern IntPtr GetDC(IntPtr hWnd);
 
-        /// <summary>
-        /// Logical pixels inch in X
-        /// </summary>
-        const int LOGPIXELSX = 88;
 
-        /// <summary>
-        /// Logical pixels inch in Y
-        /// </summary>
-        const int LOGPIXELSY = 90;
+        private enum DeviceCaps
+        {
+            /// <summary>
+            /// Logical pixels inch in X
+            /// </summary>
+            LOGPIXELSX = 88,
+
+            /// <summary>
+            /// Logical pixels inch in Y
+            /// </summary>
+            LOGPIXELSY = 90,
+
+            /// <summary>
+            /// Horizontal width in pixels
+            /// </summary>
+            HORZRES = 8,
+
+            /// <summary>
+            /// Horizontal width of entire desktop in pixels
+            /// </summary>
+            DESKTOPHORZRES = 118
+        }
+
 
         public const int WM_DPICHANGED = 0x02E0;
 
@@ -90,12 +105,26 @@ namespace ImageGlass.Theme
         {
             return (short)number;
         }
-
-        public static int CalculateCurrentDPI()
+        
+        /// <summary>
+        /// Get system Dpi
+        /// </summary>
+        /// <returns></returns>
+        public static int GetSystemDpi()
         {
-            IntPtr hdc = GetDC(IntPtr.Zero);
+            //IntPtr hdc = GetDC(IntPtr.Zero);
 
-            return GetDeviceCaps(hdc, LOGPIXELSX);
+            //return GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
+            using (Graphics screen = Graphics.FromHwnd(IntPtr.Zero))
+            {
+                IntPtr hdc = screen.GetHdc();
+
+                int virtualWidth = GetDeviceCaps(hdc, DeviceCaps.HORZRES);
+                int physicalWidth = GetDeviceCaps(hdc, DeviceCaps.DESKTOPHORZRES);
+                screen.ReleaseHdc(hdc);
+
+                return (int)(96f * physicalWidth / virtualWidth);
+            }
         }
 
         public static void HandleDpiChanged(int oldDpi, int currentDpi, Form f)

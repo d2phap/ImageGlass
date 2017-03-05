@@ -53,14 +53,15 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 86);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(403, 65);
+            this.panel1.Size = new System.Drawing.Size(531, 65);
             this.panel1.TabIndex = 10;
             // 
             // btnOpen
             // 
+            this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOpen.AutoSize = true;
             this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOpen.Location = new System.Drawing.Point(178, 18);
+            this.btnOpen.Location = new System.Drawing.Point(306, 18);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(134, 35);
             this.btnOpen.TabIndex = 3;
@@ -70,9 +71,10 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.AutoSize = true;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(318, 18);
+            this.btnClose.Location = new System.Drawing.Point(446, 18);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(73, 35);
             this.btnClose.TabIndex = 2;
@@ -106,7 +108,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(403, 151);
+            this.ClientSize = new System.Drawing.Size(531, 151);
             this.Controls.Add(this.picStatus);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.panel1);
