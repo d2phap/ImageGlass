@@ -1058,6 +1058,7 @@ namespace ImageGlass
         #endregion
 
 
+
         #region Configurations
         /// <summary>
         /// Load default theme

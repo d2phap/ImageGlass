@@ -160,11 +160,18 @@ namespace ImageGlass
             {
                 Global.Plugins.FindPlugins(pluginsDir);
 
-                foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
+                try
                 {
-                    TreeNode n = new TreeNode(p.Instance.Name);
-                    tvExtension.Nodes.Add(n);
-                    n = null;
+                    foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
+                    {
+                        TreeNode n = new TreeNode(p.Instance.Name);
+                        tvExtension.Nodes.Add(n);
+                        n = null;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
