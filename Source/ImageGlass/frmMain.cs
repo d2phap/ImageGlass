@@ -769,8 +769,6 @@ namespace ImageGlass
         /// <summary>
         /// Rename image
         /// </summary>
-        /// <param name="oldFilename"></param>
-        /// <param name="newname"></param>
         private void RenameImage()
         {
             try
@@ -953,7 +951,7 @@ namespace ImageGlass
                 GlobalSetting.StringClipboard.Count), 1000);
         }
 
-        private void CutMultiFile()
+        private void CutMultiFiles()
         {
             try
             {
@@ -2752,7 +2750,7 @@ namespace ImageGlass
 
         private void mnuMainCutMulti_Click(object sender, EventArgs e)
         {
-            CutMultiFile();
+            CutMultiFiles();
         }
 
         private void mnuMainCopyImagePath_Click(object sender, EventArgs e)

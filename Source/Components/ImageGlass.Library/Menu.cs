@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -74,6 +74,7 @@ namespace ImageGlass.Library
 
             m.ShortcutKeys = mnu.ShortcutKeys;
             m.ShowShortcutKeys = mnu.ShowShortcutKeys;
+            m.ShortcutKeyDisplayString = mnu.ShortcutKeyDisplayString;
             m.Tag = mnu.Tag;
             m.Text = mnu.Text;
             m.TextAlign = mnu.TextAlign;
