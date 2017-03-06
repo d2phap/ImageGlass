@@ -356,6 +356,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain._ExtractFrameText", "Select output folder");
             Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
+            Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v3.x
+            Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v3.x
             Items.Add("frmMain._CopyFileText", "Copied {0} file(s)."); //v2.0 final
             Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final

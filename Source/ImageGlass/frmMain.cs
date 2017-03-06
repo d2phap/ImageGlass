@@ -2317,8 +2317,7 @@ namespace ImageGlass
                 mnuMainSlideShowExit_Click(null, null);
             }
 
-            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"]
-                    , 2000);
+            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"], 2000);
         }
 
         private void mnuMainSlideShowPause_Click(object sender, EventArgs e)
@@ -2328,11 +2327,15 @@ namespace ImageGlass
             {
                 timSlideShow.Enabled = false;
                 timSlideShow.Stop();
+
+                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessagePause"], 2000);
             }
             else
             {
                 timSlideShow.Enabled = true;
                 timSlideShow.Start();
+
+                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessageResume"], 2000);
             }
 
         }
