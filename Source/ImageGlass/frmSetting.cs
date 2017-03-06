@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -121,8 +121,13 @@ namespace ImageGlass
         private void frmSetting_Load(object sender, EventArgs e)
         {
             //Load config
-            //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound", "280,125,610,570"));
+            //Windows Bound (Position + Size)------------------------------------------------
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
+
+            if (!Helper.IsOnScreen(rc.Location))
+            {
+                rc.Location = new Point(280, 125);
+            }
             Bounds = rc;
 
             //windows state--------------------------------------------------------------

@@ -356,8 +356,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain._ExtractFrameText", "Select output folder");
             Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
-            Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v3.x
-            Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v3.x
+            Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v3.6
+            Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v3.6
             Items.Add("frmMain._CopyFileText", "Copied {0} file(s)."); //v2.0 final
             Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
@@ -385,7 +385,7 @@ namespace ImageGlass.Library
             Items.Add("frmFacebook._StatusCancel", "Cancelled");
             Items.Add("frmFacebook._StatusSuccessful", "Successful");
             Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ...");
-            Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 3.x
+            Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 3.6
             Items.Add("frmAbout.lblInfo", "Information");
             Items.Add("frmAbout.lblComponent", "Components");
             Items.Add("frmAbout.lblReferences", "References");
@@ -401,7 +401,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
             Items.Add("frmSetting.lblLanguage", "Language");
             //this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge"); //removed v2.0 beta
-            Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //v3.x
+            Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //v3.6
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");

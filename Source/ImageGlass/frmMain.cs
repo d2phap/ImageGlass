@@ -894,7 +894,7 @@ namespace ImageGlass
                 GlobalSetting.StringClipboard.Count), 1000);
         }
 
-        private void CopyMultiFile()
+        private void CopyMultiFiles()
         {
             try
             {
@@ -1222,6 +1222,7 @@ namespace ImageGlass
             }
 
         }
+        
 
 
         /// <summary>
@@ -1242,7 +1243,13 @@ namespace ImageGlass
             
             //Windows Bound (Position + Size)------------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
+
+            if (!Helper.IsOnScreen(rc.Location))
+            {
+                rc.Location = new Point(280, 125);
+            }
             Bounds = rc;
+
 
             //windows state--------------------------------------------------------------
             configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
@@ -2735,7 +2742,7 @@ namespace ImageGlass
 
         private void mnuMainCopyMulti_Click(object sender, EventArgs e)
         {
-            CopyMultiFile();
+            CopyMultiFiles();
         }
 
         private void mnuMainCut_Click(object sender, EventArgs e)
