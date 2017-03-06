@@ -616,6 +616,30 @@ namespace ImageGlass
             #endregion
 
 
+            //ESC ultility------------------------------------------------------------------
+            #region ESC
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
+            {
+                //exit slideshow
+                if (GlobalSetting.IsPlaySlideShow)
+                {
+                    mnuMainSlideShowExit_Click(null, null);
+                }
+                //exit full screen
+                else if (GlobalSetting.IsFullScreen)
+                {
+                    btnFullScreen.PerformClick();
+                }
+                //Quit ImageGlass
+                else if (GlobalSetting.IsPressESCToQuit)
+                {
+                    Application.Exit();
+                }
+                return;
+            }
+            #endregion
+
+
             //Ctrl---------------------------------------------------------------------------
             #region CTRL (for Zooming)
             if (e.Control && !e.Alt && !e.Shift)//Ctrl
@@ -631,6 +655,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
+
 
         }
         
@@ -653,31 +678,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
-
-
-            //ESC ultility------------------------------------------------------------------
-            #region ESC
-            if (e.KeyValue == 27 && !e.Control && !e.Shift && !e.Alt)//ESC
-            {
-                //exit slideshow
-                if (GlobalSetting.IsPlaySlideShow)
-                {
-                    mnuMainSlideShowExit_Click(null, null);
-                }
-                //exit full screen
-                else if (GlobalSetting.IsFullScreen)
-                {
-                    btnFullScreen.PerformClick();
-                }
-                //Quit ImageGlass
-                else if (GlobalSetting.IsPressESCToQuit)
-                {
-                    Application.Exit();
-                }
-                return;
-            }
-            #endregion
-
+            
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
@@ -731,6 +732,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
+            
         }
         #endregion
 
