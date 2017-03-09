@@ -564,8 +564,24 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that ImageGlass will run in portable mode
         /// All configurations will be written to XML file instead of registry
         /// </summary>
-        public static bool IsPortableMode { get => _isPortableMode; set => _isPortableMode = value; }
-        
+        public static bool IsPortableMode
+        {
+            get => _isPortableMode;
+            set
+            {
+                //check if we have write access to write config file for portable mode
+                if (value && GlobalSetting.IsConfigFileWritable() == false)
+                {
+                    //we dont have permission
+                    _isPortableMode = false;
+                }
+                else
+                {
+                    _isPortableMode = value;
+                }
+            }
+        }
+
 
 
 
@@ -574,6 +590,14 @@ namespace ImageGlass.Services.Configuration
 
         #region "Public Method"
 
+        /// <summary>
+        /// Check is ImageGlass can write config file in the startup folder
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsConfigFileWritable()
+        {
+            return _configFile.IsWritable();
+        }
 
         /// <summary>
         /// Load image order from configuration file

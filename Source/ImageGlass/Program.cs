@@ -54,6 +54,7 @@ namespace ImageGlass
 
             //check if user enable TEMPORARY portable mode ------------------------------
             GlobalSetting.IsPortableMode = false;
+
             if (argv.ToList().IndexOf("--portable") != -1)
             {
                 GlobalSetting.IsPortableMode = true;
@@ -63,7 +64,6 @@ namespace ImageGlass
                 string configValue = GlobalSetting.GetConfig("IsPortableMode", "False", true);
                 GlobalSetting.IsPortableMode = bool.Parse(configValue);
             }
-
 
             //auto update----------------------------------------------------------------
             string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");

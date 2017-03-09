@@ -311,6 +311,10 @@ namespace ImageGlass
         {
             //Get Portable mode value
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
+            if (!GlobalSetting.IsConfigFileWritable())
+            {
+                chkPortableMode.Enabled = false;
+            }
 
             //Get value of chkFindChildFolder
             chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "false"));
