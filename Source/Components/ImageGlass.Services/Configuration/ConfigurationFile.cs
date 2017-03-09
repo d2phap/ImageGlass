@@ -19,9 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+using System.IO;
 using System.Xml;
 
 namespace ImageGlass.Services.Configuration
@@ -109,6 +107,26 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
+        /// Check is ImageGlass can write config file in the startup folder
+        /// </summary>
+        /// <returns></returns>
+        public bool IsWritable()
+        {
+            try
+            {
+                using (File.Create("test_write_file.temp")) { }
+                File.Delete("test_write_file.temp");                
+
+                return true;
+            }
+            catch //(Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Read configuration strings from file
         /// </summary>
         public void ReadConfigFile()
@@ -182,7 +200,11 @@ namespace ImageGlass.Services.Configuration
             root.AppendChild(nType);// </Content>
             doc.AppendChild(root);// </ImageGlass>
 
-            doc.Save(Filename);
+            try
+            {
+                doc.Save(Filename);
+            }
+            catch (Exception ex) { }
 
             doc = null;
             root = null;
