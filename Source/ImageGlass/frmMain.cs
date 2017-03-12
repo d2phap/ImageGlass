@@ -43,7 +43,7 @@ namespace ImageGlass
         {
             InitializeComponent();
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-
+            
             //Check DPI Scaling ratio
             DPIScaling.OldDPI = DPIScaling.CurrentDPI;
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();

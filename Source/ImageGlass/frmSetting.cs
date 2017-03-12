@@ -311,7 +311,7 @@ namespace ImageGlass
         {
             //Get Portable mode value
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
-            if (!GlobalSetting.IsConfigFileWritable())
+            if (!GlobalSetting.CheckStartUpDirWritable())
             {
                 chkPortableMode.Enabled = false;
             }

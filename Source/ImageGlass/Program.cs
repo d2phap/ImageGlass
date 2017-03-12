@@ -46,15 +46,19 @@ namespace ImageGlass
             {
                 SetProcessDPIAware();
             }
-
+            
             Guid guid = new Guid(appGuid);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Check if the start up directory writable
+            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+            
+
             //check if user enable TEMPORARY portable mode ------------------------------
             GlobalSetting.IsPortableMode = false;
-
+            
             if (argv.ToList().IndexOf("--portable") != -1)
             {
                 GlobalSetting.IsPortableMode = true;
@@ -84,12 +88,13 @@ namespace ImageGlass
                     }
                 }
             }
+            
             //save last update
             GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
-
+            
             //check if allows multi instances
             if (GlobalSetting.IsAllowMultiInstances)
             {
@@ -113,7 +118,7 @@ namespace ImageGlass
                     }
                 }
             } //end check multi instances
-
+            
         }
 
         private static void SingleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)

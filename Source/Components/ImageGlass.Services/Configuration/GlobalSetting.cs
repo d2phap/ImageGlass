@@ -131,8 +131,9 @@ namespace ImageGlass.Services.Configuration
         private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
         private static bool _isPortableMode = false;
+        private static bool _isStartUpDirWritable = true;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-
+        
 
 
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
@@ -570,7 +571,7 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 //check if we have write access to write config file for portable mode
-                if (value && GlobalSetting.IsConfigFileWritable() == false)
+                if (value && GlobalSetting.IsStartUpDirWritable == false)
                 {
                     //we dont have permission
                     _isPortableMode = false;
@@ -580,6 +581,15 @@ namespace ImageGlass.Services.Configuration
                     _isPortableMode = value;
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets, sets the value indicates that StartUpDir is writable
+        /// </summary>
+        public static bool IsStartUpDirWritable
+        {
+            get => _isStartUpDirWritable;
+            set => _isStartUpDirWritable = value;
         }
 
 
@@ -594,7 +604,7 @@ namespace ImageGlass.Services.Configuration
         /// Check is ImageGlass can write config file in the startup folder
         /// </summary>
         /// <returns></returns>
-        public static bool IsConfigFileWritable()
+        public static bool CheckStartUpDirWritable()
         {
             return _configFile.IsWritable();
         }
