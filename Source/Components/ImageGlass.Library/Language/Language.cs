@@ -453,7 +453,16 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
             Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
-            
+
+            Items.Add("frmAddNewFormat._Text", "Add new image extension"); // 4.0
+            Items.Add("frmAddNewFormat.lblImageExtension", "Image extension"); // 4.0
+            Items.Add("frmAddNewFormat.lblExtGroup", "Extension group"); // 4.0
+            Items.Add("frmAddNewFormat.btnOK", "OK"); // 4.0
+            Items.Add("frmAddNewFormat.btnClose", "Close"); // 4.0
+
+
+            Items.Add("_.ImageFormatGroup.Default", "Default extensions"); // 4.0
+            Items.Add("_.ImageFormatGroup.Optional", "Optional extensions"); // 4.0
         }
 
 

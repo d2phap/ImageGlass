@@ -26,6 +26,9 @@ using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.Linq;
+using System.Threading.Tasks;
+using ImageGlass.Theme;
+using System.Text;
 
 namespace ImageGlass
 {
@@ -34,6 +37,9 @@ namespace ImageGlass
         public frmSetting()
         {
             InitializeComponent();
+
+            RenderTheme r = new RenderTheme();
+            r.ApplyTheme(lvExtension);
         }
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -226,7 +232,7 @@ namespace ImageGlass
 
             //File Associations tab
             lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
-            btnOpenFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
+            lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
 
             //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
@@ -291,6 +297,11 @@ namespace ImageGlass
 
                     chk.Checked = GlobalSetting.OptionalImageFormats.Contains(chk.Tag.ToString());
                 }
+
+                // Load image formats to the list
+                LoadExtensionList();
+                
+
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -677,11 +688,106 @@ namespace ImageGlass
 
 
         #region TAB FILE ASSOCIATIONS
-        private void btnOpenFileAssociations_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Load built-in extensions to the list view
+        /// </summary>
+        /// <param name="builtInImageFormats"></param>
+        private void LoadExtensionList(string builtInImageFormats)
+        {
+            var list = builtInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            GlobalSetting.DefaultImageFormats = list[0];
+            GlobalSetting.OptionalImageFormats = list[1];
+
+            LoadExtensionList();
+        }
+
+        /// <summary>
+        /// Load extensions from settings to the list view
+        /// </summary>
+        private void LoadExtensionList()
+        {
+            lvExtension.Items.Clear();
+
+            // Load Default group
+            var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem(lvExtension.Groups["Default"]);
+                li.Text = ext;
+                lvExtension.Items.Add(li);
+            }
+
+            // Load Optional group
+            extList = GlobalSetting.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem(lvExtension.Groups["Optional"]);
+                li.Text = ext;
+                lvExtension.Items.Add(li);
+            }
+        }
+
+
+        private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); // path to %windir%\system32\control.exe (ensures the correct control.exe)
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
+        }
+
+        private void btnResetExt_Click(object sender, EventArgs e)
+        {
+            LoadExtensionList(GlobalSetting.BuiltInImageFormats);
+        }
+
+        private void btnDeleteExt_Click(object sender, EventArgs e)
+        {
+            if (lvExtension.CheckedItems.Count == 0)
+                return;
+
+            
+            var selectedDefaultExts = new StringBuilder();
+            var selectedOptionalExts = new StringBuilder();
+
+            // Get checked extensions in the list then
+            // remove extensions from settings
+            foreach (ListViewItem li in lvExtension.CheckedItems)
+            {
+                if (li.Group.Name == "Default")
+                {
+                    GlobalSetting.DefaultImageFormats = GlobalSetting.DefaultImageFormats.Replace($"*{li.Text};", "");
+                }
+                else if (li.Group.Name == "Optional")
+                {
+                    GlobalSetting.OptionalImageFormats = GlobalSetting.OptionalImageFormats.Replace($"*{li.Text};", "");
+                }
+            }
+
+            // Reload the list
+            LoadExtensionList();
+
+            // Remove registerred extensions in registry
+            // TODO
+        }
+
+        private void btnAddNewExt_Click(object sender, EventArgs e)
+        {
+            frmAddNewFormat f = new frmAddNewFormat();
+            if(f.ShowDialog() == DialogResult.OK)
+            {
+                if (f.ExtensionGroup == ImageExtensionGroup.Default)
+                {
+                    GlobalSetting.DefaultImageFormats += f.ImageExtension;
+                }
+                else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
+                {
+                    GlobalSetting.OptionalImageFormats += f.ImageExtension;
+                }
+
+                // Reload the list
+                LoadExtensionList();
+            }
         }
 
 
@@ -690,6 +796,6 @@ namespace ImageGlass
 
         #endregion
 
-        
+
     }
 }

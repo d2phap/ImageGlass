@@ -1540,6 +1540,10 @@ namespace ImageGlass
             SaveConfig();
         }
 
+        private void frmMain_Deactivate(object sender, EventArgs e)
+        {
+        }
+
         private void frmMain_Activated(object sender, EventArgs e)
         {
             if (GlobalSetting.IsForcedActive)
@@ -2999,6 +3003,7 @@ namespace ImageGlass
 
 
         #endregion
+
         
     }
 }

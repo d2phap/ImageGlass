@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Default extensions", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Optional extensions", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
             this.lblLanguage = new System.Windows.Forms.Label();
             this.lblFileAssociations = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.tabLanguage = new System.Windows.Forms.TabPage();
             this.lblLanguageWarning = new System.Windows.Forms.Label();
             this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
@@ -53,8 +54,8 @@
             this.chkExtraExtsTGA = new System.Windows.Forms.CheckBox();
             this.txtSupportedExtensionDefault = new System.Windows.Forms.TextBox();
             this.lblSupportedExtension = new System.Windows.Forms.Label();
-            this.btnOpenFileAssociations = new System.Windows.Forms.Button();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkPortableMode = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chkLoopViewer = new System.Windows.Forms.CheckBox();
             this.chkConfirmationDelete = new System.Windows.Forms.CheckBox();
@@ -82,8 +83,13 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.chkPortableMode = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
+            this.lvExtension = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
+            this.btnAddNewExt = new System.Windows.Forms.Button();
+            this.btnDeleteExt = new System.Windows.Forms.Button();
+            this.btnResetExt = new System.Windows.Forms.Button();
+            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
             this.panExtraExts.SuspendLayout();
@@ -95,6 +101,7 @@
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -171,20 +178,6 @@
             this.lblGeneral.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblGeneral.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblGeneral.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // picBackgroundColor
-            // 
-            this.picBackgroundColor.BackColor = System.Drawing.Color.White;
-            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(22, 978);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
-            this.picBackgroundColor.Name = "picBackgroundColor";
-            this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
-            this.picBackgroundColor.TabIndex = 12;
-            this.picBackgroundColor.TabStop = false;
-            this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
-            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
             // 
             // tabLanguage
             // 
@@ -315,10 +308,14 @@
             // 
             // tabFileAssociation
             // 
+            this.tabFileAssociation.Controls.Add(this.btnResetExt);
+            this.tabFileAssociation.Controls.Add(this.btnDeleteExt);
+            this.tabFileAssociation.Controls.Add(this.btnAddNewExt);
+            this.tabFileAssociation.Controls.Add(this.lnkOpenFileAssoc);
+            this.tabFileAssociation.Controls.Add(this.lvExtension);
             this.tabFileAssociation.Controls.Add(this.panExtraExts);
             this.tabFileAssociation.Controls.Add(this.txtSupportedExtensionDefault);
             this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
-            this.tabFileAssociation.Controls.Add(this.btnOpenFileAssociations);
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 34);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(4);
             this.tabFileAssociation.Name = "tabFileAssociation";
@@ -334,7 +331,7 @@
             this.panExtraExts.Controls.Add(this.chkExtraExtsHDR);
             this.panExtraExts.Controls.Add(this.chkExtraExtsEXR);
             this.panExtraExts.Controls.Add(this.chkExtraExtsTGA);
-            this.panExtraExts.Location = new System.Drawing.Point(20, 142);
+            this.panExtraExts.Location = new System.Drawing.Point(25, 632);
             this.panExtraExts.Margin = new System.Windows.Forms.Padding(2);
             this.panExtraExts.Name = "panExtraExts";
             this.panExtraExts.Size = new System.Drawing.Size(502, 150);
@@ -396,7 +393,7 @@
             this.txtSupportedExtensionDefault.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSupportedExtensionDefault.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSupportedExtensionDefault.ForeColor = System.Drawing.Color.Black;
-            this.txtSupportedExtensionDefault.Location = new System.Drawing.Point(22, 58);
+            this.txtSupportedExtensionDefault.Location = new System.Drawing.Point(8, 585);
             this.txtSupportedExtensionDefault.Margin = new System.Windows.Forms.Padding(2);
             this.txtSupportedExtensionDefault.Multiline = true;
             this.txtSupportedExtensionDefault.Name = "txtSupportedExtensionDefault";
@@ -414,18 +411,6 @@
             this.lblSupportedExtension.Size = new System.Drawing.Size(189, 25);
             this.lblSupportedExtension.TabIndex = 21;
             this.lblSupportedExtension.Text = "Supported extensions:";
-            // 
-            // btnOpenFileAssociations
-            // 
-            this.btnOpenFileAssociations.AutoSize = true;
-            this.btnOpenFileAssociations.Location = new System.Drawing.Point(22, 302);
-            this.btnOpenFileAssociations.Margin = new System.Windows.Forms.Padding(2);
-            this.btnOpenFileAssociations.Name = "btnOpenFileAssociations";
-            this.btnOpenFileAssociations.Size = new System.Drawing.Size(334, 52);
-            this.btnOpenFileAssociations.TabIndex = 20;
-            this.btnOpenFileAssociations.Text = "Open File Associations";
-            this.btnOpenFileAssociations.UseVisualStyleBackColor = true;
-            this.btnOpenFileAssociations.Click += new System.EventHandler(this.btnOpenFileAssociations_Click);
             // 
             // tabGeneral
             // 
@@ -463,6 +448,18 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkPortableMode
+            // 
+            this.chkPortableMode.AutoSize = true;
+            this.chkPortableMode.Location = new System.Drawing.Point(22, 20);
+            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
+            this.chkPortableMode.Name = "chkPortableMode";
+            this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
+            this.chkPortableMode.TabIndex = 25;
+            this.chkPortableMode.Text = "Enable Portable mode";
+            this.chkPortableMode.UseVisualStyleBackColor = true;
+            this.chkPortableMode.CheckedChanged += new System.EventHandler(this.chkPortableMode_CheckedChanged);
             // 
             // panel1
             // 
@@ -809,17 +806,100 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
-            // chkPortableMode
+            // lvExtension
             // 
-            this.chkPortableMode.AutoSize = true;
-            this.chkPortableMode.Location = new System.Drawing.Point(22, 20);
-            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
-            this.chkPortableMode.Name = "chkPortableMode";
-            this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
-            this.chkPortableMode.TabIndex = 25;
-            this.chkPortableMode.Text = "Enable Portable mode";
-            this.chkPortableMode.UseVisualStyleBackColor = true;
-            this.chkPortableMode.CheckedChanged += new System.EventHandler(this.chkPortableMode_CheckedChanged);
+            this.lvExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvExtension.CheckBoxes = true;
+            this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvExtension.FullRowSelect = true;
+            this.lvExtension.GridLines = true;
+            listViewGroup1.Header = "Default extensions";
+            listViewGroup1.Name = "Default";
+            listViewGroup2.Header = "Optional extensions";
+            listViewGroup2.Name = "Optional";
+            this.lvExtension.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
+            this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvExtension.Location = new System.Drawing.Point(25, 60);
+            this.lvExtension.Name = "lvExtension";
+            this.lvExtension.Size = new System.Drawing.Size(669, 357);
+            this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvExtension.TabIndex = 29;
+            this.lvExtension.UseCompatibleStateImageBehavior = false;
+            this.lvExtension.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Extensions";
+            this.columnHeader1.Width = 150;
+            // 
+            // lnkOpenFileAssoc
+            // 
+            this.lnkOpenFileAssoc.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkOpenFileAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkOpenFileAssoc.AutoSize = true;
+            this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(503, 32);
+            this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
+            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(191, 25);
+            this.lnkOpenFileAssoc.TabIndex = 30;
+            this.lnkOpenFileAssoc.TabStop = true;
+            this.lnkOpenFileAssoc.Text = "Open File Associations";
+            this.lnkOpenFileAssoc.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenFileAssoc_LinkClicked);
+            // 
+            // btnAddNewExt
+            // 
+            this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddNewExt.AutoSize = true;
+            this.btnAddNewExt.Location = new System.Drawing.Point(25, 423);
+            this.btnAddNewExt.Name = "btnAddNewExt";
+            this.btnAddNewExt.Size = new System.Drawing.Size(75, 35);
+            this.btnAddNewExt.TabIndex = 31;
+            this.btnAddNewExt.Text = "Add";
+            this.btnAddNewExt.UseVisualStyleBackColor = true;
+            this.btnAddNewExt.Click += new System.EventHandler(this.btnAddNewExt_Click);
+            // 
+            // btnDeleteExt
+            // 
+            this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDeleteExt.AutoSize = true;
+            this.btnDeleteExt.Location = new System.Drawing.Point(106, 423);
+            this.btnDeleteExt.Name = "btnDeleteExt";
+            this.btnDeleteExt.Size = new System.Drawing.Size(75, 35);
+            this.btnDeleteExt.TabIndex = 32;
+            this.btnDeleteExt.Text = "Delete";
+            this.btnDeleteExt.UseVisualStyleBackColor = true;
+            this.btnDeleteExt.Click += new System.EventHandler(this.btnDeleteExt_Click);
+            // 
+            // btnResetExt
+            // 
+            this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResetExt.AutoSize = true;
+            this.btnResetExt.Location = new System.Drawing.Point(548, 423);
+            this.btnResetExt.Name = "btnResetExt";
+            this.btnResetExt.Size = new System.Drawing.Size(146, 35);
+            this.btnResetExt.TabIndex = 33;
+            this.btnResetExt.Text = "Reset to default";
+            this.btnResetExt.UseVisualStyleBackColor = true;
+            this.btnResetExt.Click += new System.EventHandler(this.btnResetExt_Click);
+            // 
+            // picBackgroundColor
+            // 
+            this.picBackgroundColor.BackColor = System.Drawing.Color.White;
+            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picBackgroundColor.Location = new System.Drawing.Point(22, 978);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
+            this.picBackgroundColor.Name = "picBackgroundColor";
+            this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
+            this.picBackgroundColor.TabIndex = 12;
+            this.picBackgroundColor.TabStop = false;
+            this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
+            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
             // 
             // frmSetting
             // 
@@ -840,7 +920,6 @@
             this.Load += new System.EventHandler(this.frmSetting_Load);
             this.SizeChanged += new System.EventHandler(this.frmSetting_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSetting_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
             this.tabFileAssociation.ResumeLayout(false);
@@ -856,6 +935,7 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -894,7 +974,6 @@
         private System.Windows.Forms.CheckBox chkImageBoosterBack;
         private System.Windows.Forms.CheckBox chkESCToQuit;
         private System.Windows.Forms.LinkLabel lnkInstallLanguage;
-        private System.Windows.Forms.Button btnOpenFileAssociations;
         private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
         private System.Windows.Forms.CheckBox chkAllowMultiInstances;
@@ -915,5 +994,11 @@
         private System.Windows.Forms.CheckBox chkLoopViewer;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox chkPortableMode;
+        private System.Windows.Forms.ListView lvExtension;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.LinkLabel lnkOpenFileAssoc;
+        private System.Windows.Forms.Button btnResetExt;
+        private System.Windows.Forms.Button btnDeleteExt;
+        private System.Windows.Forms.Button btnAddNewExt;
     }
 }

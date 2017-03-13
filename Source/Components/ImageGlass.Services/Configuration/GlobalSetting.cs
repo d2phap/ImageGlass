@@ -47,6 +47,12 @@ namespace ImageGlass.Services.Configuration
         ClearPixels
     }
 
+    public enum ImageExtensionGroup
+    {
+        Default = 0,
+        Optional = 1
+    }
+
     public class ThumbnailItemInfo
     {
         /// <summary>
@@ -121,6 +127,7 @@ namespace ImageGlass.Services.Configuration
 
     public static class GlobalSetting
     {
+        // Private steeings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
         private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
@@ -133,14 +140,15 @@ namespace ImageGlass.Services.Configuration
         private static bool _isPortableMode = false;
         private static bool _isStartUpDirWritable = true;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-        
+        private static string _builtInImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;|*.hdr;*.exr;*.tga;*.psd;";
 
 
+        // Shared settings ----------------------------------------------------------------
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
         private static string _defaultImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
                                                      "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
                                                      "*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;";
-        private static string _optionalImageFormats = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
+        private static string _optionalImageFormats = "*.hdr;*.exr;*.tga;*.psd;";
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;
@@ -249,15 +257,16 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets default supported extension string
+        /// Gets, sets default image formats
         /// </summary>
         public static string DefaultImageFormats
         {
             get { return _defaultImageFormats; }
+            set { _defaultImageFormats = value; }
         }
 
         /// <summary>
-        /// Gets, sets supported extra extensions
+        /// Gets, sets optional image formats
         /// </summary>
         public static string OptionalImageFormats
         {
@@ -591,6 +600,11 @@ namespace ImageGlass.Services.Configuration
             get => _isStartUpDirWritable;
             set => _isStartUpDirWritable = value;
         }
+
+        /// <summary>
+        /// Gets built-in image formats for both Default and Optional formats
+        /// </summary>
+        public static string BuiltInImageFormats { get => _builtInImageFormats; }
 
 
 
