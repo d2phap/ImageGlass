@@ -69,14 +69,6 @@
     <Compile Include="Comparer\FileLogicalComparer.cs" />
     <Compile Include="Comparer\NumericComparer.cs" />
     <Compile Include="DirectoryFinder\DirectoryFinder.cs" />
-    <Compile Include="FileAssociations\AssociationManager.cs" />
-    <Compile Include="FileAssociations\FileAssociationInfo.cs" />
-    <Compile Include="FileAssociations\ProgramAssociationInfo.cs" />
-    <Compile Include="FileAssociations\ProgramIcon.cs" />
-    <Compile Include="FileAssociations\ProgramVerb.cs" />
-    <Compile Include="FileAssociations\RegistryException.cs" />
-    <Compile Include="FileAssociations\RegistryWrapper.cs" />
-    <Compile Include="FileAssociations\ShellNotification.cs" />
     <Compile Include="Image\ExifThumbReader.cs" />
     <Compile Include="Language\Language.cs" />
     <Compile Include="Net\DownloadFile.cs" />

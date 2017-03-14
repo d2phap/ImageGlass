@@ -47,8 +47,6 @@ namespace ImageGlass.Library.FileAssociations
             set { baseRegistryKey = value; }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// To read a registry key.
@@ -83,8 +81,6 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// To write into a registry key.
@@ -114,8 +110,6 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// To delete a registry key.
@@ -145,8 +139,6 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// To delete a sub key and any child.
@@ -174,8 +166,6 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// Retrive the count of subkeys at the current key.
@@ -203,8 +193,6 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
 
         /// <summary>
         /// Retrive the count of values in the key.
@@ -232,8 +220,8 @@ namespace ImageGlass.Library.FileAssociations
             }
         }
 
-        /* **************************************************************************
-         * **************************************************************************/
+        
+
         private void ShowErrorMessage(Exception e, string Title)
         {
             if (showError == true)
