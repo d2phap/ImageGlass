@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnClose = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.lblImageExtension = new System.Windows.Forms.Label();
             this.txtImageExtension = new System.Windows.Forms.TextBox();
             this.lblExtGroup = new System.Windows.Forms.Label();
@@ -49,19 +49,6 @@
             this.panel1.Size = new System.Drawing.Size(457, 68);
             this.panel1.TabIndex = 15;
             // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(351, 16);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(86, 35);
-            this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -74,6 +61,19 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Location = new System.Drawing.Point(351, 16);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(86, 35);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lblImageExtension
             // 
@@ -90,6 +90,7 @@
             this.txtImageExtension.Name = "txtImageExtension";
             this.txtImageExtension.Size = new System.Drawing.Size(419, 31);
             this.txtImageExtension.TabIndex = 0;
+            this.txtImageExtension.Text = ".svg";
             // 
             // lblExtGroup
             // 
@@ -111,7 +112,6 @@
             // 
             // frmAddNewFormat
             // 
-            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
