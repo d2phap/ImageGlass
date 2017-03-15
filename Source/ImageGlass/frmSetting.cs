@@ -778,31 +778,38 @@ namespace ImageGlass
         private void btnAddNewExt_Click(object sender, EventArgs e)
         {
             frmAddNewFormat f = new frmAddNewFormat();
-            if(f.ShowDialog() == DialogResult.OK)
+            f.ImageExtension = ".svg";
+            f.ExtensionGroup = ImageExtensionGroup.Default;
+
+            do
             {
-                // If the ext exist
-                if (GlobalSetting.AllImageFormats.Contains(f.ImageExtension))                
-                    return;
-                
-
-                if (f.ExtensionGroup == ImageExtensionGroup.Default)
+                if (f.ShowDialog() == DialogResult.OK)
                 {
-                    GlobalSetting.DefaultImageFormats += f.ImageExtension;
-                }
-                else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
-                {
-                    GlobalSetting.OptionalImageFormats += f.ImageExtension;
-                }
+                    // If the ext exist
+                    if (GlobalSetting.AllImageFormats.Contains(f.ImageExtension))
+                        return;
 
-                // Reload the list
-                LoadExtensionList();
+                    if (f.ExtensionGroup == ImageExtensionGroup.Default)
+                    {
+                        GlobalSetting.DefaultImageFormats += f.ImageExtension;
+                    }
+                    else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
+                    {
+                        GlobalSetting.OptionalImageFormats += f.ImageExtension;
+                    }
 
-                // Update extensions to registry
-                Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
-                p.Start();
+                    // Reload the list
+                    LoadExtensionList();
+
+                    // Update extensions to registry
+                    Process p = new Process();
+                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                    p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
+                    p.Start();
+                }
             }
+            while (f.DialogResult == DialogResult.Retry);
+            
         }
         
 

@@ -148,10 +148,8 @@ namespace ImageGlass.Services.Configuration
 
         // Shared settings ----------------------------------------------------------------
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
-        private static string _defaultImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
-                                                     "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;";
-        private static string _optionalImageFormats = "*.hdr;*.exr;*.tga;*.psd;";
+        private static string _defaultImageFormats = string.Empty;
+        private static string _optionalImageFormats = string.Empty;
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;

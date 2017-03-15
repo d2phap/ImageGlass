@@ -51,20 +51,25 @@ namespace ImageGlass
         private void btnOK_Click(object sender, EventArgs e)
         {
             ImageExtension = txtImageExtension.Text.ToLower().Trim();
+            ExtensionGroup = (ImageExtensionGroup)cmbExtGroup.SelectedIndex;
 
-            if (ImageExtension.Length == 0)
+            if (ImageExtension.Length < 2 || !ImageExtension.StartsWith("."))
             {
                 txtImageExtension.Focus();
+                DialogResult = DialogResult.Retry;
                 return;
             }
+            
 
-            ExtensionGroup = cmbExtGroup.SelectedIndex == 0 ? ImageExtensionGroup.Default : ImageExtensionGroup.Optional;
-
+            ImageExtension = $"*{ImageExtension};"; //standalize extension string
             DialogResult = DialogResult.OK;
         }
 
         private void frmAddNewFormat_Load(object sender, EventArgs e)
         {
+            txtImageExtension.Text = this.ImageExtension;
+            cmbExtGroup.SelectedIndex = (int) this.ExtensionGroup;
+
             txtImageExtension.Focus();
         }
 
