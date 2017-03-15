@@ -277,20 +277,9 @@ namespace ImageGlass
             {
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
-
-                txtSupportedExtensionDefault.Text = GlobalSetting.DefaultImageFormats;
                 
-                foreach (var control in panExtraExts.Controls)
-                {
-                    var chk = (CheckBox)control;
-
-                    chk.Checked = GlobalSetting.OptionalImageFormats.Contains(chk.Tag.ToString());
-                }
-
                 // Load image formats to the list
                 LoadExtensionList();
-                
-
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -362,8 +351,7 @@ namespace ImageGlass
 
             //Get value of cmbZoomOptimization
             s = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            int i = 0;
-            if (int.TryParse(s, out i))
+            if (int.TryParse(s, out int i))
             {
                 if (-1 < i && i < cmbZoomOptimization.Items.Count)
                 { }
@@ -544,8 +532,10 @@ namespace ImageGlass
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
         {
-            ColorDialog c = new ColorDialog();
-            c.AllowFullOpen = true;
+            ColorDialog c = new ColorDialog()
+            {
+                AllowFullOpen = true
+            };
 
             if (c.ShowDialog() == DialogResult.OK)
             {
@@ -610,8 +600,10 @@ namespace ImageGlass
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
-            dsLanguages = new List<Library.Language>();
-            dsLanguages.Add(new Library.Language());
+            dsLanguages = new List<Library.Language>
+            {
+                new Library.Language()
+            };
 
             if (!Directory.Exists(GlobalSetting.StartUpDir + "Languages\\"))
             {
@@ -702,8 +694,11 @@ namespace ImageGlass
             var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in extList)
             {
-                var li = new ListViewItem(lvExtension.Groups["Default"]);
-                li.Text = ext;
+                var li = new ListViewItem(lvExtension.Groups["Default"])
+                {
+                    Text = ext
+                };
+
                 lvExtension.Items.Add(li);
             }
 
@@ -711,8 +706,11 @@ namespace ImageGlass
             extList = GlobalSetting.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in extList)
             {
-                var li = new ListViewItem(lvExtension.Groups["Optional"]);
-                li.Text = ext;
+                var li = new ListViewItem(lvExtension.Groups["Optional"])
+                {
+                    Text = ext
+                };
+
                 lvExtension.Items.Add(li);
             }
 
@@ -777,9 +775,11 @@ namespace ImageGlass
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
         {
-            frmAddNewFormat f = new frmAddNewFormat();
-            f.ImageExtension = ".svg";
-            f.ExtensionGroup = ImageExtensionGroup.Default;
+            frmAddNewFormat f = new frmAddNewFormat()
+            {
+                ImageExtension = ".svg",
+                ExtensionGroup = ImageExtensionGroup.Default
+            };
 
             do
             {

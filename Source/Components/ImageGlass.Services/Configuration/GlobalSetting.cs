@@ -624,10 +624,11 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder exts = new StringBuilder();
 
-            RegistryHelper reg = new RegistryHelper();
-            reg.BaseRegistryKey = Registry.LocalMachine;
-            reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
-
+            RegistryHelper reg = new RegistryHelper()
+            {
+                BaseRegistryKey = Registry.LocalMachine,
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
             var extList = reg.GetValueNames();
 
             Parallel.ForEach(extList, (ext) =>

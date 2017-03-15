@@ -206,7 +206,9 @@ namespace ImageGlass.Services.Configuration
             {
                 doc.Save(Filename);
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
 
             doc = null;
             root = null;
@@ -321,8 +323,7 @@ namespace ImageGlass.Services.Configuration
 
         public bool Contains(KeyValuePair<string, string> item)
         {
-            string value;
-            return (_dictionary.TryGetValue(item.Key, out value) && value.Equals(item.Key));
+            return (_dictionary.TryGetValue(item.Key, out string value) && value.Equals(item.Key));
         }
 
         public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
