@@ -26,6 +26,9 @@ using System.Windows.Forms;
 using System.Collections.Specialized;
 using System.Security;
 using System.IO;
+using System.Text;
+using ImageGlass.Library.FileAssociations;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -371,7 +374,7 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 GlobalSetting._isShowWelcome = value;
-                GlobalSetting.SetConfig("Welcome", value.ToString());
+                GlobalSetting.SetConfig("IsShowWelcome", value.ToString());
             }
         }
 
@@ -613,6 +616,29 @@ namespace ImageGlass.Services.Configuration
 
 
         #region "Public Method"
+
+        /// <summary>
+        /// Get file extensions from registry
+        /// Ex: *.svg;*.png;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFileExtensionsFromRegistry()
+        {
+            StringBuilder exts = new StringBuilder();
+
+            RegistryHelper reg = new RegistryHelper();
+            reg.BaseRegistryKey = Registry.LocalMachine;
+            reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
+
+            var extList = reg.GetValueNames();
+
+            Parallel.ForEach(extList, (ext) =>
+            {
+                exts.Append($"*{ext};");
+            });
+
+            return exts.ToString();
+        }
 
         /// <summary>
         /// Check is ImageGlass can write config file in the startup folder

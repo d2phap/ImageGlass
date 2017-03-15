@@ -169,20 +169,7 @@ namespace ImageGlass
 
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
-
-            //Save extra supported extensions
-            string extraExts = "";
-            foreach (var control in panExtraExts.Controls)
-            {
-                var chk = (CheckBox)control;
-                
-                if(chk.Checked)
-                {
-                    extraExts += chk.Tag.ToString() + ";";
-                }
-            }
-            GlobalSetting.OptionalImageFormats = extraExts;
-            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+            
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
@@ -728,8 +715,14 @@ namespace ImageGlass
                 li.Text = ext;
                 lvExtension.Items.Add(li);
             }
-        }
 
+            // Write suported image formats to settings -----------------------------------------
+            // Load Default Image Formats
+            GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
+            // Load Optional Image Formats
+            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+        }
+        
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -811,10 +804,7 @@ namespace ImageGlass
                 p.Start();
             }
         }
-
         
-
-
 
         #endregion
 

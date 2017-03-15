@@ -268,8 +268,17 @@ namespace ImageGlass.Services.Configuration
             if (nItem != null)
             {
                 nItem.SetAttribute("value", value.ToString());
-                doc.Save(Filename);
             }
+            else
+            {
+                nItem = (XmlElement)root.SelectNodes("//Configuration/Content")[0]; //<Content>
+                XmlElement node = doc.CreateElement("Item");
+                node.SetAttribute("key", key);
+                node.SetAttribute("value", value.ToString());
+                nItem.AppendChild(node);
+            }
+
+            doc.Save(Filename);
 
             doc = null;
             root = null;
@@ -277,7 +286,7 @@ namespace ImageGlass.Services.Configuration
             
         }
 
-
+        
 
         #region auto-generated functions
         public bool ContainsKey(string key)
