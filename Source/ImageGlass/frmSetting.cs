@@ -217,11 +217,18 @@ namespace ImageGlass
             chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            
+
 
             //File Associations tab
+            lblExtensionsGroupDescription.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensionsGroupDescription"];
             lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
-            lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
+            lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.lnkOpenFileAssoc"];
+            btnAddNewExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddNewExt"];
+            btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
+            btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
+            lvExtension.Groups[(int)ImageExtensionGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
+            lvExtension.Groups[(int)ImageExtensionGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
+
 
             //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];

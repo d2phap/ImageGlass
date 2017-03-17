@@ -34,7 +34,11 @@ namespace ImageGlass.Core
             else
             {
                 var settings = new MagickReadSettings();
-                settings.BackgroundColor = MagickColors.Transparent;
+
+                if (path.EndsWith(".svg"))
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
 
                 if (width > 0 && height > 0)
                 {

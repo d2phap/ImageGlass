@@ -239,7 +239,11 @@ namespace ImageGlass.ImageListView
             try
             {
                 var settings = new MagickReadSettings();
-                settings.BackgroundColor = MagickColors.Transparent;
+
+                if (filename.EndsWith(".svg"))
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
 
                 if (size.Width > 0 && size.Height > 0)
                 {

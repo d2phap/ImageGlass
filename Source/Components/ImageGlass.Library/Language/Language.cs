@@ -443,8 +443,7 @@ namespace ImageGlass.Library
             //this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all"); //removed 2.0 final
             //this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final, remove 3.0
             //this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //v2.0 final, remove 3.0
-            Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final
-            Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v3.0
+            //Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final, -3.5
 
             Items.Add("frmSetting.lblLanguageText", "Installed languages:");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
@@ -453,6 +452,13 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
             Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
             Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
+
+            Items.Add("frmSetting.lblExtensionsGroupDescription", "*Optional extensions will not be automatically pre-loaded into memory."); // 4.0
+            Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v3.0
+            Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
+            Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
+            Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
+            Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
 
             Items.Add("frmAddNewFormat._Text", "Add new image extension"); // 4.0
             Items.Add("frmAddNewFormat.lblImageExtension", "Image extension"); // 4.0
