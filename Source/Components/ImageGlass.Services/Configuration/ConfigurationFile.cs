@@ -206,7 +206,9 @@ namespace ImageGlass.Services.Configuration
             {
                 doc.Save(Filename);
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
 
             doc = null;
             root = null;
@@ -268,8 +270,17 @@ namespace ImageGlass.Services.Configuration
             if (nItem != null)
             {
                 nItem.SetAttribute("value", value.ToString());
-                doc.Save(Filename);
             }
+            else
+            {
+                nItem = (XmlElement)root.SelectNodes("//Configuration/Content")[0]; //<Content>
+                XmlElement node = doc.CreateElement("Item");
+                node.SetAttribute("key", key);
+                node.SetAttribute("value", value.ToString());
+                nItem.AppendChild(node);
+            }
+
+            doc.Save(Filename);
 
             doc = null;
             root = null;
@@ -277,7 +288,7 @@ namespace ImageGlass.Services.Configuration
             
         }
 
-
+        
 
         #region auto-generated functions
         public bool ContainsKey(string key)
@@ -312,8 +323,7 @@ namespace ImageGlass.Services.Configuration
 
         public bool Contains(KeyValuePair<string, string> item)
         {
-            string value;
-            return (_dictionary.TryGetValue(item.Key, out value) && value.Equals(item.Key));
+            return (_dictionary.TryGetValue(item.Key, out string value) && value.Equals(item.Key));
         }
 
         public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)

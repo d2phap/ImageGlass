@@ -26,6 +26,11 @@ using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.Linq;
+using System.Threading.Tasks;
+using ImageGlass.Theme;
+using System.Text;
+using Microsoft.Win32;
+using ImageGlass.Library.FileAssociations;
 
 namespace ImageGlass
 {
@@ -34,6 +39,9 @@ namespace ImageGlass
         public frmSetting()
         {
             InitializeComponent();
+
+            RenderTheme r = new RenderTheme();
+            r.ApplyTheme(lvExtension);
         }
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -161,20 +169,7 @@ namespace ImageGlass
 
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
-
-            //Save extra supported extensions
-            string extraExts = "";
-            foreach (var control in panExtraExts.Controls)
-            {
-                var chk = (CheckBox)control;
-                
-                if(chk.Checked)
-                {
-                    extraExts += chk.Tag.ToString() + ";";
-                }
-            }
-            GlobalSetting.OptionalImageFormats = extraExts;
-            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+            
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
@@ -222,11 +217,18 @@ namespace ImageGlass
             chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            
+
 
             //File Associations tab
+            lblExtensionsGroupDescription.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensionsGroupDescription"];
             lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
-            btnOpenFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.btnOpenFileAssociations"];
+            lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.lnkOpenFileAssoc"];
+            btnAddNewExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddNewExt"];
+            btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
+            btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
+            lvExtension.Groups[(int)ImageExtensionGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
+            lvExtension.Groups[(int)ImageExtensionGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
+
 
             //Language tab
             lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
@@ -282,15 +284,9 @@ namespace ImageGlass
             {
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
-
-                txtSupportedExtensionDefault.Text = GlobalSetting.DefaultImageFormats;
                 
-                foreach (var control in panExtraExts.Controls)
-                {
-                    var chk = (CheckBox)control;
-
-                    chk.Checked = GlobalSetting.OptionalImageFormats.Contains(chk.Tag.ToString());
-                }
+                // Load image formats to the list
+                LoadExtensionList();
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -362,8 +358,7 @@ namespace ImageGlass
 
             //Get value of cmbZoomOptimization
             s = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            int i = 0;
-            if (int.TryParse(s, out i))
+            if (int.TryParse(s, out int i))
             {
                 if (-1 < i && i < cmbZoomOptimization.Items.Count)
                 { }
@@ -544,8 +539,10 @@ namespace ImageGlass
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
         {
-            ColorDialog c = new ColorDialog();
-            c.AllowFullOpen = true;
+            ColorDialog c = new ColorDialog()
+            {
+                AllowFullOpen = true
+            };
 
             if (c.ShowDialog() == DialogResult.OK)
             {
@@ -585,7 +582,7 @@ namespace ImageGlass
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
             p.Start();
         }
@@ -593,7 +590,7 @@ namespace ImageGlass
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
             p.Start();
         }
@@ -601,7 +598,7 @@ namespace ImageGlass
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
+            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
             p.Start();
         }
@@ -610,8 +607,10 @@ namespace ImageGlass
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
-            dsLanguages = new List<Library.Language>();
-            dsLanguages.Add(new Library.Language());
+            dsLanguages = new List<Library.Language>
+            {
+                new Library.Language()
+            };
 
             if (!Directory.Exists(GlobalSetting.StartUpDir + "Languages\\"))
             {
@@ -677,19 +676,152 @@ namespace ImageGlass
 
 
         #region TAB FILE ASSOCIATIONS
-        private void btnOpenFileAssociations_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Load built-in extensions to the list view
+        /// </summary>
+        /// <param name="builtInImageFormats"></param>
+        private void LoadExtensionList(string builtInImageFormats)
+        {
+            var list = builtInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            GlobalSetting.DefaultImageFormats = list[0];
+            GlobalSetting.OptionalImageFormats = list[1];
+
+            LoadExtensionList();
+        }
+
+        /// <summary>
+        /// Load extensions from settings to the list view
+        /// </summary>
+        private void LoadExtensionList()
+        {
+            lvExtension.Items.Clear();
+
+            // Load Default group
+            var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem(lvExtension.Groups["Default"])
+                {
+                    Text = ext
+                };
+
+                lvExtension.Items.Add(li);
+            }
+
+            // Load Optional group
+            extList = GlobalSetting.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem(lvExtension.Groups["Optional"])
+                {
+                    Text = ext
+                };
+
+                lvExtension.Items.Add(li);
+            }
+
+            // Write suported image formats to settings -----------------------------------------
+            // Load Default Image Formats
+            GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
+            // Load Optional Image Formats
+            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+        }
+        
+
+        private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             string controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); // path to %windir%\system32\control.exe (ensures the correct control.exe)
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
 
+        private void btnResetExt_Click(object sender, EventArgs e)
+        {
+            LoadExtensionList(GlobalSetting.BuiltInImageFormats);
 
+            // Update extensions to registry
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
+            p.Start();
+        }
 
+        private void btnDeleteExt_Click(object sender, EventArgs e)
+        {
+            if (lvExtension.CheckedItems.Count == 0)
+                return;
+            
+            var selectedDefaultExts = new StringBuilder();
+            var selectedOptionalExts = new StringBuilder();
 
+            // Get checked extensions in the list then
+            // remove extensions from settings
+            foreach (ListViewItem li in lvExtension.CheckedItems)
+            {
+                if (li.Group.Name == "Default")
+                {
+                    GlobalSetting.DefaultImageFormats = GlobalSetting.DefaultImageFormats.Replace($"*{li.Text};", "");
+                }
+                else if (li.Group.Name == "Optional")
+                {
+                    GlobalSetting.OptionalImageFormats = GlobalSetting.OptionalImageFormats.Replace($"*{li.Text};", "");
+                }
+            }
+
+            // Reload the list
+            LoadExtensionList();
+
+            // Update extensions to registry
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
+            p.Start();
+
+        }
+
+        private void btnAddNewExt_Click(object sender, EventArgs e)
+        {
+            frmAddNewFormat f = new frmAddNewFormat()
+            {
+                ImageExtension = ".svg",
+                ExtensionGroup = ImageExtensionGroup.Default
+            };
+
+            do
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    // If the ext exist
+                    if (GlobalSetting.AllImageFormats.Contains(f.ImageExtension))
+                        return;
+
+                    if (f.ExtensionGroup == ImageExtensionGroup.Default)
+                    {
+                        GlobalSetting.DefaultImageFormats += f.ImageExtension;
+                    }
+                    else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
+                    {
+                        GlobalSetting.OptionalImageFormats += f.ImageExtension;
+                    }
+
+                    // Reload the list
+                    LoadExtensionList();
+
+                    // Update extensions to registry
+                    Process p = new Process();
+                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                    p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
+                    p.Start();
+                }
+            }
+            while (f.DialogResult == DialogResult.Retry);
+            
+        }
+        
 
         #endregion
 
-        
+
     }
 }

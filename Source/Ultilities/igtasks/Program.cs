@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2017 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -29,71 +47,11 @@ namespace adtasks
 
             //Command
             string topcmd = args[0].ToLower().Trim();
-
-
-            //Add menu 'Open with ImageGlass'
-            #region addext <string igPath> [string ext]
-            if (topcmd == "addext")
-            {
-                //Get executable file path
-                string exePath = args[1];
-
-                if (args.Length > 2)
-                {
-                    //Get extension
-                    string ext = args[2];
-
-                    //Apply changes
-                    Functions.AddImageGlassToContextMenu(exePath, ext);
-                }
-                else
-                {
-                    //Apply changes
-                    Functions.AddImageGlassToContextMenu(exePath);
-                }
-
-                Application.Exit();
-            }
-            #endregion
-
-            //Remove menu 'Open with ImageGlass'
-            #region removeext
-            else if (topcmd == "removeext")
-            {
-                //Apply changes
-                Functions.RemoveImageGlassToContextMenu();
-
-                Application.Exit();
-            }
-            #endregion
-
-            //Update extension for Menu
-            #region updateext <string exePath> <string exts>
-            else if (topcmd == "updateext")
-            {
-                //Remove all
-                Functions.RemoveImageGlassToContextMenu();
-
-                //Add new
-                if (args.Length > 2)
-                {
-                    //Get executable file path
-                    string exePath = args[1];
-
-                    //Get extension
-                    string ext = args[2];
-
-                    //Apply changes
-                    Functions.AddImageGlassToContextMenu(exePath, ext);
-                }
-
-                Application.Exit();
-            }
-            #endregion
+            
 
             //Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
-            else if (topcmd == "setwallpaper")
+            if (topcmd == "setwallpaper")
             {
                 //Get image's path
                 string imgPath = args[1];
@@ -127,16 +85,24 @@ namespace adtasks
             }
             #endregion
 
-            //Register file association
-            #region regassociations <string appPath> <string exts>
+            //Register file associations
+            #region regassociations <string exts>
             else if (topcmd == "regassociations")
             {
-                //get Executable file
-                string appPath = args[1];
-                //get Extension
-                string exts = args[2];
+                //get Extensions
+                string exts = args[1];
 
-                Functions.RegisterAssociation(appPath, exts);
+                Functions.SetRegistryAssociations(exts);
+
+                Application.Exit();
+            }
+            #endregion
+
+            //Delete all file associations
+            #region delassociations
+            else if (topcmd == "delassociations")
+            {
+                Functions.DeleteRegistryAssociations(true);
 
                 Application.Exit();
             }

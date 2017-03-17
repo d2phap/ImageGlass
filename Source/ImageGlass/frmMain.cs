@@ -1262,12 +1262,21 @@ namespace ImageGlass
             }
 
             //check current version for the first time running
-            configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
-            if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
-            {
-                //Load Extra extensions
-                GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
-            }
+            //configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
+            //if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
+            //{
+            //    //Load Optional Image Formats
+            //    GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+            //}
+
+            // Read suported image formats ------------------------------------------------
+            var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            //Load Default Image Formats
+            GlobalSetting.DefaultImageFormats = GlobalSetting.GetConfig("DefaultImageFormats", extGroups[0]);
+
+            //Load Optional Image Formats
+            GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", extGroups[1]);
 
             //Slideshow Interval-----------------------------------------------------------
             int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
@@ -1538,6 +1547,10 @@ namespace ImageGlass
             }            
 
             SaveConfig();
+        }
+
+        private void frmMain_Deactivate(object sender, EventArgs e)
+        {
         }
 
         private void frmMain_Activated(object sender, EventArgs e)
@@ -2999,6 +3012,7 @@ namespace ImageGlass
 
 
         #endregion
+
         
     }
 }

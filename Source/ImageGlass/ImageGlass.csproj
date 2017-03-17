@@ -153,6 +153,12 @@
     <Compile Include="frmAbout.designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAddNewFormat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddNewFormat.Designer.cs">
+      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmExtension.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +196,9 @@
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddNewFormat.resx">
+      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExtension.resx">
       <DependentUpon>frmExtension.cs</DependentUpon>

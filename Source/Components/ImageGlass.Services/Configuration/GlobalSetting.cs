@@ -26,6 +26,9 @@ using System.Windows.Forms;
 using System.Collections.Specialized;
 using System.Security;
 using System.IO;
+using System.Text;
+using ImageGlass.Library.FileAssociations;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -45,6 +48,12 @@ namespace ImageGlass.Services.Configuration
         Auto,
         SmoothPixels,
         ClearPixels
+    }
+
+    public enum ImageExtensionGroup
+    {
+        Default = 0,
+        Optional = 1
     }
 
     public class ThumbnailItemInfo
@@ -121,6 +130,7 @@ namespace ImageGlass.Services.Configuration
 
     public static class GlobalSetting
     {
+        // Private steeings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
         private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
@@ -133,14 +143,13 @@ namespace ImageGlass.Services.Configuration
         private static bool _isPortableMode = false;
         private static bool _isStartUpDirWritable = true;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-        
+        private static string _builtInImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;|*.hdr;*.exr;*.tga;*.psd;";
 
 
+        // Shared settings ----------------------------------------------------------------
         private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
-        private static string _defaultImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
-                                                     "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;";
-        private static string _optionalImageFormats = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
+        private static string _defaultImageFormats = string.Empty;
+        private static string _optionalImageFormats = string.Empty;
         private static bool _isPlaySlideShow = false;
         private static bool _isFullScreen = false;
         private static bool _isShowThumbnail = false;
@@ -249,15 +258,16 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets default supported extension string
+        /// Gets, sets default image formats
         /// </summary>
         public static string DefaultImageFormats
         {
             get { return _defaultImageFormats; }
+            set { _defaultImageFormats = value; }
         }
 
         /// <summary>
-        /// Gets, sets supported extra extensions
+        /// Gets, sets optional image formats
         /// </summary>
         public static string OptionalImageFormats
         {
@@ -362,7 +372,7 @@ namespace ImageGlass.Services.Configuration
             set
             {
                 GlobalSetting._isShowWelcome = value;
-                GlobalSetting.SetConfig("Welcome", value.ToString());
+                GlobalSetting.SetConfig("IsShowWelcome", value.ToString());
             }
         }
 
@@ -592,6 +602,11 @@ namespace ImageGlass.Services.Configuration
             set => _isStartUpDirWritable = value;
         }
 
+        /// <summary>
+        /// Gets built-in image formats for both Default and Optional formats
+        /// </summary>
+        public static string BuiltInImageFormats { get => _builtInImageFormats; }
+
 
 
 
@@ -599,6 +614,30 @@ namespace ImageGlass.Services.Configuration
 
 
         #region "Public Method"
+
+        /// <summary>
+        /// Get file extensions from registry
+        /// Ex: *.svg;*.png;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFileExtensionsFromRegistry()
+        {
+            StringBuilder exts = new StringBuilder();
+
+            RegistryHelper reg = new RegistryHelper()
+            {
+                BaseRegistryKey = Registry.LocalMachine,
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+            var extList = reg.GetValueNames();
+
+            Parallel.ForEach(extList, (ext) =>
+            {
+                exts.Append($"*{ext};");
+            });
+
+            return exts.ToString();
+        }
 
         /// <summary>
         /// Check is ImageGlass can write config file in the startup folder
