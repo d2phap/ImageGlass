@@ -142,6 +142,7 @@ namespace ImageGlass.Services.Configuration
         private static Library.Language _langPack = new Library.Language();
         private static bool _isPortableMode = false;
         private static bool _isStartUpDirWritable = true;
+        private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
         private static string _builtInImageFormats = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;*.exif;*.wmf;*.emf;*.svg;*.webp;*.tga;|*.hdr;*.exr;*.tga;*.psd;";
 
@@ -171,7 +172,6 @@ namespace ImageGlass.Services.Configuration
         
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
-        private static bool _isTempMemoryData = false;
         private static bool _isMouseNavigation = false;
         
         private static bool _isWindowAlwaysOnTop = false;
@@ -505,7 +505,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\
+        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\Temp\
         /// </summary>
         public static string TempDir
         {
@@ -657,42 +657,15 @@ namespace ImageGlass.Services.Configuration
 
             if (int.TryParse(s, out int i))
             {
-                if (-1 < i && i < 7) //<=== Number of items in array
+                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderBy)).Length) //<=== Number of items in enum
                 { }
                 else
                 {
                     i = 0;
                 }
             }
-            if (i == 1)
-            {
-                ImageOrderBy = ImageOrderBy.Length;
-            }
-            else if (i == 2)
-            {
-                ImageOrderBy = ImageOrderBy.CreationTime;
-            }
-            else if (i == 3)
-            {
-                ImageOrderBy = ImageOrderBy.LastAccessTime;
-            }
-            else if (i == 4)
-            {
-                ImageOrderBy = ImageOrderBy.LastWriteTime;
-            }
-            else if (i == 5)
-            {
-                ImageOrderBy = ImageOrderBy.Extension;
-            }
-            else if (i == 6)
-            {
-                ImageOrderBy = ImageOrderBy.Random;
-            }
-            else
-            {
-                ImageOrderBy = ImageOrderBy.Name;
-            }
-            
+
+            ImageOrderBy = (ImageOrderBy)i;
         }
 
         /// <summary>

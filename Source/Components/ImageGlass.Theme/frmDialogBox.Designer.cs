@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDialogBox));
             this.btnOK = new System.Windows.Forms.Button();
             this.txtValue = new System.Windows.Forms.TextBox();
             this.lblMessage = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -41,9 +44,9 @@
             this.btnOK.FlatAppearance.BorderSize = 0;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(206)))), ((int)(((byte)(219)))));
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnOK.Location = new System.Drawing.Point(340, 82);
+            this.btnOK.Location = new System.Drawing.Point(310, 15);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(76, 35);
+            this.btnOK.Size = new System.Drawing.Size(112, 35);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -51,19 +54,33 @@
             // 
             // txtValue
             // 
-            this.txtValue.Location = new System.Drawing.Point(17, 84);
+            this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtValue.Location = new System.Drawing.Point(17, 82);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(308, 31);
+            this.txtValue.Size = new System.Drawing.Size(405, 31);
             this.txtValue.TabIndex = 0;
             this.txtValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValue_KeyPress);
             // 
             // lblMessage
             // 
+            this.lblMessage.AutoSize = true;
             this.lblMessage.Location = new System.Drawing.Point(12, 9);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(404, 57);
+            this.lblMessage.Size = new System.Drawing.Size(23, 25);
             this.lblMessage.TabIndex = 2;
+            this.lblMessage.Text = "#";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.Controls.Add(this.btnOK);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 133);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(443, 67);
+            this.panel1.TabIndex = 8;
             // 
             // frmDialogBox
             // 
@@ -71,8 +88,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(443, 139);
-            this.Controls.Add(this.btnOK);
+            this.ClientSize = new System.Drawing.Size(443, 200);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.lblMessage);
             this.DoubleBuffered = true;
@@ -86,6 +103,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.DialogBox_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDialogBox_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,5 +115,6 @@
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Panel panel1;
     }
 }

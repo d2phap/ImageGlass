@@ -34,6 +34,7 @@ using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.Theme;
+using System.Threading.Tasks;
 
 namespace ImageGlass
 {
@@ -43,7 +44,7 @@ namespace ImageGlass
         {
             InitializeComponent();
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
-            
+
             //Check DPI Scaling ratio
             DPIScaling.OldDPI = DPIScaling.CurrentDPI;
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
@@ -145,24 +146,28 @@ namespace ImageGlass
 
             //Reset current index
             GlobalSetting.CurrentIndex = 0;
-            string initFile = "";
+            string filePath = "";
+            string dirPath = "";
 
             //Check path is file or directory?
             if (File.Exists(path))
             {
-                initFile = path;
-                path = path.Substring(0, path.LastIndexOf("\\") + 1);
+                filePath = path;
+
+                // get directory
+                dirPath = (Path.GetDirectoryName(path) + "\\").Replace("\\\\", "\\");
+                dirPath = path.Substring(0, path.LastIndexOf("\\") + 1);
             }
             else if (Directory.Exists(path))
             {
-                path = path.Replace("\\\\", "\\");
+                dirPath = (path + "\\").Replace("\\\\", "\\");
             }
 
             //Declare a new list to store filename
             GlobalSetting.ImageFilenameList = new List<string>();
 
-            //Get supported image extensions from path
-            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(path);
+            //Get supported image extensions from directory
+            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
@@ -173,7 +178,14 @@ namespace ImageGlass
             GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
             //Find the index of current image
-            GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(initFile);
+            if (filePath.Length > 0)
+            {
+                GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(filePath);
+            }
+            else
+            {
+                GlobalSetting.CurrentIndex = 0;
+            }            
 
             //Load thumnbnail
             LoadThumbnails();
@@ -183,8 +195,8 @@ namespace ImageGlass
             {
                 //Mark as Image Error
                 GlobalSetting.IsImageError = true;
-                Text = "ImageGlass - " + initFile;
-                lblInfo.Text = ImageInfo.GetFileSize(initFile);
+                Text = "ImageGlass - " + filePath;
+                lblInfo.Text = ImageInfo.GetFileSize(filePath);
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
 
@@ -238,7 +250,7 @@ namespace ImageGlass
                 {
                     Application.DoEvents();
 
-                    string extension = (Path.GetExtension(f) ?? "").ToLower(); //remove blank extension
+                    string extension = Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
                     if (extension.Length > 0 && GlobalSetting.AllImageFormats.Contains(extension))
                     {
                         return true;
@@ -411,24 +423,29 @@ namespace ImageGlass
                 //refresh image
                 mnuMainRefresh_Click(null, null);
 
-                //Unlock zoom ratio before
-                if (isKeepZoomRatio)
+                //Run in another thread
+                Parallel.Invoke(() =>
                 {
-                    //reset to default values
-                    GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
-                    GlobalSetting.ZoomLockValue = 100;
-                    LocalSetting.IsResetScrollPosition = true;
-                }
+                    //Unlock zoom ratio before
+                    if (isKeepZoomRatio)
+                    {
+                        //reset to default values
+                        GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
+                        GlobalSetting.ZoomLockValue = 100;
+                        LocalSetting.IsResetScrollPosition = true;
+                    }
 
-                //Release unused images
-                if (GlobalSetting.CurrentIndex - 2 >= 0)
-                {
-                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
-                }
-                if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
-                {
-                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
-                }
+                    //Release unused images
+                    if (GlobalSetting.CurrentIndex - 2 >= 0)
+                    {
+                        GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
+                    }
+                    if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
+                    {
+                        GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
+                    }
+                });
+                
             }
             catch
             {
@@ -1107,14 +1124,14 @@ namespace ImageGlass
         /// Apply changing theme
         /// </summary>
         private void LoadTheme()
-        { 
+        {
             string themeFile = GlobalSetting.GetConfig("Theme", "default");
 
             if (File.Exists(themeFile))
             {
                 Theme.Theme t = new Theme.Theme(themeFile);
                 string dir = (Path.GetDirectoryName(themeFile) + "\\").Replace("\\\\", "\\");
-
+                
                 // <main>
                 try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
                 catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
@@ -1301,7 +1318,7 @@ namespace ImageGlass
                 //Do not show welcome image if params exist.
                 if(Environment.GetCommandLineArgs().Count() < 2)
                 {
-                    Prepare(GlobalSetting.StartUpDir + "default.png");
+                    Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
                 }
             }
 
@@ -2374,15 +2391,12 @@ namespace ImageGlass
         /// </summary>
         private string SaveTemporaryMemoryData()
         {
-            //save temp file
-            string temp_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                        "\\ImageGlass\\Temp\\";
-            if (!Directory.Exists(temp_dir))
+            if (!Directory.Exists(GlobalSetting.TempDir))
             {
-                Directory.CreateDirectory(temp_dir);
+                Directory.CreateDirectory(GlobalSetting.TempDir);
             }
 
-            string filename = temp_dir + "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png";
+            string filename = Path.Combine(GlobalSetting.TempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
 
             picMain.Image.Save(filename, ImageFormat.Png);
 
@@ -2391,32 +2405,21 @@ namespace ImageGlass
 
         private void mnuMainPrint_Click(object sender, EventArgs e)
         {
-            string filename = "";
-
-            //save image from memory
-            if (GlobalSetting.IsTempMemoryData)
-            {
-                filename = SaveTemporaryMemoryData();
-            }
+            string temFile = "";
+            
             //image error
-            else if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
             {
                 return;
             }
             else
             {
-                filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-
-                // check if file extension is NOT supported for native print
-                // these extensions will not be printed by its associated app.
-                if (GlobalSetting.OptionalImageFormats.Contains(Path.GetExtension(filename).ToLower()))
-                {
-                    filename = SaveTemporaryMemoryData();
-                }
+                //save image to temp file
+                temFile = SaveTemporaryMemoryData();
             }
 
             Process p = new Process();
-            p.StartInfo.FileName = filename;
+            p.StartInfo.FileName = temFile;
             p.StartInfo.Verb = "print";
 
             //show error dialog
@@ -2797,31 +2800,21 @@ namespace ImageGlass
                 }
 
                 //CHECK FILE EXTENSION BEFORE UPLOADING
-                string filename = "";
+                string tempFile = "";
 
-                //save image from memory
-                if (GlobalSetting.IsTempMemoryData)
-                {
-                    filename = SaveTemporaryMemoryData();
-                }
+                
                 //image error
-                else if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+                if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
                 {
                     return;
                 }
                 else
                 {
-                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-
-                    // check if file extension is NOT supported for native print
-                    // these extensions will not be printed by its associated app.
-                    if (GlobalSetting.OptionalImageFormats.Contains(Path.GetExtension(filename).ToLower()))
-                    {
-                        filename = SaveTemporaryMemoryData();
-                    }
+                    //save image to tem file
+                    tempFile = SaveTemporaryMemoryData();
                 }
 
-                LocalSetting.FFacebook.Filename = filename;
+                LocalSetting.FFacebook.Filename = tempFile;
                 GlobalSetting.IsForcedActive = false;
                 LocalSetting.FFacebook.Show();
                 LocalSetting.FFacebook.Activate();

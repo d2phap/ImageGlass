@@ -612,17 +612,19 @@ namespace ImageGlass
                 new Library.Language()
             };
 
-            if (!Directory.Exists(GlobalSetting.StartUpDir + "Languages\\"))
+            string langPath = Path.Combine(GlobalSetting.StartUpDir, "Languages");
+
+            if (!Directory.Exists(langPath))
             {
-                Directory.CreateDirectory(GlobalSetting.StartUpDir + "Languages\\");
+                Directory.CreateDirectory(langPath);
             }
             else
             {
-                foreach (string f in Directory.GetFiles(GlobalSetting.StartUpDir + "Languages\\"))
+                foreach (string f in Directory.GetFiles(langPath))
                 {
                     if (Path.GetExtension(f).ToLower() == ".iglang")
                     {
-                        Library.Language l = new Library.Language(f);
+                        Language l = new Language(f);
                         dsLanguages.Add(l);
 
                         int iLang = cmbLanguage.Items.Add(l.LangName);
@@ -656,17 +658,7 @@ namespace ImageGlass
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 

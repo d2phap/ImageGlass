@@ -44,9 +44,8 @@ namespace igcmd
             {
                 return;
             }
-
-            src = (src + "\\").Replace("\\\\", "\\");
-            Theme th = new Theme(src + "config.xml");
+            
+            Theme th = new Theme(Path.Combine(src, "config.xml"));
 
             //if file exist, rename & backup
             if (File.Exists(des))
@@ -88,16 +87,16 @@ namespace igcmd
         /// </summary>
         public static void AutoUpdate()
         {
-            Update up = new Update(new Uri("http://www.imageglass.org/checkforupdate"),
-                GlobalSetting.StartUpDir + "update.xml");
+            string updateXML = Path.Combine(GlobalSetting.StartUpDir, "update.xml");
+            Update up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), updateXML);
 
-            if (File.Exists(GlobalSetting.StartUpDir + "update.xml"))
+            if (File.Exists(updateXML))
             {
-                File.Delete(GlobalSetting.StartUpDir + "update.xml");
+                File.Delete(updateXML);
             }
-            
+
             if (!up.IsError &&
-                up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe") &&
+                up.CheckForUpdate(Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")) &&
                 up.Info.VersionType.ToLower() == "stable")
             {
                 frmCheckForUpdate f = new frmCheckForUpdate();

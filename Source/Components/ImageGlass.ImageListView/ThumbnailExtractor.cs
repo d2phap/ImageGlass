@@ -234,13 +234,13 @@ namespace ImageGlass.ImageListView
 
             Image source = null;
             Image thumb = null;
-            filename = filename.ToLower();            
+            var ext = Path.GetExtension(filename).ToLower();
 
             try
             {
                 var settings = new MagickReadSettings();
 
-                if (filename.EndsWith(".svg"))
+                if (ext.CompareTo(".svg") == 0)
                 {
                     settings.BackgroundColor = MagickColors.Transparent;
                 }

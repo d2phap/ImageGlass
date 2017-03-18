@@ -17,25 +17,33 @@ namespace ImageGlass.Core
         /// <returns></returns>
         public static Bitmap Load(string path, int @width = 0, int @height = 0)
         {
-            path = path.ToLower();
+            var ext = Path.GetExtension(path).ToLower();
+
             Bitmap bmp = null;
 
-            if (path.EndsWith(".gif"))
+            switch (ext)
             {
-                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                {
-                    bmp = new Bitmap(path, true);
-                }
+                case ".gif":
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        bmp = new Bitmap(path, true);
+                    }
+                    break;
+
+                case ".ico":
+                    bmp = ReadIconFile(path);
+                    break;
+
+                default:
+                    GetBitmapFromFile();
+                    break;
             }
-            else if (path.EndsWith(".ico"))
-            {
-                bmp = ReadIconFile(path);
-            }
-            else
+            
+            void GetBitmapFromFile()
             {
                 var settings = new MagickReadSettings();
 
-                if (path.EndsWith(".svg"))
+                if (ext.CompareTo(".svg") == 0)
                 {
                     settings.BackgroundColor = MagickColors.Transparent;
                 }
@@ -76,7 +84,7 @@ namespace ImageGlass.Core
                     bmp = magicImg.ToBitmap();
                 }
             }
-
+            
             return bmp;
         }
 
