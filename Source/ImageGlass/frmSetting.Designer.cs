@@ -48,10 +48,11 @@
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
-            this.lblExtensionsGroupDescription = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.btnResetExt = new System.Windows.Forms.Button();
-            this.btnDeleteExt = new System.Windows.Forms.Button();
             this.btnAddNewExt = new System.Windows.Forms.Button();
+            this.btnDeleteExt = new System.Windows.Forms.Button();
+            this.lblExtensionsGroupDescription = new System.Windows.Forms.Label();
             this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
             this.lvExtension = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -85,10 +86,11 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnRegisterExt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
@@ -97,7 +99,6 @@
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -332,15 +333,18 @@
             this.tabFileAssociation.Text = "file association";
             this.tabFileAssociation.UseVisualStyleBackColor = true;
             // 
-            // lblExtensionsGroupDescription
+            // panel2
             // 
-            this.lblExtensionsGroupDescription.AutoSize = true;
-            this.lblExtensionsGroupDescription.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtensionsGroupDescription.Location = new System.Drawing.Point(20, 32);
-            this.lblExtensionsGroupDescription.Name = "lblExtensionsGroupDescription";
-            this.lblExtensionsGroupDescription.Size = new System.Drawing.Size(583, 25);
-            this.lblExtensionsGroupDescription.TabIndex = 34;
-            this.lblExtensionsGroupDescription.Text = "*Optional extensions will not be automatically pre-loaded into memory .";
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.panel2.Controls.Add(this.btnRegisterExt);
+            this.panel2.Controls.Add(this.btnResetExt);
+            this.panel2.Controls.Add(this.btnAddNewExt);
+            this.panel2.Controls.Add(this.btnDeleteExt);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(4, 604);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(699, 74);
+            this.panel2.TabIndex = 35;
             // 
             // btnResetExt
             // 
@@ -354,6 +358,18 @@
             this.btnResetExt.UseVisualStyleBackColor = true;
             this.btnResetExt.Click += new System.EventHandler(this.btnResetExt_Click);
             // 
+            // btnAddNewExt
+            // 
+            this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddNewExt.AutoSize = true;
+            this.btnAddNewExt.Location = new System.Drawing.Point(21, 15);
+            this.btnAddNewExt.Name = "btnAddNewExt";
+            this.btnAddNewExt.Size = new System.Drawing.Size(75, 35);
+            this.btnAddNewExt.TabIndex = 31;
+            this.btnAddNewExt.Text = "Add";
+            this.btnAddNewExt.UseVisualStyleBackColor = true;
+            this.btnAddNewExt.Click += new System.EventHandler(this.btnAddNewExt_Click);
+            // 
             // btnDeleteExt
             // 
             this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -366,17 +382,15 @@
             this.btnDeleteExt.UseVisualStyleBackColor = true;
             this.btnDeleteExt.Click += new System.EventHandler(this.btnDeleteExt_Click);
             // 
-            // btnAddNewExt
+            // lblExtensionsGroupDescription
             // 
-            this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddNewExt.AutoSize = true;
-            this.btnAddNewExt.Location = new System.Drawing.Point(21, 15);
-            this.btnAddNewExt.Name = "btnAddNewExt";
-            this.btnAddNewExt.Size = new System.Drawing.Size(75, 35);
-            this.btnAddNewExt.TabIndex = 31;
-            this.btnAddNewExt.Text = "Add";
-            this.btnAddNewExt.UseVisualStyleBackColor = true;
-            this.btnAddNewExt.Click += new System.EventHandler(this.btnAddNewExt_Click);
+            this.lblExtensionsGroupDescription.AutoSize = true;
+            this.lblExtensionsGroupDescription.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExtensionsGroupDescription.Location = new System.Drawing.Point(20, 32);
+            this.lblExtensionsGroupDescription.Name = "lblExtensionsGroupDescription";
+            this.lblExtensionsGroupDescription.Size = new System.Drawing.Size(583, 25);
+            this.lblExtensionsGroupDescription.TabIndex = 34;
+            this.lblExtensionsGroupDescription.Text = "*Optional extensions will not be automatically pre-loaded into memory .";
             // 
             // lnkOpenFileAssoc
             // 
@@ -827,17 +841,17 @@
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
             // 
-            // panel2
+            // btnRegisterExt
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
-            this.panel2.Controls.Add(this.btnResetExt);
-            this.panel2.Controls.Add(this.btnAddNewExt);
-            this.panel2.Controls.Add(this.btnDeleteExt);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(4, 604);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(699, 74);
-            this.panel2.TabIndex = 35;
+            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRegisterExt.AutoSize = true;
+            this.btnRegisterExt.Location = new System.Drawing.Point(183, 15);
+            this.btnRegisterExt.Name = "btnRegisterExt";
+            this.btnRegisterExt.Size = new System.Drawing.Size(188, 35);
+            this.btnRegisterExt.TabIndex = 34;
+            this.btnRegisterExt.Text = "Register extensions";
+            this.btnRegisterExt.UseVisualStyleBackColor = true;
+            this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
             // 
             // frmSetting
             // 
@@ -863,6 +877,8 @@
             this.tabLanguage.PerformLayout();
             this.tabFileAssociation.ResumeLayout(false);
             this.tabFileAssociation.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
@@ -872,8 +888,6 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -934,5 +948,6 @@
         private System.Windows.Forms.Button btnAddNewExt;
         private System.Windows.Forms.Label lblExtensionsGroupDescription;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnRegisterExt;
     }
 }

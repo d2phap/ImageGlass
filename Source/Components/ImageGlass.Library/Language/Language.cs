@@ -457,6 +457,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v3.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
+            Items.Add("frmSetting.btnRegisterExt", "Register extensions"); // 4.0
             Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
 

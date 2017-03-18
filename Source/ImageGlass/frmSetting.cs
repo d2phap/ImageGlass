@@ -225,6 +225,7 @@ namespace ImageGlass
             lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.lnkOpenFileAssoc"];
             btnAddNewExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddNewExt"];
             btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
+            btnRegisterExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnRegisterExt"];
             btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
             lvExtension.Groups[(int)ImageExtensionGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
             lvExtension.Groups[(int)ImageExtensionGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
@@ -720,6 +721,28 @@ namespace ImageGlass
             GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
         }
         
+        /// <summary>
+        /// Register file associations
+        /// </summary>
+        /// <param name="extensions">Extensions to be registered, ex: *.png;*.bmp;</param>
+        private void RegisterFileAssociations(string extensions, bool @isBuiltinExtension = false)
+        {
+            if (isBuiltinExtension)
+            {
+                LoadExtensionList(extensions);
+            }
+            else
+            {
+                LoadExtensionList();
+            }
+            
+
+            // Update extensions to registry
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {extensions}";
+            p.Start();
+        }
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -730,13 +753,7 @@ namespace ImageGlass
 
         private void btnResetExt_Click(object sender, EventArgs e)
         {
-            LoadExtensionList(GlobalSetting.BuiltInImageFormats);
-
-            // Update extensions to registry
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
-            p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
-            p.Start();
+            RegisterFileAssociations(GlobalSetting.BuiltInImageFormats, true);
         }
 
         private void btnDeleteExt_Click(object sender, EventArgs e)
@@ -761,15 +778,7 @@ namespace ImageGlass
                 }
             }
 
-            // Reload the list
-            LoadExtensionList();
-
-            // Update extensions to registry
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
-            p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
-            p.Start();
-
+            RegisterFileAssociations(GlobalSetting.AllImageFormats);
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -797,20 +806,17 @@ namespace ImageGlass
                         GlobalSetting.OptionalImageFormats += f.ImageExtension;
                     }
 
-                    // Reload the list
-                    LoadExtensionList();
-
-                    // Update extensions to registry
-                    Process p = new Process();
-                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
-                    p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
-                    p.Start();
+                    RegisterFileAssociations(GlobalSetting.AllImageFormats);
                 }
             }
             while (f.DialogResult == DialogResult.Retry);
             
         }
-        
+
+        private void btnRegisterExt_Click(object sender, EventArgs e)
+        {
+            RegisterFileAssociations(GlobalSetting.AllImageFormats);
+        }
 
         #endregion
 
