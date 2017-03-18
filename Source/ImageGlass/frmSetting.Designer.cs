@@ -49,6 +49,7 @@
             this.lblLanguageText = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnRegisterExt = new System.Windows.Forms.Button();
             this.btnResetExt = new System.Windows.Forms.Button();
             this.btnAddNewExt = new System.Windows.Forms.Button();
             this.btnDeleteExt = new System.Windows.Forms.Button();
@@ -86,7 +87,6 @@
             this.tab1 = new System.Windows.Forms.TabControl();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.btnRegisterExt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -224,7 +224,7 @@
             // lnkInstallLanguage
             // 
             this.lnkInstallLanguage.AutoSize = true;
-            this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkInstallLanguage.Location = new System.Drawing.Point(16, 190);
             this.lnkInstallLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -238,7 +238,7 @@
             // lnkRefresh
             // 
             this.lnkRefresh.AutoSize = true;
-            this.lnkRefresh.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkRefresh.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkRefresh.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkRefresh.Location = new System.Drawing.Point(296, 62);
             this.lnkRefresh.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -252,7 +252,7 @@
             // lnkEdit
             // 
             this.lnkEdit.AutoSize = true;
-            this.lnkEdit.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkEdit.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEdit.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkEdit.Location = new System.Drawing.Point(16, 250);
             this.lnkEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -266,7 +266,7 @@
             // lnkCreateNew
             // 
             this.lnkCreateNew.AutoSize = true;
-            this.lnkCreateNew.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkCreateNew.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCreateNew.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkCreateNew.Location = new System.Drawing.Point(16, 220);
             this.lnkCreateNew.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -280,7 +280,7 @@
             // lnkGetMoreLanguage
             // 
             this.lnkGetMoreLanguage.AutoSize = true;
-            this.lnkGetMoreLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnkGetMoreLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkGetMoreLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkGetMoreLanguage.Location = new System.Drawing.Point(16, 280);
             this.lnkGetMoreLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -346,6 +346,18 @@
             this.panel2.Size = new System.Drawing.Size(699, 74);
             this.panel2.TabIndex = 35;
             // 
+            // btnRegisterExt
+            // 
+            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRegisterExt.AutoSize = true;
+            this.btnRegisterExt.Location = new System.Drawing.Point(183, 15);
+            this.btnRegisterExt.Name = "btnRegisterExt";
+            this.btnRegisterExt.Size = new System.Drawing.Size(188, 35);
+            this.btnRegisterExt.TabIndex = 34;
+            this.btnRegisterExt.Text = "Register extensions";
+            this.btnRegisterExt.UseVisualStyleBackColor = true;
+            this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
+            // 
             // btnResetExt
             // 
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -397,6 +409,7 @@
             this.lnkOpenFileAssoc.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkOpenFileAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkOpenFileAssoc.AutoSize = true;
+            this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkOpenFileAssoc.Location = new System.Drawing.Point(503, 67);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
@@ -840,18 +853,6 @@
             this.sp0.SplitterDistance = 234;
             this.sp0.TabIndex = 17;
             this.sp0.TabStop = false;
-            // 
-            // btnRegisterExt
-            // 
-            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(183, 15);
-            this.btnRegisterExt.Name = "btnRegisterExt";
-            this.btnRegisterExt.Size = new System.Drawing.Size(188, 35);
-            this.btnRegisterExt.TabIndex = 34;
-            this.btnRegisterExt.Text = "Register extensions";
-            this.btnRegisterExt.UseVisualStyleBackColor = true;
-            this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
             // 
             // frmSetting
             // 
