@@ -190,33 +190,49 @@ namespace ImageGlass
         private void InitLanguagePack()
         {
             RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
-
             Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
+
             lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
+            lblImage.Text = GlobalSetting.LangPack.Items["frmSetting.lblImage"];
             lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];
             lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
 
+
             //General tab
-            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
-            chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
-            chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            lblHeadStartup.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadStartup"];//
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
             chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
-            chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
-            chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
-            chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
-            chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
-            chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
-            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
 
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+            lblHeadPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadPortableMode"];//
+            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
+
+            lblHeadOthers.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadOthers"];//
+            chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
+            chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
+            chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
+            lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
+
+
+            //Image tab
+            lblHeadImageLoading.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageLoading"];//
+            chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
+            chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
+            lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
+
+            lblHeadZooming.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadZooming"];//
+            chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
+            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
+
+            lblHeadThumbnailBar.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadThumbnailBar"];//
+            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
             lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
             lblGeneral_ThumbnailSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ThumbnailSize"];
-            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
-            chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
-            lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
-            lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
+
+            lblHeadSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadSlideshow"];//
+            chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
 
             //File Associations tab
@@ -254,6 +270,10 @@ namespace ImageGlass
             {
                 tab1.SelectedTab = tabGeneral;
             }
+            else if (lbl.Name == "lblImage")
+            {
+                tab1.SelectedTab = tabImage;
+            }
             else if (lbl.Name == "lblFileAssociations")
             {
                 tab1.SelectedTab = tabFileAssociation;
@@ -267,10 +287,12 @@ namespace ImageGlass
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblGeneral.Tag = 0;
+            lblImage.Tag = 0;
             lblFileAssociations.Tag = 0;
             lblLanguage.Tag = 0;
 
             lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
+            lblImage.BackColor = M_COLOR_MENU_NORMAL;
             lblFileAssociations.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
 
@@ -280,6 +302,13 @@ namespace ImageGlass
                 lblGeneral.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabGeneralConfig();
+            }
+            else if (tab1.SelectedTab == tabImage)
+            {
+                lblImage.Tag = 1;
+                lblImage.BackColor = M_COLOR_MENU_ACTIVE;
+
+                //TODO
             }
             else if (tab1.SelectedTab == tabFileAssociation)
             {
@@ -818,8 +847,7 @@ namespace ImageGlass
             RegisterFileAssociations(GlobalSetting.AllImageFormats);
         }
 
+
         #endregion
-
-
     }
 }
