@@ -59,20 +59,24 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.lblHeadOthers = new System.Windows.Forms.Label();
+            this.lblHeadPortableMode = new System.Windows.Forms.Label();
+            this.lblHeadStartup = new System.Windows.Forms.Label();
             this.chkPortableMode = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chkConfirmationDelete = new System.Windows.Forms.CheckBox();
             this.chkAllowMultiInstances = new System.Windows.Forms.CheckBox();
             this.chkESCToQuit = new System.Windows.Forms.CheckBox();
-            this.chkHideToolBar = new System.Windows.Forms.CheckBox();
+            this.chkShowToolBar = new System.Windows.Forms.CheckBox();
             this.lblBackGroundColor = new System.Windows.Forms.Label();
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
-            this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
-            this.sp0 = new System.Windows.Forms.SplitContainer();
-            this.lblImage = new System.Windows.Forms.Label();
+            this.lblHeadZooming = new System.Windows.Forms.Label();
+            this.lblHeadSlideshow = new System.Windows.Forms.Label();
+            this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
+            this.lblHeadImageLoading = new System.Windows.Forms.Label();
             this.chkLoopViewer = new System.Windows.Forms.CheckBox();
             this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
@@ -89,13 +93,9 @@
             this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
-            this.lblHeadImageLoading = new System.Windows.Forms.Label();
-            this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
-            this.lblHeadSlideshow = new System.Windows.Forms.Label();
-            this.lblHeadZooming = new System.Windows.Forms.Label();
-            this.lblHeadStartup = new System.Windows.Forms.Label();
-            this.lblHeadPortableMode = new System.Windows.Forms.Label();
-            this.lblHeadOthers = new System.Windows.Forms.Label();
+            this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
+            this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.lblImage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -103,12 +103,12 @@
             this.tabGeneral.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tabImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -191,7 +191,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(46, 454);
+            this.picBackgroundColor.Location = new System.Drawing.Point(46, 465);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -481,7 +481,7 @@
             this.tabGeneral.Controls.Add(this.chkConfirmationDelete);
             this.tabGeneral.Controls.Add(this.chkAllowMultiInstances);
             this.tabGeneral.Controls.Add(this.chkESCToQuit);
-            this.tabGeneral.Controls.Add(this.chkHideToolBar);
+            this.tabGeneral.Controls.Add(this.chkShowToolBar);
             this.tabGeneral.Controls.Add(this.picBackgroundColor);
             this.tabGeneral.Controls.Add(this.lblBackGroundColor);
             this.tabGeneral.Controls.Add(this.chkWelcomePicture);
@@ -494,10 +494,40 @@
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // lblHeadOthers
+            // 
+            this.lblHeadOthers.AutoSize = true;
+            this.lblHeadOthers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadOthers.Location = new System.Drawing.Point(22, 263);
+            this.lblHeadOthers.Name = "lblHeadOthers";
+            this.lblHeadOthers.Size = new System.Drawing.Size(69, 25);
+            this.lblHeadOthers.TabIndex = 46;
+            this.lblHeadOthers.Text = "Others";
+            // 
+            // lblHeadPortableMode
+            // 
+            this.lblHeadPortableMode.AutoSize = true;
+            this.lblHeadPortableMode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadPortableMode.Location = new System.Drawing.Point(22, 163);
+            this.lblHeadPortableMode.Name = "lblHeadPortableMode";
+            this.lblHeadPortableMode.Size = new System.Drawing.Size(137, 25);
+            this.lblHeadPortableMode.TabIndex = 45;
+            this.lblHeadPortableMode.Text = "Portable mode";
+            // 
+            // lblHeadStartup
+            // 
+            this.lblHeadStartup.AutoSize = true;
+            this.lblHeadStartup.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadStartup.Location = new System.Drawing.Point(22, 20);
+            this.lblHeadStartup.Name = "lblHeadStartup";
+            this.lblHeadStartup.Size = new System.Drawing.Size(81, 25);
+            this.lblHeadStartup.TabIndex = 44;
+            this.lblHeadStartup.Text = "Start up";
+            // 
             // chkPortableMode
             // 
             this.chkPortableMode.AutoSize = true;
-            this.chkPortableMode.Location = new System.Drawing.Point(45, 218);
+            this.chkPortableMode.Location = new System.Drawing.Point(45, 196);
             this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
             this.chkPortableMode.Name = "chkPortableMode";
             this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
@@ -508,7 +538,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(44, 537);
+            this.panel1.Location = new System.Drawing.Point(44, 548);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -517,7 +547,7 @@
             // chkConfirmationDelete
             // 
             this.chkConfirmationDelete.AutoSize = true;
-            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 384);
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 395);
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
@@ -529,7 +559,7 @@
             // chkAllowMultiInstances
             // 
             this.chkAllowMultiInstances.AutoSize = true;
-            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 119);
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 329);
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
@@ -541,7 +571,7 @@
             // chkESCToQuit
             // 
             this.chkESCToQuit.AutoSize = true;
-            this.chkESCToQuit.Location = new System.Drawing.Point(45, 351);
+            this.chkESCToQuit.Location = new System.Drawing.Point(45, 362);
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
@@ -550,22 +580,22 @@
             this.chkESCToQuit.UseVisualStyleBackColor = true;
             this.chkESCToQuit.CheckedChanged += new System.EventHandler(this.chkESCToQuit_CheckedChanged);
             // 
-            // chkHideToolBar
+            // chkShowToolBar
             // 
-            this.chkHideToolBar.AutoSize = true;
-            this.chkHideToolBar.Location = new System.Drawing.Point(45, 86);
-            this.chkHideToolBar.Margin = new System.Windows.Forms.Padding(2);
-            this.chkHideToolBar.Name = "chkHideToolBar";
-            this.chkHideToolBar.Size = new System.Drawing.Size(276, 29);
-            this.chkHideToolBar.TabIndex = 7;
-            this.chkHideToolBar.Text = "Hide toolbar when starting up";
-            this.chkHideToolBar.UseVisualStyleBackColor = true;
-            this.chkHideToolBar.CheckedChanged += new System.EventHandler(this.chkHideToolBar_CheckedChanged);
+            this.chkShowToolBar.AutoSize = true;
+            this.chkShowToolBar.Location = new System.Drawing.Point(45, 86);
+            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowToolBar.Name = "chkShowToolBar";
+            this.chkShowToolBar.Size = new System.Drawing.Size(283, 29);
+            this.chkShowToolBar.TabIndex = 7;
+            this.chkShowToolBar.Text = "Show toolbar when starting up";
+            this.chkShowToolBar.UseVisualStyleBackColor = true;
+            this.chkShowToolBar.CheckedChanged += new System.EventHandler(this.chkShowToolBar_CheckedChanged);
             // 
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 427);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 438);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -587,7 +617,7 @@
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 318);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 296);
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
@@ -644,59 +674,45 @@
             this.tabImage.Text = "Image";
             this.tabImage.UseVisualStyleBackColor = true;
             // 
-            // imglOpenWith
+            // lblHeadZooming
             // 
-            this.imglOpenWith.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imglOpenWith.ImageSize = new System.Drawing.Size(16, 16);
-            this.imglOpenWith.TransparentColor = System.Drawing.Color.Transparent;
+            this.lblHeadZooming.AutoSize = true;
+            this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadZooming.Location = new System.Drawing.Point(22, 272);
+            this.lblHeadZooming.Name = "lblHeadZooming";
+            this.lblHeadZooming.Size = new System.Drawing.Size(88, 25);
+            this.lblHeadZooming.TabIndex = 43;
+            this.lblHeadZooming.Text = "Zooming";
             // 
-            // sp0
+            // lblHeadSlideshow
             // 
-            this.sp0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.sp0.Location = new System.Drawing.Point(0, 0);
-            this.sp0.Margin = new System.Windows.Forms.Padding(2, 2, 14, 2);
-            this.sp0.Name = "sp0";
+            this.lblHeadSlideshow.AutoSize = true;
+            this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 739);
+            this.lblHeadSlideshow.Name = "lblHeadSlideshow";
+            this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
+            this.lblHeadSlideshow.TabIndex = 42;
+            this.lblHeadSlideshow.Text = "Slideshow";
             // 
-            // sp0.Panel1
+            // lblHeadThumbnailBar
             // 
-            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.sp0.Panel1.Controls.Add(this.lblImage);
-            this.sp0.Panel1.Controls.Add(this.lblLanguage);
-            this.sp0.Panel1.Controls.Add(this.lblGeneral);
-            this.sp0.Panel1.Controls.Add(this.lblFileAssociations);
+            this.lblHeadThumbnailBar.AutoSize = true;
+            this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 464);
+            this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
+            this.lblHeadThumbnailBar.Size = new System.Drawing.Size(136, 25);
+            this.lblHeadThumbnailBar.TabIndex = 41;
+            this.lblHeadThumbnailBar.Text = "Thumbnail bar";
             // 
-            // sp0.Panel2
+            // lblHeadImageLoading
             // 
-            this.sp0.Panel2.Controls.Add(this.tab1);
-            this.sp0.Size = new System.Drawing.Size(938, 674);
-            this.sp0.SplitterDistance = 234;
-            this.sp0.TabIndex = 17;
-            this.sp0.TabStop = false;
-            // 
-            // lblImage
-            // 
-            this.lblImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblImage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblImage.ForeColor = System.Drawing.Color.Black;
-            this.lblImage.Location = new System.Drawing.Point(0, 50);
-            this.lblImage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblImage.Name = "lblImage";
-            this.lblImage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblImage.Size = new System.Drawing.Size(234, 50);
-            this.lblImage.TabIndex = 4;
-            this.lblImage.Tag = "0";
-            this.lblImage.Text = "Image";
-            this.lblImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblImage.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblImage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            this.lblHeadImageLoading.AutoSize = true;
+            this.lblHeadImageLoading.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadImageLoading.Location = new System.Drawing.Point(22, 20);
+            this.lblHeadImageLoading.Name = "lblHeadImageLoading";
+            this.lblHeadImageLoading.Size = new System.Drawing.Size(134, 25);
+            this.lblHeadImageLoading.TabIndex = 40;
+            this.lblHeadImageLoading.Text = "Image loading";
             // 
             // chkLoopViewer
             // 
@@ -826,7 +842,7 @@
             this.numMaxThumbSize.TabIndex = 30;
             this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numMaxThumbSize.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -907,75 +923,59 @@
             this.chkFindChildFolder.UseVisualStyleBackColor = true;
             this.chkFindChildFolder.CheckedChanged += new System.EventHandler(this.chkFindChildFolder_CheckedChanged);
             // 
-            // lblHeadImageLoading
+            // imglOpenWith
             // 
-            this.lblHeadImageLoading.AutoSize = true;
-            this.lblHeadImageLoading.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageLoading.Location = new System.Drawing.Point(22, 20);
-            this.lblHeadImageLoading.Name = "lblHeadImageLoading";
-            this.lblHeadImageLoading.Size = new System.Drawing.Size(134, 25);
-            this.lblHeadImageLoading.TabIndex = 40;
-            this.lblHeadImageLoading.Text = "Image loading";
+            this.imglOpenWith.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imglOpenWith.ImageSize = new System.Drawing.Size(16, 16);
+            this.imglOpenWith.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // lblHeadThumbnailBar
+            // sp0
             // 
-            this.lblHeadThumbnailBar.AutoSize = true;
-            this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 464);
-            this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
-            this.lblHeadThumbnailBar.Size = new System.Drawing.Size(136, 25);
-            this.lblHeadThumbnailBar.TabIndex = 41;
-            this.lblHeadThumbnailBar.Text = "Thumbnail bar";
+            this.sp0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sp0.Location = new System.Drawing.Point(0, 0);
+            this.sp0.Margin = new System.Windows.Forms.Padding(2, 2, 14, 2);
+            this.sp0.Name = "sp0";
             // 
-            // lblHeadSlideshow
+            // sp0.Panel1
             // 
-            this.lblHeadSlideshow.AutoSize = true;
-            this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 739);
-            this.lblHeadSlideshow.Name = "lblHeadSlideshow";
-            this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
-            this.lblHeadSlideshow.TabIndex = 42;
-            this.lblHeadSlideshow.Text = "Slideshow";
+            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.sp0.Panel1.Controls.Add(this.lblImage);
+            this.sp0.Panel1.Controls.Add(this.lblLanguage);
+            this.sp0.Panel1.Controls.Add(this.lblGeneral);
+            this.sp0.Panel1.Controls.Add(this.lblFileAssociations);
             // 
-            // lblHeadZooming
+            // sp0.Panel2
             // 
-            this.lblHeadZooming.AutoSize = true;
-            this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(22, 272);
-            this.lblHeadZooming.Name = "lblHeadZooming";
-            this.lblHeadZooming.Size = new System.Drawing.Size(88, 25);
-            this.lblHeadZooming.TabIndex = 43;
-            this.lblHeadZooming.Text = "Zooming";
+            this.sp0.Panel2.Controls.Add(this.tab1);
+            this.sp0.Size = new System.Drawing.Size(938, 674);
+            this.sp0.SplitterDistance = 234;
+            this.sp0.TabIndex = 17;
+            this.sp0.TabStop = false;
             // 
-            // lblHeadStartup
+            // lblImage
             // 
-            this.lblHeadStartup.AutoSize = true;
-            this.lblHeadStartup.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadStartup.Location = new System.Drawing.Point(22, 20);
-            this.lblHeadStartup.Name = "lblHeadStartup";
-            this.lblHeadStartup.Size = new System.Drawing.Size(81, 25);
-            this.lblHeadStartup.TabIndex = 44;
-            this.lblHeadStartup.Text = "Start up";
-            // 
-            // lblHeadPortableMode
-            // 
-            this.lblHeadPortableMode.AutoSize = true;
-            this.lblHeadPortableMode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadPortableMode.Location = new System.Drawing.Point(22, 185);
-            this.lblHeadPortableMode.Name = "lblHeadPortableMode";
-            this.lblHeadPortableMode.Size = new System.Drawing.Size(137, 25);
-            this.lblHeadPortableMode.TabIndex = 45;
-            this.lblHeadPortableMode.Text = "Portable mode";
-            // 
-            // lblHeadOthers
-            // 
-            this.lblHeadOthers.AutoSize = true;
-            this.lblHeadOthers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadOthers.Location = new System.Drawing.Point(22, 285);
-            this.lblHeadOthers.Name = "lblHeadOthers";
-            this.lblHeadOthers.Size = new System.Drawing.Size(69, 25);
-            this.lblHeadOthers.TabIndex = 46;
-            this.lblHeadOthers.Text = "Others";
+            this.lblImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblImage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblImage.ForeColor = System.Drawing.Color.Black;
+            this.lblImage.Location = new System.Drawing.Point(0, 50);
+            this.lblImage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblImage.Name = "lblImage";
+            this.lblImage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblImage.Size = new System.Drawing.Size(234, 50);
+            this.lblImage.TabIndex = 4;
+            this.lblImage.Tag = "0";
+            this.lblImage.Text = "Image";
+            this.lblImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblImage.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblImage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // frmSetting
             // 
@@ -1008,12 +1008,12 @@
             this.tab1.ResumeLayout(false);
             this.tabImage.ResumeLayout(false);
             this.tabImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.sp0.Panel1.ResumeLayout(false);
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1034,7 +1034,7 @@
         private System.Windows.Forms.Label lblLanguageText;
         private System.Windows.Forms.TabPage tabFileAssociation;
         private System.Windows.Forms.TabPage tabGeneral;
-        private System.Windows.Forms.CheckBox chkHideToolBar;
+        private System.Windows.Forms.CheckBox chkShowToolBar;
         private System.Windows.Forms.PictureBox picBackgroundColor;
         private System.Windows.Forms.Label lblBackGroundColor;
         private System.Windows.Forms.CheckBox chkWelcomePicture;

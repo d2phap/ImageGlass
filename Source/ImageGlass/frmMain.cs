@@ -63,7 +63,7 @@ namespace ImageGlass
         private bool _isZoomed = false;
 
         //determine if toolbar is shown
-        private bool _isShownToolbar = true;
+        private bool _isShowToolbar = true;
 
         private bool _isWindowsKeyPressed = false;
 
@@ -260,7 +260,7 @@ namespace ImageGlass
                 }));
 
             //Sort image file
-            if (GlobalSetting.ImageOrderBy == ImageOrderBy.Name)
+            if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = dsFile.ToArray();
                 Array.Sort(arr, new WindowsNaturalSort());
@@ -268,32 +268,32 @@ namespace ImageGlass
 
                 //list.AddRange(FileLogicalComparer.Sort(dsFile.ToArray()));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Length)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Length)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).Length));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.CreationTime)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.CreationTime)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).CreationTimeUtc));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Extension)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Extension)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).Extension));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastAccessTime)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).LastAccessTime));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.LastWriteTime)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => new FileInfo(f).LastWriteTime));
             }
-            else if (GlobalSetting.ImageOrderBy == ImageOrderBy.Random)
+            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Random)
             {
                 list.AddRange(dsFile
                     .OrderBy(f => Guid.NewGuid()));
@@ -1298,7 +1298,8 @@ namespace ImageGlass
             //Slideshow Interval-----------------------------------------------------------
             int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
             if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds
-            timSlideShow.Interval = 1000 * i;
+            GlobalSetting.SlideShowInterval = i;
+            timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
 
             //Show checked bakcground-------------------------------------------------------
             GlobalSetting.IsShowCheckedBackground = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
@@ -1310,10 +1311,7 @@ namespace ImageGlass
 
             //Get welcome screen------------------------------------------------------------
             GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
-            
-            //Load default image------------------------------------------------------------
-            string y = GlobalSetting.GetConfig("IsShowWelcome", "True");
-            if (y.ToLower() == "true")
+            if (GlobalSetting.IsShowWelcome)
             {
                 //Do not show welcome image if params exist.
                 if(Environment.GetCommandLineArgs().Count() < 2)
@@ -1354,18 +1352,29 @@ namespace ImageGlass
 
             //Zoom optimization method-------------------------------------------------------
             string z = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            if (z == "1")
+            if (int.TryParse(z, out int zoomValue))
             {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
+                if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationValue)).Length)
+                { }
+                else
+                {
+                    zoomValue = 0;
+                }
             }
-            else if (z == "2")
+            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
+
+            //Image loading order -----------------------------------------------------------
+            z = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
+            if (int.TryParse(z, out int orderValue))
             {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
+                if (-1 < orderValue && orderValue < Enum.GetNames(typeof(ImageOrderBy)).Length)
+                { }
+                else
+                {
+                    orderValue = 0;
+                }
             }
-            else //auto
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
-            }
+            GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
 
             //Load theme--------------------------------------------------------------------
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
@@ -1583,6 +1592,9 @@ namespace ImageGlass
 
                 //Update language pack------------------
                 RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+
+                //Update slideshow interval value of timer
+                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
 
                 //Prevent zooming by scrolling mouse
                 _isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
@@ -2277,7 +2289,7 @@ namespace ImageGlass
                 SaveConfig();
 
                 //save last state of toolbar
-                _isShownToolbar = GlobalSetting.IsShowToolBar;
+                _isShowToolbar = GlobalSetting.IsShowToolBar;
 
                 FormBorderStyle = FormBorderStyle.None;
                 WindowState = FormWindowState.Normal;
@@ -2297,12 +2309,12 @@ namespace ImageGlass
             else
             {
                 //restore last state of toolbar
-                GlobalSetting.IsShowToolBar = _isShownToolbar;
+                GlobalSetting.IsShowToolBar = _isShowToolbar;
 
                 FormBorderStyle = FormBorderStyle.Sizable;
 
                 //windows state
-                string state_str = GlobalSetting.GetConfig("WindowsState", "Normal");
+                string state_str = GlobalSetting.GetConfig($"{Name}WindowsState", "Normal");
                 if (state_str == "Normal")
                 {
                     WindowState = FormWindowState.Normal;
@@ -2313,7 +2325,7 @@ namespace ImageGlass
                 }
 
                 //Windows Bound (Position + Size)
-                Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig("WindowsBound", "280,125,750,545"));
+                Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
 
                 GlobalSetting.IsFullScreen = false;
                 Application.DoEvents();

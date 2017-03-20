@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2016 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -410,8 +410,7 @@ namespace ImageGlass.Library
             #region Start up
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
-            Items.Add("frmSetting.chkHideToolBar", "Hide toolbar when starting up");
-            Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
+            Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
             #endregion
 
 
@@ -424,6 +423,7 @@ namespace ImageGlass.Library
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
+            Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
             Items.Add("frmSetting.lblBackGroundColor", "Background color:");

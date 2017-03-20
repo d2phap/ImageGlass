@@ -26,11 +26,8 @@ using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.Linq;
-using System.Threading.Tasks;
 using ImageGlass.Theme;
 using System.Text;
-using Microsoft.Win32;
-using ImageGlass.Library.FileAssociations;
 
 namespace ImageGlass
 {
@@ -47,7 +44,7 @@ namespace ImageGlass
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
         private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
-        private List<Library.Language> dsLanguages = new List<Library.Language>();
+        private List<Language> dsLanguages = new List<Language>();
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
@@ -201,7 +198,7 @@ namespace ImageGlass
             //General tab
             lblHeadStartup.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadStartup"];//
             chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
-            chkHideToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkHideToolBar"];
+            chkShowToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowToolBar"];
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
 
             lblHeadPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadPortableMode"];//
@@ -308,7 +305,7 @@ namespace ImageGlass
                 lblImage.Tag = 1;
                 lblImage.BackColor = M_COLOR_MENU_ACTIVE;
 
-                //TODO
+                LoadTabImageConfig();
             }
             else if (tab1.SelectedTab == tabFileAssociation)
             {
@@ -335,19 +332,22 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
-            //Get Portable mode value
+            //Get value of chkWelcomePicture ----------------------------------------------------
+            chkWelcomePicture.Checked = GlobalSetting.IsShowWelcome;
+
+            //Get value of chkShowToolBar
+            chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
+
+            //Get Portable mode value -----------------------------------------------------------
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
             if (!GlobalSetting.CheckStartUpDirWritable())
             {
                 chkPortableMode.Enabled = false;
             }
 
-            //Get value of chkFindChildFolder
-            chkFindChildFolder.Checked = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "false"));
-
-            //Get value of cmbAutoUpdate
-            string s = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
-            if (s != "0")
+            //Get value of cmbAutoUpdate --------------------------------------------------------
+            string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
+            if (configValue != "0")
             {
                 chkAutoUpdate.Checked = true;
             }
@@ -356,108 +356,38 @@ namespace ImageGlass
                 chkAutoUpdate.Checked = false;
             }
 
-            //Get value of chkWelcomePicture
-            chkWelcomePicture.Checked = GlobalSetting.IsShowWelcome;
-
-            //Get value of chkHideToolBar
-            chkHideToolBar.Checked = bool.Parse(GlobalSetting.GetConfig("IsHideToolbar", "false"));
-
-            //Get value of chkLoopViewer
-            chkLoopViewer.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "true"));
-
-            //Get value of chkLoopSlideshow
-            chkLoopSlideshow.Checked = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "true"));
-
-            //Get value of chkImageBoosterBack
-            chkImageBoosterBack.Checked = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "false"));
+            //Get value of IsAllowMultiInstances
+            chkAllowMultiInstances.Checked = GlobalSetting.IsAllowMultiInstances;
 
             //Get value of IsPressESCToQuit
-            chkESCToQuit.Checked = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "true"));
-
-            //Get value of IsPressESCToQuit
-            chkAllowMultiInstances.Checked = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
+            chkESCToQuit.Checked = GlobalSetting.IsPressESCToQuit;
 
             //Get value of IsConfirmationDelete
-            chkConfirmationDelete.Checked = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "false"));
-
-            //Load items of cmbZoomOptimization
-            cmbZoomOptimization.Items.Clear();
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
-
-            //Get value of cmbZoomOptimization
-            s = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            if (int.TryParse(s, out int i))
-            {
-                if (-1 < i && i < cmbZoomOptimization.Items.Count)
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-            cmbZoomOptimization.SelectedIndex = i;
-
-            //Get value of barInterval
-            i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
-            if (0 < i && i < 61)
-            {
-                barInterval.Value = i;
-            }
-            else
-            {
-                barInterval.Value = 5;
-            }
-
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
-
-            //load thumbnail dimension
-            i = int.Parse(GlobalSetting.GetConfig("ThumbnailDimension", "48"));
-            GlobalSetting.ThumbnailDimension = i;
-            cmbThumbnailDimension.SelectedItem = i.ToString();
+            chkConfirmationDelete.Checked = GlobalSetting.IsConfirmationDelete;
             
-            //Load items of cmbImageOrder
-            cmbImageOrder.Items.Clear();
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
-
-            //Get value of cmbImageOrder
-            s = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
-            i = 0;
-            if (int.TryParse(s, out i))
-            {
-                if (-1 < i && i < cmbImageOrder.Items.Count)
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-            cmbImageOrder.SelectedIndex = i;
-
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
+        }
 
-            //Thumbnail bar on right side
-            chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
+        
+        private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
+            GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
+        }
 
-            //Use mouse wheel to browse images
-            chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
+        private void chkShowToolBar_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
+            GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
         }
 
         private void chkPortableMode_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsPortableMode = chkPortableMode.Checked;
-            
 
             // Check if user ia using temporary Portable mode from param
-            if(Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1)
+            if (Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1)
             {
                 GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
             }
@@ -475,51 +405,10 @@ namespace ImageGlass
             }
         }
 
-        private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.SetConfig("IsRecursiveLoading", chkFindChildFolder.Checked.ToString());
-        }
-
-        private void chkHideToolBar_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsShowToolBar = chkHideToolBar.Checked;
-            GlobalSetting.SetConfig("IsHideToolbar", GlobalSetting.IsShowToolBar.ToString());
-        }
-
-        private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
-            GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
-        }
-
-        private void chkLoopViewer_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
-            GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
-        }
-
-        private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
-            GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
-        }
-
-        private void chkImageBoosterBack_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
-            GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
-        }
-
         private void chkAllowMultiInstances_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             GlobalSetting.SetConfig("IsAllowMultiInstances", GlobalSetting.IsAllowMultiInstances.ToString());
-        }
-
-        private void chkConfirmationDelete_CheckedChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
-            GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
         }
 
         private void chkESCToQuit_CheckedChanged(object sender, EventArgs e)
@@ -528,43 +417,10 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsPressESCToQuit", GlobalSetting.IsPressESCToQuit.ToString());
         }
 
-        private void barInterval_Scroll(object sender, EventArgs e)
+        private void chkConfirmationDelete_CheckedChanged(object sender, EventArgs e)
         {
-            GlobalSetting.SetConfig("SlideShowInterval", barInterval.Value.ToString());
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"],
-                                        barInterval.Value);
-        }
-
-        private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbZoomOptimization.SelectedIndex == 1)
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.SmoothPixels;
-            }
-            else if (cmbZoomOptimization.SelectedIndex == 2)
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.ClearPixels;
-            }
-            else
-            {
-                GlobalSetting.ZoomOptimizationMethod = ZoomOptimizationValue.Auto;
-            }
-        }
-
-        private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
-        }
-
-        private void cmbThumbnailDimension_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.SetConfig("ThumbnailDimension", cmbThumbnailDimension.SelectedItem.ToString());
-        }
-
-        private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
-            GlobalSetting.LoadImageOrderConfig();
+            GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
+            GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
         }
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
@@ -584,15 +440,130 @@ namespace ImageGlass
             }
         }
 
-        private void chkThumbnailVertical_CheckedChanged(object sender, EventArgs e)
+
+        #endregion
+
+
+        #region TAB IMAGE
+
+        /// <summary>
+        /// Get and load value of Image tab
+        /// </summary>
+        private void LoadTabImageConfig()
         {
-            GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
+            //Get value of chkFindChildFolder ---------------------------------------------
+            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;            
+
+            //Get value of chkLoopViewer
+            chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
+
+            //Get value of chkImageBoosterBack
+            chkImageBoosterBack.Checked = GlobalSetting.IsImageBoosterBack;
+
+            //Load items of cmbImageOrder
+            cmbImageOrder.Items.Clear();
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
+            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
+
+            //Get value of cmbImageOrder
+            cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
+
+            //Use mouse wheel to browse images ----------------------------------------------
+            chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
+
+            //Load items of cmbZoomOptimization 
+            cmbZoomOptimization.Items.Clear();
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
+            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
+
+            //Get value of cmbZoomOptimization
+            cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
+
+            //Thumbnail bar on right side ----------------------------------------------------
+            chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
+
+            //load thumbnail dimension
+            cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
+            
+            //Get value of chkLoopSlideshow --------------------------------------------------
+            chkLoopSlideshow.Checked = GlobalSetting.IsLoopBackSlideShow;
+
+            //Get value of barInterval
+            barInterval.Value = GlobalSetting.SlideShowInterval;
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+            
+        }
+
+        private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
+            GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+        }
+
+        private void chkLoopViewer_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
+            GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
+        }
+
+        private void chkImageBoosterBack_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
+            GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
+        }
+
+        private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
+            GlobalSetting.LoadImageOrderConfig();
         }
 
         private void chkMouseNavigation_CheckedChanged(object sender, EventArgs e)
         {
             GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
             GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
+        }
+
+        private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
+            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString());
+        }
+
+        private void chkThumbnailVertical_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
+            GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
+        }
+
+        private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
+        }
+
+        private void cmbThumbnailDimension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString());
+            GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
+        }
+
+        private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
+            GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
+        }
+
+        private void barInterval_Scroll(object sender, EventArgs e)
+        {
+            GlobalSetting.SlideShowInterval = barInterval.Value;
+            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString());
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
         }
 
         #endregion

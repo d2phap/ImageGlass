@@ -62,8 +62,6 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationFile.cs" />
     <Compile Include="Configuration\GlobalSetting.cs" />
-    <Compile Include="HotfixItemUpdate.cs" />
-    <Compile Include="HotfixUpdate.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
     <Compile Include="InstanceManagement\SingleInstance.cs" />

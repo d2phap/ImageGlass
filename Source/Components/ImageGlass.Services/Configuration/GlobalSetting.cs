@@ -45,9 +45,9 @@ namespace ImageGlass.Services.Configuration
 
     public enum ZoomOptimizationValue
     {
-        Auto,
-        SmoothPixels,
-        ClearPixels
+        Auto = 0,
+        SmoothPixels = 1,
+        ClearPixels = 2
     }
 
     public enum ImageExtensionGroup
@@ -148,7 +148,7 @@ namespace ImageGlass.Services.Configuration
 
 
         // Shared settings ----------------------------------------------------------------
-        private static ImageOrderBy _imageOrderBy = ImageOrderBy.Name;
+        private static ImageOrderBy _imageLoadingOrder = ImageOrderBy.Name;
         private static string _defaultImageFormats = string.Empty;
         private static string _optionalImageFormats = string.Empty;
         private static bool _isPlaySlideShow = false;
@@ -163,6 +163,7 @@ namespace ImageGlass.Services.Configuration
         private static Color _backgroundColor = Color.White;
         private static bool _isShowToolBar = true;
         private static bool _isLoopBackSlideShow = false;
+        private static int _slideShowInterval = 5;
         private static bool _isLoopBackViewer = true;
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
@@ -238,12 +239,12 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets, sets image order
+        /// Gets, sets image laoding order
         /// </summary>
-        public static ImageOrderBy ImageOrderBy
+        public static ImageOrderBy ImageLoadingOrder
         {
-            get { return GlobalSetting._imageOrderBy; }
-            set { GlobalSetting._imageOrderBy = value; }
+            get { return GlobalSetting._imageLoadingOrder; }
+            set { GlobalSetting._imageLoadingOrder = value; }
         }
 
         /// <summary>
@@ -607,6 +608,15 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static string BuiltInImageFormats { get => _builtInImageFormats; }
 
+        /// <summary>
+        /// Gets, sets slide show interval
+        /// </summary>
+        public static int SlideShowInterval
+        {
+            get => _slideShowInterval;
+            set => _slideShowInterval = value;
+        }
+
 
 
 
@@ -665,7 +675,7 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            ImageOrderBy = (ImageOrderBy)i;
+            ImageLoadingOrder = (ImageOrderBy)i;
         }
 
         /// <summary>

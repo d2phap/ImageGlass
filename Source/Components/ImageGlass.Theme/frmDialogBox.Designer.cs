@@ -38,15 +38,16 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.AutoSize = true;
             this.btnOK.BackColor = System.Drawing.Color.Transparent;
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.FlatAppearance.BorderSize = 0;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(206)))), ((int)(((byte)(219)))));
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnOK.Location = new System.Drawing.Point(310, 15);
+            this.btnOK.Location = new System.Drawing.Point(344, 12);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(112, 35);
+            this.btnOK.Size = new System.Drawing.Size(74, 35);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -56,9 +57,9 @@
             // 
             this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtValue.Location = new System.Drawing.Point(17, 82);
+            this.txtValue.Location = new System.Drawing.Point(15, 64);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(405, 31);
+            this.txtValue.Size = new System.Drawing.Size(401, 31);
             this.txtValue.TabIndex = 0;
             this.txtValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValue_KeyPress);
             // 
@@ -77,9 +78,9 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 133);
+            this.panel1.Location = new System.Drawing.Point(0, 118);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(443, 67);
+            this.panel1.Size = new System.Drawing.Size(439, 60);
             this.panel1.TabIndex = 8;
             // 
             // frmDialogBox
@@ -88,7 +89,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(443, 200);
+            this.ClientSize = new System.Drawing.Size(439, 178);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.lblMessage);
