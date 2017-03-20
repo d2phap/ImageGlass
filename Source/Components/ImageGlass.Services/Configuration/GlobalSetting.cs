@@ -144,7 +144,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isStartUpDirWritable = true;
         private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.svg;*.tga;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
+        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tga;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
 
 
         // Shared settings ----------------------------------------------------------------
