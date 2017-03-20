@@ -476,7 +476,7 @@ namespace ImageGlass.Library
 
             #region TAB File Associations
             Items.Add("frmSetting.lblExtensionsGroupDescription", "*Optional extensions will not be automatically pre-loaded into memory."); // 4.0
-            Items.Add("frmSetting.lblSupportedExtension", "Supported extensions:"); // v3.0
+            Items.Add("frmSetting.lblSupportedExtension", "Supported extensions: {0}"); // v3.0, updated v4.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
 
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0

@@ -233,8 +233,10 @@ namespace ImageGlass
 
 
             //File Associations tab
+            var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
             lblExtensionsGroupDescription.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensionsGroupDescription"];
-            lblSupportedExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"];
+            lblSupportedExtension.Text = String.Format(GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"], extList.Length);
             lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.lnkOpenFileAssoc"];
             btnAddNewExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddNewExt"];
             btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
@@ -252,6 +254,9 @@ namespace ImageGlass
             lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
             lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
             lnkGetMoreLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
+
+
+            extList = null;
         }
 
         /// <summary>
@@ -713,6 +718,8 @@ namespace ImageGlass
 
                 lvExtension.Items.Add(li);
             }
+
+            lblSupportedExtension.Text = String.Format(GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"], lvExtension.Items.Count);
 
             // Write suported image formats to settings -----------------------------------------
             // Load Default Image Formats
