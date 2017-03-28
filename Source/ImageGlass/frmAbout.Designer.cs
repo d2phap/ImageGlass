@@ -75,10 +75,11 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(18, 18);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.MaximumSize = new System.Drawing.Size(96, 96);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(96, 96);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -319,7 +320,7 @@
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(592, -44);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(99, 36);
             this.btnClose.TabIndex = 17;
@@ -333,7 +334,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sp0.Location = new System.Drawing.Point(0, 135);
-            this.sp0.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sp0.Margin = new System.Windows.Forms.Padding(4);
             this.sp0.Name = "sp0";
             // 
             // sp0.Panel1
@@ -431,10 +432,10 @@
             this.tab1.Controls.Add(this.tpComponents);
             this.tab1.Controls.Add(this.tpReferences);
             this.tab1.Location = new System.Drawing.Point(-9, -39);
-            this.tab1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tab1.Margin = new System.Windows.Forms.Padding(4);
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(777, 645);
+            this.tab1.Size = new System.Drawing.Size(773, 645);
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
@@ -454,10 +455,10 @@
             this.tpInfo.Controls.Add(this.lnkIGHomepage);
             this.tpInfo.Controls.Add(this.label2);
             this.tpInfo.Location = new System.Drawing.Point(4, 34);
-            this.tpInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tpInfo.Name = "tpInfo";
-            this.tpInfo.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tpInfo.Size = new System.Drawing.Size(769, 607);
+            this.tpInfo.Padding = new System.Windows.Forms.Padding(4);
+            this.tpInfo.Size = new System.Drawing.Size(765, 607);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
             // 
@@ -467,10 +468,10 @@
             this.tpComponents.Controls.Add(this.txtComponents);
             this.tpComponents.ForeColor = System.Drawing.Color.Black;
             this.tpComponents.Location = new System.Drawing.Point(4, 34);
-            this.tpComponents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpComponents.Margin = new System.Windows.Forms.Padding(4);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpComponents.Size = new System.Drawing.Size(768, 607);
+            this.tpComponents.Size = new System.Drawing.Size(765, 607);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -482,12 +483,12 @@
             this.txtComponents.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtComponents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtComponents.Location = new System.Drawing.Point(30, 0);
-            this.txtComponents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtComponents.Margin = new System.Windows.Forms.Padding(4);
             this.txtComponents.Name = "txtComponents";
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(729, 601);
+            this.txtComponents.Size = new System.Drawing.Size(726, 601);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -496,10 +497,10 @@
             this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
             this.tpReferences.Location = new System.Drawing.Point(4, 34);
-            this.tpReferences.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpReferences.Margin = new System.Windows.Forms.Padding(4);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpReferences.Size = new System.Drawing.Size(768, 607);
+            this.tpReferences.Size = new System.Drawing.Size(765, 607);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -516,7 +517,7 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(729, 601);
+            this.txtReferences.Size = new System.Drawing.Size(726, 601);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
@@ -526,7 +527,7 @@
             this.btnDonation.Cursor = System.Windows.Forms.Cursors.Help;
             this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
             this.btnDonation.Location = new System.Drawing.Point(918, 34);
-            this.btnDonation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDonation.Margin = new System.Windows.Forms.Padding(4);
             this.btnDonation.Name = "btnDonation";
             this.btnDonation.Size = new System.Drawing.Size(24, 26);
             this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -552,7 +553,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(998, 748);
             this.Name = "frmAbout";
             this.RightToLeftLayout = true;

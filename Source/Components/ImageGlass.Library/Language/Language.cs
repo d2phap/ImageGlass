@@ -296,7 +296,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
-            Items.Add("frmMain.mnuMainWindowAdaptImage", "Window adapt to image"); //v3.0
+            Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
             Items.Add("frmMain.mnuMainRename", "Rename image"); //v3.0
             Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0

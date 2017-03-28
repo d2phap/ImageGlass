@@ -12,7 +12,7 @@
     <AssemblyName>ImageGlass</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>imageglass.ico</ApplicationIcon>
+    <ApplicationIcon>iglogo.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -249,6 +249,7 @@
     <None Include="Resources\autosizewindow.png" />
     <None Include="Resources\back.png" />
     <None Include="Resources\background.png" />
+    <Content Include="iglogo.ico" />
     <Content Include="Ionic.Zip.xml" />
     <Content Include="Resources\bot3.png" />
     <None Include="Resources\print.png" />

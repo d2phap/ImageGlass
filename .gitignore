@@ -161,3 +161,5 @@ Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 Source/.vs/ImageGlass.sqlite
 *.cache
 *.cache
+*.sqlite
+.vs/VSWorkspaceState.json
