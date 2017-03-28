@@ -39,6 +39,7 @@ namespace ImageGlass
 
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(lvExtension);
+            r.ApplyTheme(lvEdit);
         }
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -502,6 +503,28 @@ namespace ImageGlass
             //Get value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+
+            //Load Image Editing extension list
+            LoadImageEditingExtensionList();
+
+
+        }
+
+        private void LoadImageEditingExtensionList()
+        {
+            lvEdit.Items.Clear();
+
+            // Load Default group
+            var extList = GlobalSetting.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem()
+                {
+                    Text = ext
+                };
+
+                lvEdit.Items.Add(li);
+            }
             
         }
 
