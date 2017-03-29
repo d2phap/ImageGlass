@@ -18,29 +18,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Services.Configuration;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace ImageGlass
 {
-    public partial class frmAddNewFormat : Form
+    public partial class frmEditEditingAssocisation : Form
     {
         private bool _isAllowFormClosed = false;
-        public string FileFormat { get; set; }
-        public ImageFormatGroup FormatGroup { get; set; }
+        public string FileExtension { get; set; }
+        public string AppName { get; set; }
+        public string AppPath { get; set; }
+        public string AppArguments { get; set; }
 
-        public frmAddNewFormat()
+        public frmEditEditingAssocisation()
         {
             InitializeComponent();
 
-            // Add group items
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"]);
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"]);
-            cmbFormatGroup.SelectedIndex = 0;
-            
             lblFileExtension.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFileExtension"];
-            lblFormatGroup.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFormatGroup"];
+            lblAppName.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppName"];
+            lblAppPath.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppPath"];
+            lblAppArguments.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppArguments"];
+
+            btnReset.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnReset"];
             btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
             btnClose.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnClose"];
+        }
+
+        private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
+        {
+            txtFileExtension.Text = this.FileExtension;
+            txtAppName.Text = this.AppName;
+            txtAppPath.Text = this.AppPath;
+            txtAppArguments.Text = this.AppArguments;
+
+            txtAppName.Focus();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -51,26 +63,33 @@ namespace ImageGlass
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            FileFormat = txtFileExtension.Text.ToLower().Trim();
-            FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
+            AppName = txtAppName.Text.Trim();
+            AppPath = txtAppPath.Text.Trim();
+            AppArguments = txtAppArguments.Text.Trim();
 
-            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || GlobalSetting.AllImageFormats.Contains(FileFormat))
+            if (AppPath.Length > 0 && !File.Exists(AppPath))
             {
-                txtFileExtension.Focus();
-                return;
+                txtAppPath.Focus();
             }
 
-            FileFormat = $"*{FileFormat};"; //standalize extension string
             DialogResult = DialogResult.OK;
             _isAllowFormClosed = true;
         }
 
-        private void frmAddNewFormat_Load(object sender, EventArgs e)
+        private void btnReset_Click(object sender, EventArgs e)
         {
-            txtFileExtension.Text = this.FileFormat;
-            cmbFormatGroup.SelectedIndex = (int) this.FormatGroup;
+            txtAppName.Text = txtAppPath.Text = txtAppArguments.Text = string.Empty;
+        }
 
-            txtFileExtension.Focus();
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.CheckFileExists = true;
+
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                txtAppPath.Text = o.FileName;
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -79,7 +98,7 @@ namespace ImageGlass
             return false;
         }
 
-        private void frmAddNewFormat_KeyDown(object sender, KeyEventArgs e)
+        private void frmEditEditingAssocisation_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
@@ -89,9 +108,9 @@ namespace ImageGlass
             }
         }
 
-        private void frmAddNewFormat_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmEditEditingAssocisation_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!_isAllowFormClosed)
+            if (!_isAllowFormClosed)
             {
                 e.Cancel = true;
             }

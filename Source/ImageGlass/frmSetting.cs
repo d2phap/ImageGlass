@@ -244,8 +244,8 @@ namespace ImageGlass
             btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
             btnRegisterExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnRegisterExt"];
             btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
-            lvExtension.Groups[(int)ImageExtensionGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
-            lvExtension.Groups[(int)ImageExtensionGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
+            lvExtension.Groups[(int)ImageFormatGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
+            lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
 
 
             //Language tab
@@ -628,6 +628,45 @@ namespace ImageGlass
             LoadImageEditingAssociationList(true);
             GlobalSetting.SaveConfigOfImageEditingAssociationList();
         }
+
+        private void btnEditEditExt_Click(object sender, EventArgs e)
+        {
+            if (lvEdit.CheckedItems.Count == 0)
+                return;
+
+            //Get select Association item
+            var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension == lvEdit.CheckedItems[0].Text);
+
+            if (assoc == null)
+                return;
+
+            frmEditEditingAssocisation f = new frmEditEditingAssocisation()
+            {
+                FileExtension = assoc.Extension,
+                AppName = assoc.AppName,
+                AppPath = assoc.AppPath,
+                AppArguments = ""//////////
+            };
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                assoc.AppName = f.AppName;
+                assoc.AppPath = $"{f.AppPath} {f.AppArguments}";
+
+                LoadImageEditingAssociationList();
+            }
+
+            f.Dispose();
+            
+        }
+
+        private void lvEdit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvEdit.Items)
+            {
+                item.Checked = item.Selected;
+            }
+        }
         #endregion
 
 
@@ -849,38 +888,44 @@ namespace ImageGlass
         {
             frmAddNewFormat f = new frmAddNewFormat()
             {
-                ImageExtension = ".svg",
-                ExtensionGroup = ImageExtensionGroup.Default
+                FileFormat = ".svg",
+                FormatGroup = ImageFormatGroup.Default
             };
 
-            do
+            if (f.ShowDialog() == DialogResult.OK)
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                // If the ext exist
+                if (GlobalSetting.AllImageFormats.Contains(f.FileFormat))
+                    return;
+
+                if (f.FormatGroup == ImageFormatGroup.Default)
                 {
-                    // If the ext exist
-                    if (GlobalSetting.AllImageFormats.Contains(f.ImageExtension))
-                        return;
-
-                    if (f.ExtensionGroup == ImageExtensionGroup.Default)
-                    {
-                        GlobalSetting.DefaultImageFormats += f.ImageExtension;
-                    }
-                    else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
-                    {
-                        GlobalSetting.OptionalImageFormats += f.ImageExtension;
-                    }
-
-                    RegisterFileAssociations(GlobalSetting.AllImageFormats);
+                    GlobalSetting.DefaultImageFormats += f.FileFormat;
                 }
+                else if (f.FormatGroup == ImageFormatGroup.Optional)
+                {
+                    GlobalSetting.OptionalImageFormats += f.FileFormat;
+                }
+
+                RegisterFileAssociations(GlobalSetting.AllImageFormats);
             }
-            while (f.DialogResult == DialogResult.Retry);
-            
+
+            f.Dispose();
         }
 
         private void btnRegisterExt_Click(object sender, EventArgs e)
         {
             RegisterFileAssociations(GlobalSetting.AllImageFormats);
         }
+
+        private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvExtension.Items)
+            {
+                item.Checked = item.Selected;
+            }
+        }
+
 
 
         #endregion

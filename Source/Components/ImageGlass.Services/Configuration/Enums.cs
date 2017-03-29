@@ -36,7 +36,7 @@ namespace ImageGlass.Services.Configuration
         ClearPixels = 2
     }
 
-    public enum ImageExtensionGroup
+    public enum ImageFormatGroup
     {
         Default = 0,
         Optional = 1

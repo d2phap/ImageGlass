@@ -465,6 +465,7 @@
             this.lvExtension.TabIndex = 29;
             this.lvExtension.UseCompatibleStateImageBehavior = false;
             this.lvExtension.View = System.Windows.Forms.View.Details;
+            this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -710,6 +711,7 @@
             this.btnEditEditExt.TabIndex = 47;
             this.btnEditEditExt.Text = "Edit";
             this.btnEditEditExt.UseVisualStyleBackColor = true;
+            this.btnEditEditExt.Click += new System.EventHandler(this.btnEditEditExt_Click);
             // 
             // panel3
             // 
@@ -738,6 +740,7 @@
             listViewItem2,
             listViewItem3});
             this.lvEdit.Location = new System.Drawing.Point(45, 956);
+            this.lvEdit.MultiSelect = false;
             this.lvEdit.Name = "lvEdit";
             this.lvEdit.RightToLeftLayout = true;
             this.lvEdit.ShowItemToolTips = true;
@@ -746,6 +749,7 @@
             this.lvEdit.TabIndex = 45;
             this.lvEdit.UseCompatibleStateImageBehavior = false;
             this.lvEdit.View = System.Windows.Forms.View.Details;
+            this.lvEdit.SelectedIndexChanged += new System.EventHandler(this.lvEdit_SelectedIndexChanged);
             // 
             // clnFileExtension
             // 
