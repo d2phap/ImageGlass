@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/d2phap/ImageGlass.png?label=ready&title=Ready)](https://waffle.io/d2phap/ImageGlass)
 ImageGlass
 ==
 www.imageglass.org
