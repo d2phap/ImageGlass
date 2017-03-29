@@ -1351,8 +1351,8 @@ namespace ImageGlass
             GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;            
 
             //Zoom optimization method-------------------------------------------------------
-            string z = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            if (int.TryParse(z, out int zoomValue))
+            string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
+            if (int.TryParse(configValue2, out int zoomValue))
             {
                 if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationValue)).Length)
                 { }
@@ -1364,8 +1364,8 @@ namespace ImageGlass
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
 
             //Image loading order -----------------------------------------------------------
-            z = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
-            if (int.TryParse(z, out int orderValue))
+            configValue2 = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
+            if (int.TryParse(configValue2, out int orderValue))
             {
                 if (-1 < orderValue && orderValue < Enum.GetNames(typeof(ImageOrderBy)).Length)
                 { }
@@ -1399,7 +1399,7 @@ namespace ImageGlass
             }
 
             //Get minimum width needed for thumbnail dimension
-            var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).TotalDimension;
+            var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
             //Get the greater width value
             GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
 
@@ -1414,8 +1414,8 @@ namespace ImageGlass
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
 
             //Load background---------------------------------------------------------------
-            z = GlobalSetting.GetConfig("BackgroundColor", "-1");
-            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(z));
+            configValue2 = GlobalSetting.GetConfig("BackgroundColor", "-1");
+            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load state of IsWindowAlwaysOnTop value-----------------------------------------
@@ -1426,8 +1426,25 @@ namespace ImageGlass
             GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
             picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
 
-            //Get welcome screen------------------------------------------------------------
+            //Get IsConfirmationDelete value --------------------------------------------------
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
+
+            //Get ImageEditingAssociationList ------------------------------------------------------
+            configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
+            string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            if(editingAssoclist.Length > 0)
+            {
+                Parallel.ForEach(editingAssoclist, (configString) =>
+                {
+                    try
+                    {
+                        var extAssoc = new ImageEditingAssociation(configString);
+                        GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
+                    }
+                    catch (InvalidCastException) { }
+                });
+            }
         }
 
 
@@ -2862,7 +2879,7 @@ namespace ImageGlass
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = tb.TotalDimension + gap;
+                sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
 
                 int splitterDistance = sp1.Height - sp1.Panel2MinSize;
 

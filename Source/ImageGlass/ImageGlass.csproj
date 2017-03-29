@@ -272,7 +272,6 @@
     <None Include="Resources\report.png" />
     <None Include="Resources\menu.png" />
     <Content Include="Resources\top3.png" />
-    <Content Include="imageglass.ico" />
     <None Include="Resources\Hand_Down.png" />
     <None Include="Resources\Hand_Move.png" />
     <None Include="Resources\noimg.png" />

@@ -76,6 +76,14 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.btnResetEditExt = new System.Windows.Forms.Button();
+            this.btnEditEditExt = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lvEdit = new System.Windows.Forms.ListView();
+            this.clnFileExtension = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnAppName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnAppPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
             this.lblHeadZooming = new System.Windows.Forms.Label();
             this.lblHeadSlideshow = new System.Windows.Forms.Label();
             this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
@@ -99,14 +107,6 @@
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.lblImage = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lvEdit = new System.Windows.Forms.ListView();
-            this.clnFileExtension = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clnAppName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clnAppPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnResetEditExt = new System.Windows.Forms.Button();
-            this.btnEditEditExt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -690,6 +690,88 @@
             this.tabImage.Text = "Image";
             this.tabImage.UseVisualStyleBackColor = true;
             // 
+            // btnResetEditExt
+            // 
+            this.btnResetEditExt.AutoSize = true;
+            this.btnResetEditExt.Location = new System.Drawing.Point(126, 1247);
+            this.btnResetEditExt.Name = "btnResetEditExt";
+            this.btnResetEditExt.Size = new System.Drawing.Size(146, 35);
+            this.btnResetEditExt.TabIndex = 49;
+            this.btnResetEditExt.Text = "Reset to default";
+            this.btnResetEditExt.UseVisualStyleBackColor = true;
+            this.btnResetEditExt.Click += new System.EventHandler(this.btnResetEditExt_Click);
+            // 
+            // btnEditEditExt
+            // 
+            this.btnEditEditExt.AutoSize = true;
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1247);
+            this.btnEditEditExt.Name = "btnEditEditExt";
+            this.btnEditEditExt.Size = new System.Drawing.Size(75, 35);
+            this.btnEditEditExt.TabIndex = 47;
+            this.btnEditEditExt.Text = "Edit";
+            this.btnEditEditExt.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.Location = new System.Drawing.Point(27, 1294);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(110, 32);
+            this.panel3.TabIndex = 46;
+            // 
+            // lvEdit
+            // 
+            this.lvEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvEdit.CheckBoxes = true;
+            this.lvEdit.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clnFileExtension,
+            this.clnAppName,
+            this.clnAppPath});
+            this.lvEdit.FullRowSelect = true;
+            this.lvEdit.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            this.lvEdit.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+            this.lvEdit.Location = new System.Drawing.Point(45, 956);
+            this.lvEdit.Name = "lvEdit";
+            this.lvEdit.RightToLeftLayout = true;
+            this.lvEdit.ShowItemToolTips = true;
+            this.lvEdit.Size = new System.Drawing.Size(604, 285);
+            this.lvEdit.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvEdit.TabIndex = 45;
+            this.lvEdit.UseCompatibleStateImageBehavior = false;
+            this.lvEdit.View = System.Windows.Forms.View.Details;
+            // 
+            // clnFileExtension
+            // 
+            this.clnFileExtension.Text = "File extension";
+            this.clnFileExtension.Width = 120;
+            // 
+            // clnAppName
+            // 
+            this.clnAppName.Text = "App name";
+            this.clnAppName.Width = 200;
+            // 
+            // clnAppPath
+            // 
+            this.clnAppPath.Text = "App path";
+            this.clnAppPath.Width = 400;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(22, 923);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 25);
+            this.label1.TabIndex = 44;
+            this.label1.Text = "Image editing";
+            // 
             // lblHeadZooming
             // 
             this.lblHeadZooming.AutoSize = true;
@@ -992,87 +1074,6 @@
             this.lblImage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 923);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 25);
-            this.label1.TabIndex = 44;
-            this.label1.Text = "Image editing";
-            // 
-            // lvEdit
-            // 
-            this.lvEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvEdit.CheckBoxes = true;
-            this.lvEdit.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clnFileExtension,
-            this.clnAppName,
-            this.clnAppPath});
-            this.lvEdit.FullRowSelect = true;
-            this.lvEdit.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            this.lvEdit.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
-            this.lvEdit.Location = new System.Drawing.Point(45, 956);
-            this.lvEdit.Name = "lvEdit";
-            this.lvEdit.RightToLeftLayout = true;
-            this.lvEdit.ShowItemToolTips = true;
-            this.lvEdit.Size = new System.Drawing.Size(630, 285);
-            this.lvEdit.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvEdit.TabIndex = 45;
-            this.lvEdit.UseCompatibleStateImageBehavior = false;
-            this.lvEdit.View = System.Windows.Forms.View.Details;
-            // 
-            // clnFileExtension
-            // 
-            this.clnFileExtension.Text = "File extension";
-            this.clnFileExtension.Width = 120;
-            // 
-            // clnAppName
-            // 
-            this.clnAppName.Text = "App name";
-            this.clnAppName.Width = 200;
-            // 
-            // clnAppPath
-            // 
-            this.clnAppPath.Text = "App path";
-            this.clnAppPath.Width = 400;
-            // 
-            // panel3
-            // 
-            this.panel3.Location = new System.Drawing.Point(27, 1294);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(110, 32);
-            this.panel3.TabIndex = 46;
-            // 
-            // btnResetEditExt
-            // 
-            this.btnResetEditExt.AutoSize = true;
-            this.btnResetEditExt.Location = new System.Drawing.Point(126, 1247);
-            this.btnResetEditExt.Name = "btnResetEditExt";
-            this.btnResetEditExt.Size = new System.Drawing.Size(146, 35);
-            this.btnResetEditExt.TabIndex = 49;
-            this.btnResetEditExt.Text = "Reset to default";
-            this.btnResetEditExt.UseVisualStyleBackColor = true;
-            // 
-            // btnEditEditExt
-            // 
-            this.btnEditEditExt.AutoSize = true;
-            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1247);
-            this.btnEditEditExt.Name = "btnEditEditExt";
-            this.btnEditEditExt.Size = new System.Drawing.Size(75, 35);
-            this.btnEditEditExt.TabIndex = 47;
-            this.btnEditEditExt.Text = "Edit";
-            this.btnEditEditExt.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 

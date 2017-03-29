@@ -71,7 +71,9 @@ namespace ImageGlass.Services.Configuration
             this["AppVersion"] = "4.0.0.0";
             this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
             this["BackgroundColor"] = "-1";
-            this["OptionalImageFormats"] = "*.hdr;*.exr;*.tga;*.psd;*.cr2;";
+            this["DefaultImageFormats"] = "";
+            this["OptionalImageFormats"] = "";
+            this["ImageEditingAssociationList"] = "";
 
             this["frmMain.WindowsBound"] = "280,125,850,550";
             this["frmMain.WindowsState"] = "Normal";

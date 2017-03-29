@@ -28,6 +28,7 @@ using ImageGlass.Library;
 using System.Linq;
 using ImageGlass.Theme;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ImageGlass
 {
@@ -167,7 +168,7 @@ namespace ImageGlass
 
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
-            
+            GlobalSetting.SaveConfigOfImageEditingAssociationList();
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
@@ -505,28 +506,11 @@ namespace ImageGlass
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
             //Load Image Editing extension list
-            LoadImageEditingExtensionList();
+            LoadImageEditingAssociationList();
 
 
         }
-
-        private void LoadImageEditingExtensionList()
-        {
-            lvEdit.Items.Clear();
-
-            // Load Default group
-            var extList = GlobalSetting.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var ext in extList)
-            {
-                var li = new ListViewItem()
-                {
-                    Text = ext
-                };
-
-                lvEdit.Items.Add(li);
-            }
-            
-        }
+        
 
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
@@ -594,6 +578,56 @@ namespace ImageGlass
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
         }
 
+
+        /// <summary>
+        /// Load ImageEditingAssociation list
+        /// </summary>
+        /// <param name="isResetToDefault">True to reset the list to default (empty)</param>
+        private void LoadImageEditingAssociationList(bool @isResetToDefault = false)
+        {
+            lvEdit.Items.Clear();
+            var newEditingAssocList = new List<ImageEditingAssociation>();
+
+            // Load Default group
+            var extList = GlobalSetting.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem();
+                li.Text = ext;
+
+                //Build new list
+                var newEditingAssoc = new ImageEditingAssociation()
+                {
+                    Extension = ext
+                };
+
+                if (!isResetToDefault)
+                {
+                    //Find the extension in the settings
+                    var editingExt = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
+
+                    li.SubItems.Add(editingExt?.AppName);
+                    li.SubItems.Add(editingExt?.AppPath);
+
+                    //Build new list
+                    newEditingAssoc.AppName = editingExt?.AppName;
+                    newEditingAssoc.AppPath = editingExt?.AppPath;
+                }
+
+                newEditingAssocList.Add(newEditingAssoc);
+                lvEdit.Items.Add(li);
+            }
+
+            //Update the new full list
+            GlobalSetting.ImageEditingAssociationList = newEditingAssocList;
+        }
+
+        private void btnResetEditExt_Click(object sender, EventArgs e)
+        {
+            LoadImageEditingAssociationList(true);
+            GlobalSetting.SaveConfigOfImageEditingAssociationList();
+        }
         #endregion
 
 
@@ -850,5 +884,7 @@ namespace ImageGlass
 
 
         #endregion
+
+        
     }
 }

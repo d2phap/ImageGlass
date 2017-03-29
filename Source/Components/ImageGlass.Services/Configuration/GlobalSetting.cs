@@ -32,105 +32,9 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Services.Configuration
 {
-    public enum ImageOrderBy
-    {
-        Name = 0,
-        Length = 1,
-        CreationTime = 2,
-        Extension = 3,
-        LastAccessTime = 4,
-        LastWriteTime = 5,
-        Random = 6
-    }
-
-    public enum ZoomOptimizationValue
-    {
-        Auto = 0,
-        SmoothPixels = 1,
-        ClearPixels = 2
-    }
-
-    public enum ImageExtensionGroup
-    {
-        Default = 0,
-        Optional = 1
-    }
-
-    public class ThumbnailItemInfo
-    {
-        /// <summary>
-        /// Gets actual thumbnail dimension
-        /// </summary>
-        public int Dimension { get; }
-
-        /// <summary>
-        /// Gets extra space to adapt minimum width / height of thumbnail bar
-        /// </summary>
-        public int ExtraSpace { get; }
-
-        /// <summary>
-        /// Gets total dimension needed for minimum width / height of thumbnail bar
-        /// </summary>
-        public int TotalDimension
-        {
-            get
-            {
-                return Dimension + ExtraSpace;
-            }
-        }
-
-        /// <summary>
-        /// Thumbnail item information
-        /// </summary>
-        /// <param name="dimension">Thumbnail size</param>
-        /// <param name="isHorizontalView">Horizontal or Verticle view</param>
-        public ThumbnailItemInfo(int dimension, bool isHorizontalView)
-        {
-            if (isHorizontalView)
-            {
-                Dimension = dimension;
-                ExtraSpace = 58;
-            }
-            else {
-                switch (dimension)
-                {
-                    case 32:
-                        Dimension = 32;
-                        ExtraSpace = 48;
-                        break;
-
-                    case 48:
-                        Dimension = 48;
-                        ExtraSpace = 52;
-                        break;
-
-                    case 64:
-                        Dimension = 64;
-                        ExtraSpace = 57;
-                        break;
-
-                    case 96:
-                        Dimension = 96;
-                        ExtraSpace = 69;
-                        break;
-
-                    case 128:
-                        Dimension = 128;
-                        ExtraSpace = 79;
-                        break;
-
-                    default:
-                        Dimension = 48;
-                        ExtraSpace = 57;
-                        break;
-                }
-            }
-        }
-    }
-
     public static class GlobalSetting
     {
-        // Private steeings --------------------------------------------------------------
+        // Private settings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
         private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
@@ -168,7 +72,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isImageBoosterBack = true;
         private static bool _isPressESCToQuit = true;
         private static int _thumbnailDimension = 48;
-        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).TotalDimension;
+        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).GetTotalDimension();
         private static bool _isThumbnailHorizontal = false;
         
         private static bool _isAllowMultiInstances = true;
@@ -177,13 +81,13 @@ namespace ImageGlass.Services.Configuration
         
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
-        
+        private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
-        
+
 
 
         #region "Properties"
-        
+
         /// <summary>
         /// Gets, sets image list
         /// </summary>
@@ -617,6 +521,15 @@ namespace ImageGlass.Services.Configuration
             set => _slideShowInterval = value;
         }
 
+        /// <summary>
+        /// Gets, sets the list of Image Editing Association
+        /// </summary>
+        public static List<ImageEditingAssociation> ImageEditingAssociationList
+        {
+            get => _imageEditingAssociationList;
+            set => _imageEditingAssociationList = value;
+        }
+
 
 
 
@@ -624,6 +537,21 @@ namespace ImageGlass.Services.Configuration
 
 
         #region "Public Method"
+        /// <summary>
+        /// Save ImageEditingAssociationList to Settings
+        /// </summary>
+        /// <param name="forceWriteConfigsToRegistry"></param>
+        public static void SaveConfigOfImageEditingAssociationList(bool @forceWriteConfigsToRegistry = false)
+        {
+            StringBuilder editingAssocString = new StringBuilder();
+
+            Parallel.ForEach(GlobalSetting.ImageEditingAssociationList, (assoc) =>
+            {
+                editingAssocString.Append($"[{assoc.ToString()}]");
+            });
+
+            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
+        }
 
         /// <summary>
         /// Get file extensions from registry
