@@ -187,8 +187,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="form_igtheme.ico" />
-    <Content Include="igtheme.ico" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\recommend.png" />
     <None Include="Resources\ok.png" />

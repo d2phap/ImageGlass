@@ -1295,6 +1295,16 @@ namespace ImageGlass
             //Load Optional Image Formats
             GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", extGroups[1]);
 
+            if(GlobalSetting.AllImageFormats.Length == 0)
+            {
+                //If no formats from settings, we need to load from built-in configs
+                GlobalSetting.LoadBuiltInImageFormats();
+
+                //Write configs
+                GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
+                GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+            }
+
             //Slideshow Interval-----------------------------------------------------------
             int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
             if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds

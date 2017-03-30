@@ -538,6 +538,17 @@ namespace ImageGlass.Services.Configuration
 
         #region "Public Method"
         /// <summary>
+        /// Load the default built-in image formats to the list
+        /// </summary>
+        public static void LoadBuiltInImageFormats()
+        {
+            var exts = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray());
+
+            GlobalSetting.DefaultImageFormats = exts[0];
+            GlobalSetting.OptionalImageFormats = exts[1];
+        }
+
+        /// <summary>
         /// Save ImageEditingAssociationList to Settings
         /// </summary>
         /// <param name="forceWriteConfigsToRegistry"></param>

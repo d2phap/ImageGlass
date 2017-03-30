@@ -38,17 +38,19 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
+
+            if (!Directory.Exists(GlobalSetting.TempDir))
+                Directory.CreateDirectory(GlobalSetting.TempDir);
         }
 
         Update up = new Update();
-        string tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+        string updateInfoFile = Path.Combine(GlobalSetting.TempDir, "update.xml");
 
-    
 
         private void btnClose_Click(object sender, EventArgs e)
-        {            
-            if (File.Exists(tempDir + "update.xml"))
-                File.Delete(tempDir + "update.xml");
+        {
+            if (File.Exists(updateInfoFile))
+                File.Delete(updateInfoFile);
             Application.Exit();
         }
 
@@ -71,11 +73,11 @@ namespace igcmd
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), tempDir + "update.xml");
+            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), updateInfoFile);
 
-            if (File.Exists(tempDir + "update.xml"))
+            if (File.Exists(updateInfoFile))
             {
-                File.Delete(tempDir + "update.xml");
+                File.Delete(updateInfoFile);
             }
 
             StringBuilder sb = new StringBuilder();
