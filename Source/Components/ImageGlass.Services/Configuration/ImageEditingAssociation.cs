@@ -43,7 +43,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets arguments of app.
         /// </summary>
-        public string Arguments { get; set; }
+        public string AppArguments { get; set; }
 
         /// <summary>
         /// Initial Image Editing Association
@@ -53,7 +53,7 @@ namespace ImageGlass.Services.Configuration
             Extension = string.Empty;
             AppName = string.Empty;
             AppPath = string.Empty;
-            Arguments = string.Empty;
+            AppArguments = string.Empty;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ImageGlass.Services.Configuration
             Extension = extension.ToLower();
             AppName = appName;
             AppPath = appPath;
-            Arguments = arguments;
+            AppArguments = arguments;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ImageGlass.Services.Configuration
             Extension = itemArray[0].ToLower();
             AppName = itemArray[1];
             AppPath = itemArray[2];
-            Arguments = itemArray[3];
+            AppArguments = itemArray[3];
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns>ImageEditingAssociation string</returns>
         public override string ToString()
         {
-            return $"{Extension}|{AppName}|{AppPath}|{Arguments}";
+            return $"{Extension}|{AppName}|{AppPath}|{AppArguments}";
         }
     }
 }

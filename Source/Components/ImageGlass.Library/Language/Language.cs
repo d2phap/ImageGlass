@@ -426,7 +426,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
-            Items.Add("frmSetting.lblBackGroundColor", "Background color:");
+            Items.Add("frmSetting.lblBackGroundColor", "Background color");
             #endregion
             #endregion
 
@@ -451,7 +451,7 @@ namespace ImageGlass.Library
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
             Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
-            Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //-3.0, +3.5
+            Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
@@ -461,8 +461,8 @@ namespace ImageGlass.Library
             #region Thumbnail bar
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
-            Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
-            Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
+            Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)");
+            Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
             #endregion
 
 
@@ -471,6 +471,18 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             #endregion
+
+
+            #region Image editing
+            Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
+            Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
+            #endregion
+
             #endregion
 
 
@@ -487,7 +499,7 @@ namespace ImageGlass.Library
 
 
             #region Language
-            Items.Add("frmSetting.lblLanguageText", "Installed languages:");
+            Items.Add("frmSetting.lblLanguageText", "Installed languages");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
 

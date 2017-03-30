@@ -2292,7 +2292,7 @@ namespace ImageGlass
                     // Open configured app for editing
                     Process p = new Process();
                     p.StartInfo.FileName = assoc.AppPath;
-                    p.StartInfo.Arguments = $"\"{filename}\" {assoc.Arguments}";
+                    p.StartInfo.Arguments = $"\"{filename}\" {assoc.AppArguments}";
 
                     //show error dialog
                     p.StartInfo.ErrorDialog = true;
@@ -3106,15 +3106,7 @@ namespace ImageGlass
         }
 
         
-
-
-
-
-
-
-
-
-
+        
 
 
 

@@ -40,7 +40,7 @@ namespace ImageGlass
 
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(lvExtension);
-            r.ApplyTheme(lvEdit);
+            r.ApplyTheme(lvImageEditing);
         }
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -232,6 +232,15 @@ namespace ImageGlass
             lblHeadSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadSlideshow"];//
             chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+
+            lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
+            btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
+            btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
+            clnFileExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnFileExtension"];
+            clnAppName.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppName"];
+            clnAppPath.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppPath"];
+            clnAppArguments.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppArguments"];
+
 
 
             //File Associations tab
@@ -585,7 +594,7 @@ namespace ImageGlass
         /// <param name="isResetToDefault">True to reset the list to default (empty)</param>
         private void LoadImageEditingAssociationList(bool @isResetToDefault = false)
         {
-            lvEdit.Items.Clear();
+            lvImageEditing.Items.Clear();
             var newEditingAssocList = new List<ImageEditingAssociation>();
 
             // Load Default group
@@ -609,21 +618,23 @@ namespace ImageGlass
 
                     li.SubItems.Add(editingExt?.AppName);
                     li.SubItems.Add(editingExt?.AppPath);
+                    li.SubItems.Add(editingExt?.AppArguments);
 
                     //Build new list
                     newEditingAssoc.AppName = editingExt?.AppName;
                     newEditingAssoc.AppPath = editingExt?.AppPath;
+                    newEditingAssoc.AppArguments = editingExt?.AppArguments;
                 }
 
                 newEditingAssocList.Add(newEditingAssoc);
-                lvEdit.Items.Add(li);
+                lvImageEditing.Items.Add(li);
             }
 
             //Update the new full list
             GlobalSetting.ImageEditingAssociationList = newEditingAssocList;
         }
 
-        private void btnResetEditExt_Click(object sender, EventArgs e)
+        private void btnEditResetExt_Click(object sender, EventArgs e)
         {
             LoadImageEditingAssociationList(true);
             GlobalSetting.SaveConfigOfImageEditingAssociationList();
@@ -631,11 +642,11 @@ namespace ImageGlass
 
         private void btnEditEditExt_Click(object sender, EventArgs e)
         {
-            if (lvEdit.CheckedItems.Count == 0)
+            if (lvImageEditing.CheckedItems.Count == 0)
                 return;
 
             //Get select Association item
-            var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension == lvEdit.CheckedItems[0].Text);
+            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.CheckedItems[0].Text);
 
             if (assoc == null)
                 return;
@@ -645,13 +656,14 @@ namespace ImageGlass
                 FileExtension = assoc.Extension,
                 AppName = assoc.AppName,
                 AppPath = assoc.AppPath,
-                AppArguments = ""//////////
+                AppArguments = assoc.AppArguments
             };
 
             if (f.ShowDialog() == DialogResult.OK)
             {
                 assoc.AppName = f.AppName;
-                assoc.AppPath = $"{f.AppPath} {f.AppArguments}";
+                assoc.AppPath = f.AppPath;
+                assoc.AppArguments = f.AppArguments;
 
                 LoadImageEditingAssociationList();
             }
@@ -660,12 +672,14 @@ namespace ImageGlass
             
         }
 
-        private void lvEdit_SelectedIndexChanged(object sender, EventArgs e)
+        private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvEdit.Items)
+            foreach (ListViewItem item in lvImageEditing.Items)
             {
                 item.Checked = item.Selected;
             }
+
+            btnEditEditExt.Enabled = (lvImageEditing.CheckedIndices.Count > 0);
         }
         #endregion
 
@@ -924,6 +938,8 @@ namespace ImageGlass
             {
                 item.Checked = item.Selected;
             }
+
+            btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
         }
 
 
