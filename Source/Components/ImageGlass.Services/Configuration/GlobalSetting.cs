@@ -30,6 +30,7 @@ using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Threading;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -572,9 +573,14 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
         {
-            var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+            if (GlobalSetting.ImageEditingAssociationList.Count > 0)
+            {
+                var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
 
-            return assoc;
+                return assoc;
+            }
+
+            return null;            
         }
 
         /// <summary>

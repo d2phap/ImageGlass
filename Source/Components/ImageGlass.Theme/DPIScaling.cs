@@ -63,7 +63,7 @@ namespace ImageGlass.Theme
 
 
         public const int WM_DPICHANGED = 0x02E0;
-
+        public const int DPI_DEFAULT = 96;
 
         private static int _oldDPI = 96;
         private static int _currentDPI = 96;
@@ -127,30 +127,25 @@ namespace ImageGlass.Theme
             }
         }
 
+        /// <summary>
+        /// Get DPI Scale factor
+        /// </summary>
+        /// <param name="IsComparedTo_DPI_DEFAULT">True: Compare to the DPI_DEFAULT value</param>
+        /// <returns></returns>
+        public static double GetDPIScaleFactor(bool @IsComparedTo_DPI_DEFAULT = false)
+        {
+            return (double)DPIScaling.CurrentDPI / (IsComparedTo_DPI_DEFAULT ? DPI_DEFAULT : DPIScaling.OldDPI);
+        }
+
+
         public static void HandleDpiChanged(int oldDpi, int currentDpi, Form f)
         {
             if (oldDpi != 0)
             {
-                float scaleFactor = (float)currentDpi / oldDpi;
+                float scaleFactor = (float)GetDPIScaleFactor();
 
                 //the default scaling method of the framework
                 f.Scale(new SizeF(scaleFactor, scaleFactor));
-
-
-                //fonts are not scaled automatically so we need to handle this manually
-                //ScaleFontForControl(f, scaleFactor);
-            }
-        }
-
-        private static void ScaleFontForControl(Control control, float factor)
-        {
-            control.Font = new Font(control.Font.FontFamily,
-                   control.Font.Size * factor,
-                   control.Font.Style);
-
-            foreach (Control child in control.Controls)
-            {
-                ScaleFontForControl(child, factor);
             }
         }
 

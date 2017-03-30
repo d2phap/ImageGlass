@@ -50,10 +50,12 @@ namespace ImageGlass
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
         }
 
-        
+
 
 
         #region Local variables
+        const int MENU_ICON_HEIGHT = 18;
+
         private string _imageInfo = "";
 
         // window size value before resizing
@@ -778,7 +780,10 @@ namespace ImageGlass
 
                     //Update icon
                     Icon ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
-                    mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), mnuMainAbout.Image.Size);
+                    double scaleFactor = DPIScaling.GetDPIScaleFactor(true);
+                    int iconWidth = (int)(MENU_ICON_HEIGHT * scaleFactor);
+
+                    mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
             }
 
@@ -1058,7 +1063,7 @@ namespace ImageGlass
             if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
             {
                 DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
-                int scaleFactor = (int)Math.Floor((float)DPIScaling.CurrentDPI / DPIScaling.OldDPI);
+                int scaleFactor = (int)Math.Floor(DPIScaling.GetDPIScaleFactor());
 
                 #region change size of toolbar
                 int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
@@ -1571,7 +1576,6 @@ namespace ImageGlass
             base.WndProc(ref m);
         }
 
-        
 
         private void frmMain_Load(object sender, EventArgs e)
         {
