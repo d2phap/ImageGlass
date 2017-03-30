@@ -195,8 +195,8 @@ namespace ImageGlass
             {
                 //Mark as Image Error
                 GlobalSetting.IsImageError = true;
-                Text = "ImageGlass - " + filePath;
-                lblInfo.Text = ImageInfo.GetFileSize(filePath);
+                Text = $"ImageGlass - {filePath} - {ImageInfo.GetFileSize(filePath)}";
+
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
 
@@ -352,8 +352,7 @@ namespace ImageGlass
 
             if (GlobalSetting.ImageList.Length < 1)
             {
-                Text = "ImageGlass";
-                lblInfo.Text = string.Empty;
+                Text = $"ImageGlass";
 
                 GlobalSetting.IsImageError = true;
                 picMain.Image = null;
@@ -484,8 +483,7 @@ namespace ImageGlass
 
             if (GlobalSetting.ImageList.Length < 1)
             {
-                this.Text = "ImageGlass ";
-                lblInfo.Text = fileinfo;
+                this.Text = $"ImageGlass {fileinfo}";
                 return;
             }
 
@@ -756,6 +754,36 @@ namespace ImageGlass
 
 
         #region Private functions
+        /// <summary>
+        /// Update editing association app info and icon for Edit Image menu
+        /// </summary>
+        private void UpdateEditingAssocAppInfoForMenu()
+        {
+            string appName = "";
+            mnuMainEditImage.Image = null;
+
+            //Temporary memory data
+            if (GlobalSetting.IsTempMemoryData)
+            { }
+            else
+            {
+                //Find file format
+                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]);
+                var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
+
+                //Get App assoc info
+                if (assoc != null && File.Exists(assoc.AppPath))
+                {
+                    appName = $"({ assoc.AppName})";
+
+                    //Update icon
+                    Icon ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
+                    mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), mnuMainAbout.Image.Size);
+                }
+            }
+
+            mnuMainEditImage.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"], appName);
+        }
 
         /// <summary>
         /// Start Zoom optimization
@@ -2078,6 +2106,8 @@ namespace ImageGlass
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
             mnuPopup.Items.Add(new ToolStripSeparator());//---------------
 
+            //Get Editing Assoc App info
+            UpdateEditingAssocAppInfoForMenu();
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
             
             //check if image can animate (GIF)
@@ -2098,6 +2128,7 @@ namespace ImageGlass
 
             }
             catch { }
+
 
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
@@ -2237,21 +2268,64 @@ namespace ImageGlass
                 return;
             }
 
+            // Viewing image filename
             string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
-            Process p = new Process();
-            p.StartInfo.FileName = filename;
-            p.StartInfo.Verb = "edit";
-
-            //show error dialog
-            p.StartInfo.ErrorDialog = true;
-
-            try
+            // If viewing image is temporary memory data
+            if (GlobalSetting.IsTempMemoryData)
             {
-                p.Start();
+                // Save to temp file
+                filename = SaveTemporaryMemoryData();
+
+                EditByDefaultApp();
             }
-            catch (Exception)
-            { }
+            else
+            {
+                // Get extension
+                var ext = Path.GetExtension(filename);
+
+                // Get association App for editing
+                var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
+
+                if (assoc != null && File.Exists(assoc.AppPath))
+                {
+                    // Open configured app for editing
+                    Process p = new Process();
+                    p.StartInfo.FileName = assoc.AppPath;
+                    p.StartInfo.Arguments = $"\"{filename}\" {assoc.Arguments}";
+
+                    //show error dialog
+                    p.StartInfo.ErrorDialog = true;
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch (Exception)
+                    { }
+                }
+                else // Edit by default associated app
+                {
+                    EditByDefaultApp();
+                }
+            }
+
+            void EditByDefaultApp()
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = filename;
+                p.StartInfo.Verb = "edit";
+
+                //show error dialog
+                p.StartInfo.ErrorDialog = true;
+
+                try
+                {
+                    p.Start();
+                }
+                catch (Exception)
+                { }
+            }
         }
 
         private void mnuMainViewNext_Click(object sender, EventArgs e)
@@ -3024,12 +3098,14 @@ namespace ImageGlass
                     mnuMainStartStopAnimating.Enabled = true;
                 }
 
+                // Get association App for editing
+                UpdateEditingAssocAppInfoForMenu();
+
             }
             catch { }
         }
 
-
-
+        
 
 
 

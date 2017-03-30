@@ -230,7 +230,7 @@ namespace ImageGlass.Library
 
 
             #region frmMain
-            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0 beta
+            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
 
 
             #region Tool bar
@@ -268,7 +268,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
-            Items.Add("frmMain.mnuMainEditImage", "Edit image"); //v3.0
+            Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0

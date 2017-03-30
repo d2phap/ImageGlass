@@ -29,6 +29,7 @@ using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -562,6 +563,18 @@ namespace ImageGlass.Services.Configuration
             });
 
             GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
+        }
+
+        /// <summary>
+        /// Get ImageEditingAssociation from ImageEditingAssociationList
+        /// </summary>
+        /// <param name="ext">Extension to search. Ex: .png</param>
+        /// <returns></returns>
+        public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
+        {
+            var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+
+            return assoc;
         }
 
         /// <summary>

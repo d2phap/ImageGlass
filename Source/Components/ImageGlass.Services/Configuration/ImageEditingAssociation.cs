@@ -36,9 +36,14 @@ namespace ImageGlass.Services.Configuration
         public string AppName { get; set; }
 
         /// <summary>
-        /// Gets, sets full path and arguments of app. Ex: C:\app\app.exe --help
+        /// Gets, sets full path of app.
         /// </summary>
         public string AppPath { get; set; }
+
+        /// <summary>
+        /// Gets, sets arguments of app.
+        /// </summary>
+        public string Arguments { get; set; }
 
         /// <summary>
         /// Initial Image Editing Association
@@ -48,6 +53,7 @@ namespace ImageGlass.Services.Configuration
             Extension = string.Empty;
             AppName = string.Empty;
             AppPath = string.Empty;
+            Arguments = string.Empty;
         }
 
         /// <summary>
@@ -56,11 +62,12 @@ namespace ImageGlass.Services.Configuration
         /// <param name="extension">Extension. Ex: .png</param>
         /// <param name="appName">Friendly app name.</param>
         /// <param name="appPath">Full path and arguments of app. Ex: C:\app\app.exe --help</param>
-        public ImageEditingAssociation(string extension, string appName, string appPath)
+        public ImageEditingAssociation(string extension, string appName, string appPath, string @arguments = "")
         {
             Extension = extension.ToLower();
             AppName = appName;
             AppPath = appPath;
+            Arguments = arguments;
         }
 
         /// <summary>
@@ -72,7 +79,7 @@ namespace ImageGlass.Services.Configuration
         {
             var itemArray = mixString.Split("|".ToCharArray());
 
-            if (itemArray.Length != 3)
+            if (itemArray.Length != 4)
             {
                 throw new InvalidCastException("Invalid ImageEditingAssociation string format.");
             }
@@ -80,6 +87,7 @@ namespace ImageGlass.Services.Configuration
             Extension = itemArray[0].ToLower();
             AppName = itemArray[1];
             AppPath = itemArray[2];
+            Arguments = itemArray[3];
         }
 
         /// <summary>
@@ -88,7 +96,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns>ImageEditingAssociation string</returns>
         public override string ToString()
         {
-            return $"{Extension}|{AppName}|{AppPath}";
+            return $"{Extension}|{AppName}|{AppPath}|{Arguments}";
         }
     }
 }
