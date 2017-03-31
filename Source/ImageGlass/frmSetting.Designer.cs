@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Default extensions", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Optional extensions", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(".123");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(".abc");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(".def");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
             this.lblLanguage = new System.Windows.Forms.Label();
@@ -73,6 +76,15 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.btnEditResetExt = new System.Windows.Forms.Button();
+            this.btnEditEditExt = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lvImageEditing = new System.Windows.Forms.ListView();
+            this.clnFileExtension = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnAppName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnAppPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnAppArguments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblHeadImageEditing = new System.Windows.Forms.Label();
             this.lblHeadZooming = new System.Windows.Forms.Label();
             this.lblHeadSlideshow = new System.Windows.Forms.Label();
             this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
@@ -396,6 +408,7 @@
             // 
             this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteExt.AutoSize = true;
+            this.btnDeleteExt.Enabled = false;
             this.btnDeleteExt.Location = new System.Drawing.Point(102, 15);
             this.btnDeleteExt.Name = "btnDeleteExt";
             this.btnDeleteExt.Size = new System.Drawing.Size(75, 35);
@@ -454,6 +467,7 @@
             this.lvExtension.TabIndex = 29;
             this.lvExtension.UseCompatibleStateImageBehavior = false;
             this.lvExtension.View = System.Windows.Forms.View.Details;
+            this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -646,6 +660,11 @@
             // tabImage
             // 
             this.tabImage.AutoScroll = true;
+            this.tabImage.Controls.Add(this.btnEditResetExt);
+            this.tabImage.Controls.Add(this.btnEditEditExt);
+            this.tabImage.Controls.Add(this.panel3);
+            this.tabImage.Controls.Add(this.lvImageEditing);
+            this.tabImage.Controls.Add(this.lblHeadImageEditing);
             this.tabImage.Controls.Add(this.lblHeadZooming);
             this.tabImage.Controls.Add(this.lblHeadSlideshow);
             this.tabImage.Controls.Add(this.lblHeadThumbnailBar);
@@ -673,6 +692,98 @@
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             this.tabImage.UseVisualStyleBackColor = true;
+            // 
+            // btnEditResetExt
+            // 
+            this.btnEditResetExt.AutoSize = true;
+            this.btnEditResetExt.Location = new System.Drawing.Point(126, 1247);
+            this.btnEditResetExt.Name = "btnEditResetExt";
+            this.btnEditResetExt.Size = new System.Drawing.Size(146, 35);
+            this.btnEditResetExt.TabIndex = 49;
+            this.btnEditResetExt.Text = "Reset to default";
+            this.btnEditResetExt.UseVisualStyleBackColor = true;
+            this.btnEditResetExt.Click += new System.EventHandler(this.btnEditResetExt_Click);
+            // 
+            // btnEditEditExt
+            // 
+            this.btnEditEditExt.AutoSize = true;
+            this.btnEditEditExt.Enabled = false;
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1247);
+            this.btnEditEditExt.Name = "btnEditEditExt";
+            this.btnEditEditExt.Size = new System.Drawing.Size(75, 35);
+            this.btnEditEditExt.TabIndex = 47;
+            this.btnEditEditExt.Text = "Edit";
+            this.btnEditEditExt.UseVisualStyleBackColor = true;
+            this.btnEditEditExt.Click += new System.EventHandler(this.btnEditEditExt_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.Location = new System.Drawing.Point(27, 1294);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(110, 32);
+            this.panel3.TabIndex = 46;
+            // 
+            // lvImageEditing
+            // 
+            this.lvImageEditing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvImageEditing.CheckBoxes = true;
+            this.lvImageEditing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clnFileExtension,
+            this.clnAppName,
+            this.clnAppPath,
+            this.clnAppArguments});
+            this.lvImageEditing.FullRowSelect = true;
+            this.lvImageEditing.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            this.lvImageEditing.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+            this.lvImageEditing.Location = new System.Drawing.Point(45, 956);
+            this.lvImageEditing.MultiSelect = false;
+            this.lvImageEditing.Name = "lvImageEditing";
+            this.lvImageEditing.RightToLeftLayout = true;
+            this.lvImageEditing.ShowItemToolTips = true;
+            this.lvImageEditing.Size = new System.Drawing.Size(604, 285);
+            this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvImageEditing.TabIndex = 45;
+            this.lvImageEditing.UseCompatibleStateImageBehavior = false;
+            this.lvImageEditing.View = System.Windows.Forms.View.Details;
+            this.lvImageEditing.SelectedIndexChanged += new System.EventHandler(this.lvlvImageEditing_SelectedIndexChanged);
+            // 
+            // clnFileExtension
+            // 
+            this.clnFileExtension.Text = "File extension";
+            this.clnFileExtension.Width = 120;
+            // 
+            // clnAppName
+            // 
+            this.clnAppName.Text = "App name";
+            this.clnAppName.Width = 200;
+            // 
+            // clnAppPath
+            // 
+            this.clnAppPath.Text = "App path";
+            this.clnAppPath.Width = 400;
+            // 
+            // clnAppArguments
+            // 
+            this.clnAppArguments.Text = "App arguments";
+            this.clnAppArguments.Width = 200;
+            // 
+            // lblHeadImageEditing
+            // 
+            this.lblHeadImageEditing.AutoSize = true;
+            this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 923);
+            this.lblHeadImageEditing.Name = "lblHeadImageEditing";
+            this.lblHeadImageEditing.Size = new System.Drawing.Size(130, 25);
+            this.lblHeadImageEditing.TabIndex = 44;
+            this.lblHeadImageEditing.Text = "Image editing";
             // 
             // lblHeadZooming
             // 
@@ -1084,5 +1195,14 @@
         private System.Windows.Forms.Label lblHeadStartup;
         private System.Windows.Forms.Label lblHeadPortableMode;
         private System.Windows.Forms.Label lblHeadOthers;
+        private System.Windows.Forms.Label lblHeadImageEditing;
+        private System.Windows.Forms.ListView lvImageEditing;
+        private System.Windows.Forms.ColumnHeader clnFileExtension;
+        private System.Windows.Forms.ColumnHeader clnAppName;
+        private System.Windows.Forms.ColumnHeader clnAppPath;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnEditResetExt;
+        private System.Windows.Forms.Button btnEditEditExt;
+        private System.Windows.Forms.ColumnHeader clnAppArguments;
     }
 }

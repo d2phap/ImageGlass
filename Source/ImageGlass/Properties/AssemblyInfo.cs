@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImageGlass 3.5")]
+[assembly: AssemblyTitle("ImageGlass 4")]
 [assembly: AssemblyDescription("A lightweight, versatile image viewer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
-[assembly: AssemblyProduct("ImageGlass 3.5")]
+[assembly: AssemblyProduct("ImageGlass 4")]
 [assembly: AssemblyCopyright("Copyright © 2010-2017 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.9.20")]
-[assembly: AssemblyFileVersion("3.5.9.20")]
+[assembly: AssemblyVersion("3.5.9.21")]
+[assembly: AssemblyFileVersion("3.5.9.21")]

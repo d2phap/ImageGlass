@@ -31,10 +31,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.lblImageExtension = new System.Windows.Forms.Label();
-            this.txtImageExtension = new System.Windows.Forms.TextBox();
-            this.lblExtGroup = new System.Windows.Forms.Label();
-            this.cmbExtGroup = new System.Windows.Forms.ComboBox();
+            this.lblFileExtension = new System.Windows.Forms.Label();
+            this.txtFileExtension = new System.Windows.Forms.TextBox();
+            this.lblFormatGroup = new System.Windows.Forms.Label();
+            this.cmbFormatGroup = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,64 +75,69 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // lblImageExtension
+            // lblFileExtension
             // 
-            this.lblImageExtension.AutoSize = true;
-            this.lblImageExtension.Location = new System.Drawing.Point(13, 25);
-            this.lblImageExtension.Name = "lblImageExtension";
-            this.lblImageExtension.Size = new System.Drawing.Size(142, 25);
-            this.lblImageExtension.TabIndex = 16;
-            this.lblImageExtension.Text = "Image extension";
+            this.lblFileExtension.AutoSize = true;
+            this.lblFileExtension.Location = new System.Drawing.Point(13, 25);
+            this.lblFileExtension.Name = "lblFileExtension";
+            this.lblFileExtension.Size = new System.Drawing.Size(118, 25);
+            this.lblFileExtension.TabIndex = 16;
+            this.lblFileExtension.Text = "File extension";
             // 
-            // txtImageExtension
+            // txtFileExtension
             // 
-            this.txtImageExtension.Location = new System.Drawing.Point(18, 53);
-            this.txtImageExtension.Name = "txtImageExtension";
-            this.txtImageExtension.Size = new System.Drawing.Size(419, 31);
-            this.txtImageExtension.TabIndex = 0;
-            this.txtImageExtension.Text = ".svg";
+            this.txtFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFileExtension.Location = new System.Drawing.Point(18, 53);
+            this.txtFileExtension.Name = "txtFileExtension";
+            this.txtFileExtension.Size = new System.Drawing.Size(419, 31);
+            this.txtFileExtension.TabIndex = 0;
+            this.txtFileExtension.Text = ".svg";
             // 
-            // lblExtGroup
+            // lblFormatGroup
             // 
-            this.lblExtGroup.AutoSize = true;
-            this.lblExtGroup.Location = new System.Drawing.Point(13, 106);
-            this.lblExtGroup.Name = "lblExtGroup";
-            this.lblExtGroup.Size = new System.Drawing.Size(141, 25);
-            this.lblExtGroup.TabIndex = 18;
-            this.lblExtGroup.Text = "Extension group";
+            this.lblFormatGroup.AutoSize = true;
+            this.lblFormatGroup.Location = new System.Drawing.Point(13, 106);
+            this.lblFormatGroup.Name = "lblFormatGroup";
+            this.lblFormatGroup.Size = new System.Drawing.Size(123, 25);
+            this.lblFormatGroup.TabIndex = 18;
+            this.lblFormatGroup.Text = "Format group";
             // 
-            // cmbExtGroup
+            // cmbFormatGroup
             // 
-            this.cmbExtGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbExtGroup.FormattingEnabled = true;
-            this.cmbExtGroup.Location = new System.Drawing.Point(18, 134);
-            this.cmbExtGroup.Name = "cmbExtGroup";
-            this.cmbExtGroup.Size = new System.Drawing.Size(419, 33);
-            this.cmbExtGroup.TabIndex = 1;
+            this.cmbFormatGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbFormatGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFormatGroup.FormattingEnabled = true;
+            this.cmbFormatGroup.Location = new System.Drawing.Point(18, 134);
+            this.cmbFormatGroup.Name = "cmbFormatGroup";
+            this.cmbFormatGroup.Size = new System.Drawing.Size(419, 33);
+            this.cmbFormatGroup.TabIndex = 1;
             // 
             // frmAddNewFormat
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(457, 271);
-            this.ControlBox = false;
-            this.Controls.Add(this.cmbExtGroup);
-            this.Controls.Add(this.lblExtGroup);
-            this.Controls.Add(this.txtImageExtension);
-            this.Controls.Add(this.lblImageExtension);
+            this.Controls.Add(this.cmbFormatGroup);
+            this.Controls.Add(this.lblFormatGroup);
+            this.Controls.Add(this.txtFileExtension);
+            this.Controls.Add(this.lblFileExtension);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAddNewFormat";
+            this.RightToLeftLayout = true;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Add new image extension";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAddNewFormat_FormClosing);
             this.Load += new System.EventHandler(this.frmAddNewFormat_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAddNewFormat_KeyDown);
             this.panel1.ResumeLayout(false);
@@ -146,9 +151,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Label lblImageExtension;
-        private System.Windows.Forms.TextBox txtImageExtension;
-        private System.Windows.Forms.Label lblExtGroup;
-        private System.Windows.Forms.ComboBox cmbExtGroup;
+        private System.Windows.Forms.Label lblFileExtension;
+        private System.Windows.Forms.TextBox txtFileExtension;
+        private System.Windows.Forms.Label lblFormatGroup;
+        private System.Windows.Forms.ComboBox cmbFormatGroup;
     }
 }

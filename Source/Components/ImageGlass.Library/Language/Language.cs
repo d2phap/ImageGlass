@@ -224,13 +224,13 @@ namespace ImageGlass.Library
         {
 
             #region Common
-            Items.Add("_.ImageFormatGroup.Default", "Default extensions"); // 4.0
-            Items.Add("_.ImageFormatGroup.Optional", "Optional extensions"); // 4.0
+            Items.Add("_.ImageFormatGroup.Default", "Default formats"); // 4.0
+            Items.Add("_.ImageFormatGroup.Optional", "Optional formats"); // 4.0
             #endregion
 
 
             #region frmMain
-            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, or corrupted.");//v2.0 beta
+            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
 
 
             #region Tool bar
@@ -268,7 +268,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
-            Items.Add("frmMain.mnuMainEditImage", "Edit image"); //v3.0
+            Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
@@ -426,7 +426,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
-            Items.Add("frmSetting.lblBackGroundColor", "Background color:");
+            Items.Add("frmSetting.lblBackGroundColor", "Background color");
             #endregion
             #endregion
 
@@ -451,7 +451,7 @@ namespace ImageGlass.Library
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
             Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
-            Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization:"); //-3.0, +3.5
+            Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
@@ -461,8 +461,8 @@ namespace ImageGlass.Library
             #region Thumbnail bar
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
-            Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB):");
-            Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel):"); // v3.0
+            Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)");
+            Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
             #endregion
 
 
@@ -471,12 +471,24 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
             Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             #endregion
+
+
+            #region Image editing
+            Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
+            Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
+            Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
+            #endregion
+
             #endregion
 
 
             #region TAB File Associations
-            Items.Add("frmSetting.lblExtensionsGroupDescription", "*Optional extensions will not be automatically pre-loaded into memory."); // 4.0
-            Items.Add("frmSetting.lblSupportedExtension", "Supported extensions: {0}"); // v3.0, updated v4.0
+            Items.Add("frmSetting.lblExtensionsGroupDescription", "*Optional formats will not be automatically pre-loaded into memory."); // 4.0
+            Items.Add("frmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
 
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
@@ -487,7 +499,7 @@ namespace ImageGlass.Library
 
 
             #region Language
-            Items.Add("frmSetting.lblLanguageText", "Installed languages:");
+            Items.Add("frmSetting.lblLanguageText", "Installed languages");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
 
@@ -500,11 +512,21 @@ namespace ImageGlass.Library
 
 
             #region frmAddNewFormat
-            Items.Add("frmAddNewFormat._Text", "Add new image extension"); // 4.0
-            Items.Add("frmAddNewFormat.lblImageExtension", "Image extension"); // 4.0
-            Items.Add("frmAddNewFormat.lblExtGroup", "Extension group"); // 4.0
+            Items.Add("frmAddNewFormat.lblFileExtension", "File extension"); // 4.0
+            Items.Add("frmAddNewFormat.lblFormatGroup", "Format group"); // 4.0
             Items.Add("frmAddNewFormat.btnOK", "OK"); // 4.0
             Items.Add("frmAddNewFormat.btnClose", "Close"); // 4.0
+            #endregion
+
+
+            #region frmEditEditingAssocisation
+            Items.Add("frmEditEditingAssocisation.lblFileExtension", "File extension"); // 4.0
+            Items.Add("frmEditEditingAssocisation.lblAppName", "App name"); // 4.0
+            Items.Add("frmEditEditingAssocisation.lblAppPath", "App path"); // 4.0
+            Items.Add("frmEditEditingAssocisation.lblAppArguments", "App arguments"); // 4.0
+            Items.Add("frmEditEditingAssocisation.btnReset", "Reset"); // 4.0
+            Items.Add("frmEditEditingAssocisation.btnOK", "OK"); // 4.0
+            Items.Add("frmEditEditingAssocisation.btnClose", "Close"); // 4.0
             #endregion
 
 

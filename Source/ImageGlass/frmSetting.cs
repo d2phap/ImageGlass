@@ -28,6 +28,7 @@ using ImageGlass.Library;
 using System.Linq;
 using ImageGlass.Theme;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ImageGlass
 {
@@ -39,6 +40,7 @@ namespace ImageGlass
 
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(lvExtension);
+            r.ApplyTheme(lvImageEditing);
         }
 
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -166,7 +168,7 @@ namespace ImageGlass
 
             //Windows State-------------------------------------------------------------------
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
-            
+            GlobalSetting.SaveConfigOfImageEditingAssociationList();
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
@@ -231,6 +233,15 @@ namespace ImageGlass
             chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
+            lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
+            btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
+            btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
+            clnFileExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnFileExtension"];
+            clnAppName.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppName"];
+            clnAppPath.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppPath"];
+            clnAppArguments.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppArguments"];
+
+
 
             //File Associations tab
             var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -242,8 +253,8 @@ namespace ImageGlass
             btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
             btnRegisterExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnRegisterExt"];
             btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
-            lvExtension.Groups[(int)ImageExtensionGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
-            lvExtension.Groups[(int)ImageExtensionGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
+            lvExtension.Groups[(int)ImageFormatGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
+            lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
 
 
             //Language tab
@@ -502,8 +513,13 @@ namespace ImageGlass
             //Get value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
-            
+
+            //Load Image Editing extension list
+            LoadImageEditingAssociationList();
+
+
         }
+        
 
         private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
         {
@@ -571,6 +587,100 @@ namespace ImageGlass
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
         }
 
+
+        /// <summary>
+        /// Load ImageEditingAssociation list
+        /// </summary>
+        /// <param name="isResetToDefault">True to reset the list to default (empty)</param>
+        private void LoadImageEditingAssociationList(bool @isResetToDefault = false)
+        {
+            lvImageEditing.Items.Clear();
+            var newEditingAssocList = new List<ImageEditingAssociation>();
+
+            // Load Default group
+            var extList = GlobalSetting.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var ext in extList)
+            {
+                var li = new ListViewItem();
+                li.Text = ext;
+
+                //Build new list
+                var newEditingAssoc = new ImageEditingAssociation()
+                {
+                    Extension = ext
+                };
+
+                if (!isResetToDefault)
+                {
+                    //Find the extension in the settings
+                    var editingExt = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
+
+                    li.SubItems.Add(editingExt?.AppName);
+                    li.SubItems.Add(editingExt?.AppPath);
+                    li.SubItems.Add(editingExt?.AppArguments);
+
+                    //Build new list
+                    newEditingAssoc.AppName = editingExt?.AppName;
+                    newEditingAssoc.AppPath = editingExt?.AppPath;
+                    newEditingAssoc.AppArguments = editingExt?.AppArguments;
+                }
+
+                newEditingAssocList.Add(newEditingAssoc);
+                lvImageEditing.Items.Add(li);
+            }
+
+            //Update the new full list
+            GlobalSetting.ImageEditingAssociationList = newEditingAssocList;
+        }
+
+        private void btnEditResetExt_Click(object sender, EventArgs e)
+        {
+            LoadImageEditingAssociationList(true);
+            GlobalSetting.SaveConfigOfImageEditingAssociationList();
+        }
+
+        private void btnEditEditExt_Click(object sender, EventArgs e)
+        {
+            if (lvImageEditing.CheckedItems.Count == 0)
+                return;
+
+            //Get select Association item
+            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.CheckedItems[0].Text);
+
+            if (assoc == null)
+                return;
+
+            frmEditEditingAssocisation f = new frmEditEditingAssocisation()
+            {
+                FileExtension = assoc.Extension,
+                AppName = assoc.AppName,
+                AppPath = assoc.AppPath,
+                AppArguments = assoc.AppArguments
+            };
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                assoc.AppName = f.AppName;
+                assoc.AppPath = f.AppPath;
+                assoc.AppArguments = f.AppArguments;
+
+                LoadImageEditingAssociationList();
+            }
+
+            f.Dispose();
+            
+        }
+
+        private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvImageEditing.Items)
+            {
+                item.Checked = item.Selected;
+            }
+
+            btnEditEditExt.Enabled = (lvImageEditing.CheckedIndices.Count > 0);
+        }
         #endregion
 
 
@@ -792,32 +902,29 @@ namespace ImageGlass
         {
             frmAddNewFormat f = new frmAddNewFormat()
             {
-                ImageExtension = ".svg",
-                ExtensionGroup = ImageExtensionGroup.Default
+                FileFormat = ".svg",
+                FormatGroup = ImageFormatGroup.Default
             };
 
-            do
+            if (f.ShowDialog() == DialogResult.OK)
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                // If the ext exist
+                if (GlobalSetting.AllImageFormats.Contains(f.FileFormat))
+                    return;
+
+                if (f.FormatGroup == ImageFormatGroup.Default)
                 {
-                    // If the ext exist
-                    if (GlobalSetting.AllImageFormats.Contains(f.ImageExtension))
-                        return;
-
-                    if (f.ExtensionGroup == ImageExtensionGroup.Default)
-                    {
-                        GlobalSetting.DefaultImageFormats += f.ImageExtension;
-                    }
-                    else if (f.ExtensionGroup == ImageExtensionGroup.Optional)
-                    {
-                        GlobalSetting.OptionalImageFormats += f.ImageExtension;
-                    }
-
-                    RegisterFileAssociations(GlobalSetting.AllImageFormats);
+                    GlobalSetting.DefaultImageFormats += f.FileFormat;
                 }
+                else if (f.FormatGroup == ImageFormatGroup.Optional)
+                {
+                    GlobalSetting.OptionalImageFormats += f.FileFormat;
+                }
+
+                RegisterFileAssociations(GlobalSetting.AllImageFormats);
             }
-            while (f.DialogResult == DialogResult.Retry);
-            
+
+            f.Dispose();
         }
 
         private void btnRegisterExt_Click(object sender, EventArgs e)
@@ -825,7 +932,20 @@ namespace ImageGlass
             RegisterFileAssociations(GlobalSetting.AllImageFormats);
         }
 
+        private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvExtension.Items)
+            {
+                item.Checked = item.Selected;
+            }
+
+            btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
+        }
+
+
 
         #endregion
+
+        
     }
 }

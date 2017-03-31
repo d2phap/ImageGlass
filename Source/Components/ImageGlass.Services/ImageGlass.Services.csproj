@@ -61,7 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationFile.cs" />
+    <Compile Include="Configuration\Enums.cs" />
     <Compile Include="Configuration\GlobalSetting.cs" />
+    <Compile Include="Configuration\ImageEditingAssociation.cs" />
+    <Compile Include="Configuration\ThumbnailItemInfo.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
     <Compile Include="InstanceManagement\SingleInstance.cs" />
