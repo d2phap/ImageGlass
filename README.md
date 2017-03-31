@@ -25,12 +25,12 @@ ImageGlass is a simple picture viewer with which you will be able to display you
 
 
 ### Documentation
-[![Supported formats](https://img.shields.io/badge/supported%20formats-30+-brightgreen.svg?maxAge=3600)](www.imageglass.org/documentation/supported-formats)
+[![Supported formats](https://img.shields.io/badge/supported%20formats-30+-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/supported-formats)
 [![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](http://wwwimageglass.org/documentation/features)
 [![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](http://wwwimageglass.org/documentation/ui-shortcuts-reference)
 
 
-For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) page. 
+For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
 
 For more information about ImageGlass, go to [Documentation](http://www.imageglass.org/documentation)
 
