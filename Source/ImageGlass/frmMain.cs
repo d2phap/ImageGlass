@@ -35,6 +35,9 @@ using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
+using ImageMagick;
+using System.Reflection;
+using ImageGlass.Properties;
 
 namespace ImageGlass
 {
@@ -1122,8 +1125,37 @@ namespace ImageGlass
 
             picMain.BackColor = BackColor;
 
-            // <toolbar_icon>
-            btnBack.Image = ImageGlass.Properties.Resources.back;
+
+
+            //var settings = new MagickReadSettings()
+            //{
+            //    BackgroundColor = MagickColors.Transparent,
+            //    Width = 30,
+            //    Height = 30
+            //};
+
+
+
+            //// <toolbar_icon>
+            //var o = Resources.ResourceManager.GetObject("Print.svg");
+            
+
+            //using (var mImg = new MagickImage((byte[]) o, settings))
+            //{
+            //    btnBack.Image = mImg.ToBitmap();
+            //}
+            
+            
+            
+            
+
+
+
+
+
+
+
+            //btnBack.Image = ImageGlass.Properties.Resources.back;
             btnNext.Image = ImageGlass.Properties.Resources.next;
             btnRotateLeft.Image = ImageGlass.Properties.Resources.leftrotate;
             btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate;
@@ -1188,80 +1220,34 @@ namespace ImageGlass
 
 
                 // <toolbar_icon>
-                try { btnBack.Image = Image.FromFile(dir + t.back); }
-                catch { btnBack.Image = ImageGlass.Properties.Resources.back; }
+                btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
+                btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
 
-                try { btnNext.Image = Image.FromFile(dir + t.next); }
-                catch { btnNext.Image = ImageGlass.Properties.Resources.next; }
+                btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
+                btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+                btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
+                btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
+                btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
+                btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
+                btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
+                btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
+                btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
 
-                try { btnRotateLeft.Image = Image.FromFile(dir + t.leftrotate); }
-                catch { btnRotateLeft.Image = ImageGlass.Properties.Resources.leftrotate; }
+                btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
+                btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
+                btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+                btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
+                btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
+                btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
+                btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
 
-                try { btnRotateRight.Image = Image.FromFile(dir + t.rightrotate); }
-                catch { btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate; }
-
-                try { btnZoomIn.Image = Image.FromFile(dir + t.zoomin); }
-                catch { btnZoomIn.Image = ImageGlass.Properties.Resources.zoomin; }
-
-                try { btnZoomOut.Image = Image.FromFile(dir + t.zoomout); }
-                catch { btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout; }
-
-                try { btnActualSize.Image = Image.FromFile(dir + t.scaletofit); }
-                catch { btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit; }
-
-                try { btnZoomLock.Image = Image.FromFile(dir + t.zoomlock); }
-                catch { btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock; }
-
-                try { btnScaletoWidth.Image = Image.FromFile(dir + t.scaletowidth); }
-                catch { btnScaletoWidth.Image = ImageGlass.Properties.Resources.scaletowidth; }
-
-                try { btnScaletoHeight.Image = Image.FromFile(dir + t.scaletoheight); }
-                catch { btnScaletoHeight.Image = ImageGlass.Properties.Resources.scaletoheight; }
-
-                try { btnWindowAutosize.Image = Image.FromFile(dir + t.autosizewindow); }
-                catch { btnWindowAutosize.Image = ImageGlass.Properties.Resources.autosizewindow; }
-
-                try { btnOpen.Image = Image.FromFile(dir + t.open); }
-                catch { btnOpen.Image = ImageGlass.Properties.Resources.open; }
-
-                try { btnRefresh.Image = Image.FromFile(dir + t.refresh); }
-                catch { btnRefresh.Image = ImageGlass.Properties.Resources.refresh; }
-
-                try { btnGoto.Image = Image.FromFile(dir + t.gotoimage); }
-                catch { btnGoto.Image = ImageGlass.Properties.Resources.gotoimage; }
-
-                try { btnThumb.Image = Image.FromFile(dir + t.thumbnail); }
-                catch { btnThumb.Image = ImageGlass.Properties.Resources.thumbnail; }
-
-                try { btnCheckedBackground.Image = Image.FromFile(dir + t.checkBackground); }
-                catch { btnCheckedBackground.Image = ImageGlass.Properties.Resources.background; }
-
-                try { btnFullScreen.Image = Image.FromFile(dir + t.fullscreen); }
-                catch { btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen; }
-
-                try { btnSlideShow.Image = Image.FromFile(dir + t.slideshow); }
-                catch { btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow; }
-
-                try { btnConvert.Image = Image.FromFile(dir + t.convert); }
-                catch { btnConvert.Image = ImageGlass.Properties.Resources.convert; }
-
-                try { btnPrintImage.Image = Image.FromFile(dir + t.print); }
-                catch { btnPrintImage.Image = ImageGlass.Properties.Resources.printer; }
-
-                try { btnFacebook.Image = Image.FromFile(dir + t.uploadfb); }
-                catch { btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb; }
-
-                try { btnExtension.Image = Image.FromFile(dir + t.extension); }
-                catch { btnExtension.Image = ImageGlass.Properties.Resources.extension; }
-
-                try { btnSetting.Image = Image.FromFile(dir + t.settings); }
-                catch { btnSetting.Image = ImageGlass.Properties.Resources.settings; }
-
-                try { btnHelp.Image = Image.FromFile(dir + t.about); }
-                catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
-
-                try { btnMenu.Image = Image.FromFile(dir + t.menu); }
-                catch { btnMenu.Image = ImageGlass.Properties.Resources.menu; }
+                btnConvert.Image = t.ToolbarIcons.Convert.Image;
+                btnPrintImage.Image = t.ToolbarIcons.Print.Image;
+                btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
+                btnExtension.Image = t.ToolbarIcons.Plugins.Image;
+                btnSetting.Image = t.ToolbarIcons.Settings.Image;
+                btnHelp.Image = t.ToolbarIcons.About.Image;
+                btnMenu.Image = t.ToolbarIcons.Menu.Image;
 
                 GlobalSetting.SetConfig("Theme", themeFile);
             }

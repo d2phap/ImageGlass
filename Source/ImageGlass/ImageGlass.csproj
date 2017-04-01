@@ -250,6 +250,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ZoomOut.svg" />
+    <None Include="Resources\ZoomIn.svg" />
+    <None Include="Resources\ViewPreviousImage.svg" />
+    <None Include="Resources\ViewNextImage.svg" />
     <None Include="Resources\zoomout.png" />
     <None Include="Resources\zoomlock.png" />
     <None Include="Resources\zoomin.png" />
@@ -260,6 +264,9 @@
     <None Include="Resources\background.png" />
     <Content Include="iglogo.ico" />
     <Content Include="Ionic.Zip.xml" />
+    <None Include="Resources\About.svg" />
+    <None Include="Resources\ActualSize.svg" />
+    <None Include="Resources\AdjustWindowSize.svg" />
     <Content Include="Resources\bot3.png" />
     <None Include="Resources\print.png" />
     <None Include="Resources\convert.png" />
@@ -280,6 +287,24 @@
     <None Include="Resources\scaletowidth.png" />
     <None Include="Resources\report.png" />
     <None Include="Resources\menu.png" />
+    <None Include="Resources\CheckedBackground.svg" />
+    <None Include="Resources\Convert.svg" />
+    <None Include="Resources\FullScreen.svg" />
+    <None Include="Resources\GoToImage.svg" />
+    <None Include="Resources\LockRatio.svg" />
+    <None Include="Resources\Menu.svg" />
+    <None Include="Resources\OpenFile.svg" />
+    <None Include="Resources\Plugins.svg" />
+    <None Include="Resources\Print.svg" />
+    <None Include="Resources\Refresh.svg" />
+    <None Include="Resources\RotateLeft.svg" />
+    <None Include="Resources\RotateRight.svg" />
+    <None Include="Resources\ScaleToHeight.svg" />
+    <None Include="Resources\ScaleToWidth.svg" />
+    <None Include="Resources\Settings.svg" />
+    <None Include="Resources\Sharing.svg" />
+    <None Include="Resources\Slideshow.svg" />
+    <None Include="Resources\ThumbnailBar.svg" />
     <Content Include="Resources\top3.png" />
     <None Include="Resources\Hand_Down.png" />
     <None Include="Resources\Hand_Move.png" />
