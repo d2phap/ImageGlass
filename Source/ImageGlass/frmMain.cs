@@ -35,9 +35,6 @@ using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
-using ImageMagick;
-using System.Reflection;
-using ImageGlass.Properties;
 
 namespace ImageGlass
 {
@@ -49,15 +46,16 @@ namespace ImageGlass
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
 
             //Check DPI Scaling ratio
-            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
+            OnDpiChanged();
         }
 
 
 
 
         #region Local variables
-        const int MENU_ICON_HEIGHT = 18;
+        const int MENU_ICON_HEIGHT = 22;
+        const int TOOLBAR_HEIGHT = 40;
 
         private string _imageInfo = "";
 
@@ -766,7 +764,7 @@ namespace ImageGlass
         {
             string appName = "";
             mnuMainEditImage.Image = null;
-
+            
             //Temporary memory data
             if (GlobalSetting.IsTempMemoryData)
             { }
@@ -783,7 +781,7 @@ namespace ImageGlass
 
                     //Update icon
                     Icon ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
-                    double scaleFactor = DPIScaling.GetDPIScaleFactor(true);
+                    double scaleFactor = DPIScaling.GetDPIScaleFactor();
                     int iconWidth = (int)(MENU_ICON_HEIGHT * scaleFactor);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
@@ -1063,46 +1061,52 @@ namespace ImageGlass
         /// </summary>
         private void OnDpiChanged()
         {
-            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
+            if (DPIScaling.CurrentDPI != DPIScaling.DPI_DEFAULT)
             {
-                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
-                int scaleFactor = (int)Math.Floor(DPIScaling.GetDPIScaleFactor());
+                //Get Scaling factor
+                double scaleFactor = DPIScaling.GetDPIScaleFactor();
+
 
                 #region change size of toolbar
-                int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
+                //Update size of toolbar
+                toolMain.Height = (int)(TOOLBAR_HEIGHT * scaleFactor);
 
+                //Get new toolbar item height
+                int currentToolbarHeight = toolMain.Height;
+                int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
+
+                //Update toolbar items size
                 //Tool bar buttons
                 foreach (var item in toolMain.Items.OfType<ToolStripButton>())
                 {
-                    item.Size = new Size(height, height);
+                    item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
                 }
 
                 //Tool bar menu buttons
                 foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
                 {
-                    item.Size = new Size(height, height);
+                    item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
                 }
 
                 //Tool bar separators
                 foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
                 {
-                    item.Size = new Size(5, height);
+                    item.Size = new Size(5, newToolBarItemHeight);
                 }
                 #endregion
 
                 #region change size of menu items
-                int currentHeight = mnuMainAbout.Height;
-                int newHeight = mnuMainAbout.Height * scaleFactor;
+                int newMenuIconHeight = (int)(MENU_ICON_HEIGHT * scaleFactor);
 
-                mnuMainAbout.Image = new Bitmap(newHeight, newHeight);
-                mnuMainViewNext.Image = new Bitmap(newHeight, newHeight);
-                mnuMainSlideShowStart.Image = new Bitmap(newHeight, newHeight);
-                mnuMainRotateCounterclockwise.Image = new Bitmap(newHeight, newHeight);
+                mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
-                mnuMainClearClipboard.Image = new Bitmap(newHeight, newHeight);
-                mnuMainShareFacebook.Image = new Bitmap(newHeight, newHeight);
-                mnuMainToolbar.Image = new Bitmap(newHeight, newHeight);
-                mnuMainExtensionManager.Image = new Bitmap(newHeight, newHeight);
+                mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainShareFacebook.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
                 #endregion
 
@@ -1554,10 +1558,8 @@ namespace ImageGlass
             //the bigger part of its are is on the new monitor. 
             else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
-                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
                 DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
-
-                OnDpiChanged();
+                OnDpiChanged();                
             }
             base.WndProc(ref m);
         }
@@ -3095,14 +3097,18 @@ namespace ImageGlass
             catch { }
         }
 
-        
-        
+
+
+
 
 
 
 
         #endregion
 
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(toolMain.Height.ToString());
+        }
     }
 }

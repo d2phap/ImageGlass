@@ -575,9 +575,16 @@ namespace ImageGlass.Services.Configuration
         {
             if (GlobalSetting.ImageEditingAssociationList.Count > 0)
             {
-                var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+                try
+                {
+                    var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
 
-                return assoc;
+                    return assoc;
+                }
+                catch
+                {
+                    return null;
+                }
             }
 
             return null;            
