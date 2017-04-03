@@ -54,8 +54,6 @@ namespace ImageGlass
 
 
         #region Local variables
-        const int MENU_ICON_HEIGHT = 22;
-        const int TOOLBAR_HEIGHT = 40;
 
         private string _imageInfo = "";
 
@@ -782,7 +780,7 @@ namespace ImageGlass
                     //Update icon
                     Icon ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
                     double scaleFactor = DPIScaling.GetDPIScaleFactor();
-                    int iconWidth = (int)(MENU_ICON_HEIGHT * scaleFactor);
+                    int iconWidth = (int)((int)Constants.MENU_ICON_HEIGHT * scaleFactor);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -1067,7 +1065,7 @@ namespace ImageGlass
 
             #region change size of toolbar
             //Update size of toolbar
-            toolMain.Height = (int)(TOOLBAR_HEIGHT * scaleFactor);
+            toolMain.Height = (int)((int)Constants.TOOLBAR_HEIGHT * scaleFactor);
 
             //Get new toolbar item height
             int currentToolbarHeight = toolMain.Height;
@@ -1094,7 +1092,7 @@ namespace ImageGlass
             #endregion
 
             #region change size of menu items
-            int newMenuIconHeight = (int)(MENU_ICON_HEIGHT * scaleFactor);
+            int newMenuIconHeight = (int)((int)Constants.MENU_ICON_HEIGHT * scaleFactor);
 
             mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
@@ -1114,90 +1112,30 @@ namespace ImageGlass
 
 
         #region Configurations
+        
         /// <summary>
-        /// Load default theme
+        /// Apply ImageGlass theme
         /// </summary>
-        private void LoadThemeDefault()
+        /// <param name="themeConfigPath">config.xml path. By default, load default theme</param>
+        private void ApplyTheme(string @themeConfigPath = "default")
         {
-            // <main>
-            toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar;
-            thumbnailBar.BackColor = Color.FromArgb(234, 234, 242);
-            lblInfo.ForeColor = Color.Black;
-
-            picMain.BackColor = BackColor;
-
-
-
-            //var settings = new MagickReadSettings()
-            //{
-            //    BackgroundColor = MagickColors.Transparent,
-            //    Width = 30,
-            //    Height = 30
-            //};
-
-
-
-            //// <toolbar_icon>
-            //var o = Resources.ResourceManager.GetObject("Print.svg");
-            
-
-            //using (var mImg = new MagickImage((byte[]) o, settings))
-            //{
-            //    btnBack.Image = mImg.ToBitmap();
-            //}
-            
-            
-            
-            
-
-
-
-
-
-
-
-            //btnBack.Image = ImageGlass.Properties.Resources.back;
-            btnNext.Image = ImageGlass.Properties.Resources.next;
-            btnRotateLeft.Image = ImageGlass.Properties.Resources.leftrotate;
-            btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate;
-            btnZoomIn.Image = ImageGlass.Properties.Resources.zoomin;
-            btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout;
-            btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit;
-            btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock;
-            btnScaletoWidth.Image = ImageGlass.Properties.Resources.scaletowidth;
-            btnScaletoHeight.Image = ImageGlass.Properties.Resources.scaletoheight;
-            btnWindowAutosize.Image = ImageGlass.Properties.Resources.autosizewindow;
-            btnOpen.Image = ImageGlass.Properties.Resources.open;
-            btnRefresh.Image = ImageGlass.Properties.Resources.refresh;
-            btnGoto.Image = ImageGlass.Properties.Resources.gotoimage;
-            btnThumb.Image = ImageGlass.Properties.Resources.thumbnail;
-            btnCheckedBackground.Image = ImageGlass.Properties.Resources.background;
-            btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen;
-            btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow;
-            btnConvert.Image = ImageGlass.Properties.Resources.convert;
-            btnPrintImage.Image = ImageGlass.Properties.Resources.printer;
-            btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb;
-            btnExtension.Image = ImageGlass.Properties.Resources.extension;
-            btnSetting.Image = ImageGlass.Properties.Resources.settings;
-            btnHelp.Image = ImageGlass.Properties.Resources.about;
-            btnMenu.Image = ImageGlass.Properties.Resources.menu;
-
-            GlobalSetting.SetConfig("Theme", "default");
-        }
-
-
-        /// <summary>
-        /// Apply changing theme
-        /// </summary>
-        private void LoadTheme()
-        {
-            string themeFile = GlobalSetting.GetConfig("Theme", "default");
-
-            if (File.Exists(themeFile))
+            if (File.Exists(themeConfigPath))
             {
-                Theme.Theme t = new Theme.Theme(themeFile);
-                string dir = (Path.GetDirectoryName(themeFile) + "\\").Replace("\\\\", "\\");
-                
+                LoadTheme(themeConfigPath);
+                GlobalSetting.SetConfig("Theme", themeConfigPath);
+            }
+            else
+            {
+                themeConfigPath = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+                LoadTheme(themeConfigPath);
+            }
+
+
+            void LoadTheme(string configFile)
+            {
+                Theme.Theme t = new Theme.Theme(configFile);
+                string dir = (Path.GetDirectoryName(configFile) + "\\").Replace("\\\\", "\\");
+
                 // <main>
                 try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
                 catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
@@ -1207,7 +1145,7 @@ namespace ImageGlass
 
                 try { lblInfo.ForeColor = t.statuscolor; }
                 catch { lblInfo.ForeColor = Color.White; }
-                
+
                 try
                 {
                     picMain.BackColor = t.backcolor;
@@ -1218,7 +1156,6 @@ namespace ImageGlass
                     picMain.BackColor = Color.White;
                     GlobalSetting.BackgroundColor = Color.White;
                 }
-
 
                 // <toolbar_icon>
                 btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
@@ -1249,14 +1186,7 @@ namespace ImageGlass
                 btnSetting.Image = t.ToolbarIcons.Settings.Image;
                 btnHelp.Image = t.ToolbarIcons.About.Image;
                 btnMenu.Image = t.ToolbarIcons.Menu.Image;
-
-                GlobalSetting.SetConfig("Theme", themeFile);
             }
-            else
-            {
-                LoadThemeDefault();
-            }
-
         }
         
 
@@ -1407,8 +1337,8 @@ namespace ImageGlass
             GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
 
             //Load theme--------------------------------------------------------------------
-            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
-            LoadTheme();
+            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
+            ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
             Application.DoEvents();
 
             //Load Thumbnail dimension

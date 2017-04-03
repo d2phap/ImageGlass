@@ -16,9 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using ImageMagick;
-using System.Drawing;
-using System.IO;
 
 namespace ImageGlass.Theme
 {
@@ -84,61 +81,5 @@ namespace ImageGlass.Theme
     }
 
     
-    public class ThemeIcon
-    {
-        public Bitmap Image { get; set; }
-        public string Filename { get; set; }
-
-        /// <summary>
-        /// Icon image
-        /// </summary>
-        public ThemeIcon()
-        {
-            Image = null;
-            Filename = string.Empty;
-        }
-
-        /// <summary>
-        /// Icon image
-        /// </summary>
-        /// <param name="filename">Filename</param>
-        /// <param name="width">Set width for Scalable Format</param>
-        /// <param name="height">Set height for Scalable Format</param>
-        public ThemeIcon(string filename, int @width = 0, int @height = 0)
-        {
-            Image = null;
-            Filename = filename;
-
-            //Load image
-            LoadIcon(width, height);
-        }
-
-        /// <summary>
-        /// Load image
-        /// </summary>
-        /// <param name="width">Set width for Scalable Format</param>
-        /// <param name="height">Set height for Scalable Format</param>
-        public void LoadIcon(int @width = 0, int @height = 0)
-        {
-            var settings = new MagickReadSettings();
-            var ext = Path.GetExtension(Filename).ToLower();
-
-            if (ext.CompareTo(".svg") == 0)
-            {
-                settings.BackgroundColor = MagickColors.Transparent;
-            }
-
-            if (width > 0 && height > 0)
-            {
-                settings.Width = width;
-                settings.Height = height;
-            }
-
-            using (var magicImg = new MagickImage(Filename, settings))
-            {
-                Image = magicImg.ToBitmap();
-            }
-        }
-        
-    }
+    
 }

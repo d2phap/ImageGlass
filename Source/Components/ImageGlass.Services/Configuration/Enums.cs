@@ -41,4 +41,11 @@ namespace ImageGlass.Services.Configuration
         Default = 0,
         Optional = 1
     }
+
+    public enum Constants
+    {
+        MENU_ICON_HEIGHT = 21,
+        TOOLBAR_ICON_HEIGHT = 18,
+        TOOLBAR_HEIGHT = 40
+    }
 }

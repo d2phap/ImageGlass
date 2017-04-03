@@ -51,7 +51,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
         private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
-
+        
 
         // Shared settings ----------------------------------------------------------------
         private static ImageOrderBy _imageLoadingOrder = ImageOrderBy.Name;

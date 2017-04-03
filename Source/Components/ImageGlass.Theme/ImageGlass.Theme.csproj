@@ -68,6 +68,7 @@
     <Compile Include="frmDialogBox.Designer.cs">
       <DependentUpon>frmDialogBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThemeIcon.cs" />
     <Compile Include="ThemeIconCollection.cs" />
     <Compile Include="InputBox.cs" />
     <Compile Include="ModernMenuRenderer.cs" />
