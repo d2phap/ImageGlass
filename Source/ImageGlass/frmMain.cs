@@ -1054,63 +1054,60 @@ namespace ImageGlass
             
             LocalSetting.ImageModifiedPath = "";
         }
-        
+
 
         /// <summary>
         /// Handle the event when Dpi changed
         /// </summary>
         private void OnDpiChanged()
         {
-            if (DPIScaling.CurrentDPI != DPIScaling.DPI_DEFAULT)
+            //Get Scaling factor
+            double scaleFactor = DPIScaling.GetDPIScaleFactor();
+
+
+            #region change size of toolbar
+            //Update size of toolbar
+            toolMain.Height = (int)(TOOLBAR_HEIGHT * scaleFactor);
+
+            //Get new toolbar item height
+            int currentToolbarHeight = toolMain.Height;
+            int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
+
+            //Update toolbar items size
+            //Tool bar buttons
+            foreach (var item in toolMain.Items.OfType<ToolStripButton>())
             {
-                //Get Scaling factor
-                double scaleFactor = DPIScaling.GetDPIScaleFactor();
-
-
-                #region change size of toolbar
-                //Update size of toolbar
-                toolMain.Height = (int)(TOOLBAR_HEIGHT * scaleFactor);
-
-                //Get new toolbar item height
-                int currentToolbarHeight = toolMain.Height;
-                int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
-
-                //Update toolbar items size
-                //Tool bar buttons
-                foreach (var item in toolMain.Items.OfType<ToolStripButton>())
-                {
-                    item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
-                }
-
-                //Tool bar menu buttons
-                foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
-                {
-                    item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
-                }
-
-                //Tool bar separators
-                foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
-                {
-                    item.Size = new Size(5, newToolBarItemHeight);
-                }
-                #endregion
-
-                #region change size of menu items
-                int newMenuIconHeight = (int)(MENU_ICON_HEIGHT * scaleFactor);
-
-                mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-
-                mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainShareFacebook.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-                mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-
-                #endregion
-
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
             }
+
+            //Tool bar menu buttons
+            foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
+            {
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+            }
+
+            //Tool bar separators
+            foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
+            {
+                item.Size = new Size(5, newToolBarItemHeight);
+            }
+            #endregion
+
+            #region change size of menu items
+            int newMenuIconHeight = (int)(MENU_ICON_HEIGHT * scaleFactor);
+
+            mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainShareFacebook.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            #endregion
+
         }
         #endregion
 
@@ -3106,9 +3103,7 @@ namespace ImageGlass
 
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(toolMain.Height.ToString());
-        }
+
+
     }
 }

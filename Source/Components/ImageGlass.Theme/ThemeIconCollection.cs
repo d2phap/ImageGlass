@@ -83,7 +83,6 @@ namespace ImageGlass.Theme
         }
     }
 
-
     
     public class ThemeIcon
     {
