@@ -1089,6 +1089,17 @@ namespace ImageGlass
             {
                 item.Size = new Size(5, newToolBarItemHeight);
             }
+
+            //Update toolbar icon size
+            var themeConfigFile = GlobalSetting.GetConfig("Theme", "default");
+            if (!File.Exists(themeConfigFile))
+            {
+                themeConfigFile = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+            }
+
+            Theme.Theme t = new Theme.Theme(themeConfigFile);
+            LoadToolbarIcons(t);
+
             #endregion
 
             #region change size of menu items
@@ -1135,7 +1146,7 @@ namespace ImageGlass
             {
                 Theme.Theme t = new Theme.Theme(configFile);
                 string dir = (Path.GetDirectoryName(configFile) + "\\").Replace("\\\\", "\\");
-
+                
                 // <main>
                 try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
                 catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
@@ -1158,37 +1169,46 @@ namespace ImageGlass
                 }
 
                 // <toolbar_icon>
-                btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
-                btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
-
-                btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
-                btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
-                btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
-                btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
-                btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
-                btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
-                btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
-                btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
-                btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
-
-                btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
-                btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
-                btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
-                btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
-                btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
-                btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
-                btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
-
-                btnConvert.Image = t.ToolbarIcons.Convert.Image;
-                btnPrintImage.Image = t.ToolbarIcons.Print.Image;
-                btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
-                btnExtension.Image = t.ToolbarIcons.Plugins.Image;
-                btnSetting.Image = t.ToolbarIcons.Settings.Image;
-                btnHelp.Image = t.ToolbarIcons.About.Image;
-                btnMenu.Image = t.ToolbarIcons.Menu.Image;
+                LoadToolbarIcons(t);
             }
         }
-        
+
+        /// <summary>
+        /// Load toolbar icons
+        /// </summary>
+        /// <param name="t">Theme</param>
+        private void LoadToolbarIcons(Theme.Theme t)
+        {
+            // <toolbar_icon>
+            btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
+            btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
+
+            btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
+            btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+            btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
+            btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
+            btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
+            btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
+            btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
+            btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
+            btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
+
+            btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
+            btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
+            btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+            btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
+            btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
+            btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
+            btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
+
+            btnConvert.Image = t.ToolbarIcons.Convert.Image;
+            btnPrintImage.Image = t.ToolbarIcons.Print.Image;
+            btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
+            btnExtension.Image = t.ToolbarIcons.Plugins.Image;
+            btnSetting.Image = t.ToolbarIcons.Settings.Image;
+            btnHelp.Image = t.ToolbarIcons.About.Image;
+            btnMenu.Image = t.ToolbarIcons.Menu.Image;
+        }
 
 
         /// <summary>
@@ -1227,14 +1247,6 @@ namespace ImageGlass
             {
                 WindowState = FormWindowState.Maximized;
             }
-
-            //check current version for the first time running
-            //configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
-            //if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
-            //{
-            //    //Load Optional Image Formats
-            //    GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
-            //}
 
             // Read suported image formats ------------------------------------------------
             var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
