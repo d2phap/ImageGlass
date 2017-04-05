@@ -1146,27 +1146,18 @@ namespace ImageGlass
             {
                 Theme.Theme t = new Theme.Theme(configFile);
                 string dir = (Path.GetDirectoryName(configFile) + "\\").Replace("\\\\", "\\");
-                
+
                 // <main>
-                try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
-                catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
+                picMain.BackColor = t.BackgroundColor;
+                GlobalSetting.BackgroundColor = t.BackgroundColor;
 
-                try { thumbnailBar.BackColor = t.bottomBarColor; }
-                catch { thumbnailBar.BackColor = Color.FromArgb(234, 234, 242); }
+                toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
+                toolMain.BackColor = t.ToolbarBackgroundColor;
 
-                try { lblInfo.ForeColor = t.statuscolor; }
-                catch { lblInfo.ForeColor = Color.White; }
+                thumbnailBar.BackgroundImage = t.ThumbnailBackgroundImage.Image;
+                thumbnailBar.BackColor = t.ThumbnailBackgroundColor;
 
-                try
-                {
-                    picMain.BackColor = t.backcolor;
-                    GlobalSetting.BackgroundColor = t.backcolor;
-                }
-                catch
-                {
-                    picMain.BackColor = Color.White;
-                    GlobalSetting.BackgroundColor = Color.White;
-                }
+                lblInfo.ForeColor = t.TextInfoColor;
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);

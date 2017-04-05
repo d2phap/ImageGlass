@@ -36,25 +36,40 @@ namespace ImageGlass.Theme
         public string description = string.Empty;           
         public string type = string.Empty;                     //config file type
         public string compatibility = string.Empty;            //minimum version requirement
-        public string preview = string.Empty;                  //preview photo file
 
         //main
-        public string topbar = string.Empty;                   
-        public int topbartransparent = 0;                      //v1.2 only
-        public Color backcolor = Color.White;                  
-        public string bottombar = string.Empty;                 //v3.2-
-        public Color bottomBarColor = Color.FromArgb(234, 234, 242);    //v3.3+
-        public Color statuscolor = Color.Black;                
-        
+        public ThemeImage PreviewImage { get; set; }
+        public Color BackgroundColor { get; set; }
+
+        public ThemeImage ToolbarBackgroundImage { get; set; }
+        public Color ToolbarBackgroundColor { get; set; }
+        public ThemeImage ThumbnailBackgroundImage { get; set; }
+        public Color ThumbnailBackgroundColor { get; set; }
+        public Color TextInfoColor { get; set; }
+
         /// <summary>
         /// Toolbar Icon collection for the theme
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; }
 
+        private void InitiateVariables()
+        {
+            PreviewImage = new ThemeImage();
+            BackgroundColor = Color.White;
+
+            ToolbarIcons = new ThemeIconCollection();
+            ToolbarBackgroundImage = new ThemeImage();
+            ToolbarBackgroundColor = Color.FromArgb(234, 234, 242);
+
+            ThumbnailBackgroundImage = new ThemeImage();
+            ThumbnailBackgroundColor = Color.FromArgb(234, 234, 242);
+
+            TextInfoColor = Color.Black;
+        }
 
         public Theme()
         {
-            ToolbarIcons = new ThemeIconCollection();
+            InitiateVariables();
         }
 
         /// <summary>
@@ -63,7 +78,7 @@ namespace ImageGlass.Theme
         /// <param name="file"></param>
         public Theme(string file)
         {
-            ToolbarIcons = new ThemeIconCollection();
+            InitiateVariables();
 
             LoadTheme(file);
         }
@@ -99,6 +114,7 @@ namespace ImageGlass.Theme
             double scaleFactor = DPIScaling.GetDPIScaleFactor();
             int iconHeight = (int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
+            #region Theme <Info>
             try { name = n.GetAttribute("name"); }
             catch (Exception ex) { };
             try { version = n.GetAttribute("version"); }
@@ -115,196 +131,234 @@ namespace ImageGlass.Theme
             catch (Exception ex) { };
             try { compatibility = n.GetAttribute("compatibility"); }
             catch (Exception ex) { };
-            try { preview = n.GetAttribute("preview"); }
+            #endregion
+
+            #region Theme <main>
+            try
+            {
+                var imgFile = Path.Combine(dir, n.GetAttribute("preview"));
+                PreviewImage = new ThemeImage(imgFile);
+            }
             catch (Exception ex) { };
 
             n = (XmlElement)nType.SelectNodes("main")[0]; //<main>
-            try { topbar = n.GetAttribute("topbar"); }
-            catch (Exception ex) { };
-            try { topbartransparent = int.Parse(n.GetAttribute("topbartransparent")); }
-            catch (Exception ex) { };
-            try { backcolor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor"))); }
-            catch (Exception ex) { };
-            try { bottomBarColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor"))); }
-            catch (Exception ex) { };
-            try { statuscolor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor"))); }
+
+            try
+            {
+                var imgFile = Path.Combine(dir, n.GetAttribute("topbar"));
+                ToolbarBackgroundImage = new ThemeImage(imgFile);
+            }
             catch (Exception ex) { };
 
+            try
+            {
+                ToolbarBackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("topbarcolor")));
+            }
+            catch (Exception ex) { };
+
+            try
+            {
+                var imgFile = Path.Combine(dir, n.GetAttribute("bottombar"));
+                ThumbnailBackgroundImage = new ThemeImage(imgFile);
+            }
+            catch (Exception ex) { };
+
+            try
+            {
+                ThumbnailBackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor")));
+            }
+            catch (Exception ex) { };
+
+            try
+            {
+                BackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor")));
+            }
+            catch (Exception ex) { };
+
+            try
+            {
+                TextInfoColor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor")));
+            }
+            catch (Exception ex) { };
+            #endregion
+
+            #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("back"));
-                ToolbarIcons.ViewPreviousImage = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ViewPreviousImage = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("next"));
-                ToolbarIcons.ViewNextImage = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ViewNextImage = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("leftrotate"));
-                ToolbarIcons.RotateLeft = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.RotateLeft = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("rightrotate"));
-                ToolbarIcons.RotateRight = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.RotateRight = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("zoomin"));
-                ToolbarIcons.ZoomIn = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ZoomIn = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("zoomout"));
-                ToolbarIcons.ZoomOut = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ZoomOut = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("scaletofit"));
-                ToolbarIcons.ActualSize = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ActualSize = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("zoomlock"));
-                ToolbarIcons.LockRatio = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.LockRatio = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("scaletowidth"));
-                ToolbarIcons.ScaleToWidth = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ScaleToWidth = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("scaletoheight"));
-                ToolbarIcons.ScaleToHeight = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ScaleToHeight = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("autosizewindow"));
-                ToolbarIcons.AdjustWindowSize = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.AdjustWindowSize = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("open"));
-                ToolbarIcons.OpenFile = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.OpenFile = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("refresh"));
-                ToolbarIcons.Refresh = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Refresh = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("gotoimage"));
-                ToolbarIcons.GoToImage = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.GoToImage = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("thumbnail"));
-                ToolbarIcons.ThumbnailBar = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.ThumbnailBar = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("checkedbackground"));
-                ToolbarIcons.CheckedBackground = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.CheckedBackground = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("fullscreen"));
-                ToolbarIcons.FullScreen = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.FullScreen = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("slideshow"));
-                ToolbarIcons.Slideshow = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Slideshow = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("convert"));
-                ToolbarIcons.Convert = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Convert = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("print"));
-                ToolbarIcons.Print = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Print = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("uploadfb"));
-                ToolbarIcons.Sharing = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Sharing = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("extension"));
-                ToolbarIcons.Plugins = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Plugins = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("settings"));
-                ToolbarIcons.Settings = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Settings = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("about"));
-                ToolbarIcons.About = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.About = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
             try
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("menu"));
-                ToolbarIcons.Menu = new ThemeIcon(iconFile, iconHeight, iconHeight);
+                ToolbarIcons.Menu = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
+            #endregion
 
             return true;
         }
@@ -328,15 +382,16 @@ namespace ImageGlass.Theme
             n.SetAttribute("description", description);
             n.SetAttribute("type", "ImageGlass Theme Configuration");
             n.SetAttribute("compatibility", compatibility);
-            n.SetAttribute("preview", preview);
+            n.SetAttribute("preview", Path.GetFileName(PreviewImage.Filename));
             nType.AppendChild(n);
 
             n = doc.CreateElement("main");// <main>
-            n.SetAttribute("topbar", topbar);
-            n.SetAttribute("topbartransparent", "0");
-            n.SetAttribute("bottombar", bottombar);
-            n.SetAttribute("backcolor", backcolor.ToArgb().ToString());
-            n.SetAttribute("statuscolor", statuscolor.ToArgb().ToString());
+            n.SetAttribute("topbar", Path.GetFileName(ToolbarBackgroundImage.Filename));
+            n.SetAttribute("topbarcolor", ToolbarBackgroundColor.ToArgb().ToString());
+            n.SetAttribute("bottombar", Path.GetFileName(ThumbnailBackgroundImage.Filename));
+            n.SetAttribute("bottombarcolor", ThumbnailBackgroundColor.ToArgb().ToString());
+            n.SetAttribute("backcolor", BackgroundColor.ToArgb().ToString());
+            n.SetAttribute("statuscolor", TextInfoColor.ToArgb().ToString());
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
@@ -392,7 +447,7 @@ namespace ImageGlass.Theme
             try
             {
                 Theme th = new Theme(themePath);
-                GlobalSetting.SetConfig("BackgroundColor", th.backcolor.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString());
             }
             catch
             {

@@ -21,62 +21,62 @@ namespace ImageGlass.Theme
 {
     public class ThemeIconCollection
     {
-        public ThemeIcon About { get; set; }
-        public ThemeIcon ActualSize { get; set; }
-        public ThemeIcon AdjustWindowSize { get; set; }
-        public ThemeIcon CheckedBackground { get; set; }
-        public ThemeIcon Convert { get; set; }
-        public ThemeIcon FullScreen { get; set; }
-        public ThemeIcon GoToImage { get; set; }
-        public ThemeIcon LockRatio { get; set; }
-        public ThemeIcon Menu { get; set; }
-        public ThemeIcon OpenFile { get; set; }
-        public ThemeIcon Plugins { get; set; }
-        public ThemeIcon Print { get; set; }
-        public ThemeIcon Refresh { get; set; }
-        public ThemeIcon RotateLeft { get; set; }
-        public ThemeIcon RotateRight { get; set; }
-        public ThemeIcon ScaleToHeight { get; set; }
-        public ThemeIcon ScaleToWidth { get; set; }
-        public ThemeIcon Settings { get; set; }
-        public ThemeIcon Sharing { get; set; }
-        public ThemeIcon Slideshow { get; set; }
-        public ThemeIcon ThumbnailBar { get; set; }
-        public ThemeIcon ViewNextImage { get; set; }
-        public ThemeIcon ViewPreviousImage { get; set; }
-        public ThemeIcon ZoomIn { get; set; }
-        public ThemeIcon ZoomOut { get; set; }
+        public ThemeImage About { get; set; }
+        public ThemeImage ActualSize { get; set; }
+        public ThemeImage AdjustWindowSize { get; set; }
+        public ThemeImage CheckedBackground { get; set; }
+        public ThemeImage Convert { get; set; }
+        public ThemeImage FullScreen { get; set; }
+        public ThemeImage GoToImage { get; set; }
+        public ThemeImage LockRatio { get; set; }
+        public ThemeImage Menu { get; set; }
+        public ThemeImage OpenFile { get; set; }
+        public ThemeImage Plugins { get; set; }
+        public ThemeImage Print { get; set; }
+        public ThemeImage Refresh { get; set; }
+        public ThemeImage RotateLeft { get; set; }
+        public ThemeImage RotateRight { get; set; }
+        public ThemeImage ScaleToHeight { get; set; }
+        public ThemeImage ScaleToWidth { get; set; }
+        public ThemeImage Settings { get; set; }
+        public ThemeImage Sharing { get; set; }
+        public ThemeImage Slideshow { get; set; }
+        public ThemeImage ThumbnailBar { get; set; }
+        public ThemeImage ViewNextImage { get; set; }
+        public ThemeImage ViewPreviousImage { get; set; }
+        public ThemeImage ZoomIn { get; set; }
+        public ThemeImage ZoomOut { get; set; }
 
         /// <summary>
         /// Icon collection for the theme
         /// </summary>
         public ThemeIconCollection()
         {
-            About = new ThemeIcon();
-            ActualSize = new ThemeIcon();
-            AdjustWindowSize = new ThemeIcon();
-            CheckedBackground = new ThemeIcon();
-            Convert = new ThemeIcon();
-            FullScreen = new ThemeIcon();
-            GoToImage = new ThemeIcon();
-            LockRatio = new ThemeIcon();
-            Menu = new ThemeIcon();
-            OpenFile = new ThemeIcon();
-            Plugins = new ThemeIcon();
-            Print = new ThemeIcon();
-            Refresh = new ThemeIcon();
-            RotateLeft = new ThemeIcon();
-            RotateRight = new ThemeIcon();
-            ScaleToHeight = new ThemeIcon();
-            ScaleToWidth = new ThemeIcon();
-            Settings = new ThemeIcon();
-            Sharing = new ThemeIcon();
-            Slideshow = new ThemeIcon();
-            ThumbnailBar = new ThemeIcon();
-            ViewNextImage = new ThemeIcon();
-            ViewPreviousImage = new ThemeIcon();
-            ZoomIn = new ThemeIcon();
-            ZoomOut = new ThemeIcon();
+            About = new ThemeImage();
+            ActualSize = new ThemeImage();
+            AdjustWindowSize = new ThemeImage();
+            CheckedBackground = new ThemeImage();
+            Convert = new ThemeImage();
+            FullScreen = new ThemeImage();
+            GoToImage = new ThemeImage();
+            LockRatio = new ThemeImage();
+            Menu = new ThemeImage();
+            OpenFile = new ThemeImage();
+            Plugins = new ThemeImage();
+            Print = new ThemeImage();
+            Refresh = new ThemeImage();
+            RotateLeft = new ThemeImage();
+            RotateRight = new ThemeImage();
+            ScaleToHeight = new ThemeImage();
+            ScaleToWidth = new ThemeImage();
+            Settings = new ThemeImage();
+            Sharing = new ThemeImage();
+            Slideshow = new ThemeImage();
+            ThumbnailBar = new ThemeImage();
+            ViewNextImage = new ThemeImage();
+            ViewPreviousImage = new ThemeImage();
+            ZoomIn = new ThemeImage();
+            ZoomOut = new ThemeImage();
         }
     }
 

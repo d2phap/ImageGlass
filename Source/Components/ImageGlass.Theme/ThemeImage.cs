@@ -27,7 +27,7 @@ using System.Text;
 
 namespace ImageGlass.Theme
 {
-    public class ThemeIcon
+    public class ThemeImage
     {
         public Bitmap Image { get; set; }
         public string Filename { get; set; }
@@ -35,7 +35,7 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Icon image
         /// </summary>
-        public ThemeIcon()
+        public ThemeImage()
         {
             Image = null;
             Filename = string.Empty;
@@ -47,7 +47,7 @@ namespace ImageGlass.Theme
         /// <param name="filename">Filename</param>
         /// <param name="width">Set width for Scalable Format</param>
         /// <param name="height">Set height for Scalable Format</param>
-        public ThemeIcon(string filename, int @width = 0, int @height = 0)
+        public ThemeImage(string filename, int @width = 0, int @height = 0)
         {
             Image = null;
             Filename = filename;
