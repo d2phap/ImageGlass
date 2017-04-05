@@ -28,9 +28,7 @@ using System.Security;
 using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Threading;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -558,10 +556,10 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder editingAssocString = new StringBuilder();
 
-            Parallel.ForEach(GlobalSetting.ImageEditingAssociationList, (assoc) =>
+            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
             {
                 editingAssocString.Append($"[{assoc.ToString()}]");
-            });
+            }
 
             GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
         }
@@ -606,10 +604,10 @@ namespace ImageGlass.Services.Configuration
             };
             var extList = reg.GetValueNames();
 
-            Parallel.ForEach(extList, (ext) =>
+            foreach(var ext in extList)
             {
                 exts.Append($"*{ext};");
-            });
+            }
 
             return exts.ToString();
         }
