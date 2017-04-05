@@ -1398,7 +1398,7 @@ namespace ImageGlass
 
             if(editingAssoclist.Length > 0)
             {
-                Parallel.ForEach(editingAssoclist, (configString) =>
+                foreach(var configString in editingAssoclist)
                 {
                     try
                     {
@@ -1406,7 +1406,7 @@ namespace ImageGlass
                         GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
                     }
                     catch (InvalidCastException) { }
-                });
+                }
             }
         }
 
