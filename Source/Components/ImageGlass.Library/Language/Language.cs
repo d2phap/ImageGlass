@@ -112,11 +112,11 @@ namespace ImageGlass.Library
         /// </summary>
         public Language()
         {
-            _langCode = "en";
-            _langName = "English";
-            _author = "Dương Diệu Pháp";
-            _description = "English";
-            _minVersion = "3.5.0.0";
+            _langCode = "en-US";
+            _langName = "Local name of the language";
+            _author = "ImageGlass community";
+            _description = "English name of language";
+            _minVersion = "4.0.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -366,7 +366,7 @@ namespace ImageGlass.Library
 
 
             #region frmFacebook
-            Items.Add("frmFacebook.lblMessage", "Message:");
+            Items.Add("frmFacebook.lblMessage", "Message");
             Items.Add("frmFacebook.btnUpload._Upload", "Upload");
             Items.Add("frmFacebook.btnUpload._Cancel", "Cancel");
             Items.Add("frmFacebook.btnUpload._ViewImage", "View image");
@@ -386,8 +386,8 @@ namespace ImageGlass.Library
             Items.Add("frmAbout.lblComponent", "Components");
             Items.Add("frmAbout.lblReferences", "References");
             Items.Add("frmAbout.lblVersion", "Version: {0}");
-            Items.Add("frmAbout.lblInfoContact", "Contact:");
-            Items.Add("frmAbout.lblSoftwareUpdate", "Software updates:");
+            Items.Add("frmAbout.lblInfoContact", "Contact");
+            Items.Add("frmAbout.lblSoftwareUpdate", "Software updates");
             Items.Add("frmAbout.lnkCheckUpdate", "» Check for update");
             Items.Add("frmAbout._Text", "About");
             Items.Add("frmAbout._PortableText", "[Portable]"); //v4.0

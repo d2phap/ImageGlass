@@ -38,7 +38,7 @@ namespace igtasks
         public static void InstallExtensions()
         {
             OpenFileDialog o = new OpenFileDialog();
-            o.Filter = "ImageGlass extensions (*.dll)|*.dll";
+            o.Filter = "ImageGlass plugins (*.dll)|*.dll";
             o.Multiselect = true;
 
             if (o.ShowDialog() == DialogResult.OK)
@@ -47,7 +47,7 @@ namespace igtasks
                 {
                     try
                     {
-                        File.Copy(f, GlobalSetting.StartUpDir + "Plugins\\" + Path.GetFileName(f));
+                        File.Copy(f, Path.Combine(GlobalSetting.StartUpDir, "Plugins", Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {
@@ -73,7 +73,7 @@ namespace igtasks
                 {
                     try
                     {
-                        File.Copy(f, GlobalSetting.StartUpDir + "Languages\\" + Path.GetFileName(f));
+                        File.Copy(f, Path.Combine(GlobalSetting.StartUpDir, "Languages", Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {
