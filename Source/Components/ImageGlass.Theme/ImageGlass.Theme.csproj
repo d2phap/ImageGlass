@@ -68,6 +68,11 @@
     <Compile Include="frmDialogBox.Designer.cs">
       <DependentUpon>frmDialogBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ThemeImage.cs" />
     <Compile Include="ThemeIconCollection.cs" />
     <Compile Include="InputBox.cs" />
@@ -86,6 +91,10 @@
   <ItemGroup>
     <EmbeddedResource Include="frmDialogBox.resx">
       <DependentUpon>frmDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
