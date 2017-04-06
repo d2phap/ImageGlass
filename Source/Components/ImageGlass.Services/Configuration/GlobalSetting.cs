@@ -28,9 +28,7 @@ using System.Security;
 using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Threading;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -51,7 +49,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
         private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
-
+        
 
         // Shared settings ----------------------------------------------------------------
         private static ImageOrderBy _imageLoadingOrder = ImageOrderBy.Name;
@@ -558,10 +556,10 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder editingAssocString = new StringBuilder();
 
-            Parallel.ForEach(GlobalSetting.ImageEditingAssociationList, (assoc) =>
+            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
             {
                 editingAssocString.Append($"[{assoc.ToString()}]");
-            });
+            }
 
             GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
         }
@@ -575,9 +573,16 @@ namespace ImageGlass.Services.Configuration
         {
             if (GlobalSetting.ImageEditingAssociationList.Count > 0)
             {
-                var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+                try
+                {
+                    var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
 
-                return assoc;
+                    return assoc;
+                }
+                catch
+                {
+                    return null;
+                }
             }
 
             return null;            
@@ -599,10 +604,10 @@ namespace ImageGlass.Services.Configuration
             };
             var extList = reg.GetValueNames();
 
-            Parallel.ForEach(extList, (ext) =>
+            foreach(var ext in extList)
             {
                 exts.Append($"*{ext};");
-            });
+            }
 
             return exts.ToString();
         }

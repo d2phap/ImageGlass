@@ -46,15 +46,14 @@ namespace ImageGlass
             mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
 
             //Check DPI Scaling ratio
-            DPIScaling.OldDPI = DPIScaling.CurrentDPI;
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
+            OnDpiChanged();
         }
 
 
 
 
         #region Local variables
-        const int MENU_ICON_HEIGHT = 18;
 
         private string _imageInfo = "";
 
@@ -763,7 +762,7 @@ namespace ImageGlass
         {
             string appName = "";
             mnuMainEditImage.Image = null;
-
+            
             //Temporary memory data
             if (GlobalSetting.IsTempMemoryData)
             { }
@@ -780,8 +779,8 @@ namespace ImageGlass
 
                     //Update icon
                     Icon ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
-                    double scaleFactor = DPIScaling.GetDPIScaleFactor(true);
-                    int iconWidth = (int)(MENU_ICON_HEIGHT * scaleFactor);
+                    double scaleFactor = DPIScaling.GetDPIScaleFactor();
+                    int iconWidth = (int)((int)Constants.MENU_ICON_HEIGHT * scaleFactor);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -1053,225 +1052,154 @@ namespace ImageGlass
             
             LocalSetting.ImageModifiedPath = "";
         }
-        
+
 
         /// <summary>
         /// Handle the event when Dpi changed
         /// </summary>
         private void OnDpiChanged()
         {
-            if (DPIScaling.OldDPI != DPIScaling.CurrentDPI)
+            //Get Scaling factor
+            double scaleFactor = DPIScaling.GetDPIScaleFactor();
+
+
+            #region change size of toolbar
+            //Update size of toolbar
+            toolMain.Height = (int)((int)Constants.TOOLBAR_HEIGHT * scaleFactor);
+
+            //Get new toolbar item height
+            int currentToolbarHeight = toolMain.Height;
+            int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
+
+            //Update toolbar items size
+            //Tool bar buttons
+            foreach (var item in toolMain.Items.OfType<ToolStripButton>())
             {
-                DPIScaling.HandleDpiChanged(DPIScaling.OldDPI, DPIScaling.CurrentDPI, this);
-                int scaleFactor = (int)Math.Floor(DPIScaling.GetDPIScaleFactor());
-
-                #region change size of toolbar
-                int height = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
-
-                //Tool bar buttons
-                foreach (var item in toolMain.Items.OfType<ToolStripButton>())
-                {
-                    item.Size = new Size(height, height);
-                }
-
-                //Tool bar menu buttons
-                foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
-                {
-                    item.Size = new Size(height, height);
-                }
-
-                //Tool bar separators
-                foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
-                {
-                    item.Size = new Size(5, height);
-                }
-                #endregion
-
-                #region change size of menu items
-                int currentHeight = mnuMainAbout.Height;
-                int newHeight = mnuMainAbout.Height * scaleFactor;
-
-                mnuMainAbout.Image = new Bitmap(newHeight, newHeight);
-                mnuMainViewNext.Image = new Bitmap(newHeight, newHeight);
-                mnuMainSlideShowStart.Image = new Bitmap(newHeight, newHeight);
-                mnuMainRotateCounterclockwise.Image = new Bitmap(newHeight, newHeight);
-
-                mnuMainClearClipboard.Image = new Bitmap(newHeight, newHeight);
-                mnuMainShareFacebook.Image = new Bitmap(newHeight, newHeight);
-                mnuMainToolbar.Image = new Bitmap(newHeight, newHeight);
-                mnuMainExtensionManager.Image = new Bitmap(newHeight, newHeight);
-
-                #endregion
-
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
             }
+
+            //Tool bar menu buttons
+            foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
+            {
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+            }
+
+            //Tool bar separators
+            foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
+            {
+                item.Size = new Size(5, newToolBarItemHeight);
+            }
+
+            //Update toolbar icon size
+            var themeConfigFile = GlobalSetting.GetConfig("Theme", "default");
+            if (!File.Exists(themeConfigFile))
+            {
+                themeConfigFile = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+            }
+
+            Theme.Theme t = new Theme.Theme(themeConfigFile);
+            LoadToolbarIcons(t);
+
+            #endregion
+
+            #region change size of menu items
+            int newMenuIconHeight = (int)((int)Constants.MENU_ICON_HEIGHT * scaleFactor);
+
+            mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainShareFacebook.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            #endregion
+
         }
         #endregion
 
 
 
         #region Configurations
+        
         /// <summary>
-        /// Load default theme
+        /// Apply ImageGlass theme
         /// </summary>
-        private void LoadThemeDefault()
+        /// <param name="themeConfigPath">config.xml path. By default, load default theme</param>
+        private void ApplyTheme(string @themeConfigPath = "default")
         {
-            // <main>
-            toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar;
-            thumbnailBar.BackColor = Color.FromArgb(234, 234, 242);
-            lblInfo.ForeColor = Color.Black;
-
-            picMain.BackColor = BackColor;
-
-            // <toolbar_icon>
-            btnBack.Image = ImageGlass.Properties.Resources.back;
-            btnNext.Image = ImageGlass.Properties.Resources.next;
-            btnRotateLeft.Image = ImageGlass.Properties.Resources.leftrotate;
-            btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate;
-            btnZoomIn.Image = ImageGlass.Properties.Resources.zoomin;
-            btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout;
-            btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit;
-            btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock;
-            btnScaletoWidth.Image = ImageGlass.Properties.Resources.scaletowidth;
-            btnScaletoHeight.Image = ImageGlass.Properties.Resources.scaletoheight;
-            btnWindowAutosize.Image = ImageGlass.Properties.Resources.autosizewindow;
-            btnOpen.Image = ImageGlass.Properties.Resources.open;
-            btnRefresh.Image = ImageGlass.Properties.Resources.refresh;
-            btnGoto.Image = ImageGlass.Properties.Resources.gotoimage;
-            btnThumb.Image = ImageGlass.Properties.Resources.thumbnail;
-            btnCheckedBackground.Image = ImageGlass.Properties.Resources.background;
-            btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen;
-            btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow;
-            btnConvert.Image = ImageGlass.Properties.Resources.convert;
-            btnPrintImage.Image = ImageGlass.Properties.Resources.printer;
-            btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb;
-            btnExtension.Image = ImageGlass.Properties.Resources.extension;
-            btnSetting.Image = ImageGlass.Properties.Resources.settings;
-            btnHelp.Image = ImageGlass.Properties.Resources.about;
-            btnMenu.Image = ImageGlass.Properties.Resources.menu;
-
-            GlobalSetting.SetConfig("Theme", "default");
-        }
-
-
-        /// <summary>
-        /// Apply changing theme
-        /// </summary>
-        private void LoadTheme()
-        {
-            string themeFile = GlobalSetting.GetConfig("Theme", "default");
-
-            if (File.Exists(themeFile))
+            if (File.Exists(themeConfigPath))
             {
-                Theme.Theme t = new Theme.Theme(themeFile);
-                string dir = (Path.GetDirectoryName(themeFile) + "\\").Replace("\\\\", "\\");
-                
-                // <main>
-                try { toolMain.BackgroundImage = Image.FromFile(dir + t.topbar); }
-                catch { toolMain.BackgroundImage = ImageGlass.Properties.Resources.topbar; }
-
-                try { thumbnailBar.BackColor = t.bottomBarColor; }
-                catch { thumbnailBar.BackColor = Color.FromArgb(234, 234, 242); }
-
-                try { lblInfo.ForeColor = t.statuscolor; }
-                catch { lblInfo.ForeColor = Color.White; }
-                
-                try
-                {
-                    picMain.BackColor = t.backcolor;
-                    GlobalSetting.BackgroundColor = t.backcolor;
-                }
-                catch
-                {
-                    picMain.BackColor = Color.White;
-                    GlobalSetting.BackgroundColor = Color.White;
-                }
-
-
-                // <toolbar_icon>
-                try { btnBack.Image = Image.FromFile(dir + t.back); }
-                catch { btnBack.Image = ImageGlass.Properties.Resources.back; }
-
-                try { btnNext.Image = Image.FromFile(dir + t.next); }
-                catch { btnNext.Image = ImageGlass.Properties.Resources.next; }
-
-                try { btnRotateLeft.Image = Image.FromFile(dir + t.leftrotate); }
-                catch { btnRotateLeft.Image = ImageGlass.Properties.Resources.leftrotate; }
-
-                try { btnRotateRight.Image = Image.FromFile(dir + t.rightrotate); }
-                catch { btnRotateRight.Image = ImageGlass.Properties.Resources.rightrotate; }
-
-                try { btnZoomIn.Image = Image.FromFile(dir + t.zoomin); }
-                catch { btnZoomIn.Image = ImageGlass.Properties.Resources.zoomin; }
-
-                try { btnZoomOut.Image = Image.FromFile(dir + t.zoomout); }
-                catch { btnZoomOut.Image = ImageGlass.Properties.Resources.zoomout; }
-
-                try { btnActualSize.Image = Image.FromFile(dir + t.scaletofit); }
-                catch { btnActualSize.Image = ImageGlass.Properties.Resources.scaletofit; }
-
-                try { btnZoomLock.Image = Image.FromFile(dir + t.zoomlock); }
-                catch { btnZoomLock.Image = ImageGlass.Properties.Resources.zoomlock; }
-
-                try { btnScaletoWidth.Image = Image.FromFile(dir + t.scaletowidth); }
-                catch { btnScaletoWidth.Image = ImageGlass.Properties.Resources.scaletowidth; }
-
-                try { btnScaletoHeight.Image = Image.FromFile(dir + t.scaletoheight); }
-                catch { btnScaletoHeight.Image = ImageGlass.Properties.Resources.scaletoheight; }
-
-                try { btnWindowAutosize.Image = Image.FromFile(dir + t.autosizewindow); }
-                catch { btnWindowAutosize.Image = ImageGlass.Properties.Resources.autosizewindow; }
-
-                try { btnOpen.Image = Image.FromFile(dir + t.open); }
-                catch { btnOpen.Image = ImageGlass.Properties.Resources.open; }
-
-                try { btnRefresh.Image = Image.FromFile(dir + t.refresh); }
-                catch { btnRefresh.Image = ImageGlass.Properties.Resources.refresh; }
-
-                try { btnGoto.Image = Image.FromFile(dir + t.gotoimage); }
-                catch { btnGoto.Image = ImageGlass.Properties.Resources.gotoimage; }
-
-                try { btnThumb.Image = Image.FromFile(dir + t.thumbnail); }
-                catch { btnThumb.Image = ImageGlass.Properties.Resources.thumbnail; }
-
-                try { btnCheckedBackground.Image = Image.FromFile(dir + t.checkBackground); }
-                catch { btnCheckedBackground.Image = ImageGlass.Properties.Resources.background; }
-
-                try { btnFullScreen.Image = Image.FromFile(dir + t.fullscreen); }
-                catch { btnFullScreen.Image = ImageGlass.Properties.Resources.fullscreen; }
-
-                try { btnSlideShow.Image = Image.FromFile(dir + t.slideshow); }
-                catch { btnSlideShow.Image = ImageGlass.Properties.Resources.slideshow; }
-
-                try { btnConvert.Image = Image.FromFile(dir + t.convert); }
-                catch { btnConvert.Image = ImageGlass.Properties.Resources.convert; }
-
-                try { btnPrintImage.Image = Image.FromFile(dir + t.print); }
-                catch { btnPrintImage.Image = ImageGlass.Properties.Resources.printer; }
-
-                try { btnFacebook.Image = Image.FromFile(dir + t.uploadfb); }
-                catch { btnFacebook.Image = ImageGlass.Properties.Resources.uploadfb; }
-
-                try { btnExtension.Image = Image.FromFile(dir + t.extension); }
-                catch { btnExtension.Image = ImageGlass.Properties.Resources.extension; }
-
-                try { btnSetting.Image = Image.FromFile(dir + t.settings); }
-                catch { btnSetting.Image = ImageGlass.Properties.Resources.settings; }
-
-                try { btnHelp.Image = Image.FromFile(dir + t.about); }
-                catch { btnHelp.Image = ImageGlass.Properties.Resources.about; }
-
-                try { btnMenu.Image = Image.FromFile(dir + t.menu); }
-                catch { btnMenu.Image = ImageGlass.Properties.Resources.menu; }
-
-                GlobalSetting.SetConfig("Theme", themeFile);
+                LoadTheme(themeConfigPath);
+                GlobalSetting.SetConfig("Theme", themeConfigPath);
             }
             else
             {
-                LoadThemeDefault();
+                themeConfigPath = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+                LoadTheme(themeConfigPath);
             }
 
+
+            void LoadTheme(string configFile)
+            {
+                Theme.Theme t = new Theme.Theme(configFile);
+                string dir = (Path.GetDirectoryName(configFile) + "\\").Replace("\\\\", "\\");
+
+                // <main>
+                picMain.BackColor = t.BackgroundColor;
+                GlobalSetting.BackgroundColor = t.BackgroundColor;
+
+                toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
+                toolMain.BackColor = t.ToolbarBackgroundColor;
+
+                thumbnailBar.BackgroundImage = t.ThumbnailBackgroundImage.Image;
+                thumbnailBar.BackColor = t.ThumbnailBackgroundColor;
+
+                lblInfo.ForeColor = t.TextInfoColor;
+
+                // <toolbar_icon>
+                LoadToolbarIcons(t);
+            }
         }
-        
+
+        /// <summary>
+        /// Load toolbar icons
+        /// </summary>
+        /// <param name="t">Theme</param>
+        private void LoadToolbarIcons(Theme.Theme t)
+        {
+            // <toolbar_icon>
+            btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
+            btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
+
+            btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
+            btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+            btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
+            btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
+            btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
+            btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
+            btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
+            btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
+            btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
+
+            btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
+            btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
+            btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+            btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
+            btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
+            btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
+            btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
+
+            btnConvert.Image = t.ToolbarIcons.Convert.Image;
+            btnPrintImage.Image = t.ToolbarIcons.Print.Image;
+            btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
+            btnExtension.Image = t.ToolbarIcons.Plugins.Image;
+            btnSetting.Image = t.ToolbarIcons.Settings.Image;
+            btnHelp.Image = t.ToolbarIcons.About.Image;
+            btnMenu.Image = t.ToolbarIcons.Menu.Image;
+        }
 
 
         /// <summary>
@@ -1310,14 +1238,6 @@ namespace ImageGlass
             {
                 WindowState = FormWindowState.Maximized;
             }
-
-            //check current version for the first time running
-            //configValue = GlobalSetting.GetConfig("AppVersion", Application.ProductVersion);
-            //if (configValue.CompareTo(Application.ProductVersion) == 0) //Old version
-            //{
-            //    //Load Optional Image Formats
-            //    GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
-            //}
 
             // Read suported image formats ------------------------------------------------
             var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -1420,8 +1340,8 @@ namespace ImageGlass
             GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
 
             //Load theme--------------------------------------------------------------------
-            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
-            LoadTheme();
+            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
+            ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
             Application.DoEvents();
 
             //Load Thumbnail dimension
@@ -1478,7 +1398,7 @@ namespace ImageGlass
 
             if(editingAssoclist.Length > 0)
             {
-                Parallel.ForEach(editingAssoclist, (configString) =>
+                foreach(var configString in editingAssoclist)
                 {
                     try
                     {
@@ -1486,7 +1406,7 @@ namespace ImageGlass
                         GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
                     }
                     catch (InvalidCastException) { }
-                });
+                }
             }
         }
 
@@ -1568,10 +1488,8 @@ namespace ImageGlass
             //the bigger part of its are is on the new monitor. 
             else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
-                DPIScaling.OldDPI = DPIScaling.CurrentDPI;
                 DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
-
-                OnDpiChanged();
+                OnDpiChanged();                
             }
             base.WndProc(ref m);
         }
@@ -3109,14 +3027,16 @@ namespace ImageGlass
             catch { }
         }
 
-        
-        
+
+
+
 
 
 
 
         #endregion
 
-        
+
+
     }
 }

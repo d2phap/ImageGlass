@@ -17,11 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ImageGlass.Theme
@@ -36,7 +33,7 @@ namespace ImageGlass.Theme
 
         [DllImport("user32.dll")]
         static extern IntPtr GetDC(IntPtr hWnd);
-
+        
 
         private enum DeviceCaps
         {
@@ -64,25 +61,9 @@ namespace ImageGlass.Theme
 
         public const int WM_DPICHANGED = 0x02E0;
         public const int DPI_DEFAULT = 96;
-
-        private static int _oldDPI = 96;
+        
         private static int _currentDPI = 96;
-
-        /// <summary>
-        /// Gets, sets old DPI scaling value
-        /// </summary>
-        public static int OldDPI
-        {
-            get
-            {
-                return _oldDPI;
-            }
-
-            set
-            {
-                _oldDPI = value;
-            }
-        }
+        
 
         /// <summary>
         /// Gets, sets current DPI scaling value
@@ -112,42 +93,30 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public static int GetSystemDpi()
         {
-            //IntPtr hdc = GetDC(IntPtr.Zero);
+            IntPtr hdc = GetDC(IntPtr.Zero);
 
-            //return GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
-            using (Graphics screen = Graphics.FromHwnd(IntPtr.Zero))
-            {
-                IntPtr hdc = screen.GetHdc();
+            return GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
+            //using (Graphics screen = Graphics.FromHwnd(IntPtr.Zero))
+            //{
+            //    IntPtr hdc = screen.GetHdc();
 
-                int virtualWidth = GetDeviceCaps(hdc, DeviceCaps.HORZRES);
-                int physicalWidth = GetDeviceCaps(hdc, DeviceCaps.DESKTOPHORZRES);
-                screen.ReleaseHdc(hdc);
+            //    int virtualWidth = GetDeviceCaps(hdc, DeviceCaps.HORZRES);
+            //    int physicalWidth = GetDeviceCaps(hdc, DeviceCaps.DESKTOPHORZRES);
+            //    screen.ReleaseHdc(hdc);
 
-                return (int)(96f * physicalWidth / virtualWidth);
-            }
+            //    return (int)(96f * physicalWidth / virtualWidth);
+            //}
         }
 
         /// <summary>
         /// Get DPI Scale factor
         /// </summary>
-        /// <param name="IsComparedTo_DPI_DEFAULT">True: Compare to the DPI_DEFAULT value</param>
         /// <returns></returns>
-        public static double GetDPIScaleFactor(bool @IsComparedTo_DPI_DEFAULT = false)
+        public static double GetDPIScaleFactor()
         {
-            return (double)DPIScaling.CurrentDPI / (IsComparedTo_DPI_DEFAULT ? DPI_DEFAULT : DPIScaling.OldDPI);
+            return (double)DPIScaling.CurrentDPI / DPI_DEFAULT;
         }
-
-
-        public static void HandleDpiChanged(int oldDpi, int currentDpi, Form f)
-        {
-            if (oldDpi != 0)
-            {
-                float scaleFactor = (float)GetDPIScaleFactor();
-
-                //the default scaling method of the framework
-                f.Scale(new SizeF(scaleFactor, scaleFactor));
-            }
-        }
+        
 
     }
 }

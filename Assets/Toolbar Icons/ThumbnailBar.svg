@@ -1,0 +1,18 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#000" id="svg_1" height="17.214612" width="19.36073" y="1.392694" x="0.342466" stroke-width="0.7" fill="none"/>
+  <ellipse stroke="#000" ry="1.689498" rx="1.689498" id="svg_13" cy="5.799087" cx="15.045661" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <path id="svg_15" d="m2.16895,14.931507" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+  <path id="svg_17" d="m-5.365296,12.009132" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+  <path stroke="#000" id="svg_19" d="m2.849712,15.799087c-0.477964,-1.098866 1.173181,-9.144126 3.954057,-8.633938c2.693973,0.470942 4.171314,6.67168 4.671002,6.632433c1.021102,-0.784903 1.325261,-1.883768 2.998131,-1.962258c1.585968,0.07849 2.715697,3.296594 2.650521,3.6498" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+ </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_1"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_2">
+   <line fill="none" stroke-opacity="null" x1="0.022831" y1="2.993581" x2="20.019238" y2="2.993581" id="svg_30" stroke-linejoin="null" stroke-linecap="null" stroke="#000000"/>
+   <line fill="none" stroke-opacity="null" x1="0.001797" y1="10" x2="19.998203" y2="10" id="svg_31" stroke-linejoin="null" stroke-linecap="null" stroke="#000000"/>
+   <line fill="none" stroke-opacity="null" x1="0.001797" y1="16.915095" x2="19.998203" y2="16.915095" id="svg_32" stroke-linejoin="null" stroke-linecap="null" stroke="#000000"/>
+  </g>
+ </g>
+</svg>

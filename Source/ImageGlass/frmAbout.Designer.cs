@@ -435,7 +435,7 @@
             this.tab1.Margin = new System.Windows.Forms.Padding(4);
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(773, 645);
+            this.tab1.Size = new System.Drawing.Size(771, 645);
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
@@ -458,7 +458,7 @@
             this.tpInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tpInfo.Name = "tpInfo";
             this.tpInfo.Padding = new System.Windows.Forms.Padding(4);
-            this.tpInfo.Size = new System.Drawing.Size(765, 607);
+            this.tpInfo.Size = new System.Drawing.Size(763, 607);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
             // 
@@ -471,7 +471,7 @@
             this.tpComponents.Margin = new System.Windows.Forms.Padding(4);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpComponents.Size = new System.Drawing.Size(765, 607);
+            this.tpComponents.Size = new System.Drawing.Size(763, 607);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -488,7 +488,7 @@
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(726, 601);
+            this.txtComponents.Size = new System.Drawing.Size(724, 601);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -500,7 +500,7 @@
             this.tpReferences.Margin = new System.Windows.Forms.Padding(4);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpReferences.Size = new System.Drawing.Size(765, 607);
+            this.tpReferences.Size = new System.Drawing.Size(763, 607);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -517,7 +517,7 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(726, 601);
+            this.txtReferences.Size = new System.Drawing.Size(724, 601);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
