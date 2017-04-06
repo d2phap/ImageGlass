@@ -2275,7 +2275,7 @@ namespace ImageGlass
             int n = GlobalSetting.CurrentIndex;
             string s = "0";
             if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"],
-                                    "0", true) == System.Windows.Forms.DialogResult.OK)
+                                    "0", true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
@@ -2849,6 +2849,7 @@ namespace ImageGlass
                     tempFile = SaveTemporaryMemoryData();
                 }
 
+                LocalSetting.FFacebook.TopMost = this.TopMost;
                 LocalSetting.FFacebook.Filename = tempFile;
                 GlobalSetting.IsForcedActive = false;
                 LocalSetting.FFacebook.Show();
@@ -2958,6 +2959,7 @@ namespace ImageGlass
                 LocalSetting.FExtension = new frmExtension();
             }
             GlobalSetting.IsForcedActive = false;
+            LocalSetting.FExtension.TopMost = this.TopMost;
             LocalSetting.FExtension.Show();
             LocalSetting.FExtension.Activate();
         }
@@ -2970,6 +2972,7 @@ namespace ImageGlass
             }
 
             GlobalSetting.IsForcedActive = false;
+            LocalSetting.FSetting.TopMost = this.TopMost;
             LocalSetting.FSetting.Show();
             LocalSetting.FSetting.Activate();
         }

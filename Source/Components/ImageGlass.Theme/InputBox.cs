@@ -67,14 +67,17 @@ namespace ImageGlass.Theme
         /// <param name="message">Message</param>
         /// <param name="defaultValue">Default value</param>
         /// <param name="isNumberOnly">Number input</param>
+        /// <param name="topMost">Set the form to top most</param>
         /// <returns></returns>
-        public static DialogResult ShowDiaLog(string title, string message, string defaultValue, bool isNumberOnly)
+        public static DialogResult ShowDiaLog(string title, string message, string defaultValue, bool @isNumberOnly = false, bool @topMost = false)
         {
-            frmDialogBox f = new frmDialogBox(title, message);
-            f.Title = title;
-            f.IsNumberOnly = isNumberOnly;
-            f.Content = defaultValue;
-            
+            frmDialogBox f = new frmDialogBox(title, message)
+            {
+                Title = title,
+                IsNumberOnly = isNumberOnly,
+                Content = defaultValue,
+                TopMost = topMost
+            };
 
             if (f.ShowDialog() == DialogResult.OK)
             {

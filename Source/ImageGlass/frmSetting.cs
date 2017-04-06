@@ -656,7 +656,8 @@ namespace ImageGlass
                 FileExtension = assoc.Extension,
                 AppName = assoc.AppName,
                 AppPath = assoc.AppPath,
-                AppArguments = assoc.AppArguments
+                AppArguments = assoc.AppArguments,
+                TopMost = this.TopMost
             };
 
             if (f.ShowDialog() == DialogResult.OK)
@@ -903,7 +904,8 @@ namespace ImageGlass
             frmAddNewFormat f = new frmAddNewFormat()
             {
                 FileFormat = ".svg",
-                FormatGroup = ImageFormatGroup.Default
+                FormatGroup = ImageFormatGroup.Default,
+                TopMost = this.TopMost
             };
 
             if (f.ShowDialog() == DialogResult.OK)
