@@ -2,8 +2,8 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Cyotek ImageBox Control")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ImageGlass.ImageBox")]
+[assembly: AssemblyDescription("A customization ImageBox from Cyotek ImageBox Control")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cyotek Ltd")]
 [assembly: AssemblyProduct("Cyotek ImageBox Control")]

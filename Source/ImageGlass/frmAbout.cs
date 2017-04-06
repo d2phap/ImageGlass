@@ -18,12 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Drawing;
-using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
@@ -114,8 +109,7 @@ namespace ImageGlass
         {
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsPortableMode ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
-            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
-                                "All rights reserved.";
+            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             //Load item component
             txtComponents.Text = "";

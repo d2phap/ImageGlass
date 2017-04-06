@@ -2977,6 +2977,7 @@ namespace ImageGlass
         private void mnuMainAbout_Click(object sender, EventArgs e)
         {
             frmAbout f = new frmAbout();
+            f.TopMost = this.TopMost;
             f.ShowDialog();
         }
 
