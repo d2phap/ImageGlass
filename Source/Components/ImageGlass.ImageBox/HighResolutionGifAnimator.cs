@@ -53,7 +53,8 @@ namespace ImageGlass {
         #endregion
 
         public void Animate(Image image, EventHandler onFrameChangedHandler) {
-            if (image == null)
+
+            if (!CanAnimate(image))
                 return;
 
             if (ourImageState.ContainsKey(image))
@@ -121,15 +122,9 @@ namespace ImageGlass {
             if (image == null)
                 return false;
 
-            if (ourImageState.ContainsKey(image))
-                return true;
-
             lock (image) {
-                if (imageHasTimeFrames(image))
-                    return image.GetFrameCount(FrameDimension.Time) > 1;
+                return imageHasTimeFrames(image);
             }
-
-            return false;
         }
 
         // image lock should be held
