@@ -46,6 +46,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultGifAnimator.cs" />
+    <Compile Include="GifAnimator.cs" />
+    <Compile Include="HighResolutionGifAnimator.cs" />
     <Compile Include="ImageBox.cs">
       <SubType>Component</SubType>
     </Compile>
