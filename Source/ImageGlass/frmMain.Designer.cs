@@ -637,9 +637,8 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(422, 554);
+            this.mnuMain.Size = new System.Drawing.Size(422, 587);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -729,8 +728,8 @@
             this.mnuMainViewNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainViewNext.Name = "mnuMainViewNext";
             this.mnuMainViewNext.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainViewNext.ShortcutKeyDisplayString = "Next / PageUp";
-            this.mnuMainViewNext.Size = new System.Drawing.Size(411, 31);
+            this.mnuMainViewNext.ShortcutKeyDisplayString = "Arrow right / PageUp";
+            this.mnuMainViewNext.Size = new System.Drawing.Size(453, 31);
             this.mnuMainViewNext.Text = "View &next image";
             this.mnuMainViewNext.Click += new System.EventHandler(this.mnuMainViewNext_Click);
             // 
@@ -740,15 +739,15 @@
             this.mnuMainViewPrevious.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainViewPrevious.Name = "mnuMainViewPrevious";
             this.mnuMainViewPrevious.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainViewPrevious.ShortcutKeyDisplayString = "Back / PageDown";
-            this.mnuMainViewPrevious.Size = new System.Drawing.Size(411, 31);
+            this.mnuMainViewPrevious.ShortcutKeyDisplayString = "Arrow left / PageDown";
+            this.mnuMainViewPrevious.Size = new System.Drawing.Size(453, 31);
             this.mnuMainViewPrevious.Text = "View &previous image";
             this.mnuMainViewPrevious.Click += new System.EventHandler(this.mnuMainViewPrevious_Click);
             // 
             // toolStripMenuItem24
             // 
             this.toolStripMenuItem24.Name = "toolStripMenuItem24";
-            this.toolStripMenuItem24.Size = new System.Drawing.Size(408, 6);
+            this.toolStripMenuItem24.Size = new System.Drawing.Size(450, 6);
             // 
             // mnuMainGoto
             // 
@@ -758,7 +757,7 @@
             this.mnuMainGoto.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGoto.ShortcutKeyDisplayString = "";
             this.mnuMainGoto.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.mnuMainGoto.Size = new System.Drawing.Size(411, 31);
+            this.mnuMainGoto.Size = new System.Drawing.Size(453, 31);
             this.mnuMainGoto.Text = "&Go to ...";
             this.mnuMainGoto.Click += new System.EventHandler(this.mnuMainGoto_Click);
             // 
@@ -769,7 +768,7 @@
             this.mnuMainGotoLast.Name = "mnuMainGotoLast";
             this.mnuMainGotoLast.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGotoLast.ShortcutKeyDisplayString = "End";
-            this.mnuMainGotoLast.Size = new System.Drawing.Size(411, 31);
+            this.mnuMainGotoLast.Size = new System.Drawing.Size(453, 31);
             this.mnuMainGotoLast.Text = "Go to the &last image";
             this.mnuMainGotoLast.Click += new System.EventHandler(this.mnuMainGotoLast_Click);
             // 
@@ -780,7 +779,7 @@
             this.mnuMainGotoFirst.Name = "mnuMainGotoFirst";
             this.mnuMainGotoFirst.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainGotoFirst.ShortcutKeyDisplayString = "Home";
-            this.mnuMainGotoFirst.Size = new System.Drawing.Size(411, 31);
+            this.mnuMainGotoFirst.Size = new System.Drawing.Size(453, 31);
             this.mnuMainGotoFirst.Text = "Go to the &first image";
             this.mnuMainGotoFirst.Click += new System.EventHandler(this.mnuMainGotoFirst_Click);
             // 
