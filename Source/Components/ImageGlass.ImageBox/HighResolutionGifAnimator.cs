@@ -1,4 +1,28 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2017 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+/******************************************
+* THANKS [Meowski] FOR THIS CONTRIBUTION
+*******************************************/
+
+using System;
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -26,7 +50,7 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="value"> Ideally should be a multiple of 10. </param>
         /// <returns>The actual tick value that will be used</returns>
-        public static int setTickTimeInMilliseconds(int value) {
+        public static int SetTickTimeInMilliseconds(int value) {
             // 10 is the minimum value, as a GIF's lowest tick rate is 10ms 
             //
             int newTickValue = Math.Max(10, (value / 10) * 10);
@@ -34,7 +58,7 @@ namespace ImageGlass {
             return newTickValue;
         }
 
-        public static int getTickTimeInMilliseconds() {
+        public static int GetTickTimeInMilliseconds() {
             return ourMinTickTimeInMilliseconds;
         }
 
@@ -52,6 +76,11 @@ namespace ImageGlass {
         }
         #endregion
 
+        /// <summary>
+        /// Animates the given image. 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="onFrameChangedHandler"></param>
         public void Animate(Image image, EventHandler onFrameChangedHandler) {
 
             if (!CanAnimate(image))
@@ -65,23 +94,23 @@ namespace ImageGlass {
             // we manually try to add entries ourself, and if it fails we 
             // kill the thread.
             //
-            GifImageData toAdd = addFactory(image, onFrameChangedHandler);
+            GifImageData toAdd = AddFactory(image, onFrameChangedHandler);
             if (!ourImageState.TryAdd(image, toAdd))
                 Interlocked.Exchange(ref toAdd.myIsThreadDead, 1);
         }
 
-        private GifImageData addFactory(Image image, EventHandler eventHandler) {
+        private GifImageData AddFactory(Image image, EventHandler eventHandler) {
             GifImageData data;
             lock (image) {
                 data = new GifImageData(image, eventHandler);
             }
 
             Thread heartbeat = new Thread(() => {
-                int sleepTime = getSleepAmountInMilliseconds(data.getCurrentDelayInMilliseconds());
+                int sleepTime = getSleepAmountInMilliseconds(data.GetCurrentDelayInMilliseconds());
                 Thread.Sleep(sleepTime);
-                while (data.threadIsNotDead()) {
-                    data.handleUpdateTick();
-                    sleepTime = getSleepAmountInMilliseconds(data.getCurrentDelayInMilliseconds());
+                while (data.ThreadIsNotDead()) {
+                    data.HandleUpdateTick();
+                    sleepTime = getSleepAmountInMilliseconds(data.GetCurrentDelayInMilliseconds());
                     Thread.Sleep(sleepTime);
                 }
             });
@@ -91,6 +120,10 @@ namespace ImageGlass {
             return data;
         }
 
+        /// <summary>
+        /// Updates the time frame for this image.
+        /// </summary>
+        /// <param name="image"></param>
         public void UpdateFrames(Image image) {
             if (image == null)
                 return;
@@ -103,10 +136,15 @@ namespace ImageGlass {
                 return;
 
             lock (image) {
-                outData.updateFrame();
+                outData.UpdateFrame();
             }
         }
 
+        /// <summary>
+        /// Stops updating frames for the given image. 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="eventHandler"></param>
         public void StopAnimate(Image image, EventHandler eventHandler) {
             if (image == null)
                 return;
@@ -118,18 +156,23 @@ namespace ImageGlass {
 
         // See if we have more than one frame in the time dimension.
         //
+        /// <summary>
+        /// Determines whether an image can be animated.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
         public bool CanAnimate(Image image) {
             if (image == null)
                 return false;
 
             lock (image) {
-                return imageHasTimeFrames(image);
+                return ImageHasTimeFrames(image);
             }
         }
 
         // image lock should be held
         //
-        private bool imageHasTimeFrames(Image image) {
+        private bool ImageHasTimeFrames(Image image) {
             foreach (Guid guid in image.FrameDimensionsList) {
                 FrameDimension dimension = new FrameDimension(guid);
                 if (dimension.Equals(FrameDimension.Time))
@@ -163,31 +206,31 @@ namespace ImageGlass {
                 //
                 myNumFrames = image.GetFrameCount(FrameDimension.Time);
                 myFrameDelaysInCentiseconds = new int[myNumFrames];
-                populateFrameDelays(image);
+                PopulateFrameDelays(image);
                 myCurrentFrame = 0;
                 myIsDirty = false;
                 myOnFrameChangedHandler = onFrameChangedHandler;
             }
 
-            public bool threadIsNotDead() {
+            public bool ThreadIsNotDead() {
                 return myIsThreadDead == 0;
             }
 
-            public void handleUpdateTick() {
+            public void HandleUpdateTick() {
                 myCurrentFrame = (myCurrentFrame + 1) % myNumFrames;
                 myIsDirty = true;
                 myOnFrameChangedHandler(myImage, EventArgs.Empty);
             }
 
-            public int getCurrentDelayInMilliseconds() {
+            public int GetCurrentDelayInMilliseconds() {
                 return myFrameDelaysInCentiseconds[myCurrentFrame] * 10;
             }
 
-            public void updateFrame() {
+            public void UpdateFrame() {
                 myImage.SelectActiveFrame(FrameDimension.Time, myCurrentFrame);
             }
 
-            private void populateFrameDelays(Image image) {
+            private void PopulateFrameDelays(Image image) {
                 byte[] frameDelays = image.GetPropertyItem(FrameDelayTag).Value;
                 for (int i = 0; i < myNumFrames; i++) {
                     myFrameDelaysInCentiseconds[i] = BitConverter.ToInt32(frameDelays, i * 4);
