@@ -1209,7 +1209,7 @@ namespace ImageGlass
         private void CheckAnimationClock(bool isUsingFasterClock) {
             if (isUsingFasterClock) {
                 if (!TimerAPI.HasRequestedRateAtLeastAsFastAs(10) && TimerAPI.TimeBeginPeriod(10))
-                    HighResolutionGifAnimator.setTickTimeInMilliseconds(10);
+                    HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
                 picMain.Animator = new HighResolutionGifAnimator();
             }
             else {

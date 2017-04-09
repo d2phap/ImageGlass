@@ -93,7 +93,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Gets value whether the image can animate or not
+        /// [PHAP] Gets value whether the image can animate or not
         /// </summary>
         public bool CanAnimate
         {
@@ -125,6 +125,7 @@ namespace ImageGlass
         }
 
         #endregion
+
         #region Constants
 
         private const int MaxZoom = 3500;
@@ -143,6 +144,9 @@ namespace ImageGlass
 
         private bool _allowZoom;
 
+        /// <summary>
+        /// [PHAP]
+        /// </summary>
         private GifAnimator _animator;
 
         private bool _autoCenter;
@@ -224,13 +228,14 @@ namespace ImageGlass
         #region Public Constructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ImageBox" /> class.
+        /// [PHAP] Initializes a new instance of the <see cref="ImageBox" /> class.
         /// </summary>
         public ImageBox()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.StandardDoubleClick, false);
 
+            //[PHAP]
             _animator = new DefaultGifAnimator();
 
             _vScrollBar = new VScrollBar
@@ -1129,7 +1134,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Handles animating gif images
+        /// [PHAP] Handles animating gif images
         /// </summary>
         public GifAnimator Animator {
             set {
