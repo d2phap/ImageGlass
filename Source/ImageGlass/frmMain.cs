@@ -35,6 +35,7 @@ using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
+using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass
 {
@@ -1201,6 +1202,22 @@ namespace ImageGlass
             btnMenu.Image = t.ToolbarIcons.Menu.Image;
         }
 
+        /// <summary>
+        /// If true is passed, try to use a 10ms system clock for animating GIFs, otherwise
+        /// use the default animator.
+        /// </summary>
+        private void CheckAnimationClock(bool isUsingFasterClock) {
+            if (isUsingFasterClock) {
+                if (!TimerAPI.HasRequestedRateAtLeastAsFastAs(10) && TimerAPI.TimeBeginPeriod(10))
+                    HighResolutionGifAnimator.setTickTimeInMilliseconds(10);
+                picMain.Animator = new HighResolutionGifAnimator();
+            }
+            else {
+                if (TimerAPI.HasRequestedRateAlready(10))
+                    TimerAPI.TimeEndPeriod(10);
+                picMain.Animator = new DefaultGifAnimator();
+            }
+        }
 
         /// <summary>
         /// Load app configurations
@@ -1505,6 +1522,9 @@ namespace ImageGlass
 
             LoadConfig();
             Application.DoEvents();
+
+            //Try to use a faster image clock for animating GIFs
+            CheckAnimationClock(true);
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
