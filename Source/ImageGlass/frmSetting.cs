@@ -458,11 +458,8 @@ namespace ImageGlass
 
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var themeConfigPath = GlobalSetting.GetConfig("Theme", "default");
-            Theme.Theme th = new Theme.Theme(themeConfigPath);
-
-            picBackgroundColor.BackColor = th.BackgroundColor;
-            GlobalSetting.BackgroundColor = th.BackgroundColor;
+            picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
+            GlobalSetting.BackgroundColor = LocalSetting.Theme.BackgroundColor;
 
             GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
         }

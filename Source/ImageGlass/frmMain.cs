@@ -886,7 +886,7 @@ namespace ImageGlass
             {
                 picMain.TextBackColor = Color.Transparent;
                 picMain.Font = Font;
-                picMain.ForeColor = Color.Black;
+                picMain.ForeColor = LocalSetting.Theme.TextInfoColor;
                 picMain.Text = string.Empty;
                 return;
             }
@@ -1154,6 +1154,7 @@ namespace ImageGlass
                 thumbnailBar.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
+                picMain.ForeColor = t.TextInfoColor;
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);
@@ -1353,11 +1354,11 @@ namespace ImageGlass
 
             //Load theme--------------------------------------------------------------------
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
-            var th = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
+            LocalSetting.Theme = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
             Application.DoEvents();
 
             //Load background---------------------------------------------------------------
-            configValue2 = GlobalSetting.GetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString());
+            configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString());
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 

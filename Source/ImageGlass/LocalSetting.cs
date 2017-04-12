@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Theme;
+
 namespace ImageGlass
 {
     public static class LocalSetting
@@ -26,6 +28,7 @@ namespace ImageGlass
         private static frmExtension _fExtension = new frmExtension();
         private static string _imageModifiedPath = "";
         private static bool _isResetScrollPosition = true;
+        private static Theme.Theme _theme = new Theme.Theme();
 
         #region "Properties"
         /// <summary>
@@ -81,6 +84,11 @@ namespace ImageGlass
                 _isResetScrollPosition = value;
             }
         }
+
+        /// <summary>
+        /// Gets, sets current app theme
+        /// </summary>
+        public static Theme.Theme Theme { get => _theme; set => _theme = value; }
         #endregion
 
     }
