@@ -91,6 +91,11 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public bool LoadTheme(string file)
         {
+            if (!File.Exists(file))
+            {
+                file = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+            }
+
             string dir = Path.GetDirectoryName(file);
             XmlDocument doc = new XmlDocument();
             doc.Load(file);

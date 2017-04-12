@@ -1135,10 +1135,6 @@ namespace ImageGlass
             {
                 GlobalSetting.SetConfig("Theme", themeConfigPath);
             }
-            else
-            {
-                themeConfigPath = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
-            }
 
             Theme.Theme th = new Theme.Theme(themeConfigPath);
             LoadTheme(th);

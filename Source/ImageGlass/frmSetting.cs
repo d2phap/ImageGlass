@@ -211,7 +211,7 @@ namespace ImageGlass
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
             chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-
+            lnkResetBackgroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lnkResetBackgroundColor"];
 
             //Image tab
             lblHeadImageLoading.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageLoading"];//
@@ -456,7 +456,16 @@ namespace ImageGlass
             }
         }
 
+        private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var themeConfigPath = GlobalSetting.GetConfig("Theme", "default");
+            Theme.Theme th = new Theme.Theme(themeConfigPath);
 
+            picBackgroundColor.BackColor = th.BackgroundColor;
+            GlobalSetting.BackgroundColor = th.BackgroundColor;
+
+            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
+        }
         #endregion
 
 
@@ -943,6 +952,7 @@ namespace ImageGlass
 
             btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
         }
+
 
 
 

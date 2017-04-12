@@ -108,6 +108,7 @@
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.lblImage = new System.Windows.Forms.Label();
+            this.lnkResetBackgroundColor = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -487,6 +488,7 @@
             // tabGeneral
             // 
             this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.lnkResetBackgroundColor);
             this.tabGeneral.Controls.Add(this.lblHeadOthers);
             this.tabGeneral.Controls.Add(this.lblHeadPortableMode);
             this.tabGeneral.Controls.Add(this.lblHeadStartup);
@@ -748,7 +750,7 @@
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(578, 285);
+            this.lvImageEditing.Size = new System.Drawing.Size(552, 285);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 45;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1088,6 +1090,21 @@
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
+            // lnkResetBackgroundColor
+            // 
+            this.lnkResetBackgroundColor.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkResetBackgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkResetBackgroundColor.AutoSize = true;
+            this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 472);
+            this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
+            this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
+            this.lnkResetBackgroundColor.TabIndex = 47;
+            this.lnkResetBackgroundColor.TabStop = true;
+            this.lnkResetBackgroundColor.Text = "Reset";
+            this.lnkResetBackgroundColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkResetBackgroundColor_LinkClicked);
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -1204,5 +1221,6 @@
         private System.Windows.Forms.Button btnEditResetExt;
         private System.Windows.Forms.Button btnEditEditExt;
         private System.Windows.Forms.ColumnHeader clnAppArguments;
+        private System.Windows.Forms.LinkLabel lnkResetBackgroundColor;
     }
 }

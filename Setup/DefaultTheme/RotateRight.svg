@@ -1,0 +1,25 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_2"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" transform="rotate(-18.647884368896484 10.045961380004872,10.993860244750977) " id="svg_4">
+   <g stroke="null" id="svg_22" transform="matrix(-0.666848088034165,-0.6691295740099439,-0.6759211015529865,0.6601477244170154,23.025749012045335,9.094463138964555) ">
+    <path stroke="#000000" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m8.064764,20.220514c9.17458,0 9.18571,-9.18571 9.12783,-9.25057" id="svg_18"/>
+    <path stroke="#000000" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m17.213974,11.229654c0,-9.17457 -9.18571,-9.18571 -9.25057,-9.12783" id="svg_20"/>
+    <path stroke="#000000" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m-0.926086,11.071304c0,9.17458 9.18571,9.18571 9.25057,9.12783" id="svg_21"/>
+   </g>
+   <g stroke="null" transform="matrix(-0.941285494665065,0.12339636126420357,0.12464880894965683,0.9318276358288837,18.752060126106485,-1.0093617917575222) " id="svg_3">
+    <line stroke="#000000" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="2.755373" y1="6.427297" x2="7.13894" y2="6.427297" id="svg_23" stroke-linejoin="null" stroke-linecap="null"/>
+    <line stroke="#000000" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="3.094862" y1="6.748917" x2="3.094862" y2="2.365351" id="svg_26" stroke-linejoin="null" stroke-linecap="null"/>
+   </g>
+  </g>
+ </g>
+</svg>
