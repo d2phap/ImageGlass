@@ -1129,25 +1129,24 @@ namespace ImageGlass
         /// Apply ImageGlass theme
         /// </summary>
         /// <param name="themeConfigPath">config.xml path. By default, load default theme</param>
-        private void ApplyTheme(string @themeConfigPath = "default")
+        private Theme.Theme ApplyTheme(string @themeConfigPath = "default")
         {
             if (File.Exists(themeConfigPath))
             {
-                LoadTheme(themeConfigPath);
                 GlobalSetting.SetConfig("Theme", themeConfigPath);
             }
             else
             {
                 themeConfigPath = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
-                LoadTheme(themeConfigPath);
             }
 
+            Theme.Theme th = new Theme.Theme(themeConfigPath);
+            LoadTheme(th);
 
-            void LoadTheme(string configFile)
+            return th;
+
+            void LoadTheme(Theme.Theme t)
             {
-                Theme.Theme t = new Theme.Theme(configFile);
-                string dir = (Path.GetDirectoryName(configFile) + "\\").Replace("\\\\", "\\");
-
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
                 GlobalSetting.BackgroundColor = t.BackgroundColor;
@@ -1358,8 +1357,13 @@ namespace ImageGlass
 
             //Load theme--------------------------------------------------------------------
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
-            ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
+            var th = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
             Application.DoEvents();
+
+            //Load background---------------------------------------------------------------
+            configValue2 = GlobalSetting.GetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString());
+            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
+            picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load Thumbnail dimension
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
@@ -1392,11 +1396,6 @@ namespace ImageGlass
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-
-            //Load background---------------------------------------------------------------
-            configValue2 = GlobalSetting.GetConfig("BackgroundColor", "-1");
-            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
-            picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load state of IsWindowAlwaysOnTop value-----------------------------------------
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
