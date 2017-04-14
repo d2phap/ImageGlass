@@ -98,6 +98,7 @@ Source: "D:\DEV\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Services.dll
 Source: "D:\DEV\ImageGlass\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\DEV\ImageGlass\Source\ImageGlass\bin\Release\Ionic.Zip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\DEV\ImageGlass\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Assets\default.png"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DefaultTheme\*"; DestDir: "{app}\DefautTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs

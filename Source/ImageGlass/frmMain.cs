@@ -1292,17 +1292,6 @@ namespace ImageGlass
             //Recursive loading--------------------------------------------------------------
             GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
 
-            //Get welcome screen------------------------------------------------------------
-            GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
-            if (GlobalSetting.IsShowWelcome)
-            {
-                //Do not show welcome image if params exist.
-                if(Environment.GetCommandLineArgs().Count() < 2)
-                {
-                    Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
-                }
-            }
-
             //Load is loop back slideshow---------------------------------------------------
             GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
 
@@ -1425,6 +1414,17 @@ namespace ImageGlass
                         GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
                     }
                     catch (InvalidCastException) { }
+                }
+            }
+
+            //Get welcome screen------------------------------------------------------------
+            GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
+            if (GlobalSetting.IsShowWelcome)
+            {
+                //Do not show welcome image if params exist.
+                if (Environment.GetCommandLineArgs().Count() < 2)
+                {
+                    Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
                 }
             }
         }
