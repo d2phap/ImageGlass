@@ -1152,6 +1152,7 @@ namespace ImageGlass
 
                 thumbnailBar.BackgroundImage = t.ThumbnailBackgroundImage.Image;
                 thumbnailBar.BackColor = t.ThumbnailBackgroundColor;
+                sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
                 picMain.ForeColor = t.TextInfoColor;
@@ -2913,9 +2914,6 @@ namespace ImageGlass
                     sp1.Orientation = Orientation.Horizontal;
                     sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
-
-                    //hide splitter color
-                    sp1.BackColor = Color.White;
                 }
                 else
                 {
@@ -2925,9 +2923,6 @@ namespace ImageGlass
                     sp1.Orientation = Orientation.Vertical;
                     sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
                     thumbnailBar.View = ImageListView.View.Thumbnails;
-
-                    //theme for splitter of horizontal bar
-                    sp1.BackColor = thumbnailBar.BackColor;
                 }
             }
             else
