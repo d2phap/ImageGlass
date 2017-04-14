@@ -228,9 +228,14 @@ namespace ImageGlass
             if (thumbnailBar.Items.Count > 0)
             {
                 thumbnailBar.ClearSelection();
-                thumbnailBar.Items[GlobalSetting.CurrentIndex].Selected = true;
-                thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
-                thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
+
+                try
+                {
+                    thumbnailBar.Items[GlobalSetting.CurrentIndex].Selected = true;
+                    thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
+                    thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
+                }
+                catch (Exception ex) { }
             }
         }
 
@@ -1768,10 +1773,12 @@ namespace ImageGlass
                 {
                     //delete thumbnail list
                     thumbnailBar.Items.RemoveAt(imgIndex);
-                }
-                catch { }
 
-                NextPic(0);
+                    //In case multiple files are deleted, this is to ensure the app doesnt crash
+                    NextPic(0);
+                }
+                catch (Exception ex) { }
+                
             }
         }
 
