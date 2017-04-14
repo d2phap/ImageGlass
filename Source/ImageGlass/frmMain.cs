@@ -315,6 +315,7 @@ namespace ImageGlass
         private void LoadThumbnails()
         {
             thumbnailBar.Items.Clear();
+            thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension, GlobalSetting.ThumbnailDimension);
 
             for (int i = 0; i < GlobalSetting.ImageList.Length; i++)
             {
@@ -1368,7 +1369,7 @@ namespace ImageGlass
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
-            //Load Thumbnail dimension
+            //Load Thumbnail dimension-------------------------------------------------------
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
             {
                 GlobalSetting.ThumbnailDimension = i;
@@ -1378,7 +1379,7 @@ namespace ImageGlass
                 GlobalSetting.ThumbnailDimension = 48;
             }
 
-            //Load thumbnail bar width
+            //Load thumbnail bar width--------------------------------------------------------
             int tb_width = 0;
             if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
             {
@@ -1389,8 +1390,7 @@ namespace ImageGlass
             var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
             //Get the greater width value
             GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
-
-            thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension + GlobalSetting.ThumbnailDimension / 3, GlobalSetting.ThumbnailDimension);
+            
 
             //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
             GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
@@ -1586,6 +1586,14 @@ namespace ImageGlass
                 GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
                 mnuMainThumbnailBar_Click(null, null);
 
+                //Update thumbnail image size
+                if(LocalSetting.IsThumbnailDimensionChanged)
+                {
+                    LocalSetting.IsThumbnailDimensionChanged = false;
+
+                    LoadThumbnails();
+                }
+
                 //Update background---------------------
                 picMain.BackColor = GlobalSetting.BackgroundColor;
 
@@ -1598,6 +1606,7 @@ namespace ImageGlass
                 //Prevent zooming by scrolling mouse
                 _isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
 
+                #region Update language strings
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
                 btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
@@ -1691,6 +1700,8 @@ namespace ImageGlass
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
+                #endregion
+
             }
 
             GlobalSetting.IsForcedActive = false;
@@ -2927,9 +2938,10 @@ namespace ImageGlass
                 {
                     // RIGHT
                     sp1.IsSplitterFixed = false; //Allow user to resize
-                    sp1.SplitterWidth = 2;
+                    sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
-                    sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
+                    //sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
+                    sp1.SplitterDistance = sp1.Width - sp1.Panel2MinSize;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }

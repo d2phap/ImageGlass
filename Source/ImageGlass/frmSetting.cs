@@ -576,8 +576,20 @@ namespace ImageGlass
 
         private void cmbThumbnailDimension_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //backup old value
+            int oldValue = GlobalSetting.ThumbnailDimension;
+
+            //Get new value
             GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString());
-            GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
+
+            //Only change when the new value selected
+            if(GlobalSetting.ThumbnailDimension != oldValue)
+            {
+                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.IsThumbnailDimensionChanged = true;
+            }
         }
 
         private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)

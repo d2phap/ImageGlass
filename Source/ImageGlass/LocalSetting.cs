@@ -28,6 +28,7 @@ namespace ImageGlass
         private static string _imageModifiedPath = "";
         private static bool _isResetScrollPosition = true;
         private static Theme.Theme _theme = new Theme.Theme();
+        private static bool _isThumbnailDimensionChanged = false;
 
         #region "Properties"
         /// <summary>
@@ -88,6 +89,11 @@ namespace ImageGlass
         /// Gets, sets current app theme
         /// </summary>
         public static Theme.Theme Theme { get => _theme; set => _theme = value; }
+
+        /// <summary>
+        /// Gets, sets the value that will request frmMain to update thumbnail bar
+        /// </summary>
+        public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
         #endregion
 
     }
