@@ -40,10 +40,11 @@ namespace igcmd
             //cmd: iginstalltheme "srcFile"
 
             lblStatus.Text = "Installing ...";
-            Thread t = new Thread(new ThreadStart(InstallTheme));
-            t.Priority = ThreadPriority.BelowNormal;
-            t.IsBackground = true;
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(InstallTheme));
+            //t.Priority = ThreadPriority.BelowNormal;
+            //t.IsBackground = true;
+            //t.Start();
+            InstallTheme();
         }
 
         /// <summary>
