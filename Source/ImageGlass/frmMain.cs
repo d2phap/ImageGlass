@@ -1837,7 +1837,7 @@ namespace ImageGlass
                 {
                     GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
                 }
-                NextPic(0);
+                NextPic(0, true);
             }
         }
 
