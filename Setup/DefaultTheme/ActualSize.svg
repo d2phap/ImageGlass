@@ -10,7 +10,7 @@
  </g>
  <g>
   <title>Layer 1</title>
-  <ellipse stroke="#000" ry="7.899555" rx="7.899555" id="svg_9" cy="8.249556" cx="8.249555" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="19.699652" x2="19.722484" y1="13.835621" x1="13.858454" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+  <ellipse stroke="#fff" ry="7.899555" rx="7.899555" id="svg_9" cy="8.249556" cx="8.249555" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <line stroke="#fff" stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="19.699652" x2="19.722484" y1="13.835621" x1="13.858454" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
  </g>
 </svg>

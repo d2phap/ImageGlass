@@ -1,7 +1,7 @@
 <ImageGlass>
   <Theme>
-    <Info name="2017 (Light Gray)" version="1.0" author="Dương Diệu Pháp" email="phap@imageglass.org" website="http://imageglass.org" description="Modern ImageGlass theme (Light Gray)" type="ImageGlass Theme Configuration" compatibility="4.0" preview="preview.png" />
-    <main topbar="x" topbarcolor="-1381646" topbartransparent="0" bottombar="x" bottombarcolor="-1381646" backcolor="-1" statuscolor="-16777216" />
+    <Info name="2017 (Dark)" version="1.0" author="Dương Diệu Pháp" email="phap@imageglass.org" website="http://imageglass.org" description="Modern ImageGlass theme (Dark)" type="ImageGlass Theme Configuration" compatibility="3.0" preview="preview.png" />
+    <main topbar="x" topbarcolor="-11777464" topbartransparent="0" bottombar="x" bottombarcolor="-11777464" backcolor="-11777464" statuscolor="-1907998" />
     <toolbar_icon 
         back="ViewPreviousImage.svg"
         next="ViewNextImage.svg"
