@@ -2906,11 +2906,12 @@ namespace ImageGlass
             if (GlobalSetting.IsShowThumbnail)
             {
                 float scaleFactor = ((float)DPIScaling.CurrentDPI) / 96;
-                int gap = (int)(SystemInformation.HorizontalScrollBarHeight * (scaleFactor + 0.1 - 1));
+                //int gap = (int)(SystemInformation.HorizontalScrollBarHeight * (scaleFactor + 0.1 - 1));
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
+                //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
+                sp1.Panel2MinSize = tb.GetTotalDimension();
 
                 int splitterDistance = sp1.Height - sp1.Panel2MinSize;
 
