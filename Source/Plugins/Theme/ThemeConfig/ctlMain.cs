@@ -44,6 +44,7 @@ namespace ThemeConfig
         private Button btnAdd;
         private Label label1;
         private LinkLabel lnkDownloadTheme;
+        private Label lblVersion;
         private IContainer components;
 
         public ctlMain()
@@ -90,6 +91,7 @@ namespace ThemeConfig
             this.btnAdd = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lnkDownloadTheme = new System.Windows.Forms.LinkLabel();
+            this.lblVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,9 +104,9 @@ namespace ThemeConfig
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRefresh.AutoSize = true;
-            this.btnRefresh.Location = new System.Drawing.Point(258, 398);
+            this.btnRefresh.Location = new System.Drawing.Point(258, 414);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(80, 35);
+            this.btnRefresh.Size = new System.Drawing.Size(80, 25);
             this.btnRefresh.TabIndex = 16;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -115,9 +117,9 @@ namespace ThemeConfig
             this.btnUninstall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUninstall.AutoSize = true;
             this.btnUninstall.Enabled = false;
-            this.btnUninstall.Location = new System.Drawing.Point(98, 398);
+            this.btnUninstall.Location = new System.Drawing.Point(98, 414);
             this.btnUninstall.Name = "btnUninstall";
-            this.btnUninstall.Size = new System.Drawing.Size(89, 35);
+            this.btnUninstall.Size = new System.Drawing.Size(89, 25);
             this.btnUninstall.TabIndex = 14;
             this.btnUninstall.Text = "Uninstall";
             this.btnUninstall.UseVisualStyleBackColor = true;
@@ -129,7 +131,7 @@ namespace ThemeConfig
             this.lblCount.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCount.Location = new System.Drawing.Point(19, 53);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(145, 25);
+            this.lblCount.Size = new System.Drawing.Size(96, 15);
             this.lblCount.TabIndex = 20;
             this.lblCount.Text = "Installed themes:";
             // 
@@ -139,7 +141,7 @@ namespace ThemeConfig
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtInfo.BackColor = System.Drawing.Color.White;
             this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtInfo.Location = new System.Drawing.Point(283, 288);
+            this.txtInfo.Location = new System.Drawing.Point(283, 304);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
             this.txtInfo.ReadOnly = true;
@@ -149,9 +151,9 @@ namespace ThemeConfig
             // picPreview
             // 
             this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.picPreview.Location = new System.Drawing.Point(24, 288);
+            this.picPreview.Location = new System.Drawing.Point(22, 304);
             this.picPreview.Name = "picPreview";
-            this.picPreview.Size = new System.Drawing.Size(253, 100);
+            this.picPreview.Size = new System.Drawing.Size(255, 100);
             this.picPreview.TabIndex = 18;
             this.picPreview.TabStop = false;
             // 
@@ -159,9 +161,9 @@ namespace ThemeConfig
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
-            this.btnApply.Location = new System.Drawing.Point(674, 398);
+            this.btnApply.Location = new System.Drawing.Point(674, 414);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(124, 35);
+            this.btnApply.Size = new System.Drawing.Size(124, 25);
             this.btnApply.TabIndex = 19;
             this.btnApply.Text = "Apply theme";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -172,13 +174,12 @@ namespace ThemeConfig
             this.lvTheme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvTheme.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvTheme.FullRowSelect = true;
-            this.lvTheme.Location = new System.Drawing.Point(26, 81);
+            this.lvTheme.Location = new System.Drawing.Point(22, 74);
             this.lvTheme.MultiSelect = false;
             this.lvTheme.Name = "lvTheme";
             this.lvTheme.ShowItemToolTips = true;
-            this.lvTheme.Size = new System.Drawing.Size(772, 201);
+            this.lvTheme.Size = new System.Drawing.Size(776, 224);
             this.lvTheme.TabIndex = 11;
             this.lvTheme.TileSize = new System.Drawing.Size(260, 35);
             this.lvTheme.UseCompatibleStateImageBehavior = false;
@@ -191,9 +192,9 @@ namespace ThemeConfig
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSave.AutoSize = true;
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(193, 398);
+            this.btnSave.Location = new System.Drawing.Point(193, 414);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(59, 35);
+            this.btnSave.Size = new System.Drawing.Size(59, 25);
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -203,9 +204,9 @@ namespace ThemeConfig
             // 
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEdit.AutoSize = true;
-            this.btnEdit.Location = new System.Drawing.Point(504, 398);
+            this.btnEdit.Location = new System.Drawing.Point(504, 414);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(164, 35);
+            this.btnEdit.Size = new System.Drawing.Size(164, 25);
             this.btnEdit.TabIndex = 17;
             this.btnEdit.Text = "Create new theme";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -215,9 +216,9 @@ namespace ThemeConfig
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAdd.AutoSize = true;
-            this.btnAdd.Location = new System.Drawing.Point(24, 398);
+            this.btnAdd.Location = new System.Drawing.Point(24, 414);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(68, 35);
+            this.btnAdd.Size = new System.Drawing.Size(68, 25);
             this.btnAdd.TabIndex = 13;
             this.btnAdd.Text = "Install";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -227,9 +228,9 @@ namespace ThemeConfig
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.label1.Location = new System.Drawing.Point(19, 15);
+            this.label1.Location = new System.Drawing.Point(17, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(417, 38);
+            this.label1.Size = new System.Drawing.Size(285, 25);
             this.label1.TabIndex = 22;
             this.label1.Text = "ImageGlass theme configuration";
             // 
@@ -239,17 +240,28 @@ namespace ThemeConfig
             this.lnkDownloadTheme.AutoSize = true;
             this.lnkDownloadTheme.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkDownloadTheme.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkDownloadTheme.Location = new System.Drawing.Point(641, 53);
+            this.lnkDownloadTheme.Location = new System.Drawing.Point(695, 53);
             this.lnkDownloadTheme.Name = "lnkDownloadTheme";
-            this.lnkDownloadTheme.Size = new System.Drawing.Size(157, 25);
+            this.lnkDownloadTheme.Size = new System.Drawing.Size(103, 15);
             this.lnkDownloadTheme.TabIndex = 23;
             this.lnkDownloadTheme.TabStop = true;
             this.lnkDownloadTheme.Text = "Download themes";
             this.lnkDownloadTheme.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDownloadTheme_LinkClicked);
             // 
+            // lblVersion
+            // 
+            this.lblVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVersion.Location = new System.Drawing.Point(698, 25);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(100, 15);
+            this.lblVersion.TabIndex = 24;
+            this.lblVersion.Text = "vx.x";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // ctlMain
             // 
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lnkDownloadTheme);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRefresh);
@@ -304,6 +316,9 @@ namespace ThemeConfig
 
         private void ctlMain_Load(object sender, EventArgs e)
         {
+            Plugin p = new Plugin();
+
+            lblVersion.Text = $"v{p.Version}";
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(lvTheme);
             RefreshThemeList();

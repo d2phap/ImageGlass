@@ -182,7 +182,7 @@
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
-            this.toolMain.BackColor = System.Drawing.Color.Transparent;
+            this.toolMain.BackColor = System.Drawing.Color.Maroon;
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.ImageScalingSize = new System.Drawing.Size(32, 32);

@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Windows.Forms;
+
 namespace ImageGlass.Services.Configuration
 {
     public class ThumbnailItemInfo
@@ -49,7 +51,7 @@ namespace ImageGlass.Services.Configuration
             if (isHorizontalView)
             {
                 Dimension = dimension;
-                ExtraSpace = 58;
+                //ExtraSpace = 58;
             }
             else
             {
@@ -57,35 +59,36 @@ namespace ImageGlass.Services.Configuration
                 {
                     case 32:
                         Dimension = 32;
-                        ExtraSpace = 48;
+                        //ExtraSpace = 48;
                         break;
 
                     case 48:
                         Dimension = 48;
-                        ExtraSpace = 52;
+                        //ExtraSpace = 52;
                         break;
 
                     case 64:
                         Dimension = 64;
-                        ExtraSpace = 57;
+                        //ExtraSpace = 57;
                         break;
 
                     case 96:
                         Dimension = 96;
-                        ExtraSpace = 69;
+                        //ExtraSpace = 69;
                         break;
 
                     case 128:
                         Dimension = 128;
-                        ExtraSpace = 79;
+                        //ExtraSpace = 79;
                         break;
 
                     default:
                         Dimension = 48;
-                        ExtraSpace = 57;
+                        //ExtraSpace = 57;
                         break;
                 }
             }
+            ExtraSpace = 0;
         }
     }
 }

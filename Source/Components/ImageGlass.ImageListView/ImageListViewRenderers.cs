@@ -2524,15 +2524,19 @@ namespace ImageGlass.ImageListView
                             // Image background
                             Rectangle imgback = pos;
                             imgback.Inflate(3, 3);
-                            g.FillRectangle(SystemBrushes.Window, imgback);
+
+                            //Fill background
+                            //g.FillRectangle(SystemBrushes.Window, imgback);
+
                             // Image border
-                            if (img.Width > 32 && img.Height > 32)
-                            {
-                                using (Pen pen = new Pen(Color.FromArgb(224, 224, 244)))
-                                {
-                                    g.DrawRectangle(pen, imgback.X, imgback.Y, imgback.Width - 1, imgback.Height - 1);
-                                }
-                            }
+                            //if (img.Width > 32 && img.Height > 32)
+                            //{
+                            //    using (Pen pen = new Pen(Color.FromArgb(224, 224, 244), 2))
+                            //    {
+                            //        g.DrawRectangle(pen, imgback.X, imgback.Y, imgback.Width, imgback.Height);
+                            //    }
+                            //}
+
                             // Image
                             g.DrawImage(img, pos);
                         }
