@@ -11,12 +11,12 @@ ImageGlass is a simple picture viewer with which you will be able to display you
 
 ### Download & Screen shots
 
-<a href="http://www.imageglass.org/download" target="_blank" title="View screen shoots">
+<a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
 <img src="http://imageglass.org/upload/photo/release/4.0_1.png" alt="ImageGlass 4.0.4.15">
 </a><br/>
 
 <a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%204.0.4.15-orange.svg?maxAge=3600" height="30" alt="ImageGlass 4.0.4.15">
+<img src="https://img.shields.io/badge/Download-ImageGlass%204.0.4.15-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 4.0.4.15">
 </a>
 
 
