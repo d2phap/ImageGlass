@@ -10,8 +10,14 @@ ImageGlass is a simple picture viewer with which you will be able to display you
 
 
 ### Download & Screen shots
-[![Download the latest version](https://img.shields.io/badge/ImageGlass-4.0.4.15-orange.svg?maxAge=3600)](http://www.imageglass.org/download)
 
+<a href="http://www.imageglass.org/download" target="_blank" title="View screen shoots">
+<img src="http://imageglass.org/upload/photo/release/4.0_1.png" alt="ImageGlass 4.0.4.15">
+</a><br/>
+
+<a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
+<img src="https://img.shields.io/badge/Download-ImageGlass%204.0.4.15-orange.svg?maxAge=3600" height="30" alt="ImageGlass 4.0.4.15">
+</a>
 
 
 
@@ -25,8 +31,8 @@ ImageGlass is a simple picture viewer with which you will be able to display you
 
 
 ### Documentation
-[![Supported formats](https://img.shields.io/badge/supported%20formats-30+-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/supported-formats)
 [![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](http://wwwimageglass.org/documentation/features)
+[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/supported-formats)
 [![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](http://wwwimageglass.org/documentation/ui-shortcuts-reference)
 
 
