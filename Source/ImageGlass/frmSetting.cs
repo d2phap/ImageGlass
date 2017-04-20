@@ -915,6 +915,7 @@ namespace ImageGlass
             }
 
             //RegisterFileAssociations(GlobalSetting.AllImageFormats);
+            LoadExtensionList();
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -942,6 +943,7 @@ namespace ImageGlass
                 }
 
                 //RegisterFileAssociations(GlobalSetting.AllImageFormats);
+                LoadExtensionList();
             }
 
             f.Dispose();
