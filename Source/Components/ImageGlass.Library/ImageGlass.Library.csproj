@@ -61,20 +61,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparer\WindowsNaturalSort.cs" />
+    <Compile Include="FileAssociations\RegistryHelper.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Language\LanguageItem.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Comparer\DictionaryEntryComparer.cs" />
     <Compile Include="Comparer\FileLogicalComparer.cs" />
     <Compile Include="Comparer\NumericComparer.cs" />
     <Compile Include="DirectoryFinder\DirectoryFinder.cs" />
-    <Compile Include="FileAssociations\AssociationManager.cs" />
-    <Compile Include="FileAssociations\FileAssociationInfo.cs" />
-    <Compile Include="FileAssociations\ProgramAssociationInfo.cs" />
-    <Compile Include="FileAssociations\ProgramIcon.cs" />
-    <Compile Include="FileAssociations\ProgramVerb.cs" />
-    <Compile Include="FileAssociations\RegistryException.cs" />
-    <Compile Include="FileAssociations\RegistryWrapper.cs" />
-    <Compile Include="FileAssociations\ShellNotification.cs" />
     <Compile Include="Image\ExifThumbReader.cs" />
     <Compile Include="Language\Language.cs" />
     <Compile Include="Net\DownloadFile.cs" />
@@ -83,6 +77,7 @@
     <Compile Include="Image\ImageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Comparer\StringLogicalComparer.cs" />
+    <Compile Include="WinAPI\TimerAPI.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

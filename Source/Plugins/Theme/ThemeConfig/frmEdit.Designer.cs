@@ -91,9 +91,9 @@
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
-            this.toolMain.BackColor = System.Drawing.Color.Transparent;
-            this.toolMain.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("toolMain.BackgroundImage")));
+            this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolMain.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
             this.btnNext,
@@ -124,7 +124,7 @@
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolMain.Size = new System.Drawing.Size(822, 33);
+            this.toolMain.Size = new System.Drawing.Size(959, 40);
             this.toolMain.TabIndex = 2;
             this.toolMain.Tag = "x";
             // 
@@ -137,7 +137,7 @@
             this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBack.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(25, 28);
+            this.btnBack.Size = new System.Drawing.Size(33, 33);
             this.btnBack.Tag = "x";
             this.btnBack.ToolTipText = "Go to previous image (Left arrow / PageDown)";
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -151,7 +151,7 @@
             this.btnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNext.Margin = new System.Windows.Forms.Padding(0);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(25, 28);
+            this.btnNext.Size = new System.Drawing.Size(33, 33);
             this.btnNext.Tag = "x";
             this.btnNext.ToolTipText = "Go to next image (Right arrow / PageUp)";
             this.btnNext.Click += new System.EventHandler(this.btnBack_Click);
@@ -165,7 +165,7 @@
             this.btnRotateLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateLeft.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnRotateLeft.Name = "btnRotateLeft";
-            this.btnRotateLeft.Size = new System.Drawing.Size(25, 28);
+            this.btnRotateLeft.Size = new System.Drawing.Size(33, 33);
             this.btnRotateLeft.Tag = "x";
             this.btnRotateLeft.ToolTipText = "Rotate Counterclockwise (Ctrl + ,)";
             this.btnRotateLeft.Click += new System.EventHandler(this.btnBack_Click);
@@ -179,7 +179,7 @@
             this.btnRotateRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateRight.Margin = new System.Windows.Forms.Padding(0);
             this.btnRotateRight.Name = "btnRotateRight";
-            this.btnRotateRight.Size = new System.Drawing.Size(25, 28);
+            this.btnRotateRight.Size = new System.Drawing.Size(33, 33);
             this.btnRotateRight.Tag = "x";
             this.btnRotateRight.Text = "Next";
             this.btnRotateRight.ToolTipText = "Rotate Clockwise (Ctrl + .)";
@@ -194,7 +194,7 @@
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomIn.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomIn.Size = new System.Drawing.Size(33, 33);
             this.btnZoomIn.Tag = "x";
             this.btnZoomIn.ToolTipText = "Zoom in (Ctrl + =)";
             this.btnZoomIn.Click += new System.EventHandler(this.btnBack_Click);
@@ -208,7 +208,7 @@
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomOut.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomOut.Size = new System.Drawing.Size(33, 33);
             this.btnZoomOut.Tag = "x";
             this.btnZoomOut.ToolTipText = "Zoom out (Ctrl + -)";
             this.btnZoomOut.Click += new System.EventHandler(this.btnBack_Click);
@@ -222,7 +222,7 @@
             this.btnScale11.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScale11.Margin = new System.Windows.Forms.Padding(0);
             this.btnScale11.Name = "btnScale11";
-            this.btnScale11.Size = new System.Drawing.Size(25, 28);
+            this.btnScale11.Size = new System.Drawing.Size(33, 33);
             this.btnScale11.Tag = "x";
             this.btnScale11.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnScale11.Click += new System.EventHandler(this.btnBack_Click);
@@ -236,7 +236,7 @@
             this.btnZoomLock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomLock.Margin = new System.Windows.Forms.Padding(0);
             this.btnZoomLock.Name = "btnZoomLock";
-            this.btnZoomLock.Size = new System.Drawing.Size(25, 28);
+            this.btnZoomLock.Size = new System.Drawing.Size(33, 33);
             this.btnZoomLock.Tag = "x";
             this.btnZoomLock.ToolTipText = "Lock zoom ratio";
             this.btnZoomLock.Click += new System.EventHandler(this.btnBack_Click);
@@ -250,7 +250,7 @@
             this.btnScaletoWidth.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoWidth.Margin = new System.Windows.Forms.Padding(0);
             this.btnScaletoWidth.Name = "btnScaletoWidth";
-            this.btnScaletoWidth.Size = new System.Drawing.Size(25, 28);
+            this.btnScaletoWidth.Size = new System.Drawing.Size(33, 33);
             this.btnScaletoWidth.Tag = "x";
             this.btnScaletoWidth.ToolTipText = "Scale to Width (Ctrl + W)";
             this.btnScaletoWidth.Click += new System.EventHandler(this.btnBack_Click);
@@ -264,7 +264,7 @@
             this.btnScaletoHeight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoHeight.Margin = new System.Windows.Forms.Padding(0);
             this.btnScaletoHeight.Name = "btnScaletoHeight";
-            this.btnScaletoHeight.Size = new System.Drawing.Size(25, 28);
+            this.btnScaletoHeight.Size = new System.Drawing.Size(33, 33);
             this.btnScaletoHeight.Tag = "x";
             this.btnScaletoHeight.ToolTipText = "Scale to Height (Ctrl + H)";
             this.btnScaletoHeight.Click += new System.EventHandler(this.btnBack_Click);
@@ -278,7 +278,7 @@
             this.btnWindowAutosize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnWindowAutosize.Margin = new System.Windows.Forms.Padding(0);
             this.btnWindowAutosize.Name = "btnWindowAutosize";
-            this.btnWindowAutosize.Size = new System.Drawing.Size(25, 28);
+            this.btnWindowAutosize.Size = new System.Drawing.Size(33, 33);
             this.btnWindowAutosize.Tag = "x";
             this.btnWindowAutosize.ToolTipText = "Window adapt to image (Ctrl + M)";
             this.btnWindowAutosize.Click += new System.EventHandler(this.btnBack_Click);
@@ -293,7 +293,7 @@
             this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOpen.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(25, 28);
+            this.btnOpen.Size = new System.Drawing.Size(33, 33);
             this.btnOpen.Tag = "x";
             this.btnOpen.ToolTipText = "Open file (Ctrl + O)";
             this.btnOpen.Click += new System.EventHandler(this.btnBack_Click);
@@ -307,7 +307,7 @@
             this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(25, 28);
+            this.btnRefresh.Size = new System.Drawing.Size(33, 33);
             this.btnRefresh.Tag = "x";
             this.btnRefresh.ToolTipText = "Refresh (F5)";
             this.btnRefresh.Click += new System.EventHandler(this.btnBack_Click);
@@ -321,7 +321,7 @@
             this.btnGoto.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGoto.Margin = new System.Windows.Forms.Padding(0);
             this.btnGoto.Name = "btnGoto";
-            this.btnGoto.Size = new System.Drawing.Size(25, 28);
+            this.btnGoto.Size = new System.Drawing.Size(33, 33);
             this.btnGoto.Tag = "x";
             this.btnGoto.ToolTipText = "Go to ... (Ctrl + G)";
             this.btnGoto.Click += new System.EventHandler(this.btnBack_Click);
@@ -335,7 +335,7 @@
             this.btnThumb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnThumb.Margin = new System.Windows.Forms.Padding(0);
             this.btnThumb.Name = "btnThumb";
-            this.btnThumb.Size = new System.Drawing.Size(25, 28);
+            this.btnThumb.Size = new System.Drawing.Size(33, 33);
             this.btnThumb.Tag = "x";
             this.btnThumb.ToolTipText = "Show thumbnail (Ctrl + T)";
             this.btnThumb.Click += new System.EventHandler(this.btnBack_Click);
@@ -349,7 +349,7 @@
             this.btnCheckedBackground.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCheckedBackground.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnCheckedBackground.Name = "btnCheckedBackground";
-            this.btnCheckedBackground.Size = new System.Drawing.Size(25, 28);
+            this.btnCheckedBackground.Size = new System.Drawing.Size(33, 33);
             this.btnCheckedBackground.Tag = "x";
             this.btnCheckedBackground.ToolTipText = "Show checked background (Ctrl + B)";
             this.btnCheckedBackground.Click += new System.EventHandler(this.btnBack_Click);
@@ -363,7 +363,7 @@
             this.btnFullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
             this.btnFullScreen.Name = "btnFullScreen";
-            this.btnFullScreen.Size = new System.Drawing.Size(25, 28);
+            this.btnFullScreen.Size = new System.Drawing.Size(33, 33);
             this.btnFullScreen.Tag = "x";
             this.btnFullScreen.ToolTipText = "Full sreen (Alt + Enter)";
             this.btnFullScreen.Click += new System.EventHandler(this.btnBack_Click);
@@ -377,7 +377,7 @@
             this.btnSlideShow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSlideShow.Margin = new System.Windows.Forms.Padding(0);
             this.btnSlideShow.Name = "btnSlideShow";
-            this.btnSlideShow.Size = new System.Drawing.Size(25, 28);
+            this.btnSlideShow.Size = new System.Drawing.Size(33, 33);
             this.btnSlideShow.Tag = "x";
             this.btnSlideShow.ToolTipText = "Play slideshow (F11, ESC to exit)";
             this.btnSlideShow.Click += new System.EventHandler(this.btnBack_Click);
@@ -391,7 +391,7 @@
             this.btnConvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConvert.Margin = new System.Windows.Forms.Padding(0);
             this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(25, 28);
+            this.btnConvert.Size = new System.Drawing.Size(33, 33);
             this.btnConvert.Tag = "x";
             this.btnConvert.ToolTipText = "Convert image (Ctrl + S)";
             this.btnConvert.Click += new System.EventHandler(this.btnBack_Click);
@@ -405,7 +405,7 @@
             this.btnPrintImage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrintImage.Margin = new System.Windows.Forms.Padding(0);
             this.btnPrintImage.Name = "btnPrintImage";
-            this.btnPrintImage.Size = new System.Drawing.Size(25, 28);
+            this.btnPrintImage.Size = new System.Drawing.Size(33, 33);
             this.btnPrintImage.Tag = "x";
             this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnBack_Click);
@@ -419,7 +419,7 @@
             this.btnFacebook.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFacebook.Margin = new System.Windows.Forms.Padding(0);
             this.btnFacebook.Name = "btnFacebook";
-            this.btnFacebook.Size = new System.Drawing.Size(25, 28);
+            this.btnFacebook.Size = new System.Drawing.Size(33, 33);
             this.btnFacebook.Tag = "x";
             this.btnFacebook.ToolTipText = "Upload to Facebook (Ctrl + U)";
             this.btnFacebook.Click += new System.EventHandler(this.btnBack_Click);
@@ -433,7 +433,7 @@
             this.btnExtension.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExtension.Margin = new System.Windows.Forms.Padding(0);
             this.btnExtension.Name = "btnExtension";
-            this.btnExtension.Size = new System.Drawing.Size(25, 28);
+            this.btnExtension.Size = new System.Drawing.Size(33, 33);
             this.btnExtension.Tag = "x";
             this.btnExtension.ToolTipText = "Extension manager";
             this.btnExtension.Click += new System.EventHandler(this.btnBack_Click);
@@ -447,7 +447,7 @@
             this.btnSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(25, 28);
+            this.btnSetting.Size = new System.Drawing.Size(33, 33);
             this.btnSetting.Tag = "x";
             this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + P)";
             this.btnSetting.Click += new System.EventHandler(this.btnBack_Click);
@@ -461,7 +461,7 @@
             this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(25, 28);
+            this.btnHelp.Size = new System.Drawing.Size(33, 33);
             this.btnHelp.Tag = "x";
             this.btnHelp.ToolTipText = "Help (F1)";
             this.btnHelp.Click += new System.EventHandler(this.btnBack_Click);
@@ -476,7 +476,7 @@
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0);
             this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(25, 28);
+            this.btnMenu.Size = new System.Drawing.Size(33, 33);
             this.btnMenu.Tag = "x";
             this.btnMenu.ToolTipText = "Show Main Menu";
             this.btnMenu.Click += new System.EventHandler(this.btnBack_Click);
@@ -484,14 +484,12 @@
             // btnStatus
             // 
             this.btnStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnStatus.AutoSize = false;
             this.btnStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnStatus.Image = ((System.Drawing.Image)(resources.GetObject("btnStatus.Image")));
             this.btnStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnStatus.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStatus.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnStatus.Name = "btnStatus";
-            this.btnStatus.Size = new System.Drawing.Size(43, 28);
+            this.btnStatus.Size = new System.Drawing.Size(64, 40);
             this.btnStatus.Tag = "x";
             this.btnStatus.Text = "Status";
             this.btnStatus.ToolTipText = "Image information";
@@ -502,9 +500,9 @@
             this.panThumbnail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.panThumbnail.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panThumbnail.BackgroundImage")));
             this.panThumbnail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panThumbnail.Location = new System.Drawing.Point(0, 496);
+            this.panThumbnail.Location = new System.Drawing.Point(0, 635);
             this.panThumbnail.Name = "panThumbnail";
-            this.panThumbnail.Size = new System.Drawing.Size(822, 70);
+            this.panThumbnail.Size = new System.Drawing.Size(959, 70);
             this.panThumbnail.TabIndex = 3;
             this.panThumbnail.Tag = "x";
             // 
@@ -512,10 +510,11 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.label1.Location = new System.Drawing.Point(239, 47);
+            this.label1.Location = new System.Drawing.Point(65, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(210, 25);
+            this.label1.Size = new System.Drawing.Size(301, 36);
             this.label1.TabIndex = 4;
             this.label1.Tag = "x";
             this.label1.Text = "ImageGlass theme editor";
@@ -524,10 +523,11 @@
             // 
             this.lnkToolBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkToolBar.AutoSize = true;
+            this.lnkToolBar.BackColor = System.Drawing.Color.White;
             this.lnkToolBar.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkToolBar.Location = new System.Drawing.Point(247, 109);
+            this.lnkToolBar.Location = new System.Drawing.Point(66, 114);
             this.lnkToolBar.Name = "lnkToolBar";
-            this.lnkToolBar.Size = new System.Drawing.Size(228, 21);
+            this.lnkToolBar.Size = new System.Drawing.Size(342, 30);
             this.lnkToolBar.TabIndex = 6;
             this.lnkToolBar.TabStop = true;
             this.lnkToolBar.Tag = "x";
@@ -539,10 +539,11 @@
             // 
             this.lnkThumbnail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkThumbnail.AutoSize = true;
+            this.lnkThumbnail.BackColor = System.Drawing.Color.White;
             this.lnkThumbnail.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkThumbnail.Location = new System.Drawing.Point(247, 130);
+            this.lnkThumbnail.Location = new System.Drawing.Point(66, 149);
             this.lnkThumbnail.Name = "lnkThumbnail";
-            this.lnkThumbnail.Size = new System.Drawing.Size(275, 21);
+            this.lnkThumbnail.Size = new System.Drawing.Size(412, 30);
             this.lnkThumbnail.TabIndex = 7;
             this.lnkThumbnail.TabStop = true;
             this.lnkThumbnail.Tag = "x";
@@ -554,10 +555,11 @@
             // 
             this.linkLabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.linkLabel3.AutoSize = true;
+            this.linkLabel3.BackColor = System.Drawing.Color.White;
             this.linkLabel3.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
-            this.linkLabel3.Location = new System.Drawing.Point(247, 89);
+            this.linkLabel3.Location = new System.Drawing.Point(66, 84);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(239, 15);
+            this.linkLabel3.Size = new System.Drawing.Size(363, 25);
             this.linkLabel3.TabIndex = 8;
             this.linkLabel3.Tag = "x";
             this.linkLabel3.Text = "1. Click button to change its icon (20 x 20px)";
@@ -566,10 +568,11 @@
             // 
             this.lnkBackColor.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkBackColor.AutoSize = true;
+            this.lnkBackColor.BackColor = System.Drawing.Color.White;
             this.lnkBackColor.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkBackColor.Location = new System.Drawing.Point(247, 151);
+            this.lnkBackColor.Location = new System.Drawing.Point(66, 184);
             this.lnkBackColor.Name = "lnkBackColor";
-            this.lnkBackColor.Size = new System.Drawing.Size(159, 21);
+            this.lnkBackColor.Size = new System.Drawing.Size(238, 30);
             this.lnkBackColor.TabIndex = 9;
             this.lnkBackColor.TabStop = true;
             this.lnkBackColor.Tag = "x";
@@ -581,10 +584,11 @@
             // 
             this.lnkSave.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkSave.AutoSize = true;
+            this.lnkSave.BackColor = System.Drawing.Color.White;
             this.lnkSave.LinkArea = new System.Windows.Forms.LinkArea(3, 7);
-            this.lnkSave.Location = new System.Drawing.Point(247, 439);
+            this.lnkSave.Location = new System.Drawing.Point(66, 563);
             this.lnkSave.Name = "lnkSave";
-            this.lnkSave.Size = new System.Drawing.Size(161, 21);
+            this.lnkSave.Size = new System.Drawing.Size(241, 30);
             this.lnkSave.TabIndex = 10;
             this.lnkSave.TabStop = true;
             this.lnkSave.Tag = "x";
@@ -596,23 +600,25 @@
             // 
             this.lnkUpload.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkUpload.AutoSize = true;
+            this.lnkUpload.BackColor = System.Drawing.Color.White;
             this.lnkUpload.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
-            this.lnkUpload.Location = new System.Drawing.Point(247, 460);
+            this.lnkUpload.Location = new System.Drawing.Point(80, 598);
             this.lnkUpload.Name = "lnkUpload";
-            this.lnkUpload.Size = new System.Drawing.Size(379, 15);
+            this.lnkUpload.Size = new System.Drawing.Size(555, 25);
             this.lnkUpload.TabIndex = 11;
             this.lnkUpload.Tag = "x";
-            this.lnkUpload.Text = "    Send *.igtheme file to phap@imageglass.org for sharing. Thank you!";
+            this.lnkUpload.Text = "Send *.igtheme file to phap@imageglass.org for sharing. Thank you!";
             this.lnkUpload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkUpload_LinkClicked);
             // 
             // linkLabel4
             // 
             this.linkLabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.linkLabel4.AutoSize = true;
+            this.linkLabel4.BackColor = System.Drawing.Color.White;
             this.linkLabel4.LinkArea = new System.Windows.Forms.LinkArea(3, 0);
-            this.linkLabel4.Location = new System.Drawing.Point(247, 172);
+            this.linkLabel4.Location = new System.Drawing.Point(66, 219);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(121, 21);
+            this.linkLabel4.Size = new System.Drawing.Size(182, 30);
             this.linkLabel4.TabIndex = 12;
             this.linkLabel4.Tag = "x";
             this.linkLabel4.Text = "5. Theme information";
@@ -622,10 +628,11 @@
             // 
             this.lnkPreview.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lnkPreview.AutoSize = true;
+            this.lnkPreview.BackColor = System.Drawing.Color.White;
             this.lnkPreview.LinkArea = new System.Windows.Forms.LinkArea(3, 6);
-            this.lnkPreview.Location = new System.Drawing.Point(247, 312);
+            this.lnkPreview.Location = new System.Drawing.Point(66, 417);
             this.lnkPreview.Name = "lnkPreview";
-            this.lnkPreview.Size = new System.Drawing.Size(303, 21);
+            this.lnkPreview.Size = new System.Drawing.Size(455, 30);
             this.lnkPreview.TabIndex = 14;
             this.lnkPreview.TabStop = true;
             this.lnkPreview.Tag = "x";
@@ -637,6 +644,7 @@
             // 
             this.panInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panInfo.AutoScroll = true;
+            this.panInfo.BackColor = System.Drawing.Color.White;
             this.panInfo.Controls.Add(this.txtDescription);
             this.panInfo.Controls.Add(this.label8);
             this.panInfo.Controls.Add(this.txtMinVersion);
@@ -651,89 +659,89 @@
             this.panInfo.Controls.Add(this.label3);
             this.panInfo.Controls.Add(this.txtName);
             this.panInfo.Controls.Add(this.label2);
-            this.panInfo.Location = new System.Drawing.Point(259, 196);
+            this.panInfo.Location = new System.Drawing.Point(85, 252);
             this.panInfo.Name = "panInfo";
-            this.panInfo.Size = new System.Drawing.Size(291, 113);
+            this.panInfo.Size = new System.Drawing.Size(495, 154);
             this.panInfo.TabIndex = 15;
             this.panInfo.Tag = "x";
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(97, 176);
+            this.txtDescription.Location = new System.Drawing.Point(191, 227);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(173, 81);
+            this.txtDescription.Size = new System.Drawing.Size(244, 81);
             this.txtDescription.TabIndex = 13;
             this.txtDescription.Tag = "x";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 179);
+            this.label8.Location = new System.Drawing.Point(3, 227);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 15);
+            this.label8.Size = new System.Drawing.Size(106, 25);
             this.label8.TabIndex = 12;
             this.label8.Tag = "x";
             this.label8.Text = "Description:";
             // 
             // txtMinVersion
             // 
-            this.txtMinVersion.Location = new System.Drawing.Point(97, 147);
+            this.txtMinVersion.Location = new System.Drawing.Point(191, 190);
             this.txtMinVersion.Name = "txtMinVersion";
-            this.txtMinVersion.Size = new System.Drawing.Size(173, 23);
+            this.txtMinVersion.Size = new System.Drawing.Size(244, 31);
             this.txtMinVersion.TabIndex = 11;
             this.txtMinVersion.Tag = "x";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 150);
+            this.label7.Location = new System.Drawing.Point(3, 190);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 15);
+            this.label7.Size = new System.Drawing.Size(134, 25);
             this.label7.TabIndex = 10;
             this.label7.Tag = "x";
             this.label7.Text = "Version require:";
             // 
             // txtWebsite
             // 
-            this.txtWebsite.Location = new System.Drawing.Point(97, 118);
+            this.txtWebsite.Location = new System.Drawing.Point(191, 153);
             this.txtWebsite.Name = "txtWebsite";
-            this.txtWebsite.Size = new System.Drawing.Size(173, 23);
+            this.txtWebsite.Size = new System.Drawing.Size(244, 31);
             this.txtWebsite.TabIndex = 9;
             this.txtWebsite.Tag = "x";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 121);
+            this.label6.Location = new System.Drawing.Point(3, 153);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 15);
+            this.label6.Size = new System.Drawing.Size(79, 25);
             this.label6.TabIndex = 8;
             this.label6.Tag = "x";
             this.label6.Text = "Website:";
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(97, 89);
+            this.txtEmail.Location = new System.Drawing.Point(191, 116);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(173, 23);
+            this.txtEmail.Size = new System.Drawing.Size(244, 31);
             this.txtEmail.TabIndex = 7;
             this.txtEmail.Tag = "x";
             // 
             // txtAuthor
             // 
-            this.txtAuthor.Location = new System.Drawing.Point(97, 60);
+            this.txtAuthor.Location = new System.Drawing.Point(191, 79);
             this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(173, 23);
+            this.txtAuthor.Size = new System.Drawing.Size(244, 31);
             this.txtAuthor.TabIndex = 5;
             this.txtAuthor.Tag = "x";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 92);
+            this.label5.Location = new System.Drawing.Point(3, 116);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 15);
+            this.label5.Size = new System.Drawing.Size(58, 25);
             this.label5.TabIndex = 6;
             this.label5.Tag = "x";
             this.label5.Text = "Email:";
@@ -741,36 +749,36 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 63);
+            this.label4.Location = new System.Drawing.Point(3, 79);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.Size = new System.Drawing.Size(71, 25);
             this.label4.TabIndex = 4;
             this.label4.Tag = "x";
             this.label4.Text = "Author:";
             // 
             // txtVersion
             // 
-            this.txtVersion.Location = new System.Drawing.Point(97, 31);
+            this.txtVersion.Location = new System.Drawing.Point(191, 42);
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(173, 23);
+            this.txtVersion.Size = new System.Drawing.Size(244, 31);
             this.txtVersion.TabIndex = 3;
             this.txtVersion.Tag = "x";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 34);
+            this.label3.Location = new System.Drawing.Point(3, 42);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 15);
+            this.label3.Size = new System.Drawing.Size(131, 25);
             this.label3.TabIndex = 2;
             this.label3.Tag = "x";
             this.label3.Text = "Theme version:";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(97, 2);
+            this.txtName.Location = new System.Drawing.Point(191, 5);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(173, 23);
+            this.txtName.Size = new System.Drawing.Size(244, 31);
             this.txtName.TabIndex = 1;
             this.txtName.Tag = "x";
             // 
@@ -779,7 +787,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 5);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 15);
+            this.label2.Size = new System.Drawing.Size(118, 25);
             this.label2.TabIndex = 0;
             this.label2.Tag = "x";
             this.label2.Text = "Theme name:";
@@ -787,8 +795,9 @@
             // picPreview
             // 
             this.picPreview.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picPreview.BackColor = System.Drawing.Color.White;
             this.picPreview.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPreview.BackgroundImage")));
-            this.picPreview.Location = new System.Drawing.Point(259, 336);
+            this.picPreview.Location = new System.Drawing.Point(85, 450);
             this.picPreview.Name = "picPreview";
             this.picPreview.Size = new System.Drawing.Size(253, 100);
             this.picPreview.TabIndex = 8;
@@ -797,10 +806,10 @@
             // 
             // frmEdit
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(822, 566);
+            this.ClientSize = new System.Drawing.Size(959, 705);
             this.Controls.Add(this.picPreview);
             this.Controls.Add(this.panInfo);
             this.Controls.Add(this.lnkPreview);

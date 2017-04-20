@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using ImageGlass.Theme;
 using ImageGlass.Services.Configuration;
 using System.Diagnostics;
+using ImageGlass.Library;
 
 namespace ImageGlass
 {
@@ -77,12 +78,16 @@ namespace ImageGlass
         {
             //Load config
             //Windows Bound (Position + Size)--------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig(Name + ".WindowsBound",
-                                                "280,125,840,500"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
+
+            if (!Helper.IsOnScreen(rc.Location))
+            {
+                rc.Location = new Point(280, 125);
+            }
             Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = GlobalSetting.GetConfig(Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
             if (s == "Normal")
             {
                 WindowState = FormWindowState.Normal;
@@ -134,11 +139,11 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
-            GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
+            GlobalSetting.SetConfig($"{Name}.WindowsState", WindowState.ToString());
         }
 
         private void LoadExtensions()
@@ -155,11 +160,18 @@ namespace ImageGlass
             {
                 Global.Plugins.FindPlugins(pluginsDir);
 
-                foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
+                try
                 {
-                    TreeNode n = new TreeNode(p.Instance.Name);
-                    tvExtension.Nodes.Add(n);
-                    n = null;
+                    foreach (ImageGlass.Plugins.Types.AvailablePlugin p in Global.Plugins.AvailablePlugins)
+                    {
+                        TreeNode n = new TreeNode(p.Instance.Name);
+                        tvExtension.Nodes.Add(n);
+                        n = null;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2016 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -24,240 +24,246 @@ using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Specialized;
+using System.Security;
+using System.IO;
+using System.Text;
+using ImageGlass.Library.FileAssociations;
+using System.Linq;
 
 namespace ImageGlass.Services.Configuration
 {
-    public enum ImageOrderBy
-    {
-        Name = 0,
-        Length = 1,
-        CreationTime = 2,
-        Extension = 3,
-        LastAccessTime = 4,
-        LastWriteTime = 5,
-        Random = 6
-    }
-
-    public enum ZoomOptimizationValue
-    {
-        Auto,
-        SmoothPixels,
-        ClearPixels
-    }
-
-    public class ThumbnailItemInfo
-    {
-        /// <summary>
-        /// Gets actual thumbnail dimension
-        /// </summary>
-        public int Dimension { get; }
-
-        /// <summary>
-        /// Gets extra space to adapt minimum width / height of thumbnail bar
-        /// </summary>
-        public int ExtraSpace { get; }
-
-        /// <summary>
-        /// Gets total dimension needed for minimum width / height of thumbnail bar
-        /// </summary>
-        public int TotalDimension
-        {
-            get
-            {
-                return Dimension + ExtraSpace;
-            }
-        }
-
-        /// <summary>
-        /// Thumbnail item information
-        /// </summary>
-        /// <param name="dimension">Thumbnail size</param>
-        /// <param name="isHorizontalView">Horizontal or Vertical view</param>
-        public ThumbnailItemInfo(int dimension, bool isHorizontalView)
-        {
-            if (isHorizontalView)
-            {
-                Dimension = dimension;
-                ExtraSpace = 58;
-            }
-            else {
-                switch (dimension)
-                {
-                    case 32:
-                        Dimension = 32;
-                        ExtraSpace = 48;
-                        break;
-
-                    case 48:
-                        Dimension = 48;
-                        ExtraSpace = 52;
-                        break;
-
-                    case 64:
-                        Dimension = 64;
-                        ExtraSpace = 57;
-                        break;
-
-                    case 96:
-                        Dimension = 96;
-                        ExtraSpace = 69;
-                        break;
-
-                    case 128:
-                        Dimension = 128;
-                        ExtraSpace = 79;
-                        break;
-
-                    default:
-                        Dimension = 48;
-                        ExtraSpace = 57;
-                        break;
-                }
-            }
-        }
-    }
-
     public static class GlobalSetting
     {
-        private static string _supportedDefaultExtensions = "*.jpg;*.jpe;*.jfif;*.jpeg;*.png;" +
-                                                     "*.gif;*.ico;*.bmp;*.dib;*.tif;*.tiff;" +
-                                                     "*.exif;*.wmf;*.emf;*.svg;*.webp;";
-        private static string _supportedExtraExtensions = "*.hdr;*.exr;*.tga;*.psd;";
-        private static string _contextMenuExtensions = "";
-        private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
-        private static bool _isWelcomePicture = true;
-
+        // Private settings --------------------------------------------------------------
+        private static ImgMan _imageList = new ImgMan();
+        private static List<String> _imageFilenameList = new List<string>();
+        private static string _facebookAccessToken = "";
+        private static bool _isForcedActive = true;
+        private static int _currentIndex = -1;
+        private static bool _isRecursiveLoading = false;
+        private static StringCollection _stringClipboard = new StringCollection();
+        private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
+        private static bool _isPortableMode = false;
+        private static bool _isStartUpDirWritable = true;
+        private static bool _isTempMemoryData = false;
+        private static ConfigurationFile _configFile = new ConfigurationFile();
+        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
+        
+
+        // Shared settings ----------------------------------------------------------------
+        private static ImageOrderBy _imageLoadingOrder = ImageOrderBy.Name;
+        private static string _defaultImageFormats = string.Empty;
+        private static string _optionalImageFormats = string.Empty;
+        private static bool _isPlaySlideShow = false;
+        private static bool _isFullScreen = false;
+        private static bool _isShowThumbnail = false;
+        private static bool _isImageError = false;
+        private static bool _isEnableZoomLock = false;
+        private static bool _isZoomToFit = false;
+        private static int _zoomLockValue = 100;
+        private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
+        private static bool _isShowWelcome = true;
+        private static Color _backgroundColor = Color.White;
+        private static bool _isShowToolBar = true;
+        private static bool _isLoopBackSlideShow = false;
+        private static int _slideShowInterval = 5;
+        private static bool _isLoopBackViewer = true;
+        private static bool _isImageBoosterBack = true;
+        private static bool _isPressESCToQuit = true;
+        private static int _thumbnailDimension = 48;
+        private static int _thumbnailBarWidth = new ThumbnailItemInfo(48, true).GetTotalDimension();
+        private static bool _isThumbnailHorizontal = false;
+        
+        private static bool _isAllowMultiInstances = true;
+        private static bool _isShowCheckedBackground = false;
+        private static bool _isMouseNavigation = false;
+        
+        private static bool _isWindowAlwaysOnTop = false;
+        private static bool _isConfirmationDelete = false;
+        private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
+
+
 
 
         #region "Properties"
-        
+
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        public static ImgMan ImageList { get; set; } = new ImgMan();
+        public static ImgMan ImageList
+        {
+            get { return GlobalSetting._imageList; }
+            set { GlobalSetting._imageList = value; }
+        }
 
         /// <summary>
         /// Gets, sets filename list
         /// </summary>
-        public static List<String> ImageFilenameList { get; set; } = new List<string>();
+        public static List<String> ImageFilenameList
+        {
+            get { return GlobalSetting._imageFilenameList; }
+            set { GlobalSetting._imageFilenameList = value; }
+        }
 
         /// <summary>
         /// Gets, sets Access token of Facebook
         /// </summary>
-        public static string FacebookAccessToken { get; set; } = "";
+        public static string FacebookAccessToken
+        {
+            get { return GlobalSetting._facebookAccessToken; }
+            set { GlobalSetting._facebookAccessToken = value; }
+        }
 
         /// <summary>
         /// Gets, sets active value whenever hover on picturebox
         /// </summary>
-        public static bool IsForcedActive { get; set; } = true;
+        public static bool IsForcedActive
+        {
+            get { return GlobalSetting._isForcedActive; }
+            set { GlobalSetting._isForcedActive = value; }
+        }
 
         /// <summary>
         /// Gets, sets current index of image
         /// </summary>
-        public static int CurrentIndex { get; set; } = -1;
+        public static int CurrentIndex
+        {
+            get { return GlobalSetting._currentIndex; }
+            set { GlobalSetting._currentIndex = value; }
+        }
 
         /// <summary>
         /// Gets, sets recursive value
         /// </summary>
-        public static bool IsRecursive { get; set; } = false;
+        public static bool IsRecursiveLoading
+        {
+            get { return GlobalSetting._isRecursiveLoading; }
+            set { GlobalSetting._isRecursiveLoading = value; }
+        }
 
         /// <summary>
-        /// Gets, sets image order
+        /// Gets, sets image laoding order
         /// </summary>
-        public static ImageOrderBy ImageOrderBy { get; set; } = ImageOrderBy.Name;
+        public static ImageOrderBy ImageLoadingOrder
+        {
+            get { return GlobalSetting._imageLoadingOrder; }
+            set { GlobalSetting._imageLoadingOrder = value; }
+        }
 
         /// <summary>
         /// Gets all supported extensions string
         /// </summary>
-        public static string SupportedExtensions
+        public static string AllImageFormats
         {
             get
             {
-                return _supportedDefaultExtensions + SupportedExtraExtensions;
+                return GlobalSetting.DefaultImageFormats + GlobalSetting.OptionalImageFormats;
             }
         }
 
         /// <summary>
-        /// Gets default supported extension string
+        /// Gets, sets default image formats
         /// </summary>
-        public static string SupportedDefaultExtensions
+        public static string DefaultImageFormats
         {
-            get { return _supportedDefaultExtensions; }
+            get { return _defaultImageFormats; }
+            set { _defaultImageFormats = value; }
         }
 
         /// <summary>
-        /// Gets, sets supported extra extensions
+        /// Gets, sets optional image formats
         /// </summary>
-        public static string SupportedExtraExtensions
+        public static string OptionalImageFormats
         {
-            get { return _supportedExtraExtensions; }
-            set { _supportedExtraExtensions = value; }
+            get { return _optionalImageFormats; }
+            set { _optionalImageFormats = value; }
         }
 
         /// <summary>
         /// Gets, sets the Context menu Extensions
         /// </summary>
-        public static string ContextMenuExtensions
-        {
-            get
-            {
-                _contextMenuExtensions = GetConfig("ContextMenuExtensions", "");
-                return _contextMenuExtensions;
-            }
-            set
-            {
-                _contextMenuExtensions = value;
-                SetConfig("ContextMenuExtensions", _contextMenuExtensions);
-            }
-        }
+        //public static string ContextMenuExtensions
+        //{
+        //    get
+        //    {
+        //        _contextMenuExtensions = GetConfig("ContextMenuExtensions", "");
+        //        return _contextMenuExtensions;
+        //    }
+        //    set
+        //    {
+        //        _contextMenuExtensions = value;
+        //        GlobalSetting.SetConfig("ContextMenuExtensions", _contextMenuExtensions);
+        //    }
+        //}
 
         /// <summary>
         /// Gets, sets value of slideshow state
         /// </summary>
-        public static bool IsPlaySlideShow { get; set; } = false;
+        public static bool IsPlaySlideShow
+        {
+            get { return GlobalSetting._isPlaySlideShow; }
+            set { GlobalSetting._isPlaySlideShow = value; }
+        }
+
 
         /// <summary>
         /// Gets, sets value of thumbnail visibility
         /// </summary>
-        public static bool IsShowThumbnail { get; set; } = false;
+        public static bool IsShowThumbnail
+        {
+            get { return GlobalSetting._isShowThumbnail; }
+            set { GlobalSetting._isShowThumbnail = value; }
+        }
 
         /// <summary>
         /// Gets, sets image error value
         /// </summary>
-        public static bool IsImageError { get; set; } = false;
+        public static bool IsImageError
+        {
+            get { return GlobalSetting._isImageError; }
+            set { GlobalSetting._isImageError = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that Zoom Lock enabled
         /// </summary>
-        public static bool IsEnabledZoomLock { get; set; }
+        public static bool IsEnabledZoomLock
+        {
+            get { return _isEnableZoomLock; }
+            set { _isEnableZoomLock = value; }
+        }
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
-        public static int ZoomLockValue { get; set; } = 100;
+        public static int ZoomLockValue
+        {
+            get { return GlobalSetting._zoomLockValue; }
+            set { GlobalSetting._zoomLockValue = value; }
+        }
 
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
         public static ZoomOptimizationValue ZoomOptimizationMethod
         {
-            get { return _zoomOptimizationMethod; }
+            get { return GlobalSetting._zoomOptimizationMethod; }
             set
             {
-                _zoomOptimizationMethod = value;
+                GlobalSetting._zoomOptimizationMethod = value;
 
                 if (value == ZoomOptimizationValue.SmoothPixels)
                 {
-                    SetConfig("ZoomOptimization", "1");
+                    GlobalSetting.SetConfig("ZoomOptimization", "1");
                 }
                 else if (value == ZoomOptimizationValue.ClearPixels)
                 {
-                    SetConfig("ZoomOptimization", "2");
+                    GlobalSetting.SetConfig("ZoomOptimization", "2");
                 }
                 else
                 {
-                    SetConfig("ZoomOptimization", "0");
+                    GlobalSetting.SetConfig("ZoomOptimization", "0");
                 }
             }
         }
@@ -265,56 +271,84 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets welcome picture value
         /// </summary>
-        public static bool IsWelcomePicture
+        public static bool IsShowWelcome
         {
-            get { return _isWelcomePicture; }
+            get { return GlobalSetting._isShowWelcome; }
             set
             {
-                _isWelcomePicture = value;
-                SetConfig("Welcome", value.ToString());
+                GlobalSetting._isShowWelcome = value;
+                GlobalSetting.SetConfig("IsShowWelcome", value.ToString());
             }
         }
 
         /// <summary>
         /// Gets, sets background color
         /// </summary>
-        public static Color BackgroundColor { get; set; } = Color.White;
+        public static Color BackgroundColor
+        {
+            get { return GlobalSetting._backgroundColor; }
+            set { GlobalSetting._backgroundColor = value; }
+        }
 
         /// <summary>
         /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
-        public static bool IsShowToolBar { get; set; } = true;
+        public static bool IsShowToolBar
+        {
+            get { return GlobalSetting._isShowToolBar; }
+            set { GlobalSetting._isShowToolBar = value; }
+        }
 
         /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
-        public static bool IsLoopBackSlideShow { get; set; } = false;
+        public static bool IsLoopBackSlideShow
+        {
+            get { 
+                return GlobalSetting._isLoopBackSlideShow; 
+            }
+            set { 
+                GlobalSetting._isLoopBackSlideShow = value; 
+            }
+        }
 
         /// <summary>
         /// Gets, sets value that allow user speed up image loading when navigate back
         /// </summary>
-        public static bool IsImageBoosterBack { get; set; } = true;
+        public static bool IsImageBoosterBack
+        {
+            get { return GlobalSetting._isImageBoosterBack; }
+            set { GlobalSetting._isImageBoosterBack = value; }
+        }
 
         /// <summary>
         /// Gets, sets copied filename collection (multi-copy)
         /// </summary>
-        public static StringCollection StringClipboard { get; set; } = new StringCollection();
+        public static StringCollection StringClipboard
+        {
+            get { return GlobalSetting._stringClipboard; }
+            set { GlobalSetting._stringClipboard = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
         /// </summary>
-        public static bool IsPressESCToQuit { get; set; } = true;
+        public static bool IsPressESCToQuit
+        {
+            get { return GlobalSetting._isPressESCToQuit; }
+            set { GlobalSetting._isPressESCToQuit = value; }
+        }
 
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
         public static Library.Language LangPack
         {
-            get { return _langPack; }
+            get { return GlobalSetting._langPack; }
             set
             {
-                _langPack = value;
-                SetConfig("Language", _langPack.FileName);
+                GlobalSetting._langPack = value;
+                GlobalSetting.SetConfig("Language", _langPack.FileName);
             }
 
         }
@@ -331,65 +365,261 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Gets, sets value indicating that whether the window is full screen or not
+        /// Gets, sets value indicating that wheather the window is full screen or not
         /// </summary>
-        public static bool IsFullScreen { get; set; } = false;
+        public static bool IsFullScreen
+        {
+            get { return _isFullScreen; }
+            set { _isFullScreen = value; }
+        }
 
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static int ThumbnailDimension { get; set; } = 48;
+        public static int ThumbnailDimension
+        {
+            get { return _thumbnailDimension; }
+            set { _thumbnailDimension = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
-        public static bool IsAllowMultiInstances { get; set; } = true;
+        public static bool IsAllowMultiInstances
+        {
+            get { return _isAllowMultiInstances; }
+            set { _isAllowMultiInstances = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that checked background is shown or not
         /// </summary>
-        public static bool IsShowCheckedBackground { get; set; } = false;
+        public static bool IsShowCheckedBackground
+        {
+            get { return GlobalSetting._isShowCheckedBackground; }
+            set { GlobalSetting._isShowCheckedBackground = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
         /// </summary>
-        public static bool IsTempMemoryData { get; set; } = false;
+        public static bool IsTempMemoryData
+        {
+            get { return GlobalSetting._isTempMemoryData; }
+            set { GlobalSetting._isTempMemoryData = value; }
+        }
 
         /// <summary>
-        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\
+        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\Temp\
         /// </summary>
-        public static string TempDir { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ImageGlass\\Temp\\";
+        public static string TempDir
+        {
+            get { return _tempDir; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
         /// </summary>
-        public static bool IsWindowAlwaysOnTop { get; set; } = false;
+        public static bool IsWindowAlwaysOnTop
+        {
+            get { return _isWindowAlwaysOnTop; }
+            set { _isWindowAlwaysOnTop = value; }
+        }
 
         /// <summary>
         /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
         /// </summary>
-        public static bool IsThumbnailHorizontal { get; set; } = false;
+        public static bool IsThumbnailHorizontal
+        {
+            get { return _isThumbnailHorizontal; }
+            set { _isThumbnailHorizontal = value; }
+        }
 
         /// <summary>
         /// Gets, sets width of horizontal thumbnail bar
         /// </summary>
-        public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(48, true).TotalDimension;
+        public static int ThumbnailBarWidth
+        {
+            get { return _thumbnailBarWidth; }
+            set { _thumbnailBarWidth = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
         /// </summary>
-        public static bool IsZoomToFit { get; set; } = false;
+        public static bool IsZoomToFit
+        {
+            get { return _isZoomToFit; }
+            set { _isZoomToFit = value; }
+        }
 
         /// <summary>
         /// Gets, sets value indicating that using mouse wheel to navigate image or not
         /// </summary>
-        public static bool IsMouseNavigation { get; set; } = false;
+        public static bool IsMouseNavigation
+        {
+            get { return _isMouseNavigation; }
+            set { _isMouseNavigation = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
+        /// </summary>
+        public static bool IsConfirmationDelete
+        {
+            get => _isConfirmationDelete;
+            set => _isConfirmationDelete = value;
+        }
+
+        /// <summary>
+        /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list
+        /// </summary>
+        public static bool IsLoopBackViewer { get => _isLoopBackViewer; set => _isLoopBackViewer = value; }
+
+        /// <summary>
+        /// Gets, sets value indicating that ImageGlass will run in portable mode
+        /// All configurations will be written to XML file instead of registry
+        /// </summary>
+        public static bool IsPortableMode
+        {
+            get => _isPortableMode;
+            set
+            {
+                //check if we have write access to write config file for portable mode
+                if (value && GlobalSetting.IsStartUpDirWritable == false)
+                {
+                    //we dont have permission
+                    _isPortableMode = false;
+                }
+                else
+                {
+                    _isPortableMode = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets the value indicates that StartUpDir is writable
+        /// </summary>
+        public static bool IsStartUpDirWritable
+        {
+            get => _isStartUpDirWritable;
+            set => _isStartUpDirWritable = value;
+        }
+
+        /// <summary>
+        /// Gets built-in image formats for both Default and Optional formats
+        /// </summary>
+        public static string BuiltInImageFormats { get => _builtInImageFormats; }
+
+        /// <summary>
+        /// Gets, sets slide show interval
+        /// </summary>
+        public static int SlideShowInterval
+        {
+            get => _slideShowInterval;
+            set => _slideShowInterval = value;
+        }
+
+        /// <summary>
+        /// Gets, sets the list of Image Editing Association
+        /// </summary>
+        public static List<ImageEditingAssociation> ImageEditingAssociationList
+        {
+            get => _imageEditingAssociationList;
+            set => _imageEditingAssociationList = value;
+        }
+
+
+
 
         #endregion
 
 
         #region "Public Method"
+        /// <summary>
+        /// Load the default built-in image formats to the list
+        /// </summary>
+        public static void LoadBuiltInImageFormats()
+        {
+            var exts = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray());
 
+            GlobalSetting.DefaultImageFormats = exts[0];
+            GlobalSetting.OptionalImageFormats = exts[1];
+        }
+
+        /// <summary>
+        /// Save ImageEditingAssociationList to Settings
+        /// </summary>
+        /// <param name="forceWriteConfigsToRegistry"></param>
+        public static void SaveConfigOfImageEditingAssociationList(bool @forceWriteConfigsToRegistry = false)
+        {
+            StringBuilder editingAssocString = new StringBuilder();
+
+            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+            {
+                editingAssocString.Append($"[{assoc.ToString()}]");
+            }
+
+            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
+        }
+
+        /// <summary>
+        /// Get ImageEditingAssociation from ImageEditingAssociationList
+        /// </summary>
+        /// <param name="ext">Extension to search. Ex: .png</param>
+        /// <returns></returns>
+        public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
+        {
+            if (GlobalSetting.ImageEditingAssociationList.Count > 0)
+            {
+                try
+                {
+                    var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+
+                    return assoc;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;            
+        }
+
+        /// <summary>
+        /// Get file extensions from registry
+        /// Ex: *.svg;*.png;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFileExtensionsFromRegistry()
+        {
+            StringBuilder exts = new StringBuilder();
+
+            RegistryHelper reg = new RegistryHelper()
+            {
+                BaseRegistryKey = Registry.LocalMachine,
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+            var extList = reg.GetValueNames();
+
+            foreach(var ext in extList)
+            {
+                exts.Append($"*{ext};");
+            }
+
+            return exts.ToString();
+        }
+
+        /// <summary>
+        /// Check is ImageGlass can write config file in the startup folder
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckStartUpDirWritable()
+        {
+            return _configFile.IsWritable();
+        }
 
         /// <summary>
         /// Load image order from configuration file
@@ -397,32 +627,18 @@ namespace ImageGlass.Services.Configuration
         public static void LoadImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");
-            int i = int.TryParse(s, out i) ? i : 0;
 
-            switch(i)
+            if (int.TryParse(s, out int i))
             {
-                case 1:
-                    ImageOrderBy = ImageOrderBy.Length;
-                    break;
-                case 2:
-                    ImageOrderBy = ImageOrderBy.CreationTime;
-                    break;
-                case 3:
-                    ImageOrderBy = ImageOrderBy.LastAccessTime;
-                    break;
-                case 4:
-                    ImageOrderBy = ImageOrderBy.LastWriteTime;
-                    break;
-                case 5:
-                    ImageOrderBy = ImageOrderBy.Extension;
-                    break;
-                case 6:
-                    ImageOrderBy = ImageOrderBy.Random;
-                    break;
-                default:
-                    ImageOrderBy = ImageOrderBy.Name;
-                    break;
+                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderBy)).Length) //<=== Number of items in enum
+                { }
+                else
+                {
+                    i = 0;
+                }
             }
+
+            ImageLoadingOrder = (ImageOrderBy)i;
         }
 
         /// <summary>
@@ -435,35 +651,90 @@ namespace ImageGlass.Services.Configuration
             return GetConfig(key, "");
         }
 
+
         /// <summary>
         /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
-        /// <param name="key">Configuration key</param>
+        /// <param name="configKey">Configuration key</param>
         /// <param name="defaultValue">Default value</param>
+        /// <param name="forceGetConfigsFromRegistry">True: always read configs from Registry</param>
         /// <returns></returns>
-        public static string GetConfig(string key, string defaultValue)
+        public static string GetConfig(string configKey, string @defaultValue = "", bool forceGetConfigsFromRegistry = false)
         {
+            // Portable mode: retrieve config from file -----------------------------
+            if (GlobalSetting.IsPortableMode && !forceGetConfigsFromRegistry)
+            {
+                return _configFile.GetConfig(configKey, defaultValue);
+            }
+
+
+            // Read configs from Registry --------------------------------------------
             try
             {
-                // If the registry key doesn't exist, this would crash
-                string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
-                return Registry.GetValue(hkey, key, defaultValue).ToString();
+                RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass"); // Work path in the registry.
+                object configValue = null; // Value of the configuration obtained.
+
+                if (workKey != null)
+                {
+                    configValue = workKey.GetValue(configKey, defaultValue); // Get the config value.
+                }
+                else
+                {
+                    throw new Exception(); // Force catch.
+                }
+                return configValue.ToString();
             }
-            catch (Exception)
+            catch (SecurityException)
             {
                 return defaultValue;
             }
+            catch (IOException)
+            {
+                return defaultValue;
+            }
+            catch (ArgumentException)
+            {
+                return defaultValue;
+            }
+            catch (Exception)
+            {
+                // Need a repair function.
+                return defaultValue;
+            }
+            
         }
 
         /// <summary>
         /// Sets a specify config.
         /// </summary>
-        /// <param name="key">Configuration key</param>
+        /// <param name="configKey">Configuration key</param>
         /// <param name="value">Configuration value</param>
-        public static void SetConfig(string key, string value)
+        /// <param name="forceWriteConfigsToRegistry">True: always write configs to Registry</param>
+        public static void SetConfig(string configKey, string value, bool @forceWriteConfigsToRegistry = false)
         {
-            string hkey = @"HKEY_CURRENT_USER\Software\PhapSoftware\ImageGlass\";
-            Registry.SetValue(hkey, key, value);
+            // Portable mode: retrieve config from file -----------------------------
+            if (GlobalSetting.IsPortableMode && !@forceWriteConfigsToRegistry)
+            {
+                _configFile.SetConfig(configKey, value);
+                return;
+            }
+
+
+            // Read configs from Registry --------------------------------------------
+            RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree); // Work path in the registry.
+
+            if (workKey == null)
+            {
+                workKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree);
+            }
+
+            try
+            {
+                workKey.SetValue(configKey, value);
+            }
+#pragma warning disable CS0168 // Variable is declared but never used
+            catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
         }
 
         /// <summary>
@@ -489,7 +760,7 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static string RectToString(Rectangle rc)
         {
-            return $"{rc.Left},{rc.Top},{rc.Width},{rc.Height}";
+            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
         }
 
         #endregion

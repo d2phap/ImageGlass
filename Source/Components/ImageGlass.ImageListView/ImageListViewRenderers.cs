@@ -2454,7 +2454,7 @@ namespace ImageGlass.ImageListView
             }
 
             /// <summary>
-            /// Returns item size for the given view mode.
+            /// [PHAP] Returns item size for the given view mode.
             /// </summary>
             /// <param name="view">The view mode for which the measurement should be made.</param>
             /// <returns>The item size.</returns>
@@ -2463,14 +2463,18 @@ namespace ImageGlass.ImageListView
                 Size sz = base.MeasureItem(view);
                 if (VisualStylesEnabled && view != View.Details)
                 {
-                    sz.Width += 6;
-                    sz.Height += 6;
+                    //sz.Width += 6;
+                    //sz.Height += 6;
+                    int textHeight = ImageListView.Font.Height;
+
+                    sz.Width += textHeight * 2 / 5;
+                    sz.Height -= textHeight / 2;
                 }
                 return sz;
             }
 
             /// <summary>
-            /// Draws the specified item on the given graphics.
+            /// [PHAP] Draws the specified item on the given graphics.
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
@@ -2501,7 +2505,8 @@ namespace ImageGlass.ImageListView
                     if (((state & ItemState.Hovered) != ItemState.None) || ((state & ItemState.Selected) != ItemState.None))
                         rBack.DrawBackground(g, bounds, bounds);
 
-                    Size itemPadding = new Size(7, 7);
+                    // Size itemPadding = new Size(7, 7);
+                    Size itemPadding = new Size(5, 5);
 
                     // Draw the image
                     if (ImageListView.View != View.Details)
@@ -2509,33 +2514,42 @@ namespace ImageGlass.ImageListView
                         Image img = item.GetCachedImage(CachedImageType.Thumbnail);
                         if (img != null)
                         {
-                            Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
+                            //Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
+
+                            Rectangle pos = Utility.GetSizedImageBounds(img,
+                                new Rectangle(bounds.Location + itemPadding,
+                                new Size(bounds.Width - 2 * itemPadding.Width, bounds.Height - 2 * itemPadding.Width)));
+
                             // Image background
                             Rectangle imgback = pos;
                             imgback.Inflate(3, 3);
-                            g.FillRectangle(SystemBrushes.Window, imgback);
+
+                            //Fill background
+                            //g.FillRectangle(SystemBrushes.Window, imgback);
+
                             // Image border
-                            if (img.Width > 32 && img.Height > 32)
-                            {
-                                using (Pen pen = new Pen(Color.FromArgb(224, 224, 244)))
-                                {
-                                    g.DrawRectangle(pen, imgback.X, imgback.Y, imgback.Width - 1, imgback.Height - 1);
-                                }
-                            }
+                            //if (img.Width > 32 && img.Height > 32)
+                            //{
+                            //    using (Pen pen = new Pen(Color.FromArgb(224, 224, 244), 2))
+                            //    {
+                            //        g.DrawRectangle(pen, imgback.X, imgback.Y, imgback.Width, imgback.Height);
+                            //    }
+                            //}
+
                             // Image
                             g.DrawImage(img, pos);
                         }
 
                         // Draw item text
-                        Color foreColor = SystemColors.ControlText;
-                        if ((state & ItemState.Disabled) != ItemState.None)
-                            foreColor = SystemColors.GrayText;
-                        Size szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
-                        Rectangle rt = new Rectangle(
-                            bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height,
-                            ImageListView.ThumbnailSize.Width, szt.Height);
-                        TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
-                            TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.PreserveGraphicsClipping);
+                        //Color foreColor = SystemColors.ControlText;
+                        //if ((state & ItemState.Disabled) != ItemState.None)
+                        //    foreColor = SystemColors.GrayText;
+                        //Size szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
+                        //Rectangle rt = new Rectangle(
+                        //    bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height,
+                        //    ImageListView.ThumbnailSize.Width, szt.Height);
+                        //TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
+                        //    TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.PreserveGraphicsClipping);
                     }
                     else // if (ImageListView.View == View.Details)
                     {

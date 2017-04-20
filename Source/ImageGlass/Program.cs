@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
+using System.Collections.Generic;
 
 namespace ImageGlass
 {
@@ -30,25 +32,51 @@ namespace ImageGlass
         private static string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] argv)
         {
+            // Windows Vista or later
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
+            
             Guid guid = new Guid(appGuid);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //auto update----------------------------------------------------------------
-            string s = GlobalSetting.GetConfig("AutoUpdate", "1/1/2015 0:0:0");
+            // Check if the start up directory writable
+            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
             
-            if (s != "0")
+
+            //check if user enable TEMPORARY portable mode ------------------------------
+            GlobalSetting.IsPortableMode = false;
+            
+            if (argv.ToList().IndexOf("--portable") != -1)
+            {
+                GlobalSetting.IsPortableMode = true;
+            }
+            else
+            {
+                string configValue = GlobalSetting.GetConfig("IsPortableMode", "False", true);
+                GlobalSetting.IsPortableMode = bool.Parse(configValue);
+            }
+
+            //auto update----------------------------------------------------------------
+            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
+            
+            if (lastUpdateConfig != "0")
             {
                 DateTime lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParse(s, out lastUpdate))
+                if (DateTime.TryParse(lastUpdateConfig, out lastUpdate))
                 {
                     //Check for update every 7 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
@@ -59,11 +87,14 @@ namespace ImageGlass
                         p.Start();
                     }
                 }
-            }            
+            }
+            
+            //save last update
+            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
-
+            
             //check if allows multi instances
             if (GlobalSetting.IsAllowMultiInstances)
             {
@@ -87,7 +118,7 @@ namespace ImageGlass
                     }
                 }
             } //end check multi instances
-
+            
         }
 
         private static void SingleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)

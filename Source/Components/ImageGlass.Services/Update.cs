@@ -86,7 +86,7 @@ namespace ImageGlass.Services
                 System.Net.WebClient w = new WebClient();
                 w.DownloadFile(link, savedPath);
             }
-            catch { return false; }
+            catch (Exception ex) { return false; }
 
             //return FALSE if config file is not exist
             if (!File.Exists(savedPath)) { return false; }

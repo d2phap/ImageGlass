@@ -49,14 +49,18 @@ namespace ImageGlass.Library
                         // user just doesn't have access 
                     }
 
+#pragma warning disable CS0168 // Variable is declared but never used
                     catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                     {
                         // TODO: log the exception 
                     }
                 });
             }
 
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // TODO: save exception 
             }
@@ -109,7 +113,9 @@ namespace ImageGlass.Library
                                     retList.Add(file.FullName);
                             }
 
+#pragma warning disable CS0168 // Variable is declared but never used
                             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                             {
                                 // TODO: log the exception 
                             }
@@ -122,14 +128,18 @@ namespace ImageGlass.Library
                         // user just doesn't have access 
                     }
 
+#pragma warning disable CS0168 // Variable is declared but never used
                     catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
                     {
                         // TODO: log the exception 
                     }
                 });
             }
 
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
                 // TODO: save exception 
             }

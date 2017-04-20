@@ -40,10 +40,11 @@ namespace igcmd
             //cmd: iginstalltheme "srcFile"
 
             lblStatus.Text = "Installing ...";
-            Thread t = new Thread(new ThreadStart(InstallTheme));
-            t.Priority = ThreadPriority.BelowNormal;
-            t.IsBackground = true;
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(InstallTheme));
+            //t.Priority = ThreadPriority.BelowNormal;
+            //t.IsBackground = true;
+            //t.Start();
+            InstallTheme();
         }
 
         /// <summary>
@@ -57,8 +58,7 @@ namespace igcmd
                 return;
             }
 
-            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
-                        "\\ImageGlass\\Themes\\";
+            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
             Directory.CreateDirectory(dir);
 
             using (ZipFile z = new ZipFile(file, Encoding.UTF8))
@@ -93,9 +93,7 @@ namespace igcmd
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe",
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
-                "\\ImageGlass\\Themes\\");
+            System.Diagnostics.Process.Start("explorer.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\"));
         }
 
        

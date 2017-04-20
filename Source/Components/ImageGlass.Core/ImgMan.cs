@@ -17,8 +17,12 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Drawing;
 using System.Threading;
+using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Core
 {
@@ -97,15 +101,11 @@ namespace ImageGlass.Core
             else
             {
                 isErrorImage = false;
-                img = (Image)lstImage[i].Get();
+                img = lstImage[i].Get();
             }
 
             // Make sure someone is listening to event
-            if (OnFinishLoadingImage != null)
-            {
-                //Raise event
-                OnFinishLoadingImage(this, new EventArgs());
-            }
+            OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             return img;
         }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 namespace ImageGlass
 {
     public static class LocalSetting
@@ -25,9 +26,9 @@ namespace ImageGlass
         private static frmSetting _fSetting = new frmSetting();
         private static frmExtension _fExtension = new frmExtension();
         private static string _imageModifiedPath = "";
-        private static int _oldDPI = 96;
-        private static int _currentDPI = 96;
         private static bool _isResetScrollPosition = true;
+        private static Theme.Theme _theme = new Theme.Theme();
+        private static bool _isThumbnailDimensionChanged = false;
 
         #region "Properties"
         /// <summary>
@@ -66,37 +67,7 @@ namespace ImageGlass
             set { _imageModifiedPath = value; }
         }
 
-        /// <summary>
-        /// Gets, sets old DPI scaling value
-        /// </summary>
-        public static int OldDPI
-        {
-            get
-            {
-                return _oldDPI;
-            }
-
-            set
-            {
-                _oldDPI = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets, sets current DPI scaling value
-        /// </summary>
-        public static int CurrentDPI
-        {
-            get
-            {
-                return _currentDPI;
-            }
-
-            set
-            {
-                _currentDPI = value;
-            }
-        }
+        
 
         /// <summary>
         /// Gets, sets value indicating that picmain's scrollbar need to be reset
@@ -113,6 +84,16 @@ namespace ImageGlass
                 _isResetScrollPosition = value;
             }
         }
+
+        /// <summary>
+        /// Gets, sets current app theme
+        /// </summary>
+        public static Theme.Theme Theme { get => _theme; set => _theme = value; }
+
+        /// <summary>
+        /// Gets, sets the value that will request frmMain to update thumbnail bar
+        /// </summary>
+        public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
         #endregion
 
     }

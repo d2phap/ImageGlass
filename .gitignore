@@ -158,3 +158,9 @@ $RECYCLE.BIN/
 *.cache
 *.cache
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+Source/.vs/ImageGlass.sqlite
+*.cache
+*.cache
+*.sqlite
+.vs/VSWorkspaceState.json
+Setup/ImageGlass_4.0.4.15.exe

@@ -47,9 +47,9 @@ namespace ThemeConfig
             try
             {
                 OpenFileDialog o = new OpenFileDialog();
-                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
+                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg, *.svg)|*.png;*.jpg;*.jpeg;*.svg";
 
-                if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (o.ShowDialog() == DialogResult.OK)
                 {
                     ToolStripButton b = (ToolStripButton)sender;
                     b.Image = Image.FromFile(o.FileName);
@@ -79,9 +79,9 @@ namespace ThemeConfig
             try
             {
                 OpenFileDialog o = new OpenFileDialog();
-                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
+                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg, *.svg)|*.png;*.jpg;*.jpeg;*.svg";
 
-                if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (o.ShowDialog() == DialogResult.OK)
                 {
                     toolMain.BackgroundImage = Image.FromFile(o.FileName);
                     toolMain.Tag = Path.GetFileName(o.FileName);
@@ -108,7 +108,7 @@ namespace ThemeConfig
             try
             {
                 OpenFileDialog o = new OpenFileDialog();
-                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
+                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg, *.svg)|*.png;*.jpg;*.jpeg;*.svg";
 
                 if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -137,7 +137,7 @@ namespace ThemeConfig
 
             ColorDialog c = new ColorDialog();
             c.FullOpen = true;
-            if (c.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (c.ShowDialog() == DialogResult.OK)
             {
                 this.BackColor = c.Color;
             }
@@ -149,9 +149,9 @@ namespace ThemeConfig
             try
             {
                 OpenFileDialog o = new OpenFileDialog();
-                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
+                o.Filter = "Supported image formats (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg;";
 
-                if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (o.ShowDialog() == DialogResult.OK)
                 {
                     picPreview.Image = Image.FromFile(o.FileName);
                     picPreview.Tag = Path.GetFileName(o.FileName);
@@ -316,103 +316,100 @@ namespace ThemeConfig
                 txtMinVersion.Text = t.compatibility;
                 txtDescription.Text = t.description;
 
-                try
-                {
-                    picPreview.Image = Image.FromFile(themedir + t.preview);
-                    picPreview.Tag = t.preview;
-                }
-                catch { picPreview.Image = null; }
+                picPreview.Image = t.PreviewImage.Image;
+                picPreview.Tag = t.PreviewImage.Filename;
 
-                //main---------------------------------------------------------------------------------
-                try { toolMain.BackgroundImage = Image.FromFile(themedir + t.topbar); toolMain.Tag = t.topbar; }
-                catch { toolMain.BackgroundImage = null; }
+                //main ----------------------------------------------------------------------------
+                toolMain.BackColor = t.ToolbarBackgroundColor;
+                toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
+                toolMain.Tag = t.ToolbarBackgroundImage.Filename;
+                
+                panThumbnail.BackColor = t.ThumbnailBackgroundColor;
+                panThumbnail.BackgroundImage = t.ThumbnailBackgroundImage.Image;
+                panThumbnail.Tag = t.ThumbnailBackgroundImage.Filename;
 
-                try { panThumbnail.BackgroundImage = Image.FromFile(themedir + t.bottombar); panThumbnail.Tag = t.bottombar; }
-                catch { panThumbnail.BackgroundImage = null; }
+                this.BackColor = t.BackgroundColor;
 
-                try { this.BackColor = t.backcolor; }
-                catch { this.BackColor = Color.White; }
+                btnStatus.ForeColor = t.TextInfoColor;
 
-                try { btnStatus.ForeColor = t.statuscolor; }
-                catch { btnStatus.ForeColor = Color.Black; }
+                //toolbar_icon---------------------------------------------------------------------
+                btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
+                btnBack.Tag = t.ToolbarIcons.ViewPreviousImage.Filename;
 
-                //toolbar_icon--------------------------------------------------------------------------
-                try { btnBack.Image = Image.FromFile(themedir + t.back); btnBack.Tag = t.back; }
-                catch { btnBack.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
+                btnNext.Tag = t.ToolbarIcons.ViewNextImage.Filename;
 
-                try { btnNext.Image = Image.FromFile(themedir + t.next); btnNext.Tag = t.next; }
-                catch { btnNext.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
+                btnRotateLeft.Tag = t.ToolbarIcons.RotateLeft.Filename;
 
-                try { btnRotateLeft.Image = Image.FromFile(themedir + t.leftrotate); btnRotateLeft.Tag = t.leftrotate; }
-                catch { btnRotateLeft.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+                btnRotateRight.Tag = t.ToolbarIcons.RotateRight.Filename;
 
-                try { btnRotateRight.Image = Image.FromFile(themedir + t.rightrotate); btnRotateRight.Tag = t.rightrotate; }
-                catch { btnRotateRight.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
+                btnZoomIn.Tag = t.ToolbarIcons.ZoomIn.Filename;
 
-                try { btnZoomIn.Image = Image.FromFile(themedir + t.zoomin); btnZoomIn.Tag = t.zoomin; }
-                catch { btnZoomIn.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
+                btnZoomOut.Tag = t.ToolbarIcons.ZoomOut.Filename;
 
-                try { btnZoomOut.Image = Image.FromFile(themedir + t.zoomout); btnZoomOut.Tag = t.zoomout; }
-                catch { btnZoomOut.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnScale11.Image = t.ToolbarIcons.ActualSize.Image;
+                btnScale11.Tag = t.ToolbarIcons.ActualSize.Filename;
 
-                try { btnScale11.Image = Image.FromFile(themedir + t.scaletofit); btnScale11.Tag = t.scaletofit; }
-                catch { btnScale11.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
+                btnZoomLock.Tag = t.ToolbarIcons.LockRatio.Filename;
 
-                try { btnZoomLock.Image = Image.FromFile(themedir + t.zoomlock); btnZoomLock.Tag = t.zoomlock; }
-                catch { btnZoomLock.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
+                btnScaletoWidth.Tag = t.ToolbarIcons.ScaleToWidth.Filename;
 
-                try { btnScaletoWidth.Image = Image.FromFile(themedir + t.scaletowidth); btnScaletoWidth.Tag = t.scaletowidth; }
-                catch { btnScaletoWidth.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
+                btnScaletoHeight.Tag = t.ToolbarIcons.ScaleToHeight.Filename;
 
-                try { btnScaletoHeight.Image = Image.FromFile(themedir + t.scaletoheight); btnScaletoHeight.Tag = t.scaletoheight; }
-                catch { btnScaletoHeight.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
+                btnWindowAutosize.Tag = t.ToolbarIcons.AdjustWindowSize.Filename;
 
-                try { btnWindowAutosize.Image = Image.FromFile(themedir + t.autosizewindow); btnWindowAutosize.Tag = t.autosizewindow; }
-                catch { btnWindowAutosize.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
+                btnOpen.Tag = t.ToolbarIcons.OpenFile.Filename;
 
-                try { btnOpen.Image = Image.FromFile(themedir + t.open); btnOpen.Tag = t.open; }
-                catch { btnOpen.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
+                btnRefresh.Tag = t.ToolbarIcons.Refresh.Filename;
 
-                try { btnRefresh.Image = Image.FromFile(themedir + t.refresh); btnRefresh.Tag = t.refresh; }
-                catch { btnRefresh.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+                btnGoto.Tag = t.ToolbarIcons.GoToImage.Filename;
 
-                try { btnGoto.Image = Image.FromFile(themedir + t.gotoimage); btnGoto.Tag = t.gotoimage; }
-                catch { btnGoto.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
+                btnThumb.Tag = t.ToolbarIcons.ThumbnailBar.Filename;
 
-                try { btnThumb.Image = Image.FromFile(themedir + t.thumbnail); btnThumb.Tag = t.thumbnail; }
-                catch { btnThumb.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
+                btnCheckedBackground.Tag = t.ToolbarIcons.CheckedBackground.Filename;
 
-                try { btnCheckedBackground.Image = Image.FromFile(themedir + t.checkBackground); btnCheckedBackground.Tag = t.checkBackground; }
-                catch { btnCheckedBackground.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
+                btnFullScreen.Tag = t.ToolbarIcons.FullScreen.Filename;
 
-                try { btnFullScreen.Image = Image.FromFile(themedir + t.fullscreen); btnFullScreen.Tag = t.fullscreen; }
-                catch { btnFullScreen.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
+                btnSlideShow.Tag = t.ToolbarIcons.Slideshow.Filename;
 
-                try { btnSlideShow.Image = Image.FromFile(themedir + t.slideshow); btnSlideShow.Tag = t.slideshow; }
-                catch { btnSlideShow.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnConvert.Image = t.ToolbarIcons.Convert.Image;
+                btnConvert.Tag = t.ToolbarIcons.Convert.Filename;
 
-                try { btnConvert.Image = Image.FromFile(themedir + t.convert); btnConvert.Tag = t.convert; }
-                catch { btnConvert.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnPrintImage.Image = t.ToolbarIcons.Print.Image;
+                btnPrintImage.Tag = t.ToolbarIcons.Print.Filename;
 
-                try { btnPrintImage.Image = Image.FromFile(themedir + t.print); btnPrintImage.Tag = t.print; }
-                catch { btnPrintImage.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
+                btnFacebook.Tag = t.ToolbarIcons.Sharing.Filename;
 
-                try { btnFacebook.Image = Image.FromFile(themedir + t.uploadfb); btnFacebook.Tag = t.uploadfb; }
-                catch { btnFacebook.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnExtension.Image = t.ToolbarIcons.Plugins.Image;
+                btnExtension.Tag = t.ToolbarIcons.Plugins.Filename;
 
-                try { btnExtension.Image = Image.FromFile(themedir + t.extension); btnExtension.Tag = t.extension; }
-                catch { btnExtension.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnSetting.Image = t.ToolbarIcons.Settings.Image;
+                btnSetting.Tag = t.ToolbarIcons.Settings.Filename;
 
-                try { btnSetting.Image = Image.FromFile(themedir + t.settings); btnSetting.Tag = t.settings; }
-                catch { btnSetting.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnHelp.Image = t.ToolbarIcons.About.Image;
+                btnHelp.Tag = t.ToolbarIcons.About.Filename;
 
-                try { btnHelp.Image = Image.FromFile(themedir + t.about); btnHelp.Tag = t.about; }
-                catch { btnHelp.Image = ThemeConfig.Properties.Resources.noimg; }
+                btnMenu.Image = t.ToolbarIcons.Menu.Image;
+                btnMenu.Tag = t.ToolbarIcons.Menu.Filename;
 
-                try { btnMenu.Image = Image.FromFile(themedir + t.report); btnMenu.Tag = t.report; }
-                catch { btnMenu.Image = ThemeConfig.Properties.Resources.noimg; }
 
-                //add ds
+                //add to list----------------------------------------------------------------------
                 foreach (ToolStripButton b in toolMain.Items)
                 {
                     ds.Add(themedir + b.Tag.ToString());

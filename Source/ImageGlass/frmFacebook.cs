@@ -96,6 +96,7 @@ namespace ImageGlass
             {
                 // open the Facebook Login Dialog and ask for user permissions.
                 var fbLoginDlg = new frmFaceBookLogin(AppId, ExtendedPermissions);
+                fbLoginDlg.TopMost = this.TopMost;
                 fbLoginDlg.ShowDialog();
 
                 // The user has taken action, either allowed/denied or cancelled the authorization,
@@ -108,8 +109,7 @@ namespace ImageGlass
             lblMessage.Text = GlobalSetting.LangPack.Items["frmFacebook.lblMessage"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmFacebook.btnClose"];
             btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
-            lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"],
-                                            btnUpload.Text);
+            lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"], btnUpload.Text);
             lblPercent.Text = "";
         }
 

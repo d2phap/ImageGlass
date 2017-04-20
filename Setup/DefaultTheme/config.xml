@@ -1,0 +1,32 @@
+<ImageGlass>
+  <Theme>
+    <Info name="2017 (Dark)" version="1.0" author="Dương Diệu Pháp" email="phap@imageglass.org" website="http://imageglass.org" description="Modern ImageGlass theme (Dark)" type="ImageGlass Theme Configuration" compatibility="3.0" preview="preview.png" />
+    <main topbar="x" topbarcolor="-11777464" topbartransparent="0" bottombar="x" bottombarcolor="-11777464" backcolor="-11777464" statuscolor="-1907998" />
+    <toolbar_icon 
+        back="ViewPreviousImage.svg"
+        next="ViewNextImage.svg"
+        leftrotate="RotateLeft.svg"
+        rightrotate="RotateRight.svg"
+        zoomin="ZoomIn.svg"
+        zoomout="ZoomOut.svg"
+        zoomlock="LockRatio.svg"
+        scaletofit="ActualSize.svg"
+        scaletowidth="ScaleToWidth.svg"
+        scaletoheight="ScaleToHeight.svg"
+        autosizewindow="AdjustWindowSize.svg"
+        open="OpenFile.svg"
+        refresh="Refresh.svg"
+        gotoimage="GoToImage.svg"
+        thumbnail="ThumbnailBar.svg"
+        checkedbackground="CheckedBackground.svg"
+        fullscreen="FullScreen.svg"
+        slideshow="Slideshow.svg"
+        convert="Convert.svg"
+        print="Print.svg"
+        uploadfb="Sharing.svg"
+        extension="Plugins.svg"
+        settings="Settings.svg"
+        about="About.svg" 
+        menu="Menu.svg" />
+  </Theme>
+</ImageGlass>

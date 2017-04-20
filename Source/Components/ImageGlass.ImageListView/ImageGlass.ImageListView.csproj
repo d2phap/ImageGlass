@@ -74,18 +74,11 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET">
-      <HintPath>..\..\ImageGlass\FreeImageNET.dll</HintPath>
-    </Reference>
-    <Reference Include="Imazen.WebP">
-      <HintPath>..\..\ImageGlass\Imazen.WebP.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.0.4.701\lib\net40-client\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Svg, Version=2.2.1.1459, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Svg.2.2.1\lib\net35\Svg.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -131,16 +124,6 @@
       <SubType>component</SubType>
     </Compile>
     <Compile Include="ImageListViewColor.cs" />
-    <Compile Include="ImageListViewResources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageListViewResources.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ImageListViewResources.tr.Designer.cs">
-      <DependentUpon>ImageListViewResources.tr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="ImageListViewRenderers.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Events.cs" />
@@ -182,16 +165,6 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ImageListViewResources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImageListViewResources.tr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.tr.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ImageListView.bmp" />
     <EmbeddedResource Include="ImageListViewResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,0 +1,27 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" id="svg_4"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <g id="svg_14">
+    <path fill="none" fill-opacity="null" stroke-width="0.7" stroke-linejoin="null" stroke-linecap="null" stroke-opacity="null" d="m3.290239,6.523489c-0.68493,-0.63717 12.96804,1.52066 13.88128,1.67996c0.45662,0.49557 0.27397,0.851 0.22831,3.31116c-5.02283,0 -9.08676,0 -14.10959,0c-0.54795,0.40708 -0.04566,-1.91617 0,-4.99112z" id="svg_11" stroke="#fff"/>
+    <g id="svg_12">
+     <path fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m0.611989,18.852779c-0.73916,0.1798 1.80936,-6.68826 2.85102,-7.18269c-0.13508,-0.43826 12.33258,0.34781 12.88243,0.68493c0.40239,-0.34836 3.90981,6.71127 3.125,6.49776c-6.28615,0 -12.5723,0 -18.85845,0z" id="svg_10" transform="rotate(-180 10.032019615173342,15.199000358581543) " stroke="#fff"/>
+    </g>
+   </g>
+   <path fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m5.079039,6.734649c6.59928,-4.38356 9.3583,-0.54794 9.33966,-0.57077" id="svg_15" transform="rotate(-45 9.748915672302244,5.683496475219727) " stroke="#fff"/>
+   <g id="svg_18" transform="rotate(-14.71426010131836 12.53961658477783,2.7103409767150883) ">
+    <line fill="none" stroke="#fff" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="13.538812" y1="2.841958" x2="11.312111" y2="0.615258" id="svg_16" stroke-linejoin="null" stroke-linecap="null"/>
+    <line fill="none" stroke="#fff" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="13.767122" y1="4.805428" x2="11.540422" y2="2.578728" id="svg_17" stroke-linejoin="null" stroke-linecap="null" transform="rotate(-90 12.653772354125977,3.6920793056488024) "/>
+   </g>
+  </g>
+ </g>
+</svg>

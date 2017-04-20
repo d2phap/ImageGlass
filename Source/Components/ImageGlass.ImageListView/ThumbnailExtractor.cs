@@ -23,6 +23,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using ImageMagick;
 #if USEWIC
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -219,7 +220,7 @@ namespace ImageGlass.ImageListView
             return thumb;
         }
         /// <summary>
-        /// Creates a thumbnail from the given image file.
+        /// [Phap] Creates a thumbnail from the given image file.
         /// </summary>
         /// <param name="filename">The filename pointing to an image.</param>
         /// <param name="size">Requested image size.</param>
@@ -233,144 +234,62 @@ namespace ImageGlass.ImageListView
 
             Image source = null;
             Image thumb = null;
-            filename = filename.ToLower();
-            
-            // Revert to source image if an embedded thumbnail of required size was not found.
-            FileStream sourceStream = null;
+            var ext = Path.GetExtension(filename).ToLower();
 
-            // Fix for the missing semicolon in GIF files
-            MemoryStream streamCopy = null;
-
-            // *.SVG, *.WEBP, *.HDR, *.EXR
-            if (filename.EndsWith(".svg") ||
-                filename.EndsWith(".webp") ||
-                filename.EndsWith(".hdr") ||
-                filename.EndsWith(".exr"))
+            try
             {
-                try
+                var settings = new MagickReadSettings();
+
+                if (ext.CompareTo(".svg") == 0)
                 {
-                    source = ImageGlass.Core.Interpreter.Load(filename);
+                    settings.BackgroundColor = MagickColors.Transparent;
                 }
-                catch { return null; }
-            }
-            //OTHER FORMATS
-            else
-            {
-                // Check if this is an image file
-                try
+
+                if (size.Width > 0 && size.Height > 0)
                 {
-                    using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                    {
-                        if (!Utility.IsImage(stream))
-                            if (!filename.EndsWith(".exr"))
-                                return null;
-                    }
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
                 }
-                catch { return null; }
 
-
-
-                // Try to read the exif thumbnail
-                if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
+                using (var magicImg = new MagickImage(filename, settings))
                 {
-                    try
+                    // Try to read the exif thumbnail
+                    if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
                     {
-                        using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
                         {
-                            using (Image img = Image.FromStream(stream, false, false))
+                            // Fetch the embedded thumbnail
+                            var magicThumb = profile.CreateThumbnail();
+                            if (magicThumb != null)
                             {
-                                foreach (int index in img.PropertyIdList)
+                                source = magicThumb.ToBitmap();
+
+                                if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Auto)
                                 {
-                                    if (index == TagThumbnailData)
+                                    // Check that the embedded thumbnail is large enough.
+                                    if (Math.Max((float)source.Width / (float)size.Width, (float)source.Height / (float)size.Height) < 1.0f)
                                     {
-                                        // Fetch the embedded thumbnail
-                                        byte[] rawImage = img.GetPropertyItem(TagThumbnailData).Value;
-                                        using (MemoryStream memStream = new MemoryStream(rawImage))
-                                        {
-                                            source = Image.FromStream(memStream);
-                                        }
-                                        if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Auto)
-                                        {
-                                            // Check that the embedded thumbnail is large enough.
-                                            if (Math.Max((float)source.Width / (float)size.Width,
-                                                (float)source.Height / (float)size.Height) < 1.0f)
-                                            {
-                                                source.Dispose();
-                                                source = null;
-                                            }
-                                        }
-                                        break;
+                                        source.Dispose();
+                                        source = null;
                                     }
                                 }
                             }
                         }
                     }
-                    catch
-                    {
-                        if (source != null)
-                            source.Dispose();
-                        source = null;
-                    }
-                }
 
-                // Fix for the missing semicolon in GIF files
-                try
-                {
+                    // Revert to source image if an embedded thumbnail of required size was not found.
                     if (source == null)
                     {
-                        using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                        {
-                            byte[] gifSignature = new byte[4];
-                            stream.Read(gifSignature, 0, 4);
-                            if (Encoding.ASCII.GetString(gifSignature) == "GIF8")
-                            {
-                                stream.Seek(0, SeekOrigin.Begin);
-                                streamCopy = new MemoryStream();
-                                byte[] buffer = new byte[32768];
-                                int read = 0;
-                                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                                {
-                                    streamCopy.Write(buffer, 0, read);
-                                }
-                                // Append the missing semicolon
-                                streamCopy.Seek(-1, SeekOrigin.End);
-                                if (streamCopy.ReadByte() != 0x3b)
-                                    streamCopy.WriteByte(0x3b);
-                                source = Image.FromStream(streamCopy);
-                            }
-                        }
+                        source = magicImg.ToBitmap();
                     }
-                }
-                catch
-                {
-                    if (source != null)
-                        source.Dispose();
-                    source = null;
-                    if (streamCopy != null)
-                        streamCopy.Dispose();
-                    streamCopy = null;
-                }
 
-                // Revert to source image if an embedded thumbnail of required size was not found.
-                if (source == null)
-                {
-                    try
-                    {
-                        sourceStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                        source = Image.FromStream(sourceStream);
-                    }
-                    catch
-                    {
-                        if (source != null)
-                            source.Dispose();
-                        if (sourceStream != null)
-                            sourceStream.Dispose();
-                        source = null;
-                        sourceStream = null;
-                    }
-                }
-            } //END OTHER FORMATS
-            
+                }//END using MagickImage 
+            }
+            catch
+            {
+                source = null;
+            }
 
             // If all failed, return null.
             if (source == null) return null;
@@ -403,12 +322,6 @@ namespace ImageGlass.ImageListView
                 if (source != null)
                     source.Dispose();
                 source = null;
-                if (sourceStream != null)
-                    sourceStream.Dispose();
-                sourceStream = null;
-                if (streamCopy != null)
-                    streamCopy.Dispose();
-                streamCopy = null;
             }
 
             return thumb;

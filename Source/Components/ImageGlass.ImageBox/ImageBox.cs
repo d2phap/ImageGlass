@@ -93,11 +93,11 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Gets value whether the image can animate or not
+        /// [PHAP] Gets value whether the image can animate or not
         /// </summary>
         public bool CanAnimate
         {
-            get { return ImageAnimator.CanAnimate(Image); }
+            get { return Animator.CanAnimate(Image); }
         }
 
         #endregion
@@ -125,6 +125,7 @@ namespace ImageGlass
         }
 
         #endregion
+
         #region Constants
 
         private const int MaxZoom = 3500;
@@ -142,6 +143,11 @@ namespace ImageGlass
         private bool _allowDoubleClick;
 
         private bool _allowZoom;
+
+        /// <summary>
+        /// [PHAP]
+        /// </summary>
+        private GifAnimator _animator;
 
         private bool _autoCenter;
 
@@ -222,12 +228,15 @@ namespace ImageGlass
         #region Public Constructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ImageBox" /> class.
+        /// [PHAP] Initializes a new instance of the <see cref="ImageBox" /> class.
         /// </summary>
         public ImageBox()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.StandardDoubleClick, false);
+
+            //[PHAP]
+            _animator = new DefaultGifAnimator();
 
             _vScrollBar = new VScrollBar
             {
@@ -717,7 +726,7 @@ namespace ImageGlass
                 if (IsAnimating)
                 {
                     // ReSharper disable once HeapView.DelegateAllocation
-                    ImageAnimator.StopAnimate(Image, OnFrameChangedHandler);
+                    Animator.StopAnimate(Image, OnFrameChangedHandler);
                 }
 
                 if (_hScrollBar != null)
@@ -1125,6 +1134,22 @@ namespace ImageGlass
         }
 
         /// <summary>
+        /// [PHAP] Handles animating gif images
+        /// </summary>
+        public GifAnimator Animator {
+            set {
+                if (Image != null && IsAnimating) {
+                    StopAnimating();
+                }
+                _animator = value;
+                // Mimick Image property behavior
+                OnImageChanged(EventArgs.Empty);
+            }
+
+            get { return _animator; }
+        }
+
+        /// <summary>
         ///   Gets or sets a value indicating whether the image is centered where possible.
         /// </summary>
         /// <value>
@@ -1315,7 +1340,7 @@ namespace ImageGlass
                     // disable animations
                     if (IsAnimating)
                     {
-                        ImageAnimator.StopAnimate(Image, OnFrameChangedHandler);
+                        Animator.StopAnimate(Image, OnFrameChangedHandler);
                     }
 
                     _image = value;
@@ -1980,7 +2005,7 @@ namespace ImageGlass
         {
             if (!IsAnimating)
                 return;
-            ImageAnimator.StopAnimate(Image, OnFrameChangedHandler);
+            Animator.StopAnimate(Image, OnFrameChangedHandler);
             IsAnimating = false;
         }
 
@@ -1994,7 +2019,7 @@ namespace ImageGlass
 
             try
             {
-                ImageAnimator.Animate(Image, OnFrameChangedHandler);
+                Animator.Animate(Image, OnFrameChangedHandler);
                 IsAnimating = true;
             }
             catch (Exception) { }
@@ -3260,7 +3285,7 @@ namespace ImageGlass
                 // Animation. Thanks to teamalpha5441 for the contribution
                 if (IsAnimating && !DesignMode)
                 {
-                    ImageAnimator.UpdateFrames(Image);
+                    Animator.UpdateFrames(Image);
                 }
 
                 g.DrawImage(Image, GetImageViewPort(), GetSourceImageRegion(), GraphicsUnit.Pixel);
@@ -3277,7 +3302,7 @@ namespace ImageGlass
             {
                 // stop the animation and reset to the first frame.
                 IsAnimating = false;
-                ImageAnimator.StopAnimate(Image, OnFrameChangedHandler);
+                Animator.StopAnimate(Image, OnFrameChangedHandler);
             }
 
             g.PixelOffsetMode = currentPixelOffsetMode;
@@ -3945,10 +3970,10 @@ namespace ImageGlass
             {
                 //try
                 //{
-                //    this.IsAnimating = ImageAnimator.CanAnimate(this.Image);
+                //    this.IsAnimating = Animator.CanAnimate(this.Image);
                 //    if (this.IsAnimating)
                 //    {
-                //        ImageAnimator.Animate(this.Image, this.OnFrameChangedHandler);
+                //        Animator.Animate(this.Image, this.OnFrameChangedHandler);
                 //    }
                 //}
                 //catch (ArgumentException)
