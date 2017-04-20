@@ -1512,7 +1512,7 @@ namespace ImageGlass
             }
             base.WndProc(ref m);
         }
-
+        
 
         private void frmMain_Load(object sender, EventArgs e)
         {

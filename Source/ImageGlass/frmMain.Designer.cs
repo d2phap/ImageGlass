@@ -182,7 +182,7 @@
             // 
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
-            this.toolMain.BackColor = System.Drawing.Color.Maroon;
+            this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -1398,7 +1398,7 @@
             // sp0
             // 
             this.sp0.AllowDrop = true;
-            this.sp0.BackColor = System.Drawing.Color.Transparent;
+            this.sp0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.sp0.Location = new System.Drawing.Point(0, 0);
@@ -1425,7 +1425,7 @@
             // 
             // sp1
             // 
-            this.sp1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.sp1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.sp1.IsSplitterFixed = true;
@@ -1454,6 +1454,7 @@
             // 
             this.picMain.AllowDrop = true;
             this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1474,7 +1475,7 @@
             // 
             // thumbnailBar
             // 
-            this.thumbnailBar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

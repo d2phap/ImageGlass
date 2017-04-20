@@ -62,6 +62,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.lnkResetBackgroundColor = new System.Windows.Forms.LinkLabel();
             this.lblHeadOthers = new System.Windows.Forms.Label();
             this.lblHeadPortableMode = new System.Windows.Forms.Label();
             this.lblHeadStartup = new System.Windows.Forms.Label();
@@ -108,7 +109,6 @@
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.lblImage = new System.Windows.Forms.Label();
-            this.lnkResetBackgroundColor = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -143,7 +143,7 @@
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblLanguage.Size = new System.Drawing.Size(234, 50);
-            this.lblLanguage.TabIndex = 3;
+            this.lblLanguage.TabIndex = 4;
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -166,7 +166,7 @@
             this.lblFileAssociations.Name = "lblFileAssociations";
             this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblFileAssociations.Size = new System.Drawing.Size(234, 50);
-            this.lblFileAssociations.TabIndex = 2;
+            this.lblFileAssociations.TabIndex = 3;
             this.lblFileAssociations.Tag = "0";
             this.lblFileAssociations.Text = "File Associations";
             this.lblFileAssociations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -253,7 +253,7 @@
             this.lnkInstallLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkInstallLanguage.Name = "lnkInstallLanguage";
             this.lnkInstallLanguage.Size = new System.Drawing.Size(308, 25);
-            this.lnkInstallLanguage.TabIndex = 21;
+            this.lnkInstallLanguage.TabIndex = 35;
             this.lnkInstallLanguage.TabStop = true;
             this.lnkInstallLanguage.Text = "> Install new language pack (*.iglang)";
             this.lnkInstallLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkInstallLanguage_LinkClicked);
@@ -267,7 +267,7 @@
             this.lnkRefresh.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkRefresh.Name = "lnkRefresh";
             this.lnkRefresh.Size = new System.Drawing.Size(87, 25);
-            this.lnkRefresh.TabIndex = 20;
+            this.lnkRefresh.TabIndex = 34;
             this.lnkRefresh.TabStop = true;
             this.lnkRefresh.Text = "> Refresh";
             this.lnkRefresh.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkRefresh_LinkClicked);
@@ -281,7 +281,7 @@
             this.lnkEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkEdit.Name = "lnkEdit";
             this.lnkEdit.Size = new System.Drawing.Size(248, 25);
-            this.lnkEdit.TabIndex = 23;
+            this.lnkEdit.TabIndex = 37;
             this.lnkEdit.TabStop = true;
             this.lnkEdit.Text = "> Edit selected language pack";
             this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
@@ -295,7 +295,7 @@
             this.lnkCreateNew.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkCreateNew.Name = "lnkCreateNew";
             this.lnkCreateNew.Size = new System.Drawing.Size(236, 25);
-            this.lnkCreateNew.TabIndex = 22;
+            this.lnkCreateNew.TabIndex = 36;
             this.lnkCreateNew.TabStop = true;
             this.lnkCreateNew.Text = "> Create new language pack";
             this.lnkCreateNew.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCreateNew_LinkClicked);
@@ -309,7 +309,7 @@
             this.lnkGetMoreLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkGetMoreLanguage.Name = "lnkGetMoreLanguage";
             this.lnkGetMoreLanguage.Size = new System.Drawing.Size(231, 25);
-            this.lnkGetMoreLanguage.TabIndex = 24;
+            this.lnkGetMoreLanguage.TabIndex = 38;
             this.lnkGetMoreLanguage.TabStop = true;
             this.lnkGetMoreLanguage.Text = "> Get more language packs";
             this.lnkGetMoreLanguage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetMoreLanguage_LinkClicked);
@@ -325,7 +325,7 @@
             this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(254, 33);
-            this.cmbLanguage.TabIndex = 19;
+            this.cmbLanguage.TabIndex = 33;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
             // lblLanguageText
@@ -371,12 +371,12 @@
             // 
             // btnRegisterExt
             // 
-            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(183, 15);
+            this.btnRegisterExt.Location = new System.Drawing.Point(350, 15);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(188, 35);
-            this.btnRegisterExt.TabIndex = 34;
+            this.btnRegisterExt.TabIndex = 31;
             this.btnRegisterExt.Text = "Register extensions";
             this.btnRegisterExt.UseVisualStyleBackColor = true;
             this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
@@ -388,7 +388,7 @@
             this.btnResetExt.Location = new System.Drawing.Point(544, 15);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(146, 35);
-            this.btnResetExt.TabIndex = 33;
+            this.btnResetExt.TabIndex = 32;
             this.btnResetExt.Text = "Reset to default";
             this.btnResetExt.UseVisualStyleBackColor = true;
             this.btnResetExt.Click += new System.EventHandler(this.btnResetExt_Click);
@@ -400,7 +400,7 @@
             this.btnAddNewExt.Location = new System.Drawing.Point(21, 15);
             this.btnAddNewExt.Name = "btnAddNewExt";
             this.btnAddNewExt.Size = new System.Drawing.Size(75, 35);
-            this.btnAddNewExt.TabIndex = 31;
+            this.btnAddNewExt.TabIndex = 29;
             this.btnAddNewExt.Text = "Add";
             this.btnAddNewExt.UseVisualStyleBackColor = true;
             this.btnAddNewExt.Click += new System.EventHandler(this.btnAddNewExt_Click);
@@ -413,7 +413,7 @@
             this.btnDeleteExt.Location = new System.Drawing.Point(102, 15);
             this.btnDeleteExt.Name = "btnDeleteExt";
             this.btnDeleteExt.Size = new System.Drawing.Size(75, 35);
-            this.btnDeleteExt.TabIndex = 32;
+            this.btnDeleteExt.TabIndex = 30;
             this.btnDeleteExt.Text = "Delete";
             this.btnDeleteExt.UseVisualStyleBackColor = true;
             this.btnDeleteExt.Click += new System.EventHandler(this.btnDeleteExt_Click);
@@ -438,7 +438,7 @@
             this.lnkOpenFileAssoc.Location = new System.Drawing.Point(503, 67);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
             this.lnkOpenFileAssoc.Size = new System.Drawing.Size(191, 25);
-            this.lnkOpenFileAssoc.TabIndex = 30;
+            this.lnkOpenFileAssoc.TabIndex = 27;
             this.lnkOpenFileAssoc.TabStop = true;
             this.lnkOpenFileAssoc.Text = "Open File Associations";
             this.lnkOpenFileAssoc.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenFileAssoc_LinkClicked);
@@ -465,7 +465,7 @@
             this.lvExtension.Name = "lvExtension";
             this.lvExtension.Size = new System.Drawing.Size(669, 489);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvExtension.TabIndex = 29;
+            this.lvExtension.TabIndex = 28;
             this.lvExtension.UseCompatibleStateImageBehavior = false;
             this.lvExtension.View = System.Windows.Forms.View.Details;
             this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
@@ -510,6 +510,20 @@
             this.tabGeneral.Text = "general";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // lnkResetBackgroundColor
+            // 
+            this.lnkResetBackgroundColor.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkResetBackgroundColor.AutoSize = true;
+            this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 472);
+            this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
+            this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
+            this.lnkResetBackgroundColor.TabIndex = 12;
+            this.lnkResetBackgroundColor.TabStop = true;
+            this.lnkResetBackgroundColor.Text = "Reset";
+            this.lnkResetBackgroundColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkResetBackgroundColor_LinkClicked);
+            // 
             // lblHeadOthers
             // 
             this.lblHeadOthers.AutoSize = true;
@@ -547,7 +561,7 @@
             this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
             this.chkPortableMode.Name = "chkPortableMode";
             this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
-            this.chkPortableMode.TabIndex = 25;
+            this.chkPortableMode.TabIndex = 7;
             this.chkPortableMode.Text = "Enable Portable mode";
             this.chkPortableMode.UseVisualStyleBackColor = true;
             this.chkPortableMode.CheckedChanged += new System.EventHandler(this.chkPortableMode_CheckedChanged);
@@ -567,7 +581,7 @@
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
-            this.chkConfirmationDelete.TabIndex = 22;
+            this.chkConfirmationDelete.TabIndex = 11;
             this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
             this.chkConfirmationDelete.UseVisualStyleBackColor = true;
             this.chkConfirmationDelete.CheckedChanged += new System.EventHandler(this.chkConfirmationDelete_CheckedChanged);
@@ -579,7 +593,7 @@
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
-            this.chkAllowMultiInstances.TabIndex = 17;
+            this.chkAllowMultiInstances.TabIndex = 9;
             this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
             this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
             this.chkAllowMultiInstances.CheckedChanged += new System.EventHandler(this.chkAllowMultiInstances_CheckedChanged);
@@ -603,7 +617,7 @@
             this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToolBar.Name = "chkShowToolBar";
             this.chkShowToolBar.Size = new System.Drawing.Size(283, 29);
-            this.chkShowToolBar.TabIndex = 7;
+            this.chkShowToolBar.TabIndex = 6;
             this.chkShowToolBar.Text = "Show toolbar when starting up";
             this.chkShowToolBar.UseVisualStyleBackColor = true;
             this.chkShowToolBar.CheckedChanged += new System.EventHandler(this.chkShowToolBar_CheckedChanged);
@@ -625,7 +639,7 @@
             this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(216, 29);
-            this.chkWelcomePicture.TabIndex = 6;
+            this.chkWelcomePicture.TabIndex = 5;
             this.chkWelcomePicture.Text = "Show welcome picture";
             this.chkWelcomePicture.UseVisualStyleBackColor = true;
             this.chkWelcomePicture.CheckedChanged += new System.EventHandler(this.chkWelcomePicture_CheckedChanged);
@@ -637,7 +651,7 @@
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
-            this.chkAutoUpdate.TabIndex = 4;
+            this.chkAutoUpdate.TabIndex = 8;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
             this.chkAutoUpdate.CheckedChanged += new System.EventHandler(this.chkAutoUpdate_CheckedChanged);
@@ -701,7 +715,7 @@
             this.btnEditResetExt.Location = new System.Drawing.Point(126, 1247);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(146, 35);
-            this.btnEditResetExt.TabIndex = 49;
+            this.btnEditResetExt.TabIndex = 26;
             this.btnEditResetExt.Text = "Reset to default";
             this.btnEditResetExt.UseVisualStyleBackColor = true;
             this.btnEditResetExt.Click += new System.EventHandler(this.btnEditResetExt_Click);
@@ -713,7 +727,7 @@
             this.btnEditEditExt.Location = new System.Drawing.Point(45, 1247);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(75, 35);
-            this.btnEditEditExt.TabIndex = 47;
+            this.btnEditEditExt.TabIndex = 25;
             this.btnEditEditExt.Text = "Edit";
             this.btnEditEditExt.UseVisualStyleBackColor = true;
             this.btnEditEditExt.Click += new System.EventHandler(this.btnEditEditExt_Click);
@@ -750,9 +764,9 @@
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(552, 285);
+            this.lvImageEditing.Size = new System.Drawing.Size(526, 285);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvImageEditing.TabIndex = 45;
+            this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
             this.lvImageEditing.View = System.Windows.Forms.View.Details;
             this.lvImageEditing.SelectedIndexChanged += new System.EventHandler(this.lvlvImageEditing_SelectedIndexChanged);
@@ -834,7 +848,7 @@
             this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopViewer.Name = "chkLoopViewer";
             this.chkLoopViewer.Size = new System.Drawing.Size(580, 29);
-            this.chkLoopViewer.TabIndex = 39;
+            this.chkLoopViewer.TabIndex = 14;
             this.chkLoopViewer.Text = "Loop back viewer to the first image when reaching the end of the list";
             this.chkLoopViewer.UseVisualStyleBackColor = true;
             this.chkLoopViewer.CheckedChanged += new System.EventHandler(this.chkLoopViewer_CheckedChanged);
@@ -846,7 +860,7 @@
             this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(2);
             this.chkMouseNavigation.Name = "chkMouseNavigation";
             this.chkMouseNavigation.Size = new System.Drawing.Size(550, 29);
-            this.chkMouseNavigation.TabIndex = 38;
+            this.chkMouseNavigation.TabIndex = 17;
             this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
             this.chkMouseNavigation.UseVisualStyleBackColor = true;
             this.chkMouseNavigation.CheckedChanged += new System.EventHandler(this.chkMouseNavigation_CheckedChanged);
@@ -871,7 +885,7 @@
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
-            this.cmbZoomOptimization.TabIndex = 37;
+            this.cmbZoomOptimization.TabIndex = 18;
             this.cmbZoomOptimization.SelectedIndexChanged += new System.EventHandler(this.cmbZoomOptimization_SelectedIndexChanged);
             // 
             // chkThumbnailVertical
@@ -881,7 +895,7 @@
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 29);
-            this.chkThumbnailVertical.TabIndex = 35;
+            this.chkThumbnailVertical.TabIndex = 19;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
             this.chkThumbnailVertical.CheckedChanged += new System.EventHandler(this.chkThumbnailVertical_CheckedChanged);
@@ -910,7 +924,7 @@
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
-            this.cmbThumbnailDimension.TabIndex = 34;
+            this.cmbThumbnailDimension.TabIndex = 21;
             this.cmbThumbnailDimension.SelectedIndexChanged += new System.EventHandler(this.cmbThumbnailDimension_SelectedIndexChanged);
             // 
             // chkImageBoosterBack
@@ -920,7 +934,7 @@
             this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
             this.chkImageBoosterBack.Size = new System.Drawing.Size(578, 29);
-            this.chkImageBoosterBack.TabIndex = 27;
+            this.chkImageBoosterBack.TabIndex = 15;
             this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
             this.chkImageBoosterBack.UseVisualStyleBackColor = true;
             this.chkImageBoosterBack.CheckedChanged += new System.EventHandler(this.chkImageBoosterBack_CheckedChanged);
@@ -932,7 +946,7 @@
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
-            this.chkLoopSlideshow.TabIndex = 26;
+            this.chkLoopSlideshow.TabIndex = 22;
             this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             this.chkLoopSlideshow.CheckedChanged += new System.EventHandler(this.chkLoopSlideshow_CheckedChanged);
@@ -952,7 +966,7 @@
             0});
             this.numMaxThumbSize.Name = "numMaxThumbSize";
             this.numMaxThumbSize.Size = new System.Drawing.Size(80, 31);
-            this.numMaxThumbSize.TabIndex = 30;
+            this.numMaxThumbSize.TabIndex = 20;
             this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numMaxThumbSize.Value = new decimal(new int[] {
             10,
@@ -997,7 +1011,7 @@
             this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
-            this.cmbImageOrder.TabIndex = 32;
+            this.cmbImageOrder.TabIndex = 16;
             this.cmbImageOrder.SelectedIndexChanged += new System.EventHandler(this.cmbImageOrder_SelectedIndexChanged);
             // 
             // barInterval
@@ -1009,7 +1023,7 @@
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(292, 69);
-            this.barInterval.TabIndex = 29;
+            this.barInterval.TabIndex = 23;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
@@ -1031,7 +1045,7 @@
             this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(247, 29);
-            this.chkFindChildFolder.TabIndex = 25;
+            this.chkFindChildFolder.TabIndex = 13;
             this.chkFindChildFolder.Text = "Find images in child folder";
             this.chkFindChildFolder.UseVisualStyleBackColor = true;
             this.chkFindChildFolder.CheckedChanged += new System.EventHandler(this.chkFindChildFolder_CheckedChanged);
@@ -1080,7 +1094,7 @@
             this.lblImage.Name = "lblImage";
             this.lblImage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblImage.Size = new System.Drawing.Size(234, 50);
-            this.lblImage.TabIndex = 4;
+            this.lblImage.TabIndex = 2;
             this.lblImage.Tag = "0";
             this.lblImage.Text = "Image";
             this.lblImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1089,21 +1103,6 @@
             this.lblImage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // lnkResetBackgroundColor
-            // 
-            this.lnkResetBackgroundColor.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkResetBackgroundColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.lnkResetBackgroundColor.AutoSize = true;
-            this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 472);
-            this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
-            this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
-            this.lnkResetBackgroundColor.TabIndex = 47;
-            this.lnkResetBackgroundColor.TabStop = true;
-            this.lnkResetBackgroundColor.Text = "Reset";
-            this.lnkResetBackgroundColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkResetBackgroundColor_LinkClicked);
             // 
             // frmSetting
             // 
