@@ -26,6 +26,7 @@ using System.Diagnostics;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Theme;
+using System.Text;
 
 namespace igcmd
 {
