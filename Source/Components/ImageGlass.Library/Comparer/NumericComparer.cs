@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // (c) Vasian Cepa 2005
 // Version 2
 
-using System;
 using System.Collections; // required for NumericComparer : IComparer only
 
 namespace ImageGlass.Library.Comparer
