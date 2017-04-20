@@ -120,7 +120,7 @@
       <Item key="frmFacebook._StatusCancel" value="Đã hủy" />
       <Item key="frmFacebook._StatusSuccessful" value="Thành công" />
       <Item key="frmFaceBookLogin._Text" value="Đăng nhập vào Facebook..." />
-      <Item key="frmAbout.lblSlogant" value="Phần mềm xem hình ảnh gọn nhẹ, tiện dụng" />
+      <Item key="frmAbout.lblSlogant" value="Phần mềm xem ảnh gọn nhẹ, tiện dụng" />
       <Item key="frmAbout.lblInfo" value="Thông tin" />
       <Item key="frmAbout.lblComponent" value="Các thành phần" />
       <Item key="frmAbout.lblReferences" value="Tham khảo" />
@@ -146,6 +146,7 @@
       <Item key="frmSetting.chkESCToQuit" value="Cho phép để nhấn ESC để thoát ứng dụng" />
       <Item key="frmSetting.chkConfirmationDelete" value="Hiển thị hộp thoại xác nhận xóa bỏ" />
       <Item key="frmSetting.lblBackGroundColor" value="Màu nền" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Thiết lập lại" />
       <Item key="frmSetting.lblHeadImageLoading" value="Tải hình ảnh" />
       <Item key="frmSetting.chkFindChildFolder" value="Tìm kiếm hình ảnh trong thư mục con" />
       <Item key="frmSetting.chkLoopViewer" value="Xem lại hình ảnh đầu tiên khi kết thúc danh sách" />

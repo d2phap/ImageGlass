@@ -68,7 +68,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         private void InitConfigs()
         {
-            this["AppVersion"] = "4.0.0.0";
+            this["AppVersion"] = "4.0.4.15";
             this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
             this["BackgroundColor"] = "-1";
             this["DefaultImageFormats"] = "";

@@ -1,0 +1,209 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="Alapértelmezett formátum" />
+      <Item key="_.ImageFormatGroup.Optional" value="Választható formátumok" />
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass nem tudja megnyitni ezt a képet, mert a fájl sérült, érvénytelen vagy nem támogatott." />
+      <Item key="frmMain.btnBack" value="Ugrás az előző képhez (Balra nyíl / Page Up)" />
+      <Item key="frmMain.btnNext" value="Ugrás a következő képhez (Jobbra nyíl / Page Down)" />
+      <Item key="frmMain.btnRotateLeft" value="Forgatás balra (Ctrl + ,)" />
+      <Item key="frmMain.btnRotateRight" value="Forgatás jobbra (Ctrl + .)" />
+      <Item key="frmMain.btnZoomIn" value="Nagyítás (Ctrl + Ó)" />
+      <Item key="frmMain.btnZoomOut" value="Kicsinyítés (Ctrl + -)" />
+      <Item key="frmMain.btnActualSize" value="Tényleges méret (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="Nagyítási arány rögzítés (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="Szélességigazítás (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="Magasságigazítás (Ctrl + H)" />
+      <Item key="frmMain.btnWindowAutosize" value="Ablak igazítása az aktuális képmérethez (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="Fájl megnyitása (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="Újratöltés (F5)" />
+      <Item key="frmMain.btnGoto" value="Ugrás... (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="Miniatűr mutatása (Ctrl + T)" />
+      <Item key="frmMain.btnCaro" value="Kockás háttér mutatása (Ctrl + B)" />
+      <Item key="frmMain.btnFullScreen" value="Teljes képernyő (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="Diavetítés lejátszása (F11, ESC-kilép)" />
+      <Item key="frmMain.btnConvert" value="Kép átalakítása (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="Kép nyomtatása (Ctrl + P)" />
+      <Item key="frmMain.btnFacebook" value="Feltöltés Facebookra (Ctrl + U)" />
+      <Item key="frmMain.btnExtension" value="Kiterjesztések (Ctrl + Shift + E)" />
+      <Item key="frmMain.btnSetting" value="ImageGlass beállítások (Ctrl + Shift + P)" />
+      <Item key="frmMain.btnHelp" value="Súgó (F1)" />
+      <Item key="frmMain.btnMenu" value="Menü (Gyorsbillentyű: `)" />
+      <Item key="frmMain.mnuMainOpenFile" value="Fájl megnyitása" />
+      <Item key="frmMain.mnuMainOpenImageData" value="Képadatok megnyitása a vágólapról" />
+      <Item key="frmMain.mnuMainSaveAs" value="Kép mentése másként..." />
+      <Item key="frmMain.mnuMainRefresh" value="Frissítés" />
+      <Item key="frmMain.mnuMainEditImage" value="Kép szerkesztés {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="Navigáció" />
+      <Item key="frmMain.mnuMainViewNext" value="Következő kép megtekintése" />
+      <Item key="frmMain.mnuMainViewPrevious" value="Előző kép megtekintése" />
+      <Item key="frmMain.mnuMainGoto" value="Ugrás..." />
+      <Item key="frmMain.mnuMainGotoFirst" value="Ugrás az első képhez" />
+      <Item key="frmMain.mnuMainGotoLast" value="Ugrás az utolsó képhez" />
+      <Item key="frmMain.mnuMainFullScreen" value="Teljes képernyő" />
+      <Item key="frmMain.mnuMainSlideShow" value="Diavetítés" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="Diavetítés indítása" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="Diavetítés szüneteltetése / folytatása" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="Kilépés a diavetítésből" />
+      <Item key="frmMain.mnuMainPrint" value="Nyomtatás" />
+      <Item key="frmMain.mnuMainManipulation" value="Manipuláció" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="Forgatás balra" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="Forgatás jobbra" />
+      <Item key="frmMain.mnuMainZoomIn" value="Nagyít" />
+      <Item key="frmMain.mnuMainZoomOut" value="Kicsinyít" />
+      <Item key="frmMain.mnuMainZoomToFit" value="Mérethez igazítás" />
+      <Item key="frmMain.mnuMainActualSize" value="Tényleges méret" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Nagyítási arány rögzítése" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="Szélesség igazítás" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="Magasság igazítás" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="Ablak igazítása az aktuális képmérethez" />
+      <Item key="frmMain.mnuMainRename" value="Kép átnevezése" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Lomtárba áthelyez" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Törlés véglegesen" />
+      <Item key="frmMain.mnuMainExtractFrames" value="Képkocka kiemelése ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Mozgókép indítás / megállítás" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Beállítás asztal hátterének" />
+      <Item key="frmMain.mnuMainImageLocation" value="Kép helyének megnyitása" />
+      <Item key="frmMain.mnuMainImageProperties" value="Kép tulajdonságok" />
+      <Item key="frmMain.mnuMainClipboard" value="Vágólap" />
+      <Item key="frmMain.mnuMainCopy" value="Másolás" />
+      <Item key="frmMain.mnuMainCopyMulti" value="Több fájl másolás" />
+      <Item key="frmMain.mnuMainCut" value="Kivágás" />
+      <Item key="frmMain.mnuMainCutMulti" value="Több fájl kivágása" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kép útvonalának másolása" />
+      <Item key="frmMain.mnuMainClearClipboard" value="Vágólap törlése" />
+      <Item key="frmMain.mnuMainShare" value="Megosztás..." />
+      <Item key="frmMain.mnuMainShareFacebook" value="Feltöltés Facebookra" />
+      <Item key="frmMain.mnuMainLayout" value="Elrendezés" />
+      <Item key="frmMain.mnuMainToolbar" value="Eszköztár" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="Bélyegképek" />
+      <Item key="frmMain.mnuMainCheckBackground" value="Kockás háttér" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Maradjon mindig felül" />
+      <Item key="frmMain.mnuMainTools" value="Eszközök" />
+      <Item key="frmMain.mnuMainExtensionManager" value="Kiterjesztések" />
+      <Item key="frmMain.mnuMainSettings" value="Beállítások" />
+      <Item key="frmMain.mnuMainAbout" value="Névjegy" />
+      <Item key="frmMain.mnuMainReportIssue" value="Probléma jelentése" />
+      <Item key="frmMain._OpenFileDialog" value="Minden támogatott fájl" />
+      <Item key="frmMain._Text" value="fájl(ok)" />
+      <Item key="frmMain._RenameDialogText" value="Átnevezés" />
+      <Item key="frmMain._RenameDialog" value="Adja meg az új fájlnevet" />
+      <Item key="frmMain._GotoDialogText" value="Adja meg a kép sorszámát a megtekintéshez. Nyomja meg az {ENTER} billentyűt" />
+      <Item key="frmMain._DeleteDialogText" value="Törli '{0}' fájlt?" />
+      <Item key="frmMain._DeleteDialogTitle" value="Megerösít" />
+      <Item key="frmMain._ExtractFrameText" value="Mentés helyének kiválasztása" />
+      <Item key="frmMain._FullScreenMessage" value="Nyomja meg az ALT + ENTER billentyűkombinációt a teljes képernyős módból való kilépéshez. &#xA; Vagy CTRL + F1 a menühöz." />
+      <Item key="frmMain._SlideshowMessage" value="Nyomja meg az ESC billentyűt a diavetítésből való kilépéshez. &#xA; Jobb kattintás a helyi menü megnyitásához." />
+      <Item key="frmMain._SlideshowMessagePause" value="Diavetítés szünetel" />
+      <Item key="frmMain._SlideshowMessageResume" value="Diavetítés folytatódik" />
+      <Item key="frmMain._CopyFileText" value="Másolva: {0} db fájl." />
+      <Item key="frmMain._CutFileText" value="Kivágva: {0} db fájl." />
+      <Item key="frmMain._ClearClipboard" value="Vágólap törölve." />
+      <Item key="frmMain._SaveChanges" value="Módosítások mentése..." />
+      <Item key="frmMain._Loading" value="Betöltés..." />
+      <Item key="frmMain._FirstItemOfList" value="Elérte az első képet" />
+      <Item key="frmMain._LastItemOfList" value="Elérte az utolsó képet" />
+      <Item key="frmExtension._Text" value="Kiterjesztések" />
+      <Item key="frmExtension.btnGetMoreExt" value="További bővítmények" />
+      <Item key="frmExtension.btnRefreshAllExt" value="Frissítés" />
+      <Item key="frmExtension.btnInstallExt" value="Telepítés" />
+      <Item key="frmExtension.btnClose" value="Bezár" />
+      <Item key="frmFacebook.lblMessage" value="Üzenet" />
+      <Item key="frmFacebook.btnUpload._Upload" value="Feltöltés" />
+      <Item key="frmFacebook.btnUpload._Cancel" value="Mégse" />
+      <Item key="frmFacebook.btnUpload._ViewImage" value="Kép megtekintése" />
+      <Item key="frmFacebook.btnClose" value="Bezár" />
+      <Item key="frmFacebook._StatusBegin" value="Kattintson '{0}' a kezdéshez" />
+      <Item key="frmFacebook._StatusInvalid" value="Érvénytelen fájlnév" />
+      <Item key="frmFacebook._StatusUploading" value="Feltöltés..." />
+      <Item key="frmFacebook._StatusCancel" value="Megszakítva" />
+      <Item key="frmFacebook._StatusSuccessful" value="Sikeresen feltölve" />
+      <Item key="frmFaceBookLogin._Text" value="Bejelentkezés a Facebookra ..." />
+      <Item key="frmAbout.lblSlogant" value="Egy könnyű, sokoldalú képnézegető" />
+      <Item key="frmAbout.lblInfo" value="Információk" />
+      <Item key="frmAbout.lblComponent" value="Összetevők" />
+      <Item key="frmAbout.lblReferences" value="Hivatkozások" />
+      <Item key="frmAbout.lblVersion" value="Verzió: {0}" />
+      <Item key="frmAbout.lblInfoContact" value="Kapcsolat" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="Szoftverfrissítés" />
+      <Item key="frmAbout.lnkCheckUpdate" value="» Frissítések keresése" />
+      <Item key="frmAbout._Text" value="Névjegy" />
+      <Item key="frmAbout._PortableText" value="[Hordozható]" />
+      <Item key="frmSetting._Text" value="Beállítások" />
+      <Item key="frmSetting.lblGeneral" value="Általános" />
+      <Item key="frmSetting.lblImage" value="Kép" />
+      <Item key="frmSetting.lblFileAssociations" value="Társítások" />
+      <Item key="frmSetting.lblLanguage" value="Nyelv" />
+      <Item key="frmSetting.lblHeadStartup" value="Kezdés" />
+      <Item key="frmSetting.chkWelcomePicture" value="Üdvözlő kép megjelenítése" />
+      <Item key="frmSetting.chkShowToolBar" value="Eszköztár megjelenítése induláskor" />
+      <Item key="frmSetting.lblHeadPortableMode" value="Hordozható mód" />
+      <Item key="frmSetting.chkPortableMode" value="Hordozható mód engedélyezése" />
+      <Item key="frmSetting.lblHeadOthers" value="Egyebek" />
+      <Item key="frmSetting.chkAutoUpdate" value="Frissítés automatikus ellenőrzése" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="Alkalmazás több példányban is futhat" />
+      <Item key="frmSetting.chkESCToQuit" value="ESC engedélyezése az alkalmazás bezárásához" />
+      <Item key="frmSetting.chkConfirmationDelete" value="Törlés megerősítés megjelenítése" />
+      <Item key="frmSetting.lblBackGroundColor" value="Háttérszín" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Visszaállít" />
+      <Item key="frmSetting.lblHeadImageLoading" value="Kép betöltése" />
+      <Item key="frmSetting.chkFindChildFolder" value="Képek keresése almappában" />
+      <Item key="frmSetting.chkLoopViewer" value="Diavetítés újrakezdése amikor a lista végére ér" />
+      <Item key="frmSetting.chkImageBoosterBack" value="Image Booster bekapcsolása amikor visszafelé navigál (~20%-al nagyobb memória igény)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="Kép betöltés sorrend" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="Név szerint (alapértelmezett)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="Hossz" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Létrehozási idő" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Utolsó hozzáférés ideje" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Utolsó írás ideje" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="Kiterjesztés" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="Véletlenszerű" />
+      <Item key="frmSetting.lblHeadZooming" value="Nagyítás" />
+      <Item key="frmSetting.chkMouseNavigation" value="Egér görgő használata a képek böngészéséhez, CTRL nyomvatartása nagyításhoz" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Nagyítás optimalizálás" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Autó" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Elmosott képpont" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Tiszta képpont" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Bélyegképek" />
+      <Item key="frmSetting.chkThumbnailVertical" value="Bélyegképek megjelenítése a jobb oldalon" />
+      <Item key="frmSetting.lblGeneral_MaxFileSize" value="Maximális bélyegkép méret (MB)" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Bélyegkép méret (pixel)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="Diavetítés" />
+      <Item key="frmSetting.chkLoopSlideshow" value="Diavetítés újrakezdése amikor a végére ér" />
+      <Item key="frmSetting.lblSlideshowInterval" value="Diavetítés késleltetés: {0} másodperc" />
+      <Item key="frmSetting.lblHeadImageEditing" value="Kép szerkesztés" />
+      <Item key="frmSetting.btnEditEditExt" value="Szerkeztés" />
+      <Item key="frmSetting.btnEditResetExt" value="Alapbeállítások visszaállítása" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Fájlkiterjesztés" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Alkalmazás neve" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Alkalmazás könyvtára" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Alkalmazás értékek" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="*Választható formátumok nem lesznek automatikusan előre betöltve a memóriába." />
+      <Item key="frmSetting.lblSupportedExtension" value="Támogatott formátumok: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Fájl társítások megnyitása" />
+      <Item key="frmSetting.btnAddNewExt" value="Hozzáadás" />
+      <Item key="frmSetting.btnRegisterExt" value="Kiterjesztések hozzárendelése" />
+      <Item key="frmSetting.btnDeleteExt" value="Törlés" />
+      <Item key="frmSetting.btnResetExt" value="Alapbeállítások visszaállítása" />
+      <Item key="frmSetting.lblLanguageText" value="Telepített nyelvek" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; Frissítés" />
+      <Item key="frmSetting.lblLanguageWarning" value="Ez a nyelvi csomag lehet, hogy nem kompatibilis vele: {0}" />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Új nyelvi csomag telepítése (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Új nyelvi csomag létrehozása" />
+      <Item key="frmSetting.lnkEdit" value="&gt; Kiválasztott nyelvi csomag szerkesztése" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; További nyelvi csomagok beszerzése" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="Fájlkiterjesztés" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="Formátum csoport" />
+      <Item key="frmAddNewFormat.btnOK" value="OK" />
+      <Item key="frmAddNewFormat.btnClose" value="Bezár" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="Fájlkiterjesztés" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="Alkalmazás neve" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="Alkalmazás könyvtára" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Alkalmazás értékek" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="Visszaállít" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="OK" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="Bezár" />
+    </Content>
+  </Language>
+</ImageGlass>
