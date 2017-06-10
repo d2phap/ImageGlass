@@ -776,7 +776,7 @@ namespace ImageGlass
             else
             {
                 //Find file format
-                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]);
+                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]).ToLower();
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
 
                 //Get App assoc info
@@ -2239,7 +2239,7 @@ namespace ImageGlass
             else
             {
                 // Get extension
-                var ext = Path.GetExtension(filename);
+                var ext = Path.GetExtension(filename).ToLower();
 
                 // Get association App for editing
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
