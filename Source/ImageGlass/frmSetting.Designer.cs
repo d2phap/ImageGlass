@@ -109,6 +109,7 @@
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.lblImage = new System.Windows.Forms.Label();
+            this.btnEditEditAllExt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -676,6 +677,7 @@
             // tabImage
             // 
             this.tabImage.AutoScroll = true;
+            this.tabImage.Controls.Add(this.btnEditEditAllExt);
             this.tabImage.Controls.Add(this.btnEditResetExt);
             this.tabImage.Controls.Add(this.btnEditEditExt);
             this.tabImage.Controls.Add(this.panel3);
@@ -764,7 +766,7 @@
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(526, 285);
+            this.lvImageEditing.Size = new System.Drawing.Size(500, 285);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1104,6 +1106,18 @@
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
+            // btnEditEditAllExt
+            // 
+            this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditEditAllExt.AutoSize = true;
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(383, 1247);
+            this.btnEditEditAllExt.Name = "btnEditEditAllExt";
+            this.btnEditEditAllExt.Size = new System.Drawing.Size(162, 35);
+            this.btnEditEditAllExt.TabIndex = 47;
+            this.btnEditEditAllExt.Text = "Edit all extensions";
+            this.btnEditEditAllExt.UseVisualStyleBackColor = true;
+            this.btnEditEditAllExt.Click += new System.EventHandler(this.btnEditEditAllExt_Click);
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -1221,5 +1235,6 @@
         private System.Windows.Forms.Button btnEditEditExt;
         private System.Windows.Forms.ColumnHeader clnAppArguments;
         private System.Windows.Forms.LinkLabel lnkResetBackgroundColor;
+        private System.Windows.Forms.Button btnEditEditAllExt;
     }
 }

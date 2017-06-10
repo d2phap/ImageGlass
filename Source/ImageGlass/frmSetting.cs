@@ -236,6 +236,7 @@ namespace ImageGlass
             lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
             btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
             btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
+            btnEditEditAllExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditAllExt"];
             clnFileExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnFileExtension"];
             clnAppName.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppName"];
             clnAppPath.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppPath"];
@@ -691,6 +692,29 @@ namespace ImageGlass
             
         }
 
+        private void btnEditEditAllExt_Click(object sender, EventArgs e)
+        {
+            frmEditEditingAssocisation f = new frmEditEditingAssocisation()
+            {
+                FileExtension = $"<{string.Format(GlobalSetting.LangPack.Items["frmSetting._allExtensions"])}>",
+                TopMost = this.TopMost
+            };
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+                {
+                    assoc.AppName = f.AppName;
+                    assoc.AppPath = f.AppPath;
+                    assoc.AppArguments = f.AppArguments;
+                }
+
+                LoadImageEditingAssociationList();
+            }
+
+            f.Dispose();
+        }
+
         private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (ListViewItem item in lvImageEditing.Items)
@@ -963,6 +987,7 @@ namespace ImageGlass
 
             btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
         }
+
 
 
 
