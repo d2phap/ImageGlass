@@ -85,12 +85,13 @@ namespace ImageGlass
                         p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
                         p.StartInfo.Arguments = "igautoupdate";
                         p.Start();
+
+                        //save last update
+                        GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
                     }
                 }
             }
             
-            //save last update
-            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
 
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
