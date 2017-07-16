@@ -2515,11 +2515,13 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
             picMain.Image = bmp;
 
+            /*
             try
             {
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
             }
             catch { }
+            */
         }
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
@@ -2533,11 +2535,13 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
             picMain.Image = bmp;
 
+            /*
             try
             {
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
             }
             catch { }
+            */
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
