@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1452,7 +1452,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;

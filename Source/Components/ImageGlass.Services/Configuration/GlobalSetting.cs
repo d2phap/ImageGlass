@@ -81,6 +81,7 @@ namespace ImageGlass.Services.Configuration
         
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
+        private static bool _isScrollbarsVisible = false;
         private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
 
@@ -529,6 +530,11 @@ namespace ImageGlass.Services.Configuration
             get => _imageEditingAssociationList;
             set => _imageEditingAssociationList = value;
         }
+
+        /// <summary>
+        /// Gets, sets the value indicates that viewer scrollbars are visible
+        /// </summary>
+        public static bool IsScrollbarsVisible { get => _isScrollbarsVisible; set => _isScrollbarsVisible = value; }
 
 
 

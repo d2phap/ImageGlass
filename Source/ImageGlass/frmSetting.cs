@@ -210,6 +210,7 @@ namespace ImageGlass
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
             chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
             chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
+            chkShowScrollbar.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowScrollbar"];
             lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lnkResetBackgroundColor"];
 
@@ -381,7 +382,10 @@ namespace ImageGlass
 
             //Get value of IsConfirmationDelete
             chkConfirmationDelete.Checked = GlobalSetting.IsConfirmationDelete;
-            
+
+            //Get value of IsScrollbarsVisible
+            chkShowScrollbar.Checked = GlobalSetting.IsScrollbarsVisible;
+
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
@@ -438,6 +442,12 @@ namespace ImageGlass
         {
             GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
             GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
+        }
+
+        private void chkShowScrollbar_CheckedChanged(object sender, EventArgs e)
+        {
+            GlobalSetting.IsScrollbarsVisible = chkShowScrollbar.Checked;
+            GlobalSetting.SetConfig("IsScrollbarsVisible", GlobalSetting.IsScrollbarsVisible.ToString());
         }
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
@@ -987,6 +997,7 @@ namespace ImageGlass
 
             btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
         }
+
 
 
 

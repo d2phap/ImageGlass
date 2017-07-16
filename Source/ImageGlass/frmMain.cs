@@ -1358,6 +1358,14 @@ namespace ImageGlass
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
+            //Load scrollbars visibility-----------------------------------------------------
+            GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
+            if (GlobalSetting.IsScrollbarsVisible)
+            {
+                picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+            }
+
             //Load Thumbnail dimension-------------------------------------------------------
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
             {
@@ -1593,6 +1601,14 @@ namespace ImageGlass
 
                     LoadThumbnails();
                 }
+
+                //Update scrollbars visibility
+                if (GlobalSetting.IsScrollbarsVisible)
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                }
+                
 
                 //Update background---------------------
                 picMain.BackColor = GlobalSetting.BackgroundColor;

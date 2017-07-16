@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "4.0.0.0";
+            _minVersion = "4.1.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -425,6 +425,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
+            Items.Add("frmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion

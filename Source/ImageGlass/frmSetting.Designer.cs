@@ -77,6 +77,7 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
             this.btnEditEditExt = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -109,7 +110,7 @@
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.lblImage = new System.Windows.Forms.Label();
-            this.btnEditEditAllExt = new System.Windows.Forms.Button();
+            this.chkShowScrollbar = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -205,7 +206,7 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(46, 465);
+            this.picBackgroundColor.Location = new System.Drawing.Point(46, 502);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -489,6 +490,7 @@
             // tabGeneral
             // 
             this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.chkShowScrollbar);
             this.tabGeneral.Controls.Add(this.lnkResetBackgroundColor);
             this.tabGeneral.Controls.Add(this.lblHeadOthers);
             this.tabGeneral.Controls.Add(this.lblHeadPortableMode);
@@ -517,10 +519,10 @@
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 472);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 509);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
-            this.lnkResetBackgroundColor.TabIndex = 12;
+            this.lnkResetBackgroundColor.TabIndex = 13;
             this.lnkResetBackgroundColor.TabStop = true;
             this.lnkResetBackgroundColor.Text = "Reset";
             this.lnkResetBackgroundColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkResetBackgroundColor_LinkClicked);
@@ -569,7 +571,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(44, 548);
+            this.panel1.Location = new System.Drawing.Point(44, 580);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -626,7 +628,7 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 438);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 475);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -711,6 +713,18 @@
             this.tabImage.Text = "Image";
             this.tabImage.UseVisualStyleBackColor = true;
             // 
+            // btnEditEditAllExt
+            // 
+            this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditEditAllExt.AutoSize = true;
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(357, 1247);
+            this.btnEditEditAllExt.Name = "btnEditEditAllExt";
+            this.btnEditEditAllExt.Size = new System.Drawing.Size(162, 35);
+            this.btnEditEditAllExt.TabIndex = 47;
+            this.btnEditEditAllExt.Text = "Edit all extensions";
+            this.btnEditEditAllExt.UseVisualStyleBackColor = true;
+            this.btnEditEditAllExt.Click += new System.EventHandler(this.btnEditEditAllExt_Click);
+            // 
             // btnEditResetExt
             // 
             this.btnEditResetExt.AutoSize = true;
@@ -766,7 +780,7 @@
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(500, 285);
+            this.lvImageEditing.Size = new System.Drawing.Size(474, 285);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1106,17 +1120,17 @@
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // btnEditEditAllExt
+            // chkShowScrollbar
             // 
-            this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(383, 1247);
-            this.btnEditEditAllExt.Name = "btnEditEditAllExt";
-            this.btnEditEditAllExt.Size = new System.Drawing.Size(162, 35);
-            this.btnEditEditAllExt.TabIndex = 47;
-            this.btnEditEditAllExt.Text = "Edit all extensions";
-            this.btnEditEditAllExt.UseVisualStyleBackColor = true;
-            this.btnEditEditAllExt.Click += new System.EventHandler(this.btnEditEditAllExt_Click);
+            this.chkShowScrollbar.AutoSize = true;
+            this.chkShowScrollbar.Location = new System.Drawing.Point(45, 428);
+            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowScrollbar.Name = "chkShowScrollbar";
+            this.chkShowScrollbar.Size = new System.Drawing.Size(231, 29);
+            this.chkShowScrollbar.TabIndex = 12;
+            this.chkShowScrollbar.Text = "Display viewer scrollbars";
+            this.chkShowScrollbar.UseVisualStyleBackColor = true;
+            this.chkShowScrollbar.CheckedChanged += new System.EventHandler(this.chkShowScrollbar_CheckedChanged);
             // 
             // frmSetting
             // 
@@ -1236,5 +1250,6 @@
         private System.Windows.Forms.ColumnHeader clnAppArguments;
         private System.Windows.Forms.LinkLabel lnkResetBackgroundColor;
         private System.Windows.Forms.Button btnEditEditAllExt;
+        private System.Windows.Forms.CheckBox chkShowScrollbar;
     }
 }
