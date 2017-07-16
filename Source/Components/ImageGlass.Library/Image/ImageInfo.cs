@@ -73,6 +73,7 @@ namespace ImageGlass.Library.Image
             shInfo.nShow = SW_SHOW;
             shInfo.fMask = SEE_MASK_INVOKEIDLIST;
             shInfo.lpVerb = "properties";
+            shInfo.lpParameters = "Details";
             shInfo.hwnd = hwnd;
 
             ShellExecuteEx(ref shInfo);
