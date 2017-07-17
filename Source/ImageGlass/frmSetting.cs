@@ -128,7 +128,7 @@ namespace ImageGlass
         private void frmSetting_Load(object sender, EventArgs e)
         {
             //Load config
-            //Windows Bound (Position + Size)------------------------------------------------
+            //Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
 
             if (!Helper.IsOnScreen(rc.Location))
@@ -148,7 +148,11 @@ namespace ImageGlass
                 WindowState = FormWindowState.Maximized;
             }
 
-            LoadTabGeneralConfig();
+            //Get the last view of tab --------------------------------------------------
+            tab1.SelectedIndex = GlobalSetting.SettingsTabLastView;
+            tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
+
+
             InitLanguagePack();
         }
 
@@ -166,9 +170,12 @@ namespace ImageGlass
                 GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
-            //Windows State-------------------------------------------------------------------
+            
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
             GlobalSetting.SaveConfigOfImageEditingAssociationList();
+
+            //Tabs State---------------------------------------------------------------------------
+            GlobalSetting.SettingsTabLastView = tab1.SelectedIndex;
 
             //Force to apply the configurations
             GlobalSetting.IsForcedActive = true;
