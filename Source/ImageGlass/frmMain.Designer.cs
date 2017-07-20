@@ -638,9 +638,8 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 554);
+            this.mnuMain.Size = new System.Drawing.Size(409, 587);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1071,7 +1070,7 @@
             this.mnuMainExtractFrames.Name = "mnuMainExtractFrames";
             this.mnuMainExtractFrames.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainExtractFrames.ShortcutKeyDisplayString = "";
-            this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mnuMainExtractFrames.Size = new System.Drawing.Size(584, 31);
             this.mnuMainExtractFrames.Text = "&Extract image frames";
             this.mnuMainExtractFrames.Click += new System.EventHandler(this.mnuMainExtractFrames_Click);
