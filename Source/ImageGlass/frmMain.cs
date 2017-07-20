@@ -1608,6 +1608,11 @@ namespace ImageGlass
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                     picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                 }
+                else
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                }
                 
 
                 //Update background---------------------

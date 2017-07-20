@@ -407,66 +407,7 @@ namespace ImageGlass
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
-
         
-        private void chkWelcomePicture_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
-            //GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
-        }
-
-        private void chkShowToolBar_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
-            //GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
-        }
-
-        private void chkPortableMode_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsPortableMode = chkPortableMode.Checked;
-
-            //// Check if user ia using temporary Portable mode from param
-            //if (Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1)
-            //{
-            //    GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
-            //}
-        }
-
-        private void chkAutoUpdate_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (chkAutoUpdate.Checked)
-            //{
-            //    GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString());
-            //}
-            //else
-            //{
-            //    GlobalSetting.SetConfig("AutoUpdate", "0");
-            //}
-        }
-
-        private void chkAllowMultiInstances_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
-            //GlobalSetting.SetConfig("IsAllowMultiInstances", GlobalSetting.IsAllowMultiInstances.ToString());
-        }
-
-        private void chkESCToQuit_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsPressESCToQuit = chkESCToQuit.Checked;
-            //GlobalSetting.SetConfig("IsPressESCToQuit", GlobalSetting.IsPressESCToQuit.ToString());
-        }
-
-        private void chkConfirmationDelete_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
-            //GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
-        }
-
-        private void chkShowScrollbar_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsScrollbarsVisible = chkShowScrollbar.Checked;
-            //GlobalSetting.SetConfig("IsScrollbarsVisible", GlobalSetting.IsScrollbarsVisible.ToString());
-        }
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
         {
@@ -478,19 +419,12 @@ namespace ImageGlass
             if (c.ShowDialog() == DialogResult.OK)
             {
                 picBackgroundColor.BackColor = c.Color;
-                //GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-
-                ////Save background color
-                //GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
             }
         }
 
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
-            //GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-
-            //GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
         }
         #endregion
 
