@@ -58,6 +58,7 @@
             this.tpReferences = new System.Windows.Forms.TabPage();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
             this.btnDonation = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -68,6 +69,7 @@
             this.tpComponents.SuspendLayout();
             this.tpReferences.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -87,7 +89,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(32, 123);
+            this.label1.Location = new System.Drawing.Point(28, 119);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(288, 25);
@@ -102,7 +104,7 @@
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkCheckUpdate.Location = new System.Drawing.Point(62, 477);
+            this.lnkCheckUpdate.Location = new System.Drawing.Point(58, 473);
             this.lnkCheckUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(161, 30);
@@ -118,7 +120,7 @@
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.lblUpdate.ForeColor = System.Drawing.Color.Black;
-            this.lblUpdate.Location = new System.Drawing.Point(30, 435);
+            this.lblUpdate.Location = new System.Drawing.Point(26, 431);
             this.lblUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpdate.Name = "lblUpdate";
             this.lblUpdate.Size = new System.Drawing.Size(155, 25);
@@ -133,7 +135,7 @@
             this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkFacebook.Location = new System.Drawing.Point(62, 394);
+            this.lnkFacebook.Location = new System.Drawing.Point(58, 390);
             this.lnkFacebook.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkFacebook.Name = "lnkFacebook";
             this.lnkFacebook.Size = new System.Drawing.Size(413, 30);
@@ -152,7 +154,7 @@
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkProjectPage.Location = new System.Drawing.Point(62, 360);
+            this.lnkProjectPage.Location = new System.Drawing.Point(58, 356);
             this.lnkProjectPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(353, 30);
@@ -171,7 +173,7 @@
             this.lnkIGHomepage.LinkArea = new System.Windows.Forms.LinkArea(22, 99);
             this.lnkIGHomepage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkIGHomepage.Location = new System.Drawing.Point(62, 326);
+            this.lnkIGHomepage.Location = new System.Drawing.Point(58, 322);
             this.lnkIGHomepage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkIGHomepage.Name = "lnkIGHomepage";
             this.lnkIGHomepage.Size = new System.Drawing.Size(375, 30);
@@ -187,7 +189,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(30, 284);
+            this.label2.Location = new System.Drawing.Point(26, 280);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 25);
@@ -202,7 +204,7 @@
             this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.linkLabel2.Location = new System.Drawing.Point(62, 240);
+            this.linkLabel2.Location = new System.Drawing.Point(58, 236);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(127, 30);
@@ -221,7 +223,7 @@
             this.lnkEmail.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.lnkEmail.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEmail.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkEmail.Location = new System.Drawing.Point(62, 206);
+            this.lnkEmail.Location = new System.Drawing.Point(58, 202);
             this.lnkEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkEmail.Name = "lnkEmail";
             this.lnkEmail.Size = new System.Drawing.Size(224, 30);
@@ -237,7 +239,7 @@
             this.lblInfoContact.AutoSize = true;
             this.lblInfoContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.lblInfoContact.ForeColor = System.Drawing.Color.Black;
-            this.lblInfoContact.Location = new System.Drawing.Point(30, 164);
+            this.lblInfoContact.Location = new System.Drawing.Point(26, 160);
             this.lblInfoContact.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblInfoContact.Name = "lblInfoContact";
             this.lblInfoContact.Size = new System.Drawing.Size(77, 25);
@@ -249,7 +251,7 @@
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCopyright.ForeColor = System.Drawing.Color.Black;
-            this.lblCopyright.Location = new System.Drawing.Point(30, 48);
+            this.lblCopyright.Location = new System.Drawing.Point(26, 44);
             this.lblCopyright.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(378, 50);
@@ -261,7 +263,7 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
-            this.lblVersion.Location = new System.Drawing.Point(30, 8);
+            this.lblVersion.Location = new System.Drawing.Point(26, 4);
             this.lblVersion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(121, 25);
@@ -333,16 +335,15 @@
             this.sp0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.sp0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.sp0.Location = new System.Drawing.Point(0, 135);
-            this.sp0.Margin = new System.Windows.Forms.Padding(4);
+            this.sp0.Margin = new System.Windows.Forms.Padding(0);
             this.sp0.Name = "sp0";
             // 
             // sp0.Panel1
             // 
             this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.sp0.Panel1.Controls.Add(this.lblReferences);
-            this.sp0.Panel1.Controls.Add(this.lblInfo);
-            this.sp0.Panel1.Controls.Add(this.lblComponent);
+            this.sp0.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.sp0.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // sp0.Panel2
@@ -351,7 +352,6 @@
             this.sp0.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp0.Size = new System.Drawing.Size(992, 596);
             this.sp0.SplitterDistance = 220;
-            this.sp0.SplitterWidth = 6;
             this.sp0.TabIndex = 19;
             // 
             // lblReferences
@@ -362,11 +362,11 @@
             this.lblReferences.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblReferences.ForeColor = System.Drawing.Color.Black;
-            this.lblReferences.Location = new System.Drawing.Point(0, 120);
-            this.lblReferences.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReferences.Location = new System.Drawing.Point(0, 100);
+            this.lblReferences.Margin = new System.Windows.Forms.Padding(0);
             this.lblReferences.Name = "lblReferences";
             this.lblReferences.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.lblReferences.Size = new System.Drawing.Size(224, 60);
+            this.lblReferences.Size = new System.Drawing.Size(220, 50);
             this.lblReferences.TabIndex = 20;
             this.lblReferences.Tag = "3";
             this.lblReferences.Text = "References";
@@ -386,10 +386,10 @@
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblInfo.ForeColor = System.Drawing.Color.Black;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
-            this.lblInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.lblInfo.Size = new System.Drawing.Size(224, 60);
+            this.lblInfo.Size = new System.Drawing.Size(220, 50);
             this.lblInfo.TabIndex = 18;
             this.lblInfo.Tag = "1";
             this.lblInfo.Text = "Info";
@@ -408,11 +408,11 @@
             this.lblComponent.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblComponent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblComponent.ForeColor = System.Drawing.Color.Black;
-            this.lblComponent.Location = new System.Drawing.Point(0, 60);
-            this.lblComponent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComponent.Location = new System.Drawing.Point(0, 50);
+            this.lblComponent.Margin = new System.Windows.Forms.Padding(0);
             this.lblComponent.Name = "lblComponent";
             this.lblComponent.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.lblComponent.Size = new System.Drawing.Size(224, 60);
+            this.lblComponent.Size = new System.Drawing.Size(220, 50);
             this.lblComponent.TabIndex = 19;
             this.lblComponent.Tag = "2";
             this.lblComponent.Text = "Components";
@@ -425,17 +425,18 @@
             // 
             // tab1
             // 
-            this.tab1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tab1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tab1.Controls.Add(this.tpInfo);
             this.tab1.Controls.Add(this.tpComponents);
             this.tab1.Controls.Add(this.tpReferences);
-            this.tab1.Location = new System.Drawing.Point(-9, -39);
-            this.tab1.Margin = new System.Windows.Forms.Padding(4);
+            this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tab1.Location = new System.Drawing.Point(0, 0);
+            this.tab1.Margin = new System.Windows.Forms.Padding(0);
             this.tab1.Name = "tab1";
+            this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(771, 645);
+            this.tab1.Size = new System.Drawing.Size(768, 596);
+            this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
             // 
@@ -454,11 +455,10 @@
             this.tpInfo.Controls.Add(this.linkLabel2);
             this.tpInfo.Controls.Add(this.lnkIGHomepage);
             this.tpInfo.Controls.Add(this.label2);
-            this.tpInfo.Location = new System.Drawing.Point(4, 34);
-            this.tpInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.tpInfo.Location = new System.Drawing.Point(4, 37);
+            this.tpInfo.Margin = new System.Windows.Forms.Padding(0);
             this.tpInfo.Name = "tpInfo";
-            this.tpInfo.Padding = new System.Windows.Forms.Padding(4);
-            this.tpInfo.Size = new System.Drawing.Size(763, 607);
+            this.tpInfo.Size = new System.Drawing.Size(758, 555);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
             // 
@@ -467,11 +467,11 @@
             this.tpComponents.BackColor = System.Drawing.Color.White;
             this.tpComponents.Controls.Add(this.txtComponents);
             this.tpComponents.ForeColor = System.Drawing.Color.Black;
-            this.tpComponents.Location = new System.Drawing.Point(4, 34);
-            this.tpComponents.Margin = new System.Windows.Forms.Padding(4);
+            this.tpComponents.Location = new System.Drawing.Point(4, 37);
+            this.tpComponents.Margin = new System.Windows.Forms.Padding(0);
             this.tpComponents.Name = "tpComponents";
-            this.tpComponents.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpComponents.Size = new System.Drawing.Size(763, 607);
+            this.tpComponents.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.tpComponents.Size = new System.Drawing.Size(760, 555);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -483,12 +483,12 @@
             this.txtComponents.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtComponents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtComponents.Location = new System.Drawing.Point(30, 0);
-            this.txtComponents.Margin = new System.Windows.Forms.Padding(4);
+            this.txtComponents.Margin = new System.Windows.Forms.Padding(10);
             this.txtComponents.Name = "txtComponents";
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(724, 601);
+            this.txtComponents.Size = new System.Drawing.Size(730, 555);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -496,11 +496,11 @@
             // 
             this.tpReferences.BackColor = System.Drawing.Color.White;
             this.tpReferences.Controls.Add(this.txtReferences);
-            this.tpReferences.Location = new System.Drawing.Point(4, 34);
-            this.tpReferences.Margin = new System.Windows.Forms.Padding(4);
+            this.tpReferences.Location = new System.Drawing.Point(4, 37);
+            this.tpReferences.Margin = new System.Windows.Forms.Padding(0);
             this.tpReferences.Name = "tpReferences";
-            this.tpReferences.Padding = new System.Windows.Forms.Padding(30, 0, 9, 6);
-            this.tpReferences.Size = new System.Drawing.Size(763, 607);
+            this.tpReferences.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.tpReferences.Size = new System.Drawing.Size(760, 555);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -512,12 +512,12 @@
             this.txtReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtReferences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtReferences.Location = new System.Drawing.Point(30, 0);
-            this.txtReferences.Margin = new System.Windows.Forms.Padding(4, 4, 15, 4);
+            this.txtReferences.Margin = new System.Windows.Forms.Padding(10);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(724, 601);
+            this.txtReferences.Size = new System.Drawing.Size(730, 555);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
@@ -534,6 +534,23 @@
             this.btnDonation.TabIndex = 20;
             this.btnDonation.TabStop = false;
             this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 596);
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // frmAbout
             // 
@@ -570,6 +587,7 @@
             this.tpComponents.ResumeLayout(false);
             this.tpReferences.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -606,5 +624,6 @@
         private System.Windows.Forms.RichTextBox txtReferences;
         private System.Windows.Forms.PictureBox btnDonation;
         private System.Windows.Forms.RichTextBox txtComponents;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
