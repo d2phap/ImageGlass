@@ -127,6 +127,11 @@ namespace ImageGlass
 
         private void frmSetting_Load(object sender, EventArgs e)
         {
+            //Remove tabs header
+            tab1.Appearance = TabAppearance.FlatButtons;
+            tab1.ItemSize = new Size(0, 1);
+            tab1.SizeMode = TabSizeMode.Fixed;
+
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
@@ -177,8 +182,7 @@ namespace ImageGlass
             //Tabs State---------------------------------------------------------------------------
             GlobalSetting.SettingsTabLastView = tab1.SelectedIndex;
 
-            //Force to apply the configurations
-            GlobalSetting.IsForcedActive = true;
+            
         }
 
         private void frmSetting_KeyDown(object sender, KeyEventArgs e)
@@ -1010,8 +1014,28 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-        
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            //close without saving
+            this.Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //Save and close
+            btnApply_Click(sender, null);
+            this.Close();
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            //apply all changes
+
+            //Force to apply the configurations
+            GlobalSetting.IsForcedActive = true;
+        }
     }
 }
