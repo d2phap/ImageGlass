@@ -396,6 +396,10 @@ namespace ImageGlass.Library
             #region frmSetting
             Items.Add("frmSetting._Text", "Settings");
 
+            Items.Add("frmSetting.btnSave", "Save"); //v4.1
+            Items.Add("frmSetting.btnCancel", "Cancel"); //v4.1
+            Items.Add("frmSetting.btnApply", "Apply"); //v4.1
+
 
             #region Tab names
             Items.Add("frmSetting.lblGeneral", "General");
