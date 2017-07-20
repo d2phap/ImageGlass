@@ -490,81 +490,8 @@ namespace ImageGlass
         }
         
 
-        private void chkFindChildFolder_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
-            //GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
-        }
-
-        private void chkLoopViewer_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
-            //GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
-        }
-
-        private void chkImageBoosterBack_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
-            //GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
-        }
-
-        private void cmbImageOrder_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
-            //GlobalSetting.LoadImageOrderConfig();
-        }
-
-        private void chkMouseNavigation_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
-            //GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
-        }
-
-        private void cmbZoomOptimization_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
-            //GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString());
-        }
-
-        private void chkThumbnailVertical_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
-            //GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
-        }
-
-        private void numMaxThumbSize_ValueChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
-        }
-
-        private void cmbThumbnailDimension_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ////backup old value
-            //int oldValue = GlobalSetting.ThumbnailDimension;
-
-            ////Get new value
-            //GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString());
-
-            ////Only change when the new value selected
-            //if(GlobalSetting.ThumbnailDimension != oldValue)
-            //{
-            //    GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
-
-            //    //Request frmMain to update the thumbnail bar
-            //    LocalSetting.IsThumbnailDimensionChanged = true;
-            //}
-        }
-
-        private void chkLoopSlideshow_CheckedChanged(object sender, EventArgs e)
-        {
-            //GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
-            //GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
-        }
-
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            //GlobalSetting.SlideShowInterval = barInterval.Value;
-            //GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString());
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
         }
 
@@ -769,7 +696,6 @@ namespace ImageGlass
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblLanguageWarning.Visible = false;
-            //GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
 
             //check compatibility
             var lang = new Language();
@@ -778,11 +704,7 @@ namespace ImageGlass
                 lblLanguageWarning.Visible = true;
             }
         }
-
         
-
-
-
 
 
         #endregion
@@ -976,7 +898,7 @@ namespace ImageGlass
         {
             //apply all changes
 
-            #region General tab -------------------------------------------
+            #region General tab --------------------------------------------
             // IsShowWelcome
             GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
             GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
@@ -1025,7 +947,7 @@ namespace ImageGlass
             #endregion
 
 
-            #region Image tab -------------------------------------------
+            #region Image tab ----------------------------------------------
             //IsRecursiveLoading
             GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
             GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
@@ -1086,11 +1008,9 @@ namespace ImageGlass
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
 
             #endregion
+            
 
-
-
-
-            //Force to apply the configurations
+            //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
     }
