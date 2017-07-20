@@ -965,7 +965,10 @@
             "48",
             "64",
             "96",
-            "128"});
+            "128",
+            "256",
+            "512",
+            "1024"});
             this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 437);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
