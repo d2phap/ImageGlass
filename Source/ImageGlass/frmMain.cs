@@ -2946,10 +2946,11 @@ namespace ImageGlass
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
-                
+                int minSize = tb.GetTotalDimension() + gap;
+                //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
 
-                int splitterDistance = sp1.Height - sp1.Panel2MinSize;
+
+                int splitterDistance = Math.Abs(sp1.Height - minSize);
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
@@ -2966,7 +2967,7 @@ namespace ImageGlass
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
                     //sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
-                    sp1.SplitterDistance = sp1.Width - sp1.Panel2MinSize;
+                    sp1.SplitterDistance = sp1.Width - minSize;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }
