@@ -49,6 +49,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
         private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
+        private static int _settingsTabLastView = 0;
         
 
         // Shared settings ----------------------------------------------------------------
@@ -81,6 +82,7 @@ namespace ImageGlass.Services.Configuration
         
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
+        private static bool _isScrollbarsVisible = false;
         private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
 
@@ -513,6 +515,15 @@ namespace ImageGlass.Services.Configuration
         public static string BuiltInImageFormats { get => _builtInImageFormats; }
 
         /// <summary>
+        /// Gets, sets the value indicates the last view of Settings dialog tab. Codes:
+        /// 0: General;
+        /// 1: Image;
+        /// 2: File Associations;
+        /// 3: Language;
+        /// </summary>
+        public static int SettingsTabLastView { get => _settingsTabLastView; set => _settingsTabLastView = value; }
+        
+        /// <summary>
         /// Gets, sets slide show interval
         /// </summary>
         public static int SlideShowInterval
@@ -529,6 +540,13 @@ namespace ImageGlass.Services.Configuration
             get => _imageEditingAssociationList;
             set => _imageEditingAssociationList = value;
         }
+
+        /// <summary>
+        /// Gets, sets the value indicates that viewer scrollbars are visible
+        /// </summary>
+        public static bool IsScrollbarsVisible { get => _isScrollbarsVisible; set => _isScrollbarsVisible = value; }
+
+        
 
 
 

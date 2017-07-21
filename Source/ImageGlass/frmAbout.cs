@@ -107,6 +107,11 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
+            //Remove tabs header
+            tab1.Appearance = TabAppearance.FlatButtons;
+            tab1.ItemSize = new Size(0, 1);
+            tab1.SizeMode = TabSizeMode.Fixed;
+
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsPortableMode ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";

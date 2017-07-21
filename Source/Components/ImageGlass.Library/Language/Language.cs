@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "4.0.0.0";
+            _minVersion = "4.1.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -339,7 +339,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
-            Items.Add("frmMain._ExtractFrameText", "Select output folder");
+            Items.Add("frmMain._ExtractFrameText", "Extracting image frames. Please select output folder.");
             Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
@@ -396,6 +396,10 @@ namespace ImageGlass.Library
             #region frmSetting
             Items.Add("frmSetting._Text", "Settings");
 
+            Items.Add("frmSetting.btnSave", "Save"); //v4.1
+            Items.Add("frmSetting.btnCancel", "Cancel"); //v4.1
+            Items.Add("frmSetting.btnApply", "Apply"); //v4.1
+
 
             #region Tab names
             Items.Add("frmSetting.lblGeneral", "General");
@@ -425,6 +429,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
+            Items.Add("frmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion
@@ -477,6 +482,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
             Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
+            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.x
+            Items.Add("frmSetting._allExtensions", "all extensions"); //v4.x
             Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0

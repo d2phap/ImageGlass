@@ -1,4 +1,4 @@
-<ImageGlass>
+﻿<ImageGlass>
   <Language>
     <Info langCode="fr-FR" langName="Français" author="ImageGlass community" description="French" minVersion="4.0.0.0" isRightToLeftLayout="No" />
     <Content>
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="Entrer l'index de l'image pour l'afficher. Appuyez sur {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Supprimer le fichier '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Confirmer" />
-      <Item key="frmMain._ExtractFrameText" value="Sélectionner le dossier de sortie" />
+      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
       <Item key="frmMain._FullScreenMessage" value="Appuyez sur ALT + entrée pour quitter le mode plein écran.&#xA; ou CTRL + F1 pour afficher le menu." />
       <Item key="frmMain._SlideshowMessage" value="Appuyez sur Echap pour quitter le diaporama.&#xA; Faites un clic droit pour ouvrir le menu contextuel." />
       <Item key="frmMain._SlideshowMessagePause" value="Le diaporama est en pause" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="A propos" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Paramètres" />
+      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnCancel" value="Annuler" />
+      <Item key="frmSetting.btnApply" value="Apply" />
       <Item key="frmSetting.lblGeneral" value="Général" />
       <Item key="frmSetting.lblImage" value="Image" />
       <Item key="frmSetting.lblFileAssociations" value="Associations de fichiers" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="Autoriser plusieurs instances du programme" />
       <Item key="frmSetting.chkESCToQuit" value="Permettre d'appuyer sur Echap afin de quitter l'application" />
       <Item key="frmSetting.chkConfirmationDelete" value="Afficher le dialogue de confirmation de suppression" />
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
       <Item key="frmSetting.lblBackGroundColor" value="Couleur d'arrière-plan" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Réinitialiser" />
       <Item key="frmSetting.lblHeadImageLoading" value="Chargement de l'image" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="Retouche d'image" />
       <Item key="frmSetting.btnEditEditExt" value="Editer" />
       <Item key="frmSetting.btnEditResetExt" value="Réinitialiser" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
+      <Item key="frmSetting._allExtensions" value="all extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Extension de fichier" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nom de l'application" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Chemin de l'application" />

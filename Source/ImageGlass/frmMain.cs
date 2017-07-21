@@ -776,7 +776,7 @@ namespace ImageGlass
             else
             {
                 //Find file format
-                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]);
+                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]).ToLower();
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
 
                 //Get App assoc info
@@ -1358,6 +1358,14 @@ namespace ImageGlass
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
+            //Load scrollbars visibility-----------------------------------------------------
+            GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
+            if (GlobalSetting.IsScrollbarsVisible)
+            {
+                picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+            }
+
             //Load Thumbnail dimension-------------------------------------------------------
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
             {
@@ -1593,6 +1601,19 @@ namespace ImageGlass
 
                     LoadThumbnails();
                 }
+
+                //Update scrollbars visibility
+                if (GlobalSetting.IsScrollbarsVisible)
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                }
+                else
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                }
+                
 
                 //Update background---------------------
                 picMain.BackColor = GlobalSetting.BackgroundColor;
@@ -2239,7 +2260,7 @@ namespace ImageGlass
             else
             {
                 // Get extension
-                var ext = Path.GetExtension(filename);
+                var ext = Path.GetExtension(filename).ToLower();
 
                 // Get association App for editing
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
@@ -2515,11 +2536,13 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
             picMain.Image = bmp;
 
+            /*
             try
             {
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
             }
             catch { }
+            */
         }
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
@@ -2533,11 +2556,13 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
             picMain.Image = bmp;
 
+            /*
             try
             {
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
             }
             catch { }
+            */
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
@@ -2921,10 +2946,11 @@ namespace ImageGlass
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
-                
+                int minSize = tb.GetTotalDimension() + gap;
+                //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
 
-                int splitterDistance = sp1.Height - sp1.Panel2MinSize;
+
+                int splitterDistance = Math.Abs(sp1.Height - minSize);
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
@@ -2941,7 +2967,7 @@ namespace ImageGlass
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
                     //sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
-                    sp1.SplitterDistance = sp1.Width - sp1.Panel2MinSize;
+                    sp1.SplitterDistance = sp1.Width - minSize;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }

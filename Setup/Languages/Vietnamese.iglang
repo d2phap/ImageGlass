@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Định dạng chính" />
       <Item key="_.ImageFormatGroup.Optional" value="Định dạng phụ" />
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="Nhập các số thứ tự hình ảnh để xem nó. Nhấn {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Xóa tập tin '{0}'?" />
       <Item key="frmMain._DeleteDialogTitle" value="Xác nhận" />
-      <Item key="frmMain._ExtractFrameText" value="Chọn thư mục đầu ra" />
+      <Item key="frmMain._ExtractFrameText" value="Trích xuất hình ảnh. Vui lòng chọn thư mục lưu trữ!" />
       <Item key="frmMain._FullScreenMessage" value="Nhấn ALT + ENTER để thoát chế độ toàn màn hình.&#xA; Hoặc nhấn CTRL + F1 để mở thanh công cụ." />
       <Item key="frmMain._SlideshowMessage" value="Nhấn ESC để thoát trình diễn hình ảnh&#xA; Nhấn chuột phải để mở menu ngữ cảnh." />
       <Item key="frmMain._SlideshowMessagePause" value="Trình chiếu ảnh được tạm dừng" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="Thông tin phần mềm" />
       <Item key="frmAbout._PortableText" value="[Di động]" />
       <Item key="frmSetting._Text" value="Cài đặt" />
+      <Item key="frmSetting.btnSave" value="Lưu" />
+      <Item key="frmSetting.btnCancel" value="Hủy bỏ" />
+      <Item key="frmSetting.btnApply" value="Áp dụng" />
       <Item key="frmSetting.lblGeneral" value="Cài đặt chung" />
       <Item key="frmSetting.lblImage" value="Hình ảnh" />
       <Item key="frmSetting.lblFileAssociations" value="File Associations" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="Cho phép nhiều cửa sổ chương trình mở cùng lúc" />
       <Item key="frmSetting.chkESCToQuit" value="Cho phép để nhấn ESC để thoát ứng dụng" />
       <Item key="frmSetting.chkConfirmationDelete" value="Hiển thị hộp thoại xác nhận xóa bỏ" />
+      <Item key="frmSetting.chkShowScrollbar" value="Hiển thị thanh cuộn hình ảnh" />
       <Item key="frmSetting.lblBackGroundColor" value="Màu nền" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Thiết lập lại" />
       <Item key="frmSetting.lblHeadImageLoading" value="Tải hình ảnh" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="Chỉnh sửa hình ảnh" />
       <Item key="frmSetting.btnEditEditExt" value="Chỉnh sửa" />
       <Item key="frmSetting.btnEditResetExt" value="Đặt lại về mặc định" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Chỉnh sửa tất cả" />
+      <Item key="frmSetting._allExtensions" value="Tất cả tập tin" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Loại tập tin" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Tên ứng dụng" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Đường dẫn ứng dụng" />
