@@ -1,4 +1,4 @@
-<ImageGlass>
+﻿<ImageGlass>
   <Language>
     <Info langCode="es-ES" langName="Español" author="ImageGlass community" description="Spanish" minVersion="4.0.0.0" isRightToLeftLayout="No" />
     <Content>
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="Ingrese el índice de imagen para verla. Presione {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="¿Borrar el archivo '{0}'?" />
       <Item key="frmMain._DeleteDialogTitle" value="Confirmar" />
-      <Item key="frmMain._ExtractFrameText" value="Escoger carpeta de destino" />
+      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
       <Item key="frmMain._FullScreenMessage" value="Presione ALT + ENTER para salir del modo de pantalla completa. &#xA; o CTRL + F1 para mostrar el menú." />
       <Item key="frmMain._SlideshowMessage" value="Presione ESC para salir de la presentación.&#xA; Click derecho abre el menú contextual." />
       <Item key="frmMain._SlideshowMessagePause" value="Presentación de diapositivas en pausa" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="Acerca de" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Preferencias" />
+      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnCancel" value="Cancelar" />
+      <Item key="frmSetting.btnApply" value="Apply" />
       <Item key="frmSetting.lblGeneral" value="General" />
       <Item key="frmSetting.lblImage" value="Imagen" />
       <Item key="frmSetting.lblFileAssociations" value="Asociaciones de archivo" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="Permitir múltiples instancias del programa" />
       <Item key="frmSetting.chkESCToQuit" value="Presionar ESC cierra la aplicación" />
       <Item key="frmSetting.chkConfirmationDelete" value="Mostrar cuadro de diálogo para confirmar Eliminar" />
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
       <Item key="frmSetting.lblBackGroundColor" value="Color de fondo" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Restablecer" />
       <Item key="frmSetting.lblHeadImageLoading" value="Carga de imagen" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="Edición de imagen" />
       <Item key="frmSetting.btnEditEditExt" value="Edición" />
       <Item key="frmSetting.btnEditResetExt" value="Restablecer valores predeterminados" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
+      <Item key="frmSetting._allExtensions" value="all extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Extensión del archivo" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nombre de la aplicación" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Ruta de la aplicación" />

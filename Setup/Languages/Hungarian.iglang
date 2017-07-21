@@ -1,4 +1,4 @@
-<ImageGlass>
+﻿<ImageGlass>
   <Language>
     <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="4.0.0.0" isRightToLeftLayout="No" />
     <Content>
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="Adja meg a kép sorszámát a megtekintéshez. Nyomja meg az {ENTER} billentyűt" />
       <Item key="frmMain._DeleteDialogText" value="Törli '{0}' fájlt?" />
       <Item key="frmMain._DeleteDialogTitle" value="Megerösít" />
-      <Item key="frmMain._ExtractFrameText" value="Mentés helyének kiválasztása" />
+      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
       <Item key="frmMain._FullScreenMessage" value="Nyomja meg az ALT + ENTER billentyűkombinációt a teljes képernyős módból való kilépéshez. &#xA; Vagy CTRL + F1 a menühöz." />
       <Item key="frmMain._SlideshowMessage" value="Nyomja meg az ESC billentyűt a diavetítésből való kilépéshez. &#xA; Jobb kattintás a helyi menü megnyitásához." />
       <Item key="frmMain._SlideshowMessagePause" value="Diavetítés szünetel" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="Névjegy" />
       <Item key="frmAbout._PortableText" value="[Hordozható]" />
       <Item key="frmSetting._Text" value="Beállítások" />
+      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnCancel" value="Mégse" />
+      <Item key="frmSetting.btnApply" value="Apply" />
       <Item key="frmSetting.lblGeneral" value="Általános" />
       <Item key="frmSetting.lblImage" value="Kép" />
       <Item key="frmSetting.lblFileAssociations" value="Társítások" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="Alkalmazás több példányban is futhat" />
       <Item key="frmSetting.chkESCToQuit" value="ESC engedélyezése az alkalmazás bezárásához" />
       <Item key="frmSetting.chkConfirmationDelete" value="Törlés megerősítés megjelenítése" />
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
       <Item key="frmSetting.lblBackGroundColor" value="Háttérszín" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Visszaállít" />
       <Item key="frmSetting.lblHeadImageLoading" value="Kép betöltése" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="Kép szerkesztés" />
       <Item key="frmSetting.btnEditEditExt" value="Szerkeztés" />
       <Item key="frmSetting.btnEditResetExt" value="Alapbeállítások visszaállítása" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
+      <Item key="frmSetting._allExtensions" value="all extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Fájlkiterjesztés" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Alkalmazás neve" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Alkalmazás könyvtára" />

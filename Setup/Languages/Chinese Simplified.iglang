@@ -1,4 +1,4 @@
-<ImageGlass>
+﻿<ImageGlass>
   <Language>
     <Info langCode="zh-CN" langName="简体中文" author="ImageGlass community" description="Chinese Simplified" minVersion="4.0.0.0" isRightToLeftLayout="No" />
     <Content>
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="输入要查看的图片序号，然后回车。" />
       <Item key="frmMain._DeleteDialogText" value="删除这 {0} 张图片？" />
       <Item key="frmMain._DeleteDialogTitle" value="确认" />
-      <Item key="frmMain._ExtractFrameText" value="选择存储目录" />
+      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
       <Item key="frmMain._FullScreenMessage" value="按下 ALT + ENTER 退出全屏。&#xA;或者按下 CTRL + F1 以显示菜单。" />
       <Item key="frmMain._SlideshowMessage" value="按下 ESC 以退出幻灯片播放。&#xA; 右键可打开操作菜单。" />
       <Item key="frmMain._SlideshowMessagePause" value="幻灯片放映已暂停" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="关于" />
       <Item key="frmAbout._PortableText" value="[便携式]" />
       <Item key="frmSetting._Text" value="设置" />
+      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnCancel" value="取消" />
+      <Item key="frmSetting.btnApply" value="Apply" />
       <Item key="frmSetting.lblGeneral" value="一般" />
       <Item key="frmSetting.lblImage" value="图像" />
       <Item key="frmSetting.lblFileAssociations" value="文件关联" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="允许运行多个实例" />
       <Item key="frmSetting.chkESCToQuit" value="运行按下 ESC 退出程序" />
       <Item key="frmSetting.chkConfirmationDelete" value="显示删除确认对话框" />
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
       <Item key="frmSetting.lblBackGroundColor" value="背景颜色" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="重置" />
       <Item key="frmSetting.lblHeadImageLoading" value="图像加载中" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="图像编辑" />
       <Item key="frmSetting.btnEditEditExt" value="编辑" />
       <Item key="frmSetting.btnEditResetExt" value="重置为默认" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
+      <Item key="frmSetting._allExtensions" value="all extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="文件扩展名" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="应用程序名称" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="应用程序路径" />

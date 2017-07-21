@@ -699,7 +699,7 @@ namespace ImageGlass
 
             //check compatibility
             var lang = new Language();
-            if(lang.MinVersion.CompareTo(GlobalSetting.LangPack.MinVersion) != 0)
+            if(lang.MinVersion.CompareTo(dsLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
             {
                 lblLanguageWarning.Visible = true;
             }

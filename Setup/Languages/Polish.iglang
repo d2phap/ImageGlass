@@ -1,4 +1,4 @@
-<ImageGlass>
+﻿<ImageGlass>
   <Language>
     <Info langCode="pl-PL" langName="Język polski" author="ImageGlass community" description="Polish language" minVersion="4.0.0.0" isRightToLeftLayout="No" />
     <Content>
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="Podaj indeks obrazu, aby go wyświetlić. Później naciśnij {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Usuń plik '{0}'?" />
       <Item key="frmMain._DeleteDialogTitle" value="Zatwierdź" />
-      <Item key="frmMain._ExtractFrameText" value="Wybierz folder wyjściowy" />
+      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
       <Item key="frmMain._FullScreenMessage" value="Naciśnij klawisze ALT + ENTER, aby wyjść z trybu pełnoekranowego. &#xA; lub CTRL + F1, aby wyświetlić menu." />
       <Item key="frmMain._SlideshowMessage" value="Naciśnij klawisz ESC, aby zakończyć pokaz slajdów. &#xA; kliknij prawym przyciskiem myszy, aby otworzyć menu kontekstowe." />
       <Item key="frmMain._SlideshowMessagePause" value="Pokaz slajdów jest wstrzymany" />
@@ -131,6 +131,9 @@
       <Item key="frmAbout._Text" value="O" />
       <Item key="frmAbout._PortableText" value="[Przenośna]" />
       <Item key="frmSetting._Text" value="Ustawienia" />
+      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnCancel" value="Anuluj" />
+      <Item key="frmSetting.btnApply" value="Apply" />
       <Item key="frmSetting.lblGeneral" value="Ustawienia główne" />
       <Item key="frmSetting.lblImage" value="Obraz" />
       <Item key="frmSetting.lblFileAssociations" value="Skojarzenia plików" />
@@ -145,6 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="Zezwól na działanie kilku kopii programu jednocześnie" />
       <Item key="frmSetting.chkESCToQuit" value="Zezwól na użycie klawisza ESC, aby zakończyć pracę aplikacji" />
       <Item key="frmSetting.chkConfirmationDelete" value="Wyświetl ekran dialogowy potwierdzający usunięcie pliku" />
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
       <Item key="frmSetting.lblBackGroundColor" value="Kolor tła" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Przywróć domyślne" />
       <Item key="frmSetting.lblHeadImageLoading" value="Wczytywanie obrazu" />
@@ -175,6 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="Edycja obrazu" />
       <Item key="frmSetting.btnEditEditExt" value="Edycja" />
       <Item key="frmSetting.btnEditResetExt" value="Przywróć ustawienia domyślne" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
+      <Item key="frmSetting._allExtensions" value="all extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Rozszerzenie pliku" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nazwa aplikacji" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Ścieżka aplikacji" />
