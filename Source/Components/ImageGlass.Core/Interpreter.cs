@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Drawing.IconLib;
+using System.Windows.Media.Imaging;
 using ImageMagick;
 
 namespace ImageGlass.Core
@@ -35,7 +37,19 @@ namespace ImageGlass.Core
                     break;
 
                 default:
-                    GetBitmapFromFile();
+                    try
+                    {
+                        GetBitmapFromWic();
+
+                        if (bmp == null)
+                        {
+                            GetBitmapFromFile();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        GetBitmapFromFile();
+                    }
                     break;
             }
             
@@ -85,8 +99,50 @@ namespace ImageGlass.Core
                 }
             }
             
+            void GetBitmapFromWic()
+            {
+                var src = LoadImage(path);
+                bmp = BitmapFromSource(src);
+            }
+            
             return bmp;
         }
+
+        private static BitmapSource LoadImage(string filename, int frameIndex = 0)
+        {
+            using (var inFile = File.OpenRead(filename))
+            {
+                var decoder = BitmapDecoder.Create(inFile, BitmapCreateOptions.None, BitmapCacheOption.None);
+                return Convert(decoder.Frames[frameIndex]);
+            }
+        }
+
+        private static BitmapSource Convert(BitmapFrame frame)
+        {
+            int stride = frame.PixelWidth * (frame.Format.BitsPerPixel / 8);
+            byte[] pixels = new byte[frame.PixelHeight * stride];
+
+            frame.CopyPixels(pixels, stride, 0);
+
+            var bmpSource = BitmapSource.Create(frame.PixelWidth, frame.PixelHeight,
+                frame.DpiX, frame.DpiY, frame.Format, frame.Palette, pixels, stride);
+
+            return bmpSource;
+        }
+
+        public static Bitmap BitmapFromSource(BitmapSource bitmapsource)
+        {
+            Bitmap bitmap;
+            using (var outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapsource));
+                enc.Save(outStream);
+                bitmap = new Bitmap(outStream);
+            }
+            return bitmap;
+        }        
+               
 
         /// <summary>
         /// Read icon *.ICO file
