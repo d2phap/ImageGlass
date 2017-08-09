@@ -29,7 +29,7 @@ SetupIconFile=D:\DEV\ImageGlass\Assets\Setup Logo\setup_logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardSmallImageFile=D:\DEV\ImageGlass\Setup\WizModernSmallImage.bmp
-AppCopyright=Copyright © 2010-2017 by {#MyAppPublisher}
+AppCopyright=Copyright Â© 2010-2017 by {#MyAppPublisher}
 LanguageDetectionMethod=locale
 AppContact=d2phap@gmail.com
 AppReadmeFile=http://www.imageglass.org/
@@ -39,7 +39,7 @@ VersionInfoVersion={#MyAppVersion}
 VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription=A Iightweight, versatile image viewer
 VersionInfoTextVersion={#MyAppVersion}
-VersionInfoCopyright=Copyright © 2010-2017 by {#MyAppPublisher}
+VersionInfoCopyright=Copyright Â© 2010-2017 by {#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
@@ -65,6 +65,7 @@ Name: "hebrew"; MessagesFile: "compiler:Languages\Hebrew.isl"
 Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "korean"; MessageFile: "compiler:Languages\Korean.isl"
 Name: "nepali"; MessagesFile: "compiler:Languages\Nepali.islu"
 Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
