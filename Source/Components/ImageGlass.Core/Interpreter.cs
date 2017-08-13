@@ -108,6 +108,12 @@ namespace ImageGlass.Core
             return bmp;
         }
 
+        /// <summary>
+        /// Load image file using WIC
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="frameIndex"></param>
+        /// <returns></returns>
         private static BitmapSource LoadImage(string filename, int frameIndex = 0)
         {
             using (var inFile = File.OpenRead(filename))
@@ -130,6 +136,12 @@ namespace ImageGlass.Core
             return bmpSource;
         }
 
+        /// <summary>
+        /// Load image file using WIC
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="frameIndex"></param>
+        /// <returns></returns>
         public static Bitmap BitmapFromSource(BitmapSource bitmapsource)
         {
             Bitmap bitmap;

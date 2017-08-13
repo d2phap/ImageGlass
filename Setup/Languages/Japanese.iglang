@@ -1,6 +1,6 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="既定の形式" />
       <Item key="_.ImageFormatGroup.Optional" value="オプションの形式" />
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="何枚目の画像を表示するか入力し、エンターキーを押して下さい。" />
       <Item key="frmMain._DeleteDialogText" value="次の画像を削除しますか '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="確認" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="画像フレームを抽出しています。出力フォルダーを選択してください。" />
       <Item key="frmMain._FullScreenMessage" value="フルスクリーンを終了するには ALT + ENTER を押して下さい。&#xA;もしくは CTRL + F1 でメニューを表示できます。" />
       <Item key="frmMain._SlideshowMessage" value="スライドショーを終了するにはESCキーを押して下さい。&#xA; コンテキストメニューを開くには右クリックしてください。" />
       <Item key="frmMain._SlideshowMessagePause" value="スライドショーを一時停止しました。" />
@@ -131,9 +131,9 @@
       <Item key="frmAbout._Text" value="ImageGlassについて" />
       <Item key="frmAbout._PortableText" value="[ポータブル]" />
       <Item key="frmSetting._Text" value="設定" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="保存" />
       <Item key="frmSetting.btnCancel" value="キャンセル" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="適用" />
       <Item key="frmSetting.lblGeneral" value="全般" />
       <Item key="frmSetting.lblImage" value="画像" />
       <Item key="frmSetting.lblFileAssociations" value="関連付け" />
@@ -148,7 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="アプリの複数起動を許可" />
       <Item key="frmSetting.chkESCToQuit" value="ESCキーでアプリケーションを終了する" />
       <Item key="frmSetting.chkConfirmationDelete" value="削除の確認ダイアログを表示する" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="ビューアのスクロールバーを表示する" />
       <Item key="frmSetting.lblBackGroundColor" value="背景色" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="リセット" />
       <Item key="frmSetting.lblHeadImageLoading" value="画像の読み込み" />
@@ -179,8 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="画像編集" />
       <Item key="frmSetting.btnEditEditExt" value="編集" />
       <Item key="frmSetting.btnEditResetExt" value="デフォルトに戻す" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="すべての拡張子を編集する" />
+      <Item key="frmSetting._allExtensions" value="すべての拡張子" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="ファイルの拡張子" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="アプリ名" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="アプリのパス" />
