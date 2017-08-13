@@ -1,6 +1,6 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="預設格式" />
       <Item key="_.ImageFormatGroup.Optional" value="可選格式" />
@@ -92,7 +92,7 @@
       <Item key="frmMain._GotoDialogText" value="輸入圖片索引以檢視它。按 {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="刪除檔案 '{0}' ？" />
       <Item key="frmMain._DeleteDialogTitle" value="確定" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="正在解壓縮圖片框架。請選取輸出資料夾。" />
       <Item key="frmMain._FullScreenMessage" value="按下 ALT + ENTER 離開全螢幕模式。&#xA;或是 CTRL + F1 來顯示選單。" />
       <Item key="frmMain._SlideshowMessage" value="按下 ESC 以退出幻燈片展示。&#xA; 右鍵點選以開啟右鍵選單。" />
       <Item key="frmMain._SlideshowMessagePause" value="幻燈片已暫停" />
@@ -131,9 +131,9 @@
       <Item key="frmAbout._Text" value="關於" />
       <Item key="frmAbout._PortableText" value="[可攜版]" />
       <Item key="frmSetting._Text" value="設定" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="儲存" />
       <Item key="frmSetting.btnCancel" value="取消" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="套用" />
       <Item key="frmSetting.lblGeneral" value="一般" />
       <Item key="frmSetting.lblImage" value="圖片" />
       <Item key="frmSetting.lblFileAssociations" value="檔案關聯" />
@@ -148,7 +148,7 @@
       <Item key="frmSetting.chkAllowMultiInstances" value="允許程式執行多個實體" />
       <Item key="frmSetting.chkESCToQuit" value="允許按下 ESC 結束應用程式" />
       <Item key="frmSetting.chkConfirmationDelete" value="顯示刪除確認對話框" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="顯示檢視器捲軸列" />
       <Item key="frmSetting.lblBackGroundColor" value="背景顏色" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="重設" />
       <Item key="frmSetting.lblHeadImageLoading" value="圖片載入" />
@@ -179,8 +179,8 @@
       <Item key="frmSetting.lblHeadImageEditing" value="圖片編輯" />
       <Item key="frmSetting.btnEditEditExt" value="編輯" />
       <Item key="frmSetting.btnEditResetExt" value="重設為預設值" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="編輯所有副檔名" />
+      <Item key="frmSetting._allExtensions" value="所有副檔名" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="副檔名" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="應用程式名稱" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="應用程式路徑" />
