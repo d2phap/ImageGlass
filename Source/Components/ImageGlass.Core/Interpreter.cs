@@ -39,20 +39,20 @@ namespace ImageGlass.Core
                 default:
                     try
                     {
-                        GetBitmapFromWic();
+                        GetBitmapFromFile();
 
                         if (bmp == null)
                         {
-                            GetBitmapFromFile();
+                            GetBitmapFromWic();
                         }
                     }
                     catch (Exception)
                     {
-                        GetBitmapFromFile();
+                        GetBitmapFromWic();
                     }
                     break;
             }
-            
+
             void GetBitmapFromFile()
             {
                 var settings = new MagickReadSettings();
@@ -92,19 +92,19 @@ namespace ImageGlass.Core
 
                     }
 
-                    //corect the image color 
+                    //corect the image color
                     magicImg.AddProfile(ColorProfile.SRGB);
 
                     bmp = magicImg.ToBitmap();
                 }
             }
-            
+
             void GetBitmapFromWic()
             {
                 var src = LoadImage(path);
                 bmp = BitmapFromSource(src);
             }
-            
+
             return bmp;
         }
 
@@ -147,14 +147,14 @@ namespace ImageGlass.Core
             Bitmap bitmap;
             using (var outStream = new MemoryStream())
             {
-                BitmapEncoder enc = new BmpBitmapEncoder();
+                // Use a PNG encoder to support transparency
+                BitmapEncoder enc = new PngBitmapEncoder();
                 enc.Frames.Add(BitmapFrame.Create(bitmapsource));
                 enc.Save(outStream);
                 bitmap = new Bitmap(outStream);
             }
             return bitmap;
-        }        
-               
+        }
 
         /// <summary>
         /// Read icon *.ICO file
