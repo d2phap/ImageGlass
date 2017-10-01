@@ -233,7 +233,10 @@ namespace ImageGlass
         public ImageBox()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            SetStyle(ControlStyles.StandardDoubleClick, false);
+
+            // [PHAP] double click event
+            // Enable 
+            //SetStyle(ControlStyles.StandardDoubleClick, false);
 
             //[PHAP]
             _animator = new DefaultGifAnimator();

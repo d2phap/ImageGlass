@@ -54,7 +54,6 @@ namespace ImageGlass
 
 
 
-
         #region Local variables
 
         private string _imageInfo = "";
@@ -1904,6 +1903,18 @@ namespace ImageGlass
             }            
         }
 
+        private void picMain_DoubleClick(object sender, EventArgs e)
+        {
+            if (picMain.Zoom < 100)
+            {
+                mnuMainActualSize_Click(null, null);
+            }
+            else
+            {
+                mnuMainRefresh_Click(null, null);
+            }
+        }
+
         private void picMain_MouseClick(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -3098,9 +3109,10 @@ namespace ImageGlass
 
 
 
+
+
         #endregion
 
-
-
+        
     }
 }
