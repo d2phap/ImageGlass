@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Threading;
+using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
@@ -61,6 +62,16 @@ namespace ImageGlass.Core
             tLoader.Priority = ThreadPriority.BelowNormal;
             tLoader.IsBackground = true;
             tLoader.Start();
+        }
+
+
+        /// <summary>
+        /// Add a new image file to list
+        /// </summary>
+        /// <param name="filename"></param>
+        public void AddItem(string filename)
+        {
+            lstImage.Add(new Img(filename));
         }
 
 
@@ -152,12 +163,17 @@ namespace ImageGlass.Core
             get { return lstImage.Count; }
             set { }
         }
+
         public string GetFileName(int i)
         {
-            if (i < 0 || i > lstImage.Count)
+            try
+            {
+                return lstImage[i].GetFileName();
+            }
+            catch
+            {
                 return "";
-
-            return lstImage[i].GetFileName();
+            }
         }
 
         public void SetFileName(int i, string s)
@@ -175,6 +191,11 @@ namespace ImageGlass.Core
         {
             Unload(i);
             lstImage.RemoveAt(i);
+        }
+
+        public int IndexOf(string filename)
+        {
+            return lstImage.FindIndex(v => v.GetFileName() == filename);
         }
 
 		public void Dispose()

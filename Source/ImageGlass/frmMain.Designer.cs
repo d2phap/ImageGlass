@@ -174,8 +174,8 @@
             this.sysWatch.EnableRaisingEvents = true;
             this.sysWatch.SynchronizingObject = this;
             this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
+            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
+            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
             // toolMain
@@ -1477,7 +1477,6 @@
             // 
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;

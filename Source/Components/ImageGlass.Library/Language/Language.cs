@@ -230,6 +230,7 @@ namespace ImageGlass.Library
 
             #region frmMain
             Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
+            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");//4.5
 
 
             #region Tool bar

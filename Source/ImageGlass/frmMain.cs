@@ -80,7 +80,7 @@ namespace ImageGlass
             string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
 
             // Drag file from DESKTOP to APP
-            if (GlobalSetting.ImageFilenameList.IndexOf(filePath) == -1)
+            if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -96,7 +96,7 @@ namespace ImageGlass
             string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
 
             // Drag file from DESKTOP to APP
-            if (GlobalSetting.ImageFilenameList.IndexOf(filePath) == -1)
+            if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
             {
                 Prepare(filePath);
             }
@@ -166,23 +166,23 @@ namespace ImageGlass
             }
 
             //Declare a new list to store filename
-            GlobalSetting.ImageFilenameList = new List<string>();
+            var _imageFilenameList = new List<string>();
 
             //Get supported image extensions from directory
-            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(dirPath);
+            _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
 
             //Set filename to image list
-            GlobalSetting.ImageList = new ImgMan(GlobalSetting.ImageFilenameList.ToArray());
+            GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
             //Track image loading progress
             GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
             //Find the index of current image
             if (filePath.Length > 0)
             {
-                GlobalSetting.CurrentIndex = GlobalSetting.ImageFilenameList.IndexOf(filePath);
+                GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
             }
             else
             {
@@ -320,7 +320,7 @@ namespace ImageGlass
             for (int i = 0; i < GlobalSetting.ImageList.Length; i++)
             {
                 ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(GlobalSetting.ImageList.GetFileName(i));
-                lvi.Tag = GlobalSetting.ImageFilenameList[i];
+                lvi.Tag = GlobalSetting.ImageList.GetFileName(i);
 
                 thumbnailBar.Items.Add(lvi);
             }
@@ -776,7 +776,7 @@ namespace ImageGlass
             else
             {
                 //Find file format
-                var ext = Path.GetExtension(GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex]).ToLower();
+                var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
 
                 //Get App assoc info
@@ -1053,7 +1053,7 @@ namespace ImageGlass
         {
             try
             {
-                Library.Image.ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+                ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
             }
             catch { }
             
@@ -1772,12 +1772,12 @@ namespace ImageGlass
             string oldName = e.OldFullPath;
 
             //Get index of renamed image
-            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(oldName);
+            int imgIndex = GlobalSetting.ImageList.IndexOf(oldName);
+
             if (imgIndex > -1)
             {
                 //Rename image list
                 GlobalSetting.ImageList.SetFileName(imgIndex, newName);
-                GlobalSetting.ImageFilenameList[imgIndex] = newName;
 
                 //Update status bar title
                 UpdateStatusBar();
@@ -1791,76 +1791,50 @@ namespace ImageGlass
                 catch { }
             }
         }
-
-        private void sysWatch_Deleted(object sender, FileSystemEventArgs e)
-        {
-            //Get index of deleted image
-            int imgIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
-
-            if (imgIndex > -1)
-            {
-                //delete image list
-                GlobalSetting.ImageList.Remove(imgIndex);
-                GlobalSetting.ImageFilenameList.RemoveAt(imgIndex);
-
-                try
-                {
-                    //delete thumbnail list
-                    thumbnailBar.Items.RemoveAt(imgIndex);
-
-                    //In case multiple files are deleted, this is to ensure the app doesnt crash
-                    NextPic(0);
-                }
-                catch (Exception ex) { }
-                
-            }
-        }
-
-        private void sysWatch_Created(object sender, FileSystemEventArgs e)
-        {
-            if (!File.Exists(e.FullPath))
-            {
-                return;
-            }
-
-            //Get the new folder path ----------------------------------
-            var path = Path.GetDirectoryName(e.FullPath);
-
-            //Reload the image list ------------------------------------
-            //Declare a new list to store filename
-            GlobalSetting.ImageFilenameList = new List<string>();
-
-            //Get supported image extensions from path
-            GlobalSetting.ImageFilenameList = LoadImageFilesFromDirectory(path);
-
-            //Dispose all garbage
-            GlobalSetting.ImageList.Dispose();
-
-            //Set filename to image list
-            GlobalSetting.ImageList = new ImgMan(GlobalSetting.ImageFilenameList.ToArray());
-            //Track image loading progress
-            GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
-
-            //Insert to the thumbnail -------------------------------------
-            int newFileIndex = GlobalSetting.ImageFilenameList.IndexOf(e.FullPath);
-            if (newFileIndex > -1)
-            {
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
-                lvi.Tag = e.FullPath;
-                thumbnailBar.Items.Insert(newFileIndex, lvi);
-            }
-            
-        }
-
+        
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
-            if (e.ChangeType == WatcherChangeTypes.Changed)
+            if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
-                if (GlobalSetting.ImageList.Length > 0)
+                //Get index of deleted image
+                int imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+
+                if (imgIndex > -1)
                 {
-                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                    //delete image list
+                    GlobalSetting.ImageList.Remove(imgIndex);
+
+                    try
+                    {
+                        //delete thumbnail list
+                        thumbnailBar.Items.RemoveAt(imgIndex);
+
+                        //In case multiple files are deleted, to avoid the app doesnt crash
+                        //We just display message instead
+                        picMain.Text = GlobalSetting.LangPack.Items["frmMain._ImageNotExist"];
+                        picMain.Image = null;
+                        this.Text = "ImageGlass";
+                        LocalSetting.ImageModifiedPath = "";
+                    }
+                    catch (Exception ex) { }
+
                 }
-                NextPic(0, true);
+            }
+            else if (e.ChangeType == WatcherChangeTypes.Created)
+            {
+                if (!File.Exists(e.FullPath))
+                {
+                    return;
+                }
+
+                //Add the new image to the list
+                GlobalSetting.ImageList.AddItem(e.FullPath);
+
+                //Add the new image to thumbnail bar
+                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
+                lvi.Tag = e.FullPath;
+                thumbnailBar.Items.Add(lvi);
+
             }
         }
 
@@ -2739,7 +2713,6 @@ namespace ImageGlass
 
                         //delete image list
                         GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
 
                         NextPic(0);
                     }
@@ -2785,7 +2758,6 @@ namespace ImageGlass
 
                         //delete image list
                         GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-                        GlobalSetting.ImageFilenameList.RemoveAt(GlobalSetting.CurrentIndex);
 
                         NextPic(0);
                     }
