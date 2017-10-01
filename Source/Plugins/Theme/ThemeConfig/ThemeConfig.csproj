@@ -97,9 +97,9 @@
     <Reference Include="ImageGlass.Plugins">
       <HintPath>..\..\..\Components\ImageGlass.Plugins\bin\Release\ImageGlass.Plugins.dll</HintPath>
     </Reference>
-    <Reference Include="ImageGlass.Services, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ImageGlass.Services, Version=4.0.6312.1489, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ImageGlass\bin\Debug\ImageGlass.Services.dll</HintPath>
+      <HintPath>..\..\..\ImageGlass\bin\Release\ImageGlass.Services.dll</HintPath>
     </Reference>
     <Reference Include="ImageGlass.Theme">
       <HintPath>..\..\..\Components\ImageGlass.Theme\bin\Release\ImageGlass.Theme.dll</HintPath>

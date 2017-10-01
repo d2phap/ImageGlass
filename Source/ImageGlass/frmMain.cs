@@ -36,6 +36,7 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
+using System.Globalization;
 
 namespace ImageGlass
 {
@@ -1317,7 +1318,8 @@ namespace ImageGlass
             mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
             //Load Zoom lock value
-            int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"));
+            int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
+
             GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
             mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
             GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;            
@@ -1354,8 +1356,9 @@ namespace ImageGlass
             Application.DoEvents();
 
             //Load background---------------------------------------------------------------
-            configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString());
-            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2));
+            configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+            
+            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2, GlobalSetting.NumberFormat));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
             //Load scrollbars visibility-----------------------------------------------------
@@ -1467,7 +1470,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
 
             //Lock zoom ratio
-            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.IsEnabledZoomLock) ? GlobalSetting.ZoomLockValue.ToString() : "-1");
+            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.IsEnabledZoomLock) ? GlobalSetting.ZoomLockValue.ToString(GlobalSetting.NumberFormat) : "-1");
 
             //Thumbnail panel
             GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
@@ -1477,7 +1480,7 @@ namespace ImageGlass
 
             //Save thumbnail bar width
             GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
-            GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString());
+            GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))

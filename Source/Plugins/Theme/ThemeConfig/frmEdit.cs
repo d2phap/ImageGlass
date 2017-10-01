@@ -226,8 +226,8 @@ namespace ThemeConfig
                 n.SetAttribute("topbar", toolMain.Tag.ToString());
                 n.SetAttribute("topbartransparent", "0");
                 n.SetAttribute("bottombar", panThumbnail.Tag.ToString());
-                n.SetAttribute("backcolor", this.BackColor.ToArgb().ToString());
-                n.SetAttribute("statuscolor", btnStatus.ForeColor.ToArgb().ToString());
+                n.SetAttribute("backcolor", this.BackColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+                n.SetAttribute("statuscolor", btnStatus.ForeColor.ToArgb().ToString(GlobalSetting.NumberFormat));
                 nType.AppendChild(n);
 
                 n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
