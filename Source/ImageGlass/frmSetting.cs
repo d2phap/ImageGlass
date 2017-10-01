@@ -632,7 +632,13 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
+            
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -640,7 +646,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -648,7 +659,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

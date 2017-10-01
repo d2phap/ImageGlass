@@ -165,3 +165,4 @@ Source/.vs/ImageGlass.sqlite
 .vs/VSWorkspaceState.json
 Setup/ImageGlass_4.0.4.15.exe
 Setup/ImageGlass_4.1.7.26.exe
+*.ide
