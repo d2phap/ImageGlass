@@ -452,11 +452,11 @@ namespace ImageGlass.Theme
             try
             {
                 Theme th = new Theme(themePath);
-                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
             }
             catch
             {
-                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString(GlobalSetting.NumberFormat));
             }
         }
 

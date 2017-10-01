@@ -942,7 +942,7 @@ namespace ImageGlass
 
             //BackgroundColor
             GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
+            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
 
             #endregion
 
@@ -961,7 +961,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
 
             //ImageLoadingOrder
-            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
+            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString(GlobalSetting.NumberFormat));
             GlobalSetting.LoadImageOrderConfig();
 
             //IsMouseNavigation
@@ -970,7 +970,7 @@ namespace ImageGlass
 
             //ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
-            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString());
+            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
 
             //IsThumbnailHorizontal
             GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
@@ -981,10 +981,10 @@ namespace ImageGlass
 
             //ThumbnailDimension            
             int oldValue = GlobalSetting.ThumbnailDimension; //backup old value            
-            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString()); //Get new value
+            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); //Get new value
             if (GlobalSetting.ThumbnailDimension != oldValue) //Only change when the new value selected
             {
-                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
+                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString(GlobalSetting.NumberFormat));
 
                 //Request frmMain to update the thumbnail bar
                 LocalSetting.IsThumbnailDimensionChanged = true;
@@ -996,7 +996,7 @@ namespace ImageGlass
 
             //SlideShowInterval
             GlobalSetting.SlideShowInterval = barInterval.Value;
-            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString());
+            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
 
 
 

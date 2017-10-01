@@ -29,6 +29,7 @@ using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Linq;
+using System.Globalization;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -85,7 +86,8 @@ namespace ImageGlass.Services.Configuration
         private static bool _isScrollbarsVisible = false;
         private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
-
+        private static NumberFormatInfo numFormat = new NumberFormatInfo();
+        
 
 
         #region "Properties"
@@ -546,7 +548,20 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsScrollbarsVisible { get => _isScrollbarsVisible; set => _isScrollbarsVisible = value; }
 
-        
+        /// <summary>
+        /// Default number format for ImageGlass
+        /// </summary>
+        public static NumberFormatInfo NumberFormat {
+            get
+            {
+                var newFormat = new NumberFormatInfo();
+                newFormat.NegativeSign = "-";
+                return newFormat;
+            }
+            set => numFormat = value;
+        }
+
+
 
 
 
