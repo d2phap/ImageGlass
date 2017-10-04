@@ -25,6 +25,7 @@ namespace ImageGlass
         private static frmFacebook _fFacebook = new frmFacebook();
         private static frmSetting _fSetting = new frmSetting();
         private static frmExtension _fExtension = new frmExtension();
+        private static frmColorPicker _fColorPicker = new frmColorPicker();
         private static string _imageModifiedPath = "";
         private static bool _isResetScrollPosition = true;
         private static Theme.Theme _theme = new Theme.Theme();
@@ -56,6 +57,15 @@ namespace ImageGlass
         {
             get { return _fExtension; }
             set { _fExtension = value; }
+        }
+
+        /// <summary>
+        /// Form frmColorPicker
+        /// </summary>
+        public static frmColorPicker FColorPicker
+        {
+            get { return _fColorPicker; }
+            set { _fColorPicker = value; }
         }
 
         /// <summary>

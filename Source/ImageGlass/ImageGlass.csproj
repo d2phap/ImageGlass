@@ -159,6 +159,12 @@
     <Compile Include="frmAddNewFormat.Designer.cs">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmColorPicker.Designer.cs">
+      <DependentUpon>frmColorPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEditEditingAssocisation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAddNewFormat.resx">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmColorPicker.resx">
+      <DependentUpon>frmColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditEditingAssocisation.resx">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
