@@ -1390,9 +1390,18 @@ namespace ImageGlass
             //Get the greater width value
             GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
             
-
             //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
             GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
+
+            //Load vertical thumbnail bar width
+            if (GlobalSetting.IsThumbnailHorizontal == false)
+            {
+                int vtb_width;
+                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
+                {
+                    GlobalSetting.ThumbnailBarWidth = vtb_width;
+                }
+            }
 
             //Load state of Thumbnail---------------------------------------------------------
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
@@ -1480,6 +1489,12 @@ namespace ImageGlass
             //Save thumbnail bar width
             GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
             GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
+
+            // Save vertical thumbnail bar width
+            if (GlobalSetting.IsThumbnailHorizontal == false)
+            {
+                GlobalSetting.SetConfig("ThumbnailBarWidth", (sp1.Width - sp1.SplitterDistance).ToString(GlobalSetting.NumberFormat));
+            }
 
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -2952,8 +2967,7 @@ namespace ImageGlass
                     sp1.IsSplitterFixed = false; //Allow user to resize
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
-                    //sp1.SplitterDistance = sp1.Width - Math.Max(GlobalSetting.ThumbnailBarWidth, sp1.Panel2MinSize);
-                    sp1.SplitterDistance = sp1.Width - minSize;
+                    sp1.SplitterDistance = sp1.Width - GlobalSetting.ThumbnailBarWidth;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }
