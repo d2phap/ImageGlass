@@ -42,6 +42,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;
         private static bool _isRecursiveLoading = false;
+        private static bool _isShowingHiddenImages = false;
         private static StringCollection _stringClipboard = new StringCollection();
         private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
@@ -144,6 +145,15 @@ namespace ImageGlass.Services.Configuration
         {
             get { return GlobalSetting._isRecursiveLoading; }
             set { GlobalSetting._isRecursiveLoading = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets showing/loading hidden images
+        /// </summary>
+        public static bool IsShowingHiddenImages
+        {
+            get => _isShowingHiddenImages;
+            set => _isShowingHiddenImages = value;
         }
 
         /// <summary>

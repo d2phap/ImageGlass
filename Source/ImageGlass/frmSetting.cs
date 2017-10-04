@@ -235,6 +235,7 @@ namespace ImageGlass
             //Image tab
             lblHeadImageLoading.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageLoading"];//
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            chkShowHiddenImages.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowHiddenImages"];
             chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
@@ -437,7 +438,10 @@ namespace ImageGlass
         private void LoadTabImageConfig()
         {
             //Get value of chkFindChildFolder ---------------------------------------------
-            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;            
+            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
+
+            //Get value of chkShowHiddenImages
+            chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
 
             //Get value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
@@ -967,6 +971,10 @@ namespace ImageGlass
             //IsRecursiveLoading
             GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
             GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+
+            //IsShowingHiddenImages
+            GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;
+            GlobalSetting.SetConfig("IsShowingHiddenImages", GlobalSetting.IsShowingHiddenImages.ToString());
 
             //IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
