@@ -2381,7 +2381,7 @@ namespace ImageGlass
                 FormBorderStyle = FormBorderStyle.Sizable;
 
                 //windows state
-                string state_str = GlobalSetting.GetConfig($"{Name}WindowsState", "Normal");
+                string state_str = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
                 if (state_str == "Normal")
                 {
                     WindowState = FormWindowState.Normal;
