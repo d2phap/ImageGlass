@@ -258,6 +258,16 @@ namespace ImageGlass
                     Application.DoEvents();
 
                     string extension = Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
+                    // checks if image is hidden and ignores it if so
+                    if (GlobalSetting.IsShowingHiddenImages == false)
+                    {
+                        var attributes = File.GetAttributes(f);
+                        var isHidden = attributes.HasFlag(FileAttributes.Hidden);
+                        if (isHidden)
+                        {
+                            return false;
+                        }
+                    }
                     if (extension.Length > 0 && GlobalSetting.AllImageFormats.Contains(extension))
                     {
                         return true;
@@ -1292,6 +1302,9 @@ namespace ImageGlass
             //Recursive loading--------------------------------------------------------------
             GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
 
+            //Show hidden images------------------------------------------------------------
+            GlobalSetting.IsShowingHiddenImages = bool.Parse(GlobalSetting.GetConfig("IsShowingHiddenImages", "False"));
+            
             //Load is loop back slideshow---------------------------------------------------
             GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
 

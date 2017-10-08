@@ -441,6 +441,7 @@ namespace ImageGlass.Library
             #region Image loading
             Items.Add("frmSetting.lblHeadImageLoading", "Image loading"); //v4.0
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
+            Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
