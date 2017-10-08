@@ -79,7 +79,7 @@ namespace adtasks
                     }
                     else //style == "0"
                     {
-                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
+                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Current);
                     }
                 }
                 else

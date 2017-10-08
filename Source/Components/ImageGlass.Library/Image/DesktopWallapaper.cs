@@ -36,6 +36,10 @@ namespace ImageGlass.Library.Image
         public enum Style : int
         {
             /// <summary>
+            /// Current windows wallpaper style
+            /// </summary>
+            Current = -1,
+            /// <summary>
             /// 0
             /// </summary>
             Centered = 0,
