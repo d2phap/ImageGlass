@@ -1937,7 +1937,19 @@ namespace ImageGlass
                     break;
             }
         }
-        
+
+        private void toolMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (toolMain.PreferredSize.Width > toolMain.Size.Width)
+            {
+                btnMenu.Alignment = ToolStripItemAlignment.Left;
+            }
+            else
+            {
+                btnMenu.Alignment = ToolStripItemAlignment.Right;
+            }
+        }
+
         #endregion
 
 
