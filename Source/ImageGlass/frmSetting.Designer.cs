@@ -598,6 +598,7 @@
             this.chkPortableMode.TabIndex = 7;
             this.chkPortableMode.Text = "Enable Portable mode";
             this.chkPortableMode.UseVisualStyleBackColor = true;
+            this.chkPortableMode.Enabled = false;
             // 
             // panel1
             // 

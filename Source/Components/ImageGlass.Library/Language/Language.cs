@@ -420,7 +420,9 @@ namespace ImageGlass.Library
 
             #region Portable mode
             Items.Add("frmSetting.lblHeadPortableMode", "Portable mode"); //v4.0
-            Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //v4.0
+            //Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //remove v4.0
+            Items.Add("frmSetting.chkPortableMode._Enabled", "Portable mode is enable"); //v4.5
+            Items.Add("frmSetting.chkPortableMode._Disabled", "Portable mode is disabled on the installed folder:\r\n{0}"); //v4.5
             #endregion
 
 

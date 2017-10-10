@@ -222,7 +222,16 @@ namespace ImageGlass
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
 
             lblHeadPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadPortableMode"];//
-            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
+            if (GlobalSetting.IsPortableMode)
+            {
+                chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Enabled"];
+            }
+            else
+            {
+                chkPortableMode.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
+                chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
+            }
+            
 
             lblHeadOthers.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadOthers"];//
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
@@ -377,10 +386,6 @@ namespace ImageGlass
 
             //Get Portable mode value -----------------------------------------------------------
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
-            if (!GlobalSetting.CheckStartUpDirWritable())
-            {
-                chkPortableMode.Enabled = false;
-            }
 
             //Get value of cmbAutoUpdate --------------------------------------------------------
             string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
@@ -926,13 +931,6 @@ namespace ImageGlass
             //IsShowToolBar
             GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
-
-            //IsPortableMode
-            GlobalSetting.IsPortableMode = chkPortableMode.Checked;            
-            if (Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1) // Check if user ia using temporary Portable mode from param
-            {
-                GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
-            }
 
             //AutoUpdate
             if (chkAutoUpdate.Checked)
