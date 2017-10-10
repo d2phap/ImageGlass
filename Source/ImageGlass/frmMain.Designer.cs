@@ -223,6 +223,7 @@
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolMain.Size = new System.Drawing.Size(920, 60);
             this.toolMain.TabIndex = 1;
+            this.toolMain.SizeChanged += new System.EventHandler(this.toolMain_SizeChanged);
             // 
             // btnBack
             // 
@@ -610,6 +611,7 @@
             this.btnMenu.ShowDropDownArrow = false;
             this.btnMenu.Size = new System.Drawing.Size(33, 33);
             this.btnMenu.Text = "Menu (Hotkey: `)";
+            this.btnMenu.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // mnuMain
             // 
