@@ -1111,7 +1111,7 @@ namespace ImageGlass
             var themeConfigFile = GlobalSetting.GetConfig("Theme", "default");
             if (!File.Exists(themeConfigFile))
             {
-                themeConfigFile = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+                themeConfigFile = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
             }
 
             Theme.Theme t = new Theme.Theme(themeConfigFile);

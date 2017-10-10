@@ -93,7 +93,7 @@ namespace ImageGlass.Theme
         {
             if (!File.Exists(file))
             {
-                file = Path.Combine(GlobalSetting.StartUpDir, @"DefautTheme\config.xml");
+                file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
             }
 
             string dir = Path.GetDirectoryName(file);
