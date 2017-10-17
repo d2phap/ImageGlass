@@ -46,6 +46,7 @@ namespace ImageGlass.Theme
         public ThemeImage ViewPreviousImage { get; set; }
         public ThemeImage ZoomIn { get; set; }
         public ThemeImage ZoomOut { get; set; }
+        public ThemeImage ZoomToFit { get; set; }
 
         /// <summary>
         /// Icon collection for the theme
@@ -77,6 +78,7 @@ namespace ImageGlass.Theme
             ViewPreviousImage = new ThemeImage();
             ZoomIn = new ThemeImage();
             ZoomOut = new ThemeImage();
+            ZoomToFit = new ThemeImage();
         }
     }
 

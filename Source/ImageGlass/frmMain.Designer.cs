@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +39,7 @@
             this.btnRotateRight = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomToFit = new System.Windows.Forms.ToolStripButton();
             this.btnActualSize = new System.Windows.Forms.ToolStripButton();
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.btnScaletoWidth = new System.Windows.Forms.ToolStripButton();
@@ -194,6 +195,7 @@
             this.btnRotateRight,
             this.btnZoomIn,
             this.btnZoomOut,
+            this.btnZoomToFit,
             this.btnActualSize,
             this.btnZoomLock,
             this.btnScaletoWidth,
@@ -317,6 +319,22 @@
             this.btnZoomOut.Size = new System.Drawing.Size(33, 33);
             this.btnZoomOut.ToolTipText = "Zoom out (Ctrl + -)";
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomToFit
+            // 
+            this.btnZoomToFit.AutoSize = false;
+            this.btnZoomToFit.BackColor = System.Drawing.Color.Transparent;
+            this.btnZoomToFit.CheckOnClick = true;
+            this.btnZoomToFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToFit.Image = global::ImageGlass.Properties.Resources.zoomlock;
+            this.btnZoomToFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnZoomToFit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToFit.Margin = new System.Windows.Forms.Padding(0);
+            this.btnZoomToFit.Name = "btnZoomToFit";
+            this.btnZoomToFit.Size = new System.Drawing.Size(33, 33);
+            this.btnZoomToFit.Tag = "";
+            this.btnZoomToFit.ToolTipText = "Zoom to fit";
+            this.btnZoomToFit.Click += new System.EventHandler(this.btnZoomToFit_Click);
             // 
             // btnActualSize
             // 
@@ -608,10 +626,10 @@
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.btnMenu.ShowDropDownArrow = false;
             this.btnMenu.Size = new System.Drawing.Size(33, 33);
             this.btnMenu.Text = "Menu (Hotkey: `)";
-            this.btnMenu.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             // 
             // mnuMain
             // 
@@ -640,7 +658,6 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mnuMain.Size = new System.Drawing.Size(409, 554);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
@@ -962,7 +979,7 @@
             this.mnuMainZoomToFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainZoomToFit.Name = "mnuMainZoomToFit";
             this.mnuMainZoomToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "";
+            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "Ctrl+/";
             this.mnuMainZoomToFit.Size = new System.Drawing.Size(584, 31);
             this.mnuMainZoomToFit.Text = "Zoom to &fit";
             this.mnuMainZoomToFit.Click += new System.EventHandler(this.mnuMainZoomToFit_Click);
@@ -1395,7 +1412,7 @@
             this.lblInfo.BackColor = System.Drawing.Color.Transparent;
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(0, 57);
+            this.lblInfo.Size = new System.Drawing.Size(0, 0);
             // 
             // sp0
             // 
@@ -1454,7 +1471,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
@@ -1479,6 +1496,7 @@
             // 
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1545,6 +1563,7 @@
         private System.Windows.Forms.ToolStripButton btnRotateRight;
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
+        private System.Windows.Forms.ToolStripButton btnZoomToFit;
         private System.Windows.Forms.ToolStripButton btnActualSize;
         private System.Windows.Forms.ToolStripButton btnScaletoWidth;
         private System.Windows.Forms.ToolStripButton btnScaletoHeight;

@@ -233,6 +233,13 @@ namespace ImageGlass.Theme
 
             try
             {
+                var iconFile = Path.Combine(dir, n.GetAttribute("zoomtofit"));
+                ToolbarIcons.ZoomToFit = new ThemeImage(iconFile, iconHeight, iconHeight);
+            }
+            catch (Exception ex) { };
+
+            try
+            {
                 var iconFile = Path.Combine(dir, n.GetAttribute("scaletofit"));
                 ToolbarIcons.ActualSize = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
@@ -406,6 +413,7 @@ namespace ImageGlass.Theme
             n.SetAttribute("rightrotate", Path.GetFileName(ToolbarIcons.RotateRight.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
+            n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ZoomToFit.Filename));
             n.SetAttribute("zoomlock", Path.GetFileName(ToolbarIcons.LockRatio.Filename));
             n.SetAttribute("scaletofit", Path.GetFileName(ToolbarIcons.ActualSize.Filename));
             n.SetAttribute("scaletowidth", Path.GetFileName(ToolbarIcons.ScaleToWidth.Filename));

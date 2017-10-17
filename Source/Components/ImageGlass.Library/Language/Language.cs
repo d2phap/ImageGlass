@@ -240,6 +240,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
+            Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");

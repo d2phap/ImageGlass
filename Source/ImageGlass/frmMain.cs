@@ -627,7 +627,17 @@ namespace ImageGlass
                 return;
             }
             #endregion
-            
+
+
+            //Zoom to fit--------------------------------------------------------------------
+            #region CTRL + `
+            if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
+            {
+                mnuMainZoomToFit_Click(null, null);
+                return;
+            }
+            #endregion
+
 
             //Actual size image -------------------------------------------------------------
             #region Ctrl + 0 / Ctrl + Num0 / 0 / Num0
@@ -1192,6 +1202,7 @@ namespace ImageGlass
             btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
+            btnZoomToFit.Image = t.ToolbarIcons.ZoomToFit.Image;
             btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
             btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
             btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
@@ -1327,7 +1338,7 @@ namespace ImageGlass
 
             //Load Zoom to Fit value---------------------------------------------------------
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
-            mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
+            btnZoomToFit.Checked = mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
             //Load Zoom lock value
             int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
@@ -1665,6 +1676,7 @@ namespace ImageGlass
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
                 btnZoomIn.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomIn"];
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomOut"];
+                btnZoomToFit.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomToFit"];
                 btnActualSize.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnActualSize"];
                 btnZoomLock.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomLock"];
                 btnScaletoWidth.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnScaletoWidth"];
@@ -2028,6 +2040,11 @@ namespace ImageGlass
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
             mnuMainZoomOut_Click(null, e);
+        }
+
+        private void btnZoomToFit_Click(object sender, EventArgs e)
+        {
+            mnuMainZoomToFit_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
@@ -2615,7 +2632,15 @@ namespace ImageGlass
 
         private void mnuMainZoomToFit_Click(object sender, EventArgs e)
         {
-            GlobalSetting.IsZoomToFit = mnuMainZoomToFit.Checked;
+            if (!GlobalSetting.IsZoomToFit)
+            {
+                GlobalSetting.IsZoomToFit = btnZoomToFit.Checked = mnuMainZoomToFit.Checked = true;
+            }
+            else
+            {
+                GlobalSetting.IsZoomToFit = btnZoomToFit.Checked = mnuMainZoomToFit.Checked = false;
+            }
+
             mnuMainRefresh_Click(null, null);
         }
 
@@ -3112,6 +3137,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
 
 
