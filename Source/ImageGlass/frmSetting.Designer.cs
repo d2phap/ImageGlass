@@ -78,6 +78,7 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.chkShowHiddenImages = new System.Windows.Forms.CheckBox();
             this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
             this.btnEditEditExt = new System.Windows.Forms.Button();
@@ -117,7 +118,8 @@
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkShowHiddenImages = new System.Windows.Forms.CheckBox();
+            this.chkSaveOnRotate = new System.Windows.Forms.CheckBox();
+            this.lblSelectAppForEdit = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -591,6 +593,7 @@
             // chkPortableMode
             // 
             this.chkPortableMode.AutoSize = true;
+            this.chkPortableMode.Enabled = false;
             this.chkPortableMode.Location = new System.Drawing.Point(30, 131);
             this.chkPortableMode.Margin = new System.Windows.Forms.Padding(1);
             this.chkPortableMode.Name = "chkPortableMode";
@@ -598,7 +601,6 @@
             this.chkPortableMode.TabIndex = 7;
             this.chkPortableMode.Text = "Enable Portable mode";
             this.chkPortableMode.UseVisualStyleBackColor = true;
-            this.chkPortableMode.Enabled = false;
             // 
             // panel1
             // 
@@ -706,6 +708,8 @@
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.lblSelectAppForEdit);
+            this.tabImage.Controls.Add(this.chkSaveOnRotate);
             this.tabImage.Controls.Add(this.chkShowHiddenImages);
             this.tabImage.Controls.Add(this.btnEditEditAllExt);
             this.tabImage.Controls.Add(this.btnEditResetExt);
@@ -741,11 +745,22 @@
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
+            // chkShowHiddenImages
+            // 
+            this.chkShowHiddenImages.AutoSize = true;
+            this.chkShowHiddenImages.Location = new System.Drawing.Point(30, 57);
+            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(1);
+            this.chkShowHiddenImages.Name = "chkShowHiddenImages";
+            this.chkShowHiddenImages.Size = new System.Drawing.Size(136, 19);
+            this.chkShowHiddenImages.TabIndex = 48;
+            this.chkShowHiddenImages.Text = "Show hidden images";
+            this.chkShowHiddenImages.UseVisualStyleBackColor = true;
+            // 
             // btnEditEditAllExt
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(272, 858);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(289, 858);
             this.btnEditEditAllExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(146, 25);
@@ -806,13 +821,13 @@
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(30, 658);
+            this.lvImageEditing.Location = new System.Drawing.Point(30, 705);
             this.lvImageEditing.Margin = new System.Windows.Forms.Padding(2);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(388, 191);
+            this.lvImageEditing.Size = new System.Drawing.Size(405, 144);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1234,16 +1249,26 @@
             this.panel4.Size = new System.Drawing.Size(625, 48);
             this.panel4.TabIndex = 18;
             // 
-            // chkShowHiddenImages
+            // chkSaveOnRotate
             // 
-            this.chkShowHiddenImages.AutoSize = true;
-            this.chkShowHiddenImages.Location = new System.Drawing.Point(30, 57);
-            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(1);
-            this.chkShowHiddenImages.Name = "chkShowHiddenImages";
-            this.chkShowHiddenImages.Size = new System.Drawing.Size(136, 19);
-            this.chkShowHiddenImages.TabIndex = 48;
-            this.chkShowHiddenImages.Text = "Show hidden images";
-            this.chkShowHiddenImages.UseVisualStyleBackColor = true;
+            this.chkSaveOnRotate.AutoSize = true;
+            this.chkSaveOnRotate.Location = new System.Drawing.Point(30, 660);
+            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(1);
+            this.chkSaveOnRotate.Name = "chkSaveOnRotate";
+            this.chkSaveOnRotate.Size = new System.Drawing.Size(222, 19);
+            this.chkSaveOnRotate.TabIndex = 49;
+            this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
+            this.chkSaveOnRotate.UseVisualStyleBackColor = true;
+            // 
+            // lblSelectAppForEdit
+            // 
+            this.lblSelectAppForEdit.AutoSize = true;
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(27, 688);
+            this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
+            this.lblSelectAppForEdit.Size = new System.Drawing.Size(197, 15);
+            this.lblSelectAppForEdit.TabIndex = 50;
+            this.lblSelectAppForEdit.Text = "Select application for image editing:";
             // 
             // frmSetting
             // 
@@ -1375,5 +1400,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.CheckBox chkShowHiddenImages;
+        private System.Windows.Forms.Label lblSelectAppForEdit;
+        private System.Windows.Forms.CheckBox chkSaveOnRotate;
     }
 }

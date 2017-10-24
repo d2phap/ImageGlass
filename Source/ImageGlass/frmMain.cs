@@ -1443,6 +1443,9 @@ namespace ImageGlass
             //Get IsConfirmationDelete value --------------------------------------------------
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
 
+            //Get IsSaveAfterRotating value --------------------------------------------------
+            GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
+
             //Get ImageEditingAssociationList ------------------------------------------------------
             configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
             string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -2581,13 +2584,14 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
             picMain.Image = bmp;
 
-            /*
+
             try
             {
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
-            */
+
         }
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
@@ -2601,13 +2605,12 @@ namespace ImageGlass
             bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
             picMain.Image = bmp;
 
-            /*
             try
             {
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageFilenameList[GlobalSetting.CurrentIndex];
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
-            */
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)

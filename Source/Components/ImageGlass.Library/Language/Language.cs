@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "4.1.0.0";
+            _minVersion = "4.5.10.30";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -485,10 +485,12 @@ namespace ImageGlass.Library
 
             #region Image editing
             Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
+            Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
             Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
-            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.x
-            Items.Add("frmSetting._allExtensions", "all extensions"); //v4.x
+            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.1
+            Items.Add("frmSetting._allExtensions", "all extensions"); //v4.1
             Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0

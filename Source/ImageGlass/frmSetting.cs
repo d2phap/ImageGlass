@@ -263,6 +263,8 @@ namespace ImageGlass
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
             lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
+            chkSaveOnRotate.Text = GlobalSetting.LangPack.Items["frmSetting.chkSaveOnRotate"];
+            lblSelectAppForEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lblSelectAppForEdit"];
             btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
             btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
             btnEditEditAllExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditAllExt"];
@@ -491,6 +493,9 @@ namespace ImageGlass
             //Get value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+
+            //Get value of IsSaveAfterRotating
+            chkSaveOnRotate.Checked = GlobalSetting.IsSaveAfterRotating;
 
             //Load Image Editing extension list
             LoadImageEditingAssociationList();
@@ -1020,7 +1025,9 @@ namespace ImageGlass
             GlobalSetting.SlideShowInterval = barInterval.Value;
             GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
 
-
+            //IsSaveAfterRotating
+            GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
+            GlobalSetting.SetConfig("IsSaveAfterRotating", GlobalSetting.IsSaveAfterRotating.ToString());
 
             #endregion
 
@@ -1035,5 +1042,7 @@ namespace ImageGlass
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
+
+        
     }
 }

@@ -88,7 +88,7 @@ namespace ImageGlass.Services.Configuration
         private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
         private static NumberFormatInfo numFormat = new NumberFormatInfo();
-        
+        private static bool _isSaveAfterRotating = false;
 
 
         #region "Properties"
@@ -570,6 +570,11 @@ namespace ImageGlass.Services.Configuration
             }
             set => numFormat = value;
         }
+
+        /// <summary>
+        /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
+        /// </summary>
+        public static bool IsSaveAfterRotating { get => _isSaveAfterRotating; set => _isSaveAfterRotating = value; }
 
 
 
