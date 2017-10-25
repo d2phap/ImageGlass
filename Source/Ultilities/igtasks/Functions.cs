@@ -134,8 +134,9 @@ namespace igtasks
         /// <summary>
         /// Delete registry association of ImageGlass
         /// </summary>
+        /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
         /// <param name="deleteAllKeys">TRUE: delete all keys</param>
-        public static void DeleteRegistryAssociations(bool deleteAllKeys = false)
+        public static void DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
         {
             RegistryHelper reg = new RegistryHelper();
             reg.ShowError = true;
@@ -145,8 +146,6 @@ namespace igtasks
             reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
             if (!reg.DeleteSubKeyTree()) return;
 
-            reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile";
-            if (!reg.DeleteSubKeyTree()) return;
 
             if (deleteAllKeys)
             {
@@ -154,6 +153,14 @@ namespace igtasks
                 if (!reg.DeleteKey("ImageGlass")) return;
 
                 reg.SubKey = @"SOFTWARE\PhapSoftware";
+                if (!reg.DeleteSubKeyTree()) return;
+            }
+
+
+            var extList = exts.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in extList)
+            {
+                reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile" + ext.ToUpper();
                 if (!reg.DeleteSubKeyTree()) return;
             }
         }
@@ -164,7 +171,7 @@ namespace igtasks
         /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
         public static void SetRegistryAssociations(string extensions)
         {
-            DeleteRegistryAssociations();
+            DeleteRegistryAssociations(extensions);
 
             RegistryHelper reg = new RegistryHelper();
             reg.ShowError = true;
@@ -181,24 +188,37 @@ namespace igtasks
             if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer")) return;
 
             // Register File Associations
-            reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
             var extList = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            Parallel.ForEach(extList, (ext) =>
+
+            foreach (var ext in extList)
             {
-                if (!reg.Write(ext, "ImageGlass.AssocFile")) return;
-            });
+                var keyname = "ImageGlass.AssocFile" + ext.ToUpper();
 
-            // Config the File Associations - Icon
-            reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile\DefaultIcon";
-            if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\", 0")) return;
+                reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
+                if (!reg.Write(ext, keyname)) return;
 
-            // Config the File Associations - Friendly App Name
-            reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile\shell\open";
-            if (!reg.Write("FriendlyAppName", "ImageGlass")) return;
+                // Config the File Associations - Icon
+                var iconPath = Path.Combine(GlobalSetting.StartUpDir, @"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
+                if (!File.Exists(iconPath))
+                {
+                    iconPath = Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe");
+                }
 
-            // Config the File Associations - Command
-            reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile\shell\open\command";
-            if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\"")) return;
+                reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
+                if (!reg.Write("", $"\"{iconPath}\", 0")) return;
+
+                // Config the File Associations - Friendly App Name
+                reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
+                if (!reg.Write("FriendlyAppName", "ImageGlass")) return;
+
+                // Config the File Associations - Command
+                reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
+                if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\"")) return;
+            }
+
+            
+
+            
         }
 
     }
