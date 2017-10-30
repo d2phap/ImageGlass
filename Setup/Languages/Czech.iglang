@@ -1,0 +1,221 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="cz-CZ" langName="Čeština" author="ImageGlass community" description="Czech" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="Výchozí formáty" />
+      <Item key="_.ImageFormatGroup.Optional" value="Volitelné formáty" />
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass nemůže tento obrázek otevřít, protože soubor je pravděpodobně poškozen nebo není podporován." />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
+      <Item key="frmMain.btnBack" value="Přejít na předchozí obrázek (šipka vlevo / PageUp)" />
+      <Item key="frmMain.btnNext" value="Přejít na další obrázek (šipka vpravo / PageDown)" />
+      <Item key="frmMain.btnRotateLeft" value="Otočit doleva (Ctrl +,)" />
+      <Item key="frmMain.btnRotateRight" value="Otočit doprava (Ctrl +.)" />
+      <Item key="frmMain.btnZoomIn" value="Přiblížit (Ctrl + =)" />
+      <Item key="frmMain.btnZoomOut" value="Oddálit (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
+      <Item key="frmMain.btnActualSize" value="Skutečná velikost (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="Zamknout poměr přiblížení (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="Přizpůsobit šířce okna (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="Přizpůsobit výšce okna (Ctrl + W)" />
+      <Item key="frmMain.btnWindowAutosize" value="Přizpůsobit okno skutečné velikosti obrazu (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="Otevřít soubor (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="Obnovit (F5)" />
+      <Item key="frmMain.btnGoto" value="Přejít na... (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="Zobrazit náhledy (Ctrl + T)" />
+      <Item key="frmMain.btnCaro" value="Zobrazit šachovnici na pozadí (Ctrl + B)" />
+      <Item key="frmMain.btnFullScreen" value="Celá obrazovka (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="Spustit prezentaci (F11, ESC ukončit)" />
+      <Item key="frmMain.btnConvert" value="Převést obrázek (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="Vytisknout obrázek (Ctrl + P)" />
+      <Item key="frmMain.btnFacebook" value="Nahrát na Facebook (Ctrl + U)" />
+      <Item key="frmMain.btnExtension" value="Správce rozšíření (Ctrl + Shift + E)" />
+      <Item key="frmMain.btnSetting" value="Nastavení ImageGlass (Ctrl + Shift + P)" />
+      <Item key="frmMain.btnHelp" value="Nápověda (F1)" />
+      <Item key="frmMain.btnMenu" value="Menu (Klávesová zkratka: &quot;)" />
+      <Item key="frmMain.mnuMainOpenFile" value="Otevřít soubor" />
+      <Item key="frmMain.mnuMainOpenImageData" value="Otevřít obrázek ze schránky" />
+      <Item key="frmMain.mnuMainSaveAs" value="Uložit obrázek jako..." />
+      <Item key="frmMain.mnuMainRefresh" value="Obnovit" />
+      <Item key="frmMain.mnuMainEditImage" value="Upravit obrázek {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="Navigace" />
+      <Item key="frmMain.mnuMainViewNext" value="Zobrazit další obrázek" />
+      <Item key="frmMain.mnuMainViewPrevious" value="Zobrazit předchozí obrázek" />
+      <Item key="frmMain.mnuMainGoto" value="Přejít na..." />
+      <Item key="frmMain.mnuMainGotoFirst" value="Přejít na první obrázek" />
+      <Item key="frmMain.mnuMainGotoLast" value="Přejít na poslední obrázek" />
+      <Item key="frmMain.mnuMainFullScreen" value="Celá obrazovka" />
+      <Item key="frmMain.mnuMainSlideShow" value="Prezentace" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="Spustit prezentaci" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pozastavení / obnovení přehrávání prezentace" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="Konec prezentace" />
+      <Item key="frmMain.mnuMainPrint" value="Tisk" />
+      <Item key="frmMain.mnuMainManipulation" value="Manipulace" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="Otočit doleva" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="Otočit doprava" />
+      <Item key="frmMain.mnuMainZoomIn" value="Přiblížit" />
+      <Item key="frmMain.mnuMainZoomOut" value="Oddálit" />
+      <Item key="frmMain.mnuMainZoomToFit" value="Přizpůsobit oknu" />
+      <Item key="frmMain.mnuMainActualSize" value="Skutečná velikost" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Zamknout poměr přiblížení" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="Přizpůsobit šířce okna" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="Přizpůsobit výšce okna" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="Přizpůsobit okno skutečné velikosti obrazu" />
+      <Item key="frmMain.mnuMainRename" value="Přejmenovat obrázek" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Přesunout do koše" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Odstranit z pevného disku" />
+      <Item key="frmMain.mnuMainExtractFrames" value="Extrahovat snímky z obrázku ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Spustit / Zastavit animaci obrázku" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Nastavit jako tapetu plochy" />
+      <Item key="frmMain.mnuMainImageLocation" value="Otevřít umístění obrázku" />
+      <Item key="frmMain.mnuMainImageProperties" value="Vlastnosti obrazu" />
+      <Item key="frmMain.mnuMainClipboard" value="Schránka" />
+      <Item key="frmMain.mnuMainCopy" value="Kopírovat" />
+      <Item key="frmMain.mnuMainCopyMulti" value="Zkopírovat více souborů" />
+      <Item key="frmMain.mnuMainCut" value="Vyjmout" />
+      <Item key="frmMain.mnuMainCutMulti" value="Vyjmout více souborů" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopírovat cestu k souboru" />
+      <Item key="frmMain.mnuMainClearClipboard" value="Vyčistit schránku" />
+      <Item key="frmMain.mnuMainShare" value="Sdílet..." />
+      <Item key="frmMain.mnuMainShareFacebook" value="Nahrát na Facebook" />
+      <Item key="frmMain.mnuMainLayout" value="Rozložení" />
+      <Item key="frmMain.mnuMainToolbar" value="Panel nástrojů" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panel náhledů" />
+      <Item key="frmMain.mnuMainCheckBackground" value="Šachovnicové pozadí" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Okno vždy navrchu" />
+      <Item key="frmMain.mnuMainTools" value="Nástroje" />
+      <Item key="frmMain.mnuMainExtensionManager" value="Správce rozšíření" />
+      <Item key="frmMain.mnuMainSettings" value="Nastavení" />
+      <Item key="frmMain.mnuMainAbout" value="O aplikaci" />
+      <Item key="frmMain.mnuMainReportIssue" value="Nahlásit chybu" />
+      <Item key="frmMain._OpenFileDialog" value="Všechny podporované soubory" />
+      <Item key="frmMain._Text" value="soubor(y)" />
+      <Item key="frmMain._RenameDialogText" value="Přejmenovat" />
+      <Item key="frmMain._RenameDialog" value="Zadejte nový název souboru" />
+      <Item key="frmMain._GotoDialogText" value="Zadejte pořadí obrázku a stiskněte {ENTER}" />
+      <Item key="frmMain._DeleteDialogText" value="Smazat soubor {0}?" />
+      <Item key="frmMain._DeleteDialogTitle" value="Potvrdit" />
+      <Item key="frmMain._ExtractFrameText" value="Extrahování snímků ze souboru. Vyberte prosím cílovou složku." />
+      <Item key="frmMain._FullScreenMessage" value="Stiskněte klávesy ALT + ENTER, chcete-li ukončit režim celé obrazovky. &#xA; nebo CTRL + F1 pro zobrazení menu." />
+      <Item key="frmMain._SlideshowMessage" value="Stisknutím klávesy ESC ukončíte prezentaci. &#xA; klepněte pravým tlačítkem myši pro otevření místní nabídky." />
+      <Item key="frmMain._SlideshowMessagePause" value="Prezentace je pozastavena" />
+      <Item key="frmMain._SlideshowMessageResume" value="Prezentace je obnovena" />
+      <Item key="frmMain._CopyFileText" value="Zkopírováno {0} souborů." />
+      <Item key="frmMain._CutFileText" value="Vyjmout {0} souborů." />
+      <Item key="frmMain._ClearClipboard" value="Schránka byla vyčištěna." />
+      <Item key="frmMain._SaveChanges" value="Ukládání změn..." />
+      <Item key="frmMain._Loading" value="Nahrávání..." />
+      <Item key="frmMain._FirstItemOfList" value="Dosaženo prvního obrázku" />
+      <Item key="frmMain._LastItemOfList" value="Dosaženo posledního obrázku" />
+      <Item key="frmExtension._Text" value="Správce rozšíření" />
+      <Item key="frmExtension.btnGetMoreExt" value="Získat další rozšíření" />
+      <Item key="frmExtension.btnRefreshAllExt" value="Obnovit" />
+      <Item key="frmExtension.btnInstallExt" value="Nainstalovat" />
+      <Item key="frmExtension.btnClose" value="Zavřít" />
+      <Item key="frmFacebook.lblMessage" value="Zpráva" />
+      <Item key="frmFacebook.btnUpload._Upload" value="Nahrát" />
+      <Item key="frmFacebook.btnUpload._Cancel" value="Zrušit" />
+      <Item key="frmFacebook.btnUpload._ViewImage" value="Zobrazit obrázek" />
+      <Item key="frmFacebook.btnClose" value="Zavřít" />
+      <Item key="frmFacebook._StatusBegin" value="Klikněte na '{0}' pro zahájení" />
+      <Item key="frmFacebook._StatusInvalid" value="Neplatný název souboru" />
+      <Item key="frmFacebook._StatusUploading" value="Nahrávání..." />
+      <Item key="frmFacebook._StatusCancel" value="Zrušeno" />
+      <Item key="frmFacebook._StatusSuccessful" value="Dokončeno" />
+      <Item key="frmFaceBookLogin._Text" value="Přihlašování na Facebook..." />
+      <Item key="frmAbout.lblSlogant" value="Lehký, univerzální prohlížeč obrázků" />
+      <Item key="frmAbout.lblInfo" value="Informace" />
+      <Item key="frmAbout.lblComponent" value="Součásti" />
+      <Item key="frmAbout.lblReferences" value="Zdroje" />
+      <Item key="frmAbout.lblVersion" value="Verze: {0}" />
+      <Item key="frmAbout.lblInfoContact" value="Kontakt" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="Aktualizace softwaru" />
+      <Item key="frmAbout.lnkCheckUpdate" value="Zkontrolovat aktualizace" />
+      <Item key="frmAbout._Text" value="O aplikaci" />
+      <Item key="frmAbout._PortableText" value="[Portable]" />
+      <Item key="frmSetting._Text" value="Nastavení" />
+      <Item key="frmSetting.btnSave" value="Uložit" />
+      <Item key="frmSetting.btnCancel" value="Zrušit" />
+      <Item key="frmSetting.btnApply" value="Použít" />
+      <Item key="frmSetting.lblGeneral" value="Obecné" />
+      <Item key="frmSetting.lblImage" value="Obrázek" />
+      <Item key="frmSetting.lblFileAssociations" value="Přiřazení souborů" />
+      <Item key="frmSetting.lblLanguage" value="Jazyk" />
+      <Item key="frmSetting.lblHeadStartup" value="Spuštění" />
+      <Item key="frmSetting.chkWelcomePicture" value="Zobrazit úvodní obrázek" />
+      <Item key="frmSetting.chkShowToolBar" value="Zobrazit panel nástrojů při spuštění" />
+      <Item key="frmSetting.lblHeadPortableMode" value="Přenosný režim" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadOthers" value="Ostatní" />
+      <Item key="frmSetting.chkAutoUpdate" value="Automatická kontrola aktualizací" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="Povolit více instancí programu" />
+      <Item key="frmSetting.chkESCToQuit" value="Povolit ukončení aplikace klávesou ESC" />
+      <Item key="frmSetting.chkConfirmationDelete" value="Zobrazit dialogové okno pro potvrzení odstranění" />
+      <Item key="frmSetting.chkShowScrollbar" value="Zobrazit posuvníky v prohlížeči" />
+      <Item key="frmSetting.lblBackGroundColor" value="Barva pozadí" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Výchozí" />
+      <Item key="frmSetting.lblHeadImageLoading" value="Načítání obrázku" />
+      <Item key="frmSetting.chkFindChildFolder" value="Vyhledávat obrázky v podřízené složce" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
+      <Item key="frmSetting.chkLoopViewer" value="Vrátit prohlížeč na první obrázek po dosažení konce seznamu" />
+      <Item key="frmSetting.chkImageBoosterBack" value="Zapnout Image Booster při listování zpět (spotřeba o ~ 20% více RAM)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="Pořadí načítání obrázků" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="Název (výchozí)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="Délka" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Datum vytvoření" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Naposled zobrazeno" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Naposled upraveno" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="Přípona" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="Náhodně" />
+      <Item key="frmSetting.lblHeadZooming" value="Zvětšení/zmenšení" />
+      <Item key="frmSetting.chkMouseNavigation" value="Používat kolečko myši pro procházení snímků, držet CTRL pro zoomování" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Vykreslování při přiblížení" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automaticky" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Hladké pixely" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Ostré pixely" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Panel náhledů" />
+      <Item key="frmSetting.chkThumbnailVertical" value="Zobrazovat náhledy na pravé straně" />
+      <Item key="frmSetting.lblGeneral_MaxFileSize" value="Maximální velikost souboru pro náhled (MB)" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Velikost náhledů (v pixelech)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="Prezentace" />
+      <Item key="frmSetting.chkLoopSlideshow" value="Vrátit prohlížeč na první obrázek po dosažení konce seznamu" />
+      <Item key="frmSetting.lblSlideshowInterval" value="Interval prezentace: {0} sekund" />
+      <Item key="frmSetting.lblHeadImageEditing" value="Úpravy obrázků" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.btnEditEditExt" value="Upravit" />
+      <Item key="frmSetting.btnEditResetExt" value="Obnovit výchozí" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Upravit všechny přípony" />
+      <Item key="frmSetting._allExtensions" value="všechny přípony" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Přípona souboru" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Název aplikace" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Cesta k aplikaci" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Parametry aplikace" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="* Volitelné formáty nebudou předem načteny automaticky do paměti." />
+      <Item key="frmSetting.lblSupportedExtension" value="Podporované formáty: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Otevřít Přiřazení souborů" />
+      <Item key="frmSetting.btnAddNewExt" value="Přidat" />
+      <Item key="frmSetting.btnRegisterExt" value="Registrovat přípony" />
+      <Item key="frmSetting.btnDeleteExt" value="Odstranit" />
+      <Item key="frmSetting.btnResetExt" value="Obnovit výchozí" />
+      <Item key="frmSetting.lblLanguageText" value="Nainstalované jazyky" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; Obnovit" />
+      <Item key="frmSetting.lblLanguageWarning" value="Tato jazyková sada nemusí být kompatibilní s {0}" />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Nainstalovat novou jazykovou sadu (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Vytvořit novou jazykovou sadu" />
+      <Item key="frmSetting.lnkEdit" value="&gt; Upravit vybranou jazykovou sadu" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Získat další jazykové sady" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="Přípona souboru" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="Skupina formátů" />
+      <Item key="frmAddNewFormat.btnOK" value="OK" />
+      <Item key="frmAddNewFormat.btnClose" value="Zavřít" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="Přípona souboru" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="Název aplikace" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="Cesta k aplikaci" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Parametry aplikace" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="Výchozí" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="OK" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="Zavřít" />
+    </Content>
+  </Language>
+</ImageGlass>

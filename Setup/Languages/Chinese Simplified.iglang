@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="zh-CN" langName="简体中文" author="ImageGlass community" description="Chinese Simplified" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="zh-CN" langName="简体中文" author="ImageGlass community" description="Chinese Simplified" minVersion="4.1.26.7" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="默认格式" />
       <Item key="_.ImageFormatGroup.Optional" value="可选格式" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass无法打开该图片，因为该文件貌似已经损坏或不支持。" />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
       <Item key="frmMain.btnBack" value="前一张图片 (左方向键／PageUp键)" />
       <Item key="frmMain.btnNext" value="后一张图片 (右方向键／PageDown键)" />
       <Item key="frmMain.btnRotateLeft" value="逆时针旋转(Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="顺时针旋转 (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="放大 (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="缩小 (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="实际大小 (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="锁定缩放比例 (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="适应宽度 (Ctrl + W)" />
@@ -142,7 +144,8 @@
       <Item key="frmSetting.chkWelcomePicture" value="显示欢迎图片" />
       <Item key="frmSetting.chkShowToolBar" value="启动时显示工具栏" />
       <Item key="frmSetting.lblHeadPortableMode" value="绿色版模式" />
-      <Item key="frmSetting.chkPortableMode" value="启用绿色版模式" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="其它" />
       <Item key="frmSetting.chkAutoUpdate" value="自动检查更新" />
       <Item key="frmSetting.chkAllowMultiInstances" value="允许运行多个实例" />
@@ -153,6 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="重置" />
       <Item key="frmSetting.lblHeadImageLoading" value="图像加载中" />
       <Item key="frmSetting.chkFindChildFolder" value="查找子目录中的图片" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
       <Item key="frmSetting.chkLoopViewer" value="当到达列表最后时，再从头开始查看" />
       <Item key="frmSetting.chkImageBoosterBack" value="打开图片缓存已加速浏览（ 多占用 20% 左右的内存）" />
       <Item key="frmSetting.lblImageLoadingOrder" value="图像加载顺序" />
@@ -177,6 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="当播放到最后一张时，再从头开始播放" />
       <Item key="frmSetting.lblSlideshowInterval" value="幻灯片切换间隔：{0} 秒" />
       <Item key="frmSetting.lblHeadImageEditing" value="图像编辑" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
       <Item key="frmSetting.btnEditEditExt" value="编辑" />
       <Item key="frmSetting.btnEditResetExt" value="重置为默认" />
       <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />

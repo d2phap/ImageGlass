@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="tr" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="tr" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="4.1.26.7" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Ön tanımlı formatlar" />
       <Item key="_.ImageFormatGroup.Optional" value="Opsiyonel formatlar" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass bu resmi açamıyor çünkü dosya bozuk, hatalı veya desteklenmiyor olabilir." />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
       <Item key="frmMain.btnBack" value="Önceki resme gitmek (Sol ok / Sayfa Yukarı)" />
       <Item key="frmMain.btnNext" value="Gidin sonraki resim (sağ ok / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Saat yönünün tersine döndür (Ctrl +,)" />
       <Item key="frmMain.btnRotateRight" value="Saat yönünde döndür (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Zoom (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Uzaklaştırmak (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Gerçek boyut (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Yakınlaştırma oranını kilitle (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Ölçek genişliği (Ctrl + W)" />
@@ -142,7 +144,8 @@
       <Item key="frmSetting.chkWelcomePicture" value="Hoş geldiniz resmi göster" />
       <Item key="frmSetting.chkShowToolBar" value="Başlarken araç çubuğunu göster" />
       <Item key="frmSetting.lblHeadPortableMode" value="Mobil modu" />
-      <Item key="frmSetting.chkPortableMode" value="Mobil modunu aktive et" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Diğerleri" />
       <Item key="frmSetting.chkAutoUpdate" value="Güncellemeler otomatik olarak kontrol edilsin mi" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Programın birden çok örneğini izin" />
@@ -153,6 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="Ön değerler" />
       <Item key="frmSetting.lblHeadImageLoading" value="Resim yükleniyor" />
       <Item key="frmSetting.chkFindChildFolder" value="Alt klasördeki görüntüleri bulmak" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
       <Item key="frmSetting.chkLoopViewer" value="Listenin sonuna ulaştığında geri görüntüleyiciyi ilk görüntüye bağlayın" />
       <Item key="frmSetting.chkImageBoosterBack" value="Görüntü güçlendirici açmak ne zaman geri gidin (% ~ 20 daha fazla RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Resim yükleme sıralaması" />
@@ -177,6 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Listenin sonuna ulaşan ilk görüntü için döngü arka slideshow" />
       <Item key="frmSetting.lblSlideshowInterval" value="Slayt gösterisi aralığı: {0} saniye" />
       <Item key="frmSetting.lblHeadImageEditing" value="Resim düzenleme" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
       <Item key="frmSetting.btnEditEditExt" value="Düzenle" />
       <Item key="frmSetting.btnEditResetExt" value="Ön değerleri geri döndür" />
       <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />

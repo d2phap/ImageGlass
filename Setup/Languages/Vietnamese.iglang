@@ -1,16 +1,18 @@
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Định dạng chính" />
       <Item key="_.ImageFormatGroup.Optional" value="Định dạng phụ" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass không thể mở ảnh này vì các tập tin dường như bị hỏng hoặc định dạng không hỗ trợ." />
+      <Item key="frmMain._ImageNotExist" value="Ảnh đang xem không tồn tại." />
       <Item key="frmMain.btnBack" value="Xem ảnh trước đó (Mũi tên trái / PageUp)" />
       <Item key="frmMain.btnNext" value="Xem ảnh tiếp theo (Mũi tên phải / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Xoay ngược chiều kim đồng hồ (Ctrl +,)" />
       <Item key="frmMain.btnRotateRight" value="Xoay theo chiều kim đồng hồ (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Phóng to (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Thu nhỏ (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Tự động căn chỉnh tỉ lệ hình ảnh (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Xem kích thước thật (Ctrl+ 0)" />
       <Item key="frmMain.btnZoomLock" value="Khoá tỉ lệ phóng to / thu nhỏ (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Co dãn hình ảnh theo chiều rộng (Ctrl + W)" />
@@ -142,7 +144,8 @@
       <Item key="frmSetting.chkWelcomePicture" value="Hiển thị hình ảnh chào mừng" />
       <Item key="frmSetting.chkShowToolBar" value="Ẩn thanh công cụ khi khởi động" />
       <Item key="frmSetting.lblHeadPortableMode" value="Chế độ Di động" />
-      <Item key="frmSetting.chkPortableMode" value="Kích hoạt chế độ Di động" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Chế độ Di động đã được bật" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Chế độ Di động không được hỗ trợ ở thư mục cài đặt hiện tại:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Khác" />
       <Item key="frmSetting.chkAutoUpdate" value="Tự động kiểm tra phiên bản mới" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Cho phép nhiều cửa sổ chương trình mở cùng lúc" />
@@ -153,6 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="Thiết lập lại" />
       <Item key="frmSetting.lblHeadImageLoading" value="Tải hình ảnh" />
       <Item key="frmSetting.chkFindChildFolder" value="Tìm kiếm hình ảnh trong thư mục con" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Hiển thị tập tin hình ảnh ẩn" />
       <Item key="frmSetting.chkLoopViewer" value="Xem lại hình ảnh đầu tiên khi kết thúc danh sách" />
       <Item key="frmSetting.chkImageBoosterBack" value="Bật Image Booster khi duyệt ảnh phía sau (cần thêm ~ 20% RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Thứ tự tải hình ảnh" />
@@ -177,6 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Lặp lại trình chiếu hình ảnh đầu tiên khi kết thúc danh sách" />
       <Item key="frmSetting.lblSlideshowInterval" value="Khoảng thời gian trình chiếu: {0} giây" />
       <Item key="frmSetting.lblHeadImageEditing" value="Chỉnh sửa hình ảnh" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Tự động lưu sau khi xoay ảnh" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Chọn ứng dụng chỉnh sửa hình ảnh" />
       <Item key="frmSetting.btnEditEditExt" value="Chỉnh sửa" />
       <Item key="frmSetting.btnEditResetExt" value="Đặt lại về mặc định" />
       <Item key="frmSetting.btnEditEditAllExt" value="Chỉnh sửa tất cả" />

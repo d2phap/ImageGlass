@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="pl-PL" langName="Język polski" author="ImageGlass community" description="Polish language" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="pl-PL" langName="Polski" author="ImageGlass community" description="Polish" minVersion="4.1.26.7" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Standardowe formaty" />
       <Item key="_.ImageFormatGroup.Optional" value="Opcjonalne formaty" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nie może otworzyć tego obrazu ponieważ plik jest uszkodzony lub w nieobsługiwanym formacie." />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
       <Item key="frmMain.btnBack" value="Przejdź do poprzedniego obrazu (Strzałka w lewo / PageUp)" />
       <Item key="frmMain.btnNext" value="Przejdź do następnego obrazu (Strzałka w prawo / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Obróć w lewo (Ctrl +,)" />
       <Item key="frmMain.btnRotateRight" value="Obróć w prawo (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Powiększenie (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Pomniejszenie (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Rzeczywisty rozmiar (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Zablokuj współczynnik powiększenia (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Przeskaluj do szerokości (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Podaj indeks obrazu, aby go wyświetlić. Później naciśnij {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Usuń plik '{0}'?" />
       <Item key="frmMain._DeleteDialogTitle" value="Zatwierdź" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Wyodrębnianie ramki obrazu. Wybierz folder wyjściowy." />
       <Item key="frmMain._FullScreenMessage" value="Naciśnij klawisze ALT + ENTER, aby wyjść z trybu pełnoekranowego. &#xA; lub CTRL + F1, aby wyświetlić menu." />
       <Item key="frmMain._SlideshowMessage" value="Naciśnij klawisz ESC, aby zakończyć pokaz slajdów. &#xA; kliknij prawym przyciskiem myszy, aby otworzyć menu kontekstowe." />
       <Item key="frmMain._SlideshowMessagePause" value="Pokaz slajdów jest wstrzymany" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="O" />
       <Item key="frmAbout._PortableText" value="[Przenośna]" />
       <Item key="frmSetting._Text" value="Ustawienia" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Zapisz" />
       <Item key="frmSetting.btnCancel" value="Anuluj" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Zastosuj" />
       <Item key="frmSetting.lblGeneral" value="Ustawienia główne" />
       <Item key="frmSetting.lblImage" value="Obraz" />
       <Item key="frmSetting.lblFileAssociations" value="Skojarzenia plików" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Pokaż obraz powitalny" />
       <Item key="frmSetting.chkShowToolBar" value="Pokaż pasek narzędziowy" />
       <Item key="frmSetting.lblHeadPortableMode" value="Tryb przenośny" />
-      <Item key="frmSetting.chkPortableMode" value="Włącz tryb przenośny" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Inne" />
       <Item key="frmSetting.chkAutoUpdate" value="Automatyczne sprawdzanie aktualizacji" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Zezwól na działanie kilku kopii programu jednocześnie" />
       <Item key="frmSetting.chkESCToQuit" value="Zezwól na użycie klawisza ESC, aby zakończyć pracę aplikacji" />
       <Item key="frmSetting.chkConfirmationDelete" value="Wyświetl ekran dialogowy potwierdzający usunięcie pliku" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Pokaż pasek przewijania" />
       <Item key="frmSetting.lblBackGroundColor" value="Kolor tła" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Przywróć domyślne" />
       <Item key="frmSetting.lblHeadImageLoading" value="Wczytywanie obrazu" />
       <Item key="frmSetting.chkFindChildFolder" value="Znajdź obrazy w podfolderach" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
       <Item key="frmSetting.chkLoopViewer" value="Wróć do pierwszego obrazu po osiągnięciu końca listy przeglądanych obrazów" />
       <Item key="frmSetting.chkImageBoosterBack" value="Włącz Image Booster podczas przeglądania obrazów (potrzeba więcej ~ 20% RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Porządek wczytywania obrazów" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Wróć do pierwszego obrazu po osiągnięciu końca listy przeglądanych obrazów" />
       <Item key="frmSetting.lblSlideshowInterval" value="Pokaz slajdów interwał: {0} sekund" />
       <Item key="frmSetting.lblHeadImageEditing" value="Edycja obrazu" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
       <Item key="frmSetting.btnEditEditExt" value="Edycja" />
       <Item key="frmSetting.btnEditResetExt" value="Przywróć ustawienia domyślne" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Edycja wszystkich rozszerzeń" />
+      <Item key="frmSetting._allExtensions" value="wszystkie rozszerzenia" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Rozszerzenie pliku" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nazwa aplikacji" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Ścieżka aplikacji" />

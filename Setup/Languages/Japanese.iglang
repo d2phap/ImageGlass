@@ -1,16 +1,18 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
+    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.26.7" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="既定の形式" />
       <Item key="_.ImageFormatGroup.Optional" value="オプションの形式" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass はこの画像を開けません。 ファイルが破損しているか、サポートされていない形式です。" />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
       <Item key="frmMain.btnBack" value="前の画像を見る (左矢印キー / PageUp)" />
       <Item key="frmMain.btnNext" value="次の画像を見る (右矢印キー / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="左回りに回転 (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="右回りに回転 (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="ズームイン (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="ズームアウト (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="実際のサイズで表示 (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="ズームレシオを固定 (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="ウィンドウ幅に合わせる (Ctrl + W)" />
@@ -142,7 +144,8 @@
       <Item key="frmSetting.chkWelcomePicture" value="ウェルカム画像を表示" />
       <Item key="frmSetting.chkShowToolBar" value="起動時にツールバーを表示" />
       <Item key="frmSetting.lblHeadPortableMode" value="ポータブルモード" />
-      <Item key="frmSetting.chkPortableMode" value="ポータブルモードを有効にする" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="その他" />
       <Item key="frmSetting.chkAutoUpdate" value="アップデートを自動的に確認" />
       <Item key="frmSetting.chkAllowMultiInstances" value="アプリの複数起動を許可" />
@@ -153,6 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="リセット" />
       <Item key="frmSetting.lblHeadImageLoading" value="画像の読み込み" />
       <Item key="frmSetting.chkFindChildFolder" value="子フォルダーの画像も検索" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
       <Item key="frmSetting.chkLoopViewer" value="最後の画像に到達したら最初の画像に戻る" />
       <Item key="frmSetting.chkImageBoosterBack" value="一度表示した画像を高速表示する (メモリの消費が20%程度増えます)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="画像の読み込み順序" />
@@ -177,6 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="スライドショーで最後の画像に到達したら最初の画像に戻る" />
       <Item key="frmSetting.lblSlideshowInterval" value="スライドショーの間隔: {0} 秒" />
       <Item key="frmSetting.lblHeadImageEditing" value="画像編集" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
       <Item key="frmSetting.btnEditEditExt" value="編集" />
       <Item key="frmSetting.btnEditResetExt" value="デフォルトに戻す" />
       <Item key="frmSetting.btnEditEditAllExt" value="すべての拡張子を編集する" />
