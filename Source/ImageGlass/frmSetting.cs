@@ -240,7 +240,7 @@ namespace ImageGlass
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
 
             lblHeadZooming.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadZooming"];//
-            chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
+            //chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
             lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
 
             lblHeadThumbnailBar.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadThumbnailBar"];//
@@ -504,7 +504,7 @@ namespace ImageGlass
             cmbMouseWheelAlt.SelectedIndex = (int)GlobalSetting.MouseWheelAltAction;
 
             //Use mouse wheel to browse images ----------------------------------------------
-            chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
+            //chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
 
             //Load items of cmbZoomOptimization 
             cmbZoomOptimization.Items.Clear();
@@ -1020,8 +1020,8 @@ namespace ImageGlass
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
 
             //IsMouseNavigation
-            GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
-            GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
+            //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
+            //GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
 
             //ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;

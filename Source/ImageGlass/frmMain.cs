@@ -60,10 +60,7 @@ namespace ImageGlass
 
         // window size value before resizing
         private Size _windowSize = new Size(600, 500);
-
-        // determine if the image is zoomed
-        private bool _isZoomed = false;
-
+        
         //determine if toolbar is shown
         private bool _isShowToolbar = true;
 
@@ -669,12 +666,7 @@ namespace ImageGlass
             {
                 //Enable dragging viewing image to desktop feature---------------------------
                 _isDraggingImage = true;
-
-                if (GlobalSetting.IsMouseNavigation)
-                {
-                    _isZoomed = true;
-                    picMain.AllowZoom = true;
-                }
+                
                 return;
             }
             #endregion
@@ -692,12 +684,7 @@ namespace ImageGlass
             {
                 //Disable dragging viewing image to desktop feature--------------------------
                 _isDraggingImage = false;
-
-                if (GlobalSetting.IsMouseNavigation)
-                {
-                    _isZoomed = false;
-                    picMain.AllowZoom = false;
-                }
+                
                 return;
             }
             #endregion
@@ -1467,11 +1454,7 @@ namespace ImageGlass
             }
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
 
-
-            //Load state of IsMouseNavigation value-------------------------------------------
-            GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
-            picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
-
+            
             //Get IsConfirmationDelete value --------------------------------------------------
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
 
@@ -1692,7 +1675,7 @@ namespace ImageGlass
                 timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
 
                 //Prevent zooming by scrolling mouse
-                _isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+                //_isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
 
                 #region Update language strings
                 //Toolbar
@@ -1802,7 +1785,7 @@ namespace ImageGlass
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
-            if (Size != _windowSize && !_isZoomed)
+            if (Size != _windowSize)
             {
                 mnuMainRefresh_Click(null, null);
 
@@ -1981,20 +1964,15 @@ namespace ImageGlass
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
-            if (!GlobalSetting.IsMouseNavigation)
+            if (GlobalSetting.IsEnabledZoomLock)
             {
-                _isZoomed = true;
+                GlobalSetting.ZoomLockValue = e.NewZoom;
+            }
 
-                if (GlobalSetting.IsEnabledZoomLock)
-                {
-                    GlobalSetting.ZoomLockValue = e.NewZoom;
-                }
+            //Zoom optimization
+            ZoomOptimization();
 
-                //Zoom optimization
-                ZoomOptimization();
-
-                UpdateStatusBar(true);
-            }            
+            UpdateStatusBar(true);
         }
 
         private void picMain_MouseClick(object sender, MouseEventArgs e)
@@ -2328,7 +2306,6 @@ namespace ImageGlass
                     picMain.ZoomAuto();
                 }
 
-                _isZoomed = false;
             }
 
             //Get image file information

@@ -142,8 +142,6 @@ namespace ImageGlass
 
         private bool _allowDoubleClick;
 
-        private bool _allowZoom;
-
         /// <summary>
         /// [PHAP]
         /// </summary>
@@ -260,7 +258,6 @@ namespace ImageGlass
 
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             BorderStyle = BorderStyle.Fixed3D;
-            AllowZoom = true;
             LimitSelectionToImage = true;
             DropShadowSize = 3;
             ImageBorderStyle = ImageBoxBorderStyle.None;
@@ -894,7 +891,7 @@ namespace ImageGlass
 
             ProcessScrollingShortcuts(e);
 
-            if (ShortcutsEnabled && AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
+            if (ShortcutsEnabled && SizeMode == ImageBoxSizeMode.Normal)
             {
                 ProcessImageShortcuts(e);
             }
@@ -958,7 +955,7 @@ namespace ImageGlass
             }
             WasDragCancelled = false;
 
-            if (!doNotProcessClick && AllowZoom && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
+            if (!doNotProcessClick && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
             {
                 if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None)
                 {
@@ -1142,27 +1139,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the user can change the zoom level.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the zoom level can be changed; otherwise, <c>false</c>.
-        /// </value>
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        public virtual bool AllowZoom
-        {
-            get { return _allowZoom; }
-            set
-            {
-                if (AllowZoom != value)
-                {
-                    _allowZoom = value;
-
-                    OnAllowZoomChanged(EventArgs.Empty);
-                }
-            }
-        }
 
         /// <summary>
         /// [PHAP] Handles animating gif images
@@ -4655,18 +4631,12 @@ namespace ImageGlass
 
                 //case Keys.PageDown:
                 case Keys.Oemplus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomIn(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomIn(ImageBoxActionSources.User, true);
                     break;
 
                 //case Keys.PageUp:
                 case Keys.OemMinus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomOut(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomOut(ImageBoxActionSources.User, true);
                     break;
             }
 

@@ -78,7 +78,7 @@ namespace ImageGlass.Services.Configuration
         
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
-        private static bool _isMouseNavigation = false;
+        //private static bool _isMouseNavigation = false;
         private static MouseWheelActions _mouseWheelAction = MouseWheelActions.SCROLL_VERTICAL;
         private static MouseWheelActions _mouseWheelCtrlAction = MouseWheelActions.ZOOM;
         private static MouseWheelActions _mouseWheelShiftAction = MouseWheelActions.SCROLL_HORIZONTAL;
@@ -459,14 +459,14 @@ namespace ImageGlass.Services.Configuration
             set { _isZoomToFit = value; }
         }
 
-        /// <summary>
-        /// Gets, sets value indicating that using mouse wheel to navigate image or not
-        /// </summary>
-        public static bool IsMouseNavigation
-        {
-            get { return _isMouseNavigation; }
-            set { _isMouseNavigation = value; }
-        }
+        ///// <summary>
+        ///// Gets, sets value indicating that using mouse wheel to navigate image or not
+        ///// </summary>
+        //public static bool IsMouseNavigation
+        //{
+        //    get { return _isMouseNavigation; }
+        //    set { _isMouseNavigation = value; }
+        //}
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel

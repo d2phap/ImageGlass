@@ -102,7 +102,6 @@
             this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
             this.lblHeadImageLoading = new System.Windows.Forms.Label();
             this.chkLoopViewer = new System.Windows.Forms.CheckBox();
-            this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
             this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
             this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
@@ -733,7 +732,6 @@
             this.tabImage.Controls.Add(this.lblHeadThumbnailBar);
             this.tabImage.Controls.Add(this.lblHeadImageLoading);
             this.tabImage.Controls.Add(this.chkLoopViewer);
-            this.tabImage.Controls.Add(this.chkMouseNavigation);
             this.tabImage.Controls.Add(this.lblGeneral_ZoomOptimization);
             this.tabImage.Controls.Add(this.cmbZoomOptimization);
             this.tabImage.Controls.Add(this.chkThumbnailVertical);
@@ -842,7 +840,7 @@
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(257, 977);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(241, 977);
             this.btnEditEditAllExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(146, 25);
@@ -903,13 +901,13 @@
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(30, 777);
+            this.lvImageEditing.Location = new System.Drawing.Point(30, 756);
             this.lvImageEditing.Margin = new System.Windows.Forms.Padding(2);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(373, 191);
+            this.lvImageEditing.Size = new System.Drawing.Size(357, 191);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -940,7 +938,7 @@
             // 
             this.lblHeadImageEditing.AutoSize = true;
             this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageEditing.Location = new System.Drawing.Point(15, 755);
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(15, 734);
             this.lblHeadImageEditing.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadImageEditing.Name = "lblHeadImageEditing";
             this.lblHeadImageEditing.Size = new System.Drawing.Size(84, 15);
@@ -951,7 +949,7 @@
             // 
             this.lblHeadZooming.AutoSize = true;
             this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(15, 321);
+            this.lblHeadZooming.Location = new System.Drawing.Point(15, 331);
             this.lblHeadZooming.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadZooming.Name = "lblHeadZooming";
             this.lblHeadZooming.Size = new System.Drawing.Size(56, 15);
@@ -962,7 +960,7 @@
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(15, 633);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(15, 612);
             this.lblHeadSlideshow.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
             this.lblHeadSlideshow.Size = new System.Drawing.Size(63, 15);
@@ -973,7 +971,7 @@
             // 
             this.lblHeadThumbnailBar.AutoSize = true;
             this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(15, 449);
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(15, 428);
             this.lblHeadThumbnailBar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
             this.lblHeadThumbnailBar.Size = new System.Drawing.Size(86, 15);
@@ -1002,21 +1000,10 @@
             this.chkLoopViewer.Text = "Loop back viewer to the first image when reaching the end of the list";
             this.chkLoopViewer.UseVisualStyleBackColor = true;
             // 
-            // chkMouseNavigation
-            // 
-            this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(30, 343);
-            this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(1);
-            this.chkMouseNavigation.Name = "chkMouseNavigation";
-            this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
-            this.chkMouseNavigation.TabIndex = 17;
-            this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
-            this.chkMouseNavigation.UseVisualStyleBackColor = true;
-            // 
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 376);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 355);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
@@ -1029,7 +1016,7 @@
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(30, 394);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(30, 373);
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(187, 23);
@@ -1038,7 +1025,7 @@
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(30, 471);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(30, 450);
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(1);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
@@ -1049,7 +1036,7 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(27, 559);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(27, 538);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
@@ -1069,7 +1056,7 @@
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 577);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 556);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(187, 23);
@@ -1089,7 +1076,7 @@
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(30, 655);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(30, 634);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(1);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(405, 19);
@@ -1099,7 +1086,7 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(30, 523);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(30, 502);
             this.numMaxThumbSize.Margin = new System.Windows.Forms.Padding(1);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
@@ -1124,7 +1111,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(27, 504);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(27, 483);
             this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
@@ -1162,7 +1149,7 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(30, 708);
+            this.barInterval.Location = new System.Drawing.Point(30, 687);
             this.barInterval.Margin = new System.Windows.Forms.Padding(1);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
@@ -1176,7 +1163,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(27, 687);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(27, 666);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(163, 15);
@@ -1421,7 +1408,7 @@
         private System.Windows.Forms.TabPage tabImage;
         private System.Windows.Forms.Label lblHeadImageLoading;
         private System.Windows.Forms.CheckBox chkLoopViewer;
-        private System.Windows.Forms.CheckBox chkMouseNavigation;
+        //private System.Windows.Forms.CheckBox chkMouseNavigation;
         private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
         private System.Windows.Forms.ComboBox cmbZoomOptimization;
         private System.Windows.Forms.CheckBox chkThumbnailVertical;
