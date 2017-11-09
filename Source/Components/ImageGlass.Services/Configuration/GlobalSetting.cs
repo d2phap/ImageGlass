@@ -79,7 +79,11 @@ namespace ImageGlass.Services.Configuration
         private static bool _isAllowMultiInstances = true;
         private static bool _isShowCheckedBackground = false;
         private static bool _isMouseNavigation = false;
-        
+        private static MouseWheelActions _mouseWheelAction = MouseWheelActions.SCROLL_VERTICAL;
+        private static MouseWheelActions _mouseWheelCtrlAction = MouseWheelActions.ZOOM;
+        private static MouseWheelActions _mouseWheelShiftAction = MouseWheelActions.SCROLL_HORIZONTAL;
+        private static MouseWheelActions _mouseWheelAltAction = MouseWheelActions.BROWSE_IMAGES;
+
         private static bool _isWindowAlwaysOnTop = false;
         private static bool _isConfirmationDelete = false;
         private static bool _isScrollbarsVisible = false;
@@ -465,6 +469,26 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
+        /// Gets, sets action to be performed when user spins the mouse wheel
+        /// </summary>
+        public static MouseWheelActions MouseWheelAction { get => _mouseWheelAction; set => _mouseWheelAction = value; }
+
+        /// <summary>
+        /// Gets, sets action to be performed when user spins the mouse wheel while holding Ctrl key
+        /// </summary>
+        public static MouseWheelActions MouseWheelCtrlAction { get => _mouseWheelCtrlAction; set => _mouseWheelCtrlAction = value; }
+
+        /// <summary>
+        /// Gets, sets action to be performed when user spins the mouse wheel while holding Shift key
+        /// </summary>
+        public static MouseWheelActions MouseWheelShiftAction { get => _mouseWheelShiftAction; set => _mouseWheelShiftAction = value; }
+
+        /// <summary>
+        /// Gets, sets action to be performed when user spins the mouse wheel while holding Alt key
+        /// </summary>
+        public static MouseWheelActions MouseWheelAltAction { get => _mouseWheelAltAction; set => _mouseWheelAltAction = value; }
+
+        /// <summary>
         /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
         /// </summary>
         public static bool IsConfirmationDelete
@@ -545,8 +569,8 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that viewer scrollbars are visible
         /// </summary>
         public static bool IsScrollbarsVisible { get => _isScrollbarsVisible; set => _isScrollbarsVisible = value; }
-
         
+
 
 
 

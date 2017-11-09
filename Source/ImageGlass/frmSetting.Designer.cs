@@ -78,6 +78,15 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.cmbMouseWheelAlt = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheelShift = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheelCtrl = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheel = new System.Windows.Forms.ComboBox();
+            this.lblMouseWheelAlt = new System.Windows.Forms.Label();
+            this.lblMouseWheelShift = new System.Windows.Forms.Label();
+            this.lblMouseWheelCtrl = new System.Windows.Forms.Label();
+            this.lblMouseWheel = new System.Windows.Forms.Label();
+            this.lblHeadMouseWheelActions = new System.Windows.Forms.Label();
             this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
             this.btnEditEditExt = new System.Windows.Forms.Button();
@@ -216,7 +225,7 @@
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picBackgroundColor.Location = new System.Drawing.Point(31, 335);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(1);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(67, 27);
             this.picBackgroundColor.TabIndex = 12;
@@ -332,7 +341,7 @@
             "English (default)",
             "Vietnamese"});
             this.cmbLanguage.Location = new System.Drawing.Point(13, 39);
-            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(1);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(171, 23);
             this.cmbLanguage.TabIndex = 33;
@@ -384,7 +393,7 @@
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
             this.btnRegisterExt.Location = new System.Drawing.Point(159, 7);
-            this.btnRegisterExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRegisterExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(159, 25);
             this.btnRegisterExt.TabIndex = 31;
@@ -397,7 +406,7 @@
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetExt.AutoSize = true;
             this.btnResetExt.Location = new System.Drawing.Point(322, 7);
-            this.btnResetExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnResetExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(133, 25);
             this.btnResetExt.TabIndex = 32;
@@ -410,7 +419,7 @@
             this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddNewExt.AutoSize = true;
             this.btnAddNewExt.Location = new System.Drawing.Point(14, 7);
-            this.btnAddNewExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddNewExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddNewExt.Name = "btnAddNewExt";
             this.btnAddNewExt.Size = new System.Drawing.Size(50, 25);
             this.btnAddNewExt.TabIndex = 29;
@@ -424,7 +433,7 @@
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
             this.btnDeleteExt.Location = new System.Drawing.Point(68, 7);
-            this.btnDeleteExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDeleteExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnDeleteExt.Name = "btnDeleteExt";
             this.btnDeleteExt.Size = new System.Drawing.Size(66, 25);
             this.btnDeleteExt.TabIndex = 30;
@@ -478,7 +487,7 @@
             listViewGroup2});
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvExtension.Location = new System.Drawing.Point(15, 60);
-            this.lvExtension.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lvExtension.Margin = new System.Windows.Forms.Padding(2);
             this.lvExtension.Name = "lvExtension";
             this.lvExtension.Size = new System.Drawing.Size(439, 249);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
@@ -532,7 +541,7 @@
             // 
             this.chkShowScrollbar.AutoSize = true;
             this.chkShowScrollbar.Location = new System.Drawing.Point(30, 285);
-            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
             this.chkShowScrollbar.Size = new System.Drawing.Size(154, 19);
             this.chkShowScrollbar.TabIndex = 12;
@@ -591,7 +600,7 @@
             // 
             this.chkPortableMode.AutoSize = true;
             this.chkPortableMode.Location = new System.Drawing.Point(30, 131);
-            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(1);
             this.chkPortableMode.Name = "chkPortableMode";
             this.chkPortableMode.Size = new System.Drawing.Size(142, 19);
             this.chkPortableMode.TabIndex = 7;
@@ -601,7 +610,7 @@
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(29, 387);
-            this.panel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel1.Margin = new System.Windows.Forms.Padding(1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(73, 21);
             this.panel1.TabIndex = 24;
@@ -610,7 +619,7 @@
             // 
             this.chkConfirmationDelete.AutoSize = true;
             this.chkConfirmationDelete.Location = new System.Drawing.Point(30, 263);
-            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(1);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(211, 19);
             this.chkConfirmationDelete.TabIndex = 11;
@@ -621,7 +630,7 @@
             // 
             this.chkAllowMultiInstances.AutoSize = true;
             this.chkAllowMultiInstances.Location = new System.Drawing.Point(30, 219);
-            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(1);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(238, 19);
             this.chkAllowMultiInstances.TabIndex = 9;
@@ -632,7 +641,7 @@
             // 
             this.chkESCToQuit.AutoSize = true;
             this.chkESCToQuit.Location = new System.Drawing.Point(30, 241);
-            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(1);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(223, 19);
             this.chkESCToQuit.TabIndex = 10;
@@ -643,7 +652,7 @@
             // 
             this.chkShowToolBar.AutoSize = true;
             this.chkShowToolBar.Location = new System.Drawing.Point(30, 57);
-            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowToolBar.Name = "chkShowToolBar";
             this.chkShowToolBar.Size = new System.Drawing.Size(188, 19);
             this.chkShowToolBar.TabIndex = 6;
@@ -664,7 +673,7 @@
             // 
             this.chkWelcomePicture.AutoSize = true;
             this.chkWelcomePicture.Location = new System.Drawing.Point(30, 35);
-            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(1);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(146, 19);
             this.chkWelcomePicture.TabIndex = 5;
@@ -675,7 +684,7 @@
             // 
             this.chkAutoUpdate.AutoSize = true;
             this.chkAutoUpdate.Location = new System.Drawing.Point(30, 197);
-            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(1);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(192, 19);
             this.chkAutoUpdate.TabIndex = 8;
@@ -704,6 +713,15 @@
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.cmbMouseWheelAlt);
+            this.tabImage.Controls.Add(this.cmbMouseWheelShift);
+            this.tabImage.Controls.Add(this.cmbMouseWheelCtrl);
+            this.tabImage.Controls.Add(this.cmbMouseWheel);
+            this.tabImage.Controls.Add(this.lblMouseWheelAlt);
+            this.tabImage.Controls.Add(this.lblMouseWheelShift);
+            this.tabImage.Controls.Add(this.lblMouseWheelCtrl);
+            this.tabImage.Controls.Add(this.lblMouseWheel);
+            this.tabImage.Controls.Add(this.lblHeadMouseWheelActions);
             this.tabImage.Controls.Add(this.btnEditEditAllExt);
             this.tabImage.Controls.Add(this.btnEditResetExt);
             this.tabImage.Controls.Add(this.btnEditEditExt);
@@ -731,19 +749,101 @@
             this.tabImage.Controls.Add(this.lblSlideshowInterval);
             this.tabImage.Controls.Add(this.chkFindChildFolder);
             this.tabImage.Location = new System.Drawing.Point(4, 27);
-            this.tabImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabImage.Margin = new System.Windows.Forms.Padding(2);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabImage.Padding = new System.Windows.Forms.Padding(2);
             this.tabImage.Size = new System.Drawing.Size(463, 368);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // cmbMouseWheelAlt
+            // 
+            this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelAlt.FormattingEnabled = true;
+            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(177, 282);
+            this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
+            this.cmbMouseWheelAlt.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelAlt.TabIndex = 56;
+            // 
+            // cmbMouseWheelShift
+            // 
+            this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelShift.FormattingEnabled = true;
+            this.cmbMouseWheelShift.Location = new System.Drawing.Point(177, 253);
+            this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
+            this.cmbMouseWheelShift.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelShift.TabIndex = 55;
+            // 
+            // cmbMouseWheelCtrl
+            // 
+            this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelCtrl.FormattingEnabled = true;
+            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(177, 224);
+            this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
+            this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelCtrl.TabIndex = 54;
+            // 
+            // cmbMouseWheel
+            // 
+            this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheel.FormattingEnabled = true;
+            this.cmbMouseWheel.Location = new System.Drawing.Point(177, 195);
+            this.cmbMouseWheel.Name = "cmbMouseWheel";
+            this.cmbMouseWheel.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheel.TabIndex = 53;
+            // 
+            // lblMouseWheelAlt
+            // 
+            this.lblMouseWheelAlt.AutoSize = true;
+            this.lblMouseWheelAlt.Location = new System.Drawing.Point(31, 285);
+            this.lblMouseWheelAlt.Name = "lblMouseWheelAlt";
+            this.lblMouseWheelAlt.Size = new System.Drawing.Size(106, 15);
+            this.lblMouseWheelAlt.TabIndex = 52;
+            this.lblMouseWheelAlt.Text = "Mouse wheel + Alt";
+            // 
+            // lblMouseWheelShift
+            // 
+            this.lblMouseWheelShift.AutoSize = true;
+            this.lblMouseWheelShift.Location = new System.Drawing.Point(31, 256);
+            this.lblMouseWheelShift.Name = "lblMouseWheelShift";
+            this.lblMouseWheelShift.Size = new System.Drawing.Size(115, 15);
+            this.lblMouseWheelShift.TabIndex = 51;
+            this.lblMouseWheelShift.Text = "Mouse wheel + Shift";
+            // 
+            // lblMouseWheelCtrl
+            // 
+            this.lblMouseWheelCtrl.AutoSize = true;
+            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(31, 227);
+            this.lblMouseWheelCtrl.Name = "lblMouseWheelCtrl";
+            this.lblMouseWheelCtrl.Size = new System.Drawing.Size(110, 15);
+            this.lblMouseWheelCtrl.TabIndex = 50;
+            this.lblMouseWheelCtrl.Text = "Mouse wheel + Ctrl";
+            // 
+            // lblMouseWheel
+            // 
+            this.lblMouseWheel.AutoSize = true;
+            this.lblMouseWheel.Location = new System.Drawing.Point(31, 198);
+            this.lblMouseWheel.Name = "lblMouseWheel";
+            this.lblMouseWheel.Size = new System.Drawing.Size(77, 15);
+            this.lblMouseWheel.TabIndex = 49;
+            this.lblMouseWheel.Text = "Mouse wheel";
+            // 
+            // lblHeadMouseWheelActions
+            // 
+            this.lblHeadMouseWheelActions.AutoSize = true;
+            this.lblHeadMouseWheelActions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(15, 173);
+            this.lblHeadMouseWheelActions.Name = "lblHeadMouseWheelActions";
+            this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(123, 15);
+            this.lblHeadMouseWheelActions.TabIndex = 48;
+            this.lblHeadMouseWheelActions.Text = "Mouse wheel actions";
             // 
             // btnEditEditAllExt
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(289, 837);
-            this.btnEditEditAllExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(257, 977);
+            this.btnEditEditAllExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(146, 25);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -754,8 +854,8 @@
             // btnEditResetExt
             // 
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(84, 837);
-            this.btnEditResetExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditResetExt.Location = new System.Drawing.Point(84, 977);
+            this.btnEditResetExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(133, 25);
             this.btnEditResetExt.TabIndex = 26;
@@ -767,8 +867,8 @@
             // 
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
-            this.btnEditEditExt.Location = new System.Drawing.Point(30, 837);
-            this.btnEditEditExt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditEditExt.Location = new System.Drawing.Point(30, 977);
+            this.btnEditEditExt.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(50, 25);
             this.btnEditEditExt.TabIndex = 25;
@@ -778,8 +878,8 @@
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(18, 869);
-            this.panel3.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel3.Location = new System.Drawing.Point(18, 930);
+            this.panel3.Margin = new System.Windows.Forms.Padding(1);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(73, 21);
             this.panel3.TabIndex = 46;
@@ -803,13 +903,13 @@
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(30, 637);
-            this.lvImageEditing.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lvImageEditing.Location = new System.Drawing.Point(30, 777);
+            this.lvImageEditing.Margin = new System.Windows.Forms.Padding(2);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(405, 191);
+            this.lvImageEditing.Size = new System.Drawing.Size(373, 191);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -840,7 +940,7 @@
             // 
             this.lblHeadImageEditing.AutoSize = true;
             this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageEditing.Location = new System.Drawing.Point(15, 615);
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(15, 755);
             this.lblHeadImageEditing.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadImageEditing.Name = "lblHeadImageEditing";
             this.lblHeadImageEditing.Size = new System.Drawing.Size(84, 15);
@@ -851,7 +951,7 @@
             // 
             this.lblHeadZooming.AutoSize = true;
             this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(15, 181);
+            this.lblHeadZooming.Location = new System.Drawing.Point(15, 321);
             this.lblHeadZooming.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadZooming.Name = "lblHeadZooming";
             this.lblHeadZooming.Size = new System.Drawing.Size(56, 15);
@@ -862,7 +962,7 @@
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(15, 493);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(15, 633);
             this.lblHeadSlideshow.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
             this.lblHeadSlideshow.Size = new System.Drawing.Size(63, 15);
@@ -873,7 +973,7 @@
             // 
             this.lblHeadThumbnailBar.AutoSize = true;
             this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(15, 309);
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(15, 449);
             this.lblHeadThumbnailBar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
             this.lblHeadThumbnailBar.Size = new System.Drawing.Size(86, 15);
@@ -895,7 +995,7 @@
             // 
             this.chkLoopViewer.AutoSize = true;
             this.chkLoopViewer.Location = new System.Drawing.Point(30, 57);
-            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(1);
             this.chkLoopViewer.Name = "chkLoopViewer";
             this.chkLoopViewer.Size = new System.Drawing.Size(387, 19);
             this.chkLoopViewer.TabIndex = 14;
@@ -905,8 +1005,8 @@
             // chkMouseNavigation
             // 
             this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(30, 203);
-            this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkMouseNavigation.Location = new System.Drawing.Point(30, 343);
+            this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(1);
             this.chkMouseNavigation.Name = "chkMouseNavigation";
             this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
             this.chkMouseNavigation.TabIndex = 17;
@@ -916,7 +1016,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 236);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 376);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
@@ -929,8 +1029,8 @@
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(30, 254);
-            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(30, 394);
+            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(187, 23);
             this.cmbZoomOptimization.TabIndex = 18;
@@ -938,8 +1038,8 @@
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(30, 331);
-            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(30, 471);
+            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(1);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
             this.chkThumbnailVertical.TabIndex = 19;
@@ -949,7 +1049,7 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(27, 419);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(27, 559);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
@@ -969,8 +1069,8 @@
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 437);
-            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 577);
+            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(187, 23);
             this.cmbThumbnailDimension.TabIndex = 21;
@@ -979,7 +1079,7 @@
             // 
             this.chkImageBoosterBack.AutoSize = true;
             this.chkImageBoosterBack.Location = new System.Drawing.Point(30, 79);
-            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(1);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
             this.chkImageBoosterBack.Size = new System.Drawing.Size(385, 19);
             this.chkImageBoosterBack.TabIndex = 15;
@@ -989,8 +1089,8 @@
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(30, 515);
-            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(30, 655);
+            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(1);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(405, 19);
             this.chkLoopSlideshow.TabIndex = 22;
@@ -999,8 +1099,8 @@
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(30, 383);
-            this.numMaxThumbSize.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(30, 523);
+            this.numMaxThumbSize.Margin = new System.Windows.Forms.Padding(1);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -1024,7 +1124,7 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(27, 364);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(27, 504);
             this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
             this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
@@ -1054,7 +1154,7 @@
             "Extension",
             "Random"});
             this.cmbImageOrder.Location = new System.Drawing.Point(30, 127);
-            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(1);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(187, 23);
             this.cmbImageOrder.TabIndex = 16;
@@ -1062,12 +1162,12 @@
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(30, 568);
-            this.barInterval.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.barInterval.Location = new System.Drawing.Point(30, 708);
+            this.barInterval.Margin = new System.Windows.Forms.Padding(1);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
-            this.barInterval.Size = new System.Drawing.Size(195, 45);
+            this.barInterval.Size = new System.Drawing.Size(195, 42);
             this.barInterval.TabIndex = 23;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
@@ -1076,7 +1176,7 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(27, 547);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(27, 687);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(163, 15);
@@ -1087,7 +1187,7 @@
             // 
             this.chkFindChildFolder.AutoSize = true;
             this.chkFindChildFolder.Location = new System.Drawing.Point(30, 35);
-            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(1);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(166, 19);
             this.chkFindChildFolder.TabIndex = 13;
@@ -1104,7 +1204,7 @@
             // 
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.Location = new System.Drawing.Point(1, 1);
-            this.sp1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.sp1.Margin = new System.Windows.Forms.Padding(1);
             this.sp1.Name = "sp1";
             // 
             // sp1.Panel1
@@ -1241,7 +1341,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.Margin = new System.Windows.Forms.Padding(1);
             this.MinimumSize = new System.Drawing.Size(470, 368);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
@@ -1360,5 +1460,14 @@
         private System.Windows.Forms.TableLayoutPanel tblayout;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ComboBox cmbMouseWheelAlt;
+        private System.Windows.Forms.ComboBox cmbMouseWheelShift;
+        private System.Windows.Forms.ComboBox cmbMouseWheelCtrl;
+        private System.Windows.Forms.ComboBox cmbMouseWheel;
+        private System.Windows.Forms.Label lblMouseWheelAlt;
+        private System.Windows.Forms.Label lblMouseWheelShift;
+        private System.Windows.Forms.Label lblMouseWheelCtrl;
+        private System.Windows.Forms.Label lblMouseWheel;
+        private System.Windows.Forms.Label lblHeadMouseWheelActions;
     }
 }

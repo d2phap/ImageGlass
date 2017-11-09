@@ -586,6 +586,51 @@ namespace ImageGlass
             return ImageBox.CreateCheckerBoxTile(8, Color.Gainsboro, Color.WhiteSmoke);
         }
 
+        /// <summary>
+        /// Use mouse wheel to scroll the image vertically (by default) or horizontally
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="horizontal"></param>
+        public void ScrollWithMouseWheel(int delta, bool horizontal = false)
+        {
+            Size clientSize;
+            clientSize = GetInsideViewPort(true).Size;
+            if (horizontal)
+            {
+                if (ScaledImageWidth > clientSize.Width)
+                {
+                    AdjustScroll(-delta, 0);
+                }
+            }
+            else
+            {
+                if (ScaledImageHeight > clientSize.Height)
+                {
+                    AdjustScroll(0, -delta);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use mouse wheel to zoom the image
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="cursorPosition"></param>
+        public void ZoomWithMouseWheel(int delta, Point cursorPosition)
+        {
+            if (SizeMode == ImageBoxSizeMode.Normal)
+            {
+                int spins;
+                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
+                spins = Math.Abs(delta / SystemInformation.MouseWheelScrollDelta);
+                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
+                for (int i = 0; i < spins; i++)
+                {
+                    ProcessMouseZoom(delta > 0, cursorPosition);
+                }
+            }
+        }
+
         #endregion
 
         #region Overridden Properties
@@ -935,20 +980,6 @@ namespace ImageGlass
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            if (AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
-            {
-                int spins;
-
-                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
-                spins = Math.Abs(e.Delta / SystemInformation.MouseWheelScrollDelta);
-
-                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
-                for (int i = 0; i < spins; i++)
-                {
-                    ProcessMouseZoom(e.Delta > 0, e.Location);
-                }
-            }
         }
 
         /// <summary>

@@ -102,7 +102,7 @@ namespace ImageGlass
         private void lblButton_MouseDown(object sender, MouseEventArgs e)
         {
             Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;            
+            lbl.BackColor = M_COLOR_MENU_ACTIVE;
         }
 
         private void lblButton_MouseUp(object sender, MouseEventArgs e)
@@ -119,8 +119,8 @@ namespace ImageGlass
 
         private void lblButton_MouseLeave(object sender, EventArgs e)
         {
-            Label lbl = (Label)sender; 
-            lbl.BackColor = M_COLOR_MENU_NORMAL;            
+            Label lbl = (Label)sender;
+            lbl.BackColor = M_COLOR_MENU_NORMAL;
         }
         #endregion
 
@@ -170,7 +170,7 @@ namespace ImageGlass
         {
             Refresh();
         }
-        
+
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save config---------------------------------
@@ -180,14 +180,14 @@ namespace ImageGlass
                 GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
             }
 
-            
+
             GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
             GlobalSetting.SaveConfigOfImageEditingAssociationList();
 
             //Tabs State---------------------------------------------------------------------------
             GlobalSetting.SettingsTabLastView = tab1.SelectedIndex;
 
-            
+
         }
 
         private void frmSetting_KeyDown(object sender, KeyEventArgs e)
@@ -347,7 +347,7 @@ namespace ImageGlass
             {
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
-                
+
                 // Load image formats to the list
                 LoadExtensionList();
             }
@@ -407,7 +407,7 @@ namespace ImageGlass
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
-        
+
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
         {
@@ -437,7 +437,7 @@ namespace ImageGlass
         private void LoadTabImageConfig()
         {
             //Get value of chkFindChildFolder ---------------------------------------------
-            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;            
+            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
 
             //Get value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
@@ -458,6 +458,51 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
 
+            //TODO: Localize mouse wheel settings 
+            //Get mouse wheel actions (with no control keys pressed) ----------------------------------------------
+            cmbMouseWheel.Items.Clear();
+            cmbMouseWheel.Items.Add("Do nothing");
+            cmbMouseWheel.Items.Add("Zoom");
+            cmbMouseWheel.Items.Add("Scroll vertically");
+            cmbMouseWheel.Items.Add("Scroll horizontally");
+            cmbMouseWheel.Items.Add("Browse images");
+
+            //Get value of cmbMouseWheel
+            cmbMouseWheel.SelectedIndex = (int)GlobalSetting.MouseWheelAction;
+
+            //Get mouse wheel actions with <Ctrl> key pressed
+            cmbMouseWheelCtrl.Items.Clear();
+            cmbMouseWheelCtrl.Items.Add("Do nothing");
+            cmbMouseWheelCtrl.Items.Add("Zoom");
+            cmbMouseWheelCtrl.Items.Add("Scroll vertically");
+            cmbMouseWheelCtrl.Items.Add("Scroll horizontally");
+            cmbMouseWheelCtrl.Items.Add("Browse images");
+            
+            //Get value of cmbMouseWheelCtrl
+            cmbMouseWheelCtrl.SelectedIndex = (int)GlobalSetting.MouseWheelCtrlAction;
+
+            //Get mouse wheel actions with <Shift> key pressed
+            cmbMouseWheelShift.Items.Clear();
+            cmbMouseWheelShift.Items.Add("Do nothing");
+            cmbMouseWheelShift.Items.Add("Zoom");
+            cmbMouseWheelShift.Items.Add("Scroll vertically");
+            cmbMouseWheelShift.Items.Add("Scroll horizontally");
+            cmbMouseWheelShift.Items.Add("Browse images");
+
+            //Get value of cmbMouseWheelShift
+            cmbMouseWheelShift.SelectedIndex = (int)GlobalSetting.MouseWheelShiftAction;
+
+            //Get mouse wheel actions with <Alt> key pressed
+            cmbMouseWheelAlt.Items.Clear();
+            cmbMouseWheelAlt.Items.Add("Do nothing");
+            cmbMouseWheelAlt.Items.Add("Zoom");
+            cmbMouseWheelAlt.Items.Add("Scroll vertically");
+            cmbMouseWheelAlt.Items.Add("Scroll horizontally");
+            cmbMouseWheelAlt.Items.Add("Browse images");
+        
+            //Get value of cmbMouseWheelAlt
+            cmbMouseWheelAlt.SelectedIndex = (int)GlobalSetting.MouseWheelAltAction;
+
             //Use mouse wheel to browse images ----------------------------------------------
             chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
 
@@ -475,7 +520,7 @@ namespace ImageGlass
 
             //load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
-            
+
             //Get value of chkLoopSlideshow --------------------------------------------------
             chkLoopSlideshow.Checked = GlobalSetting.IsLoopBackSlideShow;
 
@@ -488,7 +533,7 @@ namespace ImageGlass
 
 
         }
-        
+
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
@@ -578,7 +623,7 @@ namespace ImageGlass
             }
 
             f.Dispose();
-            
+
         }
 
         private void btnEditEditAllExt_Click(object sender, EventArgs e)
@@ -591,7 +636,7 @@ namespace ImageGlass
 
             if (f.ShowDialog() == DialogResult.OK)
             {
-                foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+                foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
                 {
                     assoc.AppName = f.AppName;
                     assoc.AppPath = f.AppPath;
@@ -692,19 +737,19 @@ namespace ImageGlass
                 cmbLanguage.SelectedIndex = 0;
             }
         }
-        
+
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblLanguageWarning.Visible = false;
 
             //check compatibility
             var lang = new Language();
-            if(lang.MinVersion.CompareTo(dsLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
+            if (lang.MinVersion.CompareTo(dsLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
             {
                 lblLanguageWarning.Visible = true;
             }
         }
-        
+
 
 
         #endregion
@@ -764,7 +809,7 @@ namespace ImageGlass
             // Load Optional Image Formats
             GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
         }
-        
+
         /// <summary>
         /// Register file associations
         /// </summary>
@@ -779,7 +824,7 @@ namespace ImageGlass
             {
                 LoadExtensionList();
             }
-            
+
 
             // Update extensions to registry
             Process p = new Process();
@@ -804,7 +849,7 @@ namespace ImageGlass
         {
             if (lvExtension.CheckedItems.Count == 0)
                 return;
-            
+
             var selectedDefaultExts = new StringBuilder();
             var selectedOptionalExts = new StringBuilder();
 
@@ -908,7 +953,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
 
             //IsPortableMode
-            GlobalSetting.IsPortableMode = chkPortableMode.Checked;            
+            GlobalSetting.IsPortableMode = chkPortableMode.Checked;
             if (Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1) // Check if user ia using temporary Portable mode from param
             {
                 GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
@@ -964,6 +1009,16 @@ namespace ImageGlass
             GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
             GlobalSetting.LoadImageOrderConfig();
 
+            //Mouse wheel actions
+            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
+            GlobalSetting.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
+            GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)cmbMouseWheelCtrl.SelectedIndex;
+            GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)cmbMouseWheelShift.SelectedIndex;
+            GlobalSetting.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
+
             //IsMouseNavigation
             GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
             GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
@@ -1008,7 +1063,7 @@ namespace ImageGlass
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
 
             #endregion
-            
+
 
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;

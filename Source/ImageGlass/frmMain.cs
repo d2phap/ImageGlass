@@ -1401,6 +1401,73 @@ namespace ImageGlass
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
 
+            //Get mouse wheel settings -----------------------------------------
+            configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
+            int mouseWheel;
+            if(int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelAction = (MouseWheelActions)mouseWheel;
+
+            configValue2 = GlobalSetting.GetConfig("MouseWheelCtrlAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)mouseWheel;
+
+            configValue2 = GlobalSetting.GetConfig("MouseWheelShiftAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)mouseWheel;
+
+            configValue2 = GlobalSetting.GetConfig("MouseWheelAltAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
+
+
             //Load state of IsMouseNavigation value-------------------------------------------
             GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
             picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
@@ -1862,25 +1929,54 @@ namespace ImageGlass
             }
         }
 
-        // Use mouse wheel to navigate images
+        // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (GlobalSetting.IsMouseNavigation && !_isZoomed)
+            MouseWheelActions action;
+            switch(Control.ModifierKeys)
             {
-                //Prevent picmain zooming
-                picMain.AllowZoom = false;
-
-                if (e.Delta < 0)
-                {
-                    //Next pic
-                    mnuMainViewNext_Click(null, null);
-                }
-                else
-                {
-                    //Previous pic
-                    mnuMainViewPrevious_Click(null, null);
-                }
+                case Keys.Control:
+                    action = GlobalSetting.MouseWheelCtrlAction;
+                    break;
+                case Keys.Shift:
+                    action = GlobalSetting.MouseWheelShiftAction;
+                    break;
+                case Keys.Alt:
+                    action = GlobalSetting.MouseWheelAltAction;
+                    break;
+                case Keys.None:
+                default:
+                    action = GlobalSetting.MouseWheelAction;
+                    break;
             }
+            switch(action)
+            {
+                case MouseWheelActions.ZOOM:
+                    picMain.ZoomWithMouseWheel(e.Delta, e.Location);
+                    break;
+                case MouseWheelActions.SCROLL_VERTICAL:
+                    picMain.ScrollWithMouseWheel(e.Delta);
+                    break;
+                case MouseWheelActions.SCROLL_HORIZONTAL:
+                    picMain.ScrollWithMouseWheel(e.Delta, true);
+                    break;
+                case MouseWheelActions.BROWSE_IMAGES:
+                    if (e.Delta < 0)
+                    {
+                        //Next pic
+                        mnuMainViewNext_Click(null, null);
+                    }
+                    else
+                    {
+                        //Previous pic
+                        mnuMainViewPrevious_Click(null, null);
+                    }
+                    break;
+                case MouseWheelActions.DO_NOTHING:
+                default:
+                    break;
+            }
+            
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
