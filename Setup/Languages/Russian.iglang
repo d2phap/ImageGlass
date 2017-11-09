@@ -163,8 +163,17 @@
       <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Время последней записи" />
       <Item key="frmSetting.cmbImageOrder._Extension" value="Расширение" />
       <Item key="frmSetting.cmbImageOrder._Random" value="Случайный" />
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Действие колёсика мыши" />
+      <Item key="frmSetting.lblMouseWheel" value="Колесо мыши" />
+      <Item key="frmSetting.lblMouseWheelAlt" value="Колесо мыши + Alt" />
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Колесо мыши + Ctrl" />
+      <Item key="frmSetting.lblMouseWheelShift" value="Колесо мыши + Shift" />
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Ничего не делать" />
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Масштабировать" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Прокрутка по вертикали" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Прокрутка по горизонтали" />
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предыдущее/следующее изображение" />
       <Item key="frmSetting.lblHeadZooming" value="Масштабирование" />
-      <Item key="frmSetting.chkMouseNavigation" value="Использовать колесо мыши для просмотра изображений, удерживая клавишу CTRL для масштабирования" />
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимизация масштаба" />
       <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматически" />
       <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Пиксели с размытыми краями" />

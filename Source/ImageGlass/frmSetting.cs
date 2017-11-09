@@ -239,6 +239,12 @@ namespace ImageGlass
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
 
+            lblHeadMouseWheelActions.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadMouseWheelActions"];
+            lblMouseWheel.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheel"];
+            lblMouseWheelAlt.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelAlt"];
+            lblMouseWheelCtrl.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelCtrl"];
+            lblMouseWheelShift.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelShift"];
+
             lblHeadZooming.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadZooming"];//
             //chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
             lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
@@ -458,48 +464,47 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
 
-            //TODO: Localize mouse wheel settings 
             //Get mouse wheel actions (with no control keys pressed) ----------------------------------------------
             cmbMouseWheel.Items.Clear();
-            cmbMouseWheel.Items.Add("Do nothing");
-            cmbMouseWheel.Items.Add("Zoom");
-            cmbMouseWheel.Items.Add("Scroll vertically");
-            cmbMouseWheel.Items.Add("Scroll horizontally");
-            cmbMouseWheel.Items.Add("Browse images");
+            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
+            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
+            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
+            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
+            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
 
             //Get value of cmbMouseWheel
             cmbMouseWheel.SelectedIndex = (int)GlobalSetting.MouseWheelAction;
 
             //Get mouse wheel actions with <Ctrl> key pressed
             cmbMouseWheelCtrl.Items.Clear();
-            cmbMouseWheelCtrl.Items.Add("Do nothing");
-            cmbMouseWheelCtrl.Items.Add("Zoom");
-            cmbMouseWheelCtrl.Items.Add("Scroll vertically");
-            cmbMouseWheelCtrl.Items.Add("Scroll horizontally");
-            cmbMouseWheelCtrl.Items.Add("Browse images");
-            
+            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
+            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
+            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
+            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
+            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
+
             //Get value of cmbMouseWheelCtrl
             cmbMouseWheelCtrl.SelectedIndex = (int)GlobalSetting.MouseWheelCtrlAction;
 
             //Get mouse wheel actions with <Shift> key pressed
             cmbMouseWheelShift.Items.Clear();
-            cmbMouseWheelShift.Items.Add("Do nothing");
-            cmbMouseWheelShift.Items.Add("Zoom");
-            cmbMouseWheelShift.Items.Add("Scroll vertically");
-            cmbMouseWheelShift.Items.Add("Scroll horizontally");
-            cmbMouseWheelShift.Items.Add("Browse images");
+            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
+            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
+            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
+            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
+            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
 
             //Get value of cmbMouseWheelShift
             cmbMouseWheelShift.SelectedIndex = (int)GlobalSetting.MouseWheelShiftAction;
 
             //Get mouse wheel actions with <Alt> key pressed
             cmbMouseWheelAlt.Items.Clear();
-            cmbMouseWheelAlt.Items.Add("Do nothing");
-            cmbMouseWheelAlt.Items.Add("Zoom");
-            cmbMouseWheelAlt.Items.Add("Scroll vertically");
-            cmbMouseWheelAlt.Items.Add("Scroll horizontally");
-            cmbMouseWheelAlt.Items.Add("Browse images");
-        
+            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
+            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
+            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
+            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
+            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
+
             //Get value of cmbMouseWheelAlt
             cmbMouseWheelAlt.SelectedIndex = (int)GlobalSetting.MouseWheelAltAction;
 

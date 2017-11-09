@@ -452,10 +452,22 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbImageOrder._Random", "Random");
             #endregion
 
+            #region Mouse wheel actions
+            Items.Add("frmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
+            Items.Add("frmSetting.lblMouseWheel", "Mouse wheel");
+            Items.Add("frmSetting.lblMouseWheelAlt", "Mouse wheel + Alt");
+            Items.Add("frmSetting.lblMouseWheelCtrl", "Mouse wheel + Ctrl");
+            Items.Add("frmSetting.lblMouseWheelShift", "Mouse wheel + Shift");
+            Items.Add("frmSetting.cmbMouseWheel._DoNothing", "Do nothing");
+            Items.Add("frmSetting.cmbMouseWheel._Zoom", "Zoom");
+            Items.Add("frmSetting.cmbMouseWheel._ScrollVertically", "Scroll vertically");
+            Items.Add("frmSetting.cmbMouseWheel._ScrollHorizontally", "Scroll horizontally");
+            Items.Add("frmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
+            #endregion
 
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
-            Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
+            //Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
