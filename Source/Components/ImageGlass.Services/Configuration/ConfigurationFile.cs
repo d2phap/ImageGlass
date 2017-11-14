@@ -109,7 +109,7 @@ namespace ImageGlass.Services.Configuration
         }
 
         /// <summary>
-        /// Check is ImageGlass can write config file in the startup folder
+        /// Check if ImageGlass can write config file in the startup folder
         /// </summary>
         /// <returns></returns>
         public bool IsWritable()

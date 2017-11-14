@@ -1621,9 +1621,13 @@ namespace ImageGlass
             if (Directory.Exists(temp_dir))
             {
                 Directory.Delete(temp_dir, true);
-            }            
+            }
 
-            SaveConfig();
+            try
+            {
+                SaveConfig();
+            }
+            catch { }
         }
 
         private void frmMain_Deactivate(object sender, EventArgs e)
