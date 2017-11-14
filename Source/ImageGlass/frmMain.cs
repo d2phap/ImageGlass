@@ -65,8 +65,11 @@ namespace ImageGlass
         // determine if the image is zoomed
         private bool _isZoomed = false;
 
-        //determine if toolbar is shown
+        //determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
+
+        //determine if thumbnail is shown  (fullscreen / slideshow)
+        private bool _isShowThumbnail = true;
 
         private bool _isWindowsKeyPressed = false;
 
@@ -2448,6 +2451,7 @@ namespace ImageGlass
 
                 //save last state of toolbar
                 _isShowToolbar = GlobalSetting.IsShowToolBar;
+                _isShowThumbnail = GlobalSetting.IsShowThumbnail;
 
                 FormBorderStyle = FormBorderStyle.None;
                 WindowState = FormWindowState.Normal;
@@ -2455,10 +2459,20 @@ namespace ImageGlass
                 Application.DoEvents();
                 Bounds = Screen.FromControl(this).Bounds;
 
-                //Hide
+                //Hide toolbar
                 toolMain.Visible = false;
                 GlobalSetting.IsShowToolBar = false;
                 mnuMainToolbar.Checked = false;
+
+                //hide thumbnail
+                GlobalSetting.IsShowThumbnail = true;
+                mnuMainThumbnailBar_Click(null, null);
+
+                //realign image
+                if (!_isZoomed)
+                {
+                    mnuMainRefresh_Click(null, null);
+                }
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
                     , 2000);
@@ -2468,6 +2482,7 @@ namespace ImageGlass
             {
                 //restore last state of toolbar
                 GlobalSetting.IsShowToolBar = _isShowToolbar;
+                GlobalSetting.IsShowThumbnail = _isShowThumbnail;
 
                 FormBorderStyle = FormBorderStyle.Sizable;
 
@@ -2487,12 +2502,25 @@ namespace ImageGlass
 
                 GlobalSetting.IsFullScreen = false;
                 Application.DoEvents();
-
+                
                 if (GlobalSetting.IsShowToolBar)
                 {
                     //Show toolbar
                     toolMain.Visible = true;
                     mnuMainToolbar.Checked = true;
+                }
+
+                if (GlobalSetting.IsShowThumbnail)
+                {
+                    //Show thumbnail
+                    GlobalSetting.IsShowThumbnail = false;
+                    mnuMainThumbnailBar_Click(null, null);
+                }
+
+                //realign image
+                if (!_isZoomed)
+                {
+                    mnuMainRefresh_Click(null, null);
                 }
             }
         }
