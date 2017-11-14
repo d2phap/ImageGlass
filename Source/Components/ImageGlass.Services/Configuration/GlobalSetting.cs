@@ -101,15 +101,7 @@ namespace ImageGlass.Services.Configuration
             get { return GlobalSetting._imageList; }
             set { GlobalSetting._imageList = value; }
         }
-
-        /// <summary>
-        /// Gets, sets filename list
-        /// </summary>
-        //public static List<String> ImageFilenameList
-        //{
-        //    get { return GlobalSetting._imageFilenameList; }
-        //    set { GlobalSetting._imageFilenameList = value; }
-        //}
+        
 
         /// <summary>
         /// Gets, sets Access token of Facebook

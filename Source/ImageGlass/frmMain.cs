@@ -50,6 +50,7 @@ namespace ImageGlass
             //Check DPI Scaling ratio
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
             OnDpiChanged();
+
         }
 
 
@@ -1562,6 +1563,27 @@ namespace ImageGlass
                 DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
                 OnDpiChanged();                
             }
+            else if (m.Msg == 0x0112) // WM_SYSCOMMAND
+            {
+                // Check your window state here
+                if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
+                {
+                    // The window is being maximized
+                    if (!_isZoomed)
+                    {
+                        mnuMainRefresh_Click(null, null);
+                    }
+                }
+                // Check your window state here
+                else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
+                {
+                    // The window is being restored
+                    if (!_isZoomed)
+                    {
+                        mnuMainRefresh_Click(null, null);
+                    }
+                }
+            }
             base.WndProc(ref m);
         }
         
@@ -1573,7 +1595,7 @@ namespace ImageGlass
 
             //Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
-
+            
             LoadConfig();
             Application.DoEvents();
 
@@ -1786,11 +1808,16 @@ namespace ImageGlass
         {
             if (Size != _windowSize && !_isZoomed)
             {
-                mnuMainRefresh_Click(null, null);
-
                 SaveConfig();
             }
-            
+        }
+
+        private void frmMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (!_isZoomed)
+            {
+                mnuMainRefresh_Click(null, null);
+            }
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
@@ -3144,6 +3171,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
 
 
