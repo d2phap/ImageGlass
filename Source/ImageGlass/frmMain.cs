@@ -97,12 +97,20 @@ namespace ImageGlass
         }
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
-            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-
             // Drag file from DESKTOP to APP
-            if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
+            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            int imageIndex = GlobalSetting.ImageList.IndexOf(filePath);
+
+            // The file is located another folder, load the entire folder
+            if (imageIndex == -1)
             {
                 Prepare(filePath);
+            }
+            // The file is in current folder, just display the image
+            else
+            {
+                GlobalSetting.CurrentIndex = imageIndex;
+                NextPic(0);
             }
         }
 
