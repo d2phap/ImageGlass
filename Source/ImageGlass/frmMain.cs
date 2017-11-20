@@ -517,30 +517,17 @@ namespace ImageGlass
                 return;
             }
 
-            //Set the text of Window title
-            this.Text = "ImageGlass - " +
-                        (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.Length + " " +
-                        GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
-                        GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-
             if (GlobalSetting.IsImageError)
             {
-                try
-                {
-                    fileinfo = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
-                    fileinfo += Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).Replace(".", "").ToUpper() + "  |  ";
-                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
-                    _imageInfo = fileinfo;
-                }
-                catch { fileinfo = ""; }
+                fileinfo = "";
             }
             else
             {
-                try
-                {
-                    fileinfo += picMain.Image.Width + " x " + picMain.Image.Height + " px  |  ";
-                }
-                catch { }
+                //Set the text of Window title
+                this.Text = "ImageGlass - " +
+                            (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.Length + " " +
+                            GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
+                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "  |  ";
 
                 if (zoomOnly)
                 {
@@ -548,6 +535,7 @@ namespace ImageGlass
                 }
                 else
                 {
+                    fileinfo += picMain.Image.Width + " x " + picMain.Image.Height + " px  |  ";
                     fileinfo += ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
                     fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
 
@@ -558,7 +546,7 @@ namespace ImageGlass
             }
 
             //Move image information to Window title
-            this.Text += "  |  " + fileinfo;
+            this.Text += fileinfo;
 
         }
         #endregion
