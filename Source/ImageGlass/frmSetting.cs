@@ -815,7 +815,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = $"regassociations {extensions}";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
