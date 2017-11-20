@@ -255,10 +255,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
             Items.Add("frmMain.btnPrintImage", "Print image (Ctrl + P)");
-            Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)");
-            Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)");
-            Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)");
-            Items.Add("frmMain.btnHelp", "Help (F1)");
+            //Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)"); //removed 4.5
+            //Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)"); //removed 4.5
+            //Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)"); //removed 4.5
+            //Items.Add("frmMain.btnHelp", "Help (F1)"); //removed 4.5
 
             Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
             #endregion

@@ -25,7 +25,6 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
-            ImageGlass.ImageListView.ImageListViewColor imageListViewColor1 = new ImageGlass.ImageListView.ImageListViewColor();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,11 +56,6 @@
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
             this.btnPrintImage = new System.Windows.Forms.ToolStripButton();
-            this.btnFacebook = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExtension = new System.Windows.Forms.ToolStripButton();
-            this.btnSetting = new System.Windows.Forms.ToolStripButton();
-            this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuMainOpenFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,18 +200,13 @@
             this.btnOpen,
             this.btnRefresh,
             this.btnGoto,
-            this.btnThumb,
             this.toolStripSeparator3,
+            this.btnThumb,
             this.btnCheckedBackground,
             this.btnFullScreen,
             this.btnSlideShow,
             this.btnConvert,
             this.btnPrintImage,
-            this.btnFacebook,
-            this.toolStripSeparator4,
-            this.btnExtension,
-            this.btnSetting,
-            this.btnHelp,
             this.btnMenu,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
@@ -553,69 +542,6 @@
             this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnPrintImage_Click);
             // 
-            // btnFacebook
-            // 
-            this.btnFacebook.AutoSize = false;
-            this.btnFacebook.BackColor = System.Drawing.Color.Transparent;
-            this.btnFacebook.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFacebook.Image = global::ImageGlass.Properties.Resources.uploadfb;
-            this.btnFacebook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnFacebook.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFacebook.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFacebook.Name = "btnFacebook";
-            this.btnFacebook.Size = new System.Drawing.Size(33, 33);
-            this.btnFacebook.ToolTipText = "Upload to Facebook (Ctrl + U)";
-            this.btnFacebook.Click += new System.EventHandler(this.btnFacebook_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.AutoSize = false;
-            this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(5, 33);
-            // 
-            // btnExtension
-            // 
-            this.btnExtension.AutoSize = false;
-            this.btnExtension.BackColor = System.Drawing.Color.Transparent;
-            this.btnExtension.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExtension.Image = global::ImageGlass.Properties.Resources.extension;
-            this.btnExtension.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnExtension.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExtension.Margin = new System.Windows.Forms.Padding(0);
-            this.btnExtension.Name = "btnExtension";
-            this.btnExtension.Size = new System.Drawing.Size(33, 33);
-            this.btnExtension.ToolTipText = "Extension Manager (Ctrl + Shift + E)";
-            this.btnExtension.Click += new System.EventHandler(this.btnExtension_Click);
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.AutoSize = false;
-            this.btnSetting.BackColor = System.Drawing.Color.Transparent;
-            this.btnSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSetting.Image = global::ImageGlass.Properties.Resources.settings;
-            this.btnSetting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(33, 33);
-            this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + Shift + P)";
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.AutoSize = false;
-            this.btnHelp.BackColor = System.Drawing.Color.Transparent;
-            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnHelp.Image = global::ImageGlass.Properties.Resources.about;
-            this.btnHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(33, 33);
-            this.btnHelp.ToolTipText = "Help (F1)";
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
             // btnMenu
             // 
             this.btnMenu.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -659,7 +585,6 @@
             this.toolStripMenuItem21,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mnuMain.Size = new System.Drawing.Size(409, 554);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
@@ -1498,32 +1423,7 @@
             // 
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            imageListViewColor1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnHeaderBackColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnHeaderBackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnHeaderHoverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnHeaderHoverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ColumnSeparatorColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.ControlBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.DisabledColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.DisabledColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.HoverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.HoverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.PaneBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.PaneSeparatorColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.SelectedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.SelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.SelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.SelectionRectangleColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.SelectionRectangleColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.UnFocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.UnFocusedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            imageListViewColor1.UnFocusedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.thumbnailBar.Colors = imageListViewColor1;
+            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1606,16 +1506,11 @@
         private System.Windows.Forms.ToolStripButton btnFullScreen;
         private System.Windows.Forms.ToolStripButton btnSlideShow;
         private System.Windows.Forms.ToolStripButton btnConvert;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton btnSetting;
-        private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
-        private System.Windows.Forms.ToolStripButton btnFacebook;
-        private System.Windows.Forms.ToolStripButton btnExtension;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
         private System.IO.FileSystemWatcher sysWatch;
         private ImageBox picMain;

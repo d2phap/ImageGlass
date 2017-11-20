@@ -1212,17 +1212,14 @@ namespace ImageGlass
             btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
             btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
             btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+
             btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
             btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
             btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
             btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
-
             btnConvert.Image = t.ToolbarIcons.Convert.Image;
             btnPrintImage.Image = t.ToolbarIcons.Print.Image;
-            btnFacebook.Image = t.ToolbarIcons.Sharing.Image;
-            btnExtension.Image = t.ToolbarIcons.Plugins.Image;
-            btnSetting.Image = t.ToolbarIcons.Settings.Image;
-            btnHelp.Image = t.ToolbarIcons.About.Image;
+
             btnMenu.Image = t.ToolbarIcons.Menu.Image;
         }
 
@@ -1719,10 +1716,6 @@ namespace ImageGlass
                 btnSlideShow.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSlideShow"];
                 btnConvert.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnConvert"];
                 btnPrintImage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnPrintImage"];
-                btnFacebook.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFacebook"];
-                btnExtension.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnExtension"];
-                btnSetting.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSetting"];
-                btnHelp.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnHelp"];
                 btnMenu.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnMenu"];
 
                 //Main menu
