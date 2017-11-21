@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26127.3
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass", "ImageGlass\ImageGlass.csproj", "{97F81263-4825-4C06-A7B6-2E999765FA28}"
 EndProject
@@ -298,5 +298,8 @@ Global
 		{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 		{4159C8D3-C18D-4BED-8BE6-9BAD1B0CA4F6} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 		{0C295FB8-C6C6-4A40-9F19-05A43F353A04} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B615DD31-5898-4B61-82D5-F63AB5690C5F}
 	EndGlobalSection
 EndGlobal
