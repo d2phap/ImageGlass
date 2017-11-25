@@ -56,7 +56,7 @@ namespace ImageGlass
 
 
         #region Local variables
-
+        // information to display in title bar
         private string _imageInfo = "";
 
         // window size value before resizing
@@ -65,15 +65,25 @@ namespace ImageGlass
         // determine if the image is zoomed
         private bool _isZoomed = false;
 
-        //determine if toolbar is shown (fullscreen / slideshow)
+        // determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
 
-        //determine if thumbnail is shown  (fullscreen / slideshow)
+        // determine if thumbnail is shown  (fullscreen / slideshow)
         private bool _isShowThumbnail = true;
 
+        // determine if Windows key is pressed
         private bool _isWindowsKeyPressed = false;
 
+        // determine if user is dragging an image file
         private bool _isDraggingImage = false;
+
+
+        /***********************************
+         * Variables for FileSystemWatcher
+         ***********************************/
+        WatcherChangeTypes _lastAction = WatcherChangeTypes.All; //Last action fired.
+        DateTime _lastActionTime = DateTime.Now; //When the last action was fired.
+        List<string> queueListForDeleting = new List<string>(); // the list of local deleted files, need to be deleted in the memory list
         #endregion
 
 
@@ -1604,7 +1614,12 @@ namespace ImageGlass
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
-            
+
+            //Start thread to watching deleted files
+            System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles));
+            thDeleteWorker.Priority = System.Threading.ThreadPriority.BelowNormal;
+            thDeleteWorker.IsBackground = true;
+            thDeleteWorker.Start();
         }
 
         public void LoadFromParams(string[] args)
@@ -1839,6 +1854,8 @@ namespace ImageGlass
             }
         }
 
+
+        #region File System Watcher events
         private void sysWatch_Renamed(object sender, RenamedEventArgs e)
         {
             // Only watch the supported file types
@@ -1872,11 +1889,7 @@ namespace ImageGlass
             }
         }
 
-
         
-        WatcherChangeTypes _lastAction = WatcherChangeTypes.All;
-        DateTime _lastActionTime = DateTime.Now;
-        Image _lastImage = null;
 
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
@@ -1930,10 +1943,8 @@ namespace ImageGlass
             // need to wait few ms to check the next action
             else if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
-                _lastImage = (Image)picMain.Image.Clone();
-
                 Timer tim_waitingForNextActionAfterDelete = new Timer();
-                tim_waitingForNextActionAfterDelete.Interval = 500;
+                tim_waitingForNextActionAfterDelete.Interval = 50;
                 tim_waitingForNextActionAfterDelete.Tick += Tim_waitingForNextActionAfterDelete_Tick;
                 tim_waitingForNextActionAfterDelete.Tag = e.FullPath;
                 tim_waitingForNextActionAfterDelete.Enabled = true;
@@ -1947,6 +1958,12 @@ namespace ImageGlass
             _lastActionTime = DateTime.Now;
         }
 
+        /// <summary>
+        /// Wait for a short time to confirm the file was deleted or modified.
+        /// If it was actually deleted, add it to the queue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tim_waitingForNextActionAfterDelete_Tick(object sender, EventArgs e)
         {
             var timer = (Timer)sender;
@@ -1954,44 +1971,104 @@ namespace ImageGlass
 
             if (_lastAction == WatcherChangeTypes.Deleted || _lastAction == WatcherChangeTypes.All)
             {
-                //Get index of deleted image
-                int imgIndex = GlobalSetting.ImageList.IndexOf(timer.Tag.ToString());
-
-                if (imgIndex > -1)
-                {
-                    var img = _lastImage;
-                    _lastImage = null;
-
-                    //delete image list
-                    GlobalSetting.ImageList.Remove(imgIndex);
-
-                    try
-                    {
-                        //delete thumbnail list
-                        thumbnailBar.Items.RemoveAt(imgIndex);
-
-                        //In case multiple files are deleted, to avoid the app not crashed
-                        //We just display message instead
-                        picMain.Text = GlobalSetting.LangPack.Items["frmMain._ImageNotExist"];
-                    }
-#pragma warning disable CS0168 // Variable is declared but never used
-                    catch (Exception ex) { }
-#pragma warning restore CS0168 // Variable is declared but never used
-
-                    // change the viewing image to memory data mode
-                    if (imgIndex == GlobalSetting.CurrentIndex)
-                    {
-                        GlobalSetting.IsImageError = true;
-                        GlobalSetting.IsTempMemoryData = true;
-                        picMain.Image = (Image)img;
-                    }
-
-                }
+                // add to queue list for deleting
+                queueListForDeleting.Add(timer.Tag.ToString());
+                //Console.WriteLine("Will del file: " + timer.Tag.ToString());
             }
 
             //reset
             _lastAction = WatcherChangeTypes.All;
         }
+
+        /// <summary>
+        /// The queue thread to check the files needed to be deleted.
+        /// </summary>
+        private void ThreadWatcherDeleteFiles()
+        {
+            while (true)
+            {
+                if (queueListForDeleting.Count > 0)
+                {
+                    var filename = queueListForDeleting[0];
+                    queueListForDeleting.RemoveAt(0);
+
+                    DoDeleteFiles(filename);
+                    Application.DoEvents();
+                    GC.Collect();
+                }
+                else
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Proceed deleting file in memory
+        /// </summary>
+        /// <param name="filename"></param>
+        private void DoDeleteFiles(string filename)
+        {
+            //Get index of deleted image
+            int imgIndex = GlobalSetting.ImageList.IndexOf(filename);
+
+            if (imgIndex > -1)
+            {
+                //delete image list
+                GlobalSetting.ImageList.Remove(imgIndex);
+
+                try
+                {
+                    //delete thumbnail list
+                    thumbnailBar.Items.RemoveAt(imgIndex);
+                }
+#pragma warning disable CS0168 // Variable is declared but never used
+                catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
+
+                // change the viewing image to memory data mode
+                if (imgIndex == GlobalSetting.CurrentIndex)
+                {
+                    GlobalSetting.IsImageError = true;
+                    GlobalSetting.IsTempMemoryData = true;
+
+                    UpdatePicMain(GlobalSetting.LangPack.Items["frmMain._ImageNotExist"]);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Update UI of the picMain control
+        /// </summary>
+        /// <param name="text"></param>
+        private delegate void UpdatePicMainCallback(string text);
+        /// <summary>
+        /// Update UI of the picMain control
+        /// </summary>
+        /// <param name="text"></param>
+        private void UpdatePicMain(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (picMain.InvokeRequired)
+            {
+                UpdatePicMainCallback d = new UpdatePicMainCallback(UpdatePicMain);
+                Invoke(d, new object[] { text });
+            }
+            else
+            {
+                picMain.Text = text;
+
+                if (queueListForDeleting.Count == 0)
+                {
+                    NextPic(0);
+                }
+            }
+        }
+        #endregion
+
 
         // Use mouse wheel to navigate images
         private void picMain_MouseWheel(object sender, MouseEventArgs e)
