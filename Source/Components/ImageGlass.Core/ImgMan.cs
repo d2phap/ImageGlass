@@ -79,25 +79,33 @@ namespace ImageGlass.Core
         /// Returns image i, applying all configured enhancements
         /// </summary>
         /// <param name="i">The image to return</param>
+        /// <param name="isSkippingCache">Option to skip the cache</param>
         /// <returns>Image i</returns>
-        public Image GetImage(int i)
+        public Image GetImage(int i, bool isSkippingCache = false)
         {
             Image img = null;
 
-            // Start off with unloading excessive images
-            for (int a = 0; a < i - 2; a++)
+            if (!isSkippingCache)
             {
-                lstImage[a].Dispose();
-            }
-            for (int a = i + 2; a < lstImage.Count; a++)
-            {
-                lstImage[a].Dispose();
-            }
+                // Start off with unloading excessive images
+                for (int a = 0; a < i - 2; a++)
+                {
+                    lstImage[a].Dispose();
+                }
+                for (int a = i + 2; a < lstImage.Count; a++)
+                {
+                    lstImage[a].Dispose();
+                }
 
-            lstQueue.Clear();
-            lstQueue.Add(lstImage[i]);
-            Enqueue(i + 1);
-            Enqueue(i - 1);
+                lstQueue.Clear();
+                lstQueue.Add(lstImage[i]);
+                Enqueue(i + 1);
+                Enqueue(i - 1);
+            }
+            else
+            {
+                lstImage[i].Load();
+            }
 
             while (!lstImage[i].IsFinished)
             {
@@ -180,6 +188,7 @@ namespace ImageGlass.Core
         {
             lstImage[i].SetFileName(s);
         }
+        
 
         public void Unload(int i)
         {

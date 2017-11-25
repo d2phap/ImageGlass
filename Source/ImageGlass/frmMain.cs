@@ -363,7 +363,8 @@ namespace ImageGlass
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
-        private void NextPic(int step, bool isKeepZoomRatio)
+        /// <param name="isSkippingCache"></param>
+        private void NextPic(int step, bool isKeepZoomRatio, bool isSkippingCache = false)
         {
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath))
@@ -429,7 +430,7 @@ namespace ImageGlass
             try
             {
                 //Read image data
-                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkippingCache);
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
@@ -511,7 +512,7 @@ namespace ImageGlass
         {
             string fileinfo = "";
 
-            if (GlobalSetting.ImageList.Length < 1)
+            if (GlobalSetting.ImageList.Length < 1 || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
             {
                 this.Text = $"ImageGlass {fileinfo}";
                 return;
@@ -1603,7 +1604,8 @@ namespace ImageGlass
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
-            
+
+            sysWatch.NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size | NotifyFilters.LastWrite | NotifyFilters.DirectoryName;
         }
 
         public void LoadFromParams(string[] args)
@@ -1658,6 +1660,7 @@ namespace ImageGlass
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
+
             if (GlobalSetting.IsForcedActive)
             {
                 //Update thumbnail bar position--------
@@ -1668,7 +1671,6 @@ namespace ImageGlass
                 if(LocalSetting.IsThumbnailDimensionChanged)
                 {
                     LocalSetting.IsThumbnailDimensionChanged = false;
-
                     LoadThumbnails();
                 }
 
@@ -1840,6 +1842,13 @@ namespace ImageGlass
 
         private void sysWatch_Renamed(object sender, RenamedEventArgs e)
         {
+            // Only watch the supported file types
+            var ext = Path.GetExtension(e.Name);
+            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            {
+                return;
+            }
+
             string newName = e.FullPath;
             string oldName = e.OldFullPath;
 
@@ -1863,16 +1872,93 @@ namespace ImageGlass
                 catch { }
             }
         }
+
+
         
+        WatcherChangeTypes _lastAction = WatcherChangeTypes.All;
+        DateTime _lastActionTime = DateTime.Now;
+
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
-            if (e.ChangeType == WatcherChangeTypes.Deleted)
+            // Only watch the supported file types
+            var ext = Path.GetExtension(e.Name);
+            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            {
+                return;
+            }
+
+            var timeDiff = (DateTime.Now - _lastActionTime).TotalSeconds;
+
+            Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.fff") + ": " + e.ChangeType.ToString());
+            Console.WriteLine(timeDiff.ToString());
+
+
+            //Formular
+            //update: delete - create   |  all
+            //create: create            |  all
+            //delete: delete            |  all
+
+            if (e.ChangeType == WatcherChangeTypes.Created)
+            {
+                // File change type = Updated
+                if (_lastAction == WatcherChangeTypes.Deleted && timeDiff < 5)
+                {
+                    // update the viewing image
+                    var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+                    if (imgIndex == GlobalSetting.CurrentIndex)
+                    {
+                        NextPic(0, true, true);
+                    }
+                }
+                // File change type = Created
+                else
+                {
+                    if (GlobalSetting.ImageList.IndexOf(e.FullPath) == -1)
+                    {
+                        //Add the new image to the list
+                        GlobalSetting.ImageList.AddItem(e.FullPath);
+
+                        //Add the new image to thumbnail bar
+                        ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
+                        lvi.Tag = e.FullPath;
+                        thumbnailBar.Items.Add(lvi);
+                    }
+                }
+                
+            }
+            // Still not sure if File change type = Deleted,
+            // need to wait few ms to check the next action
+            else if (e.ChangeType == WatcherChangeTypes.Deleted)
+            {
+                Timer tim_waitingForNextActionAfterDelete = new Timer();
+                tim_waitingForNextActionAfterDelete.Interval = 500;
+                tim_waitingForNextActionAfterDelete.Tick += Tim_waitingForNextActionAfterDelete_Tick;
+                tim_waitingForNextActionAfterDelete.Tag = e.FullPath;
+                tim_waitingForNextActionAfterDelete.Enabled = true;
+
+                _lastAction = e.ChangeType;
+                
+            }
+
+
+            _lastAction = e.ChangeType;
+            _lastActionTime = DateTime.Now;
+        }
+
+        private void Tim_waitingForNextActionAfterDelete_Tick(object sender, EventArgs e)
+        {
+            var timer = (Timer)sender;
+            timer.Enabled = false;
+
+            if (_lastAction == WatcherChangeTypes.Deleted || _lastAction == WatcherChangeTypes.All)
             {
                 //Get index of deleted image
-                int imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+                int imgIndex = GlobalSetting.ImageList.IndexOf(timer.Tag.ToString());
 
                 if (imgIndex > -1)
                 {
+                    var img = picMain.Image.Clone();
+
                     //delete image list
                     GlobalSetting.ImageList.Remove(imgIndex);
 
@@ -1881,33 +1967,27 @@ namespace ImageGlass
                         //delete thumbnail list
                         thumbnailBar.Items.RemoveAt(imgIndex);
 
-                        //In case multiple files are deleted, to avoid the app doesnt crash
+                        //In case multiple files are deleted, to avoid the app not crashed
                         //We just display message instead
                         picMain.Text = GlobalSetting.LangPack.Items["frmMain._ImageNotExist"];
-                        picMain.Image = null;
-                        this.Text = "ImageGlass";
-                        LocalSetting.ImageModifiedPath = "";
                     }
+#pragma warning disable CS0168 // Variable is declared but never used
                     catch (Exception ex) { }
+#pragma warning restore CS0168 // Variable is declared but never used
+
+                    // change the viewing image to memory data mode
+                    if (imgIndex == GlobalSetting.CurrentIndex)
+                    {
+                        GlobalSetting.IsImageError = true;
+                        GlobalSetting.IsTempMemoryData = true;
+                        picMain.Image = (Image)img;
+                    }
 
                 }
             }
-            else if (e.ChangeType == WatcherChangeTypes.Created)
-            {
-                if (!File.Exists(e.FullPath))
-                {
-                    return;
-                }
 
-                //Add the new image to the list
-                GlobalSetting.ImageList.AddItem(e.FullPath);
-
-                //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
-                lvi.Tag = e.FullPath;
-                thumbnailBar.Items.Add(lvi);
-
-            }
+            //reset
+            _lastAction = WatcherChangeTypes.All;
         }
 
         // Use mouse wheel to navigate images
@@ -2129,19 +2209,20 @@ namespace ImageGlass
             mnuMainReportIssue_Click(null, e);
         }
         #endregion
-        
+
 
 
         #region Popup Menu
         private void mnuPopup_Opening(object sender, CancelEventArgs e)
         {
+            bool isImageNull = false;
+
             try
             {
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
                                  GlobalSetting.IsImageError)
                 {
-                    e.Cancel = true;
-                    return;
+                    isImageNull = true;
                 }
             }
             catch { e.Cancel = true; return; }
@@ -2149,62 +2230,75 @@ namespace ImageGlass
             //clear current items
             mnuPopup.Items.Clear();
 
-            if (GlobalSetting.IsPlaySlideShow)
+            if (GlobalSetting.IsPlaySlideShow && !isImageNull)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
                 mnuPopup.Items.Add(new ToolStripSeparator());//---------------
             }
-            
+
             //toolbar menu
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainToolbar));
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
-            mnuPopup.Items.Add(new ToolStripSeparator());//---------------
+            
 
             //Get Editing Assoc App info
-            UpdateEditingAssocAppInfoForMenu();
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
-            
-            //check if image can animate (GIF)
-            try
+            if (!isImageNull)
             {
-                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                int frameCount = img.GetFrameCount(dim);
+                mnuPopup.Items.Add(new ToolStripSeparator());//---------------
 
-                if (frameCount > 1)
+                UpdateEditingAssocAppInfoForMenu();
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
+
+                //check if image can animate (GIF)
+                try
                 {
-                    var mi = Library.Menu.Clone(mnuMainExtractFrames);
-                    mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                    int frameCount = img.GetFrameCount(dim);
 
-                    mnuPopup.Items.Add(Library.Menu.Clone(mi));
-                    mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
+                    if (frameCount > 1)
+                    {
+                        var mi = Library.Menu.Clone(mnuMainExtractFrames);
+                        mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+
+                        mnuPopup.Items.Add(Library.Menu.Clone(mi));
+                        mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
+                    }
+
                 }
-
+                catch { }
             }
-            catch { }
 
-
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
+            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+            {
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
+            }
 
             mnuPopup.Items.Add(new ToolStripSeparator());//------------
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
+            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+            {
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
+            }
 
-            mnuPopup.Items.Add(new ToolStripSeparator());//------------
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
+            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+            {
+                mnuPopup.Items.Add(new ToolStripSeparator());//------------
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
+            }
 
-            mnuPopup.Items.Add(new ToolStripSeparator());//------------
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainShareFacebook));
-
-            mnuPopup.Items.Add(new ToolStripSeparator());//------------
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
+            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+            {
+                mnuPopup.Items.Add(new ToolStripSeparator());//------------
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
+            }
 
         }
         #endregion
@@ -2598,18 +2692,16 @@ namespace ImageGlass
 
         private void mnuMainPrint_Click(object sender, EventArgs e)
         {
-            string temFile = "";
-            
             //image error
-            if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
+            if (picMain.Image == null)
             {
                 return;
             }
-            else
-            {
-                //save image to temp file
-                temFile = SaveTemporaryMemoryData();
-            }
+
+            //save image to temp file
+            string temFile = "";
+            temFile = SaveTemporaryMemoryData();
+            
 
             Process p = new Process();
             p.StartInfo.FileName = temFile;
@@ -2841,6 +2933,8 @@ namespace ImageGlass
 
                     ImageInfo.DeleteFile(f, true);
 
+                    NextPic(0);
+
                 }
                 catch (Exception ex)
                 {
@@ -2885,6 +2979,8 @@ namespace ImageGlass
                     }
 
                     ImageInfo.DeleteFile(f);
+
+                    NextPic(0);
                 }
                 catch (Exception ex)
                 {
@@ -2919,7 +3015,7 @@ namespace ImageGlass
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.IsImageError)
+            if (!GlobalSetting.IsTempMemoryData && File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 return;
 
             try
