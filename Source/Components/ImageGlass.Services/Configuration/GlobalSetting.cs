@@ -89,6 +89,7 @@ namespace ImageGlass.Services.Configuration
 
         private static NumberFormatInfo numFormat = new NumberFormatInfo();
         private static bool _isSaveAfterRotating = false;
+        private static bool _isNewVersionAvailable = false;
 
 
         #region "Properties"
@@ -567,6 +568,11 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
         /// </summary>
         public static bool IsSaveAfterRotating { get => _isSaveAfterRotating; set => _isSaveAfterRotating = value; }
+
+        /// <summary>
+        /// Gets, sets the value indicates that there is a new version
+        /// </summary>
+        public static bool IsNewVersionAvailable { get => _isNewVersionAvailable; set => _isNewVersionAvailable = value; }
 
 
 

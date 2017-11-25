@@ -1470,6 +1470,9 @@ namespace ImageGlass
                     Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
                 }
             }
+
+            //Get IsNewVersionAvailable------------------------------------------------------
+            GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
         }
 
 
@@ -1600,6 +1603,7 @@ namespace ImageGlass
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
+            
         }
 
         public void LoadFromParams(string[] args)
@@ -1783,6 +1787,8 @@ namespace ImageGlass
 
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
+
+                mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
                 #endregion
 
@@ -3142,6 +3148,14 @@ namespace ImageGlass
             f.ShowDialog();
         }
 
+        private void mnuMainCheckForUpdate_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(Application.StartupPath, "igcmd.exe");
+            p.StartInfo.Arguments = "igupdate";
+            p.Start();
+        }
+
         private void mnuMainReportIssue_Click(object sender, EventArgs e)
         {
             try
@@ -3150,6 +3164,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
         private void mnuMainStartStopAnimating_Click(object sender, EventArgs e)
         {
@@ -3167,6 +3182,9 @@ namespace ImageGlass
         {
             try
             {
+                // Alert user if there is a new version
+                mnuMainCheckForUpdate.Visible = GlobalSetting.IsNewVersionAvailable;
+
                 mnuMainExtractFrames.Enabled = false;
                 mnuMainStartStopAnimating.Enabled = false;
 
@@ -3188,6 +3206,7 @@ namespace ImageGlass
             }
             catch { }
         }
+
 
 
 

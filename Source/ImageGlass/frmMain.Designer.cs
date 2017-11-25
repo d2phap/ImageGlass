@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +49,8 @@
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
-            this.btnThumb = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnThumb = new System.Windows.Forms.ToolStripButton();
             this.btnCheckedBackground = new System.Windows.Forms.ToolStripButton();
             this.btnFullScreen = new System.Windows.Forms.ToolStripButton();
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
@@ -130,6 +130,7 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
+            this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -448,6 +449,13 @@
             this.btnGoto.ToolTipText = "Go to ... (Ctrl + G)";
             this.btnGoto.Click += new System.EventHandler(this.btnGoto_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(5, 33);
+            // 
             // btnThumb
             // 
             this.btnThumb.AutoSize = false;
@@ -462,13 +470,6 @@
             this.btnThumb.Size = new System.Drawing.Size(33, 33);
             this.btnThumb.ToolTipText = "Show thumbnail (Ctrl + T)";
             this.btnThumb.Click += new System.EventHandler(this.btnThumb_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(5, 33);
             // 
             // btnCheckedBackground
             // 
@@ -583,10 +584,11 @@
             this.mnuMainSettings,
             this.mnuMainAbout,
             this.toolStripMenuItem21,
+            this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 554);
+            this.mnuMain.Size = new System.Drawing.Size(409, 617);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1398,7 +1400,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
@@ -1438,6 +1440,14 @@
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
+            // 
+            // mnuMainCheckForUpdate
+            // 
+            this.mnuMainCheckForUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(227)))), ((int)(((byte)(181)))));
+            this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
+            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
+            this.mnuMainCheckForUpdate.Text = "A new version is available";
+            this.mnuMainCheckForUpdate.Click += new System.EventHandler(this.mnuMainCheckForUpdate_Click);
             // 
             // frmMain
             // 
@@ -1587,6 +1597,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomToFit;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
     }
 }
 

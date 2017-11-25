@@ -67,8 +67,8 @@ namespace ImageGlass
 
                 if (DateTime.TryParse(lastUpdateConfig, out lastUpdate))
                 {
-                    //Check for update every 7 days
-                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
+                    //Check for update every 3 days
+                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
                     {
                         Process p = new Process();
                         p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
