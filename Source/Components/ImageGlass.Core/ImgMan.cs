@@ -202,6 +202,12 @@ namespace ImageGlass.Core
             lstImage.RemoveAt(i);
         }
 
+        public void Remove(string filename)
+        {
+            int index = IndexOf(filename);
+            Remove(index);
+        }
+
         public int IndexOf(string filename)
         {
             return lstImage.FindIndex(v => v.GetFileName() == filename);

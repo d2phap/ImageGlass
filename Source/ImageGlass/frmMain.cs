@@ -1604,8 +1604,7 @@ namespace ImageGlass
 
             //Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
-
-            sysWatch.NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size | NotifyFilters.LastWrite | NotifyFilters.DirectoryName;
+            
         }
 
         public void LoadFromParams(string[] args)
@@ -1877,6 +1876,7 @@ namespace ImageGlass
         
         WatcherChangeTypes _lastAction = WatcherChangeTypes.All;
         DateTime _lastActionTime = DateTime.Now;
+        Image _lastImage = null;
 
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
@@ -1930,6 +1930,8 @@ namespace ImageGlass
             // need to wait few ms to check the next action
             else if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
+                _lastImage = (Image)picMain.Image.Clone();
+
                 Timer tim_waitingForNextActionAfterDelete = new Timer();
                 tim_waitingForNextActionAfterDelete.Interval = 500;
                 tim_waitingForNextActionAfterDelete.Tick += Tim_waitingForNextActionAfterDelete_Tick;
@@ -1957,7 +1959,8 @@ namespace ImageGlass
 
                 if (imgIndex > -1)
                 {
-                    var img = picMain.Image.Clone();
+                    var img = _lastImage;
+                    _lastImage = null;
 
                     //delete image list
                     GlobalSetting.ImageList.Remove(imgIndex);
@@ -2910,8 +2913,7 @@ namespace ImageGlass
 
             if (msg == DialogResult.Yes)
             {
-
-                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
                     //in case of GIF file...
@@ -2931,9 +2933,8 @@ namespace ImageGlass
                         NextPic(0);
                     }
 
-                    ImageInfo.DeleteFile(f, true);
-
-                    NextPic(0);
+                    
+                    ImageInfo.DeleteFile(filename, true);
 
                 }
                 catch (Exception ex)
@@ -2958,7 +2959,9 @@ namespace ImageGlass
 
             if (msg == DialogResult.Yes)
             {
-                string f = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                
+
+                string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
                     //If ext == GIF, release memory before deleting
@@ -2976,11 +2979,11 @@ namespace ImageGlass
                         GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
 
                         NextPic(0);
+
                     }
 
-                    ImageInfo.DeleteFile(f);
-
-                    NextPic(0);
+                    ImageInfo.DeleteFile(filename);
+                    
                 }
                 catch (Exception ex)
                 {
