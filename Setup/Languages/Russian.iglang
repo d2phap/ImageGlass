@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Формат по умолчанию" />
       <Item key="_.ImageFormatGroup.Optional" value="Дополнительные форматы" />
@@ -181,8 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Повторять слайд-шоу с первого изображения при достижении конца" />
       <Item key="frmSetting.lblSlideshowInterval" value="Слайд-шоу Интервал: {0} секунд" />
       <Item key="frmSetting.lblHeadImageEditing" value="Редактирование изображений" />
-      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
-      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Сохранить изображение после поворота" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Выберите приложение для редактирования изображений" />
       <Item key="frmSetting.btnEditEditExt" value="Редактировать" />
       <Item key="frmSetting.btnEditResetExt" value="Восстановить по умолчанию" />
       <Item key="frmSetting.btnEditEditAllExt" value="Редактировать все расширения" />

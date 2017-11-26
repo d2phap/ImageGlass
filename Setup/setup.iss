@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "4.1.7.26"
+#define MyAppVersion "4.5.11.27"
 #define MyAppPublisher "Duong Dieu Phap"
 #define MyAppURL "http://www.imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
@@ -97,17 +97,16 @@ Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{a
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Assets\default.png"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DefaultTheme\*"; DestDir: "{app}\DefautTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Assets\default.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: "Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 

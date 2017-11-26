@@ -1,18 +1,18 @@
 <ImageGlass>
   <Language>
-    <Info langCode="kh" langName="ភាសាខ្មែរ" author="ImageGlass community" description="Khmer" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="kh" langName="ភាសាខ្មែរ" author="ImageGlass community" description="Khmer" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="លំនាំដើម" />
       <Item key="_.ImageFormatGroup.Optional" value="ការជ្រើសរើស" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass មិនអាចបើក​រូប​ភាព​នេះ​បានទេ ដោយ​សារតែ​ឯកសារ​ត្រូវ​បានខូចខាត ឬ​មិន​គាំទ្រ​ជា​មួយ​នឹង​កម្មវិធី។" />
-      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
+      <Item key="frmMain._ImageNotExist" value="គ្មាន​រូបភាព​ដែល​កំពុង​មើល" />
       <Item key="frmMain.btnBack" value="ចូលទៅ​កាន់​រូប​ភាព​មុន (ព្រួញ​ខាង​ឆ្វេង / ព្រួញ​ខាង​លើ)" />
       <Item key="frmMain.btnNext" value="ចូល​ទៅ​កាន់​រូបភាព​បន្ទាប់ (ព្រួញ​ខាង​ស្ដាំ / ព្រួញ​ខាង​ក្រោម)" />
       <Item key="frmMain.btnRotateLeft" value="បង្វិល​ច្រាស​ទ្រនិចនាឡិកា (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="បង្វិលស្របទ្រនិចនាឡិកា (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="ពង្រីក (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="បង្រួម (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
+      <Item key="frmMain.btnZoomToFit" value="ពង្រីកឲ្យសម (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="ទំហំពិតប្រាកដ (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="ចាក់សោរការពង្រីកសមាមាត្រ (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="មាត្រដ្ឋានទទឹង (Ctrl + W)" />
@@ -68,7 +68,7 @@
       <Item key="frmMain.mnuMainSetAsDesktop" value="យក​រូបភាព​នេះ​ទៅ​ដាក់​នៅ​លើ​អេក្រង់" />
       <Item key="frmMain.mnuMainImageLocation" value="បើក​រូប​ភាព​ចេញ​ពី​ទីតាំង​ផ្ទុក" />
       <Item key="frmMain.mnuMainImageProperties" value="លក្ខណៈសម្បត្តិរបស់​រូបភាព" />
-      <Item key="frmMain.mnuMainClipboard" value="Clipboard" />
+      <Item key="frmMain.mnuMainClipboard" value="ក្ដារតម្បៀតខ្ទាស់" />
       <Item key="frmMain.mnuMainCopy" value="ចម្លង" />
       <Item key="frmMain.mnuMainCopyMulti" value="ចម្លងឯកសារច្រើន" />
       <Item key="frmMain.mnuMainCut" value="កាត់" />
@@ -156,7 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="កំណត់ឡើងវិញ" />
       <Item key="frmSetting.lblHeadImageLoading" value="រូបភាព​កំពុង​ដំណើរការ" />
       <Item key="frmSetting.chkFindChildFolder" value="រកមើលរូបភាពនៅក្នុងថតតូច" />
-      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
+      <Item key="frmSetting.chkShowHiddenImages" value="បង្ហាញ​រូបភាព​ដែល​បាន​លាក់" />
       <Item key="frmSetting.chkLoopViewer" value="មើលត្រឡប់​ក្រោយ​ទៅ​រូបភាព​ដំបូង នៅ​ពេល​ឈាន​ដល់​ចុង​បញ្ចប់​នៃ​បញ្ជី" />
       <Item key="frmSetting.chkImageBoosterBack" value="បើក​កម្មវិធី​បង្កើន​ល្បឿន​រូបភាព នៅ​ពេល​ងាក​ថយ​ក្រោយ (ត្រូវ​ការ​ RAM ច្រើន​ជាង ~20%)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="កំពុងផ្ទុករូបភាព" />
@@ -181,8 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="ស្លាយបង្ហាញ​ជាលក្ខណៈរង្វិលជុំ។ ចាប់ផ្ដើមពីរូបភាពដំបូងបង្អស់ និងបន្ទាប់មកដល់រូបភាពចុងក្រោយ" />
       <Item key="frmSetting.lblSlideshowInterval" value="ចន្លោះពេលបញ្ចាំងស្លាយ: {0} វិនាទី" />
       <Item key="frmSetting.lblHeadImageEditing" value="កែសម្រួលរូបភាព" />
-      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
-      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.chkSaveOnRotate" value="រក្សា​ទុក​រូបភាព​បន្ទាប់​ពី​ការ​បង្វិល" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="ជ្រើស​កម្មវិធី​សម្រាប់​កែសម្រួល​រូបភាព" />
       <Item key="frmSetting.btnEditEditExt" value="កែសម្រួល" />
       <Item key="frmSetting.btnEditResetExt" value="កំណត់ទៅលំនាំដើម" />
       <Item key="frmSetting.btnEditEditAllExt" value="កែសម្រួលកម្មវិធី​បន្ថែម​ទាំងអស់" />

@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="el-GR" langName="Ελληνικά" author="ImageGlass community" description="Greek" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="el-GR" langName="Ελληνικά" author="ImageGlass community" description="Greek" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Προεπιλεγμένες επεκτάσεις" />
       <Item key="_.ImageFormatGroup.Optional" value="Προαιρετικές επεκτάσεις" />

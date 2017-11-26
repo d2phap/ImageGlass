@@ -1,18 +1,18 @@
 <ImageGlass>
   <Language>
-    <Info langCode="fr-FR" langName="Français" author="ImageGlass community" description="French" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="fr-FR" langName="Français" author="ImageGlass community" description="French" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Formats par défaut" />
       <Item key="_.ImageFormatGroup.Optional" value="Formats optionnels" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass n'a pas pu ouvrir cette image car le fichier semble être endommagé ou corrompu." />
-      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
+      <Item key="frmMain._ImageNotExist" value="L'image sélectionnée n'existe pas." />
       <Item key="frmMain.btnBack" value="Aller à l'image précédente (Flèche gauche / PgUp)" />
       <Item key="frmMain.btnNext" value="Aller à l'image suivante (Flèche droite/ PgDn)" />
       <Item key="frmMain.btnRotateLeft" value="Faire pivoter vers la gauche (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="Faire pivoter vers la droite (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Zoomer (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Dézoomer (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
+      <Item key="frmMain.btnZoomToFit" value="Adapter l'image à la fenêtre (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Taille réelle (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Bloquer le zoom (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Mettre à l'échelle de la Largeur (Ctrl + W)" />
@@ -94,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Entrer l'index de l'image pour l'afficher. Appuyez sur {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Supprimer le fichier '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Confirmer" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Extraction des images. Veuillez sélectionner un dossier cible." />
       <Item key="frmMain._FullScreenMessage" value="Appuyez sur ALT + entrée pour quitter le mode plein écran.&#xA; ou CTRL + F1 pour afficher le menu." />
       <Item key="frmMain._SlideshowMessage" value="Appuyez sur Echap pour quitter le diaporama.&#xA; Faites un clic droit pour ouvrir le menu contextuel." />
       <Item key="frmMain._SlideshowMessagePause" value="Le diaporama est en pause" />
@@ -133,9 +133,9 @@
       <Item key="frmAbout._Text" value="A propos" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Paramètres" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Sauvegarder" />
       <Item key="frmSetting.btnCancel" value="Annuler" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Appliquer" />
       <Item key="frmSetting.lblGeneral" value="Général" />
       <Item key="frmSetting.lblImage" value="Image" />
       <Item key="frmSetting.lblFileAssociations" value="Associations de fichiers" />
@@ -144,19 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Montrer l'image de bienvenue" />
       <Item key="frmSetting.chkShowToolBar" value="Monter la barre d'outil au démarrage" />
       <Item key="frmSetting.lblHeadPortableMode" value="Mode Portable" />
-      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
-      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Mode portable activé" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Le mode portable est désactivé sur le dossier installé:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Autres" />
       <Item key="frmSetting.chkAutoUpdate" value="Rechercher les mises à jour automatiquement" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Autoriser plusieurs instances du programme" />
       <Item key="frmSetting.chkESCToQuit" value="Permettre d'appuyer sur Echap afin de quitter l'application" />
       <Item key="frmSetting.chkConfirmationDelete" value="Afficher le dialogue de confirmation de suppression" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Désactiver les barres de défilement" />
       <Item key="frmSetting.lblBackGroundColor" value="Couleur d'arrière-plan" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Réinitialiser" />
       <Item key="frmSetting.lblHeadImageLoading" value="Chargement de l'image" />
       <Item key="frmSetting.chkFindChildFolder" value="Trouver des images dans le dossier &quot;enfant&quot;" />
-      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Afficher les images cachées" />
       <Item key="frmSetting.chkLoopViewer" value="Faire tourner les images en boucles une fois arrivé à la fin de la liste" />
       <Item key="frmSetting.chkImageBoosterBack" value="Mettre en marche l'amélioration d'image quand il y a un retour en arrière (besoin de plus de ~20% de la RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Ordre de chargement d'image" />
@@ -181,12 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Faire tourner le diaporama en boucle" />
       <Item key="frmSetting.lblSlideshowInterval" value="Intervalle du diaporama: {0} secondes" />
       <Item key="frmSetting.lblHeadImageEditing" value="Retouche d'image" />
-      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
-      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Sauvegarder l'image affichée après la rotation" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Sélectionner l'application d'édition d'image" />
       <Item key="frmSetting.btnEditEditExt" value="Editer" />
       <Item key="frmSetting.btnEditResetExt" value="Réinitialiser" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Editer toutes les extensions" />
+      <Item key="frmSetting._allExtensions" value="toutes les extensions" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Extension de fichier" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nom de l'application" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Chemin de l'application" />

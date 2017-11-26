@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="cz-CZ" langName="Čeština" author="ImageGlass community" description="Czech" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="cz-CZ" langName="Čeština" author="ImageGlass community" description="Czech" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Výchozí formáty" />
       <Item key="_.ImageFormatGroup.Optional" value="Volitelné formáty" />

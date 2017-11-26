@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="既定の形式" />
       <Item key="_.ImageFormatGroup.Optional" value="オプションの形式" />

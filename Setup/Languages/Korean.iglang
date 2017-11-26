@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ko-KR" langName="한국어" author="ImageGlass community" description="Korean" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="ko-KR" langName="한국어" author="ImageGlass community" description="Korean" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="기본 파일 형식" />
       <Item key="_.ImageFormatGroup.Optional" value="선택적 파일 형식" />

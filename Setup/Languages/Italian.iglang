@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="it-IT" langName="Italiano" author="ImageGlass community" description="Italian" minVersion="4.1.26.7" isRightToLeftLayout="No" />
+    <Info langCode="it-IT" langName="Italiano" author="ImageGlass community" description="Italian" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Formati predefiniti" />
       <Item key="_.ImageFormatGroup.Optional" value="Formati opzionali" />
