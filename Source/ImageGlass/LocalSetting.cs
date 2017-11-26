@@ -59,7 +59,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Gets, sets value if image was modified
+        /// Gets, sets value if image data was modified
         /// </summary>
         public static string ImageModifiedPath
         {
@@ -94,6 +94,7 @@ namespace ImageGlass
         /// Gets, sets the value that will request frmMain to update thumbnail bar
         /// </summary>
         public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
+        
         #endregion
 
     }

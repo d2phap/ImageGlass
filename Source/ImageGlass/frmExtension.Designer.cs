@@ -71,6 +71,7 @@
             this.btnInstallExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnInstallExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInstallExt.UseVisualStyleBackColor = true;
+            this.btnInstallExt.Visible = false;
             this.btnInstallExt.Click += new System.EventHandler(this.btnInstallExt_Click);
             // 
             // btnGetMoreExt
@@ -87,6 +88,7 @@
             this.btnGetMoreExt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnGetMoreExt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGetMoreExt.UseVisualStyleBackColor = true;
+            this.btnGetMoreExt.Visible = false;
             this.btnGetMoreExt.Click += new System.EventHandler(this.btnGetMoreExt_Click);
             // 
             // btnRefreshAllExt

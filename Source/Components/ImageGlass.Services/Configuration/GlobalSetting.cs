@@ -29,6 +29,7 @@ using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Linq;
+using System.Globalization;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -36,11 +37,12 @@ namespace ImageGlass.Services.Configuration
     {
         // Private settings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
-        private static List<String> _imageFilenameList = new List<string>();
+        //private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;
         private static bool _isRecursiveLoading = false;
+        private static bool _isShowingHiddenImages = false;
         private static StringCollection _stringClipboard = new StringCollection();
         private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
@@ -48,7 +50,7 @@ namespace ImageGlass.Services.Configuration
         private static bool _isStartUpDirWritable = true;
         private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;";
+        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
         private static int _settingsTabLastView = 0;
         
 
@@ -85,7 +87,9 @@ namespace ImageGlass.Services.Configuration
         private static bool _isScrollbarsVisible = false;
         private static List<ImageEditingAssociation> _imageEditingAssociationList = new List<ImageEditingAssociation>();
 
-
+        private static NumberFormatInfo numFormat = new NumberFormatInfo();
+        private static bool _isSaveAfterRotating = false;
+        private static bool _isNewVersionAvailable = false;
 
 
         #region "Properties"
@@ -98,15 +102,7 @@ namespace ImageGlass.Services.Configuration
             get { return GlobalSetting._imageList; }
             set { GlobalSetting._imageList = value; }
         }
-
-        /// <summary>
-        /// Gets, sets filename list
-        /// </summary>
-        public static List<String> ImageFilenameList
-        {
-            get { return GlobalSetting._imageFilenameList; }
-            set { GlobalSetting._imageFilenameList = value; }
-        }
+        
 
         /// <summary>
         /// Gets, sets Access token of Facebook
@@ -142,6 +138,15 @@ namespace ImageGlass.Services.Configuration
         {
             get { return GlobalSetting._isRecursiveLoading; }
             set { GlobalSetting._isRecursiveLoading = value; }
+        }
+
+        /// <summary>
+        /// Gets, sets showing/loading hidden images
+        /// </summary>
+        public static bool IsShowingHiddenImages
+        {
+            get => _isShowingHiddenImages;
+            set => _isShowingHiddenImages = value;
         }
 
         /// <summary>
@@ -546,7 +551,30 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsScrollbarsVisible { get => _isScrollbarsVisible; set => _isScrollbarsVisible = value; }
 
-        
+        /// <summary>
+        /// Default number format for ImageGlass
+        /// </summary>
+        public static NumberFormatInfo NumberFormat {
+            get
+            {
+                var newFormat = new NumberFormatInfo();
+                newFormat.NegativeSign = "-";
+                return newFormat;
+            }
+            set => numFormat = value;
+        }
+
+        /// <summary>
+        /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
+        /// </summary>
+        public static bool IsSaveAfterRotating { get => _isSaveAfterRotating; set => _isSaveAfterRotating = value; }
+
+        /// <summary>
+        /// Gets, sets the value indicates that there is a new version
+        /// </summary>
+        public static bool IsNewVersionAvailable { get => _isNewVersionAvailable; set => _isNewVersionAvailable = value; }
+
+
 
 
 

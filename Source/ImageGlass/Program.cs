@@ -55,19 +55,8 @@ namespace ImageGlass
             // Check if the start up directory writable
             GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
             
-
-            //check if user enable TEMPORARY portable mode ------------------------------
-            GlobalSetting.IsPortableMode = false;
-            
-            if (argv.ToList().IndexOf("--portable") != -1)
-            {
-                GlobalSetting.IsPortableMode = true;
-            }
-            else
-            {
-                string configValue = GlobalSetting.GetConfig("IsPortableMode", "False", true);
-                GlobalSetting.IsPortableMode = bool.Parse(configValue);
-            }
+            // Enable Portable mode as default if possible
+            GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
             //auto update----------------------------------------------------------------
             string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
@@ -78,8 +67,8 @@ namespace ImageGlass
 
                 if (DateTime.TryParse(lastUpdateConfig, out lastUpdate))
                 {
-                    //Check for update every 7 days
-                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 7)
+                    //Check for update every 3 days
+                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
                     {
                         Process p = new Process();
                         p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";

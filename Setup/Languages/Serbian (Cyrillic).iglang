@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="sr" langName="Српски (ћирилица)" author="ImageGlass community" description="Serbian Cyrillic" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="sr-RS" langName="Српски (ћирилица)" author="ImageGlass community" description="Serbian Cyrillic" minVersion="4.1.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Предефинисани формати" />
       <Item key="_.ImageFormatGroup.Optional" value="Опциони формати" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass не може да отвори ову слику јер је датотека изгледа оштећена, покварена или није подржана." />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
       <Item key="frmMain.btnBack" value="Иди на претходну слику (Стрелица лево / PageUp)" />
       <Item key="frmMain.btnNext" value="Иди на следећу слику (Стрелица десно / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Ротирај у лево (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="Ротирај у десно (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Приближи (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Одаљи (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Права величина (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Закључај размеру величине (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Величина према ширини (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Унеси индекс слике да би је видео. Притисни {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Обрисати датотеку '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Потврди" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Вађење оквира слика. Молимо изаберите циљни фолдер." />
       <Item key="frmMain._FullScreenMessage" value="Притисни ALT + ENTER да би изашао из мода пуног екрана.&#xA;Или CTRL + F1 да би приказао мени." />
       <Item key="frmMain._SlideshowMessage" value="Притисни ESC да би прекинуо пројекцију сјалдова.&#xA; Десни клик да би отворио садржајни мени." />
       <Item key="frmMain._SlideshowMessagePause" value="Пројекција слајдова је паузирана" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="О програму" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Подешавања" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Сачувај" />
       <Item key="frmSetting.btnCancel" value="Поништи" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Потврди" />
       <Item key="frmSetting.lblGeneral" value="Опште" />
       <Item key="frmSetting.lblImage" value="Слика" />
       <Item key="frmSetting.lblFileAssociations" value="Придруживање датотека" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Прикажи слику добродошлице" />
       <Item key="frmSetting.chkShowToolBar" value="Прикажи траку са алаткама при покретању" />
       <Item key="frmSetting.lblHeadPortableMode" value="Преносни режим" />
-      <Item key="frmSetting.chkPortableMode" value="Омогући преносни режим" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Друго" />
       <Item key="frmSetting.chkAutoUpdate" value="Аутоматска провера нове верзије" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Дозволи више инстанци програма" />
       <Item key="frmSetting.chkESCToQuit" value="Дозволи излазак из програма са ESC" />
       <Item key="frmSetting.chkConfirmationDelete" value="Прикажи потврдни прозор при брисању" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Прикази траку" />
       <Item key="frmSetting.lblBackGroundColor" value="Боја позадине" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Ресетуј" />
       <Item key="frmSetting.lblHeadImageLoading" value="Учитавање слике" />
       <Item key="frmSetting.chkFindChildFolder" value="Пронађи слике у подфасциклама" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
       <Item key="frmSetting.chkLoopViewer" value="Врати прегледач на прву слику када се достигне крај листе" />
       <Item key="frmSetting.chkImageBoosterBack" value="Укључи убрзавач слика при враћењу уназад (захтева додатних ~20% RAM-а)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Редослед учитавања слика" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Врати пројекцију слајдова на прву слику када се достигне крај листе" />
       <Item key="frmSetting.lblSlideshowInterval" value="Интервал пројекције слајдова: {0} секунда(е,и)" />
       <Item key="frmSetting.lblHeadImageEditing" value="Обрада слике" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
       <Item key="frmSetting.btnEditEditExt" value="Измени" />
       <Item key="frmSetting.btnEditResetExt" value="Ресетуј" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Измијени све екстензије" />
+      <Item key="frmSetting._allExtensions" value="све екстензије" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Екстензија датотеке" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Име програма" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путања до програма" />

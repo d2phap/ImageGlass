@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="預設格式" />
       <Item key="_.ImageFormatGroup.Optional" value="可選格式" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass 無法開啟這張圖片，因為檔案似乎已損毀或不支援。" />
+      <Item key="frmMain._ImageNotExist" value="找不到圖片檔案。" />
       <Item key="frmMain.btnBack" value="到前一張圖片 (左方向鍵／PageUp)" />
       <Item key="frmMain.btnNext" value="到下一張圖片 (右方向鍵／PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="逆時針旋轉 (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="順時針旋轉 (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="放大 (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="縮小 (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="縮放至適合 (Ctrl +/)" />
       <Item key="frmMain.btnActualSize" value="實際大小 (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="鎖定縮放比例 (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="縮放至與寬度相符 (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="輸入圖片索引以檢視它。按 {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="刪除檔案 '{0}' ？" />
       <Item key="frmMain._DeleteDialogTitle" value="確定" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="正在解壓縮圖片框架。請選取輸出資料夾。" />
       <Item key="frmMain._FullScreenMessage" value="按下 ALT + ENTER 離開全螢幕模式。&#xA;或是 CTRL + F1 來顯示選單。" />
       <Item key="frmMain._SlideshowMessage" value="按下 ESC 以退出幻燈片展示。&#xA; 右鍵點選以開啟右鍵選單。" />
       <Item key="frmMain._SlideshowMessagePause" value="幻燈片已暫停" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="關於" />
       <Item key="frmAbout._PortableText" value="[可攜版]" />
       <Item key="frmSetting._Text" value="設定" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="儲存" />
       <Item key="frmSetting.btnCancel" value="取消" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="套用" />
       <Item key="frmSetting.lblGeneral" value="一般" />
       <Item key="frmSetting.lblImage" value="圖片" />
       <Item key="frmSetting.lblFileAssociations" value="檔案關聯" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="顯示歡迎圖片" />
       <Item key="frmSetting.chkShowToolBar" value="啟動時顯示工具列" />
       <Item key="frmSetting.lblHeadPortableMode" value="可攜版模式" />
-      <Item key="frmSetting.chkPortableMode" value="啟用可攜版模式" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="可携帶模式已開啓" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="安裝資料夾中無法開啓可携帶模式:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="其他" />
       <Item key="frmSetting.chkAutoUpdate" value="自動檢查更新" />
       <Item key="frmSetting.chkAllowMultiInstances" value="允許程式執行多個實體" />
       <Item key="frmSetting.chkESCToQuit" value="允許按下 ESC 結束應用程式" />
       <Item key="frmSetting.chkConfirmationDelete" value="顯示刪除確認對話框" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="顯示檢視器捲軸列" />
       <Item key="frmSetting.lblBackGroundColor" value="背景顏色" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="重設" />
       <Item key="frmSetting.lblHeadImageLoading" value="圖片載入" />
       <Item key="frmSetting.chkFindChildFolder" value="在子資料夾中搜尋圖片" />
+      <Item key="frmSetting.chkShowHiddenImages" value="顯示隱藏圖像" />
       <Item key="frmSetting.chkLoopViewer" value="當到達清單結尾時，再回到第一張圖片繼續檢視" />
       <Item key="frmSetting.chkImageBoosterBack" value="當往回看時開啟圖片加速器（需要多 ~20% RAM）" />
       <Item key="frmSetting.lblImageLoadingOrder" value="圖片載入順序" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="當到達清單的結尾時，再從第一張圖片開始播放" />
       <Item key="frmSetting.lblSlideshowInterval" value="投影片顯示間隔：{0} 秒" />
       <Item key="frmSetting.lblHeadImageEditing" value="圖片編輯" />
+      <Item key="frmSetting.chkSaveOnRotate" value="旋轉後保存查看圖像" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="選擇用於圖像編輯的應用程式" />
       <Item key="frmSetting.btnEditEditExt" value="編輯" />
       <Item key="frmSetting.btnEditResetExt" value="重設為預設值" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="編輯所有副檔名" />
+      <Item key="frmSetting._allExtensions" value="所有副檔名" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="副檔名" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="應用程式名稱" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="應用程式路徑" />

@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +39,7 @@
             this.btnRotateRight = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomToFit = new System.Windows.Forms.ToolStripButton();
             this.btnActualSize = new System.Windows.Forms.ToolStripButton();
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.btnScaletoWidth = new System.Windows.Forms.ToolStripButton();
@@ -48,18 +49,13 @@
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
-            this.btnThumb = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnThumb = new System.Windows.Forms.ToolStripButton();
             this.btnCheckedBackground = new System.Windows.Forms.ToolStripButton();
             this.btnFullScreen = new System.Windows.Forms.ToolStripButton();
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
             this.btnPrintImage = new System.Windows.Forms.ToolStripButton();
-            this.btnFacebook = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExtension = new System.Windows.Forms.ToolStripButton();
-            this.btnSetting = new System.Windows.Forms.ToolStripButton();
-            this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuMainOpenFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,6 +130,7 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
+            this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -174,8 +171,8 @@
             this.sysWatch.EnableRaisingEvents = true;
             this.sysWatch.SynchronizingObject = this;
             this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Created);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Deleted);
+            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
+            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
             this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
             // toolMain
@@ -194,6 +191,7 @@
             this.btnRotateRight,
             this.btnZoomIn,
             this.btnZoomOut,
+            this.btnZoomToFit,
             this.btnActualSize,
             this.btnZoomLock,
             this.btnScaletoWidth,
@@ -203,18 +201,13 @@
             this.btnOpen,
             this.btnRefresh,
             this.btnGoto,
-            this.btnThumb,
             this.toolStripSeparator3,
+            this.btnThumb,
             this.btnCheckedBackground,
             this.btnFullScreen,
             this.btnSlideShow,
             this.btnConvert,
             this.btnPrintImage,
-            this.btnFacebook,
-            this.toolStripSeparator4,
-            this.btnExtension,
-            this.btnSetting,
-            this.btnHelp,
             this.btnMenu,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
@@ -223,6 +216,7 @@
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolMain.Size = new System.Drawing.Size(920, 60);
             this.toolMain.TabIndex = 1;
+            this.toolMain.SizeChanged += new System.EventHandler(this.toolMain_SizeChanged);
             // 
             // btnBack
             // 
@@ -316,6 +310,22 @@
             this.btnZoomOut.Size = new System.Drawing.Size(33, 33);
             this.btnZoomOut.ToolTipText = "Zoom out (Ctrl + -)";
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomToFit
+            // 
+            this.btnZoomToFit.AutoSize = false;
+            this.btnZoomToFit.BackColor = System.Drawing.Color.Transparent;
+            this.btnZoomToFit.CheckOnClick = true;
+            this.btnZoomToFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToFit.Image = global::ImageGlass.Properties.Resources.zoomlock;
+            this.btnZoomToFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnZoomToFit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToFit.Margin = new System.Windows.Forms.Padding(0);
+            this.btnZoomToFit.Name = "btnZoomToFit";
+            this.btnZoomToFit.Size = new System.Drawing.Size(33, 33);
+            this.btnZoomToFit.Tag = "";
+            this.btnZoomToFit.ToolTipText = "Zoom to fit";
+            this.btnZoomToFit.Click += new System.EventHandler(this.btnZoomToFit_Click);
             // 
             // btnActualSize
             // 
@@ -439,6 +449,13 @@
             this.btnGoto.ToolTipText = "Go to ... (Ctrl + G)";
             this.btnGoto.Click += new System.EventHandler(this.btnGoto_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(5, 33);
+            // 
             // btnThumb
             // 
             this.btnThumb.AutoSize = false;
@@ -453,13 +470,6 @@
             this.btnThumb.Size = new System.Drawing.Size(33, 33);
             this.btnThumb.ToolTipText = "Show thumbnail (Ctrl + T)";
             this.btnThumb.Click += new System.EventHandler(this.btnThumb_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(5, 33);
             // 
             // btnCheckedBackground
             // 
@@ -533,69 +543,6 @@
             this.btnPrintImage.ToolTipText = "Print image (Ctrl + P)";
             this.btnPrintImage.Click += new System.EventHandler(this.btnPrintImage_Click);
             // 
-            // btnFacebook
-            // 
-            this.btnFacebook.AutoSize = false;
-            this.btnFacebook.BackColor = System.Drawing.Color.Transparent;
-            this.btnFacebook.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFacebook.Image = global::ImageGlass.Properties.Resources.uploadfb;
-            this.btnFacebook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnFacebook.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFacebook.Margin = new System.Windows.Forms.Padding(0);
-            this.btnFacebook.Name = "btnFacebook";
-            this.btnFacebook.Size = new System.Drawing.Size(33, 33);
-            this.btnFacebook.ToolTipText = "Upload to Facebook (Ctrl + U)";
-            this.btnFacebook.Click += new System.EventHandler(this.btnFacebook_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.AutoSize = false;
-            this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(5, 33);
-            // 
-            // btnExtension
-            // 
-            this.btnExtension.AutoSize = false;
-            this.btnExtension.BackColor = System.Drawing.Color.Transparent;
-            this.btnExtension.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExtension.Image = global::ImageGlass.Properties.Resources.extension;
-            this.btnExtension.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnExtension.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExtension.Margin = new System.Windows.Forms.Padding(0);
-            this.btnExtension.Name = "btnExtension";
-            this.btnExtension.Size = new System.Drawing.Size(33, 33);
-            this.btnExtension.ToolTipText = "Extension Manager (Ctrl + Shift + E)";
-            this.btnExtension.Click += new System.EventHandler(this.btnExtension_Click);
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.AutoSize = false;
-            this.btnSetting.BackColor = System.Drawing.Color.Transparent;
-            this.btnSetting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSetting.Image = global::ImageGlass.Properties.Resources.settings;
-            this.btnSetting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(33, 33);
-            this.btnSetting.ToolTipText = "ImageGlass Settings (Ctrl + Shift + P)";
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.AutoSize = false;
-            this.btnHelp.BackColor = System.Drawing.Color.Transparent;
-            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnHelp.Image = global::ImageGlass.Properties.Resources.about;
-            this.btnHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(0);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(33, 33);
-            this.btnHelp.ToolTipText = "Help (F1)";
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
             // btnMenu
             // 
             this.btnMenu.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -607,6 +554,7 @@
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.btnMenu.ShowDropDownArrow = false;
             this.btnMenu.Size = new System.Drawing.Size(33, 33);
             this.btnMenu.Text = "Menu (Hotkey: `)";
@@ -636,10 +584,11 @@
             this.mnuMainSettings,
             this.mnuMainAbout,
             this.toolStripMenuItem21,
+            this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 587);
+            this.mnuMain.Size = new System.Drawing.Size(409, 617);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -959,7 +908,7 @@
             this.mnuMainZoomToFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainZoomToFit.Name = "mnuMainZoomToFit";
             this.mnuMainZoomToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "";
+            this.mnuMainZoomToFit.ShortcutKeyDisplayString = "Ctrl+/";
             this.mnuMainZoomToFit.Size = new System.Drawing.Size(584, 31);
             this.mnuMainZoomToFit.Text = "Zoom to &fit";
             this.mnuMainZoomToFit.Click += new System.EventHandler(this.mnuMainZoomToFit_Click);
@@ -1451,7 +1400,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
@@ -1468,6 +1417,7 @@
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
+            this.picMain.DoubleClick += new System.EventHandler(this.picMain_DoubleClick);
             this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             // 
@@ -1491,6 +1441,14 @@
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
             // 
+            // mnuMainCheckForUpdate
+            // 
+            this.mnuMainCheckForUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(227)))), ((int)(((byte)(181)))));
+            this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
+            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
+            this.mnuMainCheckForUpdate.Text = "A new version is available";
+            this.mnuMainCheckForUpdate.Click += new System.EventHandler(this.mnuMainCheckForUpdate_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1507,13 +1465,14 @@
             this.MinimumSize = new System.Drawing.Size(94, 83);
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
-            this.Text = "ImageGlass 4.1";
+            this.Text = "ImageGlass 4.5";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.Deactivate += new System.EventHandler(this.frmMain_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResizeBegin += new System.EventHandler(this.frmMain_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
+            this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
             this.mnuPopup.ResumeLayout(false);
@@ -1542,6 +1501,7 @@
         private System.Windows.Forms.ToolStripButton btnRotateRight;
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
+        private System.Windows.Forms.ToolStripButton btnZoomToFit;
         private System.Windows.Forms.ToolStripButton btnActualSize;
         private System.Windows.Forms.ToolStripButton btnScaletoWidth;
         private System.Windows.Forms.ToolStripButton btnScaletoHeight;
@@ -1556,16 +1516,11 @@
         private System.Windows.Forms.ToolStripButton btnFullScreen;
         private System.Windows.Forms.ToolStripButton btnSlideShow;
         private System.Windows.Forms.ToolStripButton btnConvert;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton btnSetting;
-        private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuPopup;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
-        private System.Windows.Forms.ToolStripButton btnFacebook;
-        private System.Windows.Forms.ToolStripButton btnExtension;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
         private System.IO.FileSystemWatcher sysWatch;
         private ImageBox picMain;
@@ -1642,6 +1597,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomToFit;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
     }
 }
 

@@ -1,0 +1,221 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="kh" langName="ភាសាខ្មែរ" author="ImageGlass community" description="Khmer" minVersion="4.1.7.26" isRightToLeftLayout="No" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="លំនាំដើម" />
+      <Item key="_.ImageFormatGroup.Optional" value="ការជ្រើសរើស" />
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass មិនអាចបើក​រូប​ភាព​នេះ​បានទេ ដោយ​សារតែ​ឯកសារ​ត្រូវ​បានខូចខាត ឬ​មិន​គាំទ្រ​ជា​មួយ​នឹង​កម្មវិធី។" />
+      <Item key="frmMain._ImageNotExist" value="គ្មាន​រូបភាព​ដែល​កំពុង​មើល" />
+      <Item key="frmMain.btnBack" value="ចូលទៅ​កាន់​រូប​ភាព​មុន (ព្រួញ​ខាង​ឆ្វេង / ព្រួញ​ខាង​លើ)" />
+      <Item key="frmMain.btnNext" value="ចូល​ទៅ​កាន់​រូបភាព​បន្ទាប់ (ព្រួញ​ខាង​ស្ដាំ / ព្រួញ​ខាង​ក្រោម)" />
+      <Item key="frmMain.btnRotateLeft" value="បង្វិល​ច្រាស​ទ្រនិចនាឡិកា (Ctrl + ,)" />
+      <Item key="frmMain.btnRotateRight" value="បង្វិលស្របទ្រនិចនាឡិកា (Ctrl + .)" />
+      <Item key="frmMain.btnZoomIn" value="ពង្រីក (Ctrl + =)" />
+      <Item key="frmMain.btnZoomOut" value="បង្រួម (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="ពង្រីកឲ្យសម (Ctrl + /)" />
+      <Item key="frmMain.btnActualSize" value="ទំហំពិតប្រាកដ (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="ចាក់សោរការពង្រីកសមាមាត្រ (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="មាត្រដ្ឋានទទឹង (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="មាត្រដ្ឋានកម្ពស់ (Ctrl + H)" />
+      <Item key="frmMain.btnWindowAutosize" value="បង្អួចកម្មវិធីឲ្យ​សមស្របនឹងរូបភាព (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="បើកឯកសារ (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="ធ្វើឲ្យថ្មីឡើងវិញ (F5)" />
+      <Item key="frmMain.btnGoto" value="ចូលទៅកាន់ ... (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="បង្ហាញរូបភាពតូច (Ctrl + T)" />
+      <Item key="frmMain.btnCaro" value="បង្ហាញផ្ទៃក្រោយដែលបានពិនិត្យរួច (Ctrl + B)" />
+      <Item key="frmMain.btnFullScreen" value="ពេញអេក្រង់ (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="ចាក់បង្ហាញជាស្លាយ (F11, ESC to exit)" />
+      <Item key="frmMain.btnConvert" value="បម្លែងរូបភាព (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="ព្រីនរូបភាព (Ctrl + P)" />
+      <Item key="frmMain.btnFacebook" value="ផ្ទុករូបភាព​ទៅកាន់ Facebook (Ctrl + U)" />
+      <Item key="frmMain.btnExtension" value="កម្មវិធីបន្ថែម (Ctrl + Shift + E)" />
+      <Item key="frmMain.btnSetting" value="ការ​កំណត់របស់កម្មវិធី (Ctrl + Shift + P)" />
+      <Item key="frmMain.btnHelp" value="ជំនួយ (F1)" />
+      <Item key="frmMain.btnMenu" value="ម៉ឺនុយ (ចងគ្រាប់ចុច: `)" />
+      <Item key="frmMain.mnuMainOpenFile" value="បើកឯកសារ" />
+      <Item key="frmMain.mnuMainOpenImageData" value="បើក​ទិន្នន័យ​រូប​ភាព​ចេញ​ពី Clipboard" />
+      <Item key="frmMain.mnuMainSaveAs" value="រក្សាទុក​រូបភាព​ជា ..." />
+      <Item key="frmMain.mnuMainRefresh" value="ធ្វើឲ្យថ្មីឡើងវិញ" />
+      <Item key="frmMain.mnuMainEditImage" value="កែសម្រួលរូបភាព {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="ការរុករក" />
+      <Item key="frmMain.mnuMainViewNext" value="មើលរូបភាពបន្ទាប់" />
+      <Item key="frmMain.mnuMainViewPrevious" value="មើលរូបភាពមុន" />
+      <Item key="frmMain.mnuMainGoto" value="ចូលទៅកាន់ ..." />
+      <Item key="frmMain.mnuMainGotoFirst" value="ចូលទៅកាន់រូបភាពដំបូងបង្អស់" />
+      <Item key="frmMain.mnuMainGotoLast" value="ចូលទៅកាន់រូបភាពចុងក្រោយបង្អស់" />
+      <Item key="frmMain.mnuMainFullScreen" value="ពេញអេក្រង់" />
+      <Item key="frmMain.mnuMainSlideShow" value="ការបញ្ចាំងស្លាយ" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="ចាប់ផ្ដើម​ការបញ្ចាំងស្លាយ" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="ផ្អាក / បន្ត ការបញ្ចាំងស្លាយ" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="ចាកចេញពី ការបញ្ចាំងស្លាយ" />
+      <Item key="frmMain.mnuMainPrint" value="ព្រីន" />
+      <Item key="frmMain.mnuMainManipulation" value="ការរៀបចំ" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="បង្វិលច្រាសទ្រនិចនាឡិកា" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="បង្វិលស្របទ្រនិចនាឡិកា" />
+      <Item key="frmMain.mnuMainZoomIn" value="ពង្រីក" />
+      <Item key="frmMain.mnuMainZoomOut" value="បង្រួម" />
+      <Item key="frmMain.mnuMainZoomToFit" value="ពង្រីកឲ្យសម" />
+      <Item key="frmMain.mnuMainActualSize" value="ទំហំពិតប្រាកដ" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="ចាក់សោរការពង្រីកសមាមាត្រ" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="មាត្រដ្ឋានទទឹង" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="មាត្រដ្ឋានកម្ពស់" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="បង្អួចកម្មវិធីឲ្យ​សមស្របនឹងរូបភាព" />
+      <Item key="frmMain.mnuMainRename" value="ប្ដូរឈ្មោះរូបភាព" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="យក​ទៅ​ដាក់​ក្នុង​ធុង​សម្រាម" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="លុប​ចេញ​ពី​ថាសរឹង" />
+      <Item key="frmMain.mnuMainExtractFrames" value="យករូបភាពចេញពីស៊ុម ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="ចាប់ផ្ដើម / បញ្ឈប់រូបភាពមានចលនា" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="យក​រូបភាព​នេះ​ទៅ​ដាក់​នៅ​លើ​អេក្រង់" />
+      <Item key="frmMain.mnuMainImageLocation" value="បើក​រូប​ភាព​ចេញ​ពី​ទីតាំង​ផ្ទុក" />
+      <Item key="frmMain.mnuMainImageProperties" value="លក្ខណៈសម្បត្តិរបស់​រូបភាព" />
+      <Item key="frmMain.mnuMainClipboard" value="ក្ដារតម្បៀតខ្ទាស់" />
+      <Item key="frmMain.mnuMainCopy" value="ចម្លង" />
+      <Item key="frmMain.mnuMainCopyMulti" value="ចម្លងឯកសារច្រើន" />
+      <Item key="frmMain.mnuMainCut" value="កាត់" />
+      <Item key="frmMain.mnuMainCutMulti" value="កាត់ឯកសារច្រើន" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="ចម្លង​រូបភាព​ទៅ​ផ្នែក" />
+      <Item key="frmMain.mnuMainClearClipboard" value="សម្អាត Clipboard" />
+      <Item key="frmMain.mnuMainShare" value="ចែករំលែក ..." />
+      <Item key="frmMain.mnuMainShareFacebook" value="ផ្ទុក​រូប​ភាព​ទៅ​កាន់ Facebook" />
+      <Item key="frmMain.mnuMainLayout" value="ប្លង់" />
+      <Item key="frmMain.mnuMainToolbar" value="របារឧបករណ៍" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="បន្ទះរូបភាពតូច" />
+      <Item key="frmMain.mnuMainCheckBackground" value="ផ្ទៃក្រោយដែលបានពិនិត្យរួច" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="ទុក​បង្អួច​កម្មវិធីឲ្យ​នៅលើកំពូល" />
+      <Item key="frmMain.mnuMainTools" value="ឧបករណ៍" />
+      <Item key="frmMain.mnuMainExtensionManager" value="គ្រប់គ្រងកម្មវិធីបន្ថែម" />
+      <Item key="frmMain.mnuMainSettings" value="ការ​កំណត់" />
+      <Item key="frmMain.mnuMainAbout" value="អំពី" />
+      <Item key="frmMain.mnuMainReportIssue" value="រាយការណ៍ពីបញ្ហា" />
+      <Item key="frmMain._OpenFileDialog" value="ឯកសារដែលគាំទ្រទាំងអស់" />
+      <Item key="frmMain._Text" value="ឯកសារ(s)" />
+      <Item key="frmMain._RenameDialogText" value="ប្តូរឈ្មោះ" />
+      <Item key="frmMain._RenameDialog" value="បញ្ចូលឈ្មោះឯកសារថ្មី" />
+      <Item key="frmMain._GotoDialogText" value="បញ្ចូលលិបិក្រមរូបភាពដើម្បីមើលវា. ដោយចុច {ENTER}" />
+      <Item key="frmMain._DeleteDialogText" value="លុបឯកសារ '{0}' ?" />
+      <Item key="frmMain._DeleteDialogTitle" value="បញ្ជាក់" />
+      <Item key="frmMain._ExtractFrameText" value="ស្រង់ស៊ុម​រូបភាព, សូមជ្រើសរើសថតទិន្នន័យ" />
+      <Item key="frmMain._FullScreenMessage" value="គ្រាប់ចុច ALT + ENTER ដើម្បីចាកចេញពីការមើលពេញអេក្រង់។&#xA;ឬចុច CTRL + F1 ដើម្បីបង្ហាញម៉ឺនុយ" />
+      <Item key="frmMain._SlideshowMessage" value="គ្រាប់ចុច ESC ដើម្បីចាកចេញពីការបញ្ចាំងស្លាយ។&#xA; ចុចកូនកណ្ដុរស្ដាំដើម្បីបើកបរិបទម៉ឺនុយ" />
+      <Item key="frmMain._SlideshowMessagePause" value="ការបញ្ចាំងស្លាយ​ត្រូវបានផ្អាក" />
+      <Item key="frmMain._SlideshowMessageResume" value="ការបញ្ចាំងស្លាយ​ត្រូវបានបន្ត" />
+      <Item key="frmMain._CopyFileText" value="បានចម្លង {0} ឯកសារ(s)." />
+      <Item key="frmMain._CutFileText" value="កាត់ {0} ឯកសារ(s)." />
+      <Item key="frmMain._ClearClipboard" value="Clipboard បាន​សម្អាតរួចហើយ" />
+      <Item key="frmMain._SaveChanges" value="រក្សាទុកបម្លាស់ប្ដូរ..." />
+      <Item key="frmMain._Loading" value="កំពុងផ្ទុក..." />
+      <Item key="frmMain._FirstItemOfList" value="បាន​ឃើញ​រូបភាពដំបូង​បង្អស់" />
+      <Item key="frmMain._LastItemOfList" value="បាន​ឃើញ​រូបភាពចុងក្រោយ​បង្អស់" />
+      <Item key="frmExtension._Text" value="គ្រប់គ្រងកម្មវិធីបន្ថែម" />
+      <Item key="frmExtension.btnGetMoreExt" value="ទទួលយកកម្មវិធីបន្ថែមជាច្រើនទៀត" />
+      <Item key="frmExtension.btnRefreshAllExt" value="ធ្វើឲ្យថ្មីឡើងវិញ" />
+      <Item key="frmExtension.btnInstallExt" value="ដំឡើង" />
+      <Item key="frmExtension.btnClose" value="បិទ" />
+      <Item key="frmFacebook.lblMessage" value="សារ:" />
+      <Item key="frmFacebook.btnUpload._Upload" value="ផ្ទុក" />
+      <Item key="frmFacebook.btnUpload._Cancel" value="បោះបង់" />
+      <Item key="frmFacebook.btnUpload._ViewImage" value="មើលរូបភាព" />
+      <Item key="frmFacebook.btnClose" value="បិទ" />
+      <Item key="frmFacebook._StatusBegin" value="ចុចលើ '{0}' ដើម្បីចាប់ផ្ដើម" />
+      <Item key="frmFacebook._StatusInvalid" value="ឈ្មោះឯកសារមិនត្រឹមត្រូវ" />
+      <Item key="frmFacebook._StatusUploading" value="កំពុងផ្ទុក..." />
+      <Item key="frmFacebook._StatusCancel" value="បានបោះបង់ចោល" />
+      <Item key="frmFacebook._StatusSuccessful" value="ជោគជ័យ" />
+      <Item key="frmFaceBookLogin._Text" value="លុកចូលគណនី Facebook ..." />
+      <Item key="frmAbout.lblSlogant" value="ទម្ងន់ស្រាល, មើលរូបភាព​កាន់​តែ​ល្អប្រសើរ" />
+      <Item key="frmAbout.lblInfo" value="ពត៌មាន" />
+      <Item key="frmAbout.lblComponent" value="សមាសភាគផ្សំ" />
+      <Item key="frmAbout.lblReferences" value="ឯកសារយោង" />
+      <Item key="frmAbout.lblVersion" value="កំណែ: {0}" />
+      <Item key="frmAbout.lblInfoContact" value="ទំនាក់ទំនង:" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="ប្ដូរទៅកំណែថ្មីបំផុត" />
+      <Item key="frmAbout.lnkCheckUpdate" value="» ពិនិត្យរកមើលភាព​បន្ទាន់​សម័យ" />
+      <Item key="frmAbout._Text" value="អំពី" />
+      <Item key="frmAbout._PortableText" value="[ចល័ត]" />
+      <Item key="frmSetting._Text" value="ការ​កំណត់" />
+      <Item key="frmSetting.btnSave" value="រក្សាទុក" />
+      <Item key="frmSetting.btnCancel" value="បោះបង់" />
+      <Item key="frmSetting.btnApply" value="អនុវត្ត" />
+      <Item key="frmSetting.lblGeneral" value="ទូទៅ" />
+      <Item key="frmSetting.lblImage" value="រូបភាព" />
+      <Item key="frmSetting.lblFileAssociations" value="ទំនាក់ទំនងឯកសារ" />
+      <Item key="frmSetting.lblLanguage" value="ភាសា" />
+      <Item key="frmSetting.lblHeadStartup" value="ចាប់ផ្តើមឡើង" />
+      <Item key="frmSetting.chkWelcomePicture" value="បង្ហាញរូប​ភាព​ស្វាគមន៍" />
+      <Item key="frmSetting.chkShowToolBar" value="បង្ហាញ​របារឧបករណ៍នៅពេលចាប់ផ្ដើម" />
+      <Item key="frmSetting.lblHeadPortableMode" value="គម្រូ​ចល័ត" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadOthers" value="ផ្សេងទៀត" />
+      <Item key="frmSetting.chkAutoUpdate" value="ពិនិត្យមើលកំណែថ្មីដោយស្វ័យប្រវត្តិ" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="អនុញ្ញាតឲ្យមានលក្ខខណ្ឌជាច្រើនទៀតនៃកម្មវិធីនេះ" />
+      <Item key="frmSetting.chkESCToQuit" value="អនុញ្ញាតឲ្យប្រើប្រាស់គ្រាប់ចុច ESC ដើម្បីចាកចេញពីកម្មវិធីនេះ" />
+      <Item key="frmSetting.chkConfirmationDelete" value="បង្ហាញ​ប្រអប់លុប" />
+      <Item key="frmSetting.chkShowScrollbar" value="បង្ហាញរបារអ្នកមើល" />
+      <Item key="frmSetting.lblBackGroundColor" value="ពណ៌ផ្ទៃក្រោយ" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="កំណត់ឡើងវិញ" />
+      <Item key="frmSetting.lblHeadImageLoading" value="រូបភាព​កំពុង​ដំណើរការ" />
+      <Item key="frmSetting.chkFindChildFolder" value="រកមើលរូបភាពនៅក្នុងថតតូច" />
+      <Item key="frmSetting.chkShowHiddenImages" value="បង្ហាញ​រូបភាព​ដែល​បាន​លាក់" />
+      <Item key="frmSetting.chkLoopViewer" value="មើលត្រឡប់​ក្រោយ​ទៅ​រូបភាព​ដំបូង នៅ​ពេល​ឈាន​ដល់​ចុង​បញ្ចប់​នៃ​បញ្ជី" />
+      <Item key="frmSetting.chkImageBoosterBack" value="បើក​កម្មវិធី​បង្កើន​ល្បឿន​រូបភាព នៅ​ពេល​ងាក​ថយ​ក្រោយ (ត្រូវ​ការ​ RAM ច្រើន​ជាង ~20%)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="កំពុងផ្ទុករូបភាព" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="ឈ្មោះ (ឈ្មោះដើម)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="ប្រវែង" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="បង្កើតពេលវេលា" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="ពេលចូលដំណើរការចុងក្រោយបង្អស់" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="ពេលសរសេរចុងក្រោយបង្អស់" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="កម្មវិធី​បន្ថែម" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="ចៃដន្យ" />
+      <Item key="frmSetting.lblHeadZooming" value="កំពុងពង្រីក" />
+      <Item key="frmSetting.chkMouseNavigation" value="ប្រើកូន​កណ្តុរ​ដើម្បី​រករូបភាព, ចុច​លើ CTRL ដើម្បី​ប្រើការ​ពង្រីក" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="បង្កើនប្រសិទ្ធិភាព​នៃ​ការ​ពង្រីក" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="ស្វ័យប្រវត្តិ" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Pixels រលោង" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Pixels ច្បាស់" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="របាររូបភាពតូច" />
+      <Item key="frmSetting.chkThumbnailVertical" value="បង្ហាញរូបភាពតូចៗនៅផ្នែកខាងស្តាំ" />
+      <Item key="frmSetting.lblGeneral_MaxFileSize" value="ទំហំឯកសាររូបភាពតូចបំផុតអតិបរមា (MB)" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="វិមាត្ររូបភាពតូច (pixel)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="ការបញ្ចាំងស្លាយ" />
+      <Item key="frmSetting.chkLoopSlideshow" value="ស្លាយបង្ហាញ​ជាលក្ខណៈរង្វិលជុំ។ ចាប់ផ្ដើមពីរូបភាពដំបូងបង្អស់ និងបន្ទាប់មកដល់រូបភាពចុងក្រោយ" />
+      <Item key="frmSetting.lblSlideshowInterval" value="ចន្លោះពេលបញ្ចាំងស្លាយ: {0} វិនាទី" />
+      <Item key="frmSetting.lblHeadImageEditing" value="កែសម្រួលរូបភាព" />
+      <Item key="frmSetting.chkSaveOnRotate" value="រក្សា​ទុក​រូបភាព​បន្ទាប់​ពី​ការ​បង្វិល" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="ជ្រើស​កម្មវិធី​សម្រាប់​កែសម្រួល​រូបភាព" />
+      <Item key="frmSetting.btnEditEditExt" value="កែសម្រួល" />
+      <Item key="frmSetting.btnEditResetExt" value="កំណត់ទៅលំនាំដើម" />
+      <Item key="frmSetting.btnEditEditAllExt" value="កែសម្រួលកម្មវិធី​បន្ថែម​ទាំងអស់" />
+      <Item key="frmSetting._allExtensions" value="កម្មវិធី​បន្ថែម​ទាំងអស់" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="កន្ទុយឯកសារ" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="ឈ្មោះកម្មវិធី" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="ឈ្មោះ Path" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Arguments របស់​កម្មវិធី" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="* ទ្រង់ទ្រាយ​នឹង​មិន​ត្រូវ​បាន​ផ្ទុក​ជា​មុន ដោយ​ស្វ័យ​ប្រវត្តិ​ទៅ​ក្នុង Memory ទេ" />
+      <Item key="frmSetting.lblSupportedExtension" value="កម្មវិធីបន្ថែមដែលគាំទ្រ: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="បើកឯកសារ​ដែលទាក់ទង" />
+      <Item key="frmSetting.btnAddNewExt" value="បន្ថែម" />
+      <Item key="frmSetting.btnRegisterExt" value="ចុះឈ្មោះ​កម្មវិធី​បន្ថែម" />
+      <Item key="frmSetting.btnDeleteExt" value="លុប" />
+      <Item key="frmSetting.btnResetExt" value="កំណត់ទៅលំនាំដើម" />
+      <Item key="frmSetting.lblLanguageText" value="ភាសាដែល​បាន​ដំឡើង​រួច" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; ធ្វើឲ្យថ្មីឡើងវិញ" />
+      <Item key="frmSetting.lblLanguageWarning" value="កញ្ចប់ភាសានេះប្រហែល​មិន​សម​ស្រប​នឹង {0}" />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; ដំឡើងកញ្ចប់ភាសា (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; បង្កើតកញ្ចប់ភាសាថ្មី" />
+      <Item key="frmSetting.lnkEdit" value="&gt; កែសម្រួលកញ្ចប់ភាសា​ដែល​កំពុង​ប្រើ" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; បន្ថែម​កញ្ចប់ភាសា" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="កន្ទុយឯកសារ" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="ទ្រង់ទ្រាយ Group" />
+      <Item key="frmAddNewFormat.btnOK" value="យល់ព្រម" />
+      <Item key="frmAddNewFormat.btnClose" value="បិទ" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="កន្ទុយឯកសារ" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="ឈ្មោះកម្មវិធី" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="ឈ្មោះ Path" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Arguments របស់​កម្មវិធី" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="កំណត់ឡើងវិញ" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="យល់ព្រម" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="បិទ" />
+    </Content>
+  </Language>
+</ImageGlass>

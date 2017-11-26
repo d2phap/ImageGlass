@@ -222,7 +222,16 @@ namespace ImageGlass
             chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
 
             lblHeadPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadPortableMode"];//
-            chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode"];
+            if (GlobalSetting.IsPortableMode)
+            {
+                chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Enabled"];
+            }
+            else
+            {
+                chkPortableMode.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
+                chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
+            }
+            
 
             lblHeadOthers.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadOthers"];//
             chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
@@ -235,6 +244,7 @@ namespace ImageGlass
             //Image tab
             lblHeadImageLoading.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageLoading"];//
             chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
+            chkShowHiddenImages.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowHiddenImages"];
             chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
             chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
@@ -253,6 +263,8 @@ namespace ImageGlass
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
             lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
+            chkSaveOnRotate.Text = GlobalSetting.LangPack.Items["frmSetting.chkSaveOnRotate"];
+            lblSelectAppForEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lblSelectAppForEdit"];
             btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
             btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
             btnEditEditAllExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditAllExt"];
@@ -376,10 +388,6 @@ namespace ImageGlass
 
             //Get Portable mode value -----------------------------------------------------------
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
-            if (!GlobalSetting.CheckStartUpDirWritable())
-            {
-                chkPortableMode.Enabled = false;
-            }
 
             //Get value of cmbAutoUpdate --------------------------------------------------------
             string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
@@ -437,7 +445,10 @@ namespace ImageGlass
         private void LoadTabImageConfig()
         {
             //Get value of chkFindChildFolder ---------------------------------------------
-            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;            
+            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
+
+            //Get value of chkShowHiddenImages
+            chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
 
             //Get value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
@@ -482,6 +493,9 @@ namespace ImageGlass
             //Get value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+
+            //Get value of IsSaveAfterRotating
+            chkSaveOnRotate.Checked = GlobalSetting.IsSaveAfterRotating;
 
             //Load Image Editing extension list
             LoadImageEditingAssociationList();
@@ -632,7 +646,13 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
+            
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -640,7 +660,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -648,7 +673,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -785,7 +815,12 @@ namespace ImageGlass
             Process p = new Process();
             p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
             p.StartInfo.Arguments = $"regassociations {extensions}";
-            p.Start();
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
         }
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -907,13 +942,6 @@ namespace ImageGlass
             GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
 
-            //IsPortableMode
-            GlobalSetting.IsPortableMode = chkPortableMode.Checked;            
-            if (Environment.GetCommandLineArgs().ToList().IndexOf("--portable") == -1) // Check if user ia using temporary Portable mode from param
-            {
-                GlobalSetting.SetConfig("IsPortableMode", GlobalSetting.IsPortableMode.ToString(), true);
-            }
-
             //AutoUpdate
             if (chkAutoUpdate.Checked)
             {
@@ -942,7 +970,7 @@ namespace ImageGlass
 
             //BackgroundColor
             GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString());
+            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
 
             #endregion
 
@@ -951,6 +979,10 @@ namespace ImageGlass
             //IsRecursiveLoading
             GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
             GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+
+            //IsShowingHiddenImages
+            GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;
+            GlobalSetting.SetConfig("IsShowingHiddenImages", GlobalSetting.IsShowingHiddenImages.ToString());
 
             //IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
@@ -961,7 +993,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
 
             //ImageLoadingOrder
-            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString());
+            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString(GlobalSetting.NumberFormat));
             GlobalSetting.LoadImageOrderConfig();
 
             //IsMouseNavigation
@@ -970,7 +1002,7 @@ namespace ImageGlass
 
             //ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
-            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString());
+            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
 
             //IsThumbnailHorizontal
             GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
@@ -981,10 +1013,10 @@ namespace ImageGlass
 
             //ThumbnailDimension            
             int oldValue = GlobalSetting.ThumbnailDimension; //backup old value            
-            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString()); //Get new value
+            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); //Get new value
             if (GlobalSetting.ThumbnailDimension != oldValue) //Only change when the new value selected
             {
-                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString());
+                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString(GlobalSetting.NumberFormat));
 
                 //Request frmMain to update the thumbnail bar
                 LocalSetting.IsThumbnailDimensionChanged = true;
@@ -996,9 +1028,11 @@ namespace ImageGlass
 
             //SlideShowInterval
             GlobalSetting.SlideShowInterval = barInterval.Value;
-            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString());
+            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
 
-
+            //IsSaveAfterRotating
+            GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
+            GlobalSetting.SetConfig("IsSaveAfterRotating", GlobalSetting.IsSaveAfterRotating.ToString());
 
             #endregion
 
@@ -1013,5 +1047,7 @@ namespace ImageGlass
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
+
+        
     }
 }
