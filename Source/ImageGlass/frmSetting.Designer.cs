@@ -78,6 +78,15 @@
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.cmbMouseWheelAlt = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheelShift = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheelCtrl = new System.Windows.Forms.ComboBox();
+            this.cmbMouseWheel = new System.Windows.Forms.ComboBox();
+            this.lblMouseWheelAlt = new System.Windows.Forms.Label();
+            this.lblMouseWheelShift = new System.Windows.Forms.Label();
+            this.lblMouseWheelCtrl = new System.Windows.Forms.Label();
+            this.lblMouseWheel = new System.Windows.Forms.Label();
+            this.lblHeadMouseWheelActions = new System.Windows.Forms.Label();
             this.chkShowHiddenImages = new System.Windows.Forms.CheckBox();
             this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
@@ -94,7 +103,6 @@
             this.lblHeadThumbnailBar = new System.Windows.Forms.Label();
             this.lblHeadImageLoading = new System.Windows.Forms.Label();
             this.chkLoopViewer = new System.Windows.Forms.CheckBox();
-            this.chkMouseNavigation = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ZoomOptimization = new System.Windows.Forms.Label();
             this.cmbZoomOptimization = new System.Windows.Forms.ComboBox();
             this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
@@ -708,6 +716,15 @@
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.cmbMouseWheelAlt);
+            this.tabImage.Controls.Add(this.cmbMouseWheelShift);
+            this.tabImage.Controls.Add(this.cmbMouseWheelCtrl);
+            this.tabImage.Controls.Add(this.cmbMouseWheel);
+            this.tabImage.Controls.Add(this.lblMouseWheelAlt);
+            this.tabImage.Controls.Add(this.lblMouseWheelShift);
+            this.tabImage.Controls.Add(this.lblMouseWheelCtrl);
+            this.tabImage.Controls.Add(this.lblMouseWheel);
+            this.tabImage.Controls.Add(this.lblHeadMouseWheelActions);
             this.tabImage.Controls.Add(this.lblSelectAppForEdit);
             this.tabImage.Controls.Add(this.chkSaveOnRotate);
             this.tabImage.Controls.Add(this.chkShowHiddenImages);
@@ -722,7 +739,6 @@
             this.tabImage.Controls.Add(this.lblHeadThumbnailBar);
             this.tabImage.Controls.Add(this.lblHeadImageLoading);
             this.tabImage.Controls.Add(this.chkLoopViewer);
-            this.tabImage.Controls.Add(this.chkMouseNavigation);
             this.tabImage.Controls.Add(this.lblGeneral_ZoomOptimization);
             this.tabImage.Controls.Add(this.cmbZoomOptimization);
             this.tabImage.Controls.Add(this.chkThumbnailVertical);
@@ -745,6 +761,88 @@
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
+            // cmbMouseWheelAlt
+            // 
+            this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelAlt.FormattingEnabled = true;
+            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(177, 282);
+            this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
+            this.cmbMouseWheelAlt.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelAlt.TabIndex = 56;
+            // 
+            // cmbMouseWheelShift
+            // 
+            this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelShift.FormattingEnabled = true;
+            this.cmbMouseWheelShift.Location = new System.Drawing.Point(177, 253);
+            this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
+            this.cmbMouseWheelShift.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelShift.TabIndex = 55;
+            // 
+            // cmbMouseWheelCtrl
+            // 
+            this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelCtrl.FormattingEnabled = true;
+            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(177, 224);
+            this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
+            this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelCtrl.TabIndex = 54;
+            // 
+            // cmbMouseWheel
+            // 
+            this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheel.FormattingEnabled = true;
+            this.cmbMouseWheel.Location = new System.Drawing.Point(177, 195);
+            this.cmbMouseWheel.Name = "cmbMouseWheel";
+            this.cmbMouseWheel.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheel.TabIndex = 53;
+            // 
+            // lblMouseWheelAlt
+            // 
+            this.lblMouseWheelAlt.AutoSize = true;
+            this.lblMouseWheelAlt.Location = new System.Drawing.Point(31, 285);
+            this.lblMouseWheelAlt.Name = "lblMouseWheelAlt";
+            this.lblMouseWheelAlt.Size = new System.Drawing.Size(106, 15);
+            this.lblMouseWheelAlt.TabIndex = 52;
+            this.lblMouseWheelAlt.Text = "Mouse wheel + Alt";
+            // 
+            // lblMouseWheelShift
+            // 
+            this.lblMouseWheelShift.AutoSize = true;
+            this.lblMouseWheelShift.Location = new System.Drawing.Point(31, 256);
+            this.lblMouseWheelShift.Name = "lblMouseWheelShift";
+            this.lblMouseWheelShift.Size = new System.Drawing.Size(115, 15);
+            this.lblMouseWheelShift.TabIndex = 51;
+            this.lblMouseWheelShift.Text = "Mouse wheel + Shift";
+            // 
+            // lblMouseWheelCtrl
+            // 
+            this.lblMouseWheelCtrl.AutoSize = true;
+            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(31, 227);
+            this.lblMouseWheelCtrl.Name = "lblMouseWheelCtrl";
+            this.lblMouseWheelCtrl.Size = new System.Drawing.Size(110, 15);
+            this.lblMouseWheelCtrl.TabIndex = 50;
+            this.lblMouseWheelCtrl.Text = "Mouse wheel + Ctrl";
+            // 
+            // lblMouseWheel
+            // 
+            this.lblMouseWheel.AutoSize = true;
+            this.lblMouseWheel.Location = new System.Drawing.Point(31, 198);
+            this.lblMouseWheel.Name = "lblMouseWheel";
+            this.lblMouseWheel.Size = new System.Drawing.Size(77, 15);
+            this.lblMouseWheel.TabIndex = 49;
+            this.lblMouseWheel.Text = "Mouse wheel";
+            // 
+            // lblHeadMouseWheelActions
+            // 
+            this.lblHeadMouseWheelActions.AutoSize = true;
+            this.lblHeadMouseWheelActions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(15, 173);
+            this.lblHeadMouseWheelActions.Name = "lblHeadMouseWheelActions";
+            this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(123, 15);
+            this.lblHeadMouseWheelActions.TabIndex = 48;
+            this.lblHeadMouseWheelActions.Text = "Mouse wheel actions";
+            //
             // chkShowHiddenImages
             // 
             this.chkShowHiddenImages.AutoSize = true;
@@ -934,7 +1032,7 @@
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 257);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 355);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
@@ -1085,7 +1183,7 @@
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
-            this.barInterval.Size = new System.Drawing.Size(195, 45);
+            this.barInterval.Size = new System.Drawing.Size(195, 42);
             this.barInterval.TabIndex = 23;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
@@ -1360,7 +1458,7 @@
         private System.Windows.Forms.TabPage tabImage;
         private System.Windows.Forms.Label lblHeadImageLoading;
         private System.Windows.Forms.CheckBox chkLoopViewer;
-        private System.Windows.Forms.CheckBox chkMouseNavigation;
+        //private System.Windows.Forms.CheckBox chkMouseNavigation;
         private System.Windows.Forms.Label lblGeneral_ZoomOptimization;
         private System.Windows.Forms.ComboBox cmbZoomOptimization;
         private System.Windows.Forms.CheckBox chkThumbnailVertical;
@@ -1399,6 +1497,15 @@
         private System.Windows.Forms.TableLayoutPanel tblayout;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ComboBox cmbMouseWheelAlt;
+        private System.Windows.Forms.ComboBox cmbMouseWheelShift;
+        private System.Windows.Forms.ComboBox cmbMouseWheelCtrl;
+        private System.Windows.Forms.ComboBox cmbMouseWheel;
+        private System.Windows.Forms.Label lblMouseWheelAlt;
+        private System.Windows.Forms.Label lblMouseWheelShift;
+        private System.Windows.Forms.Label lblMouseWheelCtrl;
+        private System.Windows.Forms.Label lblMouseWheel;
+        private System.Windows.Forms.Label lblHeadMouseWheelActions;
         private System.Windows.Forms.CheckBox chkShowHiddenImages;
         private System.Windows.Forms.Label lblSelectAppForEdit;
         private System.Windows.Forms.CheckBox chkSaveOnRotate;
