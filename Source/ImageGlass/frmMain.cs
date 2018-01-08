@@ -700,12 +700,7 @@ namespace ImageGlass
             {
                 //Enable dragging viewing image to desktop feature---------------------------
                 _isDraggingImage = true;
-
-                if (GlobalSetting.IsMouseNavigation)
-                {
-                    _isZoomed = true;
-                    picMain.AllowZoom = true;
-                }
+                
                 return;
             }
             #endregion
@@ -723,12 +718,7 @@ namespace ImageGlass
             {
                 //Disable dragging viewing image to desktop feature--------------------------
                 _isDraggingImage = false;
-
-                if (GlobalSetting.IsMouseNavigation)
-                {
-                    _isZoomed = false;
-                    picMain.AllowZoom = false;
-                }
+                
                 return;
             }
             #endregion
@@ -1444,10 +1434,73 @@ namespace ImageGlass
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
 
-            //Load state of IsMouseNavigation value-------------------------------------------
-            GlobalSetting.IsMouseNavigation = bool.Parse(GlobalSetting.GetConfig("IsMouseNavigation", "False"));
-            picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+            //Get mouse wheel settings -----------------------------------------
+            configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
+            int mouseWheel;
+            if(int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelAction = (MouseWheelActions)mouseWheel;
 
+            configValue2 = GlobalSetting.GetConfig("MouseWheelCtrlAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)mouseWheel;
+
+            configValue2 = GlobalSetting.GetConfig("MouseWheelShiftAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)mouseWheel;
+
+            configValue2 = GlobalSetting.GetConfig("MouseWheelAltAction", "1");
+            if (int.TryParse(configValue2, out mouseWheel))
+            {
+                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                { }
+                else
+                {
+                    mouseWheel = 1; //MouseWheelActions.ZOOM
+                }
+            }
+            else
+            {
+                mouseWheel = 1;
+            }
+            GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
+
+            
             //Get IsConfirmationDelete value --------------------------------------------------
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
 
@@ -1711,7 +1764,7 @@ namespace ImageGlass
                 timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
 
                 //Prevent zooming by scrolling mouse
-                _isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
+                //_isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
 
                 #region Update language strings
                 //Toolbar
@@ -1820,7 +1873,7 @@ namespace ImageGlass
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
-            if (Size != _windowSize && !_isZoomed)
+            if (Size != _windowSize)
             {
                 SaveConfig();
             }
@@ -2070,43 +2123,67 @@ namespace ImageGlass
         #endregion
 
 
-        // Use mouse wheel to navigate images
+        // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (GlobalSetting.IsMouseNavigation && !_isZoomed)
+            MouseWheelActions action;
+            switch(Control.ModifierKeys)
             {
-                //Prevent picmain zooming
-                picMain.AllowZoom = false;
-
-                if (e.Delta < 0)
-                {
-                    //Next pic
-                    mnuMainViewNext_Click(null, null);
-                }
-                else
-                {
-                    //Previous pic
-                    mnuMainViewPrevious_Click(null, null);
-                }
+                case Keys.Control:
+                    action = GlobalSetting.MouseWheelCtrlAction;
+                    break;
+                case Keys.Shift:
+                    action = GlobalSetting.MouseWheelShiftAction;
+                    break;
+                case Keys.Alt:
+                    action = GlobalSetting.MouseWheelAltAction;
+                    break;
+                case Keys.None:
+                default:
+                    action = GlobalSetting.MouseWheelAction;
+                    break;
             }
+            switch(action)
+            {
+                case MouseWheelActions.ZOOM:
+                    picMain.ZoomWithMouseWheel(e.Delta, e.Location);
+                    break;
+                case MouseWheelActions.SCROLL_VERTICAL:
+                    picMain.ScrollWithMouseWheel(e.Delta);
+                    break;
+                case MouseWheelActions.SCROLL_HORIZONTAL:
+                    picMain.ScrollWithMouseWheel(e.Delta, true);
+                    break;
+                case MouseWheelActions.BROWSE_IMAGES:
+                    if (e.Delta < 0)
+                    {
+                        //Next pic
+                        mnuMainViewNext_Click(null, null);
+                    }
+                    else
+                    {
+                        //Previous pic
+                        mnuMainViewPrevious_Click(null, null);
+                    }
+                    break;
+                case MouseWheelActions.DO_NOTHING:
+                default:
+                    break;
+            }
+            
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
-            if (!GlobalSetting.IsMouseNavigation)
+            if (GlobalSetting.IsEnabledZoomLock)
             {
-                _isZoomed = true;
+                GlobalSetting.ZoomLockValue = e.NewZoom;
+            }
 
-                if (GlobalSetting.IsEnabledZoomLock)
-                {
-                    GlobalSetting.ZoomLockValue = e.NewZoom;
-                }
+            //Zoom optimization
+            ZoomOptimization();
 
-                //Zoom optimization
-                ZoomOptimization();
-
-                UpdateStatusBar(true);
-            }            
+            UpdateStatusBar(true);
         }
 
         private void picMain_DoubleClick(object sender, EventArgs e)
@@ -2483,7 +2560,6 @@ namespace ImageGlass
                     picMain.ZoomAuto();
                 }
 
-                _isZoomed = false;
             }
 
             //Get image file information

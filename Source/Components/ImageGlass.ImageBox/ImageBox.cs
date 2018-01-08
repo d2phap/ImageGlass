@@ -142,8 +142,6 @@ namespace ImageGlass
 
         private bool _allowDoubleClick;
 
-        private bool _allowZoom;
-
         /// <summary>
         /// [PHAP]
         /// </summary>
@@ -263,7 +261,6 @@ namespace ImageGlass
 
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             BorderStyle = BorderStyle.Fixed3D;
-            AllowZoom = true;
             LimitSelectionToImage = true;
             DropShadowSize = 3;
             ImageBorderStyle = ImageBoxBorderStyle.None;
@@ -589,6 +586,51 @@ namespace ImageGlass
             return ImageBox.CreateCheckerBoxTile(8, Color.Gainsboro, Color.WhiteSmoke);
         }
 
+        /// <summary>
+        /// Use mouse wheel to scroll the image vertically (by default) or horizontally
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="horizontal"></param>
+        public void ScrollWithMouseWheel(int delta, bool horizontal = false)
+        {
+            Size clientSize;
+            clientSize = GetInsideViewPort(true).Size;
+            if (horizontal)
+            {
+                if (ScaledImageWidth > clientSize.Width)
+                {
+                    AdjustScroll(-delta, 0);
+                }
+            }
+            else
+            {
+                if (ScaledImageHeight > clientSize.Height)
+                {
+                    AdjustScroll(0, -delta);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use mouse wheel to zoom the image
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="cursorPosition"></param>
+        public void ZoomWithMouseWheel(int delta, Point cursorPosition)
+        {
+            if (SizeMode == ImageBoxSizeMode.Normal)
+            {
+                int spins;
+                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
+                spins = Math.Abs(delta / SystemInformation.MouseWheelScrollDelta);
+                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
+                for (int i = 0; i < spins; i++)
+                {
+                    ProcessMouseZoom(delta > 0, cursorPosition);
+                }
+            }
+        }
+
         #endregion
 
         #region Overridden Properties
@@ -852,7 +894,7 @@ namespace ImageGlass
 
             ProcessScrollingShortcuts(e);
 
-            if (ShortcutsEnabled && AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
+            if (ShortcutsEnabled && SizeMode == ImageBoxSizeMode.Normal)
             {
                 ProcessImageShortcuts(e);
             }
@@ -916,7 +958,7 @@ namespace ImageGlass
             }
             WasDragCancelled = false;
 
-            if (!doNotProcessClick && AllowZoom && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
+            if (!doNotProcessClick && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
             {
                 if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None)
                 {
@@ -938,20 +980,6 @@ namespace ImageGlass
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            if (AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
-            {
-                int spins;
-
-                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
-                spins = Math.Abs(e.Delta / SystemInformation.MouseWheelScrollDelta);
-
-                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
-                for (int i = 0; i < spins; i++)
-                {
-                    ProcessMouseZoom(e.Delta > 0, e.Location);
-                }
-            }
         }
 
         /// <summary>
@@ -1114,27 +1142,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the user can change the zoom level.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the zoom level can be changed; otherwise, <c>false</c>.
-        /// </value>
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        public virtual bool AllowZoom
-        {
-            get { return _allowZoom; }
-            set
-            {
-                if (AllowZoom != value)
-                {
-                    _allowZoom = value;
-
-                    OnAllowZoomChanged(EventArgs.Empty);
-                }
-            }
-        }
 
         /// <summary>
         /// [PHAP] Handles animating gif images
@@ -4627,18 +4634,12 @@ namespace ImageGlass
 
                 //case Keys.PageDown:
                 case Keys.Oemplus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomIn(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomIn(ImageBoxActionSources.User, true);
                     break;
 
                 //case Keys.PageUp:
                 case Keys.OemMinus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomOut(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomOut(ImageBoxActionSources.User, true);
                     break;
             }
 
