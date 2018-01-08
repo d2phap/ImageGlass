@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Services.Configuration;
 using System;
 using System.Windows.Forms;
 
@@ -41,6 +42,13 @@ namespace igcmd
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Check if the start up directory writable
+            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+
+            // Enable Portable mode as default if possible
+            GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
+
             string topcmd = args[0].ToLower().Trim();
 
             if (topcmd == "igupdate")// check for update

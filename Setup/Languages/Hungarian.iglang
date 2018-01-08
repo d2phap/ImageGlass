@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Alapértelmezett formátum" />
       <Item key="_.ImageFormatGroup.Optional" value="Választható formátumok" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nem tudja megnyitni ezt a képet, mert a fájl sérült, érvénytelen vagy nem támogatott." />
+      <Item key="frmMain._ImageNotExist" value="A megjelenített kép nem létezik." />
       <Item key="frmMain.btnBack" value="Ugrás az előző képhez (Balra nyíl / Page Up)" />
       <Item key="frmMain.btnNext" value="Ugrás a következő képhez (Jobbra nyíl / Page Down)" />
       <Item key="frmMain.btnRotateLeft" value="Forgatás balra (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="Forgatás jobbra (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Nagyítás (Ctrl + Ó)" />
       <Item key="frmMain.btnZoomOut" value="Kicsinyítés (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Nagyítás illesztés (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Tényleges méret (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Nagyítási arány rögzítés (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Szélességigazítás (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Adja meg a kép sorszámát a megtekintéshez. Nyomja meg az {ENTER} billentyűt" />
       <Item key="frmMain._DeleteDialogText" value="Törli '{0}' fájlt?" />
       <Item key="frmMain._DeleteDialogTitle" value="Megerösít" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Képkockák kibontása. Kérem, válassza ki a kimeneti mappát." />
       <Item key="frmMain._FullScreenMessage" value="Nyomja meg az ALT + ENTER billentyűkombinációt a teljes képernyős módból való kilépéshez. &#xA; Vagy CTRL + F1 a menühöz." />
       <Item key="frmMain._SlideshowMessage" value="Nyomja meg az ESC billentyűt a diavetítésből való kilépéshez. &#xA; Jobb kattintás a helyi menü megnyitásához." />
       <Item key="frmMain._SlideshowMessagePause" value="Diavetítés szünetel" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="Névjegy" />
       <Item key="frmAbout._PortableText" value="[Hordozható]" />
       <Item key="frmSetting._Text" value="Beállítások" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Mentés" />
       <Item key="frmSetting.btnCancel" value="Mégse" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Alkalmaz" />
       <Item key="frmSetting.lblGeneral" value="Általános" />
       <Item key="frmSetting.lblImage" value="Kép" />
       <Item key="frmSetting.lblFileAssociations" value="Társítások" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Üdvözlő kép megjelenítése" />
       <Item key="frmSetting.chkShowToolBar" value="Eszköztár megjelenítése induláskor" />
       <Item key="frmSetting.lblHeadPortableMode" value="Hordozható mód" />
-      <Item key="frmSetting.chkPortableMode" value="Hordozható mód engedélyezése" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Hordozható mód engedélyezve" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Hordozható mód le van tiltva a telepített mappában:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Egyebek" />
       <Item key="frmSetting.chkAutoUpdate" value="Frissítés automatikus ellenőrzése" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Alkalmazás több példányban is futhat" />
       <Item key="frmSetting.chkESCToQuit" value="ESC engedélyezése az alkalmazás bezárásához" />
       <Item key="frmSetting.chkConfirmationDelete" value="Törlés megerősítés megjelenítése" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Képnéző gördítősáv megjelenítése" />
       <Item key="frmSetting.lblBackGroundColor" value="Háttérszín" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Visszaállít" />
       <Item key="frmSetting.lblHeadImageLoading" value="Kép betöltése" />
       <Item key="frmSetting.chkFindChildFolder" value="Képek keresése almappában" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Rejtett képek megjelenítése" />
       <Item key="frmSetting.chkLoopViewer" value="Diavetítés újrakezdése amikor a lista végére ér" />
       <Item key="frmSetting.chkImageBoosterBack" value="Image Booster bekapcsolása amikor visszafelé navigál (~20%-al nagyobb memória igény)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Kép betöltés sorrend" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Diavetítés újrakezdése amikor a végére ér" />
       <Item key="frmSetting.lblSlideshowInterval" value="Diavetítés késleltetés: {0} másodperc" />
       <Item key="frmSetting.lblHeadImageEditing" value="Kép szerkesztés" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Kép mentése forgatás után" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Válasszon képszerkesztő alkalmazást" />
       <Item key="frmSetting.btnEditEditExt" value="Szerkeztés" />
       <Item key="frmSetting.btnEditResetExt" value="Alapbeállítások visszaállítása" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Minden bővítmény szerkesztése" />
+      <Item key="frmSetting._allExtensions" value="minden kiterjesztés" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Fájlkiterjesztés" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Alkalmazás neve" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Alkalmazás könyvtára" />

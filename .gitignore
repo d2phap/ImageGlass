@@ -166,3 +166,8 @@ Source/.vs/ImageGlass.sqlite
 Setup/ImageGlass_4.0.4.15.exe
 Setup/ImageGlass_4.1.7.26.exe
 /Source/.vs/ImageGlass/v15/Server/sqlite3
+*.ide
+*.lock
+*.ide-shm
+*.ide-wal
+*.ide

@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="tr" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="tr-TR" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Ön tanımlı formatlar" />
       <Item key="_.ImageFormatGroup.Optional" value="Opsiyonel formatlar" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass bu resmi açamıyor çünkü dosya bozuk, hatalı veya desteklenmiyor olabilir." />
+      <Item key="frmMain._ImageNotExist" value="Görüntüleme resmi mevcut değil." />
       <Item key="frmMain.btnBack" value="Önceki resme gitmek (Sol ok / Sayfa Yukarı)" />
       <Item key="frmMain.btnNext" value="Gidin sonraki resim (sağ ok / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Saat yönünün tersine döndür (Ctrl +,)" />
       <Item key="frmMain.btnRotateRight" value="Saat yönünde döndür (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Zoom (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Uzaklaştırmak (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Sığdırmak için yakınlaştırın (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Gerçek boyut (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Yakınlaştırma oranını kilitle (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Ölçek genişliği (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Görüntülemek için yansıma dizini girin. Basın {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Dosya '{0}' silinsin mi?" />
       <Item key="frmMain._DeleteDialogTitle" value="Onay" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Görüntü çerçeveleri çıkartılıyor. Lütfen çıktı klasörü seçin." />
       <Item key="frmMain._FullScreenMessage" value="ALT + ENTER tam ekran modu. çıkmak için tuşuna basın &#xA; veya CTRL + F1 menüsünü göstermek için." />
       <Item key="frmMain._SlideshowMessage" value="Slayt gösterisi. çıkmak için ESC tuşuna basın &#xA; bağlam menüsünü açmak için sağ tıklatın." />
       <Item key="frmMain._SlideshowMessagePause" value="Slayt gösterisi duraklatıldı" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="Hakkında" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Ayarlar" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Kaydet" />
       <Item key="frmSetting.btnCancel" value="Hayır" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Uygula" />
       <Item key="frmSetting.lblGeneral" value="Genel" />
       <Item key="frmSetting.lblImage" value="Resim" />
       <Item key="frmSetting.lblFileAssociations" value="Dosya ilişkileri" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Hoş geldiniz resmi göster" />
       <Item key="frmSetting.chkShowToolBar" value="Başlarken araç çubuğunu göster" />
       <Item key="frmSetting.lblHeadPortableMode" value="Mobil modu" />
-      <Item key="frmSetting.chkPortableMode" value="Mobil modunu aktive et" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Taşınabilir mod: etkinleştir" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Taşınabilir mod yüklü klasörü devre dışı: &#xD; &#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Diğerleri" />
       <Item key="frmSetting.chkAutoUpdate" value="Güncellemeler otomatik olarak kontrol edilsin mi" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Programın birden çok örneğini izin" />
       <Item key="frmSetting.chkESCToQuit" value="Uygulama çıkmak için ESC tuşuna basın izin" />
       <Item key="frmSetting.chkConfirmationDelete" value="Silme onay diyaloğunu göster" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Görüntüleyici kaydırma çubuklarını görüntüle" />
       <Item key="frmSetting.lblBackGroundColor" value="Arka plan rengi" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Ön değerler" />
       <Item key="frmSetting.lblHeadImageLoading" value="Resim yükleniyor" />
       <Item key="frmSetting.chkFindChildFolder" value="Alt klasördeki görüntüleri bulmak" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Gizli resimleri göster" />
       <Item key="frmSetting.chkLoopViewer" value="Listenin sonuna ulaştığında geri görüntüleyiciyi ilk görüntüye bağlayın" />
       <Item key="frmSetting.chkImageBoosterBack" value="Görüntü güçlendirici açmak ne zaman geri gidin (% ~ 20 daha fazla RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Resim yükleme sıralaması" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Listenin sonuna ulaşan ilk görüntü için döngü arka slideshow" />
       <Item key="frmSetting.lblSlideshowInterval" value="Slayt gösterisi aralığı: {0} saniye" />
       <Item key="frmSetting.lblHeadImageEditing" value="Resim düzenleme" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Döndürdükten sonra görüntüyü Kaydet" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Resim düzenleme için uygulama seçin" />
       <Item key="frmSetting.btnEditEditExt" value="Düzenle" />
       <Item key="frmSetting.btnEditResetExt" value="Ön değerleri geri döndür" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Tüm eklentileri Düzenle" />
+      <Item key="frmSetting._allExtensions" value="tüm eklentiler" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Dosya uzantıları" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="App ismi" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="App yolu" />

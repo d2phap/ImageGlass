@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "4.1.0.0";
+            _minVersion = "4.5.10.30";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -230,6 +230,7 @@ namespace ImageGlass.Library
 
             #region frmMain
             Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
+            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");//4.5
 
 
             #region Tool bar
@@ -239,6 +240,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
+            Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
@@ -253,10 +255,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
             Items.Add("frmMain.btnPrintImage", "Print image (Ctrl + P)");
-            Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)");
-            Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)");
-            Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)");
-            Items.Add("frmMain.btnHelp", "Help (F1)");
+            //Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)"); //removed 4.5
+            //Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)"); //removed 4.5
+            //Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)"); //removed 4.5
+            //Items.Add("frmMain.btnHelp", "Help (F1)"); //removed 4.5
 
             Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
             #endregion
@@ -327,6 +329,8 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
+
+            Items.Add("frmMain.mnuMainCheckForUpdate", "A new version is available"); //v4.5
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
             #endregion
 
@@ -419,7 +423,9 @@ namespace ImageGlass.Library
 
             #region Portable mode
             Items.Add("frmSetting.lblHeadPortableMode", "Portable mode"); //v4.0
-            Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //v4.0
+            //Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //remove v4.0
+            Items.Add("frmSetting.chkPortableMode._Enabled", "Portable mode is enabled"); //v4.5
+            Items.Add("frmSetting.chkPortableMode._Disabled", "Portable mode is disabled on the installed folder:\r\n{0}"); //v4.5
             #endregion
 
 
@@ -440,6 +446,7 @@ namespace ImageGlass.Library
             #region Image loading
             Items.Add("frmSetting.lblHeadImageLoading", "Image loading"); //v4.0
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
+            Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
@@ -492,10 +499,12 @@ namespace ImageGlass.Library
 
             #region Image editing
             Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
+            Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
             Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
-            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.x
-            Items.Add("frmSetting._allExtensions", "all extensions"); //v4.x
+            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.1
+            Items.Add("frmSetting._allExtensions", "all extensions"); //v4.1
             Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0

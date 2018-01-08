@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("ImageGlass theme configuration")]
 [assembly: AssemblyCopyright("Copyright © 2017 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
+[assembly: AssemblyCulture("")]
 
 //
 // Version information for an assembly consists of the following four values:
@@ -26,7 +26,7 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("4.0.4.15")]
+[assembly: AssemblyVersion("4.1.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -56,4 +56,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyFileVersion("4.0.4.15")]
+[assembly: AssemblyFileVersion("4.5")]
+

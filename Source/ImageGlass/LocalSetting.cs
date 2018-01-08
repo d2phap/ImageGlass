@@ -17,17 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Threading;
 
 namespace ImageGlass
 {
     public static class LocalSetting
     {
-        private static frmFacebook _fFacebook = new frmFacebook();
-        private static frmSetting _fSetting = new frmSetting();
-        private static frmExtension _fExtension = new frmExtension();
+        private static frmFacebook _fFacebook;
+        private static frmSetting _fSetting;
+        private static frmExtension _fExtension;
         private static string _imageModifiedPath = "";
         private static bool _isResetScrollPosition = true;
-        private static Theme.Theme _theme = new Theme.Theme();
+        private static Theme.Theme _theme;
         private static bool _isThumbnailDimensionChanged = false;
 
         #region "Properties"
@@ -36,7 +37,7 @@ namespace ImageGlass
         /// </summary>
         public static frmFacebook FFacebook
         {
-            get { return _fFacebook; }
+            get { return LazyInitializer.EnsureInitialized(ref _fFacebook); }
             set { _fFacebook = value; }
         }
 
@@ -45,7 +46,7 @@ namespace ImageGlass
         /// </summary>
         public static frmSetting FSetting
         {
-            get { return _fSetting; }
+            get { return LazyInitializer.EnsureInitialized(ref _fSetting); }
             set { _fSetting = value; }
         }
 
@@ -54,12 +55,12 @@ namespace ImageGlass
         /// </summary>
         public static frmExtension FExtension
         {
-            get { return _fExtension; }
+            get { return LazyInitializer.EnsureInitialized(ref _fExtension); }
             set { _fExtension = value; }
         }
 
         /// <summary>
-        /// Gets, sets value if image was modified
+        /// Gets, sets value if image data was modified
         /// </summary>
         public static string ImageModifiedPath
         {
@@ -88,12 +89,13 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets current app theme
         /// </summary>
-        public static Theme.Theme Theme { get => _theme; set => _theme = value; }
+        public static Theme.Theme Theme { get => LazyInitializer.EnsureInitialized(ref _theme, () => new Theme.Theme()); set => _theme = value; }
 
         /// <summary>
         /// Gets, sets the value that will request frmMain to update thumbnail bar
         /// </summary>
         public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
+        
         #endregion
 
     }
