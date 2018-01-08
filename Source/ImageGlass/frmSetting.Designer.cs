@@ -87,6 +87,8 @@
             this.lblMouseWheelCtrl = new System.Windows.Forms.Label();
             this.lblMouseWheel = new System.Windows.Forms.Label();
             this.lblHeadMouseWheelActions = new System.Windows.Forms.Label();
+            this.lblSelectAppForEdit = new System.Windows.Forms.Label();
+            this.chkSaveOnRotate = new System.Windows.Forms.CheckBox();
             this.chkShowHiddenImages = new System.Windows.Forms.CheckBox();
             this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
@@ -126,8 +128,6 @@
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkSaveOnRotate = new System.Windows.Forms.CheckBox();
-            this.lblSelectAppForEdit = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -160,11 +160,11 @@
             this.lblLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblLanguage.ForeColor = System.Drawing.Color.Black;
-            this.lblLanguage.Location = new System.Drawing.Point(0, 99);
+            this.lblLanguage.Location = new System.Drawing.Point(0, 150);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
-            this.lblLanguage.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.lblLanguage.Size = new System.Drawing.Size(153, 33);
+            this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblLanguage.Size = new System.Drawing.Size(230, 50);
             this.lblLanguage.TabIndex = 4;
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
@@ -183,11 +183,11 @@
             this.lblFileAssociations.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblFileAssociations.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFileAssociations.ForeColor = System.Drawing.Color.Black;
-            this.lblFileAssociations.Location = new System.Drawing.Point(0, 66);
+            this.lblFileAssociations.Location = new System.Drawing.Point(0, 100);
             this.lblFileAssociations.Margin = new System.Windows.Forms.Padding(0);
             this.lblFileAssociations.Name = "lblFileAssociations";
-            this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.lblFileAssociations.Size = new System.Drawing.Size(153, 33);
+            this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblFileAssociations.Size = new System.Drawing.Size(230, 50);
             this.lblFileAssociations.TabIndex = 3;
             this.lblFileAssociations.Tag = "0";
             this.lblFileAssociations.Text = "File Associations";
@@ -209,8 +209,8 @@
             this.lblGeneral.Location = new System.Drawing.Point(0, 0);
             this.lblGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.lblGeneral.Name = "lblGeneral";
-            this.lblGeneral.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.lblGeneral.Size = new System.Drawing.Size(153, 33);
+            this.lblGeneral.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblGeneral.Size = new System.Drawing.Size(230, 50);
             this.lblGeneral.TabIndex = 1;
             this.lblGeneral.Tag = "1";
             this.lblGeneral.Text = "General";
@@ -226,10 +226,10 @@
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(31, 335);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(1);
+            this.picBackgroundColor.Location = new System.Drawing.Point(46, 502);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.picBackgroundColor.Name = "picBackgroundColor";
-            this.picBackgroundColor.Size = new System.Drawing.Size(67, 27);
+            this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
             this.picBackgroundColor.TabIndex = 12;
             this.picBackgroundColor.TabStop = false;
             this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
@@ -246,10 +246,10 @@
             this.tabLanguage.Controls.Add(this.lnkGetMoreLanguage);
             this.tabLanguage.Controls.Add(this.cmbLanguage);
             this.tabLanguage.Controls.Add(this.lblLanguageText);
-            this.tabLanguage.Location = new System.Drawing.Point(4, 27);
+            this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(463, 368);
+            this.tabLanguage.Size = new System.Drawing.Size(698, 557);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             // 
@@ -258,10 +258,10 @@
             this.lblLanguageWarning.AutoSize = true;
             this.lblLanguageWarning.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(160)))), ((int)(((byte)(31)))));
-            this.lblLanguageWarning.Location = new System.Drawing.Point(7, 63);
-            this.lblLanguageWarning.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblLanguageWarning.Location = new System.Drawing.Point(10, 94);
+            this.lblLanguageWarning.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLanguageWarning.Name = "lblLanguageWarning";
-            this.lblLanguageWarning.Size = new System.Drawing.Size(368, 15);
+            this.lblLanguageWarning.Size = new System.Drawing.Size(556, 25);
             this.lblLanguageWarning.TabIndex = 25;
             this.lblLanguageWarning.Text = "This language pack may be not compatible with ImageGlass 3.2.0.16.";
             // 
@@ -270,10 +270,10 @@
             this.lnkInstallLanguage.AutoSize = true;
             this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkInstallLanguage.Location = new System.Drawing.Point(8, 124);
-            this.lnkInstallLanguage.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnkInstallLanguage.Location = new System.Drawing.Point(12, 186);
+            this.lnkInstallLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkInstallLanguage.Name = "lnkInstallLanguage";
-            this.lnkInstallLanguage.Size = new System.Drawing.Size(206, 15);
+            this.lnkInstallLanguage.Size = new System.Drawing.Size(308, 25);
             this.lnkInstallLanguage.TabIndex = 35;
             this.lnkInstallLanguage.TabStop = true;
             this.lnkInstallLanguage.Text = "> Install new language pack (*.iglang)";
@@ -284,10 +284,10 @@
             this.lnkRefresh.AutoSize = true;
             this.lnkRefresh.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkRefresh.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkRefresh.Location = new System.Drawing.Point(195, 39);
-            this.lnkRefresh.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnkRefresh.Location = new System.Drawing.Point(292, 58);
+            this.lnkRefresh.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkRefresh.Name = "lnkRefresh";
-            this.lnkRefresh.Size = new System.Drawing.Size(57, 15);
+            this.lnkRefresh.Size = new System.Drawing.Size(87, 25);
             this.lnkRefresh.TabIndex = 34;
             this.lnkRefresh.TabStop = true;
             this.lnkRefresh.Text = "> Refresh";
@@ -298,10 +298,10 @@
             this.lnkEdit.AutoSize = true;
             this.lnkEdit.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEdit.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkEdit.Location = new System.Drawing.Point(8, 164);
-            this.lnkEdit.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnkEdit.Location = new System.Drawing.Point(12, 246);
+            this.lnkEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkEdit.Name = "lnkEdit";
-            this.lnkEdit.Size = new System.Drawing.Size(164, 15);
+            this.lnkEdit.Size = new System.Drawing.Size(248, 25);
             this.lnkEdit.TabIndex = 37;
             this.lnkEdit.TabStop = true;
             this.lnkEdit.Text = "> Edit selected language pack";
@@ -312,10 +312,10 @@
             this.lnkCreateNew.AutoSize = true;
             this.lnkCreateNew.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCreateNew.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkCreateNew.Location = new System.Drawing.Point(8, 144);
-            this.lnkCreateNew.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnkCreateNew.Location = new System.Drawing.Point(12, 216);
+            this.lnkCreateNew.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkCreateNew.Name = "lnkCreateNew";
-            this.lnkCreateNew.Size = new System.Drawing.Size(157, 15);
+            this.lnkCreateNew.Size = new System.Drawing.Size(236, 25);
             this.lnkCreateNew.TabIndex = 36;
             this.lnkCreateNew.TabStop = true;
             this.lnkCreateNew.Text = "> Create new language pack";
@@ -326,10 +326,10 @@
             this.lnkGetMoreLanguage.AutoSize = true;
             this.lnkGetMoreLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkGetMoreLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkGetMoreLanguage.Location = new System.Drawing.Point(8, 184);
-            this.lnkGetMoreLanguage.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnkGetMoreLanguage.Location = new System.Drawing.Point(12, 276);
+            this.lnkGetMoreLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkGetMoreLanguage.Name = "lnkGetMoreLanguage";
-            this.lnkGetMoreLanguage.Size = new System.Drawing.Size(152, 15);
+            this.lnkGetMoreLanguage.Size = new System.Drawing.Size(231, 25);
             this.lnkGetMoreLanguage.TabIndex = 38;
             this.lnkGetMoreLanguage.TabStop = true;
             this.lnkGetMoreLanguage.Text = "> Get more language packs";
@@ -342,10 +342,10 @@
             this.cmbLanguage.Items.AddRange(new object[] {
             "English (default)",
             "Vietnamese"});
-            this.cmbLanguage.Location = new System.Drawing.Point(13, 39);
-            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(1);
+            this.cmbLanguage.Location = new System.Drawing.Point(20, 58);
+            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(171, 23);
+            this.cmbLanguage.Size = new System.Drawing.Size(254, 33);
             this.cmbLanguage.TabIndex = 33;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
@@ -354,10 +354,10 @@
             this.lblLanguageText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguageText.AutoSize = true;
-            this.lblLanguageText.Location = new System.Drawing.Point(7, 19);
-            this.lblLanguageText.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblLanguageText.Location = new System.Drawing.Point(10, 28);
+            this.lblLanguageText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLanguageText.Name = "lblLanguageText";
-            this.lblLanguageText.Size = new System.Drawing.Size(111, 15);
+            this.lblLanguageText.Size = new System.Drawing.Size(168, 25);
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
@@ -369,10 +369,10 @@
             this.tabFileAssociation.Controls.Add(this.lnkOpenFileAssoc);
             this.tabFileAssociation.Controls.Add(this.lvExtension);
             this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
-            this.tabFileAssociation.Location = new System.Drawing.Point(4, 27);
+            this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(463, 368);
+            this.tabFileAssociation.Size = new System.Drawing.Size(698, 557);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             // 
@@ -384,20 +384,19 @@
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 314);
+            this.panel2.Location = new System.Drawing.Point(0, 476);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(463, 54);
+            this.panel2.Size = new System.Drawing.Size(698, 81);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(159, 7);
-            this.btnRegisterExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRegisterExt.Location = new System.Drawing.Point(242, 3);
             this.btnRegisterExt.Name = "btnRegisterExt";
-            this.btnRegisterExt.Size = new System.Drawing.Size(159, 25);
+            this.btnRegisterExt.Size = new System.Drawing.Size(238, 45);
             this.btnRegisterExt.TabIndex = 31;
             this.btnRegisterExt.Text = "Register extensions";
             this.btnRegisterExt.UseVisualStyleBackColor = true;
@@ -407,10 +406,9 @@
             // 
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetExt.AutoSize = true;
-            this.btnResetExt.Location = new System.Drawing.Point(322, 7);
-            this.btnResetExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnResetExt.Location = new System.Drawing.Point(487, 3);
             this.btnResetExt.Name = "btnResetExt";
-            this.btnResetExt.Size = new System.Drawing.Size(133, 25);
+            this.btnResetExt.Size = new System.Drawing.Size(200, 45);
             this.btnResetExt.TabIndex = 32;
             this.btnResetExt.Text = "Reset to default";
             this.btnResetExt.UseVisualStyleBackColor = true;
@@ -420,10 +418,9 @@
             // 
             this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddNewExt.AutoSize = true;
-            this.btnAddNewExt.Location = new System.Drawing.Point(14, 7);
-            this.btnAddNewExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnAddNewExt.Location = new System.Drawing.Point(21, 3);
             this.btnAddNewExt.Name = "btnAddNewExt";
-            this.btnAddNewExt.Size = new System.Drawing.Size(50, 25);
+            this.btnAddNewExt.Size = new System.Drawing.Size(75, 45);
             this.btnAddNewExt.TabIndex = 29;
             this.btnAddNewExt.Text = "Add";
             this.btnAddNewExt.UseVisualStyleBackColor = true;
@@ -434,10 +431,9 @@
             this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
-            this.btnDeleteExt.Location = new System.Drawing.Point(68, 7);
-            this.btnDeleteExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDeleteExt.Location = new System.Drawing.Point(102, 3);
             this.btnDeleteExt.Name = "btnDeleteExt";
-            this.btnDeleteExt.Size = new System.Drawing.Size(66, 25);
+            this.btnDeleteExt.Size = new System.Drawing.Size(99, 45);
             this.btnDeleteExt.TabIndex = 30;
             this.btnDeleteExt.Text = "Delete";
             this.btnDeleteExt.UseVisualStyleBackColor = true;
@@ -447,10 +443,9 @@
             // 
             this.lblExtensionsGroupDescription.AutoSize = true;
             this.lblExtensionsGroupDescription.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtensionsGroupDescription.Location = new System.Drawing.Point(11, 19);
-            this.lblExtensionsGroupDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExtensionsGroupDescription.Location = new System.Drawing.Point(16, 28);
             this.lblExtensionsGroupDescription.Name = "lblExtensionsGroupDescription";
-            this.lblExtensionsGroupDescription.Size = new System.Drawing.Size(382, 15);
+            this.lblExtensionsGroupDescription.Size = new System.Drawing.Size(583, 25);
             this.lblExtensionsGroupDescription.TabIndex = 34;
             this.lblExtensionsGroupDescription.Text = "*Optional extensions will not be automatically pre-loaded into memory .";
             // 
@@ -461,10 +456,9 @@
             this.lnkOpenFileAssoc.AutoSize = true;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(325, 43);
-            this.lnkOpenFileAssoc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(488, 64);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
-            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(126, 15);
+            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(191, 25);
             this.lnkOpenFileAssoc.TabIndex = 27;
             this.lnkOpenFileAssoc.TabStop = true;
             this.lnkOpenFileAssoc.Text = "Open File Associations";
@@ -488,10 +482,9 @@
             listViewGroup1,
             listViewGroup2});
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvExtension.Location = new System.Drawing.Point(15, 60);
-            this.lvExtension.Margin = new System.Windows.Forms.Padding(2);
+            this.lvExtension.Location = new System.Drawing.Point(22, 90);
             this.lvExtension.Name = "lvExtension";
-            this.lvExtension.Size = new System.Drawing.Size(439, 249);
+            this.lvExtension.Size = new System.Drawing.Size(656, 372);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 28;
             this.lvExtension.UseCompatibleStateImageBehavior = false;
@@ -506,10 +499,10 @@
             // lblSupportedExtension
             // 
             this.lblSupportedExtension.AutoSize = true;
-            this.lblSupportedExtension.Location = new System.Drawing.Point(11, 43);
-            this.lblSupportedExtension.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblSupportedExtension.Location = new System.Drawing.Point(16, 64);
+            this.lblSupportedExtension.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSupportedExtension.Name = "lblSupportedExtension";
-            this.lblSupportedExtension.Size = new System.Drawing.Size(123, 15);
+            this.lblSupportedExtension.Size = new System.Drawing.Size(189, 25);
             this.lblSupportedExtension.TabIndex = 21;
             this.lblSupportedExtension.Text = "Supported extensions:";
             // 
@@ -532,20 +525,20 @@
             this.tabGeneral.Controls.Add(this.lblBackGroundColor);
             this.tabGeneral.Controls.Add(this.chkWelcomePicture);
             this.tabGeneral.Controls.Add(this.chkAutoUpdate);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 27);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 37);
             this.tabGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Size = new System.Drawing.Size(463, 368);
+            this.tabGeneral.Size = new System.Drawing.Size(699, 557);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             // 
             // chkShowScrollbar
             // 
             this.chkShowScrollbar.AutoSize = true;
-            this.chkShowScrollbar.Location = new System.Drawing.Point(30, 285);
-            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(1);
+            this.chkShowScrollbar.Location = new System.Drawing.Point(45, 428);
+            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
-            this.chkShowScrollbar.Size = new System.Drawing.Size(154, 19);
+            this.chkShowScrollbar.Size = new System.Drawing.Size(231, 29);
             this.chkShowScrollbar.TabIndex = 12;
             this.chkShowScrollbar.Text = "Display viewer scrollbars";
             this.chkShowScrollbar.UseVisualStyleBackColor = true;
@@ -556,10 +549,9 @@
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(101, 339);
-            this.lnkResetBackgroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(152, 508);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
-            this.lnkResetBackgroundColor.Size = new System.Drawing.Size(35, 15);
+            this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
             this.lnkResetBackgroundColor.TabIndex = 13;
             this.lnkResetBackgroundColor.TabStop = true;
             this.lnkResetBackgroundColor.Text = "Reset";
@@ -569,10 +561,9 @@
             // 
             this.lblHeadOthers.AutoSize = true;
             this.lblHeadOthers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadOthers.Location = new System.Drawing.Point(15, 175);
-            this.lblHeadOthers.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadOthers.Location = new System.Drawing.Point(22, 262);
             this.lblHeadOthers.Name = "lblHeadOthers";
-            this.lblHeadOthers.Size = new System.Drawing.Size(45, 15);
+            this.lblHeadOthers.Size = new System.Drawing.Size(69, 25);
             this.lblHeadOthers.TabIndex = 46;
             this.lblHeadOthers.Text = "Others";
             // 
@@ -580,10 +571,9 @@
             // 
             this.lblHeadPortableMode.AutoSize = true;
             this.lblHeadPortableMode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadPortableMode.Location = new System.Drawing.Point(15, 109);
-            this.lblHeadPortableMode.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadPortableMode.Location = new System.Drawing.Point(22, 164);
             this.lblHeadPortableMode.Name = "lblHeadPortableMode";
-            this.lblHeadPortableMode.Size = new System.Drawing.Size(89, 15);
+            this.lblHeadPortableMode.Size = new System.Drawing.Size(137, 25);
             this.lblHeadPortableMode.TabIndex = 45;
             this.lblHeadPortableMode.Text = "Portable mode";
             // 
@@ -591,10 +581,9 @@
             // 
             this.lblHeadStartup.AutoSize = true;
             this.lblHeadStartup.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadStartup.Location = new System.Drawing.Point(15, 13);
-            this.lblHeadStartup.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadStartup.Location = new System.Drawing.Point(22, 20);
             this.lblHeadStartup.Name = "lblHeadStartup";
-            this.lblHeadStartup.Size = new System.Drawing.Size(52, 15);
+            this.lblHeadStartup.Size = new System.Drawing.Size(81, 25);
             this.lblHeadStartup.TabIndex = 44;
             this.lblHeadStartup.Text = "Start up";
             // 
@@ -602,29 +591,29 @@
             // 
             this.chkPortableMode.AutoSize = true;
             this.chkPortableMode.Enabled = false;
-            this.chkPortableMode.Location = new System.Drawing.Point(30, 131);
-            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(1);
+            this.chkPortableMode.Location = new System.Drawing.Point(45, 196);
+            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkPortableMode.Name = "chkPortableMode";
-            this.chkPortableMode.Size = new System.Drawing.Size(142, 19);
+            this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
             this.chkPortableMode.TabIndex = 7;
             this.chkPortableMode.Text = "Enable Portable mode";
             this.chkPortableMode.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(29, 387);
-            this.panel1.Margin = new System.Windows.Forms.Padding(1);
+            this.panel1.Location = new System.Drawing.Point(44, 580);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(73, 21);
+            this.panel1.Size = new System.Drawing.Size(110, 32);
             this.panel1.TabIndex = 24;
             // 
             // chkConfirmationDelete
             // 
             this.chkConfirmationDelete.AutoSize = true;
-            this.chkConfirmationDelete.Location = new System.Drawing.Point(30, 263);
-            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(1);
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 394);
+            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
-            this.chkConfirmationDelete.Size = new System.Drawing.Size(211, 19);
+            this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
             this.chkConfirmationDelete.TabIndex = 11;
             this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
             this.chkConfirmationDelete.UseVisualStyleBackColor = true;
@@ -632,10 +621,10 @@
             // chkAllowMultiInstances
             // 
             this.chkAllowMultiInstances.AutoSize = true;
-            this.chkAllowMultiInstances.Location = new System.Drawing.Point(30, 219);
-            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(1);
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 328);
+            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
-            this.chkAllowMultiInstances.Size = new System.Drawing.Size(238, 19);
+            this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
             this.chkAllowMultiInstances.TabIndex = 9;
             this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
             this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
@@ -643,10 +632,10 @@
             // chkESCToQuit
             // 
             this.chkESCToQuit.AutoSize = true;
-            this.chkESCToQuit.Location = new System.Drawing.Point(30, 241);
-            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(1);
+            this.chkESCToQuit.Location = new System.Drawing.Point(45, 362);
+            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkESCToQuit.Name = "chkESCToQuit";
-            this.chkESCToQuit.Size = new System.Drawing.Size(223, 19);
+            this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
             this.chkESCToQuit.TabIndex = 10;
             this.chkESCToQuit.Text = "Allow to press ESC to quit application";
             this.chkESCToQuit.UseVisualStyleBackColor = true;
@@ -654,10 +643,10 @@
             // chkShowToolBar
             // 
             this.chkShowToolBar.AutoSize = true;
-            this.chkShowToolBar.Location = new System.Drawing.Point(30, 57);
-            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(1);
+            this.chkShowToolBar.Location = new System.Drawing.Point(45, 86);
+            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkShowToolBar.Name = "chkShowToolBar";
-            this.chkShowToolBar.Size = new System.Drawing.Size(188, 19);
+            this.chkShowToolBar.Size = new System.Drawing.Size(283, 29);
             this.chkShowToolBar.TabIndex = 6;
             this.chkShowToolBar.Text = "Show toolbar when starting up";
             this.chkShowToolBar.UseVisualStyleBackColor = true;
@@ -665,20 +654,20 @@
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(27, 317);
-            this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 476);
+            this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
-            this.lblBackGroundColor.Size = new System.Drawing.Size(104, 15);
+            this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
             this.lblBackGroundColor.TabIndex = 11;
             this.lblBackGroundColor.Text = "Background color:";
             // 
             // chkWelcomePicture
             // 
             this.chkWelcomePicture.AutoSize = true;
-            this.chkWelcomePicture.Location = new System.Drawing.Point(30, 35);
-            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(1);
+            this.chkWelcomePicture.Location = new System.Drawing.Point(45, 52);
+            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
-            this.chkWelcomePicture.Size = new System.Drawing.Size(146, 19);
+            this.chkWelcomePicture.Size = new System.Drawing.Size(216, 29);
             this.chkWelcomePicture.TabIndex = 5;
             this.chkWelcomePicture.Text = "Show welcome picture";
             this.chkWelcomePicture.UseVisualStyleBackColor = true;
@@ -686,10 +675,10 @@
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(30, 197);
-            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(1);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 296);
+            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
-            this.chkAutoUpdate.Size = new System.Drawing.Size(192, 19);
+            this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
             this.chkAutoUpdate.TabIndex = 8;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
@@ -707,7 +696,7 @@
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(471, 399);
+            this.tab1.Size = new System.Drawing.Size(707, 598);
             this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
@@ -753,11 +742,10 @@
             this.tabImage.Controls.Add(this.barInterval);
             this.tabImage.Controls.Add(this.lblSlideshowInterval);
             this.tabImage.Controls.Add(this.chkFindChildFolder);
-            this.tabImage.Location = new System.Drawing.Point(4, 27);
-            this.tabImage.Margin = new System.Windows.Forms.Padding(2);
+            this.tabImage.Location = new System.Drawing.Point(4, 37);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Padding = new System.Windows.Forms.Padding(2);
-            this.tabImage.Size = new System.Drawing.Size(463, 368);
+            this.tabImage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabImage.Size = new System.Drawing.Size(699, 557);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
@@ -765,71 +753,79 @@
             // 
             this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelAlt.FormattingEnabled = true;
-            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(177, 282);
+            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 628);
+            this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
-            this.cmbMouseWheelAlt.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelAlt.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelAlt.TabIndex = 56;
             // 
             // cmbMouseWheelShift
             // 
             this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelShift.FormattingEnabled = true;
-            this.cmbMouseWheelShift.Location = new System.Drawing.Point(177, 253);
+            this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 541);
+            this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
-            this.cmbMouseWheelShift.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelShift.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelShift.TabIndex = 55;
             // 
             // cmbMouseWheelCtrl
             // 
             this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelCtrl.FormattingEnabled = true;
-            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(177, 224);
+            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 454);
+            this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
-            this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelCtrl.TabIndex = 54;
             // 
             // cmbMouseWheel
             // 
             this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheel.FormattingEnabled = true;
-            this.cmbMouseWheel.Location = new System.Drawing.Point(177, 195);
+            this.cmbMouseWheel.Location = new System.Drawing.Point(45, 369);
+            this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
-            this.cmbMouseWheel.Size = new System.Drawing.Size(198, 23);
+            this.cmbMouseWheel.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheel.TabIndex = 53;
             // 
             // lblMouseWheelAlt
             // 
             this.lblMouseWheelAlt.AutoSize = true;
-            this.lblMouseWheelAlt.Location = new System.Drawing.Point(31, 285);
+            this.lblMouseWheelAlt.Location = new System.Drawing.Point(40, 599);
+            this.lblMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelAlt.Name = "lblMouseWheelAlt";
-            this.lblMouseWheelAlt.Size = new System.Drawing.Size(106, 15);
+            this.lblMouseWheelAlt.Size = new System.Drawing.Size(160, 25);
             this.lblMouseWheelAlt.TabIndex = 52;
             this.lblMouseWheelAlt.Text = "Mouse wheel + Alt";
             // 
             // lblMouseWheelShift
             // 
             this.lblMouseWheelShift.AutoSize = true;
-            this.lblMouseWheelShift.Location = new System.Drawing.Point(31, 256);
+            this.lblMouseWheelShift.Location = new System.Drawing.Point(40, 512);
+            this.lblMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelShift.Name = "lblMouseWheelShift";
-            this.lblMouseWheelShift.Size = new System.Drawing.Size(115, 15);
+            this.lblMouseWheelShift.Size = new System.Drawing.Size(174, 25);
             this.lblMouseWheelShift.TabIndex = 51;
             this.lblMouseWheelShift.Text = "Mouse wheel + Shift";
             // 
             // lblMouseWheelCtrl
             // 
             this.lblMouseWheelCtrl.AutoSize = true;
-            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(31, 227);
+            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(40, 425);
+            this.lblMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelCtrl.Name = "lblMouseWheelCtrl";
-            this.lblMouseWheelCtrl.Size = new System.Drawing.Size(110, 15);
+            this.lblMouseWheelCtrl.Size = new System.Drawing.Size(165, 25);
             this.lblMouseWheelCtrl.TabIndex = 50;
             this.lblMouseWheelCtrl.Text = "Mouse wheel + Ctrl";
             // 
             // lblMouseWheel
             // 
             this.lblMouseWheel.AutoSize = true;
-            this.lblMouseWheel.Location = new System.Drawing.Point(31, 198);
+            this.lblMouseWheel.Location = new System.Drawing.Point(40, 340);
+            this.lblMouseWheel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheel.Name = "lblMouseWheel";
-            this.lblMouseWheel.Size = new System.Drawing.Size(77, 15);
+            this.lblMouseWheel.Size = new System.Drawing.Size(116, 25);
             this.lblMouseWheel.TabIndex = 49;
             this.lblMouseWheel.Text = "Mouse wheel";
             // 
@@ -837,19 +833,41 @@
             // 
             this.lblHeadMouseWheelActions.AutoSize = true;
             this.lblHeadMouseWheelActions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(15, 173);
+            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(22, 307);
+            this.lblHeadMouseWheelActions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeadMouseWheelActions.Name = "lblHeadMouseWheelActions";
-            this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(123, 15);
+            this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(190, 25);
             this.lblHeadMouseWheelActions.TabIndex = 48;
             this.lblHeadMouseWheelActions.Text = "Mouse wheel actions";
-            //
+            // 
+            // lblSelectAppForEdit
+            // 
+            this.lblSelectAppForEdit.AutoSize = true;
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(40, 1406);
+            this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
+            this.lblSelectAppForEdit.Size = new System.Drawing.Size(296, 25);
+            this.lblSelectAppForEdit.TabIndex = 50;
+            this.lblSelectAppForEdit.Text = "Select application for image editing:";
+            // 
+            // chkSaveOnRotate
+            // 
+            this.chkSaveOnRotate.AutoSize = true;
+            this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1364);
+            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkSaveOnRotate.Name = "chkSaveOnRotate";
+            this.chkSaveOnRotate.Size = new System.Drawing.Size(333, 29);
+            this.chkSaveOnRotate.TabIndex = 49;
+            this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
+            this.chkSaveOnRotate.UseVisualStyleBackColor = true;
+            // 
             // chkShowHiddenImages
             // 
             this.chkShowHiddenImages.AutoSize = true;
-            this.chkShowHiddenImages.Location = new System.Drawing.Point(30, 57);
-            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(1);
+            this.chkShowHiddenImages.Location = new System.Drawing.Point(45, 86);
+            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkShowHiddenImages.Name = "chkShowHiddenImages";
-            this.chkShowHiddenImages.Size = new System.Drawing.Size(136, 19);
+            this.chkShowHiddenImages.Size = new System.Drawing.Size(204, 29);
             this.chkShowHiddenImages.TabIndex = 48;
             this.chkShowHiddenImages.Text = "Show hidden images";
             this.chkShowHiddenImages.UseVisualStyleBackColor = true;
@@ -858,10 +876,9 @@
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(289, 858);
-            this.btnEditEditAllExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(434, 1661);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
-            this.btnEditEditAllExt.Size = new System.Drawing.Size(146, 25);
+            this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
             this.btnEditEditAllExt.Text = "Edit all extensions";
             this.btnEditEditAllExt.UseVisualStyleBackColor = true;
@@ -870,10 +887,9 @@
             // btnEditResetExt
             // 
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(84, 858);
-            this.btnEditResetExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEditResetExt.Location = new System.Drawing.Point(126, 1661);
             this.btnEditResetExt.Name = "btnEditResetExt";
-            this.btnEditResetExt.Size = new System.Drawing.Size(133, 25);
+            this.btnEditResetExt.Size = new System.Drawing.Size(200, 45);
             this.btnEditResetExt.TabIndex = 26;
             this.btnEditResetExt.Text = "Reset to default";
             this.btnEditResetExt.UseVisualStyleBackColor = true;
@@ -883,10 +899,9 @@
             // 
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
-            this.btnEditEditExt.Location = new System.Drawing.Point(30, 858);
-            this.btnEditEditExt.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1661);
             this.btnEditEditExt.Name = "btnEditEditExt";
-            this.btnEditEditExt.Size = new System.Drawing.Size(50, 25);
+            this.btnEditEditExt.Size = new System.Drawing.Size(75, 45);
             this.btnEditEditExt.TabIndex = 25;
             this.btnEditEditExt.Text = "Edit";
             this.btnEditEditExt.UseVisualStyleBackColor = true;
@@ -894,10 +909,10 @@
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(18, 869);
-            this.panel3.Margin = new System.Windows.Forms.Padding(1);
+            this.panel3.Location = new System.Drawing.Point(27, 1690);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(73, 21);
+            this.panel3.Size = new System.Drawing.Size(110, 51);
             this.panel3.TabIndex = 46;
             // 
             // lvImageEditing
@@ -919,13 +934,12 @@
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(30, 705);
-            this.lvImageEditing.Margin = new System.Windows.Forms.Padding(2);
+            this.lvImageEditing.Location = new System.Drawing.Point(45, 1432);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(405, 144);
+            this.lvImageEditing.Size = new System.Drawing.Size(608, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -956,10 +970,9 @@
             // 
             this.lblHeadImageEditing.AutoSize = true;
             this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageEditing.Location = new System.Drawing.Point(15, 636);
-            this.lblHeadImageEditing.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 1328);
             this.lblHeadImageEditing.Name = "lblHeadImageEditing";
-            this.lblHeadImageEditing.Size = new System.Drawing.Size(84, 15);
+            this.lblHeadImageEditing.Size = new System.Drawing.Size(130, 25);
             this.lblHeadImageEditing.TabIndex = 44;
             this.lblHeadImageEditing.Text = "Image editing";
             // 
@@ -967,10 +980,9 @@
             // 
             this.lblHeadZooming.AutoSize = true;
             this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(15, 202);
-            this.lblHeadZooming.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadZooming.Location = new System.Drawing.Point(22, 721);
             this.lblHeadZooming.Name = "lblHeadZooming";
-            this.lblHeadZooming.Size = new System.Drawing.Size(56, 15);
+            this.lblHeadZooming.Size = new System.Drawing.Size(88, 25);
             this.lblHeadZooming.TabIndex = 43;
             this.lblHeadZooming.Text = "Zooming";
             // 
@@ -978,10 +990,9 @@
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(15, 514);
-            this.lblHeadSlideshow.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1145);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
-            this.lblHeadSlideshow.Size = new System.Drawing.Size(63, 15);
+            this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
             this.lblHeadSlideshow.TabIndex = 42;
             this.lblHeadSlideshow.Text = "Slideshow";
             // 
@@ -989,10 +1000,9 @@
             // 
             this.lblHeadThumbnailBar.AutoSize = true;
             this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(15, 330);
-            this.lblHeadThumbnailBar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 869);
             this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
-            this.lblHeadThumbnailBar.Size = new System.Drawing.Size(86, 15);
+            this.lblHeadThumbnailBar.Size = new System.Drawing.Size(136, 25);
             this.lblHeadThumbnailBar.TabIndex = 41;
             this.lblHeadThumbnailBar.Text = "Thumbnail bar";
             // 
@@ -1000,42 +1010,30 @@
             // 
             this.lblHeadImageLoading.AutoSize = true;
             this.lblHeadImageLoading.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageLoading.Location = new System.Drawing.Point(15, 13);
-            this.lblHeadImageLoading.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHeadImageLoading.Location = new System.Drawing.Point(22, 20);
             this.lblHeadImageLoading.Name = "lblHeadImageLoading";
-            this.lblHeadImageLoading.Size = new System.Drawing.Size(85, 15);
+            this.lblHeadImageLoading.Size = new System.Drawing.Size(134, 25);
             this.lblHeadImageLoading.TabIndex = 40;
             this.lblHeadImageLoading.Text = "Image loading";
             // 
             // chkLoopViewer
             // 
             this.chkLoopViewer.AutoSize = true;
-            this.chkLoopViewer.Location = new System.Drawing.Point(30, 78);
-            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(1);
+            this.chkLoopViewer.Location = new System.Drawing.Point(45, 117);
+            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkLoopViewer.Name = "chkLoopViewer";
-            this.chkLoopViewer.Size = new System.Drawing.Size(387, 19);
+            this.chkLoopViewer.Size = new System.Drawing.Size(580, 29);
             this.chkLoopViewer.TabIndex = 14;
             this.chkLoopViewer.Text = "Loop back viewer to the first image when reaching the end of the list";
             this.chkLoopViewer.UseVisualStyleBackColor = true;
             // 
-            // chkMouseNavigation
-            // 
-            this.chkMouseNavigation.AutoSize = true;
-            this.chkMouseNavigation.Location = new System.Drawing.Point(30, 224);
-            this.chkMouseNavigation.Margin = new System.Windows.Forms.Padding(1);
-            this.chkMouseNavigation.Name = "chkMouseNavigation";
-            this.chkMouseNavigation.Size = new System.Drawing.Size(366, 19);
-            this.chkMouseNavigation.TabIndex = 17;
-            this.chkMouseNavigation.Text = "Use the mouse wheel to browse images, hold CTRL for zooming.";
-            this.chkMouseNavigation.UseVisualStyleBackColor = true;
-            // 
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(27, 355);
-            this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(40, 755);
+            this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
-            this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(109, 15);
+            this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(165, 25);
             this.lblGeneral_ZoomOptimization.TabIndex = 36;
             this.lblGeneral_ZoomOptimization.Text = "Zoom optimization";
             // 
@@ -1045,19 +1043,19 @@
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(30, 275);
-            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 782);
+            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
-            this.cmbZoomOptimization.Size = new System.Drawing.Size(187, 23);
+            this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
             this.cmbZoomOptimization.TabIndex = 18;
             // 
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(30, 352);
-            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(1);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 902);
+            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
-            this.chkThumbnailVertical.Size = new System.Drawing.Size(173, 19);
+            this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 29);
             this.chkThumbnailVertical.TabIndex = 19;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
@@ -1065,10 +1063,10 @@
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(27, 440);
-            this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1034);
+            this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
-            this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(175, 15);
+            this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(257, 25);
             this.lblGeneral_ThumbnailSize.TabIndex = 33;
             this.lblGeneral_ThumbnailSize.Text = "Thumbnail dimension (in pixel):";
             // 
@@ -1085,19 +1083,19 @@
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(30, 458);
-            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(45, 1061);
+            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
-            this.cmbThumbnailDimension.Size = new System.Drawing.Size(187, 23);
+            this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
             this.cmbThumbnailDimension.TabIndex = 21;
             // 
             // chkImageBoosterBack
             // 
             this.chkImageBoosterBack.AutoSize = true;
-            this.chkImageBoosterBack.Location = new System.Drawing.Point(30, 100);
-            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(1);
+            this.chkImageBoosterBack.Location = new System.Drawing.Point(45, 150);
+            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
-            this.chkImageBoosterBack.Size = new System.Drawing.Size(385, 19);
+            this.chkImageBoosterBack.Size = new System.Drawing.Size(578, 29);
             this.chkImageBoosterBack.TabIndex = 15;
             this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
             this.chkImageBoosterBack.UseVisualStyleBackColor = true;
@@ -1105,18 +1103,17 @@
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(30, 536);
-            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(1);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1178);
+            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
-            this.chkLoopSlideshow.Size = new System.Drawing.Size(405, 19);
+            this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
             this.chkLoopSlideshow.TabIndex = 22;
             this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             // 
             // numMaxThumbSize
             // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(30, 404);
-            this.numMaxThumbSize.Margin = new System.Windows.Forms.Padding(1);
+            this.numMaxThumbSize.Location = new System.Drawing.Point(45, 980);
             this.numMaxThumbSize.Maximum = new decimal(new int[] {
             30,
             0,
@@ -1128,7 +1125,7 @@
             0,
             0});
             this.numMaxThumbSize.Name = "numMaxThumbSize";
-            this.numMaxThumbSize.Size = new System.Drawing.Size(53, 23);
+            this.numMaxThumbSize.Size = new System.Drawing.Size(80, 31);
             this.numMaxThumbSize.TabIndex = 20;
             this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numMaxThumbSize.Value = new decimal(new int[] {
@@ -1140,20 +1137,20 @@
             // lblGeneral_MaxFileSize
             // 
             this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(27, 385);
-            this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(40, 952);
+            this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
-            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(186, 15);
+            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(274, 25);
             this.lblGeneral_MaxFileSize.TabIndex = 31;
             this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail size (in MB):";
             // 
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(27, 131);
-            this.lblImageLoadingOrder.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(40, 196);
+            this.lblImageLoadingOrder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
-            this.lblImageLoadingOrder.Size = new System.Drawing.Size(117, 15);
+            this.lblImageLoadingOrder.Size = new System.Drawing.Size(179, 25);
             this.lblImageLoadingOrder.TabIndex = 28;
             this.lblImageLoadingOrder.Text = "Image loading order:";
             // 
@@ -1169,21 +1166,21 @@
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(30, 148);
-            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(1);
+            this.cmbImageOrder.Location = new System.Drawing.Point(45, 222);
+            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbImageOrder.Name = "cmbImageOrder";
-            this.cmbImageOrder.Size = new System.Drawing.Size(187, 23);
+            this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 16;
             // 
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(30, 589);
-            this.barInterval.Margin = new System.Windows.Forms.Padding(1);
+            this.barInterval.Location = new System.Drawing.Point(45, 1258);
+            this.barInterval.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
-            this.barInterval.Size = new System.Drawing.Size(195, 42);
+            this.barInterval.Size = new System.Drawing.Size(292, 69);
             this.barInterval.TabIndex = 23;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 5;
@@ -1192,20 +1189,20 @@
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(27, 568);
-            this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1226);
+            this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
-            this.lblSlideshowInterval.Size = new System.Drawing.Size(163, 15);
+            this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
             this.lblSlideshowInterval.TabIndex = 24;
             this.lblSlideshowInterval.Text = "Slide show interval: 5 seconds";
             // 
             // chkFindChildFolder
             // 
             this.chkFindChildFolder.AutoSize = true;
-            this.chkFindChildFolder.Location = new System.Drawing.Point(30, 35);
-            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(1);
+            this.chkFindChildFolder.Location = new System.Drawing.Point(45, 52);
+            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
-            this.chkFindChildFolder.Size = new System.Drawing.Size(166, 19);
+            this.chkFindChildFolder.Size = new System.Drawing.Size(247, 29);
             this.chkFindChildFolder.TabIndex = 13;
             this.chkFindChildFolder.Text = "Find images in child folder";
             this.chkFindChildFolder.UseVisualStyleBackColor = true;
@@ -1219,8 +1216,8 @@
             // sp1
             // 
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sp1.Location = new System.Drawing.Point(1, 1);
-            this.sp1.Margin = new System.Windows.Forms.Padding(1);
+            this.sp1.Location = new System.Drawing.Point(2, 2);
+            this.sp1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.sp1.Name = "sp1";
             // 
             // sp1.Panel1
@@ -1231,9 +1228,8 @@
             // sp1.Panel2
             // 
             this.sp1.Panel2.Controls.Add(this.tab1);
-            this.sp1.Size = new System.Drawing.Size(623, 399);
-            this.sp1.SplitterDistance = 149;
-            this.sp1.SplitterWidth = 3;
+            this.sp1.Size = new System.Drawing.Size(934, 598);
+            this.sp1.SplitterDistance = 223;
             this.sp1.TabIndex = 17;
             this.sp1.TabStop = false;
             // 
@@ -1241,7 +1237,7 @@
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel1.Controls.Add(this.lblGeneral, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblImage, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 2);
@@ -1255,7 +1251,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(149, 399);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(223, 598);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // lblImage
@@ -1266,11 +1262,11 @@
             this.lblImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblImage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblImage.ForeColor = System.Drawing.Color.Black;
-            this.lblImage.Location = new System.Drawing.Point(0, 33);
+            this.lblImage.Location = new System.Drawing.Point(0, 50);
             this.lblImage.Margin = new System.Windows.Forms.Padding(0);
             this.lblImage.Name = "lblImage";
-            this.lblImage.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.lblImage.Size = new System.Drawing.Size(153, 33);
+            this.lblImage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblImage.Size = new System.Drawing.Size(230, 50);
             this.lblImage.TabIndex = 2;
             this.lblImage.Tag = "0";
             this.lblImage.Text = "Image";
@@ -1285,9 +1281,10 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(376, 8);
+            this.btnSave.Location = new System.Drawing.Point(564, 12);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 25);
+            this.btnSave.Size = new System.Drawing.Size(112, 45);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -1297,9 +1294,10 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
-            this.btnCancel.Location = new System.Drawing.Point(457, 8);
+            this.btnCancel.Location = new System.Drawing.Point(686, 12);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 25);
+            this.btnCancel.Size = new System.Drawing.Size(112, 45);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -1309,9 +1307,10 @@
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
-            this.btnApply.Location = new System.Drawing.Point(538, 8);
+            this.btnApply.Location = new System.Drawing.Point(807, 12);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(75, 25);
+            this.btnApply.Size = new System.Drawing.Size(112, 45);
             this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -1321,7 +1320,7 @@
             // 
             this.tblayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.tblayout.ColumnCount = 1;
-            this.tblayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblayout.Controls.Add(this.sp1, 0, 0);
             this.tblayout.Controls.Add(this.panel4, 0, 1);
             this.tblayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1330,8 +1329,8 @@
             this.tblayout.Name = "tblayout";
             this.tblayout.RowCount = 2;
             this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tblayout.Size = new System.Drawing.Size(625, 449);
+            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tblayout.Size = new System.Drawing.Size(938, 674);
             this.tblayout.TabIndex = 19;
             // 
             // panel4
@@ -1341,45 +1340,24 @@
             this.panel4.Controls.Add(this.btnSave);
             this.panel4.Controls.Add(this.btnCancel);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 401);
+            this.panel4.Location = new System.Drawing.Point(0, 602);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(625, 48);
+            this.panel4.Size = new System.Drawing.Size(938, 72);
             this.panel4.TabIndex = 18;
-            // 
-            // chkSaveOnRotate
-            // 
-            this.chkSaveOnRotate.AutoSize = true;
-            this.chkSaveOnRotate.Location = new System.Drawing.Point(30, 660);
-            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(1);
-            this.chkSaveOnRotate.Name = "chkSaveOnRotate";
-            this.chkSaveOnRotate.Size = new System.Drawing.Size(222, 19);
-            this.chkSaveOnRotate.TabIndex = 49;
-            this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
-            this.chkSaveOnRotate.UseVisualStyleBackColor = true;
-            // 
-            // lblSelectAppForEdit
-            // 
-            this.lblSelectAppForEdit.AutoSize = true;
-            this.lblSelectAppForEdit.Location = new System.Drawing.Point(27, 688);
-            this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
-            this.lblSelectAppForEdit.Size = new System.Drawing.Size(197, 15);
-            this.lblSelectAppForEdit.TabIndex = 50;
-            this.lblSelectAppForEdit.Text = "Select application for image editing:";
             // 
             // frmSetting
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(625, 449);
+            this.ClientSize = new System.Drawing.Size(938, 674);
             this.Controls.Add(this.tblayout);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(1);
-            this.MinimumSize = new System.Drawing.Size(470, 368);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(694, 524);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
             this.Text = "Settings";
