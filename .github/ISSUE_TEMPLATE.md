@@ -1,6 +1,3 @@
-
-
-
 // Use this template when you want to report a **_bug_** only. **<<===== DELETE THIS LINE**
 
 ### Expected behavior:
@@ -25,3 +22,6 @@ ____tell_me_here____
 ### Other info:
 ____tell_me_here____
 
+
+<!-- Love imageglass? Please consider supporting our collective:
+👉  https://opencollective.com/imageglass/donate -->
