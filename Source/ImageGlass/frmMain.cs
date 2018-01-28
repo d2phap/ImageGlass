@@ -3171,7 +3171,7 @@ namespace ImageGlass
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsTempMemoryData && File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+            if (GlobalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 return;
 
             try
