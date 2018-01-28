@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -3069,26 +3069,7 @@ namespace ImageGlass
                 string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
-                    //in case of GIF file...
-                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                    if (ext == ".gif")
-                    {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
-                        }
-                        catch { }
-
-                        //delete image list
-                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-
-                        NextPic(0);
-                    }
-
-                    
                     ImageInfo.DeleteFile(filename, true);
-
                 }
                 catch (Exception ex)
                 {
@@ -3117,26 +3098,7 @@ namespace ImageGlass
                 string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
-                    //If ext == GIF, release memory before deleting
-                    string ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
-                    if (ext == ".gif")
-                    {
-                        try
-                        {
-                            //delete thumbnail list
-                            thumbnailBar.Items.RemoveAt(GlobalSetting.CurrentIndex);
-                        }
-                        catch { }
-
-                        //delete image list
-                        GlobalSetting.ImageList.Remove(GlobalSetting.CurrentIndex);
-
-                        NextPic(0);
-
-                    }
-
-                    ImageInfo.DeleteFile(filename);
-                    
+                    ImageInfo.DeleteFile(filename);                    
                 }
                 catch (Exception ex)
                 {
