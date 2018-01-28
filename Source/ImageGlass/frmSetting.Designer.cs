@@ -157,7 +157,6 @@
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblLanguage.ForeColor = System.Drawing.Color.Black;
             this.lblLanguage.Location = new System.Drawing.Point(0, 150);
@@ -180,7 +179,6 @@
             this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFileAssociations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblFileAssociations.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblFileAssociations.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFileAssociations.ForeColor = System.Drawing.Color.Black;
             this.lblFileAssociations.Location = new System.Drawing.Point(0, 100);
@@ -203,7 +201,6 @@
             this.lblGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGeneral.BackColor = System.Drawing.Color.Gainsboro;
-            this.lblGeneral.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblGeneral.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblGeneral.ForeColor = System.Drawing.Color.Black;
             this.lblGeneral.Location = new System.Drawing.Point(0, 0);
@@ -227,7 +224,7 @@
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picBackgroundColor.Location = new System.Drawing.Point(46, 502);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
             this.picBackgroundColor.TabIndex = 12;
@@ -249,7 +246,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(698, 557);
+            this.tabLanguage.Size = new System.Drawing.Size(699, 557);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             // 
@@ -343,7 +340,7 @@
             "English (default)",
             "Vietnamese"});
             this.cmbLanguage.Location = new System.Drawing.Point(20, 58);
-            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(254, 33);
             this.cmbLanguage.TabIndex = 33;
@@ -372,7 +369,7 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(698, 557);
+            this.tabFileAssociation.Size = new System.Drawing.Size(699, 557);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             // 
@@ -387,14 +384,14 @@
             this.panel2.Location = new System.Drawing.Point(0, 476);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(698, 81);
+            this.panel2.Size = new System.Drawing.Size(699, 81);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(242, 3);
+            this.btnRegisterExt.Location = new System.Drawing.Point(243, 3);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(238, 45);
             this.btnRegisterExt.TabIndex = 31;
@@ -406,7 +403,7 @@
             // 
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetExt.AutoSize = true;
-            this.btnResetExt.Location = new System.Drawing.Point(487, 3);
+            this.btnResetExt.Location = new System.Drawing.Point(488, 3);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(200, 45);
             this.btnResetExt.TabIndex = 32;
@@ -536,7 +533,7 @@
             // 
             this.chkShowScrollbar.AutoSize = true;
             this.chkShowScrollbar.Location = new System.Drawing.Point(45, 428);
-            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
             this.chkShowScrollbar.Size = new System.Drawing.Size(231, 29);
             this.chkShowScrollbar.TabIndex = 12;
@@ -592,7 +589,7 @@
             this.chkPortableMode.AutoSize = true;
             this.chkPortableMode.Enabled = false;
             this.chkPortableMode.Location = new System.Drawing.Point(45, 196);
-            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
             this.chkPortableMode.Name = "chkPortableMode";
             this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
             this.chkPortableMode.TabIndex = 7;
@@ -602,7 +599,7 @@
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(44, 580);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
             this.panel1.TabIndex = 24;
@@ -611,7 +608,7 @@
             // 
             this.chkConfirmationDelete.AutoSize = true;
             this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 394);
-            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
             this.chkConfirmationDelete.TabIndex = 11;
@@ -622,7 +619,7 @@
             // 
             this.chkAllowMultiInstances.AutoSize = true;
             this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 328);
-            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
             this.chkAllowMultiInstances.TabIndex = 9;
@@ -633,7 +630,7 @@
             // 
             this.chkESCToQuit.AutoSize = true;
             this.chkESCToQuit.Location = new System.Drawing.Point(45, 362);
-            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
             this.chkESCToQuit.TabIndex = 10;
@@ -644,7 +641,7 @@
             // 
             this.chkShowToolBar.AutoSize = true;
             this.chkShowToolBar.Location = new System.Drawing.Point(45, 86);
-            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToolBar.Name = "chkShowToolBar";
             this.chkShowToolBar.Size = new System.Drawing.Size(283, 29);
             this.chkShowToolBar.TabIndex = 6;
@@ -665,7 +662,7 @@
             // 
             this.chkWelcomePicture.AutoSize = true;
             this.chkWelcomePicture.Location = new System.Drawing.Point(45, 52);
-            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(216, 29);
             this.chkWelcomePicture.TabIndex = 5;
@@ -676,7 +673,7 @@
             // 
             this.chkAutoUpdate.AutoSize = true;
             this.chkAutoUpdate.Location = new System.Drawing.Point(45, 296);
-            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
             this.chkAutoUpdate.TabIndex = 8;
@@ -744,7 +741,7 @@
             this.tabImage.Controls.Add(this.chkFindChildFolder);
             this.tabImage.Location = new System.Drawing.Point(4, 37);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabImage.Padding = new System.Windows.Forms.Padding(3);
             this.tabImage.Size = new System.Drawing.Size(699, 557);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
@@ -754,7 +751,7 @@
             this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelAlt.FormattingEnabled = true;
             this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 628);
-            this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
             this.cmbMouseWheelAlt.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelAlt.TabIndex = 56;
@@ -764,7 +761,7 @@
             this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelShift.FormattingEnabled = true;
             this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 541);
-            this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
             this.cmbMouseWheelShift.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelShift.TabIndex = 55;
@@ -774,7 +771,7 @@
             this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelCtrl.FormattingEnabled = true;
             this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 454);
-            this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
             this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheelCtrl.TabIndex = 54;
@@ -784,7 +781,7 @@
             this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheel.FormattingEnabled = true;
             this.cmbMouseWheel.Location = new System.Drawing.Point(45, 369);
-            this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
             this.cmbMouseWheel.Size = new System.Drawing.Size(278, 33);
             this.cmbMouseWheel.TabIndex = 53;
@@ -854,7 +851,7 @@
             // 
             this.chkSaveOnRotate.AutoSize = true;
             this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1364);
-            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(333, 29);
             this.chkSaveOnRotate.TabIndex = 49;
@@ -865,7 +862,7 @@
             // 
             this.chkShowHiddenImages.AutoSize = true;
             this.chkShowHiddenImages.Location = new System.Drawing.Point(45, 86);
-            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowHiddenImages.Name = "chkShowHiddenImages";
             this.chkShowHiddenImages.Size = new System.Drawing.Size(204, 29);
             this.chkShowHiddenImages.TabIndex = 48;
@@ -876,7 +873,7 @@
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(434, 1661);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(408, 1661);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -910,7 +907,7 @@
             // panel3
             // 
             this.panel3.Location = new System.Drawing.Point(27, 1690);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
             this.panel3.TabIndex = 46;
@@ -939,7 +936,7 @@
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(608, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(582, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1020,7 +1017,7 @@
             // 
             this.chkLoopViewer.AutoSize = true;
             this.chkLoopViewer.Location = new System.Drawing.Point(45, 117);
-            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopViewer.Name = "chkLoopViewer";
             this.chkLoopViewer.Size = new System.Drawing.Size(580, 29);
             this.chkLoopViewer.TabIndex = 14;
@@ -1044,7 +1041,7 @@
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
             this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 782);
-            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
             this.cmbZoomOptimization.TabIndex = 18;
@@ -1053,7 +1050,7 @@
             // 
             this.chkThumbnailVertical.AutoSize = true;
             this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 902);
-            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 29);
             this.chkThumbnailVertical.TabIndex = 19;
@@ -1084,7 +1081,7 @@
             "512",
             "1024"});
             this.cmbThumbnailDimension.Location = new System.Drawing.Point(45, 1061);
-            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
             this.cmbThumbnailDimension.TabIndex = 21;
@@ -1093,7 +1090,7 @@
             // 
             this.chkImageBoosterBack.AutoSize = true;
             this.chkImageBoosterBack.Location = new System.Drawing.Point(45, 150);
-            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
             this.chkImageBoosterBack.Size = new System.Drawing.Size(578, 29);
             this.chkImageBoosterBack.TabIndex = 15;
@@ -1104,7 +1101,7 @@
             // 
             this.chkLoopSlideshow.AutoSize = true;
             this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1178);
-            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
             this.chkLoopSlideshow.TabIndex = 22;
@@ -1167,7 +1164,7 @@
             "Extension",
             "Random"});
             this.cmbImageOrder.Location = new System.Drawing.Point(45, 222);
-            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 16;
@@ -1176,7 +1173,7 @@
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
             this.barInterval.Location = new System.Drawing.Point(45, 1258);
-            this.barInterval.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
@@ -1200,7 +1197,7 @@
             // 
             this.chkFindChildFolder.AutoSize = true;
             this.chkFindChildFolder.Location = new System.Drawing.Point(45, 52);
-            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(247, 29);
             this.chkFindChildFolder.TabIndex = 13;
@@ -1217,7 +1214,7 @@
             // 
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.Location = new System.Drawing.Point(2, 2);
-            this.sp1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sp1.Margin = new System.Windows.Forms.Padding(2);
             this.sp1.Name = "sp1";
             // 
             // sp1.Panel1
@@ -1259,7 +1256,6 @@
             this.lblImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblImage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblImage.ForeColor = System.Drawing.Color.Black;
             this.lblImage.Location = new System.Drawing.Point(0, 50);
@@ -1282,7 +1278,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
             this.btnSave.Location = new System.Drawing.Point(564, 12);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(112, 45);
             this.btnSave.TabIndex = 0;
@@ -1295,7 +1291,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
             this.btnCancel.Location = new System.Drawing.Point(686, 12);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 45);
             this.btnCancel.TabIndex = 1;
@@ -1308,7 +1304,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
             this.btnApply.Location = new System.Drawing.Point(807, 12);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(112, 45);
             this.btnApply.TabIndex = 2;
@@ -1356,7 +1352,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(694, 524);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
