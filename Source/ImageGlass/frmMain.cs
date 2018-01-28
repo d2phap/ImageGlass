@@ -748,7 +748,7 @@ namespace ImageGlass
 
             //Goto the first Image---------------------------------------------------------------
             #region HOME
-            if ((e.KeyValue == 36 || e.KeyValue == 39) &&
+            if (!_isWindowsKeyPressed && e.KeyValue == 36 &&
                 !e.Control && !e.Shift && !e.Alt)
             {
                 mnuMainGotoFirst_Click(null, e);
@@ -759,7 +759,7 @@ namespace ImageGlass
 
             //Goto the last Image---------------------------------------------------------------
             #region END
-            if ((e.KeyValue == 35 || e.KeyValue == 39) &&
+            if (!_isWindowsKeyPressed && e.KeyValue == 35 &&
                 !e.Control && !e.Shift && !e.Alt)
             {
                 mnuMainGotoLast_Click(null, e);
