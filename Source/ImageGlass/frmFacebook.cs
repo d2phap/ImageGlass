@@ -50,7 +50,7 @@ namespace ImageGlass
                 if (File.Exists(value))
                 {
                     _filename = value;
-                    this.Text = _filename;
+                    Text = _filename;
                 }
             }
         }
@@ -96,6 +96,7 @@ namespace ImageGlass
             {
                 // open the Facebook Login Dialog and ask for user permissions.
                 var fbLoginDlg = new frmFaceBookLogin(AppId, ExtendedPermissions);
+                fbLoginDlg.TopMost = this.TopMost;
                 fbLoginDlg.ShowDialog();
 
                 // The user has taken action, either allowed/denied or cancelled the authorization,
@@ -108,8 +109,7 @@ namespace ImageGlass
             lblMessage.Text = GlobalSetting.LangPack.Items["frmFacebook.lblMessage"];
             btnClose.Text = GlobalSetting.LangPack.Items["frmFacebook.btnClose"];
             btnUpload.Text = GlobalSetting.LangPack.Items["frmFacebook.btnUpload._Upload"];
-            lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"],
-                                            btnUpload.Text);
+            lblStatus.Text = string.Format(GlobalSetting.LangPack.Items["frmFacebook._StatusBegin"], btnUpload.Text);
             lblPercent.Text = "";
         }
 
@@ -119,7 +119,7 @@ namespace ImageGlass
             {
                 // the user closed the FacebookLoginDialog, so do nothing.
                 // MessageBox.Show("Cancelled!");
-                this.Close();
+                Close();
                 return;
             }
 
@@ -137,7 +137,7 @@ namespace ImageGlass
                 // for some reason we failed to get the access token.
                 // most likely the user clicked don't allow.
                 MessageBox.Show(facebookOAuthResult.ErrorDescription);
-                this.Close();
+                Close();
             }
         }
 
@@ -209,7 +209,7 @@ namespace ImageGlass
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
 

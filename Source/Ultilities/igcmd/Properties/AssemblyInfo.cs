@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -8,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("igcmd")]
 [assembly: AssemblyDescription("ImageGlass commands")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PhapSoftware")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("igcmd")]
-[assembly: AssemblyCopyright("Copyright © 2013 - 2016 by Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2013 - 2017 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.2.0.0")]
-[assembly: AssemblyFileVersion("3.2.0.0")]
+[assembly: AssemblyVersion("4.5.*")]
+//[assembly: AssemblyFileVersion("4.0.0.0")]

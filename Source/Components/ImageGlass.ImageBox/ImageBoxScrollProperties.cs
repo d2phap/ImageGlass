@@ -144,13 +144,13 @@ namespace ImageGlass
       get { return _value; }
       internal set
       {
-        if (value < this.Minimum)
+        if (value < Minimum)
         {
-          value = this.Minimum;
+          value = Minimum;
         }
-        else if (value > this.Maximum)
+        else if (value > Maximum)
         {
-          value = this.Maximum;
+          value = Maximum;
         }
 
         if (_value != value)

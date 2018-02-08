@@ -1,0 +1,221 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="ja-JP" langName="日本語" author="ImageGlass community" description="Japanese" minVersion="4.1.7.26" isRightToLeftLayout="No" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="既定の形式" />
+      <Item key="_.ImageFormatGroup.Optional" value="オプションの形式" />
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass はこの画像を開けません。 ファイルが破損しているか、サポートされていない形式です。" />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
+      <Item key="frmMain.btnBack" value="前の画像を見る (左矢印キー / PageUp)" />
+      <Item key="frmMain.btnNext" value="次の画像を見る (右矢印キー / PageDown)" />
+      <Item key="frmMain.btnRotateLeft" value="左回りに回転 (Ctrl + ,)" />
+      <Item key="frmMain.btnRotateRight" value="右回りに回転 (Ctrl + .)" />
+      <Item key="frmMain.btnZoomIn" value="ズームイン (Ctrl + =)" />
+      <Item key="frmMain.btnZoomOut" value="ズームアウト (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
+      <Item key="frmMain.btnActualSize" value="実際のサイズで表示 (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="ズームレシオを固定 (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="ウィンドウ幅に合わせる (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="ウィンドウ高さに合わせる (Ctrl + H)" />
+      <Item key="frmMain.btnWindowAutosize" value="ウィンドウを画像のサイズに合わせる (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="ファイルを開く (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="リロード (F5)" />
+      <Item key="frmMain.btnGoto" value="？番目の画像を開く (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="サムネイルを表示 (Ctrl + T)" />
+      <Item key="frmMain.btnCaro" value="チェック柄の背景を表示 (Ctrl + B)" />
+      <Item key="frmMain.btnFullScreen" value="フルスクリーン (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="スライドショーを開始 (F11で開始、ESCで終了)" />
+      <Item key="frmMain.btnConvert" value="別形式で保存 (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="印刷 (Ctrl + P)" />
+      <Item key="frmMain.btnFacebook" value="Facebookにアップロード (Ctrl + U)" />
+      <Item key="frmMain.btnExtension" value="拡張機能マネージャ (Ctrl + Shift + E)" />
+      <Item key="frmMain.btnSetting" value="設定 (Ctrl + Shift + P)" />
+      <Item key="frmMain.btnHelp" value="ヘルプ (F1)" />
+      <Item key="frmMain.btnMenu" value="メニュー (ホットキー: `)" />
+      <Item key="frmMain.mnuMainOpenFile" value="ファイルを開く" />
+      <Item key="frmMain.mnuMainOpenImageData" value="クリップボードの画像データを開く" />
+      <Item key="frmMain.mnuMainSaveAs" value="名前を付けて保存" />
+      <Item key="frmMain.mnuMainRefresh" value="リフレッシュ" />
+      <Item key="frmMain.mnuMainEditImage" value="画像を編集 {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="ナビゲーション" />
+      <Item key="frmMain.mnuMainViewNext" value="次の画像を表示" />
+      <Item key="frmMain.mnuMainViewPrevious" value="前の画像を表示" />
+      <Item key="frmMain.mnuMainGoto" value="？番目の画像を見る" />
+      <Item key="frmMain.mnuMainGotoFirst" value="最初の画像を見る" />
+      <Item key="frmMain.mnuMainGotoLast" value="最後の画像を見る" />
+      <Item key="frmMain.mnuMainFullScreen" value="フルスクリーン" />
+      <Item key="frmMain.mnuMainSlideShow" value="スライドショー" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="スライドショーを開始" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="一時停止 / 再生" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="スライドショーを終了" />
+      <Item key="frmMain.mnuMainPrint" value="印刷" />
+      <Item key="frmMain.mnuMainManipulation" value="操作" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="左回りに回転" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="右回りに回転" />
+      <Item key="frmMain.mnuMainZoomIn" value="ズームイン" />
+      <Item key="frmMain.mnuMainZoomOut" value="ズームアウト" />
+      <Item key="frmMain.mnuMainZoomToFit" value="ウィンドウサイズに合わせてズーム" />
+      <Item key="frmMain.mnuMainActualSize" value="実際のサイズで表示" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="ズームレシオを固定" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="ウィンドウの幅に合わせる" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="ウィンドウの高さに合わせる" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="ウィンドウを画像のサイズに合わせる" />
+      <Item key="frmMain.mnuMainRename" value="リネーム" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="ゴミ箱へ移動" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="ハードディスクから削除" />
+      <Item key="frmMain.mnuMainExtractFrames" value="動画から画像を抽出 ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="アニメーションをスタート / ストップ" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="デスクトップの背景に設定" />
+      <Item key="frmMain.mnuMainImageLocation" value="画像ファイルの場所を開く" />
+      <Item key="frmMain.mnuMainImageProperties" value="画像のプロパティ" />
+      <Item key="frmMain.mnuMainClipboard" value="クリップボード" />
+      <Item key="frmMain.mnuMainCopy" value="コピー" />
+      <Item key="frmMain.mnuMainCopyMulti" value="複数のファイルをコピー" />
+      <Item key="frmMain.mnuMainCut" value="カット" />
+      <Item key="frmMain.mnuMainCutMulti" value="複数のファイルをカット" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="画像のパス（場所）をコピー" />
+      <Item key="frmMain.mnuMainClearClipboard" value="クリップボードをクリア" />
+      <Item key="frmMain.mnuMainShare" value="シェア" />
+      <Item key="frmMain.mnuMainShareFacebook" value="Facebookにアップロード" />
+      <Item key="frmMain.mnuMainLayout" value="レイアウト" />
+      <Item key="frmMain.mnuMainToolbar" value="ツールバー" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="サムネイルパネル" />
+      <Item key="frmMain.mnuMainCheckBackground" value="チェック柄の背景を表示" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="ウィンドウを常に最前面に表示" />
+      <Item key="frmMain.mnuMainTools" value="ツール" />
+      <Item key="frmMain.mnuMainExtensionManager" value="拡張機能マネージャ" />
+      <Item key="frmMain.mnuMainSettings" value="設定" />
+      <Item key="frmMain.mnuMainAbout" value="ImageGlassについて" />
+      <Item key="frmMain.mnuMainReportIssue" value="問題を報告" />
+      <Item key="frmMain._OpenFileDialog" value="サポートされている全ての形式" />
+      <Item key="frmMain._Text" value="ファイル" />
+      <Item key="frmMain._RenameDialogText" value="リネーム" />
+      <Item key="frmMain._RenameDialog" value="新しいファイル名を入力して下さい" />
+      <Item key="frmMain._GotoDialogText" value="何枚目の画像を表示するか入力し、エンターキーを押して下さい。" />
+      <Item key="frmMain._DeleteDialogText" value="次の画像を削除しますか '{0}' ?" />
+      <Item key="frmMain._DeleteDialogTitle" value="確認" />
+      <Item key="frmMain._ExtractFrameText" value="画像フレームを抽出しています。出力フォルダーを選択してください。" />
+      <Item key="frmMain._FullScreenMessage" value="フルスクリーンを終了するには ALT + ENTER を押して下さい。&#xA;もしくは CTRL + F1 でメニューを表示できます。" />
+      <Item key="frmMain._SlideshowMessage" value="スライドショーを終了するにはESCキーを押して下さい。&#xA; コンテキストメニューを開くには右クリックしてください。" />
+      <Item key="frmMain._SlideshowMessagePause" value="スライドショーを一時停止しました。" />
+      <Item key="frmMain._SlideshowMessageResume" value="スライドショーを再開しました。" />
+      <Item key="frmMain._CopyFileText" value="{0} 個のファイルをコピーしました。" />
+      <Item key="frmMain._CutFileText" value="{0} このファイルをカットしました。" />
+      <Item key="frmMain._ClearClipboard" value="クリップボードがクリアされました。" />
+      <Item key="frmMain._SaveChanges" value="変更を保存しています..." />
+      <Item key="frmMain._Loading" value="読み込み中..." />
+      <Item key="frmMain._FirstItemOfList" value="最初の画像に到達しました。" />
+      <Item key="frmMain._LastItemOfList" value="最後の画像に到達しました。" />
+      <Item key="frmExtension._Text" value="拡張機能マネージャ" />
+      <Item key="frmExtension.btnGetMoreExt" value="拡張機能を入手" />
+      <Item key="frmExtension.btnRefreshAllExt" value="リフレッシュ" />
+      <Item key="frmExtension.btnInstallExt" value="インストール" />
+      <Item key="frmExtension.btnClose" value="閉じる" />
+      <Item key="frmFacebook.lblMessage" value="メッセージ" />
+      <Item key="frmFacebook.btnUpload._Upload" value="アップロード" />
+      <Item key="frmFacebook.btnUpload._Cancel" value="キャンセル" />
+      <Item key="frmFacebook.btnUpload._ViewImage" value="画像を表示" />
+      <Item key="frmFacebook.btnClose" value="閉じる" />
+      <Item key="frmFacebook._StatusBegin" value="開始するには '{0}' をクリックしてください。" />
+      <Item key="frmFacebook._StatusInvalid" value="ファイル名が正しくありません" />
+      <Item key="frmFacebook._StatusUploading" value="アップロード中..." />
+      <Item key="frmFacebook._StatusCancel" value="キャンセルされました" />
+      <Item key="frmFacebook._StatusSuccessful" value="完了しました" />
+      <Item key="frmFaceBookLogin._Text" value="Facebookにログイン" />
+      <Item key="frmAbout.lblSlogant" value="軽くて多機能な画像ビューア" />
+      <Item key="frmAbout.lblInfo" value="情報" />
+      <Item key="frmAbout.lblComponent" value="コンポーネント" />
+      <Item key="frmAbout.lblReferences" value="リファレンス" />
+      <Item key="frmAbout.lblVersion" value="バージョン: {0}" />
+      <Item key="frmAbout.lblInfoContact" value="お問い合わせ" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="ソフトウェアの更新" />
+      <Item key="frmAbout.lnkCheckUpdate" value="» アップデートをチェック" />
+      <Item key="frmAbout._Text" value="ImageGlassについて" />
+      <Item key="frmAbout._PortableText" value="[ポータブル]" />
+      <Item key="frmSetting._Text" value="設定" />
+      <Item key="frmSetting.btnSave" value="保存" />
+      <Item key="frmSetting.btnCancel" value="キャンセル" />
+      <Item key="frmSetting.btnApply" value="適用" />
+      <Item key="frmSetting.lblGeneral" value="全般" />
+      <Item key="frmSetting.lblImage" value="画像" />
+      <Item key="frmSetting.lblFileAssociations" value="関連付け" />
+      <Item key="frmSetting.lblLanguage" value="言語" />
+      <Item key="frmSetting.lblHeadStartup" value="起動時" />
+      <Item key="frmSetting.chkWelcomePicture" value="ウェルカム画像を表示" />
+      <Item key="frmSetting.chkShowToolBar" value="起動時にツールバーを表示" />
+      <Item key="frmSetting.lblHeadPortableMode" value="ポータブルモード" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadOthers" value="その他" />
+      <Item key="frmSetting.chkAutoUpdate" value="アップデートを自動的に確認" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="アプリの複数起動を許可" />
+      <Item key="frmSetting.chkESCToQuit" value="ESCキーでアプリケーションを終了する" />
+      <Item key="frmSetting.chkConfirmationDelete" value="削除の確認ダイアログを表示する" />
+      <Item key="frmSetting.chkShowScrollbar" value="ビューアのスクロールバーを表示する" />
+      <Item key="frmSetting.lblBackGroundColor" value="背景色" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="リセット" />
+      <Item key="frmSetting.lblHeadImageLoading" value="画像の読み込み" />
+      <Item key="frmSetting.chkFindChildFolder" value="子フォルダーの画像も検索" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
+      <Item key="frmSetting.chkLoopViewer" value="最後の画像に到達したら最初の画像に戻る" />
+      <Item key="frmSetting.chkImageBoosterBack" value="一度表示した画像を高速表示する (メモリの消費が20%程度増えます)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="画像の読み込み順序" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="ファイル名 (デフォルト)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="ファイルサイズ" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="作成日時" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="最終アクセス日時" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="最終変更日" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="拡張子" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="ランダム" />
+      <Item key="frmSetting.lblHeadZooming" value="ズーム" />
+      <Item key="frmSetting.chkMouseNavigation" value="マウスホイールで画像の移動、CTRL+ホイールでズーム" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="ズームの最適化" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="自動" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="なめらか" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="クリア" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="サムネイルバー" />
+      <Item key="frmSetting.chkThumbnailVertical" value="サムネイルを右側に表示" />
+      <Item key="frmSetting.lblGeneral_MaxFileSize" value="サムネイルの最大サイズ (MB)" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="サムネイルの大きさ (ピクセル)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="スライドショー" />
+      <Item key="frmSetting.chkLoopSlideshow" value="スライドショーで最後の画像に到達したら最初の画像に戻る" />
+      <Item key="frmSetting.lblSlideshowInterval" value="スライドショーの間隔: {0} 秒" />
+      <Item key="frmSetting.lblHeadImageEditing" value="画像編集" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.btnEditEditExt" value="編集" />
+      <Item key="frmSetting.btnEditResetExt" value="デフォルトに戻す" />
+      <Item key="frmSetting.btnEditEditAllExt" value="すべての拡張子を編集する" />
+      <Item key="frmSetting._allExtensions" value="すべての拡張子" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="ファイルの拡張子" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="アプリ名" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="アプリのパス" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="アプリの引数" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="*オプションの形式は自動的にメモリ上へ先読みされません。" />
+      <Item key="frmSetting.lblSupportedExtension" value="サポートされている形式: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="関連付けの設定画面を開く" />
+      <Item key="frmSetting.btnAddNewExt" value="追加" />
+      <Item key="frmSetting.btnRegisterExt" value="レジスタファイル拡張子" />
+      <Item key="frmSetting.btnDeleteExt" value="削除" />
+      <Item key="frmSetting.btnResetExt" value="デフォルトに戻す" />
+      <Item key="frmSetting.lblLanguageText" value="インストール済みの言語" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; リフレッシュ" />
+      <Item key="frmSetting.lblLanguageWarning" value="この言語パックは {0} と互換性がありません" />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; 新しい言語パックをインストールする (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; 新しい言語パックを作成する" />
+      <Item key="frmSetting.lnkEdit" value="&gt; 選択した言語パックを編集する" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; 言語パックを入手する" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="ファイルの拡張子" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="形式のグループ" />
+      <Item key="frmAddNewFormat.btnOK" value="OK" />
+      <Item key="frmAddNewFormat.btnClose" value="閉じる" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="ファイルの拡張子" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="アプリ名" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="アプリのパス" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="アプリの引数" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="リセット" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="OK" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="閉じる" />
+    </Content>
+  </Language>
+</ImageGlass>

@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ImageGlass.Plugins">
-      <HintPath>..\ThemeConfig\bin\Debug\ImageGlass.Plugins.dll</HintPath>
+      <HintPath>..\..\..\Components\ImageGlass.Plugins\bin\Release\ImageGlass.Plugins.dll</HintPath>
     </Reference>
     <Reference Include="ImageGlass.Theme, Version=1.5.4913.41701, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

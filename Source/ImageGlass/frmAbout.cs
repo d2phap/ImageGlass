@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Drawing;
-using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
@@ -112,22 +107,30 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
+            //Remove tabs header
+            tab1.Appearance = TabAppearance.FlatButtons;
+            tab1.ItemSize = new Size(0, 1);
+            tab1.SizeMode = TabSizeMode.Fixed;
+
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
-            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], 
-                                            Application.ProductVersion);
-            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" +
-                                "All rights reserved.";
+            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsPortableMode ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
+            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             //Load item component
+            txtComponents.Text = "";
             foreach (string f in Directory.GetFiles(Application.StartupPath))
             {
                 if (Path.GetExtension(f).ToLower() == ".dll" ||
                     Path.GetExtension(f).ToLower() == ".exe")
                 {
-                    fileList1.AddItems(f);
+                    FileVersionInfo fi = FileVersionInfo.GetVersionInfo(f);
+
+                    txtComponents.Text += $"{Path.GetFileName(f)} - {fi.FileVersion}\r\n" +
+                        $"{fi.LegalCopyright}\r\n" +
+                        $"{f}\r\n" +
+                        $"-----------------------------------------\r\n\r\n";
                 }
             }
-            fileList1.ReLoadItems();
 
             //Load language:
             lblSlogant.Text = GlobalSetting.LangPack.Items["frmAbout.lblSlogant"];
@@ -137,7 +140,7 @@ namespace ImageGlass
             lblInfoContact.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfoContact"];
             lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
             lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
-            this.Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
+            Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
             
         }
 
@@ -146,7 +149,7 @@ namespace ImageGlass
         {
             try
             {
-                Process.Start("mailto:d2phap@gmal.com");
+                Process.Start("mailto:d2phap@gmail.com");
             }
             catch { }
         }
@@ -160,14 +163,7 @@ namespace ImageGlass
             catch { }
         }
 
-        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                Process.Start("tel:+841674710360");
-            }
-            catch { }
-        }
+        
         private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
@@ -208,7 +204,7 @@ namespace ImageGlass
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)

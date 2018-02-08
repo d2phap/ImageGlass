@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImageGlass.ImageListView</RootNamespace>
     <AssemblyName>ImageGlass.ImageListView</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -43,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\ImageGlass.ImageListView.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release without WIC|AnyCPU' ">
     <OutputPath>bin\Release without WIC\</OutputPath>
@@ -61,6 +63,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DebugType>none</DebugType>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug Designer|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,19 +75,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET">
-      <HintPath>..\..\ImageGlass\FreeImageNET.dll</HintPath>
-    </Reference>
-    <Reference Include="Imazen.WebP">
-      <HintPath>..\..\ImageGlass\Imazen.WebP.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.2.1.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.3.0\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Svg">
-      <HintPath>..\..\ImageGlass\Svg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -130,16 +128,6 @@
       <SubType>component</SubType>
     </Compile>
     <Compile Include="ImageListViewColor.cs" />
-    <Compile Include="ImageListViewResources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageListViewResources.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ImageListViewResources.tr.Designer.cs">
-      <DependentUpon>ImageListViewResources.tr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="ImageListViewRenderers.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Events.cs" />
@@ -181,16 +169,6 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ImageListViewResources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImageListViewResources.tr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.tr.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ImageListView.bmp" />
     <EmbeddedResource Include="ImageListViewResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -202,6 +180,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\DefaultImage.png" />
   </ItemGroup>
   <ItemGroup>

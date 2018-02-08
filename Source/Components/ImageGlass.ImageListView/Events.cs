@@ -20,7 +20,6 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-using System.Collections.Generic;
 
 
 namespace ImageGlass.ImageListView

@@ -15,7 +15,6 @@
 //
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
-using System;
 namespace ImageGlass.ImageListView
 {
     public partial class ImageListView

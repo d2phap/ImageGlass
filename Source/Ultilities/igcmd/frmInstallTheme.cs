@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2012 DUONG DIEU PHAP
+Copyright (C) 2016 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -44,14 +40,15 @@ namespace igcmd
             //cmd: iginstalltheme "srcFile"
 
             lblStatus.Text = "Installing ...";
-            Thread t = new Thread(new ThreadStart(InstallTheme));
-            t.Priority = ThreadPriority.BelowNormal;
-            t.IsBackground = true;
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(InstallTheme));
+            //t.Priority = ThreadPriority.BelowNormal;
+            //t.IsBackground = true;
+            //t.Start();
+            InstallTheme();
         }
 
         /// <summary>
-        /// Cài đặt theme
+        /// Install theme
         /// </summary>
         private void InstallTheme()
         {
@@ -61,8 +58,7 @@ namespace igcmd
                 return;
             }
 
-            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
-                        "\\ImageGlass\\Themes\\";
+            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
             Directory.CreateDirectory(dir);
 
             using (ZipFile z = new ZipFile(file, Encoding.UTF8))
@@ -78,7 +74,7 @@ namespace igcmd
         private void z_ZipError(object sender, ZipErrorEventArgs e)
         {
             picStatus.Image = igcmd.Properties.Resources.warning;
-            lblStatus.Text = "Theme was error!";
+            lblStatus.Text = "Invalid theme!";
         }
 
         private void z_ExtractProgress(object sender, ExtractProgressEventArgs e)
@@ -86,7 +82,7 @@ namespace igcmd
             if (e.EntriesExtracted == e.EntriesTotal)
             {
                 picStatus.Image = igcmd.Properties.Resources.ok;
-                lblStatus.Text = "Install successful!";
+                lblStatus.Text = "Installed successfully!";
             }
         }
 
@@ -97,9 +93,7 @@ namespace igcmd
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe",
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + 
-                "\\ImageGlass\\Themes\\");
+            System.Diagnostics.Process.Start("explorer.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\"));
         }
 
        

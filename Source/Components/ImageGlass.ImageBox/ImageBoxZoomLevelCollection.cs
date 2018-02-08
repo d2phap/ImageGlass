@@ -25,7 +25,7 @@ namespace ImageGlass
     /// </summary>
     public ImageBoxZoomLevelCollection()
     {
-      this.List = new SortedList<int, int>();
+            List = new SortedList<int, int>();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace ImageGlass
         throw new ArgumentNullException("collection");
       }
 
-      this.AddRange(collection);
+            AddRange(collection);
     }
 
     #endregion
@@ -74,7 +74,7 @@ namespace ImageGlass
     /// </returns>
     public int Count
     {
-      get { return this.List.Count; }
+      get { return List.Count; }
     }
 
     /// <summary>
@@ -94,11 +94,11 @@ namespace ImageGlass
     /// <param name="index">The index.</param>
     public int this[int index]
     {
-      get { return this.List.Values[index]; }
+      get { return List.Values[index]; }
       set
       {
-        this.List.RemoveAt(index);
-        this.Add(value);
+                List.RemoveAt(index);
+                Add(value);
       }
     }
 
@@ -121,7 +121,7 @@ namespace ImageGlass
     /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
     public void Add(int item)
     {
-      this.List.Add(item, item);
+            List.Add(item, item);
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ namespace ImageGlass
 
       foreach (int value in collection)
       {
-        this.Add(value);
+                Add(value);
       }
     }
 
@@ -147,7 +147,7 @@ namespace ImageGlass
     /// </summary>
     public void Clear()
     {
-      this.List.Clear();
+            List.Clear();
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ namespace ImageGlass
     /// <returns>true if <paramref name="item" /> is found in the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false.</returns>
     public bool Contains(int item)
     {
-      return this.List.ContainsKey(item);
+      return List.ContainsKey(item);
     }
 
     /// <summary>
@@ -167,9 +167,9 @@ namespace ImageGlass
     /// <param name="arrayIndex">A 64-bit integer that represents the index in the <see cref="Array"/> at which storing begins.</param>
     public void CopyTo(int[] array, int arrayIndex)
     {
-      for (int i = 0; i < this.Count; i++)
+      for (int i = 0; i < Count; i++)
       {
-        array[arrayIndex + i] = this.List.Values[i];
+        array[arrayIndex + i] = List.Values[i];
       }
     }
 
@@ -179,11 +179,11 @@ namespace ImageGlass
     /// <param name="zoomLevel">The zoom level.</param>
     public int FindNearest(int zoomLevel)
     {
-      int nearestValue = this.List.Values[0];
+      int nearestValue = List.Values[0];
       int nearestDifference = Math.Abs(nearestValue - zoomLevel);
-      for (int i = 1; i < this.Count; i++)
+      for (int i = 1; i < Count; i++)
       {
-        int value = this.List.Values[i];
+        int value = List.Values[i];
         int difference = Math.Abs(value - zoomLevel);
         if (difference < nearestDifference)
         {
@@ -200,7 +200,7 @@ namespace ImageGlass
     /// <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.</returns>
     public IEnumerator<int> GetEnumerator()
     {
-      return this.List.Values.GetEnumerator();
+      return List.Values.GetEnumerator();
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ namespace ImageGlass
     /// <returns>The index of <paramref name="item" /> if found in the list; otherwise, -1.</returns>
     public int IndexOf(int item)
     {
-      return this.List.IndexOfKey(item);
+      return List.IndexOfKey(item);
     }
 
     /// <summary>
@@ -233,8 +233,8 @@ namespace ImageGlass
     {
       int index;
 
-      index = this.IndexOf(this.FindNearest(zoomLevel));
-      if (index < this.Count - 1)
+      index = IndexOf(FindNearest(zoomLevel));
+      if (index < Count - 1)
       {
         index++;
       }
@@ -251,7 +251,7 @@ namespace ImageGlass
     {
       int index;
 
-      index = this.IndexOf(this.FindNearest(zoomLevel));
+      index = IndexOf(FindNearest(zoomLevel));
       if (index > 0)
       {
         index--;
@@ -267,7 +267,7 @@ namespace ImageGlass
     /// <returns>true if <paramref name="item" /> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false. This method also returns false if <paramref name="item" /> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.</returns>
     public bool Remove(int item)
     {
-      return this.List.Remove(item);
+      return List.Remove(item);
     }
 
     /// <summary>
@@ -276,7 +276,7 @@ namespace ImageGlass
     /// <param name="index">The zero-based index of the element to remove.</param>
     public void RemoveAt(int index)
     {
-      this.List.RemoveAt(index);
+            List.RemoveAt(index);
     }
 
     /// <summary>
@@ -287,8 +287,8 @@ namespace ImageGlass
     {
       int[] results;
 
-      results = new int[this.Count];
-      this.CopyTo(results, 0);
+      results = new int[Count];
+            CopyTo(results, 0);
 
       return results;
     }
@@ -303,7 +303,7 @@ namespace ImageGlass
     /// <returns>An <see cref="ImageBoxZoomLevelCollection" /> object that can be used to iterate through the collection.</returns>
     IEnumerator IEnumerable.GetEnumerator()
     {
-      return this.GetEnumerator();
+      return GetEnumerator();
     }
 
     #endregion

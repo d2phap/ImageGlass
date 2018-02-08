@@ -50,12 +50,13 @@
             // lblPercent
             // 
             this.lblPercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPercent.AutoSize = true;
             this.lblPercent.BackColor = System.Drawing.Color.Transparent;
             this.lblPercent.Font = new System.Drawing.Font("Segoe UI", 20F);
             this.lblPercent.ForeColor = System.Drawing.Color.White;
-            this.lblPercent.Location = new System.Drawing.Point(278, 8);
+            this.lblPercent.Location = new System.Drawing.Point(513, 5);
             this.lblPercent.Name = "lblPercent";
-            this.lblPercent.Size = new System.Drawing.Size(199, 30);
+            this.lblPercent.Size = new System.Drawing.Size(223, 54);
             this.lblPercent.TabIndex = 2;
             this.lblPercent.Text = "[lblPercent]";
             this.lblPercent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -69,7 +70,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(480, 37);
+            this.panel1.Size = new System.Drawing.Size(718, 43);
             this.panel1.TabIndex = 6;
             // 
             // pictureBox1
@@ -101,9 +102,9 @@
             this.panel2.Controls.Add(this.btnClose);
             this.panel2.Controls.Add(this.btnUpload);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 225);
+            this.panel2.Location = new System.Drawing.Point(0, 329);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(480, 47);
+            this.panel2.Size = new System.Drawing.Size(718, 69);
             this.panel2.TabIndex = 8;
             // 
             // lblStatus
@@ -115,7 +116,7 @@
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblStatus.Location = new System.Drawing.Point(9, 15);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(270, 21);
+            this.lblStatus.Size = new System.Drawing.Size(508, 43);
             this.lblStatus.TabIndex = 11;
             this.lblStatus.Text = "[lblStatus]";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -123,12 +124,13 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.AutoSize = true;
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(394, 11);
+            this.btnClose.Location = new System.Drawing.Point(632, 18);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(74, 28);
+            this.btnClose.Size = new System.Drawing.Size(74, 35);
             this.btnClose.TabIndex = 13;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -137,11 +139,12 @@
             // btnUpload
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpload.AutoSize = true;
             this.btnUpload.BackColor = System.Drawing.Color.Transparent;
             this.btnUpload.ForeColor = System.Drawing.Color.Black;
-            this.btnUpload.Location = new System.Drawing.Point(285, 11);
+            this.btnUpload.Location = new System.Drawing.Point(523, 18);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(103, 28);
+            this.btnUpload.Size = new System.Drawing.Size(103, 35);
             this.btnUpload.TabIndex = 12;
             this.btnUpload.Tag = "0";
             this.btnUpload.Text = "Upload";
@@ -157,25 +160,26 @@
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(452, 120);
+            this.txtMessage.Size = new System.Drawing.Size(690, 217);
             this.txtMessage.TabIndex = 9;
             // 
             // lblMessage
             // 
             this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(13, 70);
+            this.lblMessage.BackColor = System.Drawing.Color.Transparent;
+            this.lblMessage.Location = new System.Drawing.Point(12, 60);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(56, 15);
+            this.lblMessage.Size = new System.Drawing.Size(86, 25);
             this.lblMessage.TabIndex = 10;
             this.lblMessage.Text = "Message:";
             // 
             // frmFacebook
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(480, 272);
+            this.ClientSize = new System.Drawing.Size(718, 398);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.panel2);
@@ -193,6 +197,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

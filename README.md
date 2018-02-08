@@ -1,62 +1,55 @@
-ImageGlass
-==========
-http://www.imageglass.org/ <br/>
-Free and open source image viewer
+ImageGlass - A lightweight, versatile image viewer.
+===
 
-<h3>Donation</h3>
+[![Website](https://img.shields.io/badge/www-imageglass.org-0099BC.svg?maxAge=3600)](http://www.imageglass.org)
+[![GPL Licence](https://img.shields.io/badge/license-GPLv3-green.svg?maxAge=3600)](https://github.com/d2phap/ImageGlass/blob/master/LICENSE)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/imageglass/localized.svg)](https://crowdin.com/project/imageglass)
 
-<a style="text-align: center;
-display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=20%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-20 USD
+
+ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.
+
+
+## Download & Screen shots
+
+<a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
+<img src="http://imageglass.org/upload/photo/release/4.5_1.png" alt="ImageGlass 4.5.11.27">
+</a><br/>
+
+<a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
+<img src="https://img.shields.io/badge/Download-ImageGlass%204.5.11.27-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 4.5.11.27">
 </a>
 
 
-<a style="text-align: center;
-display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=50%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-50 USD
+## Development
+![Visual Studio 2017](https://img.shields.io/badge/IDE-Visual%20Studio%202017-964ad4.svg?maxAge=3600)
+![.NET Framework 4](https://img.shields.io/badge/.NET-Framework%204-lightgrey.svg?maxAge=3600)
+![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
+
+```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
+
+**``Pull Request``** is most welcome!
+
+
+
+## Documentation
+
+[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/features)
+[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/supported-formats)
+[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/ui-shortcuts-reference)
+
+
+For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
+
+For more information about ImageGlass, go to [Documentation](http://www.imageglass.org/documentation)
+
+
+
+
+## Donate
+ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
+
+Thanks for your gratitude and finance help!
+
+<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
+<img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
-
-
-<a style="text-align: center;
-display: inline-block;
-font-weight: bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=UXQD2JFGL6C98&lc=VN&item_name=ImageGlass%20software&amount=100%2e00&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="" /><br/>
-100 USD
-</a>
-
-<h3>Share ImageGlass</h3>
-<a href="https://www.facebook.com/ImageGlass" target="_blank"><img src="http://i1214.photobucket.com/albums/cc483/phapsuxeko/fbl_zpsba9e6ee2.png" border="0" alt="Photobucket"/></a>
-
-<h3>Links</h3>
-<ul>
-<li><a title="ImageGlass homepage" href="http://www.imageglass.org/" target="_blank"><strong>Homepage</strong></a> </li>
-<li><a title="ImageGlass themes" href="http://www.imageglass.org/download/themes" target="_blank"><strong><span style="color: #008080;">Download themes&nbsp;</span></strong></a> </li>
-<li><a title="ImageGlass extensions" href="http://www.imageglass.org/download/extensions" target="_blank"><strong><span style="color: #008080;">Download extensions&nbsp;</span></strong></a> </li>
-<li><a title="ImageGlass language packs" href="http://www.imageglass.org/download/languagepacks" target="_blank"><strong><span style="color: #008080;">Download language packs&nbsp;</span></strong></a> </li>
-</ul>
-<h3>Project Description</h3>
-<p>ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.</p>
-<p><img style="vertical-align: middle;" src="https://cloud.githubusercontent.com/assets/3154213/12851190/7e0a583a-cc63-11e5-8627-9b9ef483b9d8.png" alt="ImageGlass 3.2.0.16" /></p>
-
-<h3>ImageGlass Features</h3>
-
-The unique features of ImageGlass are the following:
-<ul>
-<li>ImageGlass works great with GIF, ICO and PNG formats, among others</li>
-<li>Various zoom options: zoom in or zoom out, scale to height, scale to width, lock zoom ratio, etc.</li>
-<li>20 image formats supported, including JPG, JPE, JFIF, JPEG, PNG, GIF, ICO, BMP, DIB, TIF, TIFF, EXIF, WMF, EMF, TGA, PSD, HDR, EXR, SGV, WEBP (non-animated)</li>
-<li>Fast switch between images</li>
-<li>Image frames extraction from GIF files</li>
-<li>Thumbnail images can be shown in the current viewing folder</li>
-<li>Different theme packs available to change the look of the interface</li>
-<li>'Slide Show' viewing functionality</li>
-<li>Conversion can be made in up to 14 different formats</li>
-<li>Possibility of uploading the image being viewed to Facebook</li>
-<li>Multilanguage support, which makes the user able to create its own packs</li>
-<li>Easy installation of new extensions to widen the program's possibilities</li>
-
-</ul>

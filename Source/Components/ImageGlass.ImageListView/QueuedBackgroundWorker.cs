@@ -56,7 +56,7 @@ namespace ImageGlass.ImageListView
 			cancelledItems = new Dictionary<object, bool> ();
 			
 			// The loader complete callback
-			workCompletedCallback = new SendOrPostCallback (this.RunWorkerCompletedCallback);
+			workCompletedCallback = new SendOrPostCallback (RunWorkerCompletedCallback);
 		}
 		#endregion
 

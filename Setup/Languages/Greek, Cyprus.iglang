@@ -1,0 +1,221 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="el-GR" langName="Ελληνικά" author="ImageGlass community" description="Greek" minVersion="4.1.7.26" isRightToLeftLayout="No" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="Προεπιλεγμένες επεκτάσεις" />
+      <Item key="_.ImageFormatGroup.Optional" value="Προαιρετικές επεκτάσεις" />
+      <Item key="frmMain.picMain._ErrorText" value="Το ImageGlass δεν μπορεί να ανοίξει αυτή την εικόνα επειδή το αρχείο φαίνεται να είναι κατεστραμμένο ή μη συμβατό." />
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist." />
+      <Item key="frmMain.btnBack" value="Προηγούμενη φωτογραφία (← / PageUp)" />
+      <Item key="frmMain.btnNext" value="Επόμενη φωτογραφία (→ / PageDown)" />
+      <Item key="frmMain.btnRotateLeft" value="Περιστροφή προς τα αριστερά (Ctrl + ,)" />
+      <Item key="frmMain.btnRotateRight" value="Περιστροφή προς τα δεξιά (Ctrl + .)" />
+      <Item key="frmMain.btnZoomIn" value="Μεγέθυνση (Ctrl + =)" />
+      <Item key="frmMain.btnZoomOut" value="Σμίκρυνση (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Zoom to fit (Ctrl + /)" />
+      <Item key="frmMain.btnActualSize" value="Πραγματικό μέγεθος (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="Κλείδωμα μεγέθυνσης (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="Προσαρμογή στο πλάτος (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="Προσαρμογή στο ύψος (Ctrl + H)" />
+      <Item key="frmMain.btnWindowAutosize" value="Προσαρμογή εικόνας στις πραγματικές διαστάσεις (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="Άνοιγμα (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="Ανανέωση (F5)" />
+      <Item key="frmMain.btnGoto" value="Πήγαινε σε... (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="Εμφάνιση μικρογραφιών (Ctrl + T)" />
+      <Item key="frmMain.btnCaro" value="Εμφάνιση διαφανούς φόντου (Ctrl + B)" />
+      <Item key="frmMain.btnFullScreen" value="Πλήρης οθόνη (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="Προβολή διαφανειών (slideshow) (F11, ESC για έξοδο)" />
+      <Item key="frmMain.btnConvert" value="Μετατροπή εικόνας (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="Εκτύπωση εικόνας (Ctrl + P)" />
+      <Item key="frmMain.btnFacebook" value="Ανέβασμα στο Facebook (Ctrl + U)" />
+      <Item key="frmMain.btnExtension" value="Διαχειριστής επεκτάσεων (Ctrl + Shift + E)" />
+      <Item key="frmMain.btnSetting" value="Ρυθμίσεις ImageGlass (Ctrl + Shift + P)" />
+      <Item key="frmMain.btnHelp" value="Βοήθεια (F1)" />
+      <Item key="frmMain.btnMenu" value="Μενού (Hotkey: ')" />
+      <Item key="frmMain.mnuMainOpenFile" value="Άνοιγμα" />
+      <Item key="frmMain.mnuMainOpenImageData" value="Άνοιγμα εικόνας από το πρόχειρο" />
+      <Item key="frmMain.mnuMainSaveAs" value="Αποθήκευση εικόνας ως..." />
+      <Item key="frmMain.mnuMainRefresh" value="Ανανέωση" />
+      <Item key="frmMain.mnuMainEditImage" value="Επεξεργασία εικόνας {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="Πλοήγηση" />
+      <Item key="frmMain.mnuMainViewNext" value="Επόμενη εικόνα" />
+      <Item key="frmMain.mnuMainViewPrevious" value="Προηγούμενη εικόνα" />
+      <Item key="frmMain.mnuMainGoto" value="Μετάβαση σε ..." />
+      <Item key="frmMain.mnuMainGotoFirst" value="Πήγαινε στην πρώτη εικόνα" />
+      <Item key="frmMain.mnuMainGotoLast" value="Πήγαινε στην τελευταία εικόνα" />
+      <Item key="frmMain.mnuMainFullScreen" value="Πλήρης οθόνη" />
+      <Item key="frmMain.mnuMainSlideShow" value="Προβολή διαφανειών (slideshow)" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="Έναρξη προβολής διαφανειών (slideshow)" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="Παύση / συνέχιση προβολής διαφανειών (slideshow)" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="Έξοδος προβολής διαφανειών (slideshow)" />
+      <Item key="frmMain.mnuMainPrint" value="Εκτύπωση" />
+      <Item key="frmMain.mnuMainManipulation" value="Διαχείριση εικόνας" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="Περιστροφή προς τα αριστερά" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="Περιστροφή προς τα δεξιά" />
+      <Item key="frmMain.mnuMainZoomIn" value="Μεγέθυνση" />
+      <Item key="frmMain.mnuMainZoomOut" value="Σμίκρυνση" />
+      <Item key="frmMain.mnuMainZoomToFit" value="Μεγέθυνση μέχρι να χωρέσει" />
+      <Item key="frmMain.mnuMainActualSize" value="Πραγματικό Μέγεθος" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Κλείδωμα μεγέθυνσης" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="Προσαρμογή στο πλάτος" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="Προσαρμογή στο ύψος" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="Προσαρμογή παραθύρου στις πραγματικές διαστάσεις της εικόνας" />
+      <Item key="frmMain.mnuMainRename" value="Μετονομασία φωτογραφίας" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Μετακίνηση στον κάδο ανακύκλωσης" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Διαγραφή απο το δίσκο" />
+      <Item key="frmMain.mnuMainExtractFrames" value="Αποσυμπίεση καρέ εικόνας ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Έναρξη / διακοπή κινούμενης φωτογραφίας" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Ορισμός ως φόντου επιφάνειας εργασίας" />
+      <Item key="frmMain.mnuMainImageLocation" value="Άνοιγμα φακέλου φωτογραφίας" />
+      <Item key="frmMain.mnuMainImageProperties" value="Ιδιότητες εικόνας" />
+      <Item key="frmMain.mnuMainClipboard" value="Πρόχειρο" />
+      <Item key="frmMain.mnuMainCopy" value="Αντιγραφή" />
+      <Item key="frmMain.mnuMainCopyMulti" value="Αντιγραφή πολλαπλών αρχείων" />
+      <Item key="frmMain.mnuMainCut" value="Αποκοπή" />
+      <Item key="frmMain.mnuMainCutMulti" value="Αποκοπή πολλαπλών αρχείων" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="Αντιγραφή τοποθεσίας αρχείου" />
+      <Item key="frmMain.mnuMainClearClipboard" value="Καθάρισμα πρόχειρου" />
+      <Item key="frmMain.mnuMainShare" value="Κοινή χρήση..." />
+      <Item key="frmMain.mnuMainShareFacebook" value="Ανέβασμα στο Facebook" />
+      <Item key="frmMain.mnuMainLayout" value="Διάταξη" />
+      <Item key="frmMain.mnuMainToolbar" value="Γραμμή εργαλειών" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="Πάνελ μικρογραφιών" />
+      <Item key="frmMain.mnuMainCheckBackground" value="Ελεγμένο φόντο" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Κράτησε το παράθυρο πάντα σε πρώτο πλάνο" />
+      <Item key="frmMain.mnuMainTools" value="Εργαλεία" />
+      <Item key="frmMain.mnuMainExtensionManager" value="Διαχειριστής επεκτάσεων" />
+      <Item key="frmMain.mnuMainSettings" value="Ρυθμίσεις" />
+      <Item key="frmMain.mnuMainAbout" value="Σχετικά Με" />
+      <Item key="frmMain.mnuMainReportIssue" value="Αναφορά προβλήματος" />
+      <Item key="frmMain._OpenFileDialog" value="Όλα τα υποστηριζόμενα αρχεία" />
+      <Item key="frmMain._Text" value="αρχείο (α)" />
+      <Item key="frmMain._RenameDialogText" value="Μετονομασία" />
+      <Item key="frmMain._RenameDialog" value="Πληκτρολογήστε νέο όνομα αρχείου" />
+      <Item key="frmMain._GotoDialogText" value="Πληκτρολογήστε το νούμερο της εικόνας στη λίστα. Πατήστε {ENTER}" />
+      <Item key="frmMain._DeleteDialogText" value="Διαγραφή αρχείου {0};" />
+      <Item key="frmMain._DeleteDialogTitle" value="Επιβεβαίωση" />
+      <Item key="frmMain._ExtractFrameText" value="Εξαγωγή καρέ εικόνας. Παρακαλώ επιλέξτε φάκελο αποθήκευσης." />
+      <Item key="frmMain._FullScreenMessage" value="Πατήστε ALT + ENTER για να βγάλετε την πλήρη οθόνη.&#xA;Ή CTRL + F1 για να εμφανίσετε το μενού." />
+      <Item key="frmMain._SlideshowMessage" value="Πιέστε ESC για να βγείτε απο την προβολή διαφανειών.&#xA; Κάντε δεξί κλικ για να ανοίξετε το μενού." />
+      <Item key="frmMain._SlideshowMessagePause" value="Η προβολή διαφανειών είναι σε παύση" />
+      <Item key="frmMain._SlideshowMessageResume" value="Η προβολή διαφανειών συνεχίστηκε" />
+      <Item key="frmMain._CopyFileText" value="Αντιγράφτηκαν {0} αρχείο (α)." />
+      <Item key="frmMain._CutFileText" value="Αποκόπηκαν {0} αρχείο (α)." />
+      <Item key="frmMain._ClearClipboard" value="Το πρόχειρο εκκαθαρίστηκε." />
+      <Item key="frmMain._SaveChanges" value="Αποθήκευση των αλλαγών..." />
+      <Item key="frmMain._Loading" value="Φόρτωση..." />
+      <Item key="frmMain._FirstItemOfList" value="Φτάσατε στην πρώτη εικόνα" />
+      <Item key="frmMain._LastItemOfList" value="Φτάσατε στην τελευταία εικόνα" />
+      <Item key="frmExtension._Text" value="Διαχειριστής επεκτάσεων" />
+      <Item key="frmExtension.btnGetMoreExt" value="Λήψη περισσότερων επεκτάσεων" />
+      <Item key="frmExtension.btnRefreshAllExt" value="Ανανέωση" />
+      <Item key="frmExtension.btnInstallExt" value="Εγκατάσταση" />
+      <Item key="frmExtension.btnClose" value="Κλείσιμο" />
+      <Item key="frmFacebook.lblMessage" value="Μήνυμα" />
+      <Item key="frmFacebook.btnUpload._Upload" value="Μεταφόρτωση" />
+      <Item key="frmFacebook.btnUpload._Cancel" value="Ακύρωση" />
+      <Item key="frmFacebook.btnUpload._ViewImage" value="Προβολή εικόνας" />
+      <Item key="frmFacebook.btnClose" value="Κλείσιμο" />
+      <Item key="frmFacebook._StatusBegin" value="Κάντε κλικ το '{0}' για να ξεκινήσετε" />
+      <Item key="frmFacebook._StatusInvalid" value="Μη έγκυρο όνομα αρχείου" />
+      <Item key="frmFacebook._StatusUploading" value="Ανέβασμα..." />
+      <Item key="frmFacebook._StatusCancel" value="Ακυρώθηκε" />
+      <Item key="frmFacebook._StatusSuccessful" value="Επιτυχής" />
+      <Item key="frmFaceBookLogin._Text" value="Σύνδεση στο Facebook..." />
+      <Item key="frmAbout.lblSlogant" value="Ένας ελαφρύς και ευέλικτος προβολέας εικόνων" />
+      <Item key="frmAbout.lblInfo" value="Πληροφορίες" />
+      <Item key="frmAbout.lblComponent" value="Στοιχεία" />
+      <Item key="frmAbout.lblReferences" value="Αναφορές" />
+      <Item key="frmAbout.lblVersion" value="Έκδοση {0}" />
+      <Item key="frmAbout.lblInfoContact" value="Επικοινωνία" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="Ενημέρωση προγράμματος" />
+      <Item key="frmAbout.lnkCheckUpdate" value="» Έλεγχος για ενημερώσεις" />
+      <Item key="frmAbout._Text" value="Σχετικά Με" />
+      <Item key="frmAbout._PortableText" value="[Φορητή έκδοση]" />
+      <Item key="frmSetting._Text" value="Ρυθμίσεις" />
+      <Item key="frmSetting.btnSave" value="Αποθήκευση" />
+      <Item key="frmSetting.btnCancel" value="Ακύρωση" />
+      <Item key="frmSetting.btnApply" value="Εφαρμογή" />
+      <Item key="frmSetting.lblGeneral" value="Γενικά" />
+      <Item key="frmSetting.lblImage" value="Εικόνα" />
+      <Item key="frmSetting.lblFileAssociations" value="Συσχετισμοί αρχείων" />
+      <Item key="frmSetting.lblLanguage" value="Γλώσσα" />
+      <Item key="frmSetting.lblHeadStartup" value="Εκκίνηση" />
+      <Item key="frmSetting.chkWelcomePicture" value="Εμφάνιση εικόνας καλωσορίσματος" />
+      <Item key="frmSetting.chkShowToolBar" value="Εμφάνιση της γραμμής εργαλείων κατά την εκκίνηση" />
+      <Item key="frmSetting.lblHeadPortableMode" value="Φορητή έκδοση" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Portable mode is enable" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Portable mode is disabled on the installed folder:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadOthers" value="Άλλες ρυθμήσεις" />
+      <Item key="frmSetting.chkAutoUpdate" value="Αυτόματος έλεγχος για ενημερώσεις" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="Να επιτρέπονται πολλαπλές εμφανίσεις του προγράμματος" />
+      <Item key="frmSetting.chkESCToQuit" value="Να επιτρέπεται το ESC για έξοδο της εφαρμογής" />
+      <Item key="frmSetting.chkConfirmationDelete" value="Εμφάνιση διαλόγου επιβεβαίωσης διαγραφής" />
+      <Item key="frmSetting.chkShowScrollbar" value="Εμφάνιση μπαρών κύλισης για την προβολή" />
+      <Item key="frmSetting.lblBackGroundColor" value="Χρώμα φόντου" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Επαναφορά" />
+      <Item key="frmSetting.lblHeadImageLoading" value="Φόρτωση εικόνας" />
+      <Item key="frmSetting.chkFindChildFolder" value="Εύρεση φωτογραφιών στο φάκελο" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Show hidden images" />
+      <Item key="frmSetting.chkLoopViewer" value="Άρχισε από την αρχή στο τέλος της λίστας της προβολής διαφανειών (slideshow)" />
+      <Item key="frmSetting.chkImageBoosterBack" value="Ενεργοποίηση Image Booster κατά την πλοήγηση προς τα πίσω (χρειάζεται περίπου 20% περισσότερη RAM)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="Σειρά φόρτωσης εικόνων" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="Όνομα (προεπιλογή)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="Διάρκεια" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Ημερομηνία δημιουργίας" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Πρόσφατο άνοιγμα αρχείου" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Τελευταία τροποποίηση αρχείου" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="Επέκταση" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="Τυχαίο" />
+      <Item key="frmSetting.lblHeadZooming" value="Μεγέθυνση" />
+      <Item key="frmSetting.chkMouseNavigation" value="Χρησιμοποιήστε τον τροχό του ποντικιού για να περιηγηθείτε τις εικόνες και κρατήστε πατημένο το CTRL για μεγέθυνση" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Βελτιστοποίηση μεγέθυνσης" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Αυτόματο" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Ομαλά pixels (εικονοστοιχεία)" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Καθαρισμός pixel (οικονοστοιχειών)" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Πάνελ μικρογραφιών" />
+      <Item key="frmSetting.chkThumbnailVertical" value="Εμφάνιση μικρογραφιών στην δεξιά πλευρά" />
+      <Item key="frmSetting.lblGeneral_MaxFileSize" value="Μέγιστο μέγεθος αρχείου μικρογραφιών (MB)" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Μέγεθος μικρογραφιών (σε pixel)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="Προβολή διαφανειών (slideshow)" />
+      <Item key="frmSetting.chkLoopSlideshow" value="Πήγαινε πίσω στην πρώτη εικόνα όταν φτάσει στο τέλος της λίστας της προβολής διαφανειών (slideshow)" />
+      <Item key="frmSetting.lblSlideshowInterval" value="Διάστημα προβολής διαφανειών (slideshow) {0} δευτερόλεπτα" />
+      <Item key="frmSetting.lblHeadImageEditing" value="Επεξεργασία εικόνας" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing" />
+      <Item key="frmSetting.btnEditEditExt" value="Επεξεργασία" />
+      <Item key="frmSetting.btnEditResetExt" value="Επαναφορά στις προεπιλογές" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Επεξεργασία όλων των επεκτάσεων" />
+      <Item key="frmSetting._allExtensions" value="όλες οι επεκτάσεις" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Επέκταση αρχείου" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Όνομα εφαρμογής" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Τοποθεσία εφαρμογής" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Εντολές εφαρμογής" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="*Οι προαιρετικές καταλήξεις δεν θα φορτωθούν στην μνήμη αυτόματα." />
+      <Item key="frmSetting.lblSupportedExtension" value="Υποστηριζόμενες μορφές: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Συσχετισμοί αρχείων" />
+      <Item key="frmSetting.btnAddNewExt" value="Προσθήκη" />
+      <Item key="frmSetting.btnRegisterExt" value="Συσχετισμός καταλήξεων" />
+      <Item key="frmSetting.btnDeleteExt" value="Διαγραφή" />
+      <Item key="frmSetting.btnResetExt" value="Επαναφορά στις προεπιλογές" />
+      <Item key="frmSetting.lblLanguageText" value="Εγκατεστημένες γλώσσες" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; Ανανέωση" />
+      <Item key="frmSetting.lblLanguageWarning" value="Αυτό το πακέτο γλώσσας δεν είναι συμβατό με {0}" />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Εγκατάσταση νέου πακέτου γλώσσας (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Δημιουργία νέου πακέτου γλώσσας" />
+      <Item key="frmSetting.lnkEdit" value="&gt; Επεξεργασία επιλεγμένου πακέτου γλώσσας" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Λήψη περισσότερων πακέτων γλώσσας" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="Επέκταση αρχείου" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="Ομάδες καταλήξεων" />
+      <Item key="frmAddNewFormat.btnOK" value="ΟΚ" />
+      <Item key="frmAddNewFormat.btnClose" value="Κλείσιμο" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="Επέκταση αρχείου" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="Όνομα εφαρμογής" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="Τοποθεσία εφαρμογής" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Εντολές εφαρμογής" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="Επαναφορά" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="ΟΚ" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="Κλείσιμο" />
+    </Content>
+  </Language>
+</ImageGlass>

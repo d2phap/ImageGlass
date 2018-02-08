@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 
 namespace ImageGlass
 {
-	/// <summary>
-	/// Holds A static instance of global program shtuff
-	/// </summary>
-	public class Global
+    /// <summary>
+    /// Holds A static instance of global program shtuff
+    /// </summary>
+    public class Global
 	{
 		public Global(){} //Constructor
 		

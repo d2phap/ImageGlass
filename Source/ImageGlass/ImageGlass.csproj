@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,9 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImageGlass</RootNamespace>
     <AssemblyName>ImageGlass</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>imageglass.ico</ApplicationIcon>
+    <ApplicationIcon>iglogo.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -49,7 +49,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -60,8 +60,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -69,6 +69,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>8145C0B5F2194ED51B5BCFD1E550FF6CCB7D9712</ManifestCertificateThumbprint>
@@ -88,9 +89,7 @@
   <PropertyGroup>
   </PropertyGroup>
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -101,6 +100,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -112,27 +112,39 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.7.0.6\lib\net40-client\Facebook.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\IconLib.dll</HintPath>
+      <HintPath>..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
     </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.2.1.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.3.0\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.PSD">
-      <HintPath>..\packages\System.Drawing.PSD.0.1.0\lib\net40\System.Drawing.PSD.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -142,6 +154,18 @@
     </Compile>
     <Compile Include="frmAbout.designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddNewFormat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddNewFormat.Designer.cs">
+      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditEditingAssocisation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditEditingAssocisation.Designer.cs">
+      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
     </Compile>
     <Compile Include="frmExtension.cs">
       <SubType>Form</SubType>
@@ -180,6 +204,12 @@
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddNewFormat.resx">
+      <DependentUpon>frmAddNewFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditEditingAssocisation.resx">
+      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExtension.resx">
       <DependentUpon>frmExtension.cs</DependentUpon>
@@ -230,6 +260,7 @@
     <None Include="Resources\autosizewindow.png" />
     <None Include="Resources\back.png" />
     <None Include="Resources\background.png" />
+    <Content Include="iglogo.ico" />
     <Content Include="Resources\bot3.png" />
     <None Include="Resources\print.png" />
     <None Include="Resources\convert.png" />
@@ -251,7 +282,6 @@
     <None Include="Resources\report.png" />
     <None Include="Resources\menu.png" />
     <Content Include="Resources\top3.png" />
-    <Content Include="imageglass.ico" />
     <None Include="Resources\Hand_Down.png" />
     <None Include="Resources\Hand_Move.png" />
     <None Include="Resources\noimg.png" />
@@ -300,6 +330,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.Core\ImageGlass.Core.csproj">
+      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
+      <Name>ImageGlass.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
       <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>
       <Name>ImageGlass.ImageBox</Name>
@@ -308,37 +342,29 @@
       <Project>{0c295fb8-c6c6-4a40-9f19-05a43f353a04}</Project>
       <Name>ImageGlass.ImageListView</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
-      <Project>{CC391E3E-9137-4857-85DC-C4CF6DF37584}</Project>
-      <Name>igcmd</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultilities\igtasks\igtasks.csproj">
-      <Project>{63e3171f-d36e-4100-9c55-21d277b8530c}</Project>
-      <Name>igtasks</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540D406-E362-4ECC-9761-F978996354DF}</Project>
-      <Name>ImageGlass.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
-      <Project>{3EBDAABB-077B-4308-9D69-93727DFD4554}</Project>
+      <Project>{3ebdaabb-077b-4308-9d69-93727dfd4554}</Project>
       <Name>ImageGlass.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Components\ImageGlass.Theme\ImageGlass.Theme.csproj">
+      <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>
+      <Name>ImageGlass.Theme</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Theme\ImageGlass.Theme.csproj">
-      <Project>{76486F88-AA16-4D7D-BBF6-0F1C604D5853}</Project>
-      <Name>ImageGlass.Theme</Name>
+    <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
+      <Project>{cc391e3e-9137-4857-85dc-c4cf6df37584}</Project>
+      <Name>igcmd</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.FileList\ImageGlass.FileList.csproj">
-      <Project>{12E1741E-07CD-4658-BFA7-B28E07ED83F2}</Project>
-      <Name>ImageGlass.FileList</Name>
+    <ProjectReference Include="..\Ultilities\igtasks\igtasks.csproj">
+      <Project>{63e3171f-d36e-4100-9c55-21d277b8530c}</Project>
+      <Name>igtasks</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

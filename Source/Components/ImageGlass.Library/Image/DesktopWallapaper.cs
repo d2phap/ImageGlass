@@ -18,10 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
 using Microsoft.Win32;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -39,6 +35,10 @@ namespace ImageGlass.Library.Image
 
         public enum Style : int
         {
+            /// <summary>
+            /// Current windows wallpaper style
+            /// </summary>
+            Current = -1,
             /// <summary>
             /// 0
             /// </summary>

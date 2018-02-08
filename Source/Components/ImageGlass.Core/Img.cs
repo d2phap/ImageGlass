@@ -16,8 +16,6 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
 namespace ImageGlass.Core
@@ -45,7 +43,9 @@ namespace ImageGlass.Core
             {
                 im = Interpreter.Load(path);
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             { }
             Set(im);
         }

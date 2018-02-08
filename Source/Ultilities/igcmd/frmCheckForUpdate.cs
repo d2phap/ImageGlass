@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2017 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Theme;
+using System.Text;
 
 namespace igcmd
 {
@@ -37,15 +35,19 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
+
+            if (!Directory.Exists(GlobalSetting.TempDir))
+                Directory.CreateDirectory(GlobalSetting.TempDir);
         }
 
         Update up = new Update();
-        string tempDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+        string updateInfoFile = Path.Combine(GlobalSetting.TempDir, "update.xml");
+
 
         private void btnClose_Click(object sender, EventArgs e)
-        {            
-            if (File.Exists(tempDir + "update.xml"))
-                File.Delete(tempDir + "update.xml");
+        {
+            if (File.Exists(updateInfoFile))
+                File.Delete(updateInfoFile);
             Application.Exit();
         }
 
@@ -58,32 +60,30 @@ namespace igcmd
             t.IsBackground = true;
             t.Start();
 
-            //CheckForUpdate();
+
 
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir + "ImageGlass.exe");
-            lblCurentVersion.Text = "Version: " + fv.FileVersion;
+
+            txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
+
+            //CheckForUpdate();
 
         }
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), tempDir + "update.xml");
+            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), updateInfoFile);
 
-            if (File.Exists(tempDir + "update.xml"))
+            if (File.Exists(updateInfoFile))
             {
-                File.Delete(tempDir + "update.xml");
+                File.Delete(updateInfoFile);
             }
+
+            StringBuilder sb = new StringBuilder();
 
             if (up.IsError)
             {
-                this.Size = this.MaximumSize;
-                lblUpdateVersion.Text = "Please visit http://imageglass.org/download to check for updates.";
-                lblUpdateVersionType.Text =
-                    lblUpdateImportance.Text =
-                    lblUpdateSize.Text =
-                    lblUpdatePubDate.Text =
-                    lnkUpdateReadMore.Text =
-                    String.Empty;
+                sb.Append("Please visit http://imageglass.org/download to check for updates.");
 
                 lblStatus.Text = "Unable to check for current version online.";
                 lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
@@ -91,13 +91,13 @@ namespace igcmd
             }
             else
             {
-                this.Size = this.MinimumSize;
-                lblUpdateVersion.Text = "Version: " + up.Info.NewVersion.ToString();
-                lblUpdateVersionType.Text = "Version type: " + up.Info.VersionType;
-                lblUpdateImportance.Text = "Importance: " + up.Info.Level;
-                lblUpdateSize.Text = "Size: " + up.Info.Size;
-                lblUpdatePubDate.Text = "Publish date: " + up.Info.PublishDate.ToString("MMM d, yyyy");
-                lnkUpdateReadMore.Text = "Read more...";
+                sb.AppendLine($"The latest ImageGlass information:\r\n" +
+                    $"------------------------------\r\n" +
+                    $"Version: {up.Info.NewVersion.ToString()}\r\n" +
+                    $"Version type: {up.Info.VersionType}\r\n" +
+                    $"Importance: {up.Info.Level}\r\n" +
+                    $"Size: {up.Info.Size}\r\n" +
+                    $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
                 if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
                 {
@@ -113,6 +113,9 @@ namespace igcmd
                     }
                     picStatus.Image = igcmd.Properties.Resources.warning;
                     btnDownload.Enabled = true;
+
+                    GlobalSetting.IsNewVersionAvailable = true;
+                    
                 }
                 else
                 {
@@ -120,8 +123,14 @@ namespace igcmd
                     lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
                     btnDownload.Enabled = false;
                     picStatus.Image = igcmd.Properties.Resources.ok;
+
+                    GlobalSetting.IsNewVersionAvailable = false;
                 }
+
+                GlobalSetting.SetConfig("IsNewVersionAvailable", GlobalSetting.IsNewVersionAvailable.ToString());
             }
+
+            txtUpdates.Text += sb.ToString();
 
             //save last update
             GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));

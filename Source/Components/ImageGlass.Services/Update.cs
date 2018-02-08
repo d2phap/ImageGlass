@@ -18,14 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
-using ImageGlass.Library.Net;
 
 namespace ImageGlass.Services
 {
@@ -61,7 +57,7 @@ namespace ImageGlass.Services
             _info = new InfoUpdate();
 
             //Get information update pack
-            this._isError = !GetUpdateConfig(link, savedPath);
+            _isError = !GetUpdateConfig(link, savedPath);
         }
 
         /// <summary>
@@ -90,7 +86,7 @@ namespace ImageGlass.Services
                 System.Net.WebClient w = new WebClient();
                 w.DownloadFile(link, savedPath);
             }
-            catch { return false; }
+            catch (Exception ex) { return false; }
 
             //return FALSE if config file is not exist
             if (!File.Exists(savedPath)) { return false; }
@@ -99,7 +95,7 @@ namespace ImageGlass.Services
             LoadUpdateConfig(savedPath);
 
             //error on downloading
-            if (this._info.NewVersion.ToString() == "1.0.0.0")
+            if (_info.NewVersion.ToString() == "1.0.0.0")
             {
                 return false;
             }
@@ -141,7 +137,7 @@ namespace ImageGlass.Services
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
 
             //There is a new version
-            if (this.Info.NewVersion.ToString().CompareTo(fv.FileVersion) != 0)
+            if (Info.NewVersion.ToString().CompareTo(fv.FileVersion) != 0)
             {
                 return true;
             }

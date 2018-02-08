@@ -18,9 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
@@ -76,6 +73,7 @@ namespace ImageGlass.Library.Image
             shInfo.nShow = SW_SHOW;
             shInfo.fMask = SEE_MASK_INVOKEIDLIST;
             shInfo.lpVerb = "properties";
+            shInfo.lpParameters = "Details";
             shInfo.hwnd = hwnd;
 
             ShellExecuteEx(ref shInfo);
@@ -166,8 +164,8 @@ namespace ImageGlass.Library.Image
                         {
                             try
                             {
-                                clonedPic.Save(ms, pic.RawFormat);
-                                string base64string = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+                                clonedPic.Save(ms, ImageFormat.Png);
+                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
 
                                 using (StreamWriter fs = new StreamWriter(s.FileName))
                                 {
@@ -475,7 +473,7 @@ namespace ImageGlass.Library.Image
                 File.Move(oldFileName, newFileName);
             }
         }
-                
+
 
         /// <summary>
         /// Delete file

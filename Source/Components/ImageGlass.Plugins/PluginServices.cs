@@ -20,8 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Reflection;
-using ImageGlass.Plugins;
-using System.Linq;
 
 namespace ImageGlass.Plugins
 {
@@ -73,7 +71,7 @@ namespace ImageGlass.Plugins
                 if (file.Extension.Equals(".dll"))
                 {
                     //Add the 'plugin'
-                    this.AddPlugin(fileOn);
+                    AddPlugin(fileOn);
                 }
             }
         }
@@ -136,7 +134,7 @@ namespace ImageGlass.Plugins
                             newPlugin.Instance.Initialize();
 
                             //Add the new plugin to our collection here
-                            this.colAvailablePlugins.Add(newPlugin);
+                            colAvailablePlugins.Add(newPlugin);
 
                             //cleanup a bit
                             newPlugin = null;
@@ -201,7 +199,7 @@ namespace ImageGlass.Plugins
             /// <param name="pluginToAdd">The Plugin to Add</param>
             public void Add(Types.AvailablePlugin pluginToAdd)
             {
-                this.List.Add(pluginToAdd);
+                List.Add(pluginToAdd);
             }
 
             /// <summary>
@@ -210,7 +208,7 @@ namespace ImageGlass.Plugins
             /// <param name="pluginToRemove">The Plugin to Remove</param>
             public void Remove(Types.AvailablePlugin pluginToRemove)
             {
-                this.List.Remove(pluginToRemove);
+                List.Remove(pluginToRemove);
             }
 
             /// <summary>
@@ -223,7 +221,7 @@ namespace ImageGlass.Plugins
                 Types.AvailablePlugin toReturn = null;
 
                 //Loop through all the plugins
-                foreach (Types.AvailablePlugin pluginOn in this.List)
+                foreach (Types.AvailablePlugin pluginOn in List)
                 {
                     //Find the one with the matching name or filename
                     if ((pluginOn.Instance.Name.Equals(pluginNameOrPath)) || pluginOn.AssemblyPath.Equals(pluginNameOrPath))
