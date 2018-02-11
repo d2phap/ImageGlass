@@ -28,7 +28,6 @@ using ImageGlass.Library;
 using System.Linq;
 using ImageGlass.Theme;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageGlass
 {
@@ -305,6 +304,7 @@ namespace ImageGlass
             lnkGetMoreLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
 
 
+            InitLanguagePackToolbar();
             extList = null;
         }
 
@@ -316,22 +316,23 @@ namespace ImageGlass
         private void lblMenu_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
-
-            if (lbl.Name == "lblGeneral")
+            switch (lbl.Name)
             {
-                tab1.SelectedTab = tabGeneral;
-            }
-            else if (lbl.Name == "lblImage")
-            {
-                tab1.SelectedTab = tabImage;
-            }
-            else if (lbl.Name == "lblFileAssociations")
-            {
-                tab1.SelectedTab = tabFileAssociation;
-            }
-            else if (lbl.Name == "lblLanguage")
-            {
-                tab1.SelectedTab = tabLanguage;
+                case "lblGeneral":
+                    tab1.SelectedTab = tabGeneral;
+                    break;
+                case "lblImage":
+                    tab1.SelectedTab = tabImage;
+                    break;
+                case "lblFileAssociations":
+                    tab1.SelectedTab = tabFileAssociation;
+                    break;
+                case "lblLanguage":
+                    tab1.SelectedTab = tabLanguage;
+                    break;
+                case "lblToolbar":
+                    tab1.SelectedTab = tabToolbar;
+                    break;
             }
         }
 
@@ -341,11 +342,13 @@ namespace ImageGlass
             lblImage.Tag = 0;
             lblFileAssociations.Tag = 0;
             lblLanguage.Tag = 0;
+            lblToolbar.Tag = 0;
 
             lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
             lblImage.BackColor = M_COLOR_MENU_NORMAL;
             lblFileAssociations.BackColor = M_COLOR_MENU_NORMAL;
             lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
+            lblToolbar.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -375,6 +378,13 @@ namespace ImageGlass
                 lblLanguage.BackColor = M_COLOR_MENU_ACTIVE;
 
                 lnkRefresh_LinkClicked(null, null);
+            }
+            else if (tab1.SelectedTab == tabToolbar)
+            {
+                lblToolbar.Tag = 1;
+                lblToolbar.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabToolbar();
             }
         }
 
@@ -1103,11 +1113,11 @@ namespace ImageGlass
 
             #endregion
 
+            ApplyToolbarChanges();
 
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
 
-        
     }
 }

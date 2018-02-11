@@ -608,8 +608,18 @@ namespace ImageGlass.Library
             #endregion
 
 
-            // Toolbar customization
-            this.Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
+            #region Toolbar Customization
+            // V5.0
+            Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
+            Items.Add("frmSetting.lblToolbar", "Toolbar");
+            Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
+            Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
+            Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
+            Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
+            Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
+            #endregion
         }
 
 

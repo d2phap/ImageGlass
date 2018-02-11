@@ -3442,6 +3442,7 @@ namespace ImageGlass
             }
 
             GlobalSetting.IsForcedActive = false;
+            LocalSetting.FSetting.MainInstance = this;
             LocalSetting.FSetting.TopMost = this.TopMost;
             LocalSetting.FSetting.Show();
             LocalSetting.FSetting.Activate();
