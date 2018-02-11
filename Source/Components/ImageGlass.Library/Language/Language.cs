@@ -607,6 +607,9 @@ namespace ImageGlass.Library
             //Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final, -3.5
             #endregion
 
+
+            // Toolbar customization
+            this.Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
         }
 
 

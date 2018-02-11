@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using ImageGlass.Core;
 using ImageGlass.Library.Image;
@@ -257,7 +258,7 @@ namespace ImageGlass
                     thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
                     thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
             }
         }
 
@@ -568,6 +569,13 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Control && e.KeyCode == Keys.F9) // KBR
+            {
+                var frm = new frmCustToolbar();
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.ShowDialog(this);
+            }
+
             //this.Text = e.KeyValue.ToString();
 
 
@@ -1256,6 +1264,8 @@ namespace ImageGlass
                 GlobalSetting.IsForcedActive = true;
                 frmMain_Activated(null, null);
             }
+
+            ConfigToolbar(); // KBR			
             
             //Windows Bound (Position + Size)------------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
@@ -1595,6 +1605,88 @@ namespace ImageGlass
                 Application.DoEvents();
                 ImageSaveChange();
             }
+
+            GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
+        }
+// KBR
+        // NOTE: the field names here _must_ match the names in frmCustToolbar.cs/enum allBtns
+        private ToolStripButton btnRecycleBin;
+        private ToolStripButton btnRename;
+        private ToolStripButton btnEditImage;
+
+        private void MakeMenuButton(ToolStripButton btn, string name, string ttText)
+        {
+            btn.AutoSize = false;
+            btn.BackColor = Color.Transparent;
+            btn.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btn.ImageScaling = ToolStripItemImageScaling.None;
+            btn.ImageTransparentColor = Color.Magenta;
+            btn.Margin = new Padding(3, 0, 0, 0);
+            btn.Name = name;
+            btn.Size = new Size(28, 28);
+            btn.ToolTipText = ttText;
+        }
+
+        private void MakeMenuButtons()
+        {
+            // These buttons were not part of the initial toolbar button set. Set up and initialize
+            // as if they were created via the designer.
+
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(frmMain));
+
+            string txt = GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"];
+            btnRecycleBin = new ToolStripButton();
+            MakeMenuButton(btnRecycleBin, "btnRecycleBin", txt);
+            btnRecycleBin.Image = ((Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
+            btnRecycleBin.Click += mnuMainMoveToRecycleBin_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainRename"];
+            btnRename = new ToolStripButton();
+            MakeMenuButton(btnRename, "btnRename", txt);
+            btnRename.Image = ((Image)(resources.GetObject("mnuMainRename.Image")));
+            btnRename.Click += mnuMainRename_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
+            btnEditImage = new ToolStripButton();
+            MakeMenuButton(btnEditImage, "btnEditImage", txt);
+            btnEditImage.Image = ((Image)(resources.GetObject("mnuMainEditImage.Image")));
+            btnEditImage.Click += mnuMainEditImage_Click;
+        }
+
+        private void ConfigToolbar()
+        {
+            if (btnRecycleBin == null)
+                MakeMenuButtons();
+
+            toolMain.Items.Clear();
+
+            List<string> tbBtns = frmCustToolbar.LoadToolbarConfig();
+            Type mainType = GetType();
+
+            foreach (var tbBtn in tbBtns)
+            {
+                if (tbBtn == "_sep_")
+                {
+                    ToolStripSeparator sep = new ToolStripSeparator();
+                    toolMain.Items.Add(sep);
+                }
+                else
+                {
+                    try
+                    {
+                        var info = mainType.GetField(tbBtn, BindingFlags.Instance | BindingFlags.NonPublic);
+                        var val = info.GetValue(this);
+                        toolMain.Items.Add(val as ToolStripItem);
+                    }
+                    catch (Exception)
+                    {
+                        // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                    }
+                }
+            }
+
+            toolMain.Items.Add(btnMenu);
+            toolMain.Items.Add(lblInfo);
         }
 
         #endregion
