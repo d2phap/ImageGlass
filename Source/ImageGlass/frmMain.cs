@@ -1876,7 +1876,7 @@ namespace ImageGlass
                 btnRefresh.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRefresh"];
                 btnGoto.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnGoto"];
                 btnThumb.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnThumb"];
-                btnCheckedBackground.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnCaro"];
+                btnCheckedBackground.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnCheckedBackground"];
                 btnFullScreen.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFullScreen"];
                 btnSlideShow.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnSlideShow"];
                 btnConvert.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnConvert"];

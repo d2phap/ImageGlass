@@ -208,7 +208,7 @@ namespace ImageGlass
             btnRefresh,
             btnGoto,
             btnThumb,
-            btnCaro, // 15
+            btnCheckedBackground, // 15
             btnFullScreen,
             btnSlideShow,
             btnConvert,
@@ -387,13 +387,8 @@ namespace ImageGlass
                 case allBtns.Separator:
                     frmMainFieldsByName.Add("_sep_");
                     break;
-                case allBtns.btnCaro:
-                    // this is a discrepancy because the frmMain field is "btnCheckedBackground" but 
-                    // the resources are "btnCaro".
-                    frmMainFieldsByName.Add("btnCheckedBackground");
-                    break;
                 default: 
-                    // enum name *must* match the field name in frmMain
+                    // enum name *must* match the field name in frmMain AND the resource name, e.g. "frmMain.btnBack"
                     frmMainFieldsByName.Add(btnEnum.ToString());
                     break;
                 }

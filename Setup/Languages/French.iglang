@@ -23,6 +23,7 @@
       <Item key="frmMain.btnGoto" value="Aller à... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Montrer la vignette (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Montrer le fond à carreaux (Ctrl + B)" />
+      <Item key="frmMain.btnCheckedBackground" value="Montrer le fond à carreaux (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Plein écran (Alt + Entrée)" />
       <Item key="frmMain.btnSlideShow" value="Diaporama (F11, Echap pour quitter)" />
       <Item key="frmMain.btnConvert" value="Convertir l'image (Ctrl + S)" />

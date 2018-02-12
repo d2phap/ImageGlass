@@ -23,6 +23,7 @@
       <Item key="frmMain.btnGoto" value="Siirry ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Näytä esikatselukuva (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Näytä valittu tausta (Ctrl + B)" />
+      <Item key="frmMain.btnCheckedBackground" value="Näytä valittu tausta (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Koko näyttö (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Toista diaesitys (F11, ESC lopettaa)" />
       <Item key="frmMain.btnConvert" value="Muunna kuva (Ctrl + S)" />

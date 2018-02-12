@@ -23,6 +23,7 @@
       <Item key="frmMain.btnGoto" value="바로 이동 (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="섬네일 표시 (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="체크무늬 배경 표시 (Ctrl + B)" />
+      <Item key="frmMain.btnCheckedBackground" value="체크무늬 배경 표시 (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="전체화면 (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="슬라이드 쇼 (F11로 실행, ESC로 종료)" />
       <Item key="frmMain.btnConvert" value="이미지 변환 (Ctrl + S)" />

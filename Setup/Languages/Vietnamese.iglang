@@ -23,6 +23,7 @@
       <Item key="frmMain.btnGoto" value="Đi tới... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Hiển thị hình ảnh thu nhỏ (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Hiển thị nền nền sọc ca rô (Ctrl + B)" />
+      <Item key="frmMain.btnCheckedBackground" value="Hiển thị nền nền sọc ca rô (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Toàn màn hình (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Trình chiếu ảnh (F11, ESC để thoát)" />
       <Item key="frmMain.btnConvert" value="Lưu và chuyển đổi hình ảnh (Ctrl + S)" />

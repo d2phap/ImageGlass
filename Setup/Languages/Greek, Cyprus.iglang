@@ -23,6 +23,7 @@
       <Item key="frmMain.btnGoto" value="Πήγαινε σε... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Εμφάνιση μικρογραφιών (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Εμφάνιση διαφανούς φόντου (Ctrl + B)" />
+      <Item key="frmMain.btnCheckedBackground" value="Εμφάνιση διαφανούς φόντου (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Πλήρης οθόνη (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Προβολή διαφανειών (slideshow) (F11, ESC για έξοδο)" />
       <Item key="frmMain.btnConvert" value="Μετατροπή εικόνας (Ctrl + S)" />

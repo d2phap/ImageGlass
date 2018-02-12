@@ -104,10 +104,6 @@ namespace ImageGlass
             {
                 var fieldName = ((allBtns)i).ToString();
 
-                // btnCheckedBackground is an exception: the resource is 'btnCaro'
-                if (i == (int)allBtns.btnCaro)
-                    fieldName = "btnCheckedBackground";
-
                 var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
 
                 // TODO if info is null, something is out-of-whack
@@ -291,7 +287,7 @@ namespace ImageGlass
             btnRefresh,
             btnGoto,
             btnThumb,
-            btnCaro, // 15
+            btnCheckedBackground, // 15
             btnFullScreen,
             btnSlideShow,
             btnConvert,
