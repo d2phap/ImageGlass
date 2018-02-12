@@ -88,11 +88,14 @@ namespace ImageGlass
         #region Initialize
         private void BuildImageList()
         {
+            // Fetch all the toolbar images via reflection from the ToolStripButton
+            // instances in the frmMain instance. This is why the enum name MUST
+            // match the frmMain field name!
+
             if (_images != null)
                 return;
             _images = new ImageList();
             _images.ImageSize = new Size(20, 20); // TODO empirically determined
-
 
             Type mainType = typeof(frmMain);
             for (int i=0; i < (int)allBtns.MAX; i++)
@@ -100,9 +103,7 @@ namespace ImageGlass
                 var fieldName = ((allBtns)i).ToString();
 
                 var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-
-                // TODO if info is null, something is out-of-whack
-
+                // TODO if info is null, something is out-of-whack; how to recover?
                 ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
 
                 _images.Images.Add(val.Image);
@@ -111,11 +112,15 @@ namespace ImageGlass
 
         private void InitUsedList()
         {
+            // Build the list of "currently used" toolbar buttons
+
             usedButtons.View = View.SmallIcon;
             usedButtons.SmallImageList = _images;
             usedButtons.FullRowSelect = true;
             usedButtons.MultiSelect = true;
             usedButtons.Sorting = SortOrder.None;
+
+            usedButtons.Items.Clear();
 
             string currentSet = GlobalSetting.ToolbarButtons;
             var enumList = TranslateFromConfig(currentSet);
@@ -123,37 +128,57 @@ namespace ImageGlass
             _masterUsedList = new List<ListViewItem>(enumList.Count);
             for (int i = 0; i < enumList.Count; i++)
             {
-                ListViewItem lvi = new ListViewItem();
+                ListViewItem lvi;
 
                 if (enumList[i] == allBtns.Separator)
                 {
-                    lvi.Text = _separatorText;
-                    lvi.ToolTipText = _separatorText;
-                    lvi.Tag = allBtns.Separator;
+                    lvi = BuildSeparatorItem();
                 }
                 else
                 {
-                    lvi.ImageIndex = (int)enumList[i];
-                    var btnEnum = enumList[i];
-
-// TODO do NOT fetch resource: pull from frmMain field via reflection!
-
-                    // Here we fetch the localized string by the *name* of the enum
-                    string name = string.Format("frmMain.{0}", btnEnum);
-                    lvi.Text = GlobalSetting.LangPack.Items[name];
-                    lvi.ToolTipText = GlobalSetting.LangPack.Items[name];
-                    lvi.Tag = btnEnum;
+                    lvi = BuildItem(enumList[i]);
                 }
 
                 _masterUsedList.Add(lvi);
             }
 
             usedButtons.Items.AddRange(_masterUsedList.ToArray());
+        }
 
+        private ListViewItem BuildItem(allBtns who)
+        {
+            ListViewItem lvi = new ListViewItem();
+            lvi.ImageIndex = (int)who;
+            lvi.Tag = who;
+
+            // Fetch the toolbar string via reflection from the ToolStripButton
+            // instance in the frmMain instance. This is why the enum name MUST
+            // match the frmMain field name!
+
+            var fieldName = who.ToString();
+            Type mainType = typeof(frmMain);
+
+            var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+            // TODO if info is null, something is out-of-whack; how to recover?
+            ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+
+            lvi.Text = lvi.ToolTipText = val.ToolTipText;
+            return lvi;
+        }
+
+        private ListViewItem BuildSeparatorItem()
+        {
+            var lvi = new ListViewItem();
+            lvi.Text = _separatorText;
+            lvi.ToolTipText = _separatorText;
+            lvi.Tag = allBtns.Separator;
+            return lvi;
         }
 
         private void InitAvailList()
         {
+            // Build the list of "not currently used" toolbar buttons
+
             availButtons.View = View.List;
             availButtons.SmallImageList = _images;
             availButtons.FullRowSelect = true;
@@ -162,14 +187,19 @@ namespace ImageGlass
 
             availButtons.Items.Clear();
 
-            // TODO build by adding each button NOT in the 'used' list
+            // Build by adding each button NOT in the 'used' list
+            string currentSet = GlobalSetting.ToolbarButtons;
+            var enumList = TranslateFromConfig(currentSet);
+            for (int i=0; i < (int)allBtns.MAX; i++)
+            {
+                if (!enumList.Contains((allBtns)i))
+                {
+                    availButtons.Items.Add(BuildItem((allBtns)i));
+                }
+            }
 
             // separator is always available
-            ListViewItem lvi = new ListViewItem();
-            lvi.Text = _separatorText;
-            lvi.ToolTipText = _separatorText;
-            lvi.Tag = allBtns.Separator;
-            availButtons.Items.Add(lvi);
+            availButtons.Items.Add(BuildSeparatorItem());
         }
 
         private void UpdateButtonState()
