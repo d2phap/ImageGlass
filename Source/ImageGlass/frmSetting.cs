@@ -152,17 +152,16 @@ namespace ImageGlass
                 WindowState = FormWindowState.Maximized;
             }
 
+            InitLanguagePack(); // Needs to be done before setting up the initial tab
+
             //Get the last view of tab --------------------------------------------------
             tab1.SelectedIndex = GlobalSetting.SettingsTabLastView;
-            tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
+            // KBR prevent loading tab config twice tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
 
             //Load configs
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
-
-
-            InitLanguagePack();
         }
 
         private void frmSetting_SizeChanged(object sender, EventArgs e)
