@@ -18,18 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 This file created by Kevin Routley, aka fire-eggs.
 */
+using ImageGlass.Services.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
-using ImageGlass.Services.Configuration;
-using ImageGlass.Library;
-using System.Linq;
-using ImageGlass.Theme;
-using System.Text;
 using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
@@ -141,6 +136,8 @@ namespace ImageGlass
                     lvi.ImageIndex = (int)enumList[i];
                     var btnEnum = enumList[i];
 
+// TODO do NOT fetch resource: pull from frmMain field via reflection!
+
                     // Here we fetch the localized string by the *name* of the enum
                     string name = string.Format("frmMain.{0}", btnEnum);
                     lvi.Text = GlobalSetting.LangPack.Items[name];
@@ -162,6 +159,8 @@ namespace ImageGlass
             availButtons.FullRowSelect = true;
             availButtons.MultiSelect = true;
             availButtons.Sorting = SortOrder.None;
+
+            availButtons.Items.Clear();
 
             // TODO build by adding each button NOT in the 'used' list
 
@@ -195,7 +194,7 @@ namespace ImageGlass
             usedButtons.BeginUpdate();
             usedButtons.SelectedIndices.Clear();
             usedButtons.Items.Clear();
-            //usedButtons.Items.AddRange(_masterUsedList.ToArray());
+            usedButtons.Items.AddRange(_masterUsedList.ToArray());
             if (toSelect >= 0)
                 usedButtons.Items[toSelect].Selected = true;
             usedButtons.EndUpdate();
@@ -248,30 +247,88 @@ namespace ImageGlass
 
         private void btnMoveRight_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            // 'Move' the selected entry in the LEFT list to the bottom of the RIGHT list
+            // An exception is 'separator' which always remains available in the left list.
+
+            for (int i = 0; i < availButtons.SelectedItems.Count; i++)
+            {
+                var lvi = availButtons.SelectedItems[i];
+                _masterUsedList.Add(lvi.Clone() as ListViewItem);
+            }
+
+            for (int i = availButtons.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                var lvi = availButtons.SelectedItems[i];
+                if ((allBtns)lvi.Tag != allBtns.Separator)
+                    availButtons.Items.Remove(lvi);
+            }
+            availButtons.SelectedIndices.Clear();
+            RebuildUsed(_masterUsedList.Count - 1);
+            usedButtons.EnsureVisible(_masterUsedList.Count - 1);
         }
 
         private void btnMoveLeft_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            // 'Move' the selected entry in the RIGHT list to the bottom of the LEFT list
+            // An exception is 'separator' which always remains available in the left list.
+
+            for (int i = 0; i < usedButtons.SelectedItems.Count; i++)
+            {
+                var lvi = usedButtons.SelectedItems[i];
+                if ((allBtns)lvi.Tag != allBtns.Separator)
+                    availButtons.Items.Add(lvi.Clone() as ListViewItem);
+
+                _masterUsedList.Remove(lvi);
+            }
+            RebuildUsed(-1);
         }
 
         private void btnMoveDown_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            MoveUsedEntry(+1);
         }
 
         private void btnMoveUp_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            MoveUsedEntry(-1);
         }
+
+        private void MoveUsedEntry(int delta)
+        {
+            // Move an item in the 'used' list
+
+            var currentIndex = usedButtons.SelectedItems[0].Index;
+
+            // do not wrap around
+            if (delta < 0)
+            {
+                if (currentIndex <= 0)
+                    return;
+            }
+            else
+            {
+                if (currentIndex >= _masterUsedList.Count - 1)
+                    return; 
+            }
+
+            var item = usedButtons.Items[currentIndex];
+
+            _masterUsedList.RemoveAt(currentIndex);
+            _masterUsedList.Insert(currentIndex + delta, item);
+            RebuildUsed(currentIndex+delta);
+
+            // Make sure the new position, plus some context, is visible after rebuild
+            usedButtons.EnsureVisible(Math.Min(currentIndex + 2, _masterUsedList.Count - 1));
+        }
+
         #endregion
 
         enum allBtns
         {
             Separator = -1,
             // NOTE: the names here MUST match the ToolTipText name in the LangPack,
-            // and ideally the field name in frmMain as well.
+            // and the field name in frmMain as well. If the two don't match, code
+            // needs to translate between.
             btnBack = 0,
             btnNext,
             btnRotateLeft,
