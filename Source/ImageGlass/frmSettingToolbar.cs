@@ -26,6 +26,20 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+/*
+Regarding the fixed width of the listviews: to get a nice icon+text view,
+I chose to use SmallIcon mode. Alas, to get a nice single-column display,
+it is required to constrain the width of the listview so that it is 
+narrower than most? many? of the icon+text width. Thus, the listviews cannot
+be docked-to-fill and cannot resize wider when the form resizes.
+
+Changing the Alignment or AutoArrange properties will likely mess this up as well.
+*/
+
+/*
+How to add a new toolbar button:
+*/
+
 namespace ImageGlass
 {
     public partial class frmSetting : Form
@@ -47,6 +61,7 @@ namespace ImageGlass
             lblToolbar.Text = lang["frmSetting.lblToolbar"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
             lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
+            lblRestartForChange.Text = lang["frmSetting.lblRestartForChange"];
 
             tip1.SetToolTip(lblToolbar, lang["frmSetting.lblToolbarTT"]);
             tip1.SetToolTip(btnMoveUp, lang["frmSetting.btnMoveUpTT"]);
@@ -116,9 +131,7 @@ namespace ImageGlass
 
             usedButtons.View = View.SmallIcon;
             usedButtons.SmallImageList = _images;
-            usedButtons.FullRowSelect = true;
-            usedButtons.MultiSelect = true;
-            usedButtons.Sorting = SortOrder.None;
+            usedButtons.Width = 200;  // See comment at top of file
 
             usedButtons.Items.Clear();
 
@@ -179,11 +192,12 @@ namespace ImageGlass
         {
             // Build the list of "not currently used" toolbar buttons
 
-            availButtons.View = View.List;
+            availButtons.View = View.SmallIcon;
             availButtons.SmallImageList = _images;
-            availButtons.FullRowSelect = true;
-            availButtons.MultiSelect = true;
-            availButtons.Sorting = SortOrder.None;
+            //availButtons.FullRowSelect = true;
+            //availButtons.MultiSelect = true;
+            //availButtons.Sorting = SortOrder.None;
+            availButtons.Width = 200; // See comment at top of file
 
             availButtons.Items.Clear();
 
@@ -227,6 +241,7 @@ namespace ImageGlass
             usedButtons.Items.AddRange(_masterUsedList.ToArray());
             if (toSelect >= 0)
                 usedButtons.Items[toSelect].Selected = true;
+
             usedButtons.EndUpdate();
         }
 
