@@ -167,12 +167,6 @@
     <Compile Include="frmEditEditingAssocisation.Designer.cs">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCustToolbar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCustToolbar.Designer.cs">
-      <DependentUpon>frmCustToolbar.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmExtension.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,9 +213,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditEditingAssocisation.resx">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCustToolbar.resx">
-      <DependentUpon>frmCustToolbar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExtension.resx">
       <DependentUpon>frmExtension.cs</DependentUpon>

@@ -117,11 +117,16 @@ namespace ImageGlass
             {
                 var fieldName = ((allBtns)i).ToString();
 
-                var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                // TODO if info is null, something is out-of-whack; how to recover?
-                ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
-
-                _images.Images.Add(val.Image);
+                try
+                {
+                    var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+                    ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+                    _images.Images.Add(val.Image);
+                }
+                catch (Exception)
+                {
+                    // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                }
             }
         }
 
@@ -171,11 +176,19 @@ namespace ImageGlass
             var fieldName = who.ToString();
             Type mainType = typeof(frmMain);
 
-            var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-            // TODO if info is null, something is out-of-whack; how to recover?
-            ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+            try
+            {
+                var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+                // TODO if info is null, something is out-of-whack; how to recover?
+                ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+                lvi.Text = lvi.ToolTipText = val.ToolTipText;
+            }
+            catch (Exception)
+            {
+                // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                return null;
+            }
 
-            lvi.Text = lvi.ToolTipText = val.ToolTipText;
             return lvi;
         }
 
@@ -194,9 +207,6 @@ namespace ImageGlass
 
             availButtons.View = View.SmallIcon;
             availButtons.SmallImageList = _images;
-            //availButtons.FullRowSelect = true;
-            //availButtons.MultiSelect = true;
-            //availButtons.Sorting = SortOrder.None;
             availButtons.Width = 200; // See comment at top of file
 
             availButtons.Items.Clear();
@@ -368,12 +378,14 @@ namespace ImageGlass
 
         #endregion
 
+        // All the supported toolbar buttons. NOTE: the names here MUST match the field 
+        // name in frmMain! Reflection is used to fetch the image and string from the
+        // frmMain field.
+        //
+        // The integer value of the enum is used for storing the config info.
         enum allBtns
         {
             Separator = -1,
-            // NOTE: the names here MUST match the ToolTipText name in the LangPack,
-            // and the field name in frmMain as well. If the two don't match, code
-            // needs to translate between.
             btnBack = 0,
             btnNext,
             btnRotateLeft,
@@ -400,6 +412,117 @@ namespace ImageGlass
             //btnEditImage,
             MAX // DO NOT ADD ANYTHING AFTER THIS
         }
+
+        public static List<string> LoadToolbarConfig()
+        {
+            // This method is used by the main form to actually initialize the toolbar.
+            // The toolbar buttons setting is translated to a list of field NAMES from
+            // the frmMain class. The need of a separator is indicated by the magic string
+            // "_sep_".
+
+            string savedVal = GlobalSetting.GetConfig("ToolbarButtons", _defaultToolbarConfig);
+            GlobalSetting.ToolbarButtons = savedVal;
+
+            var xlated = TranslateFromConfig(savedVal);
+
+            List<string> frmMainFieldsByName = new List<string>();
+            foreach (var btnEnum in xlated)
+            {
+                switch (btnEnum)
+                {
+                    case allBtns.Separator:
+                        frmMainFieldsByName.Add("_sep_");
+                        break;
+                    default:
+                        // enum name *must* match the field name in frmMain AND the resource name, e.g. "frmMain.btnBack"
+                        frmMainFieldsByName.Add(btnEnum.ToString());
+                        break;
+                }
+            }
+            return frmMainFieldsByName;
+        }
+
+        public static void ConfigToolbar(ToolStrip toolMain, frmMain mainWin)
+        {
+            toolMain.Items.Clear();
+
+            List<string> tbBtns = LoadToolbarConfig();
+            Type mainType = typeof(frmMain);
+
+            foreach (var tbBtn in tbBtns)
+            {
+                if (tbBtn == "_sep_")
+                {
+                    ToolStripSeparator sep = new ToolStripSeparator();
+                    toolMain.Items.Add(sep);
+                }
+                else
+                {
+                    try
+                    {
+                        var info = mainType.GetField(tbBtn, BindingFlags.Instance | BindingFlags.NonPublic);
+                        var val = info.GetValue(mainWin);
+                        toolMain.Items.Add(val as ToolStripItem);
+                    }
+                    catch (Exception)
+                    {
+                        // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                    }
+                }
+            }
+        }
+
+#if false
+
+        // The following code is disabled as it was my attempt to provide toolbar buttons for
+        // rename, recycle, and edit. The menu images for those menu entries have been removed,
+        // so this code cannot be used until SVG images are provided for those functions.
+
+        private void MakeMenuButtons()
+        {
+            // These buttons were not part of the initial toolbar button set. Set up and initialize
+            // as if they were created via the designer.
+
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(frmMain));
+
+            string txt = GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"];
+            btnRecycleBin = new ToolStripButton();
+            MakeMenuButton(btnRecycleBin, "btnRecycleBin", txt);
+            btnRecycleBin.Image = ((Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
+            btnRecycleBin.Click += mnuMainMoveToRecycleBin_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainRename"];
+            btnRename = new ToolStripButton();
+            MakeMenuButton(btnRename, "btnRename", txt);
+            btnRename.Image = ((Image)(resources.GetObject("mnuMainRename.Image")));
+            btnRename.Click += mnuMainRename_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
+            btnEditImage = new ToolStripButton();
+            MakeMenuButton(btnEditImage, "btnEditImage", txt);
+            btnEditImage.Image = ((Image)(resources.GetObject("mnuMainEditImage.Image")));
+            btnEditImage.Click += mnuMainEditImage_Click;
+        }
+
+        // NOTE: the field names here _must_ match the names in frmCustToolbar.cs/enum allBtns
+        private ToolStripButton btnRecycleBin;
+        private ToolStripButton btnRename;
+        private ToolStripButton btnEditImage;
+
+        private void MakeMenuButton(ToolStripButton btn, string name, string ttText)
+        {
+            btn.AutoSize = false;
+            btn.BackColor = Color.Transparent;
+            btn.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btn.ImageScaling = ToolStripItemImageScaling.None;
+            btn.ImageTransparentColor = Color.Magenta;
+            btn.Margin = new Padding(3, 0, 0, 0);
+            btn.Name = name;
+            btn.Size = new Size(28, 28);
+            btn.ToolTipText = ttText;
+        }
+
+#endif
 
     }
 }
