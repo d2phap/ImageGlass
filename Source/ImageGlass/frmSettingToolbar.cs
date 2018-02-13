@@ -36,9 +36,24 @@ be docked-to-fill and cannot resize wider when the form resizes.
 Changing the Alignment or AutoArrange properties will likely mess this up as well.
 */
 
+// TODO investigate using "List" mode for the ListViews, might solve the fixed width limitation.
+// TODO consider cleaning up the multiple copies of the reflection code
+
 /*
 How to add a new toolbar button:
+1. A SVG image in the theme is necessary.
+2. A tooltip string in the language set is necessary.
+3. Add a ToolStripButton field to frmMain. Note the field name (e.g. "btnRename").
+   The button does NOT need to be added to the toolstrip, or created by the designer.
+   It can be created and initialized in code, either by, or before, ConfigToolbar
+   is invoked. The image, tooltip and Click event must all be specified!
+4. Add a new enum to allBtns below, with the same name as the field name assigned in
+   the step above (e.g. "btnRename"). The new enum goes BEFORE the MAX entry.
+
+The new toolbar button will now be available, the user would use the toolbar config
+tab to add it to their toolbar settings.
 */
+
 
 namespace ImageGlass
 {
@@ -184,7 +199,6 @@ namespace ImageGlass
             try
             {
                 var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                // TODO if info is null, something is out-of-whack; how to recover?
                 ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
                 lvi.Text = lvi.ToolTipText = val.ToolTipText;
             }
@@ -412,9 +426,6 @@ namespace ImageGlass
             btnConvert,
             btnPrintImage,
             // NOTE: add new items here, must match order in _images.Images list
-            //btnRename, // 20
-            //btnRecycleBin,
-            //btnEditImage,
             MAX // DO NOT ADD ANYTHING AFTER THIS
         }
 
@@ -479,9 +490,9 @@ namespace ImageGlass
 
 #if false
 
-        // The following code is disabled as it was my attempt to provide toolbar buttons for
+        // The following code is disabled as it was an early attempt to provide toolbar buttons for
         // rename, recycle, and edit. The menu images for those menu entries have been removed,
-        // so this code cannot be used until SVG images are provided for those functions.
+        // so this code cannot be used until SVG images are provided in the theme for those functions.
 
         private void MakeMenuButtons()
         {
