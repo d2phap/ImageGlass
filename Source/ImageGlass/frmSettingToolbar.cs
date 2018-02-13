@@ -80,6 +80,11 @@ namespace ImageGlass
 
         private void ApplyToolbarChanges()
         {
+            // User hasn't actually visited the toolbar tab, don't do anything!
+            // (Discovered by clicking 'Save' w/o having visited the toolbar tab...
+            if (usedButtons.Items.Count == 0 && availButtons.Items.Count == 0)
+                return;
+
             // Save the current set of 'used' buttons to the comma-separated list of integers.
 
             StringBuilder sb = new StringBuilder();
