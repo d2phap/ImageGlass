@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Ir para... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Mostrar miniatura (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Mostrar fundo em xadrez (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Mostrar fundo em xadrez (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Ecrã completo (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Iniciar apresentação (F11, ESC para sair)" />
       <Item key="frmMain.btnConvert" value="Converter imagem (Ctrl + S)" />

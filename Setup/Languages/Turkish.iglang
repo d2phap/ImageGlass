@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Git... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Küçük resim (Ctrl + T) göster" />
       <Item key="frmMain.btnCaro" value="Haritayı kontrol arka plan (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Haritayı kontrol arka plan (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Tam ekran (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Slayt gösterisi (çıkmak için F11, ESC) oynamak" />
       <Item key="frmMain.btnConvert" value="Dönüştürmek resim (Ctrl + S)" />

@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Ugrás... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Miniatűr mutatása (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Kockás háttér mutatása (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Kockás háttér mutatása (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Teljes képernyő (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Diavetítés lejátszása (F11, ESC-kilép)" />
       <Item key="frmMain.btnConvert" value="Kép átalakítása (Ctrl + S)" />

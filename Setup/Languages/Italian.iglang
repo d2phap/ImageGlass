@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Vai a ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Vedi Miniatura (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Mostra Sfondo selezionato (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Mostra Sfondo selezionato (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Schermo intero (Alt + Invio)" />
       <Item key="frmMain.btnSlideShow" value="Avvia slideshow (F11, ESC per uscire)" />
       <Item key="frmMain.btnConvert" value="Converti immagine (Ctrl + S)" />

@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="前往... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="顯示縮圖 (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="顯示被勾選的背景 (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="顯示被勾選的背景 (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="全螢幕 (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="播放幻燈片 (F11，按 ESC 結束)" />
       <Item key="frmMain.btnConvert" value="轉換圖片 (Ctrl + S)" />

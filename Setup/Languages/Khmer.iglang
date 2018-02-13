@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="ចូលទៅកាន់ ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="បង្ហាញរូបភាពតូច (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="បង្ហាញផ្ទៃក្រោយដែលបានពិនិត្យរួច (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="បង្ហាញផ្ទៃក្រោយដែលបានពិនិត្យរួច (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="ពេញអេក្រង់ (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="ចាក់បង្ហាញជាស្លាយ (F11, ESC to exit)" />
       <Item key="frmMain.btnConvert" value="បម្លែងរូបភាព (Ctrl + S)" />

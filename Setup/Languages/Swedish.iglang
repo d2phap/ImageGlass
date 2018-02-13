@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Gå till ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Visa miniatyr (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Visa rutmönstrad bakgrund (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Visa rutmönstrad bakgrund (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Fullskärm (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Starta bildspel (F11, ESC för att avsluta)" />
       <Item key="frmMain.btnConvert" value="Konvertera bild (Ctrl + S)" />

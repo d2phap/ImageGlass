@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="？番目の画像を開く (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="サムネイルを表示 (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="チェック柄の背景を表示 (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="チェック柄の背景を表示 (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="フルスクリーン (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="スライドショーを開始 (F11で開始、ESCで終了)" />
       <Item key="frmMain.btnConvert" value="別形式で保存 (Ctrl + S)" />

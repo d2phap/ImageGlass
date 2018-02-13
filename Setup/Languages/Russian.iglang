@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Перейти к ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Показать эскизы изображений (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Показать фон (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Показать фон (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Во весь экран (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Слайд-шоу (F11, ESC выход)" />
       <Item key="frmMain.btnConvert" value="Конвертировать изображения (Ctrl + S)" />

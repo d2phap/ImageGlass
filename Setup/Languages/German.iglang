@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Gehe zu ... (Strg + G)" />
       <Item key="frmMain.btnThumb" value="Zeige Vorschaubilder (Strg + T)" />
       <Item key="frmMain.btnCaro" value="Zeige karierten Hintergrund (Strg + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Zeige karierten Hintergrund (Strg + B)" />
       <Item key="frmMain.btnFullScreen" value="Vollbild (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Diashow starten (F11, ESC zum Beenden)" />
       <Item key="frmMain.btnConvert" value="Bild konvertieren (Strg + S)" />

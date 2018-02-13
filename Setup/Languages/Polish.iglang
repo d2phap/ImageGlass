@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Przejdź do... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Pokaż miniaturki (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Pokaż zaznaczone tła (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Pokaż zaznaczone tła (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Pełny ekran (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Odtwarzanie pokazu slajdów (F11, ESC, aby zamknąć)" />
       <Item key="frmMain.btnConvert" value="Konwersja obrazu (Ctrl + S)" />

@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Иди на ... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Прикажи сличице (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Прикажи коцкасту позадину (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Прикажи коцкасту позадину (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Пун екран (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Пусти пројекцију слајдова (F11, ESC за крај)" />
       <Item key="frmMain.btnConvert" value="Конвертуј слику (Ctrl + S)" />

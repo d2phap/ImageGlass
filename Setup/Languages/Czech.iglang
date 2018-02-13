@@ -23,7 +23,6 @@
       <Item key="frmMain.btnGoto" value="Přejít na... (Ctrl + G)" />
       <Item key="frmMain.btnThumb" value="Zobrazit náhledy (Ctrl + T)" />
       <Item key="frmMain.btnCaro" value="Zobrazit šachovnici na pozadí (Ctrl + B)" />
-      <Item key="frmMain.btnCheckedBackground" value="Zobrazit šachovnici na pozadí (Ctrl + B)" />
       <Item key="frmMain.btnFullScreen" value="Celá obrazovka (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Spustit prezentaci (F11, ESC ukončit)" />
       <Item key="frmMain.btnConvert" value="Převést obrázek (Ctrl + S)" />

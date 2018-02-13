@@ -250,7 +250,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
-            Items.Add("frmMain.btnCheckedBackground", "Show checked background (Ctrl + B)");
+            Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)");
             Items.Add("frmMain.btnFullScreen", "Full screen (Alt + Enter)");
             Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
