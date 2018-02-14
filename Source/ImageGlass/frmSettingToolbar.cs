@@ -19,10 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 This file created by Kevin Routley, aka fire-eggs.
 */
 using ImageGlass.Services.Configuration;
+using ImageGlass.Theme;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -84,9 +86,13 @@ namespace ImageGlass
             tip1.SetToolTip(btnMoveLeft, lang["frmSetting.btnMoveLeftTT"]);
             tip1.SetToolTip(btnMoveRight, lang["frmSetting.btnMoveRightTT"]);
         }
-
+        
         private void LoadTabToolbar()
         {
+            Theme.RenderTheme th = new Theme.RenderTheme();
+            th.ApplyTheme(availButtons);
+            th.ApplyTheme(usedButtons);
+
             BuildImageList();
             InitUsedList();
             InitAvailList();
@@ -130,7 +136,10 @@ namespace ImageGlass
             if (_images != null)
                 return;
             _images = new ImageList();
-            _images.ImageSize = new Size(20, 20); // TODO empirically determined
+            _images.ColorDepth = ColorDepth.Depth32Bit; // max out image quality
+
+            var iconHeight = ThemeImage.GetCorrectIconHeight();
+            _images.ImageSize = new Size(iconHeight, iconHeight); // TODO empirically determined (can get from ImageGlass.Theme)
 
             Type mainType = typeof(frmMain);
             for (int i=0; i < (int)allBtns.MAX; i++)
@@ -154,9 +163,9 @@ namespace ImageGlass
         {
             // Build the list of "currently used" toolbar buttons
 
-            usedButtons.View = View.SmallIcon;
-            usedButtons.SmallImageList = _images;
-            usedButtons.Width = 200;  // See comment at top of file
+            usedButtons.View = View.Tile;
+            usedButtons.LargeImageList = _images;
+            //usedButtons.Width = 200;  // See comment at top of file
 
             usedButtons.Items.Clear();
 
@@ -183,11 +192,15 @@ namespace ImageGlass
             usedButtons.Items.AddRange(_masterUsedList.ToArray());
         }
 
+
+        
+
         private ListViewItem BuildItem(allBtns who)
         {
             ListViewItem lvi = new ListViewItem();
             lvi.ImageIndex = (int)who;
             lvi.Tag = who;
+            
 
             // Fetch the toolbar string via reflection from the ToolStripButton
             // instance in the frmMain instance. This is why the enum name MUST
@@ -224,9 +237,9 @@ namespace ImageGlass
         {
             // Build the list of "not currently used" toolbar buttons
 
-            availButtons.View = View.SmallIcon;
-            availButtons.SmallImageList = _images;
-            availButtons.Width = 200; // See comment at top of file
+            availButtons.View = View.Tile;
+            availButtons.LargeImageList = _images;
+            //availButtons.Width = 200; // See comment at top of file
 
             availButtons.Items.Clear();
 

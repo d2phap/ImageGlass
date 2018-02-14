@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Services.Configuration;
 using ImageMagick;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,20 @@ namespace ImageGlass.Theme
             {
                 Image = magicImg.ToBitmap();
             }
+        }
+
+
+        /// <summary>
+        /// Get the height of toolbar icon after applying DPI calculation
+        /// </summary>
+        /// <returns></returns>
+        public static int GetCorrectIconHeight()
+        {
+            //Get Scaling factor
+            double scaleFactor = DPIScaling.GetDPIScaleFactor();
+            int iconHeight = (int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
+
+            return iconHeight;
         }
 
     }

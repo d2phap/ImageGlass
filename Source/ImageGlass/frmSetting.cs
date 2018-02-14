@@ -164,10 +164,6 @@ namespace ImageGlass
             lnkRefresh_LinkClicked(null, null);
         }
 
-        private void frmSetting_SizeChanged(object sender, EventArgs e)
-        {
-            Refresh();
-        }
 
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -188,6 +184,7 @@ namespace ImageGlass
 
         }
 
+
         private void frmSetting_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
@@ -195,6 +192,35 @@ namespace ImageGlass
             {
                 Close();
             }
+        }
+
+
+        private void frmSetting_SizeChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+        
+
+        private void ButtonsListView_Resize(object sender, EventArgs e)
+        {
+            var lv = (ListView)sender;
+            UpdateButtonsListViewItemSize(lv);
+        }
+
+        /// <summary>
+        /// Make the list view item bigger, adapted to icon size
+        /// </summary>
+        /// <param name="lv"></param>
+        private void UpdateButtonsListViewItemSize(ListView lv)
+        {
+            var width = (int)(lv.Width * 0.85); // reserve right gap for multiple selection
+            var height = ThemeImage.GetCorrectIconHeight() * 2;
+
+            lv.TileSize = new Size(width, height);
+
+            // TODO: Issue:
+            // The Listview layout is broken when user shrinks the window
+            // then click Maximize button
         }
 
         /// <summary>
@@ -1118,5 +1144,6 @@ namespace ImageGlass
             GlobalSetting.IsForcedActive = true;
         }
 
+        
     }
 }
