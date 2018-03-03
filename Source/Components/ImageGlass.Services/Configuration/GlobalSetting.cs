@@ -37,7 +37,6 @@ namespace ImageGlass.Services.Configuration
     {
         // Private settings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
-        //private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;

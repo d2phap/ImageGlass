@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,13 +124,13 @@
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReportIssue = new System.Windows.Forms.ToolStripMenuItem();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -587,8 +587,9 @@
             this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 617);
+            this.mnuMain.Size = new System.Drawing.Size(409, 584);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1326,6 +1327,14 @@
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
             this.toolStripMenuItem21.Size = new System.Drawing.Size(405, 6);
             // 
+            // mnuMainCheckForUpdate
+            // 
+            this.mnuMainCheckForUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(227)))), ((int)(((byte)(181)))));
+            this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
+            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
+            this.mnuMainCheckForUpdate.Text = "A new version is available";
+            this.mnuMainCheckForUpdate.Click += new System.EventHandler(this.mnuMainCheckForUpdate_Click);
+            // 
             // mnuMainReportIssue
             // 
             this.mnuMainReportIssue.ForeColor = System.Drawing.Color.Black;
@@ -1400,7 +1409,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
@@ -1440,14 +1449,6 @@
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
-            // 
-            // mnuMainCheckForUpdate
-            // 
-            this.mnuMainCheckForUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(227)))), ((int)(((byte)(181)))));
-            this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
-            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
-            this.mnuMainCheckForUpdate.Text = "A new version is available";
-            this.mnuMainCheckForUpdate.Click += new System.EventHandler(this.mnuMainCheckForUpdate_Click);
             // 
             // frmMain
             // 

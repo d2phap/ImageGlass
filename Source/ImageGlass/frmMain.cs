@@ -1259,7 +1259,7 @@ namespace ImageGlass
             }
 
             // Update the modifiable portion of the toolbar based on user config setting.
-            frmSetting.ConfigToolbar(toolMain, this);
+            frmSetting.UpdateToolbarButtons(toolMain, this);
             toolMain.Items.Add(btnMenu);
             toolMain.Items.Add(lblInfo);
 
@@ -1607,6 +1607,8 @@ namespace ImageGlass
         }
 
         #endregion
+
+
 
         #region Form events
         protected override void WndProc(ref Message m)
@@ -2242,7 +2244,7 @@ namespace ImageGlass
 
 
 
-        #region Toolbar Button
+        #region Toolbar Buttons Events
         private void btnNext_Click(object sender, EventArgs e)
         {
             mnuMainViewNext_Click(null, e);

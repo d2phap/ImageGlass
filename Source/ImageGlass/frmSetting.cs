@@ -28,6 +28,7 @@ using ImageGlass.Library;
 using System.Linq;
 using ImageGlass.Theme;
 using System.Text;
+using System.Reflection;
 
 namespace ImageGlass
 {
@@ -42,10 +43,26 @@ namespace ImageGlass
             r.ApplyTheme(lvImageEditing);
         }
 
+        #region PROPERTIES
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
         private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
         private List<Language> dsLanguages = new List<Language>();
+
+        #region Toolbar
+        private string _separatorText; // Text used in lists to represent separator bar
+        private ImageList _lstToolbarImg;
+        private List<ListViewItem> _lstMasterUsed;
+
+        // The out-of-the-box toolbar button set from V4.5
+        private const string _defaultToolbarConfig = "0,1,s,2,3,s,4,5,6,7,8,9,10,s,11,12,13,14,s,15,16,17,18,19,20";
+
+        // instance of frmMain, for reflection
+        public frmMain MainInstance { get; internal set; }
+        #endregion
+
+        #endregion
+
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e)
@@ -124,6 +141,7 @@ namespace ImageGlass
         #endregion
 
 
+        #region FRMSETTING FORM EVENTS
         private void frmSetting_Load(object sender, EventArgs e)
         {
             //Remove tabs header
@@ -199,137 +217,135 @@ namespace ImageGlass
         {
             Refresh();
         }
+
+        #endregion
+
+
         
-
-        private void ButtonsListView_Resize(object sender, EventArgs e)
-        {
-            var lv = (ListView)sender;
-            UpdateButtonsListViewItemSize(lv);
-        }
-
-        /// <summary>
-        /// Make the list view item bigger, adapted to icon size
-        /// </summary>
-        /// <param name="lv"></param>
-        private void UpdateButtonsListViewItemSize(ListView lv)
-        {
-            var width = (int)(lv.Width * 0.85); // reserve right gap for multiple selection
-            var height = ThemeImage.GetCorrectIconHeight() * 2;
-
-            lv.TileSize = new Size(width, height);
-
-            // TODO: Issue:
-            // The Listview layout is broken when user shrinks the window
-            // then click Maximize button
-        }
 
         /// <summary>
         /// Load language pack
         /// </summary>
         private void InitLanguagePack()
         {
-            RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
-            Text = GlobalSetting.LangPack.Items["frmSetting._Text"];
+            var lang = GlobalSetting.LangPack.Items;
 
-            lblGeneral.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral"];
-            lblImage.Text = GlobalSetting.LangPack.Items["frmSetting.lblImage"];
-            lblFileAssociations.Text = GlobalSetting.LangPack.Items["frmSetting.lblFileAssociations"];
-            lblLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguage"];
-            btnSave.Text = GlobalSetting.LangPack.Items["frmSetting.btnSave"];
-            btnCancel.Text = GlobalSetting.LangPack.Items["frmSetting.btnCancel"];
-            btnApply.Text = GlobalSetting.LangPack.Items["frmSetting.btnApply"];
+            RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+            Text = lang["frmSetting._Text"];
+
+            lblGeneral.Text = lang["frmSetting.lblGeneral"];
+            lblImage.Text = lang["frmSetting.lblImage"];
+            lblFileAssociations.Text = lang["frmSetting.lblFileAssociations"];
+            lblLanguage.Text = lang["frmSetting.lblLanguage"];
+            btnSave.Text = lang["frmSetting.btnSave"];
+            btnCancel.Text = lang["frmSetting.btnCancel"];
+            btnApply.Text = lang["frmSetting.btnApply"];
 
             //General tab
-            lblHeadStartup.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadStartup"];//
-            chkWelcomePicture.Text = GlobalSetting.LangPack.Items["frmSetting.chkWelcomePicture"];
-            chkShowToolBar.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowToolBar"];
-            chkAllowMultiInstances.Text = GlobalSetting.LangPack.Items["frmSetting.chkAllowMultiInstances"];
+            lblHeadStartup.Text = lang["frmSetting.lblHeadStartup"];//
+            chkWelcomePicture.Text = lang["frmSetting.chkWelcomePicture"];
+            chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
+            chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
-            lblHeadPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadPortableMode"];//
+            lblHeadPortableMode.Text = lang["frmSetting.lblHeadPortableMode"];//
             if (GlobalSetting.IsPortableMode)
             {
-                chkPortableMode.Text = GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Enabled"];
+                chkPortableMode.Text = lang["frmSetting.chkPortableMode._Enabled"];
             }
             else
             {
-                chkPortableMode.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
+                chkPortableMode.Text = string.Format(lang["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
                 chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
             }
             
 
-            lblHeadOthers.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadOthers"];//
-            chkAutoUpdate.Text = GlobalSetting.LangPack.Items["frmSetting.chkAutoUpdate"];
-            chkESCToQuit.Text = GlobalSetting.LangPack.Items["frmSetting.chkESCToQuit"];
-            chkConfirmationDelete.Text = GlobalSetting.LangPack.Items["frmSetting.chkConfirmationDelete"];
-            chkShowScrollbar.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowScrollbar"];
-            lblBackGroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lblBackGroundColor"];
-            lnkResetBackgroundColor.Text = GlobalSetting.LangPack.Items["frmSetting.lnkResetBackgroundColor"];
+            lblHeadOthers.Text = lang["frmSetting.lblHeadOthers"];//
+            chkAutoUpdate.Text = lang["frmSetting.chkAutoUpdate"];
+            chkESCToQuit.Text = lang["frmSetting.chkESCToQuit"];
+            chkConfirmationDelete.Text = lang["frmSetting.chkConfirmationDelete"];
+            chkShowScrollbar.Text = lang["frmSetting.chkShowScrollbar"];
+            lblBackGroundColor.Text = lang["frmSetting.lblBackGroundColor"];
+            lnkResetBackgroundColor.Text = lang["frmSetting.lnkResetBackgroundColor"];
 
             //Image tab
-            lblHeadImageLoading.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageLoading"];//
-            chkFindChildFolder.Text = GlobalSetting.LangPack.Items["frmSetting.chkFindChildFolder"];
-            chkShowHiddenImages.Text = GlobalSetting.LangPack.Items["frmSetting.chkShowHiddenImages"];
-            chkLoopViewer.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopViewer"];
-            chkImageBoosterBack.Text = GlobalSetting.LangPack.Items["frmSetting.chkImageBoosterBack"];
-            lblImageLoadingOrder.Text = GlobalSetting.LangPack.Items["frmSetting.lblImageLoadingOrder"];
+            lblHeadImageLoading.Text = lang["frmSetting.lblHeadImageLoading"];//
+            chkFindChildFolder.Text = lang["frmSetting.chkFindChildFolder"];
+            chkShowHiddenImages.Text = lang["frmSetting.chkShowHiddenImages"];
+            chkLoopViewer.Text = lang["frmSetting.chkLoopViewer"];
+            chkImageBoosterBack.Text = lang["frmSetting.chkImageBoosterBack"];
+            lblImageLoadingOrder.Text = lang["frmSetting.lblImageLoadingOrder"];
 
-            lblHeadMouseWheelActions.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadMouseWheelActions"];
-            lblMouseWheel.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheel"];
-            lblMouseWheelAlt.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelAlt"];
-            lblMouseWheelCtrl.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelCtrl"];
-            lblMouseWheelShift.Text = GlobalSetting.LangPack.Items["frmSetting.lblMouseWheelShift"];
+            lblHeadMouseWheelActions.Text = lang["frmSetting.lblHeadMouseWheelActions"];
+            lblMouseWheel.Text = lang["frmSetting.lblMouseWheel"];
+            lblMouseWheelAlt.Text = lang["frmSetting.lblMouseWheelAlt"];
+            lblMouseWheelCtrl.Text = lang["frmSetting.lblMouseWheelCtrl"];
+            lblMouseWheelShift.Text = lang["frmSetting.lblMouseWheelShift"];
 
-            lblHeadZooming.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadZooming"];//
-            //chkMouseNavigation.Text = GlobalSetting.LangPack.Items["frmSetting.chkMouseNavigation"];
-            lblGeneral_ZoomOptimization.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ZoomOptimization"];
+            lblHeadZooming.Text = lang["frmSetting.lblHeadZooming"];//
+            //chkMouseNavigation.Text = lang["frmSetting.chkMouseNavigation"];
+            lblGeneral_ZoomOptimization.Text = lang["frmSetting.lblGeneral_ZoomOptimization"];
 
-            lblHeadThumbnailBar.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadThumbnailBar"];//
-            chkThumbnailVertical.Text = GlobalSetting.LangPack.Items["frmSetting.chkThumbnailVertical"];
-            lblGeneral_MaxFileSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_MaxFileSize"];
-            lblGeneral_ThumbnailSize.Text = GlobalSetting.LangPack.Items["frmSetting.lblGeneral_ThumbnailSize"];
+            lblHeadThumbnailBar.Text = lang["frmSetting.lblHeadThumbnailBar"];//
+            chkThumbnailVertical.Text = lang["frmSetting.chkThumbnailVertical"];
+            lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
+            lblGeneral_ThumbnailSize.Text = lang["frmSetting.lblGeneral_ThumbnailSize"];
 
-            lblHeadSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadSlideshow"];//
-            chkLoopSlideshow.Text = GlobalSetting.LangPack.Items["frmSetting.chkLoopSlideshow"];
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblSlideshowInterval"], barInterval.Value);
+            lblHeadSlideshow.Text = lang["frmSetting.lblHeadSlideshow"];//
+            chkLoopSlideshow.Text = lang["frmSetting.chkLoopSlideshow"];
+            lblSlideshowInterval.Text = string.Format(lang["frmSetting.lblSlideshowInterval"], barInterval.Value);
 
-            lblHeadImageEditing.Text = GlobalSetting.LangPack.Items["frmSetting.lblHeadImageEditing"];//
-            chkSaveOnRotate.Text = GlobalSetting.LangPack.Items["frmSetting.chkSaveOnRotate"];
-            lblSelectAppForEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lblSelectAppForEdit"];
-            btnEditEditExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditExt"];
-            btnEditResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditResetExt"];
-            btnEditEditAllExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnEditEditAllExt"];
-            clnFileExtension.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnFileExtension"];
-            clnAppName.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppName"];
-            clnAppPath.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppPath"];
-            clnAppArguments.Text = GlobalSetting.LangPack.Items["frmSetting.lvImageEditing.clnAppArguments"];
+            lblHeadImageEditing.Text = lang["frmSetting.lblHeadImageEditing"];//
+            chkSaveOnRotate.Text = lang["frmSetting.chkSaveOnRotate"];
+            lblSelectAppForEdit.Text = lang["frmSetting.lblSelectAppForEdit"];
+            btnEditEditExt.Text = lang["frmSetting.btnEditEditExt"];
+            btnEditResetExt.Text = lang["frmSetting.btnEditResetExt"];
+            btnEditEditAllExt.Text = lang["frmSetting.btnEditEditAllExt"];
+            clnFileExtension.Text = lang["frmSetting.lvImageEditing.clnFileExtension"];
+            clnAppName.Text = lang["frmSetting.lvImageEditing.clnAppName"];
+            clnAppPath.Text = lang["frmSetting.lvImageEditing.clnAppPath"];
+            clnAppArguments.Text = lang["frmSetting.lvImageEditing.clnAppArguments"];
 
 
 
             //File Associations tab
             var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            lblExtensionsGroupDescription.Text = GlobalSetting.LangPack.Items["frmSetting.lblExtensionsGroupDescription"];
-            lblSupportedExtension.Text = String.Format(GlobalSetting.LangPack.Items["frmSetting.lblSupportedExtension"], extList.Length);
-            lnkOpenFileAssoc.Text = GlobalSetting.LangPack.Items["frmSetting.lnkOpenFileAssoc"];
-            btnAddNewExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnAddNewExt"];
-            btnDeleteExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnDeleteExt"];
-            btnRegisterExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnRegisterExt"];
-            btnResetExt.Text = GlobalSetting.LangPack.Items["frmSetting.btnResetExt"];
-            lvExtension.Groups[(int)ImageFormatGroup.Default].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"];
-            lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"];
+            lblExtensionsGroupDescription.Text = lang["frmSetting.lblExtensionsGroupDescription"];
+            lblSupportedExtension.Text = String.Format(lang["frmSetting.lblSupportedExtension"], extList.Length);
+            lnkOpenFileAssoc.Text = lang["frmSetting.lnkOpenFileAssoc"];
+            btnAddNewExt.Text = lang["frmSetting.btnAddNewExt"];
+            btnDeleteExt.Text = lang["frmSetting.btnDeleteExt"];
+            btnRegisterExt.Text = lang["frmSetting.btnRegisterExt"];
+            btnResetExt.Text = lang["frmSetting.btnResetExt"];
+            lvExtension.Groups[(int)ImageFormatGroup.Default].Header = lang["_.ImageFormatGroup.Default"];
+            lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = lang["_.ImageFormatGroup.Optional"];
 
 
             //Language tab
-            lblLanguageText.Text = GlobalSetting.LangPack.Items["frmSetting.lblLanguageText"];
-            lnkRefresh.Text = GlobalSetting.LangPack.Items["frmSetting.lnkRefresh"];
-            lblLanguageWarning.Text = string.Format(GlobalSetting.LangPack.Items["frmSetting.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
-            lnkInstallLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkInstallLanguage"];
-            lnkCreateNew.Text = GlobalSetting.LangPack.Items["frmSetting.lnkCreateNew"];
-            lnkEdit.Text = GlobalSetting.LangPack.Items["frmSetting.lnkEdit"];
-            lnkGetMoreLanguage.Text = GlobalSetting.LangPack.Items["frmSetting.lnkGetMoreLanguage"];
+            lblLanguageText.Text = lang["frmSetting.lblLanguageText"];
+            lnkRefresh.Text = lang["frmSetting.lnkRefresh"];
+            lblLanguageWarning.Text = string.Format(lang["frmSetting.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
+            lnkInstallLanguage.Text = lang["frmSetting.lnkInstallLanguage"];
+            lnkCreateNew.Text = lang["frmSetting.lnkCreateNew"];
+            lnkEdit.Text = lang["frmSetting.lnkEdit"];
+            lnkGetMoreLanguage.Text = lang["frmSetting.lnkGetMoreLanguage"];
 
 
-            InitLanguagePackToolbar();
+            //Toolbar tab
+            _separatorText = lang["frmSetting.txtSeparator"];
+            lblToolbar.Text = lang["frmSetting.lblToolbar"];
+            lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
+            lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
+            lblRestartForChange.Text = lang["frmSetting.lblRestartForChange"];
+
+            tip1.SetToolTip(lblToolbar, lang["frmSetting.lblToolbarTT"]);
+            tip1.SetToolTip(btnMoveUp, lang["frmSetting.btnMoveUpTT"]);
+            tip1.SetToolTip(btnMoveDown, lang["frmSetting.btnMoveDownTT"]);
+            tip1.SetToolTip(btnMoveLeft, lang["frmSetting.btnMoveLeftTT"]);
+            tip1.SetToolTip(btnMoveRight, lang["frmSetting.btnMoveRightTT"]);
+
+
+
             extList = null;
         }
 
@@ -1001,6 +1017,583 @@ namespace ImageGlass
         #endregion
 
 
+        #region TAB TOOLBAR
+        /*
+        How to add a new toolbar button:
+        1. A SVG image in the theme is necessary.
+        2. A tooltip string in the language set is necessary.
+        3. Add a ToolStripButton field to frmMain. Note the field name (e.g. "btnRename").
+           The button does NOT need to be added to the toolstrip, or created by the designer.
+           It can be created and initialized in code, either by, or before, UpdateToolbarButtons
+           is invoked. The image, tooltip and Click event must all be specified!
+        4. Add a new enum to ToolbarButtons below, with the same name as the field name assigned in
+           the step above (e.g. "btnRename"). The new enum goes BEFORE the MAX entry.
+
+        The new toolbar button will now be available, the user would use the toolbar config
+        tab to add it to their toolbar settings.
+        */
+
+        private void LoadTabToolbar()
+        {
+            // Apply Windows System theme to listview
+            Theme.RenderTheme th = new Theme.RenderTheme();
+            th.ApplyTheme(lvAvailButtons);
+            th.ApplyTheme(lvUsedButtons);
+
+            // Apply ImageGlass theme to buttons list
+            lvAvailButtons.BackColor = lvUsedButtons.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            lvAvailButtons.ForeColor = lvUsedButtons.ForeColor = LocalSetting.Theme.TextInfoColor;
+
+
+            BuildToolbarImageList();
+            InitUsedList();
+            InitAvailList();
+            UpdateNavigationButtonsState();
+        }
+
+
+        /// <summary>
+        /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
+        /// name in frmMain! Reflection is used to fetch the image and string from the
+        /// frmMain field.
+        ///
+        /// The integer value of the enum is used for storing the config info.
+        /// </summary>
+        enum ToolbarButtons
+        {
+            Separator = -1,
+            btnBack = 0,
+            btnNext = 1,
+            btnRotateLeft = 2,
+            btnRotateRight = 3,
+            btnZoomIn = 4,
+            btnZoomOut = 5,
+            btnZoomToFit = 6,
+            btnActualSize = 7,
+            btnZoomLock = 8,
+            btnScaletoWidth = 9,
+            btnScaletoHeight = 10,
+            btnWindowAutosize = 11,
+            btnOpen = 12,
+            btnRefresh = 13,
+            btnGoto = 14,
+            btnThumb = 15,
+            btnCheckedBackground = 16,
+            btnFullScreen = 17,
+            btnSlideShow = 18,
+            btnConvert = 19,
+            btnPrintImage = 20,
+            // NOTE: add new items here, must match order in _images.Images list
+
+
+            MAX // DO NOT ADD ANYTHING AFTER THIS
+        }
+
+
+        /// <summary>
+        /// Fetch all the toolbar images via reflection from the ToolStripButton
+        /// instances in the frmMain instance. This is why the enum name MUST
+        /// match the frmMain field name!
+        /// </summary>
+        private void BuildToolbarImageList()
+        {
+            if (_lstToolbarImg != null)
+                return;
+
+            _lstToolbarImg = new ImageList();
+            _lstToolbarImg.ColorDepth = ColorDepth.Depth32Bit; // max out image quality
+
+            var iconHeight = ThemeImage.GetCorrectIconHeight();
+            _lstToolbarImg.ImageSize = new Size(iconHeight, iconHeight); // TODO empirically determined (can get from ImageGlass.Theme)
+
+            Type mainType = typeof(frmMain);
+            for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
+            {
+                var fieldName = ((ToolbarButtons)i).ToString();
+
+                try
+                {
+                    var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+                    ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+                    _lstToolbarImg.Images.Add(val.Image);
+                }
+                catch (Exception)
+                {
+                    // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Build the list of "currently used" toolbar buttons
+        /// </summary>
+        private void InitUsedList()
+        {
+            lvUsedButtons.View = View.Tile;
+            lvUsedButtons.LargeImageList = _lstToolbarImg;
+
+            lvUsedButtons.Items.Clear();
+
+            string currentSet = GlobalSetting.ToolbarButtons;
+            var enumList = TranslateToolbarButtonsFromConfig(currentSet);
+
+            _lstMasterUsed = new List<ListViewItem>(enumList.Count);
+            for (int i = 0; i < enumList.Count; i++)
+            {
+                ListViewItem lvi;
+
+                if (enumList[i] == ToolbarButtons.Separator)
+                {
+                    lvi = BuildSeparatorItem();
+                }
+                else
+                {
+                    lvi = BuildToolbarListItem(enumList[i]);
+                }
+
+                _lstMasterUsed.Add(lvi);
+            }
+
+            lvUsedButtons.Items.AddRange(_lstMasterUsed.ToArray());
+        }
+
+
+        /// <summary>
+        /// Build the list of "not currently used" toolbar buttons
+        /// </summary>
+        private void InitAvailList()
+        {
+            lvAvailButtons.View = View.Tile;
+            lvAvailButtons.LargeImageList = _lstToolbarImg;
+
+            lvAvailButtons.Items.Clear();
+
+            // Build by adding each button NOT in the 'used' list
+            string currentSet = GlobalSetting.ToolbarButtons;
+            var enumList = TranslateToolbarButtonsFromConfig(currentSet);
+            for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
+            {
+                if (!enumList.Contains((ToolbarButtons)i))
+                {
+                    lvAvailButtons.Items.Add(BuildToolbarListItem((ToolbarButtons)i));
+                }
+            }
+
+            // separator is always available
+            lvAvailButtons.Items.Add(BuildSeparatorItem());
+        }
+
+
+        /// <summary>
+        /// Fetch the toolbar string via reflection from the ToolStripButton
+        /// instance in the frmMain instance. This is why the enum name MUST
+        /// match the frmMain field name!
+        /// </summary>
+        /// <param name="buttonType"></param>
+        /// <returns></returns>
+        private ListViewItem BuildToolbarListItem(ToolbarButtons buttonType)
+        {
+            ListViewItem lvi = new ListViewItem
+            {
+                ImageIndex = (int)buttonType,
+                Tag = buttonType
+            };
+
+
+            var fieldName = buttonType.ToString();
+            Type mainType = typeof(frmMain);
+
+            try
+            {
+                var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+                ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+                lvi.Text = lvi.ToolTipText = val.ToolTipText;
+            }
+            catch (Exception)
+            {
+                // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                return null;
+            }
+
+            return lvi;
+        }
+
+
+        /// <summary>
+        /// Build Separator for Toolbar listview
+        /// </summary>
+        /// <returns></returns>
+        private ListViewItem BuildSeparatorItem()
+        {
+            var lvi = new ListViewItem();
+            lvi.Text = _separatorText;
+            lvi.ToolTipText = _separatorText;
+            lvi.Tag = ToolbarButtons.Separator;
+            return lvi;
+        }
+
+
+        /// <summary>
+        /// The toolbar config string is stored as a comma-separated list of int values for convenience.
+        /// Here, we translate that string to a list of button enums.
+        /// </summary>
+        /// <param name="configVal"></param>
+        /// <returns></returns>
+        private static List<ToolbarButtons> TranslateToolbarButtonsFromConfig(string configVal)
+        {
+            List<ToolbarButtons> outVal = new List<ToolbarButtons>();
+            string[] splitvals = configVal.Split(new[] { ',' });
+
+            foreach (var splitval in splitvals)
+            {
+                if (splitval == "s")
+                {
+                    outVal.Add(ToolbarButtons.Separator);
+                }
+                else
+                {
+                    int numVal;
+                    if (int.TryParse(splitval, out numVal))
+                    {
+                        try
+                        {
+                            ToolbarButtons enumVal = (ToolbarButtons)numVal;
+                            outVal.Add(enumVal);
+                        }
+                        catch (Exception) 
+                        {
+                            // when the enumeration value doesn't exist, don't add it!
+                        }
+                    }
+                }
+            }
+            return outVal;
+        }
+
+
+        /// <summary>
+        /// Update Navagation buttons of toolbar buttons list's state
+        /// </summary>
+        private void UpdateNavigationButtonsState()
+        {
+            // 'Move right' active for at least one selected item in left list.
+            // 'Move left' active for at least one selected item in left list.
+            // 'Move up/down' active for ONLY one selected item in right list.
+
+            btnMoveRight.Enabled = lvAvailButtons.SelectedItems.Count > 0;
+            btnMoveLeft.Enabled = lvUsedButtons.SelectedItems.Count > 0;
+            btnMoveUp.Enabled = lvUsedButtons.SelectedItems.Count == 1;
+            btnMoveDown.Enabled = lvUsedButtons.SelectedItems.Count == 1;
+        }
+
+
+        /// <summary>
+        /// Apply all button changes in Toolbar
+        /// </summary>
+        private void ApplyToolbarChanges()
+        {
+            // User hasn't actually visited the toolbar tab, don't do anything!
+            // (Discovered by clicking 'Save' w/o having visited the toolbar tab...
+            if (lvUsedButtons.Items.Count == 0 && lvAvailButtons.Items.Count == 0)
+                return;
+
+            // Save the current set of 'used' buttons to the comma-separated list of integers.
+            StringBuilder sb = new StringBuilder();
+            bool first = true;
+
+            foreach (ListViewItem item in lvUsedButtons.Items)
+            {
+                string val;
+
+                if ((ToolbarButtons)item.Tag == ToolbarButtons.Separator)
+                    val = "s";
+                else
+                    val = ((int)item.Tag).ToString();
+                if (!first)
+                    sb.Append(",");
+
+                first = false;
+                sb.Append(val);
+            }
+
+            GlobalSetting.ToolbarButtons = sb.ToString();
+        }
+
+
+        #region Events
+        private void ButtonsListView_Resize(object sender, EventArgs e)
+        {
+            var lv = (ListView)sender;
+            UpdateButtonsListViewItemSize(lv);
+        }
+
+
+        /// <summary>
+        /// Make the list view item bigger, adapted to icon size
+        /// </summary>
+        /// <param name="lv"></param>
+        private void UpdateButtonsListViewItemSize(ListView lv)
+        {
+            var width = (int)(lv.Width * 0.85); // reserve right gap for multiple selection
+            var height = ThemeImage.GetCorrectIconHeight() * 2;
+
+            lv.TileSize = new Size(width, height);
+
+            // TODO: Issue:
+            // The Listview layout is broken when user shrinks the window
+            // then click Maximize button
+        }
+
+
+        private void lvUsedButtons_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateNavigationButtonsState();
+        }
+
+        private void lvAvailButtons_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateNavigationButtonsState();
+        }
+
+        private void btnMoveRight_Click(object sender, EventArgs e)
+        {
+            // 'Move' the selected entry in the LEFT list to the bottom of the RIGHT list
+            // An exception is 'separator' which always remains available in the left list.
+
+            for (int i = 0; i < lvAvailButtons.SelectedItems.Count; i++)
+            {
+                var lvi = lvAvailButtons.SelectedItems[i];
+                _lstMasterUsed.Add(lvi.Clone() as ListViewItem);
+            }
+
+            for (int i = lvAvailButtons.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                var lvi = lvAvailButtons.SelectedItems[i];
+                if ((ToolbarButtons)lvi.Tag != ToolbarButtons.Separator)
+                    lvAvailButtons.Items.Remove(lvi);
+            }
+
+            lvAvailButtons.SelectedIndices.Clear();
+            RebuildUsedButtonsList(_lstMasterUsed.Count - 1);
+            lvUsedButtons.EnsureVisible(_lstMasterUsed.Count - 1);
+        }
+
+        private void btnMoveLeft_Click(object sender, EventArgs e)
+        {
+            // 'Move' the selected entry in the RIGHT list to the bottom of the LEFT list
+            // An exception is 'separator' which always remains available in the left list.
+
+            for (int i = 0; i < lvUsedButtons.SelectedItems.Count; i++)
+            {
+                var lvi = lvUsedButtons.SelectedItems[i];
+                if ((ToolbarButtons)lvi.Tag != ToolbarButtons.Separator)
+                    lvAvailButtons.Items.Add(lvi.Clone() as ListViewItem);
+
+                _lstMasterUsed.Remove(lvi);
+            }
+
+            RebuildUsedButtonsList(-1);
+        }
+
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+            MoveUsedEntry(+1);
+        }
+
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+            MoveUsedEntry(-1);
+        }
+
+        /// <summary>
+        /// Move an item in the 'used' list
+        /// </summary>
+        /// <param name="delta"></param>
+        private void MoveUsedEntry(int delta)
+        {
+            var currentIndex = lvUsedButtons.SelectedItems[0].Index;
+
+            // do not wrap around
+            if (delta < 0)
+            {
+                if (currentIndex <= 0)
+                    return;
+            }
+            else
+            {
+                if (currentIndex >= _lstMasterUsed.Count - 1)
+                    return;
+            }
+
+            var item = lvUsedButtons.Items[currentIndex];
+
+            _lstMasterUsed.RemoveAt(currentIndex);
+            _lstMasterUsed.Insert(currentIndex + delta, item);
+            RebuildUsedButtonsList(currentIndex + delta);
+
+            // Make sure the new position, plus some context, is visible after rebuild
+            lvUsedButtons.EnsureVisible(Math.Min(currentIndex + 2, _lstMasterUsed.Count - 1));
+        }
+
+        private void RebuildUsedButtonsList(int toSelect)
+        {
+            // This is annoying. To show the desired appearance in the listview, we need
+            // to use 'SmallIcons' mode [image + text on a single line]. 'SmallIcons' mode
+            // will NOT repaint the listview after changes to the Items list!!! Thus, we
+            // teardown and rebuild the listview here.
+
+            lvUsedButtons.BeginUpdate();
+            lvUsedButtons.SelectedIndices.Clear();
+            lvUsedButtons.Items.Clear();
+            lvUsedButtons.Items.AddRange(_lstMasterUsed.ToArray());
+
+            if (toSelect >= 0)
+            {
+                lvUsedButtons.Items[toSelect].Selected = true;
+            }
+
+            lvUsedButtons.EndUpdate();
+        }
+
+        #endregion
+
+
+        #region PUBLIC METHODS used in [frmMain]
+        /// <summary>
+        /// This method is used by the main form to actually initialize the toolbar. 
+        /// The toolbar buttons setting is translated to a list of field NAMES from 
+        /// the frmMain class. The need of a separator is indicated by the magic string "_sep_".
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> LoadToolbarConfig()
+        {
+            string savedVal = GlobalSetting.GetConfig("ToolbarButtons", _defaultToolbarConfig);
+            GlobalSetting.ToolbarButtons = savedVal;
+
+            var xlated = TranslateToolbarButtonsFromConfig(savedVal);
+            List<string> lstToolbarButtonNames = new List<string>();
+
+            foreach (var btnEnum in xlated)
+            {
+                switch (btnEnum)
+                {
+                    case ToolbarButtons.Separator:
+                        lstToolbarButtonNames.Add("_sep_");
+                        break;
+
+                    default:
+                        // enum name *must* match the field name in frmMain AND the resource name, e.g. "frmMain.btnBack"
+                        lstToolbarButtonNames.Add(btnEnum.ToString());
+                        break;
+                }
+            }
+            return lstToolbarButtonNames;
+        }
+
+
+        /// <summary>
+        /// Load toolbar configs and update the buttons
+        /// </summary>
+        /// <param name="toolMain"></param>
+        /// <param name="form"></param>
+        public static void UpdateToolbarButtons(ToolStrip toolMain, frmMain form)
+        {
+            toolMain.Items.Clear();
+
+            List<string> lstToolbarButtons = LoadToolbarConfig();
+            Type frmMainType = typeof(frmMain);
+
+            foreach (var btn in lstToolbarButtons)
+            {
+                if (btn == "_sep_")
+                {
+                    var hIcon = ThemeImage.GetCorrectIconHeight();
+
+                    ToolStripSeparator sep = new ToolStripSeparator();
+                    sep.AutoSize = false;
+                    sep.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
+                    sep.Height = (int)(hIcon * 1.2);
+
+                    toolMain.Items.Add(sep);
+                }
+                else
+                {
+                    try
+                    {
+                        var info = frmMainType.GetField(btn, BindingFlags.Instance | BindingFlags.NonPublic);
+                        var val = info.GetValue(form);
+
+                        toolMain.Items.Add(val as ToolStripItem);
+                    }
+                    catch (Exception)
+                    {
+                        // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
+                    }
+                }
+            }
+        }
+
+
+#if false
+
+        // The following code is disabled as it was an early attempt to provide toolbar buttons for
+        // rename, recycle, and edit. The menu images for those menu entries have been removed,
+        // so this code cannot be used until SVG images are provided in the theme for those functions.
+
+        private void MakeMenuButtons()
+        {
+            // These buttons were not part of the initial toolbar button set. Set up and initialize
+            // as if they were created via the designer.
+
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(frmMain));
+
+            string txt = GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"];
+            btnRecycleBin = new ToolStripButton();
+            MakeMenuButton(btnRecycleBin, "btnRecycleBin", txt);
+            btnRecycleBin.Image = ((Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
+            btnRecycleBin.Click += mnuMainMoveToRecycleBin_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainRename"];
+            btnRename = new ToolStripButton();
+            MakeMenuButton(btnRename, "btnRename", txt);
+            btnRename.Image = ((Image)(resources.GetObject("mnuMainRename.Image")));
+            btnRename.Click += mnuMainRename_Click;
+
+            txt = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
+            btnEditImage = new ToolStripButton();
+            MakeMenuButton(btnEditImage, "btnEditImage", txt);
+            btnEditImage.Image = ((Image)(resources.GetObject("mnuMainEditImage.Image")));
+            btnEditImage.Click += mnuMainEditImage_Click;
+        }
+
+        // NOTE: the field names here _must_ match the names in frmCustToolbar.cs/enum allBtns
+        private ToolStripButton btnRecycleBin;
+        private ToolStripButton btnRename;
+        private ToolStripButton btnEditImage;
+
+        private void MakeMenuButton(ToolStripButton btn, string name, string ttText)
+        {
+            btn.AutoSize = false;
+            btn.BackColor = Color.Transparent;
+            btn.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btn.ImageScaling = ToolStripItemImageScaling.None;
+            btn.ImageTransparentColor = Color.Magenta;
+            btn.Margin = new Padding(3, 0, 0, 0);
+            btn.Name = name;
+            btn.Size = new Size(28, 28);
+            btn.ToolTipText = ttText;
+        }
+
+#endif
+
+
+        #endregion
+
+        #endregion
+
+
+        #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
         {
             //close without saving
@@ -1138,12 +1731,15 @@ namespace ImageGlass
 
             #endregion
 
+
+            #region Toolbar tab --------------------------------------------
             ApplyToolbarChanges();
+            #endregion
 
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
+        #endregion
 
-        
     }
 }

@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Drawing;
 using System.Threading;
+using ImageGlass.Theme;
 
 namespace ImageGlass
 {
@@ -95,7 +97,8 @@ namespace ImageGlass
         /// Gets, sets the value that will request frmMain to update thumbnail bar
         /// </summary>
         public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
-        
+
+
         #endregion
 
     }
