@@ -607,6 +607,22 @@ namespace ImageGlass.Library
             //Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final, -3.5
             #endregion
 
+
+            #region Toolbar Customization
+            // V5.0
+            Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
+            Items.Add("frmSetting.lblToolbar", "Toolbar");
+            Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
+            Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
+            Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
+            Items.Add("frmSetting.lblRestartForChange", "Note: toolbar changes will not take effect until after restart.");
+
+            Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
+            Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
+
+            #endregion
         }
 
 

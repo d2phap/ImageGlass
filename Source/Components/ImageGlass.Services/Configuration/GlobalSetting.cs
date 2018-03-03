@@ -599,6 +599,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsNewVersionAvailable { get => _isNewVersionAvailable; set => _isNewVersionAvailable = value; }
 
+        /// <summary>
+        /// The toolbar button configuration: contents and order.
+        /// </summary>
+        public static string ToolbarButtons { get; set; }
+
 
         #endregion
 

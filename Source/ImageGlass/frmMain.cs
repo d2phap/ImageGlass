@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using ImageGlass.Core;
 using ImageGlass.Library.Image;
@@ -257,7 +258,7 @@ namespace ImageGlass
                     thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
                     thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
             }
         }
 
@@ -1256,7 +1257,13 @@ namespace ImageGlass
                 GlobalSetting.IsForcedActive = true;
                 frmMain_Activated(null, null);
             }
-            
+
+            // Update the modifiable portion of the toolbar based on user config setting.
+            frmSetting.ConfigToolbar(toolMain, this);
+            toolMain.Items.Add(btnMenu);
+            toolMain.Items.Add(lblInfo);
+
+
             //Windows Bound (Position + Size)------------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
 
@@ -1595,11 +1602,11 @@ namespace ImageGlass
                 Application.DoEvents();
                 ImageSaveChange();
             }
+
+            GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
         }
 
         #endregion
-
-
 
         #region Form events
         protected override void WndProc(ref Message m)
@@ -3350,6 +3357,7 @@ namespace ImageGlass
             }
 
             GlobalSetting.IsForcedActive = false;
+            LocalSetting.FSetting.MainInstance = this;
             LocalSetting.FSetting.TopMost = this.TopMost;
             LocalSetting.FSetting.Show();
             LocalSetting.FSetting.Activate();

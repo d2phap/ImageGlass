@@ -197,6 +197,9 @@
     <Compile Include="frmSetting.Designer.cs">
       <DependentUpon>frmSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSettingToolbar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
