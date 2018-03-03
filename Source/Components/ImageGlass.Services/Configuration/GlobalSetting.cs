@@ -37,7 +37,6 @@ namespace ImageGlass.Services.Configuration
     {
         // Private settings --------------------------------------------------------------
         private static ImgMan _imageList = new ImgMan();
-        //private static List<String> _imageFilenameList = new List<string>();
         private static string _facebookAccessToken = "";
         private static bool _isForcedActive = true;
         private static int _currentIndex = -1;
@@ -598,6 +597,11 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get => _isNewVersionAvailable; set => _isNewVersionAvailable = value; }
+
+        /// <summary>
+        /// The toolbar button configuration: contents and order.
+        /// </summary>
+        public static string ToolbarButtons { get; set; }
 
 
         #endregion
