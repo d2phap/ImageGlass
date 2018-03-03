@@ -121,14 +121,16 @@ namespace ImageGlass
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.tabToolbar = new System.Windows.Forms.TabPage();
-            this.lblUsedBtns = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblAvailBtns = new System.Windows.Forms.Label();
-            this.usedButtons = new System.Windows.Forms.ListView();
             this.availButtons = new System.Windows.Forms.ListView();
-            this.btnMoveRight = new System.Windows.Forms.Button();
             this.btnMoveLeft = new System.Windows.Forms.Button();
+            this.btnMoveRight = new System.Windows.Forms.Button();
+            this.lblUsedBtns = new System.Windows.Forms.Label();
             this.btnMoveDown = new System.Windows.Forms.Button();
+            this.usedButtons = new System.Windows.Forms.ListView();
             this.btnMoveUp = new System.Windows.Forms.Button();
+            this.lblRestartForChange = new System.Windows.Forms.Label();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -139,8 +141,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.tabToolbarPanelLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.lblRestartForChange = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -151,6 +151,10 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabToolbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
@@ -158,7 +162,6 @@ namespace ImageGlass
             this.tableLayoutPanel1.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tabToolbarPanelLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -172,8 +175,6 @@ namespace ImageGlass
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblLanguage.ForeColor = System.Drawing.Color.Black;
             this.lblLanguage.Location = new System.Drawing.Point(0, 150);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
@@ -194,8 +195,6 @@ namespace ImageGlass
             this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFileAssociations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblFileAssociations.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFileAssociations.ForeColor = System.Drawing.Color.Black;
             this.lblFileAssociations.Location = new System.Drawing.Point(0, 100);
             this.lblFileAssociations.Margin = new System.Windows.Forms.Padding(0);
             this.lblFileAssociations.Name = "lblFileAssociations";
@@ -216,8 +215,6 @@ namespace ImageGlass
             this.lblGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGeneral.BackColor = System.Drawing.Color.Gainsboro;
-            this.lblGeneral.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblGeneral.ForeColor = System.Drawing.Color.Black;
             this.lblGeneral.Location = new System.Drawing.Point(0, 0);
             this.lblGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.lblGeneral.Name = "lblGeneral";
@@ -705,7 +702,7 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabToolbar);
             this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab1.Location = new System.Drawing.Point(0, 0);
-            this.tab1.Margin = new System.Windows.Forms.Padding(0);
+            this.tab1.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
@@ -889,7 +886,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(408, 1661);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(200, 1661);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -952,7 +949,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(582, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(374, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1223,93 +1220,82 @@ namespace ImageGlass
             // tabToolbar
             // 
             this.tabToolbar.BackColor = System.Drawing.Color.White;
-            this.tabToolbar.Controls.Add(this.tabToolbarPanelLayout);
-            this.tabToolbar.Location = new System.Drawing.Point(4, 27);
+            this.tabToolbar.Controls.Add(this.splitContainer1);
+            this.tabToolbar.Controls.Add(this.lblRestartForChange);
+            this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Name = "tabToolbar";
             this.tabToolbar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabToolbar.Size = new System.Drawing.Size(464, 368);
+            this.tabToolbar.Size = new System.Drawing.Size(699, 557);
             this.tabToolbar.TabIndex = 4;
             this.tabToolbar.Text = "toolbar";
             this.tabToolbar.UseVisualStyleBackColor = true;
             // 
-            // lblUsedBtns
+            // splitContainer1
             // 
-            this.lblUsedBtns.AutoSize = true;
-            this.lblUsedBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsedBtns.Location = new System.Drawing.Point(232, 24);
-            this.lblUsedBtns.Name = "lblUsedBtns";
-            this.lblUsedBtns.Size = new System.Drawing.Size(100, 15);
-            this.lblUsedBtns.TabIndex = 8;
-            this.lblUsedBtns.Text = "Current Buttons:";
-            this.lblUsedBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(6, 6);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.lblAvailBtns);
+            this.splitContainer1.Panel1.Controls.Add(this.availButtons);
+            this.splitContainer1.Panel1.Controls.Add(this.btnMoveLeft);
+            this.splitContainer1.Panel1.Controls.Add(this.btnMoveRight);
+            this.splitContainer1.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.lblUsedBtns);
+            this.splitContainer1.Panel2.Controls.Add(this.btnMoveDown);
+            this.splitContainer1.Panel2.Controls.Add(this.usedButtons);
+            this.splitContainer1.Panel2.Controls.Add(this.btnMoveUp);
+            this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer1.Size = new System.Drawing.Size(687, 505);
+            this.splitContainer1.SplitterDistance = 343;
+            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.TabIndex = 10;
             // 
             // lblAvailBtns
             // 
             this.lblAvailBtns.AutoSize = true;
-            this.lblAvailBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvailBtns.Location = new System.Drawing.Point(8, 25);
+            this.lblAvailBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvailBtns.Location = new System.Drawing.Point(5, 10);
+            this.lblAvailBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
             this.lblAvailBtns.Name = "lblAvailBtns";
-            this.lblAvailBtns.Size = new System.Drawing.Size(107, 15);
+            this.lblAvailBtns.Size = new System.Drawing.Size(153, 25);
             this.lblAvailBtns.TabIndex = 3;
             this.lblAvailBtns.Text = "Available Buttons:";
-            this.lblAvailBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
-            // 
-            // usedButtons
-            // 
-            this.usedButtons.Alignment = System.Windows.Forms.ListViewAlignment.Top;
-            this.usedButtons.AutoArrange = true;
-            this.usedButtons.BackColor = System.Drawing.SystemColors.GrayText;
-            this.usedButtons.ForeColor = System.Drawing.SystemColors.Window;
-            this.usedButtons.FullRowSelect = true;
-            this.usedButtons.GridLines = true;
-            this.usedButtons.HideSelection = false;
-            this.usedButtons.LabelWrap = false;
-            this.usedButtons.Location = new System.Drawing.Point(235, 48);
-            this.usedButtons.Name = "usedButtons";
-            this.usedButtons.ShowGroups = false;
-            this.usedButtons.ShowItemToolTips = true;
-            this.usedButtons.Size = new System.Drawing.Size(200, 250);
-            this.usedButtons.TabIndex = 4;
-            this.usedButtons.UseCompatibleStateImageBehavior = false;
-            this.usedButtons.View = System.Windows.Forms.View.List;
-            this.usedButtons.SelectedIndexChanged += new System.EventHandler(this.usedButtons_SelectedIndexChanged);
-            this.usedButtons.Dock = System.Windows.Forms.DockStyle.Left;
             // 
             // availButtons
             // 
+            this.availButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.availButtons.BackColor = System.Drawing.SystemColors.GrayText;
+            this.availButtons.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.availButtons.ForeColor = System.Drawing.SystemColors.Window;
+            this.availButtons.FullRowSelect = true;
             this.availButtons.GridLines = true;
             this.availButtons.HideSelection = false;
-            this.availButtons.Location = new System.Drawing.Point(8, 48);
+            this.availButtons.Location = new System.Drawing.Point(10, 43);
             this.availButtons.Name = "availButtons";
             this.availButtons.ShowGroups = false;
             this.availButtons.ShowItemToolTips = true;
-            this.availButtons.Size = new System.Drawing.Size(200, 314);
+            this.availButtons.Size = new System.Drawing.Size(260, 459);
             this.availButtons.TabIndex = 1;
             this.availButtons.UseCompatibleStateImageBehavior = false;
             this.availButtons.SelectedIndexChanged += new System.EventHandler(this.availButtons_SelectedIndexChanged);
-            this.availButtons.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tabToolbarPanelLayout.SetRowSpan(this.availButtons, 4);
-            this.availButtons.Alignment = System.Windows.Forms.ListViewAlignment.Top;
-            this.availButtons.AutoArrange = true;
-            // 
-            // btnMoveRight
-            // 
-            this.btnMoveRight.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveRight.Location = new System.Drawing.Point(194, 159);
-            this.btnMoveRight.Name = "btnMoveRight";
-            this.btnMoveRight.Size = new System.Drawing.Size(40, 40);
-            this.btnMoveRight.TabIndex = 3;
-            this.btnMoveRight.Text = "u";
-            this.btnMoveRight.UseVisualStyleBackColor = true;
-            this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
-            this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
+            this.availButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
             // 
             // btnMoveLeft
             // 
+            this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(194, 113);
+            this.btnMoveLeft.Location = new System.Drawing.Point(288, 224);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(40, 40);
             this.btnMoveLeft.TabIndex = 2;
@@ -1317,10 +1303,35 @@ namespace ImageGlass
             this.btnMoveLeft.UseVisualStyleBackColor = true;
             this.btnMoveLeft.Click += new System.EventHandler(this.btnMoveLeft_Click);
             // 
+            // btnMoveRight
+            // 
+            this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnMoveRight.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.btnMoveRight.Location = new System.Drawing.Point(288, 272);
+            this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
+            this.btnMoveRight.Name = "btnMoveRight";
+            this.btnMoveRight.Size = new System.Drawing.Size(40, 40);
+            this.btnMoveRight.TabIndex = 3;
+            this.btnMoveRight.Text = "u";
+            this.btnMoveRight.UseVisualStyleBackColor = true;
+            this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
+            // 
+            // lblUsedBtns
+            // 
+            this.lblUsedBtns.AutoSize = true;
+            this.lblUsedBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsedBtns.Location = new System.Drawing.Point(-2, 14);
+            this.lblUsedBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
+            this.lblUsedBtns.Name = "lblUsedBtns";
+            this.lblUsedBtns.Size = new System.Drawing.Size(140, 25);
+            this.lblUsedBtns.TabIndex = 8;
+            this.lblUsedBtns.Text = "Current Buttons:";
+            // 
             // btnMoveDown
             // 
+            this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveDown.Location = new System.Drawing.Point(417, 159);
+            this.btnMoveDown.Location = new System.Drawing.Point(293, 272);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(40, 40);
             this.btnMoveDown.TabIndex = 6;
@@ -1328,16 +1339,49 @@ namespace ImageGlass
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
+            // usedButtons
+            // 
+            this.usedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.usedButtons.BackColor = System.Drawing.SystemColors.GrayText;
+            this.usedButtons.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.usedButtons.ForeColor = System.Drawing.SystemColors.Window;
+            this.usedButtons.FullRowSelect = true;
+            this.usedButtons.HideSelection = false;
+            this.usedButtons.Location = new System.Drawing.Point(3, 43);
+            this.usedButtons.Name = "usedButtons";
+            this.usedButtons.ShowGroups = false;
+            this.usedButtons.ShowItemToolTips = true;
+            this.usedButtons.Size = new System.Drawing.Size(269, 459);
+            this.usedButtons.TabIndex = 4;
+            this.usedButtons.UseCompatibleStateImageBehavior = false;
+            this.usedButtons.View = System.Windows.Forms.View.List;
+            this.usedButtons.SelectedIndexChanged += new System.EventHandler(this.usedButtons_SelectedIndexChanged);
+            this.usedButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
+            // 
             // btnMoveUp
             // 
+            this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveUp.Location = new System.Drawing.Point(417, 113);
+            this.btnMoveUp.Location = new System.Drawing.Point(293, 224);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(40, 40);
             this.btnMoveUp.TabIndex = 5;
             this.btnMoveUp.Text = "p";
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
+            // 
+            // lblRestartForChange
+            // 
+            this.lblRestartForChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblRestartForChange.AutoSize = true;
+            this.lblRestartForChange.Location = new System.Drawing.Point(10, 524);
+            this.lblRestartForChange.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+            this.lblRestartForChange.Name = "lblRestartForChange";
+            this.lblRestartForChange.Size = new System.Drawing.Size(59, 25);
+            this.lblRestartForChange.TabIndex = 9;
+            this.lblRestartForChange.Text = "label1";
             // 
             // imglOpenWith
             // 
@@ -1372,8 +1416,8 @@ namespace ImageGlass
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel1.Controls.Add(this.lblGeneral, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblImage, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblToolbar, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -1385,6 +1429,8 @@ namespace ImageGlass
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(223, 598);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
@@ -1393,8 +1439,6 @@ namespace ImageGlass
             this.lblImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblImage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblImage.ForeColor = System.Drawing.Color.Black;
             this.lblImage.Location = new System.Drawing.Point(0, 50);
             this.lblImage.Margin = new System.Windows.Forms.Padding(0);
             this.lblImage.Name = "lblImage";
@@ -1414,14 +1458,20 @@ namespace ImageGlass
             // 
             this.lblToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblToolbar.Location = new System.Drawing.Point(3, 132);
+            this.lblToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblToolbar.Location = new System.Drawing.Point(3, 200);
             this.lblToolbar.Name = "lblToolbar";
-            this.lblToolbar.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.lblToolbar.Size = new System.Drawing.Size(147, 33);
+            this.lblToolbar.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblToolbar.Size = new System.Drawing.Size(224, 50);
             this.lblToolbar.TabIndex = 5;
+            this.lblToolbar.Tag = "0";
             this.lblToolbar.Text = "Toolbar";
             this.lblToolbar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblToolbar.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblToolbar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblToolbar.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblToolbar.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblToolbar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // btnSave
             // 
@@ -1492,47 +1542,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(938, 72);
             this.panel4.TabIndex = 18;
             // 
-            // tabToolbarPanelLayout
-            // 
-            this.tabToolbarPanelLayout.ColumnCount = 4;
-            this.tabToolbarPanelLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle()); // System.Windows.Forms.SizeType.Percent, 50F));
-            this.tabToolbarPanelLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tabToolbarPanelLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());// System.Windows.Forms.SizeType.Percent, 50F));
-            this.tabToolbarPanelLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tabToolbarPanelLayout.Controls.Add(this.lblUsedBtns, 2, 0);
-            this.tabToolbarPanelLayout.Controls.Add(this.btnMoveDown, 3, 3);
-            this.tabToolbarPanelLayout.Controls.Add(this.btnMoveRight, 1, 3);
-            this.tabToolbarPanelLayout.Controls.Add(this.btnMoveUp, 3, 2);
-            this.tabToolbarPanelLayout.Controls.Add(this.usedButtons, 2, 1);
-            this.tabToolbarPanelLayout.Controls.Add(this.btnMoveLeft, 1, 2);
-            this.tabToolbarPanelLayout.Controls.Add(this.lblAvailBtns, 0, 0);
-            this.tabToolbarPanelLayout.Controls.Add(this.availButtons, 0, 1);
-            this.tabToolbarPanelLayout.Controls.Add(this.lblRestartForChange, 0, 5);
-            this.tabToolbarPanelLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabToolbarPanelLayout.Location = new System.Drawing.Point(2, 2);
-            this.tabToolbarPanelLayout.Name = "tabToolbarPanelLayout";
-            this.tabToolbarPanelLayout.RowCount = 6;
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tabToolbarPanelLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tabToolbarPanelLayout.Size = new System.Drawing.Size(460, 364);
-            this.tabToolbarPanelLayout.TabIndex = 9;
-            this.tabToolbarPanelLayout.SetRowSpan(this.usedButtons, 4);
-            // 
-            // lblRestartForChange
-            // 
-            this.lblRestartForChange.AutoSize = true;
-            this.tabToolbarPanelLayout.SetColumnSpan(this.lblRestartForChange, 4);
-            this.lblRestartForChange.Location = new System.Drawing.Point(3, 349);
-            this.lblRestartForChange.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
-            this.lblRestartForChange.Name = "lblRestartForChange";
-            this.lblRestartForChange.Size = new System.Drawing.Size(38, 15);
-            this.lblRestartForChange.TabIndex = 9;
-            this.lblRestartForChange.Text = "label1";
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -1567,6 +1576,13 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabToolbar.ResumeLayout(false);
+            this.tabToolbar.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.sp1.Panel1.ResumeLayout(false);
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
@@ -1575,8 +1591,6 @@ namespace ImageGlass
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.tabToolbarPanelLayout.ResumeLayout(false);
-            this.tabToolbarPanelLayout.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1679,7 +1693,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblSelectAppForEdit;
         private System.Windows.Forms.CheckBox chkSaveOnRotate;
         private System.Windows.Forms.TabPage tabToolbar;
-        private System.Windows.Forms.Label lblToolbar;
         private System.Windows.Forms.Button btnMoveUp;
         private System.Windows.Forms.Button btnMoveDown;
         private System.Windows.Forms.Button btnMoveLeft;
@@ -1688,7 +1701,8 @@ namespace ImageGlass
         private System.Windows.Forms.ListView usedButtons;
         private System.Windows.Forms.Label lblUsedBtns;
         private System.Windows.Forms.Label lblAvailBtns;
-        private System.Windows.Forms.TableLayoutPanel tabToolbarPanelLayout;
         private System.Windows.Forms.Label lblRestartForChange;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label lblToolbar;
     }
 }
