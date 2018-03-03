@@ -135,12 +135,12 @@ namespace ImageGlass
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblImage = new System.Windows.Forms.Label();
-            this.lblToolbar = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.lblToolbar = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -175,7 +175,7 @@ namespace ImageGlass
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblLanguage.Location = new System.Drawing.Point(0, 150);
+            this.lblLanguage.Location = new System.Drawing.Point(0, 100);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
@@ -195,7 +195,7 @@ namespace ImageGlass
             this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFileAssociations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblFileAssociations.Location = new System.Drawing.Point(0, 100);
+            this.lblFileAssociations.Location = new System.Drawing.Point(0, 150);
             this.lblFileAssociations.Margin = new System.Windows.Forms.Padding(0);
             this.lblFileAssociations.Name = "lblFileAssociations";
             this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
@@ -886,7 +886,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(200, 1661);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(174, 1661);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -949,7 +949,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(374, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(348, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1331,7 +1331,7 @@ namespace ImageGlass
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveDown.Location = new System.Drawing.Point(293, 272);
+            this.btnMoveDown.Location = new System.Drawing.Point(296, 272);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(40, 40);
             this.btnMoveDown.TabIndex = 6;
@@ -1353,7 +1353,7 @@ namespace ImageGlass
             this.usedButtons.Name = "usedButtons";
             this.usedButtons.ShowGroups = false;
             this.usedButtons.ShowItemToolTips = true;
-            this.usedButtons.Size = new System.Drawing.Size(269, 459);
+            this.usedButtons.Size = new System.Drawing.Size(272, 459);
             this.usedButtons.TabIndex = 4;
             this.usedButtons.UseCompatibleStateImageBehavior = false;
             this.usedButtons.View = System.Windows.Forms.View.List;
@@ -1364,7 +1364,7 @@ namespace ImageGlass
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveUp.Location = new System.Drawing.Point(293, 224);
+            this.btnMoveUp.Location = new System.Drawing.Point(296, 224);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(40, 40);
             this.btnMoveUp.TabIndex = 5;
@@ -1414,22 +1414,23 @@ namespace ImageGlass
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanel1.Controls.Add(this.lblToolbar, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.lblGeneral, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblImage, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblToolbar, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(223, 598);
             this.tableLayoutPanel1.TabIndex = 5;
@@ -1453,25 +1454,6 @@ namespace ImageGlass
             this.lblImage.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblImage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblImage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // lblToolbar
-            // 
-            this.lblToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblToolbar.Location = new System.Drawing.Point(3, 200);
-            this.lblToolbar.Name = "lblToolbar";
-            this.lblToolbar.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblToolbar.Size = new System.Drawing.Size(224, 50);
-            this.lblToolbar.TabIndex = 5;
-            this.lblToolbar.Tag = "0";
-            this.lblToolbar.Text = "Toolbar";
-            this.lblToolbar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblToolbar.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblToolbar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblToolbar.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblToolbar.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblToolbar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // btnSave
             // 
@@ -1541,6 +1523,26 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(938, 72);
             this.panel4.TabIndex = 18;
+            // 
+            // lblToolbar
+            // 
+            this.lblToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblToolbar.Location = new System.Drawing.Point(0, 200);
+            this.lblToolbar.Margin = new System.Windows.Forms.Padding(0);
+            this.lblToolbar.Name = "lblToolbar";
+            this.lblToolbar.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblToolbar.Size = new System.Drawing.Size(230, 50);
+            this.lblToolbar.TabIndex = 6;
+            this.lblToolbar.Tag = "0";
+            this.lblToolbar.Text = "Toolbar";
+            this.lblToolbar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblToolbar.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblToolbar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblToolbar.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblToolbar.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblToolbar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // frmSetting
             // 
