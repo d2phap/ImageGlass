@@ -3032,7 +3032,6 @@ namespace ImageGlass
             //if image size is bigger than screen
             if (picMain.Image.Width >= screen.Width || picMain.Height >= screen.Height)
             {
-                Left = Top = 0;
                 Width = screen.Width;
                 Height = screen.Height;
             }
@@ -3042,8 +3041,6 @@ namespace ImageGlass
                                 Height += picMain.Image.Height - picMain.Height);
 
                 picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
-                Top = (screen.Height - Height) / 2 + screen.Top;
-                Left = (screen.Width - Width) / 2 + screen.Left;
             }
 
             //reset zoom
