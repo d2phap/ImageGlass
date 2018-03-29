@@ -172,6 +172,10 @@ namespace ImageGlass.Core
             set { }
         }
 
+        /// <summary>
+        /// Get full path of this image
+        /// </summary>
+        /// <returns>Full path of image</returns>
         public string GetFileName(int i)
         {
             try
@@ -184,6 +188,11 @@ namespace ImageGlass.Core
             }
         }
 
+        /// <summary>
+        /// Set full path of this image
+        /// </summary>
+        /// <param name="i">image index</param>
+        /// <param name="s">new full path</param>
         public void SetFileName(int i, string s)
         {
             lstImage[i].SetFileName(s);

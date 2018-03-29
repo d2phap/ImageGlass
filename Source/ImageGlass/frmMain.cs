@@ -210,7 +210,7 @@ namespace ImageGlass
             else
             {
                 GlobalSetting.CurrentIndex = 0;
-            }            
+            }
 
             //Load thumnbnail
             LoadThumbnails();
@@ -220,7 +220,7 @@ namespace ImageGlass
             {
                 //Mark as Image Error
                 GlobalSetting.IsImageError = true;
-                Text = $"ImageGlass - {filePath} - {ImageInfo.GetFileSize(filePath)}";
+                this.Text = $"ImageGlass - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
@@ -536,10 +536,7 @@ namespace ImageGlass
             else
             {
                 //Set the text of Window title
-                this.Text = "ImageGlass - " +
-                            (GlobalSetting.CurrentIndex + 1) + "/" + GlobalSetting.ImageList.Length + " " +
-                            GlobalSetting.LangPack.Items["frmMain._Text"] + " - " +
-                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "  |  ";
+                this.Text = $"ImageGlass - {(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]} - {Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex))}  |  ";
 
                 if (zoomOnly)
                 {
