@@ -56,7 +56,8 @@
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
             this.btnPrintImage = new System.Windows.Forms.ToolStripButton();
-            this.btnMenu = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnMenu = new System.Windows.Forms.ToolStripButton();
+            this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.mnuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuMainOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,7 +127,6 @@
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReportIssue = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
@@ -547,17 +547,24 @@
             // 
             this.btnMenu.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnMenu.AutoSize = false;
+            this.btnMenu.CheckOnClick = true;
             this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMenu.DropDown = this.mnuMain;
             this.btnMenu.Image = global::ImageGlass.Properties.Resources.menu;
             this.btnMenu.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.btnMenu.ShowDropDownArrow = false;
             this.btnMenu.Size = new System.Drawing.Size(33, 33);
             this.btnMenu.Text = "Menu (Hotkey: `)";
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.BackColor = System.Drawing.Color.Transparent;
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(0, 57);
             // 
             // mnuMain
             // 
@@ -587,9 +594,9 @@
             this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
-            this.mnuMain.OwnerItem = this.btnMenu;
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 584);
+            this.mnuMain.Size = new System.Drawing.Size(409, 617);
+            this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
             // mnuMainOpenFile
@@ -1345,13 +1352,6 @@
             this.mnuMainReportIssue.Text = "Report an iss&ue";
             this.mnuMainReportIssue.Click += new System.EventHandler(this.mnuMainReportIssue_Click);
             // 
-            // lblInfo
-            // 
-            this.lblInfo.BackColor = System.Drawing.Color.Transparent;
-            this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(0, 57);
-            // 
             // sp0
             // 
             this.sp0.AllowDrop = true;
@@ -1526,7 +1526,6 @@
         private System.IO.FileSystemWatcher sysWatch;
         private ImageBox picMain;
         private System.Windows.Forms.SplitContainer sp0;
-        private System.Windows.Forms.ToolStripDropDownButton btnMenu;
         private System.Windows.Forms.ContextMenuStrip mnuMain;
         private System.Windows.Forms.ToolStripMenuItem mnuMainOpenFile;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSaveAs;
@@ -1599,6 +1598,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomToFit;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
+        private System.Windows.Forms.ToolStripButton btnMenu;
     }
 }
 

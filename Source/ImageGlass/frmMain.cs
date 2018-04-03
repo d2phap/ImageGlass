@@ -2371,6 +2371,11 @@ namespace ImageGlass
         {
             mnuMainReportIssue_Click(null, e);
         }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+        }
         #endregion
 
 
@@ -3398,6 +3403,8 @@ namespace ImageGlass
 
         private void mnuMain_Opening(object sender, CancelEventArgs e)
         {
+            btnMenu.Checked = true;
+
             try
             {
                 // Alert user if there is a new version
@@ -3406,9 +3413,15 @@ namespace ImageGlass
                 mnuMainExtractFrames.Enabled = false;
                 mnuMainStartStopAnimating.Enabled = false;
 
-                Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                int frameCount = img.GetFrameCount(dim);
+
+                int frameCount = 0;
+                if (GlobalSetting.CurrentIndex >= 0)
+                {
+                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                    frameCount = img.GetFrameCount(dim);
+                }
+                
 
                 mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
 
@@ -3420,11 +3433,18 @@ namespace ImageGlass
 
                 // Get association App for editing
                 UpdateEditingAssocAppInfoForMenu();
-
+                
             }
-            catch { }
+            catch (Exception ex) { }
         }
 
+        private void mnuMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            btnMenu.Checked = false;
+        }
+
+
+        
 
 
 
@@ -3439,6 +3459,6 @@ namespace ImageGlass
 
         #endregion
 
-        
+       
     }
 }
