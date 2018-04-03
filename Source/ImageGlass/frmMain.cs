@@ -3177,7 +3177,7 @@ namespace ImageGlass
 
         private void mnuMainCopy_Click(object sender, EventArgs e)
         {
-            CopyFile();
+            CopyMultiFiles();
         }
 
         private void mnuMainCopyMulti_Click(object sender, EventArgs e)
@@ -3187,7 +3187,7 @@ namespace ImageGlass
 
         private void mnuMainCut_Click(object sender, EventArgs e)
         {
-            CutFile();
+            CutMultiFiles();
         }
 
         private void mnuMainCutMulti_Click(object sender, EventArgs e)
