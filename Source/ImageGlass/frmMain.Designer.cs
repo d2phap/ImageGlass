@@ -679,6 +679,7 @@
             this.mnuMainNavigation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainNavigation.Size = new System.Drawing.Size(408, 31);
             this.mnuMainNavigation.Text = "&Navigation";
+            this.mnuMainNavigation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainViewNext
             // 
@@ -765,6 +766,7 @@
             this.mnuMainSlideShow.ShortcutKeyDisplayString = "";
             this.mnuMainSlideShow.Size = new System.Drawing.Size(408, 31);
             this.mnuMainSlideShow.Text = "Sl&ideshow";
+            this.mnuMainSlideShow.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainSlideShowStart
             // 
@@ -848,6 +850,7 @@
             this.mnuMainManipulation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainManipulation.Size = new System.Drawing.Size(408, 31);
             this.mnuMainManipulation.Text = "&Manipulation";
+            this.mnuMainManipulation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainRotateCounterclockwise
             // 
@@ -1093,6 +1096,7 @@
             this.mnuMainClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainClipboard.Size = new System.Drawing.Size(408, 31);
             this.mnuMainClipboard.Text = "&Clipboard";
+            this.mnuMainClipboard.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainCopy
             // 
@@ -1185,6 +1189,7 @@
             this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainShare.Size = new System.Drawing.Size(408, 31);
             this.mnuMainShare.Text = "S&hare ...";
+            this.mnuMainShare.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainShareFacebook
             // 
@@ -1217,6 +1222,7 @@
             this.mnuMainLayout.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLayout.Size = new System.Drawing.Size(408, 31);
             this.mnuMainLayout.Text = "&Layout";
+            this.mnuMainLayout.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainToolbar
             // 
@@ -1290,6 +1296,7 @@
             this.mnuMainTools.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainTools.Size = new System.Drawing.Size(408, 31);
             this.mnuMainTools.Text = "&Tools";
+            this.mnuMainTools.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainExtensionManager
             // 
