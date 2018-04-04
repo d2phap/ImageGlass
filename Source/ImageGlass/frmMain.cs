@@ -568,6 +568,30 @@ namespace ImageGlass
         {
             //this.Text = e.KeyValue.ToString();
 
+            #region Register MAIN MENU shortcuts
+            void checkMenuShortcut(ToolStripMenuItem mnu)
+            {
+                Keys pressed = e.KeyCode;
+                if (e.Control) pressed = pressed | Keys.Control;
+                if (e.Shift) pressed = pressed | Keys.Shift;
+                if (e.Alt) pressed = pressed | Keys.Alt;
+
+                if (mnu.ShortcutKeys == pressed)
+                {
+                    mnu.PerformClick();
+                }
+                foreach (ToolStripMenuItem child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
+                {
+                    checkMenuShortcut(child);
+                }
+            }
+
+            //register context menu shortcuts
+            foreach (ToolStripMenuItem item in mnuMain.Items.OfType<ToolStripMenuItem>())
+            {
+                checkMenuShortcut(item);
+            }
+            #endregion
 
 
             #region Detect WIN logo key
@@ -703,7 +727,7 @@ namespace ImageGlass
             }
             #endregion
 
-
+            
         }
         
         private void frmMain_KeyUp(object sender, KeyEventArgs e)
