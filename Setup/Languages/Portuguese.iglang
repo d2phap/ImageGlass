@@ -1,16 +1,18 @@
 <ImageGlass>
   <Language>
-    <Info langCode="pt-PT" langName="Português" author="ImageGlass community" description="Portuguese" minVersion="4.1.0.0" isRightToLeftLayout="No" />
+    <Info langCode="pt-PT" langName="Português" author="ImageGlass community" description="Portuguese" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Formatos padrão" />
       <Item key="_.ImageFormatGroup.Optional" value="Formatos opcionais" />
       <Item key="frmMain.picMain._ErrorText" value="O ImageGlass não consegue abrir esta imagem porque o ficheiro não é suportado ou então porque está danificado." />
+      <Item key="frmMain._ImageNotExist" value="A imagem não existe." />
       <Item key="frmMain.btnBack" value="Ir para a imagem anterior (seta à esquerda/PageUp)" />
       <Item key="frmMain.btnNext" value="Ir para a imagem seguinte (seta à direita/PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Rodar à esquerda (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="Rodar à direita (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Ampliar (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Reduzir (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Ajustar para caber (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Tamanho real (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Bloquear tamanho (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Ajustar à largura (Ctrl + W)" />
@@ -142,7 +144,8 @@
       <Item key="frmSetting.chkWelcomePicture" value="Mostrar imagem de boas vindas" />
       <Item key="frmSetting.chkShowToolBar" value="Mostrar barra de ferramentas" />
       <Item key="frmSetting.lblHeadPortableMode" value="Modo portátil" />
-      <Item key="frmSetting.chkPortableMode" value="Ativar modo portátil" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Modo portátil ativado" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Modo portátil desativado na pasta de instalação:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Outras" />
       <Item key="frmSetting.chkAutoUpdate" value="Procurar atualizações automaticamente" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Permitir várias instâncias da aplicação" />
@@ -153,6 +156,7 @@
       <Item key="frmSetting.lnkResetBackgroundColor" value="Repor" />
       <Item key="frmSetting.lblHeadImageLoading" value="Carregamento de imagens" />
       <Item key="frmSetting.chkFindChildFolder" value="Localizar imagens na pasta dependente" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Mostrar imagens ocultas" />
       <Item key="frmSetting.chkLoopViewer" value="Mostrar a primeira imagem ao atingir a última da lista" />
       <Item key="frmSetting.chkImageBoosterBack" value="Ativar image Booster ao navegar para trás (requer ~20% de RAM adicional)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Ordem de carregamento" />
@@ -177,6 +181,8 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Mostrar a primeira imagem depois de atingir a última (em apresentações)" />
       <Item key="frmSetting.lblSlideshowInterval" value="Tempo entre imagens: {0} segundos" />
       <Item key="frmSetting.lblHeadImageEditing" value="Edição de imagens" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Guardar a imagem depois de rodar" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Selecione a aplicação para edição de imagens" />
       <Item key="frmSetting.btnEditEditExt" value="Editar" />
       <Item key="frmSetting.btnEditResetExt" value="Repor predefinições" />
       <Item key="frmSetting.btnEditEditAllExt" value="Editar todas as extensões" />

@@ -48,6 +48,7 @@
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblReferences = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblComponent = new System.Windows.Forms.Label();
@@ -58,18 +59,17 @@
             this.tpReferences = new System.Windows.Forms.TabPage();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
             this.btnDonation = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tpInfo.SuspendLayout();
             this.tpComponents.SuspendLayout();
             this.tpReferences.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -354,12 +354,28 @@
             this.sp0.SplitterDistance = 220;
             this.sp0.TabIndex = 19;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 596);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
             // lblReferences
             // 
             this.lblReferences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblReferences.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblReferences.ForeColor = System.Drawing.Color.Black;
             this.lblReferences.Location = new System.Drawing.Point(0, 100);
@@ -382,7 +398,6 @@
             this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfo.BackColor = System.Drawing.Color.Gainsboro;
-            this.lblInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblInfo.ForeColor = System.Drawing.Color.Black;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
@@ -405,7 +420,6 @@
             this.lblComponent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblComponent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblComponent.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblComponent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblComponent.ForeColor = System.Drawing.Color.Black;
             this.lblComponent.Location = new System.Drawing.Point(0, 50);
@@ -458,7 +472,7 @@
             this.tpInfo.Location = new System.Drawing.Point(4, 37);
             this.tpInfo.Margin = new System.Windows.Forms.Padding(0);
             this.tpInfo.Name = "tpInfo";
-            this.tpInfo.Size = new System.Drawing.Size(758, 555);
+            this.tpInfo.Size = new System.Drawing.Size(760, 555);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
             // 
@@ -535,23 +549,6 @@
             this.btnDonation.TabStop = false;
             this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 596);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -581,13 +578,13 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.tab1.ResumeLayout(false);
             this.tpInfo.ResumeLayout(false);
             this.tpInfo.PerformLayout();
             this.tpComponents.ResumeLayout(false);
             this.tpReferences.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -116,8 +116,8 @@ namespace ImageGlass.Theme
             }
 
             //Get Scaling factor
-            double scaleFactor = DPIScaling.GetDPIScaleFactor();
-            int iconHeight = (int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
+            //double scaleFactor = DPIScaling.GetDPIScaleFactor();
+            int iconHeight = ThemeImage.GetCorrectIconHeight(); //(int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
             #region Theme <Info>
             try { name = n.GetAttribute("name"); }
@@ -228,6 +228,13 @@ namespace ImageGlass.Theme
             {
                 var iconFile = Path.Combine(dir, n.GetAttribute("zoomout"));
                 ToolbarIcons.ZoomOut = new ThemeImage(iconFile, iconHeight, iconHeight);
+            }
+            catch (Exception ex) { };
+
+            try
+            {
+                var iconFile = Path.Combine(dir, n.GetAttribute("zoomtofit"));
+                ToolbarIcons.ZoomToFit = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
@@ -406,6 +413,7 @@ namespace ImageGlass.Theme
             n.SetAttribute("rightrotate", Path.GetFileName(ToolbarIcons.RotateRight.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
+            n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ZoomToFit.Filename));
             n.SetAttribute("zoomlock", Path.GetFileName(ToolbarIcons.LockRatio.Filename));
             n.SetAttribute("scaletofit", Path.GetFileName(ToolbarIcons.ActualSize.Filename));
             n.SetAttribute("scaletowidth", Path.GetFileName(ToolbarIcons.ScaleToWidth.Filename));
@@ -452,11 +460,11 @@ namespace ImageGlass.Theme
             try
             {
                 Theme th = new Theme(themePath);
-                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
             }
             catch
             {
-                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString());
+                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString(GlobalSetting.NumberFormat));
             }
         }
 

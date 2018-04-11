@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="de-DE" langName="Deutsch" author="ImageGlass community" description="German" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="de-DE" langName="Deutsch" author="ImageGlass community" description="German" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Standardformate" />
       <Item key="_.ImageFormatGroup.Optional" value="Optionale Formate" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass kann dieses Bild nicht öffnen da die Datei beschädigt ist, fehlerhaft oder nicht unterstützt wird." />
+      <Item key="frmMain._ImageNotExist" value="Das Anzeigebild existiert nicht." />
       <Item key="frmMain.btnBack" value="Gehe zum vorherigen Bild (Pfeil links / Bild hoch)" />
       <Item key="frmMain.btnNext" value="Gehe zum nächsten Bild (Pfeil rechts / Bild runter)" />
       <Item key="frmMain.btnRotateLeft" value="Gegen den Uhrzeigersinn drehen (Strg + ,)" />
       <Item key="frmMain.btnRotateRight" value="Im Uhrzeigersinn drehen (Strg + .)" />
       <Item key="frmMain.btnZoomIn" value="Vergrößern (Strg + =)" />
       <Item key="frmMain.btnZoomOut" value="Verkleinern (Strg + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Auf das Seitenverhältnis anpassen (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Originalgröße (Strg + 0)" />
       <Item key="frmMain.btnZoomLock" value="Seitenverhältnis beibehalten (Strg + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Auf Breite skalieren (Strg + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Bitte geben Sie die Bildnummer ein, die angezeigt werden soll. Drücken Sie anschließend {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Datei '{0}' löschen ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Bestätigen" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Extrahieren von Einzelbildern. Bitte wählen Sie den Zielordner." />
       <Item key="frmMain._FullScreenMessage" value="Drücken Sie ALT + ENTER um den Vollbildmodus zu verlassen.&#xA;Andernfalls STRG + F1 um das Menü anzuzeigen." />
       <Item key="frmMain._SlideshowMessage" value="Drücken Sie die ESC-Taste um die Diashow zu beenden.&#xA; Rechte Maustaste um das Kontextmenü anzuzeigen." />
       <Item key="frmMain._SlideshowMessagePause" value="Diashow wurde angehalten" />
@@ -120,7 +122,7 @@
       <Item key="frmFacebook._StatusCancel" value="Abgebrochen" />
       <Item key="frmFacebook._StatusSuccessful" value="Erfolgreich" />
       <Item key="frmFaceBookLogin._Text" value="Bei Facebook anmelden ..." />
-      <Item key="frmAbout.lblSlogant" value="Ein leichter, vielseitiger Bildanzeiger" />
+      <Item key="frmAbout.lblSlogant" value="Ein leichter, vielseitiger Bildbetrachter" />
       <Item key="frmAbout.lblInfo" value="Informationen" />
       <Item key="frmAbout.lblComponent" value="Komponenten" />
       <Item key="frmAbout.lblReferences" value="Referenzen" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="Über" />
       <Item key="frmAbout._PortableText" value="[Portable]" />
       <Item key="frmSetting._Text" value="Einstellungen" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Speichern" />
       <Item key="frmSetting.btnCancel" value="Abbrechen" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Übernehmen" />
       <Item key="frmSetting.lblGeneral" value="Allgemein" />
       <Item key="frmSetting.lblImage" value="Bild" />
       <Item key="frmSetting.lblFileAssociations" value="Dateizuordnungen" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Zeige Startbild" />
       <Item key="frmSetting.chkShowToolBar" value="Zeige Toolbar wenn gestartet wird" />
       <Item key="frmSetting.lblHeadPortableMode" value="Portabler Modus" />
-      <Item key="frmSetting.chkPortableMode" value="Portablen Modus aktivieren" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Der portable Modus ist aktiviert" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Der portable Modus ist im Installationsverzeichnis deaktiviert:&#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Andere" />
       <Item key="frmSetting.chkAutoUpdate" value="Automatisch nach Aktualisierungen suchen" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Mehrere Programminstanzen erlauben" />
       <Item key="frmSetting.chkESCToQuit" value="Programm mit der ESC-Taste beenden" />
       <Item key="frmSetting.chkConfirmationDelete" value="Dialog zur Bestätigung des Löschvorgangs anzeigen" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Bild-Scrollbalken anzeigen" />
       <Item key="frmSetting.lblBackGroundColor" value="Hintergrundfarbe" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Zurücksetzen" />
       <Item key="frmSetting.lblHeadImageLoading" value="Bild lädt" />
       <Item key="frmSetting.chkFindChildFolder" value="Bilder auch aus Unterordner anzeigen" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Versteckte Bilder anzeigen" />
       <Item key="frmSetting.chkLoopViewer" value="Starte die Diashow wieder mit dem ersten Bild, wenn das Ende der Liste erreicht wurde" />
       <Item key="frmSetting.chkImageBoosterBack" value="Image Booster aktivieren wenn zum vorherigen Bild gewechselt wird (benötigt ~20% mehr RAM)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Bilder anzeigen nach" />
@@ -177,10 +181,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Starte die Diashow wieder mit dem ersten Bild, wenn das Ende der Liste erreicht wurde" />
       <Item key="frmSetting.lblSlideshowInterval" value="Diashow Intervall: {0} Sekunden" />
       <Item key="frmSetting.lblHeadImageEditing" value="Bildbearbeitung" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Speichern des angezeigten Bildes nach dem Drehen" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Auswählen einer Anwendung zur Bildbearbeitung" />
       <Item key="frmSetting.btnEditEditExt" value="Bearbeiten" />
       <Item key="frmSetting.btnEditResetExt" value="Auf Standard zurücksetzen" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Alle Erweiterungen bearbeiten" />
+      <Item key="frmSetting._allExtensions" value="Alle Erweiterungen" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Dateierweiterung" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Programmname" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Programmpfad" />
@@ -194,7 +200,7 @@
       <Item key="frmSetting.btnResetExt" value="Auf Standard zurücksetzen" />
       <Item key="frmSetting.lblLanguageText" value="Installierte Sprachen" />
       <Item key="frmSetting.lnkRefresh" value="&gt; Aktualisieren" />
-      <Item key="frmSetting.lblLanguageWarning" value="Dieses Sprachpaket ist nicht kompatibel mit Version {0}" />
+      <Item key="frmSetting.lblLanguageWarning" value="Dieses Sprachpaket ist evtl. nicht kompatibel mit Version {0}" />
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Neues Sprachpaket installieren (*.iglang)" />
       <Item key="frmSetting.lnkCreateNew" value="&gt; Erstelle neues Sprachpaket" />
       <Item key="frmSetting.lnkEdit" value="&gt; Bearbeite ausgewähltes Sprachpaket" />

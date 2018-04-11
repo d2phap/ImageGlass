@@ -1,16 +1,18 @@
-﻿<ImageGlass>
+<ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="4.0.0.0" isRightToLeftLayout="No" />
+    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="4.5.10.30" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Формат по умолчанию" />
       <Item key="_.ImageFormatGroup.Optional" value="Дополнительные форматы" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass не может открыть это изображение, т.к. файл поврежден или не поддерживается." />
+      <Item key="frmMain._ImageNotExist" value="Такого изображения не существует" />
       <Item key="frmMain.btnBack" value="Предыдущее изображение (Стрелка влево / PageUp)" />
       <Item key="frmMain.btnNext" value="Следующее изображение (Стрелка вправо / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Повернуть против часовой стрелки (Ctrl + ,)" />
       <Item key="frmMain.btnRotateRight" value="Повернуть по часовой стрелке (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Увеличить (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Уменьшить (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="Масштаб по размеру (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Истинный размер (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Зафиксировать масштаб (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Масштаб по ширине (Ctrl + W)" />
@@ -92,7 +94,7 @@
       <Item key="frmMain._GotoDialogText" value="Введите индекс изображения, чтобы просмотреть его, и нажмите {ENTER}" />
       <Item key="frmMain._DeleteDialogText" value="Удалить файл '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Подтвердить" />
-      <Item key="frmMain._ExtractFrameText" value="Extracting image frames. Please select output folder." />
+      <Item key="frmMain._ExtractFrameText" value="Извлечение кадров изображения. Пожалуйста, выберите выходную папку." />
       <Item key="frmMain._FullScreenMessage" value="Нажмите Alt + Enter для выхода из полноэкранного режима.&#xA;Или Ctrl + F1 чтобы показать меню." />
       <Item key="frmMain._SlideshowMessage" value="Нажмите ESC чтобы выйти из Cлайд-шоу.&#xA; Правая кнопка мыши, чтобы открыть контекстное меню." />
       <Item key="frmMain._SlideshowMessagePause" value="Приостановить слайд-шоу" />
@@ -131,9 +133,9 @@
       <Item key="frmAbout._Text" value="О программе" />
       <Item key="frmAbout._PortableText" value="[Портативный]" />
       <Item key="frmSetting._Text" value="Настройки" />
-      <Item key="frmSetting.btnSave" value="Save" />
+      <Item key="frmSetting.btnSave" value="Сохранить" />
       <Item key="frmSetting.btnCancel" value="Отмена" />
-      <Item key="frmSetting.btnApply" value="Apply" />
+      <Item key="frmSetting.btnApply" value="Применить" />
       <Item key="frmSetting.lblGeneral" value="Главные настройки" />
       <Item key="frmSetting.lblImage" value="Изображение" />
       <Item key="frmSetting.lblFileAssociations" value="Ассоциации файлов" />
@@ -142,17 +144,19 @@
       <Item key="frmSetting.chkWelcomePicture" value="Показать картинку приветствия" />
       <Item key="frmSetting.chkShowToolBar" value="Показать панель инструментов при запуске" />
       <Item key="frmSetting.lblHeadPortableMode" value="Портативный режим" />
-      <Item key="frmSetting.chkPortableMode" value="Включить портативный режим" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="Портативный режим включён" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="Портативный режим отключен в установленной папке: &#xD;&#xA;{0}" />
       <Item key="frmSetting.lblHeadOthers" value="Другие настройки" />
       <Item key="frmSetting.chkAutoUpdate" value="Проверка обновлений автоматически" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Разрешить несколько экземпляров программы" />
       <Item key="frmSetting.chkESCToQuit" value="Разрешить нажатие ESC для выхода из приложения" />
       <Item key="frmSetting.chkConfirmationDelete" value="Отображать диалоговое окно подтверждения удаления" />
-      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars" />
+      <Item key="frmSetting.chkShowScrollbar" value="Отображать списки прокрутки" />
       <Item key="frmSetting.lblBackGroundColor" value="Цвет фона" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Сброс" />
       <Item key="frmSetting.lblHeadImageLoading" value="Загрузка изображения" />
       <Item key="frmSetting.chkFindChildFolder" value="Искать изображения во вложенных папках" />
+      <Item key="frmSetting.chkShowHiddenImages" value="Показывать скрытые изображения" />
       <Item key="frmSetting.chkLoopViewer" value="Повторять слайд-шоу с первого изображения при достижении конца" />
       <Item key="frmSetting.chkImageBoosterBack" value="Ускоренная загрузка изображений в навигации (требуется на ~20% больше ОЗУ)" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок загрузки изображений" />
@@ -163,8 +167,17 @@
       <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Время последней записи" />
       <Item key="frmSetting.cmbImageOrder._Extension" value="Расширение" />
       <Item key="frmSetting.cmbImageOrder._Random" value="Случайный" />
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Действие колёсика мыши" />
+      <Item key="frmSetting.lblMouseWheel" value="Колесо мыши" />
+      <Item key="frmSetting.lblMouseWheelAlt" value="Колесо мыши + Alt" />
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Колесо мыши + Ctrl" />
+      <Item key="frmSetting.lblMouseWheelShift" value="Колесо мыши + Shift" />
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Ничего не делать" />
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Масштабировать" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Прокрутка по вертикали" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Прокрутка по горизонтали" />
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предыдущее/следующее изображение" />
       <Item key="frmSetting.lblHeadZooming" value="Масштабирование" />
-      <Item key="frmSetting.chkMouseNavigation" value="Использовать колесо мыши для просмотра изображений, удерживая клавишу CTRL для масштабирования" />
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимизация масштаба" />
       <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматически" />
       <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Пиксели с размытыми краями" />
@@ -177,10 +190,12 @@
       <Item key="frmSetting.chkLoopSlideshow" value="Повторять слайд-шоу с первого изображения при достижении конца" />
       <Item key="frmSetting.lblSlideshowInterval" value="Слайд-шоу Интервал: {0} секунд" />
       <Item key="frmSetting.lblHeadImageEditing" value="Редактирование изображений" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Сохранить изображение после поворота" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="Выберите приложение для редактирования изображений" />
       <Item key="frmSetting.btnEditEditExt" value="Редактировать" />
       <Item key="frmSetting.btnEditResetExt" value="Восстановить по умолчанию" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions" />
-      <Item key="frmSetting._allExtensions" value="all extensions" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Редактировать все расширения" />
+      <Item key="frmSetting._allExtensions" value="Все расширения" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Расширение файла" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Имя приложения" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путь к приложению" />

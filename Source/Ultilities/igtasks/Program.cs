@@ -24,6 +24,7 @@ using igtasks;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.FileAssociations;
+using ImageGlass.Services.Configuration;
 
 namespace adtasks
 {
@@ -79,7 +80,7 @@ namespace adtasks
                     }
                     else //style == "0"
                     {
-                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
+                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Current);
                     }
                 }
                 else
@@ -109,7 +110,7 @@ namespace adtasks
             #region delassociations
             else if (topcmd == "delassociations")
             {
-                Functions.DeleteRegistryAssociations(true);
+                Functions.DeleteRegistryAssociations(GlobalSetting.AllImageFormats, true);
 
                 Application.Exit();
             }

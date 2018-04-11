@@ -28,7 +28,11 @@ namespace ImageGlass.Core
                 case ".gif":
                     using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                     {
-                        bmp = new Bitmap(path, true);
+                        var ms = new MemoryStream();
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
+
+                        bmp = new Bitmap(ms, true);
                     }
                     break;
 
