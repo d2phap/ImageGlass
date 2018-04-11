@@ -1977,7 +1977,7 @@ namespace ImageGlass
         private void sysWatch_Changed(object sender, FileSystemEventArgs e)
         {
             // Only watch the supported file types
-            var ext = Path.GetExtension(e.Name);
+            var ext = Path.GetExtension(e.Name).ToLower();
             if (!GlobalSetting.AllImageFormats.Contains(ext))
             {
                 return;
@@ -1985,8 +1985,8 @@ namespace ImageGlass
 
             var timeDiff = (DateTime.Now - _lastActionTime).TotalSeconds;
 
-            Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.fff") + ": " + e.ChangeType.ToString());
-            Console.WriteLine(timeDiff.ToString());
+            //Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.fff") + ": " + e.ChangeType.ToString());
+            //Console.WriteLine(timeDiff.ToString());
 
 
             //Formular
@@ -2026,8 +2026,11 @@ namespace ImageGlass
             // need to wait few ms to check the next action
             else if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
-                Timer tim_waitingForNextActionAfterDelete = new Timer();
-                tim_waitingForNextActionAfterDelete.Interval = 50;
+                Timer tim_waitingForNextActionAfterDelete = new Timer
+                {
+                    Interval = 50
+                };
+
                 tim_waitingForNextActionAfterDelete.Tick += Tim_waitingForNextActionAfterDelete_Tick;
                 tim_waitingForNextActionAfterDelete.Tag = e.FullPath;
                 tim_waitingForNextActionAfterDelete.Enabled = true;
