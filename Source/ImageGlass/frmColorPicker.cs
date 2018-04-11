@@ -14,9 +14,7 @@ namespace ImageGlass
 {
     public partial class frmColorPicker : Form
     {
-
-        // opacity when the mouse is out of this form
-        private const double FormOpacity = 0.9;
+        
         // default location offset on the parent form
         private static Point DefaultLocationOffset = new Point(20, 80);
 
@@ -33,17 +31,12 @@ namespace ImageGlass
 
             //apply current theme
             this.BackColor = txtRGB.BackColor = txtHEX.BackColor = LocalSetting.Theme.BackgroundColor;
-            lblPixel.ForeColor = lblRgb.ForeColor = lblHex.ForeColor = LocalSetting.Theme.TextInfoColor;
-
-
-            // set the opacity and events to manage it
-            Opacity = FormOpacity;
-            foreach (var child in Controls)
-            {
-                ((Control)child).MouseEnter += frmColorPicker_MouseEnter;
-            }
+            lblPixel.ForeColor = lblRgb.ForeColor = lblHex.ForeColor = txtRGB.ForeColor = txtHEX.ForeColor = LocalSetting.Theme.TextInfoColor;
+            panel1.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            
 
             DefaultLocationOffset = new Point((int)(DefaultLocationOffset.X * DPIScaling.GetDPIScaleFactor()), (int)(DefaultLocationOffset.Y * DPIScaling.GetDPIScaleFactor()));
+            
         }
 
         public void SetImageBox(ImageBox imgBox)
@@ -334,8 +327,7 @@ namespace ImageGlass
             if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
                 && _cursorPos.Y < _imgBox.Image.Height)
             {
-                Color color = _bmpBooster.get(_cursorPos.X, _cursorPos.Y);
-                //_DisplayColor(color, _cursorPos);
+                lblPixel.Text = string.Format("Pixel: ({0}, {1})", _cursorPos.X, _cursorPos.Y);
             }
         }
 
@@ -350,7 +342,7 @@ namespace ImageGlass
                 && _cursorPos.Y < _imgBox.Image.Height)
             {
                 Color color = _bmpBooster.get(_cursorPos.X, _cursorPos.Y);
-                _DisplayColor(color, _cursorPos);
+                _DisplayColor(color);
             }
         }
 
@@ -374,10 +366,10 @@ namespace ImageGlass
 
         #region Display data
 
-        private void _DisplayColor(Color color, Point pixel)
+        private void _DisplayColor(Color color)
         {
             panelColor.BackColor = color;
-            lblPixel.Text = string.Format("Pixel: ({0}, {1})", pixel.X, pixel.Y);
+            
             txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
             txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
         }
@@ -395,10 +387,17 @@ namespace ImageGlass
             var txt = (TextBox)sender;
             txt.SelectAll();
         }
-        
+
+
+
         #endregion
 
 
 
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
