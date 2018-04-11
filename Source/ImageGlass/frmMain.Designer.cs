@@ -122,6 +122,7 @@
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainExtensionManager = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
@@ -1289,12 +1290,13 @@
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainExtensionManager});
+            this.mnuMainExtensionManager,
+            this.mnuMainColorPicker});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
             this.mnuMainTools.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainTools.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainTools.Size = new System.Drawing.Size(297, 23);
             this.mnuMainTools.Text = "&Tools";
             this.mnuMainTools.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1310,6 +1312,19 @@
             this.mnuMainExtensionManager.Size = new System.Drawing.Size(354, 31);
             this.mnuMainExtensionManager.Text = "&Extension manager";
             this.mnuMainExtensionManager.Click += new System.EventHandler(this.mnuMainExtensionManager_Click);
+            // 
+            // mnuMainColorPicker
+            // 
+            this.mnuMainColorPicker.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainColorPicker.Name = "mnuMainColorPicker";
+            this.mnuMainColorPicker.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainColorPicker.ShortcutKeyDisplayString = "";
+            this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.K)));
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(275, 23);
+            this.mnuMainColorPicker.Text = "&Color picker";
+            this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
             // mnuMainSettings
             // 
@@ -1604,6 +1619,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomToFit;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainColorPicker;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripButton btnMenu;
     }

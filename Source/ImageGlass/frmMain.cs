@@ -1883,6 +1883,7 @@ namespace ImageGlass
 
                 mnuMainTools.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainTools"];
                 mnuMainExtensionManager.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtensionManager"];
+                mnuMainColorPicker.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainColorPicker"];
 
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
@@ -3377,6 +3378,21 @@ namespace ImageGlass
             LocalSetting.FExtension.Activate();
         }
 
+        private void mnuMainColorPicker_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.FColorPicker.IsDisposed)
+            {
+                LocalSetting.FColorPicker = new frmColorPicker();
+            }
+            GlobalSetting.IsForcedActive = true;
+
+            if (!LocalSetting.FColorPicker.Visible)
+            {
+                LocalSetting.FColorPicker.SetImageBox(picMain);
+                LocalSetting.FColorPicker.Show(this);
+            }
+        }
+
         private void mnuMainSettings_Click(object sender, EventArgs e)
         {
             if (LocalSetting.FSetting.IsDisposed)
@@ -3498,7 +3514,6 @@ namespace ImageGlass
             }
             maxWidth += 10; // Add a little wiggle room
 
-
             int farRight = pos.X + mnuMain.Width + maxWidth;
             int farLeft = pos.X - maxWidth;
             
@@ -3519,12 +3534,8 @@ namespace ImageGlass
 
 
 
-        
-
-
 
         #endregion
-
 
     }
 }
