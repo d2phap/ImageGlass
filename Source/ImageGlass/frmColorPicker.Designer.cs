@@ -162,8 +162,6 @@
             this.Text = "Color Picker";
             this.TopMost = true;
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
-            this.MouseEnter += new System.EventHandler(this.frmColorPicker_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.frmColorPicker_MouseLeave);
             this.Move += new System.EventHandler(this.frmColorPicker_Move);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

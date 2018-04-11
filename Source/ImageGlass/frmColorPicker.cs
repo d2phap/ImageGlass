@@ -238,6 +238,8 @@ namespace ImageGlass
 
         private void Owner_Move(object sender, EventArgs e)
         {
+            if (this.Owner == null) return;
+
             formOwnerMoving = true;
 
             var parentOffset = new Point(this.Owner.Left - parentLocation.X, this.Owner.Top - parentLocation.Y);
@@ -347,21 +349,7 @@ namespace ImageGlass
         }
 
         #endregion
-
-
-        #region Opacity events
-
-        private void frmColorPicker_MouseLeave(object sender, EventArgs e)
-        {
-            Opacity = FormOpacity;
-        }
-
-        private void frmColorPicker_MouseEnter(object sender, EventArgs e)
-        {
-            Opacity = 1;
-        }
-
-        #endregion
+        
 
 
         #region Display data

@@ -3391,6 +3391,8 @@ namespace ImageGlass
                 LocalSetting.FColorPicker.SetImageBox(picMain);
                 LocalSetting.FColorPicker.Show(this);
             }
+
+            this.Activate();
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e)
