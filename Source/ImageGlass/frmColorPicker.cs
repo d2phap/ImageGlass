@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using ImageGlass.Theme;
 using System.Runtime.InteropServices;
+using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
 {
@@ -16,7 +17,7 @@ namespace ImageGlass
     {
         
         // default location offset on the parent form
-        private static Point DefaultLocationOffset = new Point(20, 80);
+        private static Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(80 * DPIScaling.GetDPIScaleFactor()));
 
         private Form _currentOwner = null;
         private ImageBox _imgBox = null;
@@ -32,10 +33,6 @@ namespace ImageGlass
             //apply current theme
             this.BackColor = txtRGB.BackColor = txtHEX.BackColor = LocalSetting.Theme.BackgroundColor;
             lblPixel.ForeColor = lblRgb.ForeColor = lblHex.ForeColor = txtRGB.ForeColor = txtHEX.ForeColor = LocalSetting.Theme.TextInfoColor;
-            panel1.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
-            
-
-            DefaultLocationOffset = new Point((int)(DefaultLocationOffset.X * DPIScaling.GetDPIScaleFactor()), (int)(DefaultLocationOffset.Y * DPIScaling.GetDPIScaleFactor()));
             
         }
 
@@ -257,14 +254,6 @@ namespace ImageGlass
                 _AttachEventsToParent(_currentOwner);
             }
             
-
-            _locationOffset = DefaultLocationOffset;
-            parentOffset = _locationOffset;
-
-            _SetLocationBasedOnParent();
-            _ResetColor();
-            
-            
             base.OnShown(e);
         }
 
@@ -274,8 +263,7 @@ namespace ImageGlass
             if (Owner == null)
                 return;
 
-            if (Owner.WindowState == FormWindowState.Minimized
-                || !Owner.Visible)
+            if (Owner.WindowState == FormWindowState.Minimized || !Owner.Visible)
             {
                 Visible = false;
                 return;
@@ -329,7 +317,7 @@ namespace ImageGlass
             if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
                 && _cursorPos.Y < _imgBox.Image.Height)
             {
-                lblPixel.Text = string.Format("Pixel: ({0}, {1})", _cursorPos.X, _cursorPos.Y);
+                lblPixel.Text = string.Format("({0}, {1})", _cursorPos.X, _cursorPos.Y);
             }
         }
 
@@ -351,15 +339,32 @@ namespace ImageGlass
         #endregion
         
 
-
         #region Display data
 
         private void _DisplayColor(Color color)
         {
             panelColor.BackColor = color;
+
+            if (GlobalSetting.IsColorPickerRGBA)
+            {
+                txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, color.A);
+            }
+            else
+            {
+                txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
+            }
+
+            if (GlobalSetting.IsColorPickerHEXA)
+            {
+                txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.R, color.G, color.B, color.A);
+            }
+            else
+            {
+                txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+            }
             
-            txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
-            txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+            
+            lblPixel.ForeColor = InvertColor(color);
         }
 
         private void _ResetColor()
@@ -367,6 +372,33 @@ namespace ImageGlass
             lblPixel.Text = string.Empty;
             txtRGB.Text = string.Empty;
             txtHEX.Text = string.Empty;
+        }
+
+        private Color InvertColor(Color c)
+        {
+            var avgValue = 255 / 2;
+            var brightColorCounts = 0;
+            var list = new List<int>();
+
+            list.Add(c.R);
+            list.Add(c.G);
+            list.Add(c.B);
+
+            list.ForEach(li =>
+            {
+                if (li > avgValue)
+                {
+                    brightColorCounts++;
+                }
+            });
+
+
+            if (brightColorCounts > 1)
+            {
+                return Color.Black;
+            }
+
+            return Color.White;
         }
 
 
@@ -378,14 +410,78 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
 
-
-
-        private void btnClose_Click(object sender, EventArgs e)
+        #region Other Form Events
+        private void frmColorPicker_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Close();
+            //lblPixel.Text = e.KeyCode.ToString();
+
+
+            #region ESC or CTRL + SHIFT + K
+            //ESC or CTRL + SHIFT + K --------------------------------------------------------
+            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
+                (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
+            {
+                this.Close();
+            }
+            #endregion
         }
+
+
+        private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            LocalSetting.IsColorPickerToolOpening = false;
+            GlobalSetting.IsForcedActive = true;
+
+            //Windows Bound-------------------------------------------------------------------
+            GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
+        }
+
+
+        private void frmColorPicker_Load(object sender, EventArgs e)
+        {
+            //Windows Bound (Position + Size)-------------------------------------------
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", $"0,0,300,160"));
+
+            if (rc.X == 0 && rc.Y == 0)
+            {
+                _locationOffset = DefaultLocationOffset;
+                parentOffset = _locationOffset;
+
+                _SetLocationBasedOnParent();
+            }
+            else
+            {
+                this.Location = rc.Location;
+            }
+
+            _ResetColor();
+
+
+
+            //Color code ----------------------------------------------------------------
+            GlobalSetting.IsColorPickerRGBA = Boolean.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
+            GlobalSetting.IsColorPickerHEXA = Boolean.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
+
+            lblRgb.Text = "RGB:";
+            lblHex.Text = "HEX:";
+
+            if (GlobalSetting.IsColorPickerRGBA)
+            {
+                lblRgb.Text = "RGBA:";
+            }
+
+            if (GlobalSetting.IsColorPickerHEXA)
+            {
+                lblHex.Text = "HEXA:";
+            }
+
+
+        }
+        #endregion
+
     }
 }

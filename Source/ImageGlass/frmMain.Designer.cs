@@ -1296,7 +1296,7 @@
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
             this.mnuMainTools.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainTools.Size = new System.Drawing.Size(297, 23);
+            this.mnuMainTools.Size = new System.Drawing.Size(408, 31);
             this.mnuMainTools.Text = "&Tools";
             this.mnuMainTools.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1315,6 +1315,7 @@
             // 
             // mnuMainColorPicker
             // 
+            this.mnuMainColorPicker.CheckOnClick = true;
             this.mnuMainColorPicker.ForeColor = System.Drawing.Color.Black;
             this.mnuMainColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainColorPicker.Name = "mnuMainColorPicker";
@@ -1322,7 +1323,7 @@
             this.mnuMainColorPicker.ShortcutKeyDisplayString = "";
             this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.K)));
-            this.mnuMainColorPicker.Size = new System.Drawing.Size(275, 23);
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(354, 31);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 

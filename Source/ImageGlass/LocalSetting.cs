@@ -35,6 +35,16 @@ namespace ImageGlass
         private static Theme.Theme _theme;
         private static bool _isThumbnailDimensionChanged = false;
 
+
+        /// <summary>
+        /// Check if frmColorPickerOpening
+        /// </summary>
+        public static bool IsColorPickerToolOpening
+        {
+            get; set;
+        } = false;
+
+
         #region "Properties"
         /// <summary>
         /// Form frmFacebook

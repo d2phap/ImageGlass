@@ -95,7 +95,20 @@ namespace ImageGlass.Services.Configuration
         private static bool _isNewVersionAvailable = false;
 
 
+
+
         #region "Properties"
+
+        /// <summary>
+        /// Check if user wants to display RGBA color code for Color Picker tool
+        /// </summary>
+        public static bool IsColorPickerRGBA { get; set; } = true;
+
+        /// <summary>
+        /// Check if user wants to display HEX with Alpha color code for Color Picker tool
+        /// </summary>
+        public static bool IsColorPickerHEXA { get; set; } = true;
+
 
         /// <summary>
         /// Gets, sets image list

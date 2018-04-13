@@ -697,7 +697,11 @@ namespace ImageGlass
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
                 //exit slideshow
-                if (GlobalSetting.IsPlaySlideShow)
+                if (LocalSetting.IsColorPickerToolOpening)
+                {
+                    mnuMainColorPicker.PerformClick();
+                }
+                else if (GlobalSetting.IsPlaySlideShow)
                 {
                     mnuMainSlideShowExit_Click(null, null);
                 }
@@ -1796,6 +1800,10 @@ namespace ImageGlass
                 //Prevent zooming by scrolling mouse
                 //_isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
 
+
+                mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
+
+
                 #region Update language strings
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
@@ -1893,6 +1901,7 @@ namespace ImageGlass
                 #endregion
 
             }
+            
 
             GlobalSetting.IsForcedActive = false;
         }
@@ -3380,19 +3389,35 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            if (LocalSetting.FColorPicker.IsDisposed)
-            {
-                LocalSetting.FColorPicker = new frmColorPicker();
-            }
-            GlobalSetting.IsForcedActive = true;
+            LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
 
-            if (!LocalSetting.FColorPicker.Visible)
+            //open Color Picker tool
+            if (mnuMainColorPicker.Checked)
             {
-                LocalSetting.FColorPicker.SetImageBox(picMain);
-                LocalSetting.FColorPicker.Show(this);
+                if (LocalSetting.FColorPicker.IsDisposed)
+                {
+                    LocalSetting.FColorPicker = new frmColorPicker();
+                }
+                GlobalSetting.IsForcedActive = true;
+
+                if (!LocalSetting.FColorPicker.Visible)
+                {
+                    LocalSetting.FColorPicker.SetImageBox(picMain);
+                    LocalSetting.FColorPicker.Show(this);
+                }
+
+                this.Activate();
+            }
+            //Close Color picker tool
+            else
+            {
+                if (LocalSetting.FColorPicker != null)
+                {
+                    LocalSetting.FColorPicker.Close();
+                }
             }
 
-            this.Activate();
+            
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e)
