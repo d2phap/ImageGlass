@@ -1720,14 +1720,16 @@ namespace ImageGlass
             GlobalSetting.LoadImageOrderConfig();
 
             //Mouse wheel actions
-            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
             GlobalSetting.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
             GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)cmbMouseWheelCtrl.SelectedIndex;
             GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)cmbMouseWheelShift.SelectedIndex;
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
+
+            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
+            
 
             //IsMouseNavigation
             //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;

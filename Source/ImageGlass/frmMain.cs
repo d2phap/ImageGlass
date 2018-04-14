@@ -1315,7 +1315,7 @@ namespace ImageGlass
             //Load Optional Image Formats
             GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", extGroups[1]);
 
-            if(GlobalSetting.AllImageFormats.Length == 0)
+            if (GlobalSetting.AllImageFormats.Length == 0)
             {
                 //If no formats from settings, we need to load from built-in configs
                 GlobalSetting.LoadBuiltInImageFormats();
@@ -1341,7 +1341,7 @@ namespace ImageGlass
 
             //Show hidden images------------------------------------------------------------
             GlobalSetting.IsShowingHiddenImages = bool.Parse(GlobalSetting.GetConfig("IsShowingHiddenImages", "False"));
-            
+
             //Load is loop back slideshow---------------------------------------------------
             GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
 
@@ -1371,7 +1371,7 @@ namespace ImageGlass
 
             GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
             mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
-            GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;            
+            GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
 
             //Zoom optimization method-------------------------------------------------------
             string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
@@ -1406,7 +1406,7 @@ namespace ImageGlass
 
             //Load background---------------------------------------------------------------
             configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
-            
+
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2, GlobalSetting.NumberFormat));
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
@@ -1439,7 +1439,7 @@ namespace ImageGlass
             var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
             //Get the greater width value
             GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
-            
+
             //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
             GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
 
@@ -1465,7 +1465,7 @@ namespace ImageGlass
             //Get mouse wheel settings -----------------------------------------
             configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
             int mouseWheel;
-            if(int.TryParse(configValue2, out mouseWheel))
+            if (int.TryParse(configValue2, out mouseWheel))
             {
                 if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
                 { }
@@ -1528,7 +1528,7 @@ namespace ImageGlass
             }
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
 
-            
+
             //Get IsConfirmationDelete value --------------------------------------------------
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
 
@@ -1539,9 +1539,9 @@ namespace ImageGlass
             configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
             string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            if(editingAssoclist.Length > 0)
+            if (editingAssoclist.Length > 0)
             {
-                foreach(var configString in editingAssoclist)
+                foreach (var configString in editingAssoclist)
                 {
                     try
                     {
@@ -1579,7 +1579,7 @@ namespace ImageGlass
                 mnuMainColorPicker.PerformClick();
             }
 
-            
+
         }
 
 
