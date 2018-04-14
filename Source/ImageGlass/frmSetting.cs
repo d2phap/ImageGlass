@@ -1665,6 +1665,10 @@ namespace ImageGlass
             GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
 
+            //IsShowColorPickerOnStartup
+            GlobalSetting.IsShowColorPickerOnStartup = chkShowColorPicker.Checked;
+            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", GlobalSetting.IsShowColorPickerOnStartup.ToString());
+
             //AutoUpdate
             if (chkAutoUpdate.Checked)
             {
