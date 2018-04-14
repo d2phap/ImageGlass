@@ -41,14 +41,11 @@ namespace ImageGlass
             if (_imgBox != null)
             {
                 _imgBox.MouseMove -= _imgBox_MouseMove;
-                _imgBox.ImageChanged -= _imgBox_ImageChanged;
             }
 
             _imgBox = imgBox;
-            _imgBox_ImageChanged(this, EventArgs.Empty);
 
             _imgBox.MouseMove += _imgBox_MouseMove;
-            _imgBox.ImageChanged += _imgBox_ImageChanged;
             _imgBox.Click += _imgBox_Click;
         }
 
@@ -288,20 +285,7 @@ namespace ImageGlass
             if (_imgBox != null)
             {
                 _imgBox.MouseMove -= _imgBox_MouseMove;
-                _imgBox.ImageChanged -= _imgBox_ImageChanged;
-            }
-        }
-
-        private void _imgBox_ImageChanged(object sender, EventArgs e)
-        {
-            if (_bmpBooster != null)
-            {
-                _bmpBooster.Dispose();
-            }
-
-            if (_imgBox.Image != null)
-            {
-                _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
+                _imgBox.Click -= _imgBox_Click;
             }
         }
 
@@ -323,10 +307,17 @@ namespace ImageGlass
 
         private void _imgBox_Click(object sender, EventArgs e)
         {
-            if (_imgBox.Image == null || _bmpBooster == null)
+            if (_imgBox.Image == null)
             {
                 return;
             }
+
+            if (_bmpBooster != null)
+            {
+                _bmpBooster.Dispose();
+            }
+            _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
+            
 
             if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
                 && _cursorPos.Y < _imgBox.Image.Height)
