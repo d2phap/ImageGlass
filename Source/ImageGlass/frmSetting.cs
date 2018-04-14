@@ -233,6 +233,7 @@ namespace ImageGlass
             RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             Text = lang["frmSetting._Text"];
 
+            #region Tabs label
             lblGeneral.Text = lang["frmSetting.lblGeneral"];
             lblImage.Text = lang["frmSetting.lblImage"];
             lblFileAssociations.Text = lang["frmSetting.lblFileAssociations"];
@@ -240,11 +241,14 @@ namespace ImageGlass
             btnSave.Text = lang["frmSetting.btnSave"];
             btnCancel.Text = lang["frmSetting.btnCancel"];
             btnApply.Text = lang["frmSetting.btnApply"];
+            #endregion
 
-            //General tab
+
+            #region GENERAL TAB
             lblHeadStartup.Text = lang["frmSetting.lblHeadStartup"];//
             chkWelcomePicture.Text = lang["frmSetting.chkWelcomePicture"];
             chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
+            chkShowColorPicker.Text = lang["frmSetting.chkShowColorPicker"];
             chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
             lblHeadPortableMode.Text = lang["frmSetting.lblHeadPortableMode"];//
@@ -266,8 +270,10 @@ namespace ImageGlass
             chkShowScrollbar.Text = lang["frmSetting.chkShowScrollbar"];
             lblBackGroundColor.Text = lang["frmSetting.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = lang["frmSetting.lnkResetBackgroundColor"];
+            #endregion
 
-            //Image tab
+
+            #region IMAGE TAB
             lblHeadImageLoading.Text = lang["frmSetting.lblHeadImageLoading"];//
             chkFindChildFolder.Text = lang["frmSetting.chkFindChildFolder"];
             chkShowHiddenImages.Text = lang["frmSetting.chkShowHiddenImages"];
@@ -304,10 +310,10 @@ namespace ImageGlass
             clnAppName.Text = lang["frmSetting.lvImageEditing.clnAppName"];
             clnAppPath.Text = lang["frmSetting.lvImageEditing.clnAppPath"];
             clnAppArguments.Text = lang["frmSetting.lvImageEditing.clnAppArguments"];
+            #endregion
 
 
-
-            //File Associations tab
+            #region FILE ASSOCIATION TAB
             var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             lblExtensionsGroupDescription.Text = lang["frmSetting.lblExtensionsGroupDescription"];
@@ -319,9 +325,10 @@ namespace ImageGlass
             btnResetExt.Text = lang["frmSetting.btnResetExt"];
             lvExtension.Groups[(int)ImageFormatGroup.Default].Header = lang["_.ImageFormatGroup.Default"];
             lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = lang["_.ImageFormatGroup.Optional"];
+            #endregion
 
 
-            //Language tab
+            #region LANGUAGE TAB
             lblLanguageText.Text = lang["frmSetting.lblLanguageText"];
             lnkRefresh.Text = lang["frmSetting.lnkRefresh"];
             lblLanguageWarning.Text = string.Format(lang["frmSetting.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
@@ -329,9 +336,10 @@ namespace ImageGlass
             lnkCreateNew.Text = lang["frmSetting.lnkCreateNew"];
             lnkEdit.Text = lang["frmSetting.lnkEdit"];
             lnkGetMoreLanguage.Text = lang["frmSetting.lnkGetMoreLanguage"];
+            #endregion
 
 
-            //Toolbar tab
+            #region TOOLBAR TAB
             _separatorText = lang["frmSetting.txtSeparator"];
             lblToolbar.Text = lang["frmSetting.lblToolbar"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
@@ -343,11 +351,20 @@ namespace ImageGlass
             tip1.SetToolTip(btnMoveDown, lang["frmSetting.btnMoveDownTT"]);
             tip1.SetToolTip(btnMoveLeft, lang["frmSetting.btnMoveLeftTT"]);
             tip1.SetToolTip(btnMoveRight, lang["frmSetting.btnMoveRightTT"]);
+            #endregion
 
+
+            #region COLOR PICKER TAB
+            lblColorCodeFormat.Text = lang["frmSetting.lblColorCodeFormat"];
+            chkColorUseRGBA.Text = lang["frmSetting.chkColorUseRGBA"];
+            chkColorUseHEXA.Text = lang["frmSetting.chkColorUseHEXA"];
+            chkColorUseHSLA.Text = lang["frmSetting.chkColorUseHSLA"];
+            #endregion
 
 
             extList = null;
         }
+
 
         /// <summary>
         /// TAB LABEL CLICK
@@ -374,22 +391,28 @@ namespace ImageGlass
                 case "lblToolbar":
                     tab1.SelectedTab = tabToolbar;
                     break;
+                case "lblColorPicker":
+                    tab1.SelectedTab = tabColorPicker;
+                    break;
             }
         }
 
+
         private void tab1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblGeneral.Tag = 0;
-            lblImage.Tag = 0;
-            lblFileAssociations.Tag = 0;
-            lblLanguage.Tag = 0;
-            lblToolbar.Tag = 0;
+            lblGeneral.Tag =
+            lblImage.Tag =
+            lblFileAssociations.Tag =
+            lblLanguage.Tag =
+            lblToolbar.Tag =
+            lblColorPicker.Tag = 0;
 
-            lblGeneral.BackColor = M_COLOR_MENU_NORMAL;
-            lblImage.BackColor = M_COLOR_MENU_NORMAL;
-            lblFileAssociations.BackColor = M_COLOR_MENU_NORMAL;
-            lblLanguage.BackColor = M_COLOR_MENU_NORMAL;
-            lblToolbar.BackColor = M_COLOR_MENU_NORMAL;
+            lblGeneral.BackColor =
+            lblImage.BackColor =
+            lblFileAssociations.BackColor =
+            lblLanguage.BackColor =
+            lblToolbar.BackColor =
+            lblColorPicker.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -427,6 +450,13 @@ namespace ImageGlass
 
                 LoadTabToolbar();
             }
+            else if (tab1.SelectedTab == tabColorPicker)
+            {
+                lblColorPicker.Tag = 1;
+                lblColorPicker.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabColorPicker();
+            }
         }
 
 
@@ -442,6 +472,9 @@ namespace ImageGlass
 
             //Get value of chkShowToolBar
             chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
+
+            //Get value of chkShowColorPicker
+            chkShowColorPicker.Checked = GlobalSetting.IsShowColorPickerOnStartup;
 
             //Get Portable mode value -----------------------------------------------------------
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
@@ -1593,6 +1626,18 @@ namespace ImageGlass
         #endregion
 
 
+        #region TAB COLOR PICKER
+        private void LoadTabColorPicker()
+        {
+            chkColorUseRGBA.Checked = GlobalSetting.IsColorPickerRGBA;
+            chkColorUseHEXA.Checked = GlobalSetting.IsColorPickerHEXA;
+            chkColorUseHSLA.Checked = GlobalSetting.IsColorPickerHSLA;
+        }
+        
+
+        #endregion
+
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -1675,14 +1720,16 @@ namespace ImageGlass
             GlobalSetting.LoadImageOrderConfig();
 
             //Mouse wheel actions
-            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
             GlobalSetting.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
             GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)cmbMouseWheelCtrl.SelectedIndex;
             GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)cmbMouseWheelShift.SelectedIndex;
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
+
+            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
+            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
+            
 
             //IsMouseNavigation
             //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
@@ -1736,10 +1783,26 @@ namespace ImageGlass
             ApplyToolbarChanges();
             #endregion
 
+
+            #region Color Picker tab ---------------------------------------
+            GlobalSetting.IsColorPickerRGBA = chkColorUseRGBA.Checked;
+            GlobalSetting.SetConfig("IsColorPickerRGBA", GlobalSetting.IsColorPickerRGBA.ToString());
+
+            GlobalSetting.IsColorPickerHEXA = chkColorUseHEXA.Checked;
+            GlobalSetting.SetConfig("IsColorPickerHEXA", GlobalSetting.IsColorPickerHEXA.ToString());
+
+            GlobalSetting.IsColorPickerHSLA= chkColorUseHEXA.Checked;
+            GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
+
+            #endregion
+
+
             //Force frmMain applying the configurations
             GlobalSetting.IsForcedActive = true;
         }
+
         #endregion
 
+        
     }
 }

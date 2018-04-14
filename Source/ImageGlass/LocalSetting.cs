@@ -1,6 +1,6 @@
-﻿/*
+/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -28,10 +28,22 @@ namespace ImageGlass
         private static frmFacebook _fFacebook;
         private static frmSetting _fSetting;
         private static frmExtension _fExtension;
+        private static frmColorPicker _fColorPicker;
+      
         private static string _imageModifiedPath = "";
         private static bool _isResetScrollPosition = true;
         private static Theme.Theme _theme;
         private static bool _isThumbnailDimensionChanged = false;
+
+
+        /// <summary>
+        /// Check if frmColorPickerOpening
+        /// </summary>
+        public static bool IsColorPickerToolOpening
+        {
+            get; set;
+        } = false;
+
 
         #region "Properties"
         /// <summary>
@@ -59,6 +71,15 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fExtension); }
             set { _fExtension = value; }
+        }
+
+        /// <summary>
+        /// Form frmColorPicker
+        /// </summary>
+        public static frmColorPicker FColorPicker
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
+            set { _fColorPicker = value; }
         }
 
         /// <summary>

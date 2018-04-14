@@ -56,4 +56,5 @@ namespace ImageGlass.Services.Configuration
         SCROLL_HORIZONTAL = 3,
         BROWSE_IMAGES = 4
     }
+    
 }
