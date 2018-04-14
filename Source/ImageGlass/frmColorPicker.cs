@@ -29,12 +29,8 @@ namespace ImageGlass
         public frmColorPicker()
         {
             InitializeComponent();
-
-            //apply current theme
-            this.BackColor = txtRGB.BackColor = txtHEX.BackColor = LocalSetting.Theme.BackgroundColor;
-            lblPixel.ForeColor = lblRgb.ForeColor = lblHex.ForeColor = txtRGB.ForeColor = txtHEX.ForeColor = LocalSetting.Theme.TextInfoColor;
-            
         }
+
 
         public void SetImageBox(ImageBox imgBox)
         {
@@ -216,18 +212,10 @@ namespace ImageGlass
             frmOwner.LocationChanged -= FrmOwner_LocationChanged;
         }
 
+
         private void FrmOwner_Deactivate(object sender, EventArgs e)
         {
             this.TopMost = false;
-        }
-
-        private void frmColorPicker_Move(object sender, EventArgs e)
-        {
-            if (!formOwnerMoving)
-            {
-                _locationOffset = new Point(this.Left - this.Owner.Left, this.Top - this.Owner.Top);
-                parentOffset = _locationOffset;
-            }
         }
 
         private void Owner_Move(object sender, EventArgs e)
@@ -240,6 +228,15 @@ namespace ImageGlass
 
             _SetLocationBasedOnParent();
             parentLocation = this.Owner.Location;
+        }
+
+        private void frmColorPicker_Move(object sender, EventArgs e)
+        {
+            if (!formOwnerMoving)
+            {
+                _locationOffset = new Point(this.Left - this.Owner.Left, this.Top - this.Owner.Top);
+                parentOffset = _locationOffset;
+            }
         }
 
         protected override void OnShown(EventArgs e)
@@ -317,18 +314,18 @@ namespace ImageGlass
                 _bmpBooster.Dispose();
             }
             _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
-            
+
 
             if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
                 && _cursorPos.Y < _imgBox.Image.Height)
             {
-                Color color = _bmpBooster.get(_cursorPos.X, _cursorPos.Y);
+                Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
                 _DisplayColor(color);
             }
         }
 
         #endregion
-        
+
 
         #region Display data
 
@@ -336,25 +333,50 @@ namespace ImageGlass
         {
             panelColor.BackColor = color;
 
+            //RGBA color -----------------------------------------------
             if (GlobalSetting.IsColorPickerRGBA)
             {
-                txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, color.A);
+                lblRGB.Text = "RGBA:";
+                txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, Math.Round(color.A / 255.0, 3));
             }
             else
             {
+                lblRGB.Text = "RGB:";
                 txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
             }
 
+            //HEXA color -----------------------------------------------
             if (GlobalSetting.IsColorPickerHEXA)
             {
+                lblHEX.Text = "HEXA:";
                 txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.R, color.G, color.B, color.A);
             }
             else
             {
+                lblHEX.Text = "HEX:";
                 txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
             }
+
+            //CMYK color -----------------------------------------------
+            var cmyk = RGBToCMYK(color);
+            txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
+
+            //HSLA color -----------------------------------------------
+            var hsla = RGBAToHSLA(color);
+            if (GlobalSetting.IsColorPickerHSLA)
+            {
+                lblHSL.Text = "HSLA:";
+                txtHSL.Text = string.Format("{0}, {1}%, {2}%, {3}", hsla[0], hsla[1], hsla[2], hsla[3]);
+            }
+            else
+            {
+                lblHSL.Text = "HSL:";
+                txtHSL.Text = string.Format("{0}, {1}%, {2}%", hsla[0], hsla[1], hsla[2]);
+            }
+
+                
             
-            
+
             lblPixel.ForeColor = InvertColor(color);
         }
 
@@ -399,7 +421,35 @@ namespace ImageGlass
             txt.SelectAll();
         }
 
+        private int[] RGBToCMYK(Color c)
+        {
+            if (c.R == 0 && c.G == 0 && c.B == 0)
+            {
+                return new[] { 0, 0, 0, 1 };
+            }
 
+            double black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
+            double cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
+            double magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
+            double yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
+
+            return new[] {
+                (int) Math.Round(cyan*100),
+                (int) Math.Round(magenta*100),
+                (int) Math.Round(yellow*100),
+                (int) Math.Round(black*100)
+            };
+        }
+
+        private float[] RGBAToHSLA(Color c)
+        {
+            float h = (float)Math.Round(c.GetHue());
+            float s = (float)Math.Round(c.GetSaturation() * 100);
+            float l = (float)Math.Round(c.GetBrightness() * 100);
+            float a = (float)Math.Round(c.A / 255.0, 3);
+
+            return new[] { h, s, l, a };
+        }
 
 
         #endregion
@@ -434,6 +484,26 @@ namespace ImageGlass
 
         private void frmColorPicker_Load(object sender, EventArgs e)
         {
+            //apply current theme ------------------------------------------------------
+            this.BackColor = 
+                txtRGB.BackColor = 
+                txtHEX.BackColor = 
+                txtCMYK.BackColor = 
+                txtHSL.BackColor = 
+                LocalSetting.Theme.BackgroundColor;
+
+            lblPixel.ForeColor = 
+                lblRGB.ForeColor = 
+                lblHEX.ForeColor = 
+                lblCMYK.ForeColor =
+                lblHSL.ForeColor =
+                txtRGB.ForeColor = 
+                txtHEX.ForeColor = 
+                txtCMYK.ForeColor = 
+                txtHSL.ForeColor = 
+                LocalSetting.Theme.TextInfoColor;
+
+
             //Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", $"0,0,300,160"));
 
@@ -450,29 +520,30 @@ namespace ImageGlass
             }
 
             _ResetColor();
+            
 
-
-
-            //Color code ----------------------------------------------------------------
-            GlobalSetting.IsColorPickerRGBA = Boolean.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
-            GlobalSetting.IsColorPickerHEXA = Boolean.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
-
-            lblRgb.Text = "RGB:";
-            lblHex.Text = "HEX:";
+            lblRGB.Text = "RGB:";
+            lblHEX.Text = "HEX:";
+            lblHSL.Text = "HSL:";
 
             if (GlobalSetting.IsColorPickerRGBA)
             {
-                lblRgb.Text = "RGBA:";
+                lblRGB.Text = "RGBA:";
             }
-
             if (GlobalSetting.IsColorPickerHEXA)
             {
-                lblHex.Text = "HEXA:";
+                lblHEX.Text = "HEXA:";
+            }
+            if (GlobalSetting.IsColorPickerHSLA)
+            {
+                lblHSL.Text = "HSLA:";
             }
 
 
         }
+        
         #endregion
+
 
     }
 }

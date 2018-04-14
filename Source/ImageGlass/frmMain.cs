@@ -697,11 +697,7 @@ namespace ImageGlass
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
                 //exit slideshow
-                if (LocalSetting.IsColorPickerToolOpening)
-                {
-                    mnuMainColorPicker.PerformClick();
-                }
-                else if (GlobalSetting.IsPlaySlideShow)
+                if (GlobalSetting.IsPlaySlideShow)
                 {
                     mnuMainSlideShowExit_Click(null, null);
                 }
@@ -1569,6 +1565,21 @@ namespace ImageGlass
 
             //Get IsNewVersionAvailable------------------------------------------------------
             GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
+
+            //Get Color code format ---------------------------------------------------------
+            GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
+            GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
+            GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
+
+
+            //Get IsShowColorPicker ---------------------------------------------------------
+            GlobalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+            if (GlobalSetting.IsShowColorPickerOnStartup)
+            {
+                mnuMainColorPicker.PerformClick();
+            }
+
+            
         }
 
 
@@ -1628,6 +1639,10 @@ namespace ImageGlass
                 ImageSaveChange();
             }
 
+            //Save IsShowColorPickerOnStartup
+            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", GlobalSetting.IsShowColorPickerOnStartup.ToString());
+
+            //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
         }
 

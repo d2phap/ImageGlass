@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "4.5.10.30";
+            _minVersion = "5.0.5.6";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -419,6 +419,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
             Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
+            Items.Add("frmSetting.chkShowColorPicker", "Show Color Picker tool"); //v5.0
+            
             #endregion
 
 
@@ -526,6 +528,32 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
 
+            
+            #region TAB Toolbar
+            // V5.0
+            Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
+            Items.Add("frmSetting.lblToolbar", "Toolbar");
+            Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
+            Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
+            Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
+            Items.Add("frmSetting.lblRestartForChange", "Note: toolbar changes will not take effect until after restart.");
+
+            Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
+            Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
+
+            #endregion
+
+
+            #region TAB Color Picker
+            Items.Add("frmSetting.lblColorCodeFormat", "Color code format"); //v5.0
+            Items.Add("frmSetting.chkColorUseRGBA", "Use RGBA format"); //v5.0
+            Items.Add("frmSetting.chkColorUseHEXA", "Use HEX with alpha format"); //v5.0
+            Items.Add("frmSetting.chkColorUseHSLA", "Use HSLA format"); //v5.0
+            Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
+            #endregion
+
 
             #region Language
             Items.Add("frmSetting.lblLanguageText", "Installed languages");
@@ -537,6 +565,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
             Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
             #endregion
+
+            
             #endregion
 
 
@@ -609,21 +639,7 @@ namespace ImageGlass.Library
             #endregion
 
 
-            #region Toolbar Customization
-            // V5.0
-            Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
-            Items.Add("frmSetting.lblToolbar", "Toolbar");
-            Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
-            Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
-            Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
-            Items.Add("frmSetting.lblRestartForChange", "Note: toolbar changes will not take effect until after restart.");
-
-            Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
-            Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
-            Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
-            Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
-
-            #endregion
+            
         }
 
 

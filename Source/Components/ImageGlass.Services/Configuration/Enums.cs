@@ -56,4 +56,10 @@ namespace ImageGlass.Services.Configuration
         SCROLL_HORIZONTAL = 3,
         BROWSE_IMAGES = 4
     }
+
+    public enum ColorCodeFormats
+    {
+        RGB = 0,
+        HEX = 1
+    }
 }
