@@ -37,6 +37,7 @@ namespace ImageGlass
             if (_imgBox != null)
             {
                 _imgBox.MouseMove -= _imgBox_MouseMove;
+                _imgBox.Click -= _imgBox_Click;
             }
 
             _imgBox = imgBox;
@@ -281,6 +282,7 @@ namespace ImageGlass
 
             if (_imgBox != null)
             {
+                _imgBox.Cursor = Cursors.Default;
                 _imgBox.MouseMove -= _imgBox_MouseMove;
                 _imgBox.Click -= _imgBox_Click;
             }
@@ -288,7 +290,7 @@ namespace ImageGlass
 
         private void _imgBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_imgBox.Image == null || _bmpBooster == null)
+            if (_imgBox.Image == null)
             {
                 return;
             }
@@ -309,16 +311,15 @@ namespace ImageGlass
                 return;
             }
 
-            if (_bmpBooster != null)
-            {
-                _bmpBooster.Dispose();
-            }
-            _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
 
-
-            if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
-                && _cursorPos.Y < _imgBox.Image.Height)
+            if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width && _cursorPos.Y < _imgBox.Image.Height)
             {
+                if (_bmpBooster != null)
+                {
+                    _bmpBooster.Dispose();
+                }
+                _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
+
                 Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
                 _DisplayColor(color);
             }

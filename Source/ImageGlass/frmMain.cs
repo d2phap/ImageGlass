@@ -3415,11 +3415,8 @@ namespace ImageGlass
                 }
                 GlobalSetting.IsForcedActive = true;
 
-                if (!LocalSetting.FColorPicker.Visible)
-                {
-                    LocalSetting.FColorPicker.SetImageBox(picMain);
-                    LocalSetting.FColorPicker.Show(this);
-                }
+                LocalSetting.FColorPicker.SetImageBox(picMain);
+                LocalSetting.FColorPicker.Show(this);
 
                 this.Activate();
             }
