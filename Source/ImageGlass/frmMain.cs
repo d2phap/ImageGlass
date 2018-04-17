@@ -1839,7 +1839,7 @@ namespace ImageGlass
 
                 mnuMainClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClipboard"];
                 mnuMainCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopy"];
-                mnuMainCopyImagePixel.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImagePixel"];
+                mnuMainCopyImageData.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImageData"];
                 mnuMainCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCut"];
                 mnuMainCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImagePath"];
                 mnuMainClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClearClipboard"];
@@ -2457,7 +2457,7 @@ namespace ImageGlass
 
             if (picMain.Image != null)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePixel));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
             }
 
             if (!isImageError && !GlobalSetting.IsTempMemoryData)
@@ -3197,12 +3197,12 @@ namespace ImageGlass
             CutMultiFiles();
         }
 
-        private void mnuMainCopyImagePixel_Click(object sender, EventArgs e)
+        private void mnuMainCopyImageData_Click(object sender, EventArgs e)
         {
             if (picMain.Image != null)
             {
                 Clipboard.SetImage(picMain.Image);
-                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._CopyImagePixel"], 1000);
+                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._CopyImageData"], 1000);
             }
         }
 
