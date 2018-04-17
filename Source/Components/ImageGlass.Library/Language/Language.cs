@@ -309,9 +309,10 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainClipboard", "Clipboard"); //v3.0
             Items.Add("frmMain.mnuMainCopy", "Copy"); //v3.0
-            Items.Add("frmMain.mnuMainCopyMulti", "Copy multiple files"); //v3.0
+            Items.Add("frmMain.mnuMainCopyImagePixel", "Copy image pixels"); //v5.0
             Items.Add("frmMain.mnuMainCut", "Cut"); //v3.0
-            Items.Add("frmMain.mnuMainCutMulti", "Cut multiple files"); //v3.0
+            //Items.Add("frmMain.mnuMainCopyMulti", "Copy multiple files"); //v3.0, removed 5.0
+            //Items.Add("frmMain.mnuMainCutMulti", "Cut multiple files"); //v3.0, removed 5.0
             Items.Add("frmMain.mnuMainCopyImagePath", "Copy image path"); //v3.0
             Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
 
@@ -349,9 +350,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
-            Items.Add("frmMain._CopyFileText", "Copied {0} file(s)."); //v2.0 final
-            Items.Add("frmMain._CutFileText", "Cut {0} file(s)."); //v2.0 final
-            Items.Add("frmMain._ClearClipboard", "Clipboard was cleared."); //v2.0 final
+            Items.Add("frmMain._CopyFileText", "Copied {0} file(s)"); //v2.0 final
+            Items.Add("frmMain._CutFileText", "Cut {0} file(s)"); //v2.0 final
+            Items.Add("frmMain._CopyImagePixel", "Image was copied to clipboard"); //v5.0
+            Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); //v2.0 final
             Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
             Items.Add("frmMain._Loading", "Loading..."); //v3.0
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0

@@ -971,26 +971,6 @@ namespace ImageGlass
             picMain.Text = string.Empty;
         }
 
-        private void CopyFile()
-        {
-            try
-            {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
-
-            GlobalSetting.StringClipboard = new StringCollection();
-            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-            Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
-
-            DisplayTextMessage(
-                string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
-                GlobalSetting.StringClipboard.Count), 1000);
-        }
-
         private void CopyMultiFiles()
         {
             try
@@ -1017,36 +997,6 @@ namespace ImageGlass
 
             DisplayTextMessage(
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
-                GlobalSetting.StringClipboard.Count), 1000);
-        }
-
-        private void CutFile()
-        {
-            try
-            {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                {
-                    return;
-                }
-            }
-            catch { return; }
-
-            GlobalSetting.StringClipboard = new StringCollection();
-            GlobalSetting.StringClipboard.Add(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-
-            byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
-            MemoryStream dropEffect = new MemoryStream();
-            dropEffect.Write(moveEffect, 0, moveEffect.Length);
-
-            DataObject data = new DataObject();
-            data.SetFileDropList(GlobalSetting.StringClipboard);
-            data.SetData("Preferred DropEffect", dropEffect);
-
-            Clipboard.Clear();
-            Clipboard.SetDataObject(data, true);
-
-            DisplayTextMessage(
-                string.Format(GlobalSetting.LangPack.Items["frmMain._CutFileText"],
                 GlobalSetting.StringClipboard.Count), 1000);
         }
 
@@ -1889,9 +1839,8 @@ namespace ImageGlass
 
                 mnuMainClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClipboard"];
                 mnuMainCopy.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopy"];
-                mnuMainCopyMulti.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyMulti"];
+                mnuMainCopyImagePixel.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImagePixel"];
                 mnuMainCut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCut"];
-                mnuMainCutMulti.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCutMulti"];
                 mnuMainCopyImagePath.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCopyImagePath"];
                 mnuMainClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClearClipboard"];
 
@@ -2435,14 +2384,13 @@ namespace ImageGlass
         #region Popup Menu
         private void mnuPopup_Opening(object sender, CancelEventArgs e)
         {
-            bool isImageNull = false;
+            bool isImageError = false;
 
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
-                                 GlobalSetting.IsImageError)
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) || GlobalSetting.IsImageError)
                 {
-                    isImageNull = true;
+                    isImageError = true;
                 }
             }
             catch { e.Cancel = true; return; }
@@ -2450,7 +2398,7 @@ namespace ImageGlass
             //clear current items
             mnuPopup.Items.Clear();
 
-            if (GlobalSetting.IsPlaySlideShow && !isImageNull)
+            if (GlobalSetting.IsPlaySlideShow && !isImageError)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
@@ -2463,7 +2411,7 @@ namespace ImageGlass
             
 
             //Get Editing Assoc App info
-            if (!isImageNull)
+            if (!isImageError)
             {
                 mnuPopup.Items.Add(new ToolStripSeparator());//---------------
 
@@ -2490,30 +2438,42 @@ namespace ImageGlass
                 catch { }
             }
 
-            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+
+            if (!isImageError && !GlobalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
             }
 
+
+            #region Menu group: CLIPBOARD
             mnuPopup.Items.Add(new ToolStripSeparator());//------------
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
-            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+
+            if (!isImageError && !GlobalSetting.IsTempMemoryData)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
             }
 
-            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
+            if (picMain.Image != null)
+            {
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePixel));
+            }
+
+            if (!isImageError && !GlobalSetting.IsTempMemoryData)
+            {
+                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
+            }
+            #endregion
+
+
+            if (!isImageError && !GlobalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(new ToolStripSeparator());//------------
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
-            }
 
-            if (!isImageNull && !GlobalSetting.IsTempMemoryData)
-            {
                 mnuPopup.Items.Add(new ToolStripSeparator());//------------
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
@@ -3213,7 +3173,7 @@ namespace ImageGlass
         {
             if (GlobalSetting.ImageList.Length > 0)
             {
-                System.Diagnostics.Process.Start("explorer.exe", "/select,\"" +
+                Process.Start("explorer.exe", "/select,\"" +
                     GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\"");
             }
         }
@@ -3232,19 +3192,18 @@ namespace ImageGlass
             CopyMultiFiles();
         }
 
-        private void mnuMainCopyMulti_Click(object sender, EventArgs e)
-        {
-            CopyMultiFiles();
-        }
-
         private void mnuMainCut_Click(object sender, EventArgs e)
         {
             CutMultiFiles();
         }
 
-        private void mnuMainCutMulti_Click(object sender, EventArgs e)
+        private void mnuMainCopyImagePixel_Click(object sender, EventArgs e)
         {
-            CutMultiFiles();
+            if (picMain.Image != null)
+            {
+                Clipboard.SetImage(picMain.Image);
+                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._CopyImagePixel"], 1000);
+            }
         }
 
         private void mnuMainCopyImagePath_Click(object sender, EventArgs e)
@@ -3576,5 +3535,6 @@ namespace ImageGlass
 
         #endregion
 
+        
     }
 }

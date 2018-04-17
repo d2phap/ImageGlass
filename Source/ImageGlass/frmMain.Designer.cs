@@ -104,9 +104,8 @@
             this.mnuMainImageProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainCopyMulti = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainCopyImagePixel = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainCutMulti = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
@@ -1084,9 +1083,8 @@
             // 
             this.mnuMainClipboard.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainCopy,
-            this.mnuMainCopyMulti,
+            this.mnuMainCopyImagePixel,
             this.mnuMainCut,
-            this.mnuMainCutMulti,
             this.toolStripMenuItem28,
             this.mnuMainCopyImagePath,
             this.toolStripMenuItem14,
@@ -1107,22 +1105,22 @@
             this.mnuMainCopy.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCopy.ShortcutKeyDisplayString = "";
             this.mnuMainCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuMainCopy.Size = new System.Drawing.Size(353, 31);
+            this.mnuMainCopy.Size = new System.Drawing.Size(351, 31);
             this.mnuMainCopy.Text = "&Copy";
             this.mnuMainCopy.Click += new System.EventHandler(this.mnuMainCopy_Click);
             // 
-            // mnuMainCopyMulti
+            // mnuMainCopyImagePixel
             // 
-            this.mnuMainCopyMulti.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainCopyMulti.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainCopyMulti.Name = "mnuMainCopyMulti";
-            this.mnuMainCopyMulti.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopyMulti.ShortcutKeyDisplayString = "";
-            this.mnuMainCopyMulti.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.mnuMainCopyImagePixel.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainCopyImagePixel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainCopyImagePixel.Name = "mnuMainCopyImagePixel";
+            this.mnuMainCopyImagePixel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainCopyImagePixel.ShortcutKeyDisplayString = "";
+            this.mnuMainCopyImagePixel.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.C)));
-            this.mnuMainCopyMulti.Size = new System.Drawing.Size(353, 31);
-            this.mnuMainCopyMulti.Text = "Copy &multiple files";
-            this.mnuMainCopyMulti.Click += new System.EventHandler(this.mnuMainCopyMulti_Click);
+            this.mnuMainCopyImagePixel.Size = new System.Drawing.Size(351, 31);
+            this.mnuMainCopyImagePixel.Text = "Copy &image pixels";
+            this.mnuMainCopyImagePixel.Click += new System.EventHandler(this.mnuMainCopyImagePixel_Click);
             // 
             // mnuMainCut
             // 
@@ -1132,27 +1130,14 @@
             this.mnuMainCut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCut.ShortcutKeyDisplayString = "";
             this.mnuMainCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.mnuMainCut.Size = new System.Drawing.Size(353, 31);
+            this.mnuMainCut.Size = new System.Drawing.Size(351, 31);
             this.mnuMainCut.Text = "Cu&t";
             this.mnuMainCut.Click += new System.EventHandler(this.mnuMainCut_Click);
-            // 
-            // mnuMainCutMulti
-            // 
-            this.mnuMainCutMulti.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainCutMulti.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainCutMulti.Name = "mnuMainCutMulti";
-            this.mnuMainCutMulti.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCutMulti.ShortcutKeyDisplayString = "";
-            this.mnuMainCutMulti.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.X)));
-            this.mnuMainCutMulti.Size = new System.Drawing.Size(353, 31);
-            this.mnuMainCutMulti.Text = "C&ut multifile files";
-            this.mnuMainCutMulti.Click += new System.EventHandler(this.mnuMainCutMulti_Click);
             // 
             // toolStripMenuItem28
             // 
             this.toolStripMenuItem28.Name = "toolStripMenuItem28";
-            this.toolStripMenuItem28.Size = new System.Drawing.Size(350, 6);
+            this.toolStripMenuItem28.Size = new System.Drawing.Size(348, 6);
             // 
             // mnuMainCopyImagePath
             // 
@@ -1160,14 +1145,14 @@
             this.mnuMainCopyImagePath.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCopyImagePath.Name = "mnuMainCopyImagePath";
             this.mnuMainCopyImagePath.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopyImagePath.Size = new System.Drawing.Size(353, 31);
+            this.mnuMainCopyImagePath.Size = new System.Drawing.Size(351, 31);
             this.mnuMainCopyImagePath.Text = "Copy image path";
             this.mnuMainCopyImagePath.Click += new System.EventHandler(this.mnuMainCopyImagePath_Click);
             // 
             // toolStripMenuItem14
             // 
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(350, 6);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(348, 6);
             // 
             // mnuMainClearClipboard
             // 
@@ -1176,7 +1161,7 @@
             this.mnuMainClearClipboard.Name = "mnuMainClearClipboard";
             this.mnuMainClearClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainClearClipboard.ShortcutKeyDisplayString = "Ctrl+`";
-            this.mnuMainClearClipboard.Size = new System.Drawing.Size(353, 31);
+            this.mnuMainClearClipboard.Size = new System.Drawing.Size(351, 31);
             this.mnuMainClearClipboard.Text = "Clear clipboard";
             this.mnuMainClearClipboard.Click += new System.EventHandler(this.mnuMainClearClipboard_Click);
             // 
@@ -1573,9 +1558,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainWindowAdaptImage;
         private System.Windows.Forms.ToolStripMenuItem mnuMainClipboard;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCopy;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainCopyMulti;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainCopyImagePixel;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCut;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainCutMulti;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem28;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCopyImagePath;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
