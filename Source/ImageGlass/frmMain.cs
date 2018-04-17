@@ -1635,6 +1635,11 @@ namespace ImageGlass
                     {
                         mnuMainRefresh_Click(null, null);
                     }
+                    else
+                    {
+                        //reset picture position
+                        picMain.ScrollTo(0, 0, 0, 0);
+                    }
                 }
                 // Check your window state here
                 else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
@@ -2182,6 +2187,8 @@ namespace ImageGlass
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
+            _isZoomed = true;
+
             if (GlobalSetting.IsEnabledZoomLock)
             {
                 GlobalSetting.ZoomLockValue = e.NewZoom;
@@ -2583,6 +2590,7 @@ namespace ImageGlass
                     picMain.ZoomAuto();
                 }
 
+                _isZoomed = false;
             }
 
             //Get image file information
