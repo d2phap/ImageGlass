@@ -248,7 +248,6 @@ namespace ImageGlass
             lblHeadStartup.Text = lang["frmSetting.lblHeadStartup"];//
             chkWelcomePicture.Text = lang["frmSetting.chkWelcomePicture"];
             chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
-            chkShowColorPicker.Text = lang["frmSetting.chkShowColorPicker"];
             chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
             lblHeadPortableMode.Text = lang["frmSetting.lblHeadPortableMode"];//
@@ -472,9 +471,6 @@ namespace ImageGlass
 
             //Get value of chkShowToolBar
             chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
-
-            //Get value of chkShowColorPicker
-            chkShowColorPicker.Checked = GlobalSetting.IsShowColorPickerOnStartup;
 
             //Get Portable mode value -----------------------------------------------------------
             chkPortableMode.Checked = GlobalSetting.IsPortableMode;
@@ -1665,9 +1661,6 @@ namespace ImageGlass
             GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
 
-            //IsShowColorPickerOnStartup
-            GlobalSetting.IsShowColorPickerOnStartup = chkShowColorPicker.Checked;
-            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", GlobalSetting.IsShowColorPickerOnStartup.ToString());
 
             //AutoUpdate
             if (chkAutoUpdate.Checked)

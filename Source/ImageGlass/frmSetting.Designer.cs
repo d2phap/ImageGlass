@@ -63,7 +63,6 @@ namespace ImageGlass
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.chkShowColorPicker = new System.Windows.Forms.CheckBox();
             this.chkShowScrollbar = new System.Windows.Forms.CheckBox();
             this.lnkResetBackgroundColor = new System.Windows.Forms.LinkLabel();
             this.lblHeadOthers = new System.Windows.Forms.Label();
@@ -133,6 +132,7 @@ namespace ImageGlass
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.lblRestartForChange = new System.Windows.Forms.Label();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
+            this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorCodeFormat = new System.Windows.Forms.Label();
             this.chkColorUseHEXA = new System.Windows.Forms.CheckBox();
             this.chkColorUseRGBA = new System.Windows.Forms.CheckBox();
@@ -147,7 +147,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -243,7 +242,7 @@ namespace ImageGlass
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(46, 528);
+            this.picBackgroundColor.Location = new System.Drawing.Point(46, 503);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -527,7 +526,6 @@ namespace ImageGlass
             // 
             this.tabGeneral.AutoScroll = true;
             this.tabGeneral.BackColor = System.Drawing.Color.White;
-            this.tabGeneral.Controls.Add(this.chkShowColorPicker);
             this.tabGeneral.Controls.Add(this.chkShowScrollbar);
             this.tabGeneral.Controls.Add(this.lnkResetBackgroundColor);
             this.tabGeneral.Controls.Add(this.lblHeadOthers);
@@ -550,21 +548,10 @@ namespace ImageGlass
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             // 
-            // chkShowColorPicker
-            // 
-            this.chkShowColorPicker.AutoSize = true;
-            this.chkShowColorPicker.Location = new System.Drawing.Point(45, 120);
-            this.chkShowColorPicker.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowColorPicker.Name = "chkShowColorPicker";
-            this.chkShowColorPicker.Size = new System.Drawing.Size(218, 29);
-            this.chkShowColorPicker.TabIndex = 47;
-            this.chkShowColorPicker.Text = "Show Color Picker tool";
-            this.chkShowColorPicker.UseVisualStyleBackColor = true;
-            // 
             // chkShowScrollbar
             // 
             this.chkShowScrollbar.AutoSize = true;
-            this.chkShowScrollbar.Location = new System.Drawing.Point(45, 454);
+            this.chkShowScrollbar.Location = new System.Drawing.Point(45, 429);
             this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
             this.chkShowScrollbar.Size = new System.Drawing.Size(231, 29);
@@ -578,7 +565,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 535);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(151, 510);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
             this.lnkResetBackgroundColor.TabIndex = 13;
@@ -590,7 +577,7 @@ namespace ImageGlass
             // 
             this.lblHeadOthers.AutoSize = true;
             this.lblHeadOthers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadOthers.Location = new System.Drawing.Point(22, 288);
+            this.lblHeadOthers.Location = new System.Drawing.Point(22, 263);
             this.lblHeadOthers.Name = "lblHeadOthers";
             this.lblHeadOthers.Size = new System.Drawing.Size(69, 25);
             this.lblHeadOthers.TabIndex = 46;
@@ -600,7 +587,7 @@ namespace ImageGlass
             // 
             this.lblHeadPortableMode.AutoSize = true;
             this.lblHeadPortableMode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadPortableMode.Location = new System.Drawing.Point(22, 190);
+            this.lblHeadPortableMode.Location = new System.Drawing.Point(22, 165);
             this.lblHeadPortableMode.Name = "lblHeadPortableMode";
             this.lblHeadPortableMode.Size = new System.Drawing.Size(137, 25);
             this.lblHeadPortableMode.TabIndex = 45;
@@ -620,7 +607,7 @@ namespace ImageGlass
             // 
             this.chkPortableMode.AutoSize = true;
             this.chkPortableMode.Enabled = false;
-            this.chkPortableMode.Location = new System.Drawing.Point(45, 222);
+            this.chkPortableMode.Location = new System.Drawing.Point(45, 197);
             this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
             this.chkPortableMode.Name = "chkPortableMode";
             this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
@@ -630,7 +617,7 @@ namespace ImageGlass
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(44, 606);
+            this.panel1.Location = new System.Drawing.Point(44, 581);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -639,7 +626,7 @@ namespace ImageGlass
             // chkConfirmationDelete
             // 
             this.chkConfirmationDelete.AutoSize = true;
-            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 420);
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 395);
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
@@ -650,7 +637,7 @@ namespace ImageGlass
             // chkAllowMultiInstances
             // 
             this.chkAllowMultiInstances.AutoSize = true;
-            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 354);
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 329);
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
@@ -661,7 +648,7 @@ namespace ImageGlass
             // chkESCToQuit
             // 
             this.chkESCToQuit.AutoSize = true;
-            this.chkESCToQuit.Location = new System.Drawing.Point(45, 388);
+            this.chkESCToQuit.Location = new System.Drawing.Point(45, 363);
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
@@ -683,7 +670,7 @@ namespace ImageGlass
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 502);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 477);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -704,7 +691,7 @@ namespace ImageGlass
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 322);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 297);
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
@@ -907,7 +894,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(188, 1658);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(162, 1658);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -919,7 +906,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(413, 1658);
+            this.btnEditResetExt.Location = new System.Drawing.Point(387, 1658);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(211, 45);
             this.btnEditResetExt.TabIndex = 26;
@@ -971,7 +958,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(579, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(553, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1355,7 +1342,7 @@ namespace ImageGlass
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveDown.Location = new System.Drawing.Point(270, 286);
+            this.btnMoveDown.Location = new System.Drawing.Point(273, 286);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 6;
@@ -1377,7 +1364,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(248, 455);
+            this.lvUsedButtons.Size = new System.Drawing.Size(251, 455);
             this.lvUsedButtons.TabIndex = 4;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -1388,7 +1375,7 @@ namespace ImageGlass
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveUp.Location = new System.Drawing.Point(270, 217);
+            this.btnMoveUp.Location = new System.Drawing.Point(273, 217);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 5;
@@ -1421,6 +1408,17 @@ namespace ImageGlass
             this.tabColorPicker.Size = new System.Drawing.Size(699, 557);
             this.tabColorPicker.TabIndex = 5;
             this.tabColorPicker.Text = "color picker";
+            // 
+            // chkColorUseHSLA
+            // 
+            this.chkColorUseHSLA.AutoSize = true;
+            this.chkColorUseHSLA.Location = new System.Drawing.Point(45, 120);
+            this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(2);
+            this.chkColorUseHSLA.Name = "chkColorUseHSLA";
+            this.chkColorUseHSLA.Size = new System.Drawing.Size(175, 29);
+            this.chkColorUseHSLA.TabIndex = 48;
+            this.chkColorUseHSLA.Text = "Use HSLA format";
+            this.chkColorUseHSLA.UseVisualStyleBackColor = true;
             // 
             // lblColorCodeFormat
             // 
@@ -1636,17 +1634,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(938, 72);
             this.panel4.TabIndex = 18;
             // 
-            // chkColorUseHSLA
-            // 
-            this.chkColorUseHSLA.AutoSize = true;
-            this.chkColorUseHSLA.Location = new System.Drawing.Point(45, 120);
-            this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(2);
-            this.chkColorUseHSLA.Name = "chkColorUseHSLA";
-            this.chkColorUseHSLA.Size = new System.Drawing.Size(175, 29);
-            this.chkColorUseHSLA.TabIndex = 48;
-            this.chkColorUseHSLA.Text = "Use HSLA format";
-            this.chkColorUseHSLA.UseVisualStyleBackColor = true;
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -1813,7 +1800,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblToolbar;
         private System.Windows.Forms.Label lblColorPicker;
         private System.Windows.Forms.TabPage tabColorPicker;
-        private System.Windows.Forms.CheckBox chkShowColorPicker;
         private System.Windows.Forms.Label lblColorCodeFormat;
         private System.Windows.Forms.CheckBox chkColorUseHEXA;
         private System.Windows.Forms.CheckBox chkColorUseRGBA;

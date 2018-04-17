@@ -1523,12 +1523,11 @@ namespace ImageGlass
 
 
             //Get IsShowColorPicker ---------------------------------------------------------
-            GlobalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
-            if (GlobalSetting.IsShowColorPickerOnStartup)
+            LocalSetting.IsColorPickerToolOpening = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+            if (LocalSetting.IsColorPickerToolOpening)
             {
                 mnuMainColorPicker.PerformClick();
             }
-
 
         }
 
@@ -1590,7 +1589,7 @@ namespace ImageGlass
             }
 
             //Save IsShowColorPickerOnStartup
-            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", GlobalSetting.IsShowColorPickerOnStartup.ToString());
+            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsColorPickerToolOpening.ToString());
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR

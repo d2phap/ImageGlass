@@ -421,7 +421,6 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
             Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
-            Items.Add("frmSetting.chkShowColorPicker", "Show Color Picker tool"); //v5.0
             
             #endregion
 

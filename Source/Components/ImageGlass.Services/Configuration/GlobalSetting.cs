@@ -114,10 +114,6 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsColorPickerHSLA { get; set; } = true;
 
-        /// <summary>
-        /// Determine if Solor Picker tool will open on startup
-        /// </summary>
-        public static bool IsShowColorPickerOnStartup { get; set; } = false;
 
     
 
