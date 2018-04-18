@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +111,6 @@
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainShare = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainShareFacebook = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
@@ -595,7 +594,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 584);
+            this.mnuMain.Size = new System.Drawing.Size(409, 617);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1167,8 +1166,6 @@
             // 
             // mnuMainShare
             // 
-            this.mnuMainShare.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainShareFacebook});
             this.mnuMainShare.ForeColor = System.Drawing.Color.Black;
             this.mnuMainShare.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainShare.Name = "mnuMainShare";
@@ -1176,18 +1173,6 @@
             this.mnuMainShare.Size = new System.Drawing.Size(408, 31);
             this.mnuMainShare.Text = "S&hare ...";
             this.mnuMainShare.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
-            // 
-            // mnuMainShareFacebook
-            // 
-            this.mnuMainShareFacebook.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainShareFacebook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainShareFacebook.Name = "mnuMainShareFacebook";
-            this.mnuMainShareFacebook.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainShareFacebook.ShortcutKeyDisplayString = "";
-            this.mnuMainShareFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
-            this.mnuMainShareFacebook.Size = new System.Drawing.Size(320, 31);
-            this.mnuMainShareFacebook.Text = "Upload to &Facebook";
-            this.mnuMainShareFacebook.Click += new System.EventHandler(this.mnuMainShareFacebook_Click);
             // 
             // toolStripSeparator9
             // 
@@ -1417,7 +1402,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuPopup;
@@ -1574,7 +1559,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainExtractFrames;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsDesktop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainShareFacebook;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;

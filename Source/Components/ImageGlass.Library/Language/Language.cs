@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -317,7 +317,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
 
             Items.Add("frmMain.mnuMainShare", "Share ..."); //v3.0
-            Items.Add("frmMain.mnuMainShareFacebook", "Upload to Facebook"); //v3.0
+            //Items.Add("frmMain.mnuMainShareFacebook", "Upload to Facebook"); //v3.0, removed v5.0
 
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
@@ -368,21 +368,6 @@ namespace ImageGlass.Library
             Items.Add("frmExtension.btnRefreshAllExt", "Refresh"); //v2.0 final
             Items.Add("frmExtension.btnInstallExt", "Install"); //v2.0 final            
             Items.Add("frmExtension.btnClose", "Close");
-            #endregion
-
-
-            #region frmFacebook
-            Items.Add("frmFacebook.lblMessage", "Message");
-            Items.Add("frmFacebook.btnUpload._Upload", "Upload");
-            Items.Add("frmFacebook.btnUpload._Cancel", "Cancel");
-            Items.Add("frmFacebook.btnUpload._ViewImage", "View image");
-            Items.Add("frmFacebook.btnClose", "Close");
-            Items.Add("frmFacebook._StatusBegin", "Click '{0}' to begin");
-            Items.Add("frmFacebook._StatusInvalid", "Invalid filename");
-            Items.Add("frmFacebook._StatusUploading", "Uploading...");
-            Items.Add("frmFacebook._StatusCancel", "Cancelled");
-            Items.Add("frmFacebook._StatusSuccessful", "Successful");
-            Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ...");
             #endregion
 
 
@@ -637,10 +622,25 @@ namespace ImageGlass.Library
             //this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final, remove 3.0
             //this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //v2.0 final, remove 3.0
             //Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final, -3.5
+
+
+            #region frmFacebook
+            //Items.Add("frmFacebook.lblMessage", "Message"); //removed v5.0
+            //Items.Add("frmFacebook.btnUpload._Upload", "Upload"); //removed v5.0
+            //Items.Add("frmFacebook.btnUpload._Cancel", "Cancel"); //removed v5.0
+            //Items.Add("frmFacebook.btnUpload._ViewImage", "View image"); //removed v5.0
+            //Items.Add("frmFacebook.btnClose", "Close"); //removed v5.0
+            //Items.Add("frmFacebook._StatusBegin", "Click '{0}' to begin"); //removed v5.0
+            //Items.Add("frmFacebook._StatusInvalid", "Invalid filename"); //removed v5.0
+            //Items.Add("frmFacebook._StatusUploading", "Uploading..."); //removed v5.0
+            //Items.Add("frmFacebook._StatusCancel", "Cancelled"); //removed v5.0
+            //Items.Add("frmFacebook._StatusSuccessful", "Successful"); //removed v5.0
+            //Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ..."); //removed v5.0
+            #endregion
             #endregion
 
 
-            
+
         }
 
 
