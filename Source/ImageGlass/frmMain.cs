@@ -1111,7 +1111,6 @@ namespace ImageGlass
             mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainShareFacebook.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
@@ -1849,7 +1848,6 @@ namespace ImageGlass
                 mnuMainClearClipboard.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainClearClipboard"];
 
                 mnuMainShare.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainShare"];
-                mnuMainShareFacebook.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainShareFacebook"];
 
                 mnuMainLayout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLayout"];
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
@@ -2347,11 +2345,6 @@ namespace ImageGlass
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
             mnuMainPrint_Click(null, e);
-        }
-
-        private void btnFacebook_Click(object sender, EventArgs e)
-        {
-            mnuMainShareFacebook_Click(null, e);
         }
 
         private void btnExtension_Click(object sender, EventArgs e)
@@ -3233,37 +3226,6 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMainShareFacebook_Click(object sender, EventArgs e)
-        {
-            if (GlobalSetting.ImageList.Length > 0 && File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-            {
-                if (LocalSetting.FFacebook.IsDisposed)
-                {
-                    LocalSetting.FFacebook = new frmFacebook();
-                }
-
-                //CHECK FILE EXTENSION BEFORE UPLOADING
-                string tempFile = "";
-
-                
-                //image error
-                if (GlobalSetting.ImageList.Length < 1 || GlobalSetting.IsImageError)
-                {
-                    return;
-                }
-                else
-                {
-                    //save image to tem file
-                    tempFile = SaveTemporaryMemoryData();
-                }
-
-                LocalSetting.FFacebook.TopMost = this.TopMost;
-                LocalSetting.FFacebook.Filename = tempFile;
-                GlobalSetting.IsForcedActive = false;
-                LocalSetting.FFacebook.Show();
-                LocalSetting.FFacebook.Activate();
-            }
-        }
 
         private void mnuMainToolbar_Click(object sender, EventArgs e)
         {

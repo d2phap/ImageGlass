@@ -25,7 +25,6 @@ namespace ImageGlass
 {
     public static class LocalSetting
     {
-        private static frmFacebook _fFacebook;
         private static frmSetting _fSetting;
         private static frmExtension _fExtension;
         private static frmColorPicker _fColorPicker;
@@ -46,14 +45,6 @@ namespace ImageGlass
 
 
         #region "Properties"
-        /// <summary>
-        /// Form frmFacebook
-        /// </summary>
-        public static frmFacebook FFacebook
-        {
-            get { return LazyInitializer.EnsureInitialized(ref _fFacebook); }
-            set { _fFacebook = value; }
-        }
 
         /// <summary>
         /// Form frmSetting

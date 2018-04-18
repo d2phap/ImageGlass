@@ -131,9 +131,6 @@
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
-    </Reference>
     <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
     </Reference>
@@ -179,18 +176,6 @@
     <Compile Include="frmExtension.Designer.cs">
       <DependentUpon>frmExtension.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFacebook.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFacebook.Designer.cs">
-      <DependentUpon>frmFacebook.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmFaceBookLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFaceBookLogin.Designer.cs">
-      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,12 +208,6 @@
     <EmbeddedResource Include="frmExtension.resx">
       <DependentUpon>frmExtension.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFacebook.resx">
-      <DependentUpon>frmFacebook.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFaceBookLogin.resx">
-      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
