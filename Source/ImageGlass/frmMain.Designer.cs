@@ -1172,6 +1172,7 @@
             this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainShare.Size = new System.Drawing.Size(408, 31);
             this.mnuMainShare.Text = "S&hare ...";
+            this.mnuMainShare.Visible = false;
             this.mnuMainShare.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // toolStripSeparator9
