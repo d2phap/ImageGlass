@@ -390,7 +390,7 @@ namespace ImageGlass
             Application.DoEvents();
 
             picMain.Text = "";
-            GlobalSetting.IsTempMemoryData = false;
+            LocalSetting.IsTempMemoryData = false;
 
             if (GlobalSetting.ImageList.Length < 1)
             {
@@ -814,7 +814,7 @@ namespace ImageGlass
             mnuMainEditImage.Image = null;
             
             //Temporary memory data
-            if (GlobalSetting.IsTempMemoryData)
+            if (LocalSetting.IsTempMemoryData)
             { }
             else
             {
@@ -986,18 +986,18 @@ namespace ImageGlass
             string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
             //exit if duplicated filename
-            if (GlobalSetting.StringClipboard.IndexOf(filename) != -1)
+            if (LocalSetting.StringClipboard.IndexOf(filename) != -1)
             {
                 return;
             }
 
             //add filename to clipboard
-            GlobalSetting.StringClipboard.Add(filename);
-            Clipboard.SetFileDropList(GlobalSetting.StringClipboard);
+            LocalSetting.StringClipboard.Add(filename);
+            Clipboard.SetFileDropList(LocalSetting.StringClipboard);
 
             DisplayTextMessage(
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
-                GlobalSetting.StringClipboard.Count), 1000);
+                LocalSetting.StringClipboard.Count), 1000);
         }
 
         private void CutMultiFiles()
@@ -1015,20 +1015,20 @@ namespace ImageGlass
             string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
             //exit if duplicated filename
-            if (GlobalSetting.StringClipboard.IndexOf(filename) != -1)
+            if (LocalSetting.StringClipboard.IndexOf(filename) != -1)
             {
                 return;
             }
 
             //add filename to clipboard
-            GlobalSetting.StringClipboard.Add(filename);
+            LocalSetting.StringClipboard.Add(filename);
 
             byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
             MemoryStream dropEffect = new MemoryStream();
             dropEffect.Write(moveEffect, 0, moveEffect.Length);
 
             DataObject data = new DataObject();
-            data.SetFileDropList(GlobalSetting.StringClipboard);
+            data.SetFileDropList(LocalSetting.StringClipboard);
             data.SetData("Preferred DropEffect", dropEffect);
 
             Clipboard.Clear();
@@ -1036,7 +1036,7 @@ namespace ImageGlass
 
             DisplayTextMessage(
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CutFileText"],
-                GlobalSetting.StringClipboard.Count), 1000);
+                LocalSetting.StringClipboard.Count), 1000);
         }
 
         /// <summary>
@@ -1224,7 +1224,7 @@ namespace ImageGlass
                 GlobalSetting.LangPack = new Library.Language(configValue);
 
                 //force update language pack
-                GlobalSetting.IsForcedActive = true;
+                LocalSetting.IsForcedActive = true;
                 frmMain_Activated(null, null);
             }
 
@@ -1712,10 +1712,9 @@ namespace ImageGlass
             try
             {
                 //clear temp files
-                string temp_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
-                if (Directory.Exists(temp_dir))
+                if (Directory.Exists(GlobalSetting.TempDir))
                 {
-                    Directory.Delete(temp_dir, true);
+                    Directory.Delete(GlobalSetting.TempDir, true);
                 }
 
                 SaveConfig();
@@ -1730,7 +1729,7 @@ namespace ImageGlass
         private void frmMain_Activated(object sender, EventArgs e)
         {
 
-            if (GlobalSetting.IsForcedActive)
+            if (LocalSetting.IsForcedActive)
             {
                 //Update thumbnail bar position--------
                 GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
@@ -1867,9 +1866,9 @@ namespace ImageGlass
                 #endregion
 
             }
-            
 
-            GlobalSetting.IsForcedActive = false;
+
+            LocalSetting.IsForcedActive = false;
         }
 
         private void frmMain_ResizeBegin(object sender, EventArgs e)
@@ -2092,7 +2091,7 @@ namespace ImageGlass
                 if (imgIndex == GlobalSetting.CurrentIndex)
                 {
                     GlobalSetting.IsImageError = true;
-                    GlobalSetting.IsTempMemoryData = true;
+                    LocalSetting.IsTempMemoryData = true;
 
                     UpdatePicMain(GlobalSetting.LangPack.Items["frmMain._ImageNotExist"]);
                 }
@@ -2438,7 +2437,7 @@ namespace ImageGlass
             }
 
 
-            if (!isImageError && !GlobalSetting.IsTempMemoryData)
+            if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
             }
@@ -2448,7 +2447,7 @@ namespace ImageGlass
             mnuPopup.Items.Add(new ToolStripSeparator());//------------
             mnuPopup.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
 
-            if (!isImageError && !GlobalSetting.IsTempMemoryData)
+            if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
@@ -2459,14 +2458,14 @@ namespace ImageGlass
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
             }
 
-            if (!isImageError && !GlobalSetting.IsTempMemoryData)
+            if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
             }
             #endregion
 
 
-            if (!isImageError && !GlobalSetting.IsTempMemoryData)
+            if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
                 mnuPopup.Items.Add(new ToolStripSeparator());//------------
                 mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
@@ -2511,7 +2510,7 @@ namespace ImageGlass
             else if (Clipboard.ContainsImage())
             {
                 picMain.Image = Clipboard.GetImage();
-                GlobalSetting.IsTempMemoryData = true;
+                LocalSetting.IsTempMemoryData = true;
             }
 
             //Is there a filename in clipboard?-----------------------------------------------
@@ -2534,7 +2533,7 @@ namespace ImageGlass
                         var file_image = Image.FromStream(file_stream);
 
                         picMain.Image = file_image;
-                        GlobalSetting.IsTempMemoryData = true;
+                        LocalSetting.IsTempMemoryData = true;
                     }
                     catch { }
                 }
@@ -2554,7 +2553,14 @@ namespace ImageGlass
                 filename = "untitled.png";
             }
 
-            ImageInfo.ConvertImage(picMain.Image, filename);
+
+            var output = ImageInfo.ConvertImage(picMain.Image, filename);
+
+            //display successful msg
+            if (File.Exists(output))
+            {
+                DisplayTextMessage(string.Format(GlobalSetting.LangPack.Items["frmMain._SaveImage"], output), 2000);
+            }
         }
 
         private void mnuMainRefresh_Click(object sender, EventArgs e)
@@ -2600,7 +2606,7 @@ namespace ImageGlass
             string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
             // If viewing image is temporary memory data
-            if (GlobalSetting.IsTempMemoryData)
+            if (LocalSetting.IsTempMemoryData)
             {
                 // Save to temp file
                 filename = SaveTemporaryMemoryData();
@@ -3160,7 +3166,7 @@ namespace ImageGlass
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 return;
 
             try
@@ -3225,9 +3231,9 @@ namespace ImageGlass
         private void mnuMainClearClipboard_Click(object sender, EventArgs e)
         {
             //clear copied files in clipboard
-            if (GlobalSetting.StringClipboard.Count > 0)
+            if (LocalSetting.StringClipboard.Count > 0)
             {
-                GlobalSetting.StringClipboard = new StringCollection();
+                LocalSetting.StringClipboard = new StringCollection();
                 Clipboard.Clear();
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
             }
@@ -3331,7 +3337,8 @@ namespace ImageGlass
             {
                 LocalSetting.FExtension = new frmExtension();
             }
-            GlobalSetting.IsForcedActive = false;
+
+            LocalSetting.IsForcedActive = false;
             LocalSetting.FExtension.TopMost = this.TopMost;
             LocalSetting.FExtension.Show();
             LocalSetting.FExtension.Activate();
@@ -3348,7 +3355,7 @@ namespace ImageGlass
                 {
                     LocalSetting.FColorPicker = new frmColorPicker();
                 }
-                GlobalSetting.IsForcedActive = true;
+                LocalSetting.IsForcedActive = true;
 
                 LocalSetting.FColorPicker.SetImageBox(picMain);
                 LocalSetting.FColorPicker.Show(this);
@@ -3374,7 +3381,7 @@ namespace ImageGlass
                 LocalSetting.FSetting = new frmSetting();
             }
 
-            GlobalSetting.IsForcedActive = false;
+            LocalSetting.IsForcedActive = false;
             LocalSetting.FSetting.MainInstance = this;
             LocalSetting.FSetting.TopMost = this.TopMost;
             LocalSetting.FSetting.Show();

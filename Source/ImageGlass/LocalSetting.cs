@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Threading;
 using ImageGlass.Theme;
@@ -28,13 +29,12 @@ namespace ImageGlass
         private static frmSetting _fSetting;
         private static frmExtension _fExtension;
         private static frmColorPicker _fColorPicker;
-      
-        private static string _imageModifiedPath = "";
-        private static bool _isResetScrollPosition = true;
         private static Theme.Theme _theme;
-        private static bool _isThumbnailDimensionChanged = false;
+
+        
 
 
+        #region Auto Properties
         /// <summary>
         /// Check if frmColorPicker is opening.
         /// This is for toggle Color Picker menu in frmMain
@@ -49,7 +49,55 @@ namespace ImageGlass
         public static bool IsShowColorPickerOnStartup { get; set; } = false;
 
 
-        #region "Properties"
+        /// <summary>
+        /// Gets, sets value if image data was modified
+        /// </summary>
+        public static string ImageModifiedPath { get; set; } = "";
+        
+
+        /// <summary>
+        /// Gets, sets value indicating that picmain's scrollbar need to be reset
+        /// </summary>
+        public static bool IsResetScrollPosition { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets the value that will request frmMain to update thumbnail bar
+        /// </summary>
+        public static bool IsThumbnailDimensionChanged { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets the 0-based index of the last view of Settings dialog tab.
+        /// </summary>
+        public static int SettingsTabLastView { get; set; } = 0;
+
+
+        /// <summary>
+        /// Gets, sets active value whenever hover on picturebox
+        /// </summary>
+        public static bool IsForcedActive { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets copied filename collection (multi-copy)
+        /// </summary>
+        public static StringCollection StringClipboard { get; set; } = new StringCollection();
+
+
+        /// <summary>
+        /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
+        /// </summary>
+        public static bool IsTempMemoryData { get; set; } = false;
+
+
+
+
+
+        #endregion
+
+
+        #region LazyInitializer Properties
 
         /// <summary>
         /// Form frmSetting
@@ -78,45 +126,19 @@ namespace ImageGlass
             set { _fColorPicker = value; }
         }
 
-        /// <summary>
-        /// Gets, sets value if image data was modified
-        /// </summary>
-        public static string ImageModifiedPath
-        {
-            get { return _imageModifiedPath; }
-            set { _imageModifiedPath = value; }
-        }
-
-        
-
-        /// <summary>
-        /// Gets, sets value indicating that picmain's scrollbar need to be reset
-        /// </summary>
-        public static bool IsResetScrollPosition
-        {
-            get
-            {
-                return _isResetScrollPosition;
-            }
-
-            set
-            {
-                _isResetScrollPosition = value;
-            }
-        }
 
         /// <summary>
         /// Gets, sets current app theme
         /// </summary>
-        public static Theme.Theme Theme { get => LazyInitializer.EnsureInitialized(ref _theme, () => new Theme.Theme()); set => _theme = value; }
-
-        /// <summary>
-        /// Gets, sets the value that will request frmMain to update thumbnail bar
-        /// </summary>
-        public static bool IsThumbnailDimensionChanged { get => _isThumbnailDimensionChanged; set => _isThumbnailDimensionChanged = value; }
+        public static Theme.Theme Theme
+        {
+            get => LazyInitializer.EnsureInitialized(ref _theme, () => new Theme.Theme());
+            set => _theme = value;
+        }
 
 
         #endregion
+
 
     }
 }

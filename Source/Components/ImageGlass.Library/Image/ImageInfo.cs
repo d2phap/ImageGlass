@@ -84,7 +84,7 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="pic">Image source</param>
         /// <param name="filename">Filename</param>
-        public static void ConvertImage(System.Drawing.Image pic, string filename)
+        public static string ConvertImage(System.Drawing.Image pic, string filename)
         {
             SaveFileDialog s = new SaveFileDialog();
             s.Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.txt)|*.txt";
@@ -184,7 +184,11 @@ namespace ImageGlass.Library.Image
 
                 // free resources
                 clonedPic.Dispose();
+
+                return s.FileName;
             }
+
+            return string.Empty;
         }
 
         /// <summary>

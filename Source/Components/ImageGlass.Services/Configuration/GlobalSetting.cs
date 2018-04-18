@@ -1,6 +1,6 @@
 /*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -36,25 +36,13 @@ namespace ImageGlass.Services.Configuration
     public static class GlobalSetting
     {
         // Private settings --------------------------------------------------------------
-        private static ImgMan _imageList = new ImgMan();
-        private static string _facebookAccessToken = "";
-        private static bool _isForcedActive = true;
-        private static int _currentIndex = -1;
-        private static bool _isRecursiveLoading = false;
-        private static bool _isShowingHiddenImages = false;
-        private static StringCollection _stringClipboard = new StringCollection();
-        private static string _tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
         private static Library.Language _langPack = new Library.Language();
         private static bool _isPortableMode = false;
-        private static bool _isStartUpDirWritable = true;
-        private static bool _isTempMemoryData = false;
         private static ConfigurationFile _configFile = new ConfigurationFile();
-        private static string _builtInImageFormats = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
-        private static int _settingsTabLastView = 0;
-        
+
+
 
         // Shared settings ----------------------------------------------------------------
-        private static ImageOrderBy _imageLoadingOrder = ImageOrderBy.Name;
         private static string _defaultImageFormats = string.Empty;
         private static string _optionalImageFormats = string.Empty;
         private static bool _isPlaySlideShow = false;
@@ -95,10 +83,58 @@ namespace ImageGlass.Services.Configuration
         private static bool _isNewVersionAvailable = false;
 
 
+        #region Private Properties
+
+        /// <summary>
+        /// Gets, sets image list
+        /// </summary>
+        public static ImgMan ImageList { get; set; } = new ImgMan();
 
 
-        #region "Properties"
+        /// <summary>
+        /// Gets, sets current index of image
+        /// </summary>
+        public static int CurrentIndex { get; set; } = -1;
 
+
+        /// <summary>
+        /// Gets, sets the value indicates that StartUpDir is writable
+        /// </summary>
+        public static bool IsStartUpDirWritable { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets recursive value
+        /// </summary>
+        public static bool IsRecursiveLoading { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets image laoding order
+        /// </summary>
+        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
+
+
+        /// <summary>
+        /// Gets, sets showing/loading hidden images
+        /// </summary>
+        public static bool IsShowingHiddenImages { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets built-in image formats for both Default and Optional formats
+        /// </summary>
+        public static string BuiltInImageFormats { get; } = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
+
+        #endregion
+
+
+
+
+
+
+
+        #region Public Properties
         /// <summary>
         /// Check if user wants to display RGBA color code for Color Picker tool
         /// </summary>
@@ -115,71 +151,22 @@ namespace ImageGlass.Services.Configuration
         public static bool IsColorPickerHSLA { get; set; } = true;
 
 
-    
+        #endregion
 
-        /// <summary>
-        /// Gets, sets image list
-        /// </summary>
-        public static ImgMan ImageList
-        {
-            get { return GlobalSetting._imageList; }
-            set { GlobalSetting._imageList = value; }
-        }
+
+
+
+
+
+
+
+
+
+        #region Properties
+
         
-
-        /// <summary>
-        /// Gets, sets Access token of Facebook
-        /// </summary>
-        public static string FacebookAccessToken
-        {
-            get { return GlobalSetting._facebookAccessToken; }
-            set { GlobalSetting._facebookAccessToken = value; }
-        }
-
-        /// <summary>
-        /// Gets, sets active value whenever hover on picturebox
-        /// </summary>
-        public static bool IsForcedActive
-        {
-            get { return GlobalSetting._isForcedActive; }
-            set { GlobalSetting._isForcedActive = value; }
-        }
-
-        /// <summary>
-        /// Gets, sets current index of image
-        /// </summary>
-        public static int CurrentIndex
-        {
-            get { return GlobalSetting._currentIndex; }
-            set { GlobalSetting._currentIndex = value; }
-        }
-
-        /// <summary>
-        /// Gets, sets recursive value
-        /// </summary>
-        public static bool IsRecursiveLoading
-        {
-            get { return GlobalSetting._isRecursiveLoading; }
-            set { GlobalSetting._isRecursiveLoading = value; }
-        }
-
-        /// <summary>
-        /// Gets, sets showing/loading hidden images
-        /// </summary>
-        public static bool IsShowingHiddenImages
-        {
-            get => _isShowingHiddenImages;
-            set => _isShowingHiddenImages = value;
-        }
-
-        /// <summary>
-        /// Gets, sets image laoding order
-        /// </summary>
-        public static ImageOrderBy ImageLoadingOrder
-        {
-            get { return GlobalSetting._imageLoadingOrder; }
-            set { GlobalSetting._imageLoadingOrder = value; }
-        }
+        
+       
 
         /// <summary>
         /// Gets all supported extensions string
@@ -351,14 +338,7 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isImageBoosterBack = value; }
         }
 
-        /// <summary>
-        /// Gets, sets copied filename collection (multi-copy)
-        /// </summary>
-        public static StringCollection StringClipboard
-        {
-            get { return GlobalSetting._stringClipboard; }
-            set { GlobalSetting._stringClipboard = value; }
-        }
+        
 
         /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
@@ -430,22 +410,12 @@ namespace ImageGlass.Services.Configuration
             set { GlobalSetting._isShowCheckedBackground = value; }
         }
 
-        /// <summary>
-        /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
-        /// </summary>
-        public static bool IsTempMemoryData
-        {
-            get { return GlobalSetting._isTempMemoryData; }
-            set { GlobalSetting._isTempMemoryData = value; }
-        }
+        
 
         /// <summary>
         /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\Temp\
         /// </summary>
-        public static string TempDir
-        {
-            get { return _tempDir; }
-        }
+        public static string TempDir { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -548,29 +518,10 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-        /// <summary>
-        /// Gets, sets the value indicates that StartUpDir is writable
-        /// </summary>
-        public static bool IsStartUpDirWritable
-        {
-            get => _isStartUpDirWritable;
-            set => _isStartUpDirWritable = value;
-        }
 
-        /// <summary>
-        /// Gets built-in image formats for both Default and Optional formats
-        /// </summary>
-        public static string BuiltInImageFormats { get => _builtInImageFormats; }
-
-        /// <summary>
-        /// Gets, sets the value indicates the last view of Settings dialog tab. Codes:
-        /// 0: General;
-        /// 1: Image;
-        /// 2: File Associations;
-        /// 3: Language;
-        /// </summary>
-        public static int SettingsTabLastView { get => _settingsTabLastView; set => _settingsTabLastView = value; }
         
+
+
         /// <summary>
         /// Gets, sets slide show interval
         /// </summary>
