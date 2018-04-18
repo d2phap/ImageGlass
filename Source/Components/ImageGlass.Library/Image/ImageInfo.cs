@@ -133,7 +133,7 @@ namespace ImageGlass.Library.Image
                 switch (s.FilterIndex)
                 {
                     case 1:
-                        clonedPic.Save(s.FileName, ImageFormat.Bmp);
+                        SaveImage(clonedPic, s.FileName);
                         break;
                     case 2:
                         clonedPic.Save(s.FileName, ImageFormat.Emf);
@@ -142,16 +142,16 @@ namespace ImageGlass.Library.Image
                         clonedPic.Save(s.FileName, ImageFormat.Exif);
                         break;
                     case 4:
-                        clonedPic.Save(s.FileName, ImageFormat.Gif);
+                        SaveImage(clonedPic, s.FileName);
                         break;
                     case 5:
                         clonedPic.Save(s.FileName, ImageFormat.Icon);
                         break;
                     case 6:
-                        clonedPic.Save(s.FileName, ImageFormat.Jpeg);
+                        SaveImage(clonedPic, s.FileName);
                         break;
                     case 7:
-                        clonedPic.Save(s.FileName, ImageFormat.Png);
+                        SaveImage(clonedPic, s.FileName);
                         break;
                     case 8:
                         clonedPic.Save(s.FileName, ImageFormat.Tiff);
@@ -190,44 +190,66 @@ namespace ImageGlass.Library.Image
         /// <summary>
         /// Save image
         /// </summary>
-        /// <param name="pic">Image source</param>
-        /// <param name="filename">Filename</param>
-        public static void SaveImage(System.Drawing.Image pic, string filename)
+        /// <param name="originalFilename">Image file name</param>
+        /// <param name="filename">New image file name</param>
+        public static void SaveImage(string originalFilename, string filename)
         {
             string ext = Path.GetExtension(filename).Substring(1).ToLower();
 
-            if (ext == "bmp")
+            using (var img = new ImageMagick.MagickImage(originalFilename))
             {
-                pic.Save(filename, ImageFormat.Bmp);
+                img.Quality = 100;
+                img.Write(filename);
             }
-            else if (ext == "emf")
+        }
+
+            /// <summary>
+            /// Save image
+            /// </summary>
+            /// <param name="pic">Image source</param>
+            /// <param name="filename">New image file name</param>
+            public static void SaveImage(System.Drawing.Image pic, string filename)
+        {
+            string ext = Path.GetExtension(filename).Substring(1).ToLower();
+
+            using (var img = new ImageMagick.MagickImage(new Bitmap(pic)))
             {
-                pic.Save(filename, ImageFormat.Emf);
+                img.Quality = 100;
+                img.Write(filename);
             }
-            else if (ext == "exif")
-            {
-                pic.Save(filename, ImageFormat.Exif);
-            }
-            else if (ext == "ico")
-            {
-                pic.Save(filename, ImageFormat.Icon);
-            }
-            else if (ext == "jpeg" || ext == "jpg" || ext == "jfif")
-            {
-                pic.Save(filename, ImageFormat.Jpeg);
-            }
-            else if (ext == "png")
-            {
-                pic.Save(filename, ImageFormat.Png);
-            }
-            else if (ext == "tiff")
-            {
-                pic.Save(filename, ImageFormat.Tiff);
-            }
-            else if (ext == "wmf")
-            {
-                pic.Save(filename, ImageFormat.Wmf);
-            }
+
+            //if (ext == "bmp")
+            //{
+            //    pic.Save(filename, ImageFormat.Bmp);
+            //}
+            //else if (ext == "emf")
+            //{
+            //    pic.Save(filename, ImageFormat.Emf);
+            //}
+            //else if (ext == "exif")
+            //{
+            //    pic.Save(filename, ImageFormat.Exif);
+            //}
+            //else if (ext == "ico")
+            //{
+            //    pic.Save(filename, ImageFormat.Icon);
+            //}
+            //else if (ext == "jpeg" || ext == "jpg" || ext == "jfif")
+            //{
+            //    pic.Save(filename, ImageFormat.Jpeg);
+            //}
+            //else if (ext == "png")
+            //{
+            //    pic.Save(filename, ImageFormat.Png);
+            //}
+            //else if (ext == "tiff")
+            //{
+            //    pic.Save(filename, ImageFormat.Tiff);
+            //}
+            //else if (ext == "wmf")
+            //{
+            //    pic.Save(filename, ImageFormat.Wmf);
+            //}
         }
 
         /// <summary>

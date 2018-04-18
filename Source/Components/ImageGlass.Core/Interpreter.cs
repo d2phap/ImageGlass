@@ -75,6 +75,8 @@ namespace ImageGlass.Core
 
                 using (var magicImg = new MagickImage(path, settings))
                 {
+                    magicImg.Quality = 100;
+
                     //Get Exif information
                     var profile = magicImg.GetExifProfile();
                     if (profile != null)

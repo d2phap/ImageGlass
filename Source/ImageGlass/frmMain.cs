@@ -1048,7 +1048,7 @@ namespace ImageGlass
             {
                 ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
             }
-            catch { }
+            catch (Exception ex) { }
             
             LocalSetting.ImageModifiedPath = "";
         }
@@ -2554,7 +2554,7 @@ namespace ImageGlass
                 filename = "untitled.png";
             }
 
-            Library.Image.ImageInfo.ConvertImage(picMain.Image, filename);
+            ImageInfo.ConvertImage(picMain.Image, filename);
         }
 
         private void mnuMainRefresh_Click(object sender, EventArgs e)
@@ -2905,10 +2905,13 @@ namespace ImageGlass
                 return;
             }
 
-            Bitmap bmp = new Bitmap(picMain.Image);
-            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            picMain.Image = bmp;
-
+            var bmp = new Bitmap(picMain.Image);
+            using (var img = new ImageMagick.MagickImage(bmp))
+            {
+                img.Rotate(270);
+                img.Quality = 100;
+                picMain.Image = img.ToBitmap();
+            }
 
             try
             {
@@ -2926,9 +2929,13 @@ namespace ImageGlass
                 return;
             }
 
-            Bitmap bmp = new Bitmap(picMain.Image);
-            bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            picMain.Image = bmp;
+            var bmp = new Bitmap(picMain.Image);
+            using (var img = new ImageMagick.MagickImage(bmp))
+            {
+                img.Rotate(90);
+                img.Quality = 100;
+                picMain.Image = img.ToBitmap();
+            }
 
             try
             {
