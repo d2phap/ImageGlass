@@ -507,6 +507,8 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = "";
             }
 
+            _isDraggingImage = false;
+
             //Select thumbnail item
             SelectCurrentThumbnail();
 
@@ -569,7 +571,7 @@ namespace ImageGlass
             //this.Text = e.KeyValue.ToString();
 
             #region Register MAIN MENU shortcuts
-            void checkMenuShortcut(ToolStripMenuItem mnu)
+            bool checkMenuShortcut(ToolStripMenuItem mnu)
             {
                 Keys pressed = e.KeyCode;
                 if (e.Control) pressed = pressed | Keys.Control;
@@ -579,17 +581,23 @@ namespace ImageGlass
                 if (mnu.ShortcutKeys == pressed)
                 {
                     mnu.PerformClick();
+                    return true;
                 }
                 foreach (ToolStripMenuItem child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
                 {
                     checkMenuShortcut(child);
                 }
+
+                return false;
             }
 
             //register context menu shortcuts
             foreach (ToolStripMenuItem item in mnuMain.Items.OfType<ToolStripMenuItem>())
             {
-                checkMenuShortcut(item);
+                if (checkMenuShortcut(item))
+                {
+                    return;
+                }
             }
             #endregion
 
