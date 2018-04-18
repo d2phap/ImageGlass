@@ -1281,8 +1281,8 @@ namespace ImageGlass
             timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
 
             //Show checked bakcground-------------------------------------------------------
-            GlobalSetting.IsShowCheckedBackground = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
-            GlobalSetting.IsShowCheckedBackground = !GlobalSetting.IsShowCheckedBackground;
+            GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
+            GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
             mnuMainCheckBackground_Click(null, EventArgs.Empty);
 
             //Recursive loading--------------------------------------------------------------
@@ -1548,7 +1548,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig($"{Name}.WindowsState", WindowState.ToString());
 
             //Checked background
-            GlobalSetting.SetConfig("IsShowCheckedBackground", GlobalSetting.IsShowCheckedBackground.ToString());
+            GlobalSetting.SetConfig("IsShowCheckedBackground", GlobalSetting.IsShowCheckerBoard.ToString());
 
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
@@ -3307,8 +3307,8 @@ namespace ImageGlass
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
         {
-            GlobalSetting.IsShowCheckedBackground = !GlobalSetting.IsShowCheckedBackground;
-            btnCheckedBackground.Checked = GlobalSetting.IsShowCheckedBackground;
+            GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
+            btnCheckedBackground.Checked = GlobalSetting.IsShowCheckerBoard;
 
             if (btnCheckedBackground.Checked)
             {

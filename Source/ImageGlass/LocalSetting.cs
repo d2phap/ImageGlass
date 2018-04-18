@@ -18,9 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Specialized;
-using System.Drawing;
 using System.Threading;
-using ImageGlass.Theme;
 
 namespace ImageGlass
 {
@@ -90,11 +88,9 @@ namespace ImageGlass
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
 
-
-
-
-
+        
         #endregion
+
 
 
         #region LazyInitializer Properties

@@ -56,57 +56,10 @@ namespace ImageGlass.Services.Configuration
             Description = "ImageGlass Configuration file";
             Version = "4.0";
 
-            // Init configs
-            InitConfigs();
-
             //Read all configs from file
             ReadConfigFile();
         }
 
-        /// <summary>
-        /// Initiate all configuration strings
-        /// </summary>
-        private void InitConfigs()
-        {
-            //this["AppVersion"] = "4.0.4.15";
-            //this["AutoUpdate"] = "7/26/1991 12:13:08 AM";
-            //this["BackgroundColor"] = "-1";
-            //this["DefaultImageFormats"] = "";
-            //this["OptionalImageFormats"] = "";
-            //this["ImageEditingAssociationList"] = "";
-
-            //this["frmMain.WindowsBound"] = "280,125,850,550";
-            //this["frmMain.WindowsState"] = "Normal";
-
-            //this["frmSetting.WindowsBound"] = "280,125,610,570";
-            //this["frmSetting.WindowsState"] = "Normal";
-
-            //this["frmExtension.WindowsBound"] = "280,125,840,500";
-            //this["frmExtension.WindowsState"] = "Normal";
-
-            //this["Language"] = "";
-            //this["Theme"] = "default";
-            //this["ThumbnailBarWidth"] = "962";
-            //this["ThumbnailDimension"] = "48";
-            //this["IsShowThumbnail"] = "False";
-            //this["IsThumbnailHorizontal"] = "True";
-            //this["IsShowToolBar"] = "True";
-
-            //this["IsRecursiveLoading"] = "False";
-            //this["ImageLoadingOrder"] = "0";
-            //this["SlideShowInterval"] = "5";
-            //this["IsAllowMultiInstances"] = "True";
-            //this["IsLoopBackSlideShow"] = "True";
-            //this["IsLoopBackViewer"] = "True";
-            //this["IsPressESCToQuit"] = "True";
-            //this["IsShowCheckedBackground"] = "False";
-            //this["IsWindowAlwaysOnTop"] = "False";
-            //this["IsShowWelcome"] = "True";
-
-            //this["IsZoomToFit"] = "False";
-            //this["ZoomLockValue"] = "-1";
-            //this["ZoomOptimization"] = "0";
-        }
 
         /// <summary>
         /// Check if ImageGlass can write config file in the startup folder

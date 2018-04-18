@@ -54,8 +54,6 @@ namespace ImageGlass
         private ImageList _lstToolbarImg;
         private List<ListViewItem> _lstMasterUsed;
 
-        // The out-of-the-box toolbar button set from V4.5
-        private const string _defaultToolbarConfig = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20";
 
         // instance of frmMain, for reflection
         public frmMain MainInstance { get; internal set; }
@@ -1497,7 +1495,7 @@ namespace ImageGlass
         /// <returns></returns>
         public static List<string> LoadToolbarConfig()
         {
-            string savedVal = GlobalSetting.GetConfig("ToolbarButtons", _defaultToolbarConfig);
+            string savedVal = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
             GlobalSetting.ToolbarButtons = savedVal;
 
             var xlated = TranslateToolbarButtonsFromConfig(savedVal);
@@ -1772,6 +1770,7 @@ namespace ImageGlass
             #region Language tab -------------------------------------------
             //Language
             GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+            GlobalSetting.SetConfig("Language", GlobalSetting.LangPack.FileName);
 
             #endregion
 
