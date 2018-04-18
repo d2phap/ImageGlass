@@ -467,6 +467,7 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
                 (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
             {
+                LocalSetting.IsShowColorPickerOnStartup = false;
                 this.Close();
             }
             #endregion

@@ -36,12 +36,17 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Check if frmColorPickerOpening
+        /// Check if frmColorPicker is opening.
+        /// This is for toggle Color Picker menu in frmMain
         /// </summary>
-        public static bool IsColorPickerToolOpening
-        {
-            get; set;
-        } = false;
+        public static bool IsColorPickerToolOpening { get; set; } = false;
+
+
+        /// <summary>
+        /// Check if frmColorPicker is not closed by user (toggle the menu / press ESC on frmColorPicker form). 
+        /// This is for auto open Color Picker tool when startup
+        /// </summary>
+        public static bool IsShowColorPickerOnStartup { get; set; } = false;
 
 
         #region "Properties"

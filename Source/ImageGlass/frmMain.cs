@@ -1522,8 +1522,8 @@ namespace ImageGlass
 
 
             //Get IsShowColorPicker ---------------------------------------------------------
-            LocalSetting.IsColorPickerToolOpening = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
-            if (LocalSetting.IsColorPickerToolOpening)
+            LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+            if (LocalSetting.IsShowColorPickerOnStartup)
             {
                 mnuMainColorPicker.PerformClick();
             }
@@ -1588,7 +1588,7 @@ namespace ImageGlass
             }
 
             //Save IsShowColorPickerOnStartup
-            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsColorPickerToolOpening.ToString());
+            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsShowColorPickerOnStartup.ToString());
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
@@ -1767,7 +1767,7 @@ namespace ImageGlass
 
                 //Prevent zooming by scrolling mouse
                 //_isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
-
+                
 
                 mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
 
@@ -3339,7 +3339,7 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
+            LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
 
             //open Color Picker tool
             if (mnuMainColorPicker.Checked)
