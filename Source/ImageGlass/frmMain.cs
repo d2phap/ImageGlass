@@ -1710,15 +1710,15 @@ namespace ImageGlass
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //clear temp files
-            string temp_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
-            if (Directory.Exists(temp_dir))
-            {
-                Directory.Delete(temp_dir, true);
-            }
-
             try
             {
+                //clear temp files
+                string temp_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
+                if (Directory.Exists(temp_dir))
+                {
+                    Directory.Delete(temp_dir, true);
+                }
+
                 SaveConfig();
             }
             catch { }
