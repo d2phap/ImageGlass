@@ -295,13 +295,20 @@ namespace ImageGlass
                 return;
             }
             _imgBox.Cursor = Cursors.Cross;
-
             _cursorPos = _imgBox.PointToImage(e.Location);
-            if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
-                && _cursorPos.Y < _imgBox.Image.Height)
+
+            //In case of opening a second image, 
+            //there is a delay of loading image time which will cause error due to _imgBox is null.
+            //Wrap try catch to skip this error
+            try
             {
-                lblPixel.Text = string.Format("({0}, {1})", _cursorPos.X, _cursorPos.Y);
+                if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
+                    && _cursorPos.Y < _imgBox.Image.Height)
+                {
+                    lblPixel.Text = string.Format("({0}, {1})", _cursorPos.X, _cursorPos.Y);
+                }
             }
+            catch { }
         }
 
         private void _imgBox_Click(object sender, EventArgs e)
@@ -312,17 +319,24 @@ namespace ImageGlass
             }
 
 
-            if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width && _cursorPos.Y < _imgBox.Image.Height)
+            //In case of opening a second image, 
+            //there is a delay of loading image time which will cause error due to _imgBox is null.
+            //Wrap try catch to skip this error
+            try
             {
-                if (_bmpBooster != null)
+                if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width && _cursorPos.Y < _imgBox.Image.Height)
                 {
-                    _bmpBooster.Dispose();
-                }
-                _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
+                    if (_bmpBooster != null)
+                    {
+                        _bmpBooster.Dispose();
+                    }
+                    _bmpBooster = new BitmapBooster(new Bitmap(_imgBox.Image));
 
-                Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
-                _DisplayColor(color);
+                    Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
+                    _DisplayColor(color);
+                }
             }
+            catch { }
         }
 
         #endregion
