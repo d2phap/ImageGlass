@@ -106,6 +106,7 @@ namespace ImageGlass
             }
 
         }
+
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
             // Drag file from DESKTOP to APP
@@ -117,7 +118,12 @@ namespace ImageGlass
             {
                 Prepare(filePath);
             }
-            // The file is in current folder, just display the image
+            // The file is in current folder AND it is the viewing image
+            else if (GlobalSetting.CurrentIndex == imageIndex)
+            {
+                //do nothing
+            }
+            // The file is in current folder AND it is NOT the viewing image
             else
             {
                 GlobalSetting.CurrentIndex = imageIndex;
@@ -384,7 +390,12 @@ namespace ImageGlass
 
                 Application.DoEvents();
                 ImageSaveChange();
-                return;
+
+                //remove the old image data from cache
+                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+
+                //update thumbnail
+                thumbnailBar.Items[GlobalSetting.CurrentIndex].Update();
             }
             
             Application.DoEvents();
@@ -1988,6 +1999,9 @@ namespace ImageGlass
                     {
                         NextPic(0, true, true);
                     }
+
+                    //update thumbnail
+                    thumbnailBar.Items[imgIndex].Update();
                 }
                 // File change type = Created
                 else
