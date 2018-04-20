@@ -339,6 +339,7 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Text", "file(s)");
+            Items.Add("frmMain._ImageData", "Image Data"); //v5.0
             Items.Add("frmMain._RenameDialogText", "Rename"); //v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");
             Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");

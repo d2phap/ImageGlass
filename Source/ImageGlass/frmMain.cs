@@ -57,8 +57,6 @@ namespace ImageGlass
 
 
         #region Local variables
-        // information to display in title bar
-        private string _imageInfo = "";
 
         // window size value before resizing
         private Size _windowSize = new Size(600, 500);
@@ -532,43 +530,55 @@ namespace ImageGlass
         /// <summary>
         /// Update image information on status bar
         /// </summary>
-        private void UpdateStatusBar(bool @zoomOnly = false)
+        private void UpdateStatusBar()
         {
-            string fileinfo = "";
+            string appName = "ImageGlass";
+            string indexTotal = string.Empty;
+            string filename = string.Empty;
+            string zoom = string.Empty;
+            string imgSize = string.Empty;
+            string fileSize = string.Empty;
+            string fileDate = string.Empty;
 
-            if (GlobalSetting.ImageList.Length < 1 || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-            {
-                this.Text = $"ImageGlass {fileinfo}";
-                return;
-            }
 
-            if (GlobalSetting.IsImageError)
+            if (LocalSetting.IsTempMemoryData)
             {
-                fileinfo = "";
+                appName += $"  |  {GlobalSetting.LangPack.Items["frmMain._ImageData"]}";
+                imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                zoom = $"{picMain.Zoom.ToString()}%";
+
+                //ImageGlass (Image data)  |  {zoom}  |  {image size}
+                this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
             }
             else
             {
-                //Set the text of Window title
-                this.Text = $"ImageGlass - {(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]} - {Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex))}  |  ";
-
-                if (zoomOnly)
+                if (GlobalSetting.ImageList.Length < 1 || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 {
-                    fileinfo = picMain.Zoom.ToString() + "%  |  " + _imageInfo;
+                    this.Text = appName;
+                    return;
+                }
+
+
+                indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
+                filename = Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                fileSize = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                fileDate = File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/MM/dd HH:mm:ss");
+
+
+                if (GlobalSetting.IsImageError)
+                {
+                    //ImageGlass - {index/total} - {filename}  |  {file size}  |  {file date}
+                    this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
                 }
                 else
                 {
-                    fileinfo += picMain.Image.Width + " x " + picMain.Image.Height + " px  |  ";
-                    fileinfo += ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\t  |  ";
-                    fileinfo += File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/M/d HH:m:s");
+                    imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                    zoom = $"{picMain.Zoom.ToString()}%";
 
-                    _imageInfo = fileinfo;
-
-                    fileinfo = picMain.Zoom.ToString() + "%  |  " + fileinfo;
+                    //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
+                    this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
                 }
             }
-
-            //Move image information to Window title
-            this.Text += fileinfo;
 
         }
         #endregion
@@ -1136,12 +1146,26 @@ namespace ImageGlass
             #endregion
 
         }
+
+
+        /// <summary>
+        /// Load image data
+        /// </summary>
+        /// <param name="img"></param>
+        private void LoadImageData(Image img)
+        {
+            picMain.Image = img;
+            picMain.Text = "";
+            LocalSetting.IsTempMemoryData = true;
+
+            UpdateStatusBar();
+        }
         #endregion
 
 
 
         #region Configurations
-        
+
         /// <summary>
         /// Apply ImageGlass theme
         /// </summary>
@@ -2215,7 +2239,7 @@ namespace ImageGlass
             //Zoom optimization
             ZoomOptimization();
 
-            UpdateStatusBar(true);
+            UpdateStatusBar();
         }
 
         private void picMain_DoubleClick(object sender, EventArgs e)
@@ -2531,8 +2555,7 @@ namespace ImageGlass
             //CheckImageInClipboard: ;
             else if (Clipboard.ContainsImage())
             {
-                picMain.Image = Clipboard.GetImage();
-                LocalSetting.IsTempMemoryData = true;
+                LoadImageData(Clipboard.GetImage());
             }
 
             //Is there a filename in clipboard?-----------------------------------------------
