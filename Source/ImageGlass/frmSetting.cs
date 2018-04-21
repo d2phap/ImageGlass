@@ -363,6 +363,12 @@ namespace ImageGlass
             #endregion
 
 
+            #region THEME TAB
+
+
+            #endregion
+
+
             extList = null;
         }
 
@@ -1695,6 +1701,12 @@ namespace ImageGlass
 
                         lvTheme.Items.Add(lvi);
                     }
+                }
+
+                //select the default theme
+                if (lvTheme.Items.Count > 0 && lvTheme.SelectedItems.Count == 0)
+                {
+                    lvTheme.Items[0].Selected = true;
                 }
             }
             else
