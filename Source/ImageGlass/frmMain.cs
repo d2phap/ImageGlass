@@ -1141,7 +1141,7 @@ namespace ImageGlass
 
             mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainExtensionManager.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainColorPicker.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             #endregion
 
@@ -1864,7 +1864,6 @@ namespace ImageGlass
                 mnuMainAlwaysOnTop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAlwaysOnTop"];
 
                 mnuMainTools.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainTools"];
-                mnuMainExtensionManager.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtensionManager"];
                 mnuMainColorPicker.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainColorPicker"];
 
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
@@ -2424,11 +2423,6 @@ namespace ImageGlass
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
             mnuMainPrint_Click(null, e);
-        }
-
-        private void btnExtension_Click(object sender, EventArgs e)
-        {
-            mnuMainExtensionManager_Click(null, e);
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
@@ -3409,19 +3403,7 @@ namespace ImageGlass
                 mnuMainAlwaysOnTop.Checked = 
                 GlobalSetting.IsWindowAlwaysOnTop = !GlobalSetting.IsWindowAlwaysOnTop;
         }
-
-        private void mnuMainExtensionManager_Click(object sender, EventArgs e)
-        {
-            if (LocalSetting.FExtension.IsDisposed)
-            {
-                LocalSetting.FExtension = new frmExtension();
-            }
-
-            LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
-            LocalSetting.FExtension.TopMost = this.TopMost;
-            LocalSetting.FExtension.Show();
-            LocalSetting.FExtension.Activate();
-        }
+        
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {

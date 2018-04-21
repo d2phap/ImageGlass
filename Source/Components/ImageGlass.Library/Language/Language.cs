@@ -326,8 +326,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
-            Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0
-            Items.Add("frmMain.mnuMainColorPicker", "Color picker");
+            //Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0, removed v5.0
+            Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
 
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
@@ -361,17 +361,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
             Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
             #endregion
-
-
-            #region frmExtension
-            Items.Add("frmExtension._Text", "Extension Manager");
-
-            Items.Add("frmExtension.btnGetMoreExt", "Get more extensions"); //v2.0 final
-            Items.Add("frmExtension.btnRefreshAllExt", "Refresh"); //v2.0 final
-            Items.Add("frmExtension.btnInstallExt", "Install"); //v2.0 final            
-            Items.Add("frmExtension.btnClose", "Close");
-            #endregion
-
+            
 
             #region frmAbout
             Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0
@@ -672,6 +662,18 @@ namespace ImageGlass.Library
             //Items.Add("frmFacebook._StatusSuccessful", "Successful"); //removed v5.0
             //Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ..."); //removed v5.0
             #endregion
+
+
+            #region frmExtension
+            //Items.Add("frmExtension._Text", "Extension Manager"); //removed v5.0
+
+            //Items.Add("frmExtension.btnGetMoreExt", "Get more extensions"); //v2.0 final, removed v5.0
+            //Items.Add("frmExtension.btnRefreshAllExt", "Refresh"); //v2.0 final, removed v5.0
+            //Items.Add("frmExtension.btnInstallExt", "Install"); //v2.0 final, removed v5.0
+            //Items.Add("frmExtension.btnClose", "Close"); //removed v5.0
+            #endregion
+
+
             #endregion
 
 

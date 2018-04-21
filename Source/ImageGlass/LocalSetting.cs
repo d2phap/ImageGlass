@@ -26,7 +26,6 @@ namespace ImageGlass
     public static class LocalSetting
     {
         private static frmSetting _fSetting;
-        private static frmExtension _fExtension;
         private static frmColorPicker _fColorPicker;
         private static Theme.Theme _theme;
         
@@ -101,15 +100,6 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fSetting); }
             set { _fSetting = value; }
-        }
-
-        /// <summary>
-        /// Form frmExtension
-        /// </summary>
-        public static frmExtension FExtension
-        {
-            get { return LazyInitializer.EnsureInitialized(ref _fExtension); }
-            set { _fExtension = value; }
         }
 
         /// <summary>

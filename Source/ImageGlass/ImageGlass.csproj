@@ -170,12 +170,6 @@
     <Compile Include="frmEditEditingAssocisation.Designer.cs">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmExtension.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmExtension.Designer.cs">
-      <DependentUpon>frmExtension.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,7 +182,6 @@
     <Compile Include="frmSetting.Designer.cs">
       <DependentUpon>frmSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global.cs" />
     <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,10 +197,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditEditingAssocisation.resx">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmExtension.resx">
-      <DependentUpon>frmExtension.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -333,10 +322,6 @@
     <ProjectReference Include="..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
-      <Project>{3ebdaabb-077b-4308-9d69-93727dfd4554}</Project>
-      <Name>ImageGlass.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Theme\ImageGlass.Theme.csproj">
       <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>

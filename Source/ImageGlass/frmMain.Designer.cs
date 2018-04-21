@@ -119,7 +119,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainExtensionManager = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -1261,7 +1260,6 @@
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainExtensionManager,
             this.mnuMainColorPicker});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -1270,19 +1268,6 @@
             this.mnuMainTools.Size = new System.Drawing.Size(408, 31);
             this.mnuMainTools.Text = "&Tools";
             this.mnuMainTools.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
-            // 
-            // mnuMainExtensionManager
-            // 
-            this.mnuMainExtensionManager.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainExtensionManager.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainExtensionManager.Name = "mnuMainExtensionManager";
-            this.mnuMainExtensionManager.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainExtensionManager.ShortcutKeyDisplayString = "";
-            this.mnuMainExtensionManager.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.E)));
-            this.mnuMainExtensionManager.Size = new System.Drawing.Size(354, 31);
-            this.mnuMainExtensionManager.Text = "&Extension manager";
-            this.mnuMainExtensionManager.Click += new System.EventHandler(this.mnuMainExtensionManager_Click);
             // 
             // mnuMainColorPicker
             // 
@@ -1294,7 +1279,7 @@
             this.mnuMainColorPicker.ShortcutKeyDisplayString = "";
             this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.K)));
-            this.mnuMainColorPicker.Size = new System.Drawing.Size(354, 31);
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(300, 31);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
@@ -1550,7 +1535,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainCopyImagePath;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem mnuMainClearClipboard;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainExtensionManager;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRename;
         private System.Windows.Forms.ToolStripMenuItem mnuMainMoveToRecycleBin;
