@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013-2016 DUONG DIEU PHAP
+Copyright (C) 2013-2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -58,15 +58,6 @@ namespace igcmd
             else if (topcmd == "igautoupdate")// auto check for update
             {
                 Core.AutoUpdate();
-            }
-            else if (topcmd == "igpacktheme")// pack theme *.igtheme
-            {
-                //cmd: igcmd.exe igpacktheme "srcDir" "desFile"
-                Core.PackTheme(args[1], args[2]);
-            }
-            else if (topcmd == "iginstalltheme")//install theme
-            {
-                Core.InstallTheme(args[1]);
             }
         }
 

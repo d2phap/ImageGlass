@@ -223,7 +223,7 @@ namespace ImageGlass
         #endregion
 
 
-        
+
 
         /// <summary>
         /// Load language pack
@@ -262,7 +262,7 @@ namespace ImageGlass
                 chkPortableMode.Text = string.Format(lang["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
                 chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
             }
-            
+
 
             lblHeadOthers.Text = lang["frmSetting.lblHeadOthers"];//
             chkAutoUpdate.Text = lang["frmSetting.chkAutoUpdate"];
@@ -796,7 +796,7 @@ namespace ImageGlass
                 p.Start();
             }
             catch { }
-            
+
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1304,7 +1304,7 @@ namespace ImageGlass
                             ToolbarButtons enumVal = (ToolbarButtons)numVal;
                             outVal.Add(enumVal);
                         }
-                        catch (Exception) 
+                        catch (Exception)
                         {
                             // when the enumeration value doesn't exist, don't add it!
                         }
@@ -1676,7 +1676,7 @@ namespace ImageGlass
                     if (File.Exists(configFile))
                     {
                         Theme.Theme th = new Theme.Theme();
-                        
+
                         //invalid theme
                         if (!th.LoadTheme(configFile))
                         {
@@ -1701,7 +1701,7 @@ namespace ImageGlass
             {
                 Directory.CreateDirectory(dir);
             }
-            
+
 
             lblInstalledThemes.Text = "Installed themes: " + lvTheme.Items.Count.ToString();
         }
@@ -1741,12 +1741,14 @@ namespace ImageGlass
                                 "Website: " + t.Website + "\r\n" +
                                 "Compatibility: " + t.Compatibility + "\r\n" +
                                 "Description: " + t.Description;
+                txtThemeInfo.Visible = true;
 
                 btnThemeEdit.Text = "Edit selected theme";
             }
             else
             {
                 picPreview.Image = null;
+                txtThemeInfo.Visible = false;
                 txtThemeInfo.Text = "";
                 btnSave.Enabled = false;
                 btnThemeUninstall.Enabled = false;
@@ -1792,7 +1794,7 @@ namespace ImageGlass
                 {
                     MessageBox.Show("Theme not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
             }
         }
 
@@ -1835,13 +1837,21 @@ namespace ImageGlass
         }
 
 
+        private void btnThemeFolderOpen_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\"));
+        }
+
+
+
+
         private void btnThemeApply_Click(object sender, EventArgs e)
         {
             if (lvTheme.SelectedItems.Count > 0)
             {
                 var th = Theme.Theme.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString());
 
-                if (th != null )
+                if (th != null)
                 {
                     LocalSetting.Theme = th;
                     LocalSetting.IsForcedActive = true;
@@ -1850,6 +1860,8 @@ namespace ImageGlass
                 }
             }
         }
+
+
 
 
         #endregion
@@ -1947,7 +1959,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
             GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
             GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
-            
+
 
             //IsMouseNavigation
             //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
@@ -2010,7 +2022,7 @@ namespace ImageGlass
             GlobalSetting.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHEXA", GlobalSetting.IsColorPickerHEXA.ToString());
 
-            GlobalSetting.IsColorPickerHSLA= chkColorUseHEXA.Checked;
+            GlobalSetting.IsColorPickerHSLA = chkColorUseHEXA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
 
             #endregion
@@ -2032,8 +2044,9 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-        
+
     }
 }
