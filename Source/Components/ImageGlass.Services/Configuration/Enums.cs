@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+
 namespace ImageGlass.Services.Configuration
 {
     public enum ImageOrderBy
@@ -56,5 +58,19 @@ namespace ImageGlass.Services.Configuration
         SCROLL_HORIZONTAL = 3,
         BROWSE_IMAGES = 4
     }
-    
+
+    /// <summary>
+    /// Define the flags to tell frmMain update the UI
+    /// </summary>
+    [Flags]
+    public enum MainFormForceUpdateAction
+    {
+        NONE = 1,
+        COLOR_PICKER_MENU = 2,
+        THEME = 4,
+        LANGUAGE = 8,
+        THUMBNAIL = 16,
+        OTHER_SETTINGS = 32
+    }
+
 }

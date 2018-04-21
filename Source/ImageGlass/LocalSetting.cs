@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Services.Configuration;
 using System.Collections.Specialized;
 using System.Threading;
 
@@ -28,9 +29,7 @@ namespace ImageGlass
         private static frmExtension _fExtension;
         private static frmColorPicker _fColorPicker;
         private static Theme.Theme _theme;
-
         
-
 
         #region Auto Properties
         /// <summary>
@@ -74,7 +73,7 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets active value whenever hover on picturebox
         /// </summary>
-        public static bool IsForcedActive { get; set; } = true;
+        public static MainFormForceUpdateAction ForceUpdateActions { get; set; } = MainFormForceUpdateAction.NONE;
 
 
         /// <summary>

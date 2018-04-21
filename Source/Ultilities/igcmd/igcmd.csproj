@@ -110,12 +110,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmInstallTheme.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmInstallTheme.Designer.cs">
-      <DependentUpon>frmInstallTheme.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmCheckForUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,9 +127,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmInstallTheme.resx">
-      <DependentUpon>frmInstallTheme.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMsg.resx">
       <DependentUpon>frmMsg.cs</DependentUpon>
