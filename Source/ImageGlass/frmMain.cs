@@ -1267,7 +1267,7 @@ namespace ImageGlass
                 GlobalSetting.LangPack = new Library.Language(configValue);
 
                 //force update language pack
-                LocalSetting.IsForcedActive = true;
+                LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.LANGUAGE;
                 frmMain_Activated(null, null);
             }
 
@@ -1771,49 +1771,15 @@ namespace ImageGlass
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
+            var flags = LocalSetting.ForceUpdateActions;
 
-            if (LocalSetting.IsForcedActive)
+            //do nothing
+            if (flags == MainFormForceUpdateAction.NONE) return;
+
+
+            #region LANGUAGE
+            if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
             {
-                //Update thumbnail bar position--------
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                mnuMainThumbnailBar_Click(null, null);
-
-                //Update thumbnail image size
-                if(LocalSetting.IsThumbnailDimensionChanged)
-                {
-                    LocalSetting.IsThumbnailDimensionChanged = false;
-                    LoadThumbnails();
-                }
-
-                //Update scrollbars visibility
-                if (GlobalSetting.IsScrollbarsVisible)
-                {
-                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                }
-                else
-                {
-                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
-                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
-                }
-                
-
-                //Update background---------------------
-                picMain.BackColor = GlobalSetting.BackgroundColor;
-
-                //Update language pack------------------
-                RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
-
-                //Update slideshow interval value of timer
-                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
-
-                //Prevent zooming by scrolling mouse
-                //_isZoomed = picMain.AllowZoom = !GlobalSetting.IsMouseNavigation;
-                
-
-                mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
-
-
                 #region Update language strings
                 //Toolbar
                 btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
@@ -1908,10 +1874,78 @@ namespace ImageGlass
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
                 #endregion
 
+                //Update language layout ------------------
+                RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             }
+            #endregion
 
 
-            LocalSetting.IsForcedActive = false;
+            #region THUMBNAIL
+            if ((flags & MainFormForceUpdateAction.THUMBNAIL) == MainFormForceUpdateAction.THUMBNAIL)
+            {
+                #region Update thumbnail bar
+                //Update thumbnail bar position--------
+                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                mnuMainThumbnailBar_Click(null, null);
+
+                //Update thumbnail image size
+                if (LocalSetting.IsThumbnailDimensionChanged)
+                {
+                    LocalSetting.IsThumbnailDimensionChanged = false;
+                    LoadThumbnails();
+                }
+                #endregion
+            }
+            #endregion
+
+
+            #region COLOR_PICKER_MENU
+            if ((flags & MainFormForceUpdateAction.COLOR_PICKER_MENU) == MainFormForceUpdateAction.COLOR_PICKER_MENU)
+            {
+                mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
+            }
+            #endregion
+
+
+            #region THEME
+            if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
+            {
+                ApplyTheme(LocalSetting.Theme.ThemeConfigFilePath);
+            }
+            #endregion
+
+
+            #region OTHER_SETTINGS
+            if ((flags & MainFormForceUpdateAction.OTHER_SETTINGS) == MainFormForceUpdateAction.OTHER_SETTINGS)
+            {
+                #region Update Other Settings
+
+                //Update scrollbars visibility
+                if (GlobalSetting.IsScrollbarsVisible)
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                }
+                else
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                }
+
+                //Update background---------------------
+                picMain.BackColor = GlobalSetting.BackgroundColor;
+
+                //Update slideshow interval value of timer
+                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
+
+                #endregion
+
+            }
+            #endregion
+
+            
+
+            LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
         }
 
         private void frmMain_ResizeBegin(object sender, EventArgs e)
@@ -3383,7 +3417,7 @@ namespace ImageGlass
                 LocalSetting.FExtension = new frmExtension();
             }
 
-            LocalSetting.IsForcedActive = false;
+            LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
             LocalSetting.FExtension.TopMost = this.TopMost;
             LocalSetting.FExtension.Show();
             LocalSetting.FExtension.Activate();
@@ -3400,7 +3434,7 @@ namespace ImageGlass
                 {
                     LocalSetting.FColorPicker = new frmColorPicker();
                 }
-                LocalSetting.IsForcedActive = true;
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
 
                 LocalSetting.FColorPicker.SetImageBox(picMain);
                 LocalSetting.FColorPicker.Show(this);
@@ -3426,7 +3460,7 @@ namespace ImageGlass
                 LocalSetting.FSetting = new frmSetting();
             }
 
-            LocalSetting.IsForcedActive = false;
+            LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
             LocalSetting.FSetting.MainInstance = this;
             LocalSetting.FSetting.TopMost = this.TopMost;
             LocalSetting.FSetting.Show();

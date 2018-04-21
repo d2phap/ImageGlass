@@ -1718,13 +1718,13 @@ namespace ImageGlass
             if (lvTheme.SelectedIndices.Count > 0)
             {
                 string file = lvTheme.SelectedItems[0].Tag.ToString();
-                btnSave.Enabled = true;
+                btnThemeSaveAs.Enabled = true;
                 btnThemeUninstall.Enabled = true;
 
                 if (file == "Default")
                 {
                     file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
-                    btnSave.Enabled = false;
+                    btnThemeSaveAs.Enabled = false;
                     btnThemeUninstall.Enabled = false;
                 }
 
@@ -1750,7 +1750,7 @@ namespace ImageGlass
                 picPreview.Image = null;
                 txtThemeInfo.Visible = false;
                 txtThemeInfo.Text = "";
-                btnSave.Enabled = false;
+                btnThemeSaveAs.Enabled = false;
                 btnThemeUninstall.Enabled = false;
                 btnThemeEdit.Text = "Create new theme";
             }
@@ -1770,11 +1770,11 @@ namespace ImageGlass
                 {
                     RefreshThemeList();
 
-                    MessageBox.Show("The theme was installed successfully!", "Theme Installation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Your theme was installed successfully!", "Theme Installation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Cannot install the theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unable to install your theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1792,7 +1792,7 @@ namespace ImageGlass
                 }
                 else if (result == ThemeUninstallingResult.ERROR)
                 {
-                    MessageBox.Show("Theme not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unable to uninstall the selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -1830,7 +1830,7 @@ namespace ImageGlass
                     }
                     else
                     {
-                        MessageBox.Show("ImageGlass is unable to save your selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Unable to save your selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -1841,9 +1841,7 @@ namespace ImageGlass
         {
             Process.Start("explorer.exe", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\"));
         }
-
-
-
+        
 
         private void btnThemeApply_Click(object sender, EventArgs e)
         {
@@ -1854,13 +1852,18 @@ namespace ImageGlass
                 if (th != null)
                 {
                     LocalSetting.Theme = th;
-                    LocalSetting.IsForcedActive = true;
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
                     th = null;
+
+                    MessageBox.Show("The selected theme was applied successfully!", "Theme", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to apply the selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
-
 
 
 
@@ -1925,6 +1928,7 @@ namespace ImageGlass
             GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
             GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
 
+            
             #endregion
 
 
@@ -2029,7 +2033,8 @@ namespace ImageGlass
 
 
             //Force frmMain applying the configurations
-            LocalSetting.IsForcedActive = true;
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS | MainFormForceUpdateAction.LANGUAGE | MainFormForceUpdateAction.THUMBNAIL;
+
         }
 
 
