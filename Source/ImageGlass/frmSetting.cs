@@ -240,6 +240,10 @@ namespace ImageGlass
             lblImage.Text = lang["frmSetting.lblImage"];
             lblFileAssociations.Text = lang["frmSetting.lblFileAssociations"];
             lblLanguage.Text = lang["frmSetting.lblLanguage"];
+            lblToolbar.Text = lang["frmSetting.lblToolbar"];
+            lblColorPicker.Text = lang["frmSetting.lblColorPicker"];
+            lblTheme.Text = lang["frmSetting.lblTheme"];
+
             btnSave.Text = lang["frmSetting.btnSave"];
             btnCancel.Text = lang["frmSetting.btnCancel"];
             btnApply.Text = lang["frmSetting.btnApply"];
@@ -342,7 +346,6 @@ namespace ImageGlass
 
             #region TOOLBAR TAB
             _separatorText = lang["frmSetting.txtSeparator"];
-            lblToolbar.Text = lang["frmSetting.lblToolbar"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
             lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
             lblRestartForChange.Text = lang["frmSetting.lblRestartForChange"];
@@ -364,7 +367,17 @@ namespace ImageGlass
 
 
             #region THEME TAB
+            lblInstalledThemes.Text = string.Format(lang[$"{this.Name}.lblInstalledThemes"], "");
+            lnkThemeDownload.Text = lang[$"{this.Name}.lnkThemeDownload"];
 
+            btnThemeRefresh.Text = lang[$"{this.Name}.btnThemeRefresh"];
+            btnThemeInstall.Text = lang[$"{this.Name}.btnThemeInstall"];
+            btnThemeUninstall.Text = lang[$"{this.Name}.btnThemeUninstall"];
+            btnThemeSaveAs.Text = lang[$"{this.Name}.btnThemeSaveAs"];
+            btnThemeFolderOpen.Text = lang[$"{this.Name}.btnThemeFolderOpen"];
+
+            btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
+            btnThemeApply.Text = lang[$"{this.Name}.btnThemeApply"];
 
             #endregion
 
@@ -1715,7 +1728,7 @@ namespace ImageGlass
             }
 
 
-            lblInstalledThemes.Text = "Installed themes: " + lvTheme.Items.Count.ToString();
+            lblInstalledThemes.Text = string.Format(GlobalSetting.LangPack.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
 
 
@@ -1727,6 +1740,8 @@ namespace ImageGlass
 
         private void lvTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var lang = GlobalSetting.LangPack.Items;
+
             if (lvTheme.SelectedIndices.Count > 0)
             {
                 string file = lvTheme.SelectedItems[0].Tag.ToString();
@@ -1746,16 +1761,18 @@ namespace ImageGlass
                 Theme.Theme t = new Theme.Theme(file);
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
-                txtThemeInfo.Text = "Name: " + t.Name + "\r\n" +
-                                "Version: " + t.Version + "\r\n" +
-                                "Author: " + t.Author + "\r\n" +
-                                "Email: " + t.Email + "\r\n" +
-                                "Website: " + t.Website + "\r\n" +
-                                "Compatibility: " + t.Compatibility + "\r\n" +
-                                "Description: " + t.Description;
+                txtThemeInfo.Text = 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" + 
+                    $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {t.Description}";
+                    
                 txtThemeInfo.Visible = true;
 
-                btnThemeEdit.Text = "Edit selected theme";
+                btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
             }
             else
             {
@@ -1764,7 +1781,7 @@ namespace ImageGlass
                 txtThemeInfo.Text = "";
                 btnThemeSaveAs.Enabled = false;
                 btnThemeUninstall.Enabled = false;
-                btnThemeEdit.Text = "Create new theme";
+                btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._New"];
             }
         }
 
@@ -1782,11 +1799,11 @@ namespace ImageGlass
                 {
                     RefreshThemeList();
 
-                    MessageBox.Show("Your theme was installed successfully!", "Theme Installation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Unable to install your theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1804,7 +1821,7 @@ namespace ImageGlass
                 }
                 else if (result == ThemeUninstallingResult.ERROR)
                 {
-                    MessageBox.Show("Unable to uninstall the selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -1838,11 +1855,11 @@ namespace ImageGlass
 
                     if (result == ThemePackingResult.SUCCESS)
                     {
-                        MessageBox.Show(string.Format("Your selected theme has been saved in {0}", s.FileName), "Theme Packing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(string.Format(GlobalSetting.LangPack.Items["frmSetting.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Unable to save your selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeSaveAs._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -1868,11 +1885,11 @@ namespace ImageGlass
 
                     th = null;
 
-                    MessageBox.Show("The selected theme was applied successfully!", "Theme", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Unable to apply the selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.LangPack.Items["frmSetting.btnThemeApply._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

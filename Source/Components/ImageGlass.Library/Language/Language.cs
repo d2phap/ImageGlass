@@ -399,7 +399,10 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblGeneral", "General");
             Items.Add("frmSetting.lblImage", "Image"); //v4.0            
             Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
+            Items.Add("frmSetting.lblToolbar", "Toolbar"); //v5.0
+            Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
             Items.Add("frmSetting.lblLanguage", "Language");
+            Items.Add("frmSetting.lblTheme", "Theme"); //v5.0
             #endregion
 
 
@@ -520,12 +523,10 @@ namespace ImageGlass.Library
             #region TAB Toolbar
             // V5.0
             Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
-            Items.Add("frmSetting.lblToolbar", "Toolbar");
             Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
             Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
             Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
             Items.Add("frmSetting.lblRestartForChange", "Note: toolbar changes will not take effect until after restart.");
-
             Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
             Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
             Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
@@ -543,7 +544,7 @@ namespace ImageGlass.Library
             #endregion
 
 
-            #region Language
+            #region TAB Language
             Items.Add("frmSetting.lblLanguageText", "Installed languages");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
@@ -554,7 +555,39 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
             #endregion
 
-            
+
+            #region TAB Theme
+
+            Items.Add("frmSetting.lblInstalledThemes", "Installed themes: {0}"); //v5.0
+            Items.Add("frmSetting.lnkThemeDownload", "Download themes"); //v5.0
+            Items.Add("frmSetting.btnThemeRefresh", "Refresh"); //v5.0
+            Items.Add("frmSetting.btnThemeInstall", "Install"); //v5.0
+            Items.Add("frmSetting.btnThemeUninstall", "Uninstall"); //v5.0
+            Items.Add("frmSetting.btnThemeSaveAs", "Save As"); //v5.0
+            Items.Add("frmSetting.btnThemeFolderOpen", "Open Theme Folder"); //v5.0
+            Items.Add("frmSetting.btnThemeEdit._Edit", "Edit Selected Theme"); //v5.0
+            Items.Add("frmSetting.btnThemeEdit._New", "Create New Theme"); //v5.0
+            Items.Add("frmSetting.btnThemeApply", "Apply Theme"); //v5.0
+
+            Items.Add("frmSetting.txtThemeInfo._Name", "Name"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Version", "Version"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Author", "Author"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Email", "Email"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Website", "Website"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Compatibility", "Compatibility"); //v5.0
+            Items.Add("frmSetting.txtThemeInfo._Description", "Description"); //v5.0
+
+            Items.Add("frmSetting.btnThemeInstall._Success", "Your theme was installed successfully!"); //v5.0
+            Items.Add("frmSetting.btnThemeInstall._Error", "Unable to install your theme."); //v5.0
+            Items.Add("frmSetting.btnThemeUninstall._Error", "Unable to uninstall the selected theme."); //v5.0
+            Items.Add("frmSetting.btnThemeSaveAs._Success", "Your selected theme has been saved in {0}"); //v5.0
+            Items.Add("frmSetting.btnThemeSaveAs._Error", "Unable to save your selected theme."); //v5.0
+            Items.Add("frmSetting.btnThemeApply._Success", "The selected theme was applied successfully!"); //v5.0
+            Items.Add("frmSetting.btnThemeApply._Error", "Unable to apply the selected theme."); //v5.0
+
+            #endregion
+
+
             #endregion
 
 
