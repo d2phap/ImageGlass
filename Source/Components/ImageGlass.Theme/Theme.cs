@@ -22,11 +22,18 @@ using System.IO;
 using System.Drawing;
 using ImageGlass.Services.Configuration;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Ionic.Zip;
+using System.Text;
 
 namespace ImageGlass.Theme
 {
     public class Theme
     {
+        private string _themeConfigFilePath = string.Empty;
+        public string ThemeConfigFilePath { get => _themeConfigFilePath; }
+
         //Info
         public string name = string.Empty;                  
         public string version = string.Empty;               
@@ -38,38 +45,24 @@ namespace ImageGlass.Theme
         public string compatibility = string.Empty;            //minimum version requirement
 
         //main
-        public ThemeImage PreviewImage { get; set; }
-        public Color BackgroundColor { get; set; }
+        public ThemeImage PreviewImage { get; set; } = new ThemeImage();
+        public Color BackgroundColor { get; set; } = Color.White;
 
-        public ThemeImage ToolbarBackgroundImage { get; set; }
-        public Color ToolbarBackgroundColor { get; set; }
-        public ThemeImage ThumbnailBackgroundImage { get; set; }
-        public Color ThumbnailBackgroundColor { get; set; }
-        public Color TextInfoColor { get; set; }
+        public ThemeImage ToolbarBackgroundImage { get; set; } = new ThemeImage();
+        public Color ToolbarBackgroundColor { get; set; } = Color.FromArgb(234, 234, 242);
+        public ThemeImage ThumbnailBackgroundImage { get; set; } = new ThemeImage();
+        public Color ThumbnailBackgroundColor { get; set; } = Color.FromArgb(234, 234, 242);
+        public Color TextInfoColor { get; set; } = Color.Black;
 
         /// <summary>
         /// Toolbar Icon collection for the theme
         /// </summary>
-        public ThemeIconCollection ToolbarIcons { get; set; }
-
-        private void InitiateVariables()
-        {
-            PreviewImage = new ThemeImage();
-            BackgroundColor = Color.White;
-
-            ToolbarIcons = new ThemeIconCollection();
-            ToolbarBackgroundImage = new ThemeImage();
-            ToolbarBackgroundColor = Color.FromArgb(234, 234, 242);
-
-            ThumbnailBackgroundImage = new ThemeImage();
-            ThumbnailBackgroundColor = Color.FromArgb(234, 234, 242);
-
-            TextInfoColor = Color.Black;
-        }
+        public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
+        public bool IsThemeValid { get; set; } = true;
 
         public Theme()
         {
-            InitiateVariables();
+
         }
 
         /// <summary>
@@ -78,10 +71,9 @@ namespace ImageGlass.Theme
         /// <param name="file"></param>
         public Theme(string file)
         {
-            InitiateVariables();
-
-            LoadTheme(file);
+            this.IsThemeValid = LoadTheme(file);
         }
+
 
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+). 
@@ -95,6 +87,8 @@ namespace ImageGlass.Theme
             {
                 file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
             }
+
+            this._themeConfigFilePath = file;
 
             string dir = Path.GetDirectoryName(file);
             XmlDocument doc = new XmlDocument();
@@ -112,7 +106,7 @@ namespace ImageGlass.Theme
             }
             catch
             {
-                return false;
+                this.IsThemeValid = false;
             }
 
             //Get Scaling factor
@@ -372,8 +366,11 @@ namespace ImageGlass.Theme
             catch (Exception ex) { };
             #endregion
 
-            return true;
+            this.IsThemeValid = true;
+            return this.IsThemeValid;
         }
+
+
         
         /// <summary>
         /// Save theme compatible with v1.5+
@@ -447,27 +444,132 @@ namespace ImageGlass.Theme
             doc.Save(Path.Combine(dir, "config.xml")); //save file
         }
 
-        /// <summary>
-        /// Apply the new theme
-        /// </summary>
-        /// <param name="themePath">Full path of *.igtheme</param>
-        public void ApplyTheme(string themePath)
-        {
-            //Save theme path
-            GlobalSetting.SetConfig("Theme", themePath);
 
-            //Save background color
+
+
+        #region PRIVATE STATIC FUNCS
+        private static ThemeInstallResult _extractThemeResult = ThemeInstallResult.UNKNOWN;
+
+        private static ThemeInstallResult ExtractTheme(string themePath, string dir)
+        {
+            _extractThemeResult = ThemeInstallResult.UNKNOWN;
+
             try
             {
-                Theme th = new Theme(themePath);
-                GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+                using (ZipFile z = new ZipFile(themePath, Encoding.UTF8))
+                {
+                    z.ExtractProgress += new EventHandler<ExtractProgressEventArgs>(z_ExtractProgress);
+                    z.ZipError += new EventHandler<ZipErrorEventArgs>(z_ZipError);
+                    z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
+                }
             }
             catch
             {
-                GlobalSetting.SetConfig("BackgroundColor", Color.White.ToArgb().ToString(GlobalSetting.NumberFormat));
+                _extractThemeResult = ThemeInstallResult.ERROR;
             }
+
+            while (_extractThemeResult == ThemeInstallResult.UNKNOWN)
+            {
+                Thread.Sleep(20);
+            }
+
+            return _extractThemeResult;
+        }
+
+        private static void z_ZipError(object sender, ZipErrorEventArgs e)
+        {
+            _extractThemeResult = ThemeInstallResult.ERROR;
+        }
+
+        private static void z_ExtractProgress(object sender, ExtractProgressEventArgs e)
+        {
+            if (e.EntriesExtracted == e.EntriesTotal)
+            {
+                _extractThemeResult = ThemeInstallResult.SUCCESS;
+            }
+        }
+        #endregion
+
+
+
+
+        #region PUBLIC STATIC FUNCS
+        /// <summary>
+        /// Apply the new theme and save configs
+        /// </summary>
+        /// <param name="themeConfigPath">Full path of config.xml</param>
+        /// <returns>Return Theme object if success, else NULL</returns>
+        public static Theme ApplyTheme(string themeConfigPath)
+        {
+            //Save background color
+            try
+            {
+                Theme th = new Theme();
+
+                if (th.LoadTheme(themeConfigPath))
+                {
+                    GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+
+                    //Save theme path
+                    GlobalSetting.SetConfig("Theme", themeConfigPath);
+
+                    return th;
+                }
+            }
+            catch { }
+
+            return null;
         }
 
 
+        /// <summary>
+        /// Install ImageGlass theme
+        /// </summary>
+        /// <param name="themePath">Full path of *.igtheme</param>
+        /// <returns></returns>
+        public static ThemeInstallResult InstallTheme(string themePath)
+        {
+            if (!File.Exists(themePath))
+            {
+                return ThemeInstallResult.ERROR;
+            }
+
+            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
+            Directory.CreateDirectory(dir);
+
+            return ExtractTheme(themePath, dir);
+        }
+
+        
+
+        /// <summary>
+        /// Uninstall ImageGlass theme pack
+        /// </summary>
+        /// <param name="themeConfigPath">Full path of config.xml</param>
+        /// <returns></returns>
+        public static ThemeUninstallResult UninstallTheme(string themeConfigPath)
+        {
+            if (File.Exists(themeConfigPath))
+            {
+                string dir = Path.GetDirectoryName(themeConfigPath);
+
+                try
+                {
+                    Directory.Delete(dir, true);
+                }
+                catch (Exception ex)
+                {
+                    return ThemeUninstallResult.ERROR;
+                }
+            }
+            else
+            {
+                return ThemeUninstallResult.ERROR_THEME_NOT_FOUND;
+            }
+
+            return ThemeUninstallResult.SUCCESS;
+        }
+
+        #endregion
     }
 }

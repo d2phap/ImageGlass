@@ -41,6 +41,10 @@ namespace ImageGlass
             RenderTheme r = new RenderTheme();
             r.ApplyTheme(lvExtension);
             r.ApplyTheme(lvImageEditing);
+            r.ApplyTheme(lvTheme);
+
+
+            imglGeneral.Images.Add("_blank", new Bitmap(10, 50));
         }
 
         #region PROPERTIES
@@ -391,6 +395,9 @@ namespace ImageGlass
                 case "lblColorPicker":
                     tab1.SelectedTab = tabColorPicker;
                     break;
+                case "lblTheme":
+                    tab1.SelectedTab = tabTheme;
+                    break;
             }
         }
 
@@ -402,14 +409,16 @@ namespace ImageGlass
             lblFileAssociations.Tag =
             lblLanguage.Tag =
             lblToolbar.Tag =
-            lblColorPicker.Tag = 0;
+            lblColorPicker.Tag =
+            lblTheme.Tag = 0;
 
             lblGeneral.BackColor =
             lblImage.BackColor =
             lblFileAssociations.BackColor =
             lblLanguage.BackColor =
             lblToolbar.BackColor =
-            lblColorPicker.BackColor = M_COLOR_MENU_NORMAL;
+            lblColorPicker.BackColor =
+            lblTheme.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -453,6 +462,13 @@ namespace ImageGlass
                 lblColorPicker.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabColorPicker();
+            }
+            else if (tab1.SelectedTab == tabTheme)
+            {
+                lblTheme.Tag = 1;
+                lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabTheme();
             }
         }
 
@@ -1627,7 +1643,206 @@ namespace ImageGlass
             chkColorUseHEXA.Checked = GlobalSetting.IsColorPickerHEXA;
             chkColorUseHSLA.Checked = GlobalSetting.IsColorPickerHSLA;
         }
-        
+
+
+        #endregion
+
+
+        #region TAB THEME
+        private void LoadTabTheme()
+        {
+            if (lvTheme.Items.Count == 0)
+            {
+                RenderTheme r = new RenderTheme();
+                r.ApplyTheme(lvTheme);
+
+                RefreshThemeList();
+            }
+        }
+
+        private void RefreshThemeList()
+        {
+            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
+
+            lvTheme.Items.Clear();
+            lvTheme.Items.Add("2017 (Dark)").Tag = "Default";
+
+            if (Directory.Exists(dir))
+            {
+                foreach (string d in Directory.GetDirectories(dir))
+                {
+                    string configFile = Path.Combine(d, "config.xml");
+
+                    if (File.Exists(configFile))
+                    {
+                        Theme.Theme t = new Theme.Theme();
+
+                        //invalid theme
+                        if (!t.LoadTheme(configFile))
+                        {
+                            continue;
+                        }
+
+                        var lvi = new ListViewItem(t.name);
+                        lvi.Tag = configFile;
+                        lvi.ImageKey = "_blank";
+
+                        if (LocalSetting.Theme.ThemeConfigFilePath == configFile)
+                        {
+                            lvi.Selected = true;
+                            lvi.Checked = true;
+                        }
+
+                        lvTheme.Items.Add(lvi);
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(dir);
+            }
+            
+
+            lblInstalledThemes.Text = "Installed themes: " + lvTheme.Items.Count.ToString();
+        }
+
+        private void btnThemeRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshThemeList();
+        }
+
+        private void lvTheme_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvTheme.SelectedIndices.Count > 0)
+            {
+                string file = lvTheme.SelectedItems[0].Tag.ToString();
+                btnSave.Enabled = true;
+                btnThemeUninstall.Enabled = true;
+
+                if (file == "Default")
+                {
+                    file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
+                    btnSave.Enabled = false;
+                    btnThemeUninstall.Enabled = false;
+                }
+
+
+                string dir = Path.GetDirectoryName(file) + "\\";
+
+                Theme.Theme t = new Theme.Theme(file);
+                picPreview.BackgroundImage = t.PreviewImage.Image;
+
+                txtThemeInfo.Text = "Name: " + t.name + "\r\n" +
+                                "Version: " + t.version + "\r\n" +
+                                "Author: " + t.author + "\r\n" +
+                                "Email: " + t.email + "\r\n" +
+                                "Website: " + t.website + "\r\n" +
+                                "Compatibility: " + t.compatibility + "\r\n" +
+                                "Description: " + t.description;
+
+                btnThemeEdit.Text = "Edit selected theme";
+            }
+            else
+            {
+                picPreview.Image = null;
+                txtThemeInfo.Text = "";
+                btnSave.Enabled = false;
+                btnThemeUninstall.Enabled = false;
+                btnThemeEdit.Text = "Create new theme";
+            }
+        }
+
+
+        private void btnThemeInstall_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*";
+
+            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
+            {
+                var result = Theme.Theme.InstallTheme(o.FileName);
+
+                if (result == ThemeInstallResult.SUCCESS)
+                {
+                    RefreshThemeList();
+
+                    MessageBox.Show("The theme was installed successfully!", "Theme Installation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Cannot install the theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+        private void btnThemeUninstall_Click(object sender, EventArgs e)
+        {
+            if (lvTheme.SelectedItems.Count > 0)
+            {
+                var result = Theme.Theme.UninstallTheme(lvTheme.SelectedItems[0].Tag.ToString());
+
+                if (result == ThemeUninstallResult.SUCCESS)
+                {
+                    RefreshThemeList();
+                }
+                else if (result == ThemeUninstallResult.ERROR)
+                {
+                    MessageBox.Show("Theme not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
+        }
+
+
+        private void lnkThemeDownload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
+                Process.Start("http://www.imageglass.org/download/themes?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_download_theme");
+            }
+            catch { }
+        }
+
+
+        private void btnThemeSaveAs_Click(object sender, EventArgs e)
+        {
+            if (lvTheme.SelectedItems.Count > 0)
+            {
+                SaveFileDialog s = new SaveFileDialog();
+                s.Filter = "ImageGlass theme (*.igtheme)|*.igtheme";
+
+                if (s.ShowDialog() == DialogResult.OK)
+                {
+                    string exe = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                    string cmd = "igpacktheme " + char.ConvertFromUtf32(34) +
+                        Path.GetDirectoryName(lvTheme.SelectedItems[0].Tag.ToString()) +
+                        char.ConvertFromUtf32(34) + " " +
+                        char.ConvertFromUtf32(34) + s.FileName + char.ConvertFromUtf32(34);
+
+                    Process.Start(exe, cmd);
+                }
+            }
+        }
+
+
+        private void btnThemeApply_Click(object sender, EventArgs e)
+        {
+            if (lvTheme.SelectedItems.Count > 0)
+            {
+                var th = Theme.Theme.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString());
+
+                if (th != null )
+                {
+                    LocalSetting.Theme = th;
+                    LocalSetting.IsForcedActive = true;
+
+                    th = null;
+                }
+            }
+        }
+
 
         #endregion
 
@@ -1796,6 +2011,18 @@ namespace ImageGlass
             //Force frmMain applying the configurations
             LocalSetting.IsForcedActive = true;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         #endregion
 
