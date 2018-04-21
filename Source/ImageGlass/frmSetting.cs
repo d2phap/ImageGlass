@@ -1675,15 +1675,15 @@ namespace ImageGlass
 
                     if (File.Exists(configFile))
                     {
-                        Theme.Theme t = new Theme.Theme();
-
+                        Theme.Theme th = new Theme.Theme();
+                        
                         //invalid theme
-                        if (!t.LoadTheme(configFile))
+                        if (!th.LoadTheme(configFile))
                         {
                             continue;
                         }
 
-                        var lvi = new ListViewItem(t.name);
+                        var lvi = new ListViewItem(th.Name);
                         lvi.Tag = configFile;
                         lvi.ImageKey = "_blank";
 
@@ -1706,10 +1706,12 @@ namespace ImageGlass
             lblInstalledThemes.Text = "Installed themes: " + lvTheme.Items.Count.ToString();
         }
 
+
         private void btnThemeRefresh_Click(object sender, EventArgs e)
         {
             RefreshThemeList();
         }
+
 
         private void lvTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1732,13 +1734,13 @@ namespace ImageGlass
                 Theme.Theme t = new Theme.Theme(file);
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
-                txtThemeInfo.Text = "Name: " + t.name + "\r\n" +
-                                "Version: " + t.version + "\r\n" +
-                                "Author: " + t.author + "\r\n" +
-                                "Email: " + t.email + "\r\n" +
-                                "Website: " + t.website + "\r\n" +
-                                "Compatibility: " + t.compatibility + "\r\n" +
-                                "Description: " + t.description;
+                txtThemeInfo.Text = "Name: " + t.Name + "\r\n" +
+                                "Version: " + t.Version + "\r\n" +
+                                "Author: " + t.Author + "\r\n" +
+                                "Email: " + t.Email + "\r\n" +
+                                "Website: " + t.Website + "\r\n" +
+                                "Compatibility: " + t.Compatibility + "\r\n" +
+                                "Description: " + t.Description;
 
                 btnThemeEdit.Text = "Edit selected theme";
             }
@@ -1762,7 +1764,7 @@ namespace ImageGlass
             {
                 var result = Theme.Theme.InstallTheme(o.FileName);
 
-                if (result == ThemeInstallResult.SUCCESS)
+                if (result == ThemeInstallingResult.SUCCESS)
                 {
                     RefreshThemeList();
 
@@ -1782,11 +1784,11 @@ namespace ImageGlass
             {
                 var result = Theme.Theme.UninstallTheme(lvTheme.SelectedItems[0].Tag.ToString());
 
-                if (result == ThemeUninstallResult.SUCCESS)
+                if (result == ThemeUninstallingResult.SUCCESS)
                 {
                     RefreshThemeList();
                 }
-                else if (result == ThemeUninstallResult.ERROR)
+                else if (result == ThemeUninstallingResult.ERROR)
                 {
                     MessageBox.Show("Theme not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -1815,13 +1817,19 @@ namespace ImageGlass
 
                 if (s.ShowDialog() == DialogResult.OK)
                 {
-                    string exe = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
-                    string cmd = "igpacktheme " + char.ConvertFromUtf32(34) +
-                        Path.GetDirectoryName(lvTheme.SelectedItems[0].Tag.ToString()) +
-                        char.ConvertFromUtf32(34) + " " +
-                        char.ConvertFromUtf32(34) + s.FileName + char.ConvertFromUtf32(34);
+                    var themConfig = lvTheme.SelectedItems[0].Tag.ToString();
+                    var themeDir = Path.GetDirectoryName(themConfig);
 
-                    Process.Start(exe, cmd);
+                    var result = Theme.Theme.PackTheme(themeDir, s.FileName);
+
+                    if (result == ThemePackingResult.SUCCESS)
+                    {
+                        MessageBox.Show(string.Format("Your selected theme has been saved in {0}", s.FileName), "Theme Packing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("ImageGlass is unable to save your selected theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

@@ -54,7 +54,7 @@ namespace igcmd
             {
                 using (ZipFile z = new ZipFile(des, Encoding.UTF8))
                 {
-                    z.AddDirectory(src, th.name);
+                    z.AddDirectory(src, th.Name);
                     z.Save();
                 };
 

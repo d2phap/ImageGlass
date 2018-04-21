@@ -23,7 +23,6 @@ using System.Drawing;
 using ImageGlass.Services.Configuration;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Ionic.Zip;
 using System.Text;
 
@@ -32,48 +31,139 @@ namespace ImageGlass.Theme
     public class Theme
     {
         private string _themeConfigFilePath = string.Empty;
+        private bool _isThemeValid = true;
+
+
+        #region CLASS PROPERTIES
+        /// <summary>
+        /// Get theme config file path (config.xml)
+        /// </summary>
         public string ThemeConfigFilePath { get => _themeConfigFilePath; }
 
-        //Info
-        public string name = string.Empty;                  
-        public string version = string.Empty;               
-        public string author = string.Empty;                
-        public string email = string.Empty;                 
-        public string website = string.Empty;               
-        public string description = string.Empty;           
-        public string type = string.Empty;                     //config file type
-        public string compatibility = string.Empty;            //minimum version requirement
+        /// <summary>
+        /// Check if this theme is valid
+        /// </summary>
+        public bool IsThemeValid { get => _isThemeValid; }
 
-        //main
+        #endregion
+
+
+        #region THEME NODE PROPERTIES
+
+        #region <INFO> node
+
+        /// <summary>
+        /// Theme name
+        /// </summary>
+        public string Name { get; set; } = string.Empty;   
+        
+        /// <summary>
+        /// Theme version
+        /// </summary>
+        public string Version { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Author's information
+        /// </summary>
+        public string Author { get; set; } = string.Empty;    
+        
+        /// <summary>
+        /// Author's email
+        /// </summary>
+        public string Email { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Author's website
+        /// </summary>
+        public string Website { get; set; } = string.Empty;    
+        
+        /// <summary>
+        /// Theme file description
+        /// </summary>
+        public string Description { get; set; } = string.Empty;   
+        
+        /// <summary>
+        /// Theme Config file type
+        /// </summary>
+        public string Type { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Minimum version of this theme work with
+        /// </summary>
+        public string Compatibility { get; set; } = string.Empty;
+        #endregion
+
+
+        #region <MAIN> node
+
+        /// <summary>
+        /// The preview image of the theme
+        /// </summary>
         public ThemeImage PreviewImage { get; set; } = new ThemeImage();
+
+        /// <summary>
+        /// Theme background color
+        /// </summary>
         public Color BackgroundColor { get; set; } = Color.White;
 
+        /// <summary>
+        /// Toolbar background image
+        /// </summary>
         public ThemeImage ToolbarBackgroundImage { get; set; } = new ThemeImage();
+
+        /// <summary>
+        /// Toolbar background color
+        /// </summary>
         public Color ToolbarBackgroundColor { get; set; } = Color.FromArgb(234, 234, 242);
+
+        /// <summary>
+        /// Thumbnail bar background image
+        /// </summary>
         public ThemeImage ThumbnailBackgroundImage { get; set; } = new ThemeImage();
+        
+        /// <summary>
+        /// Thumbnail bar background color
+        /// </summary>
         public Color ThumbnailBackgroundColor { get; set; } = Color.FromArgb(234, 234, 242);
+
+        /// <summary>
+        /// Text color
+        /// </summary>
         public Color TextInfoColor { get; set; } = Color.Black;
+        #endregion
+
+
+        #region <TOOLBAR_ICON> node
 
         /// <summary>
         /// Toolbar Icon collection for the theme
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
-        public bool IsThemeValid { get; set; } = true;
+        #endregion
 
+        #endregion
+
+
+        /// <summary>
+        /// Initiate empty theme onject
+        /// </summary>
         public Theme()
         {
 
         }
 
         /// <summary>
-        /// Read theme data from theme configuration file (Version 1.5+)
+        /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
         /// <param name="file"></param>
         public Theme(string file)
         {
-            this.IsThemeValid = LoadTheme(file);
+            this._isThemeValid = LoadTheme(file);
         }
 
+
+
+        #region PUBLIC CLASS FUNCS
 
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+). 
@@ -106,7 +196,7 @@ namespace ImageGlass.Theme
             }
             catch
             {
-                this.IsThemeValid = false;
+                this._isThemeValid = false;
             }
 
             //Get Scaling factor
@@ -114,21 +204,21 @@ namespace ImageGlass.Theme
             int iconHeight = ThemeImage.GetCorrectIconHeight(); //(int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
             #region Theme <Info>
-            try { name = n.GetAttribute("name"); }
+            try { Name = n.GetAttribute("name"); }
             catch (Exception ex) { };
-            try { version = n.GetAttribute("version"); }
+            try { Version = n.GetAttribute("version"); }
             catch (Exception ex) { };
-            try { author = n.GetAttribute("author"); }
+            try { Author = n.GetAttribute("author"); }
             catch (Exception ex) { };
-            try { email = n.GetAttribute("email"); }
+            try { Email = n.GetAttribute("email"); }
             catch (Exception ex) { };
-            try { website = n.GetAttribute("website"); }
+            try { Website = n.GetAttribute("website"); }
             catch (Exception ex) { };
-            try { description = n.GetAttribute("description"); }
+            try { Description = n.GetAttribute("description"); }
             catch (Exception ex) { };
-            try { type = n.GetAttribute("type"); }
+            try { Type = n.GetAttribute("type"); }
             catch (Exception ex) { };
-            try { compatibility = n.GetAttribute("compatibility"); }
+            try { Compatibility = n.GetAttribute("compatibility"); }
             catch (Exception ex) { };
             #endregion
 
@@ -366,31 +456,31 @@ namespace ImageGlass.Theme
             catch (Exception ex) { };
             #endregion
 
-            this.IsThemeValid = true;
+            this._isThemeValid = true;
             return this.IsThemeValid;
         }
 
 
         
         /// <summary>
-        /// Save theme compatible with v1.5+
+        /// Save as the new theme config file, compatible with v1.5+
         /// </summary>
         /// <param name="dir"></param>
-        public void SaveAsTheme(string dir)
+        public void SaveAsThemeConfigs(string dir)
         {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");//<ImageGlass>
             XmlElement nType = doc.CreateElement("Theme");//<Theme>
 
             XmlElement n = doc.CreateElement("Info");// <Info>
-            n.SetAttribute("name", name);
-            n.SetAttribute("version", version);
-            n.SetAttribute("author", author);
-            n.SetAttribute("email", email);
-            n.SetAttribute("website", website);
-            n.SetAttribute("description", description);
+            n.SetAttribute("name", Name);
+            n.SetAttribute("version", Version);
+            n.SetAttribute("author", Author);
+            n.SetAttribute("email", Email);
+            n.SetAttribute("website", Website);
+            n.SetAttribute("description", Description);
             n.SetAttribute("type", "ImageGlass Theme Configuration");
-            n.SetAttribute("compatibility", compatibility);
+            n.SetAttribute("compatibility", Compatibility);
             n.SetAttribute("preview", Path.GetFileName(PreviewImage.Filename));
             nType.AppendChild(n);
 
@@ -444,15 +534,16 @@ namespace ImageGlass.Theme
             doc.Save(Path.Combine(dir, "config.xml")); //save file
         }
 
+        #endregion
 
 
 
         #region PRIVATE STATIC FUNCS
-        private static ThemeInstallResult _extractThemeResult = ThemeInstallResult.UNKNOWN;
+        private static ThemeInstallingResult _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
-        private static ThemeInstallResult ExtractTheme(string themePath, string dir)
+        private static ThemeInstallingResult ExtractTheme(string themePath, string dir)
         {
-            _extractThemeResult = ThemeInstallResult.UNKNOWN;
+            _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
             try
             {
@@ -465,10 +556,10 @@ namespace ImageGlass.Theme
             }
             catch
             {
-                _extractThemeResult = ThemeInstallResult.ERROR;
+                _extractThemeResult = ThemeInstallingResult.ERROR;
             }
 
-            while (_extractThemeResult == ThemeInstallResult.UNKNOWN)
+            while (_extractThemeResult == ThemeInstallingResult.UNKNOWN)
             {
                 Thread.Sleep(20);
             }
@@ -478,20 +569,19 @@ namespace ImageGlass.Theme
 
         private static void z_ZipError(object sender, ZipErrorEventArgs e)
         {
-            _extractThemeResult = ThemeInstallResult.ERROR;
+            _extractThemeResult = ThemeInstallingResult.ERROR;
         }
 
         private static void z_ExtractProgress(object sender, ExtractProgressEventArgs e)
         {
             if (e.EntriesExtracted == e.EntriesTotal)
             {
-                _extractThemeResult = ThemeInstallResult.SUCCESS;
+                _extractThemeResult = ThemeInstallingResult.SUCCESS;
             }
         }
         #endregion
 
-
-
+        
 
         #region PUBLIC STATIC FUNCS
         /// <summary>
@@ -527,11 +617,11 @@ namespace ImageGlass.Theme
         /// </summary>
         /// <param name="themePath">Full path of *.igtheme</param>
         /// <returns></returns>
-        public static ThemeInstallResult InstallTheme(string themePath)
+        public static ThemeInstallingResult InstallTheme(string themePath)
         {
             if (!File.Exists(themePath))
             {
-                return ThemeInstallResult.ERROR;
+                return ThemeInstallingResult.ERROR;
             }
 
             string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
@@ -541,13 +631,12 @@ namespace ImageGlass.Theme
         }
 
         
-
         /// <summary>
         /// Uninstall ImageGlass theme pack
         /// </summary>
         /// <param name="themeConfigPath">Full path of config.xml</param>
         /// <returns></returns>
-        public static ThemeUninstallResult UninstallTheme(string themeConfigPath)
+        public static ThemeUninstallingResult UninstallTheme(string themeConfigPath)
         {
             if (File.Exists(themeConfigPath))
             {
@@ -559,16 +648,66 @@ namespace ImageGlass.Theme
                 }
                 catch (Exception ex)
                 {
-                    return ThemeUninstallResult.ERROR;
+                    return ThemeUninstallingResult.ERROR;
                 }
             }
             else
             {
-                return ThemeUninstallResult.ERROR_THEME_NOT_FOUND;
+                return ThemeUninstallingResult.ERROR_THEME_NOT_FOUND;
             }
 
-            return ThemeUninstallResult.SUCCESS;
+            return ThemeUninstallingResult.SUCCESS;
         }
+
+
+        /// <summary>
+        /// Pack the theme folder to *.igtheme file
+        /// </summary>
+        /// <param name="themeFolder">Theme folder</param>
+        /// <param name="themeFileOutput">Output *.igtheme file</param>
+        /// <returns></returns>
+        public static ThemePackingResult PackTheme(string themeFolder, string themeFileOutput)
+        {
+            if (!Directory.Exists(themeFolder))
+            {
+                return ThemePackingResult.ERROR;
+            }
+
+            Theme th = new Theme(Path.Combine(themeFolder, "config.xml"));
+
+            //if file exist, rename & backup
+            if (File.Exists(themeFileOutput))
+            {
+                File.Move(themeFileOutput, themeFileOutput + ".old");
+            }
+
+            try
+            {
+                using (ZipFile z = new ZipFile(themeFileOutput, Encoding.UTF8))
+                {
+                    z.AddDirectory(themeFolder, th.Name);
+                    z.Save();
+                };
+            }
+            catch (Exception ex)
+            {
+                //restore backup file
+                if (File.Exists(themeFileOutput + ".old"))
+                {
+                    File.Move(themeFileOutput + ".old", themeFileOutput);
+                }
+
+                return ThemePackingResult.ERROR;
+            }
+
+            if (File.Exists(themeFileOutput + ".old"))
+            {
+                File.Delete(themeFileOutput + ".old");
+            }
+
+            return ThemePackingResult.SUCCESS;
+        }
+
 
         #endregion
     }
