@@ -46,12 +46,20 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-            mnuMain.Renderer = mnuPopup.Renderer = new Theme.ModernMenuRenderer();
+
+            //Modern UI menu renderer
+            mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();
+
+            //Remove white line under tool strip
+            toolMain.Renderer = new Theme.ToolStripRenderer();
+
+            //Load Configs
+            LoadConfig();
+            Application.DoEvents();
 
             //Check DPI Scaling ratio
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
             OnDpiChanged();
-
         }
 
 
@@ -1260,6 +1268,95 @@ namespace ImageGlass
         /// </summary>
         private void LoadConfig()
         {
+            #region UI SETTINGS
+
+            #region Load theme
+            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
+            LocalSetting.Theme = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
+            Application.DoEvents();
+            #endregion
+
+            
+            #region Show checkerboard
+            GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
+            GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
+            mnuMainCheckBackground_Click(null, EventArgs.Empty);
+            #endregion
+
+
+            #region Load background
+            var bgValue = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+
+            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(bgValue, GlobalSetting.NumberFormat));
+            picMain.BackColor = GlobalSetting.BackgroundColor;
+            #endregion
+
+
+            #region Load Toolbar buttons
+
+            GlobalSetting.ToolbarButtons = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+
+            #endregion
+
+
+            #region Load state of Toolbar 
+            GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
+            GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
+            mnuMainToolbar_Click(null, EventArgs.Empty);
+            #endregion
+
+
+            #region Load Thumbnail dimension
+            if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out int thumbDimension))
+            {
+                GlobalSetting.ThumbnailDimension = thumbDimension;
+            }
+            else
+            {
+                GlobalSetting.ThumbnailDimension = 48;
+            }
+            #endregion
+
+
+            #region Load thumbnail bar width & position
+            int tb_width = 0;
+            if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
+            {
+                tb_width = 0;
+            }
+
+            //Get minimum width needed for thumbnail dimension
+            var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
+            //Get the greater width value
+            GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
+
+            //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
+            GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
+
+            //Load vertical thumbnail bar width
+            if (GlobalSetting.IsThumbnailHorizontal == false)
+            {
+                int vtb_width;
+                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
+                {
+                    GlobalSetting.ThumbnailBarWidth = vtb_width;
+                }
+            }
+            #endregion
+
+
+            #region Load state of Thumbnail 
+            GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+            GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+            mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+            #endregion
+            
+            #endregion
+
+
+            #region OTHER SETTINGS
+
             #region Load language pack
             string configValue = GlobalSetting.GetConfig("Language", "English");
             if (File.Exists(configValue))
@@ -1271,15 +1368,7 @@ namespace ImageGlass
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
             #endregion
 
-
-            #region Load Toolbar buttons
             
-            GlobalSetting.ToolbarButtons = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
-
-            #endregion
-
-
             #region Windows Bound (Position + Size)
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
 
@@ -1332,14 +1421,7 @@ namespace ImageGlass
             GlobalSetting.SlideShowInterval = i;
             timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
             #endregion
-
-
-            #region Show checkerboard
-            GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
-            GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
-            mnuMainCheckBackground_Click(null, EventArgs.Empty);
-            #endregion
-
+            
 
             #region Recursive loading
             GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
@@ -1365,14 +1447,7 @@ namespace ImageGlass
 
             //Load state of Image Booster
             GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
-
-
-            #region Load state of Toolbar 
-            GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
-            GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
-            mnuMainToolbar_Click(null, EventArgs.Empty);
-            #endregion
-
+            
 
             //Load Zoom to Fit value 
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
@@ -1417,22 +1492,7 @@ namespace ImageGlass
             GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
             #endregion
 
-
-            #region Load theme
-            thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
-            LocalSetting.Theme = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
-            Application.DoEvents();
-            #endregion
-
-
-            #region Load background
-            configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
-
-            GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2, GlobalSetting.NumberFormat));
-            picMain.BackColor = GlobalSetting.BackgroundColor;
-            #endregion
-
-
+            
             #region Load scrollbars visibility
             GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
             if (GlobalSetting.IsScrollbarsVisible)
@@ -1441,53 +1501,7 @@ namespace ImageGlass
                 picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
             }
             #endregion
-
-
-            #region Load Thumbnail dimension
-            if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
-            {
-                GlobalSetting.ThumbnailDimension = i;
-            }
-            else
-            {
-                GlobalSetting.ThumbnailDimension = 48;
-            }
-            #endregion
-
-
-            #region Load thumbnail bar width & position
-            int tb_width = 0;
-            if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
-            {
-                tb_width = 0;
-            }
-
-            //Get minimum width needed for thumbnail dimension
-            var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
-            //Get the greater width value
-            GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
-
-            //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
-            GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
-
-            //Load vertical thumbnail bar width
-            if (GlobalSetting.IsThumbnailHorizontal == false)
-            {
-                int vtb_width;
-                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
-                {
-                    GlobalSetting.ThumbnailBarWidth = vtb_width;
-                }
-            }
-            #endregion
-
-
-            #region Load state of Thumbnail 
-            GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-            GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-            mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-            #endregion
-
+            
 
             #region Load state of IsWindowAlwaysOnTop value 
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
@@ -1623,6 +1637,8 @@ namespace ImageGlass
             }
             #endregion
 
+            #endregion
+
         }
 
 
@@ -1750,14 +1766,9 @@ namespace ImageGlass
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Remove white line under tool strip
-            toolMain.Renderer = new Theme.ToolStripRenderer();
-
             //Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
             
-            LoadConfig();
-            Application.DoEvents();
 
             //Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);

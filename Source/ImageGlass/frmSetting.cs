@@ -299,7 +299,7 @@ namespace ImageGlass
 
             lblHeadThumbnailBar.Text = lang["frmSetting.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang["frmSetting.chkThumbnailVertical"];
-            lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
+            //lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
             lblGeneral_ThumbnailSize.Text = lang["frmSetting.lblGeneral_ThumbnailSize"];
 
             lblHeadSlideshow.Text = lang["frmSetting.lblHeadSlideshow"];//
@@ -2042,10 +2042,6 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
             }
             #endregion
-
-
-            //MaxThumbnailFileSize
-            GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
 
 
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS

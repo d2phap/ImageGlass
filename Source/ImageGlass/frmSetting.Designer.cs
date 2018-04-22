@@ -113,8 +113,6 @@ namespace ImageGlass
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
             this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
-            this.numMaxThumbSize = new System.Windows.Forms.NumericUpDown();
-            this.lblGeneral_MaxFileSize = new System.Windows.Forms.Label();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
             this.barInterval = new System.Windows.Forms.TrackBar();
@@ -172,7 +170,6 @@ namespace ImageGlass
             this.tabGeneral.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tabImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabToolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -778,8 +775,6 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.cmbThumbnailDimension);
             this.tabImage.Controls.Add(this.chkImageBoosterBack);
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
-            this.tabImage.Controls.Add(this.numMaxThumbSize);
-            this.tabImage.Controls.Add(this.lblGeneral_MaxFileSize);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
             this.tabImage.Controls.Add(this.barInterval);
@@ -886,7 +881,7 @@ namespace ImageGlass
             // lblSelectAppForEdit
             // 
             this.lblSelectAppForEdit.AutoSize = true;
-            this.lblSelectAppForEdit.Location = new System.Drawing.Point(40, 1401);
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(40, 1317);
             this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
             this.lblSelectAppForEdit.Size = new System.Drawing.Size(296, 25);
@@ -896,7 +891,7 @@ namespace ImageGlass
             // chkSaveOnRotate
             // 
             this.chkSaveOnRotate.AutoSize = true;
-            this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1361);
+            this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1277);
             this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(333, 29);
@@ -919,7 +914,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(84, 1658);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(191, 1574);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -931,7 +926,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(309, 1658);
+            this.btnEditResetExt.Location = new System.Drawing.Point(416, 1574);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(211, 45);
             this.btnEditResetExt.TabIndex = 26;
@@ -943,7 +938,7 @@ namespace ImageGlass
             // 
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
-            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1658);
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1574);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(119, 45);
             this.btnEditEditExt.TabIndex = 25;
@@ -953,7 +948,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1690);
+            this.panel3.Location = new System.Drawing.Point(27, 1606);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -978,12 +973,12 @@ namespace ImageGlass
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(45, 1429);
+            this.lvImageEditing.Location = new System.Drawing.Point(45, 1345);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(475, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(582, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1014,7 +1009,7 @@ namespace ImageGlass
             // 
             this.lblHeadImageEditing.AutoSize = true;
             this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 1325);
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 1241);
             this.lblHeadImageEditing.Name = "lblHeadImageEditing";
             this.lblHeadImageEditing.Size = new System.Drawing.Size(130, 25);
             this.lblHeadImageEditing.TabIndex = 44;
@@ -1034,7 +1029,7 @@ namespace ImageGlass
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1142);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1058);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
             this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
             this.lblHeadSlideshow.TabIndex = 42;
@@ -1107,7 +1102,7 @@ namespace ImageGlass
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1030);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 946);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(257, 25);
@@ -1127,7 +1122,7 @@ namespace ImageGlass
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1060);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 976);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
@@ -1147,46 +1142,13 @@ namespace ImageGlass
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1175);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1091);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
             this.chkLoopSlideshow.TabIndex = 22;
             this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
-            // 
-            // numMaxThumbSize
-            // 
-            this.numMaxThumbSize.Location = new System.Drawing.Point(45, 978);
-            this.numMaxThumbSize.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numMaxThumbSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMaxThumbSize.Name = "numMaxThumbSize";
-            this.numMaxThumbSize.Size = new System.Drawing.Size(80, 31);
-            this.numMaxThumbSize.TabIndex = 20;
-            this.numMaxThumbSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numMaxThumbSize.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // lblGeneral_MaxFileSize
-            // 
-            this.lblGeneral_MaxFileSize.AutoSize = true;
-            this.lblGeneral_MaxFileSize.Location = new System.Drawing.Point(40, 950);
-            this.lblGeneral_MaxFileSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblGeneral_MaxFileSize.Name = "lblGeneral_MaxFileSize";
-            this.lblGeneral_MaxFileSize.Size = new System.Drawing.Size(274, 25);
-            this.lblGeneral_MaxFileSize.TabIndex = 31;
-            this.lblGeneral_MaxFileSize.Text = "Maximum thumbnail size (in MB):";
             // 
             // lblImageLoadingOrder
             // 
@@ -1219,7 +1181,7 @@ namespace ImageGlass
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(47, 1258);
+            this.barInterval.Location = new System.Drawing.Point(47, 1174);
             this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
@@ -1233,7 +1195,7 @@ namespace ImageGlass
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1224);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1140);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
@@ -1367,7 +1329,7 @@ namespace ImageGlass
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveDown.Location = new System.Drawing.Point(282, 286);
+            this.btnMoveDown.Location = new System.Drawing.Point(268, 286);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 6;
@@ -1389,7 +1351,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(260, 455);
+            this.lvUsedButtons.Size = new System.Drawing.Size(245, 455);
             this.lvUsedButtons.TabIndex = 4;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -1400,7 +1362,7 @@ namespace ImageGlass
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveUp.Location = new System.Drawing.Point(282, 217);
+            this.btnMoveUp.Location = new System.Drawing.Point(268, 217);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 5;
@@ -1939,7 +1901,6 @@ namespace ImageGlass
             this.tab1.ResumeLayout(false);
             this.tabImage.ResumeLayout(false);
             this.tabImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxThumbSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabToolbar.ResumeLayout(false);
             this.tabToolbar.PerformLayout();
@@ -2028,8 +1989,6 @@ namespace ImageGlass
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
         private System.Windows.Forms.CheckBox chkImageBoosterBack;
         private System.Windows.Forms.CheckBox chkLoopSlideshow;
-        private System.Windows.Forms.NumericUpDown numMaxThumbSize;
-        private System.Windows.Forms.Label lblGeneral_MaxFileSize;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
         private System.Windows.Forms.TrackBar barInterval;
