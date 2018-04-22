@@ -1226,6 +1226,8 @@ namespace ImageGlass
 
             btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
             btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+            btnDelete.Image = t.ToolbarIcons.Detele.Image;
+
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
             btnZoomToFit.Image = t.ToolbarIcons.ZoomToFit.Image;
@@ -1852,6 +1854,7 @@ namespace ImageGlass
                 btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
+                btnDelete.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
                 btnZoomIn.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomIn"];
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomOut"];
                 btnZoomToFit.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomToFit"];
@@ -2424,6 +2427,11 @@ namespace ImageGlass
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
             mnuMainRotateCounterclockwise_Click(null, e);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            mnuMainMoveToRecycleBin_Click(null, e);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -3661,6 +3669,7 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

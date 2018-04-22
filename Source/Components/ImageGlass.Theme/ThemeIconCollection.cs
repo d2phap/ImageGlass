@@ -36,6 +36,7 @@ namespace ImageGlass.Theme
         public ThemeImage Refresh { get; set; }
         public ThemeImage RotateLeft { get; set; }
         public ThemeImage RotateRight { get; set; }
+        public ThemeImage Detele { get; set; }
         public ThemeImage ScaleToHeight { get; set; }
         public ThemeImage ScaleToWidth { get; set; }
         public ThemeImage Settings { get; set; }
@@ -68,6 +69,7 @@ namespace ImageGlass.Theme
             Refresh = new ThemeImage();
             RotateLeft = new ThemeImage();
             RotateRight = new ThemeImage();
+            Detele = new ThemeImage();
             ScaleToHeight = new ThemeImage();
             ScaleToWidth = new ThemeImage();
             Settings = new ThemeImage();

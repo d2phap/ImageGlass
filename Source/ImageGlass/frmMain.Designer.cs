@@ -55,6 +55,7 @@
             this.btnFullScreen = new System.Windows.Forms.ToolStripButton();
             this.btnSlideShow = new System.Windows.Forms.ToolStripButton();
             this.btnConvert = new System.Windows.Forms.ToolStripButton();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton();
             this.btnPrintImage = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
@@ -206,6 +207,7 @@
             this.btnSlideShow,
             this.btnConvert,
             this.btnPrintImage,
+            this.btnDelete,
             this.btnMenu,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
@@ -526,6 +528,19 @@
             this.btnConvert.Size = new System.Drawing.Size(33, 33);
             this.btnConvert.ToolTipText = "Convert image (Ctrl + S)";
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.AutoSize = false;
+            this.btnDelete.BackColor = System.Drawing.Color.Transparent;
+            this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDelete.Image = global::ImageGlass.Properties.Resources.zoomout;
+            this.btnDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(33, 33);
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnPrintImage
             // 
@@ -1380,7 +1395,7 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(920, 390);
-            this.sp1.SplitterDistance = 248;
+            this.sp1.SplitterDistance = 252;
             this.sp1.SplitterWidth = 2;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1399,7 +1414,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(920, 248);
+            this.picMain.Size = new System.Drawing.Size(920, 252);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1423,7 +1438,7 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(920, 140);
+            this.thumbnailBar.Size = new System.Drawing.Size(920, 136);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
@@ -1576,6 +1591,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainColorPicker;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripButton btnMenu;
+        private System.Windows.Forms.ToolStripButton btnDelete;
     }
 }
 

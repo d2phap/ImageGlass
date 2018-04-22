@@ -405,7 +405,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
-        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20";
+        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,21,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20";
 
 
         #endregion

@@ -303,6 +303,13 @@ namespace ImageGlass.Theme
 
             try
             {
+                var iconFile = Path.Combine(dir, n.GetAttribute("delete"));
+                ToolbarIcons.Detele = new ThemeImage(iconFile, iconHeight, iconHeight);
+            }
+            catch (Exception ex) { };
+
+            try
+            {
                 var iconFile = Path.Combine(dir, n.GetAttribute("zoomin"));
                 ToolbarIcons.ZoomIn = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
@@ -498,6 +505,7 @@ namespace ImageGlass.Theme
             n.SetAttribute("next", Path.GetFileName(ToolbarIcons.ViewNextImage.Filename));
             n.SetAttribute("leftrotate", Path.GetFileName(ToolbarIcons.RotateLeft.Filename));
             n.SetAttribute("rightrotate", Path.GetFileName(ToolbarIcons.RotateRight.Filename));
+            n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Detele.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
             n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ZoomToFit.Filename));

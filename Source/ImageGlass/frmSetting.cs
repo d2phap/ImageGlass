@@ -1098,7 +1098,7 @@ namespace ImageGlass
         private void LoadTabToolbar()
         {
             // Apply Windows System theme to listview
-            Theme.RenderTheme th = new Theme.RenderTheme();
+            RenderTheme th = new RenderTheme();
             th.ApplyTheme(lvAvailButtons);
             th.ApplyTheme(lvUsedButtons);
 
@@ -1145,7 +1145,8 @@ namespace ImageGlass
             btnSlideShow = 18,
             btnConvert = 19,
             btnPrintImage = 20,
-            // NOTE: add new items here, must match order in _images.Images list
+            btnDelete = 21,
+            // NOTE: add new items here, must match order in _lstToolbarImg.Images list
 
 
             MAX // DO NOT ADD ANYTHING AFTER THIS
