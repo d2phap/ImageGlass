@@ -119,7 +119,7 @@ namespace ImageGlass
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.tabToolbar = new System.Windows.Forms.TabPage();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.spToolbar = new System.Windows.Forms.SplitContainer();
             this.lblAvailBtns = new System.Windows.Forms.Label();
             this.lvAvailButtons = new System.Windows.Forms.ListView();
             this.btnMoveLeft = new System.Windows.Forms.Button();
@@ -128,7 +128,6 @@ namespace ImageGlass
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.lvUsedButtons = new System.Windows.Forms.ListView();
             this.btnMoveUp = new System.Windows.Forms.Button();
-            this.lblRestartForChange = new System.Windows.Forms.Label();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorCodeFormat = new System.Windows.Forms.Label();
@@ -172,10 +171,10 @@ namespace ImageGlass
             this.tabImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabToolbar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spToolbar)).BeginInit();
+            this.spToolbar.Panel1.SuspendLayout();
+            this.spToolbar.Panel2.SuspendLayout();
+            this.spToolbar.SuspendLayout();
             this.tabColorPicker.SuspendLayout();
             this.tabTheme.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spTheme)).BeginInit();
@@ -914,7 +913,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(191, 1574);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(165, 1574);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -926,7 +925,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(416, 1574);
+            this.btnEditResetExt.Location = new System.Drawing.Point(390, 1574);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(211, 45);
             this.btnEditResetExt.TabIndex = 26;
@@ -978,7 +977,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(582, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(556, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1216,8 +1215,7 @@ namespace ImageGlass
             // tabToolbar
             // 
             this.tabToolbar.BackColor = System.Drawing.Color.White;
-            this.tabToolbar.Controls.Add(this.splitContainer1);
-            this.tabToolbar.Controls.Add(this.lblRestartForChange);
+            this.tabToolbar.Controls.Add(this.spToolbar);
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
@@ -1226,34 +1224,34 @@ namespace ImageGlass
             this.tabToolbar.Text = "toolbar";
             this.tabToolbar.UseVisualStyleBackColor = true;
             // 
-            // splitContainer1
+            // spToolbar
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.spToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer1.Name = "splitContainer1";
+            this.spToolbar.IsSplitterFixed = true;
+            this.spToolbar.Location = new System.Drawing.Point(3, 3);
+            this.spToolbar.Name = "spToolbar";
             // 
-            // splitContainer1.Panel1
+            // spToolbar.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.lblAvailBtns);
-            this.splitContainer1.Panel1.Controls.Add(this.lvAvailButtons);
-            this.splitContainer1.Panel1.Controls.Add(this.btnMoveLeft);
-            this.splitContainer1.Panel1.Controls.Add(this.btnMoveRight);
-            this.splitContainer1.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.spToolbar.Panel1.Controls.Add(this.lblAvailBtns);
+            this.spToolbar.Panel1.Controls.Add(this.lvAvailButtons);
+            this.spToolbar.Panel1.Controls.Add(this.btnMoveLeft);
+            this.spToolbar.Panel1.Controls.Add(this.btnMoveRight);
+            this.spToolbar.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
-            // splitContainer1.Panel2
+            // spToolbar.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.lblUsedBtns);
-            this.splitContainer1.Panel2.Controls.Add(this.btnMoveDown);
-            this.splitContainer1.Panel2.Controls.Add(this.lvUsedButtons);
-            this.splitContainer1.Panel2.Controls.Add(this.btnMoveUp);
-            this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(693, 511);
-            this.splitContainer1.SplitterDistance = 358;
-            this.splitContainer1.SplitterWidth = 1;
-            this.splitContainer1.TabIndex = 10;
+            this.spToolbar.Panel2.Controls.Add(this.lblUsedBtns);
+            this.spToolbar.Panel2.Controls.Add(this.btnMoveDown);
+            this.spToolbar.Panel2.Controls.Add(this.lvUsedButtons);
+            this.spToolbar.Panel2.Controls.Add(this.btnMoveUp);
+            this.spToolbar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.spToolbar.Size = new System.Drawing.Size(693, 534);
+            this.spToolbar.SplitterDistance = 358;
+            this.spToolbar.SplitterWidth = 1;
+            this.spToolbar.TabIndex = 10;
             // 
             // lblAvailBtns
             // 
@@ -1282,7 +1280,7 @@ namespace ImageGlass
             this.lvAvailButtons.Name = "lvAvailButtons";
             this.lvAvailButtons.ShowGroups = false;
             this.lvAvailButtons.ShowItemToolTips = true;
-            this.lvAvailButtons.Size = new System.Drawing.Size(245, 455);
+            this.lvAvailButtons.Size = new System.Drawing.Size(245, 478);
             this.lvAvailButtons.TabIndex = 1;
             this.lvAvailButtons.UseCompatibleStateImageBehavior = false;
             this.lvAvailButtons.SelectedIndexChanged += new System.EventHandler(this.lvAvailButtons_SelectedIndexChanged);
@@ -1291,25 +1289,25 @@ namespace ImageGlass
             // btnMoveLeft
             // 
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(290, 217);
+            this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveLeft.Location = new System.Drawing.Point(290, 229);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(50, 50);
             this.btnMoveLeft.TabIndex = 2;
-            this.btnMoveLeft.Text = "t";
+            this.btnMoveLeft.Text = "ß";
             this.btnMoveLeft.UseVisualStyleBackColor = true;
             this.btnMoveLeft.Click += new System.EventHandler(this.btnMoveLeft_Click);
             // 
             // btnMoveRight
             // 
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveRight.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveRight.Location = new System.Drawing.Point(290, 286);
+            this.btnMoveRight.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveRight.Location = new System.Drawing.Point(290, 298);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(50, 50);
             this.btnMoveRight.TabIndex = 3;
-            this.btnMoveRight.Text = "u";
+            this.btnMoveRight.Text = "à";
             this.btnMoveRight.UseVisualStyleBackColor = true;
             this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
             // 
@@ -1328,12 +1326,12 @@ namespace ImageGlass
             // btnMoveDown
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveDown.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveDown.Location = new System.Drawing.Point(268, 286);
+            this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveDown.Location = new System.Drawing.Point(271, 298);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 6;
-            this.btnMoveDown.Text = "q";
+            this.btnMoveDown.Text = "â";
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
@@ -1351,7 +1349,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(245, 455);
+            this.lvUsedButtons.Size = new System.Drawing.Size(248, 478);
             this.lvUsedButtons.TabIndex = 4;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -1361,25 +1359,14 @@ namespace ImageGlass
             // btnMoveUp
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveUp.Font = new System.Drawing.Font("Wingdings 3", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.btnMoveUp.Location = new System.Drawing.Point(268, 217);
+            this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveUp.Location = new System.Drawing.Point(271, 229);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 5;
-            this.btnMoveUp.Text = "p";
+            this.btnMoveUp.Text = "á";
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
-            // 
-            // lblRestartForChange
-            // 
-            this.lblRestartForChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRestartForChange.AutoSize = true;
-            this.lblRestartForChange.Location = new System.Drawing.Point(25, 525);
-            this.lblRestartForChange.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
-            this.lblRestartForChange.Name = "lblRestartForChange";
-            this.lblRestartForChange.Size = new System.Drawing.Size(59, 25);
-            this.lblRestartForChange.TabIndex = 9;
-            this.lblRestartForChange.Text = "label1";
             // 
             // tabColorPicker
             // 
@@ -1903,13 +1890,12 @@ namespace ImageGlass
             this.tabImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabToolbar.ResumeLayout(false);
-            this.tabToolbar.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.spToolbar.Panel1.ResumeLayout(false);
+            this.spToolbar.Panel1.PerformLayout();
+            this.spToolbar.Panel2.ResumeLayout(false);
+            this.spToolbar.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spToolbar)).EndInit();
+            this.spToolbar.ResumeLayout(false);
             this.tabColorPicker.ResumeLayout(false);
             this.tabColorPicker.PerformLayout();
             this.tabTheme.ResumeLayout(false);
@@ -2039,8 +2025,7 @@ namespace ImageGlass
         private System.Windows.Forms.ListView lvUsedButtons;
         private System.Windows.Forms.Label lblUsedBtns;
         private System.Windows.Forms.Label lblAvailBtns;
-        private System.Windows.Forms.Label lblRestartForChange;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer spToolbar;
         private System.Windows.Forms.Label lblToolbar;
         private System.Windows.Forms.Label lblColorPicker;
         private System.Windows.Forms.TabPage tabColorPicker;

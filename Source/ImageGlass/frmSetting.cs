@@ -349,7 +349,6 @@ namespace ImageGlass
             _separatorText = lang["frmSetting.txtSeparator"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
             lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
-            lblRestartForChange.Text = lang["frmSetting.lblRestartForChange"];
 
             tip1.SetToolTip(lblToolbar, lang["frmSetting.lblToolbarTT"]);
             tip1.SetToolTip(btnMoveUp, lang["frmSetting.btnMoveUpTT"]);
