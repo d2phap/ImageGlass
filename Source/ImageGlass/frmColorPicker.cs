@@ -392,7 +392,7 @@ namespace ImageGlass
                 
             
 
-            lblPixel.ForeColor = InvertColor(color);
+            lblPixel.ForeColor = Theme.Theme.InvertColor(color);
         }
 
         private void _ResetColor()
@@ -400,33 +400,6 @@ namespace ImageGlass
             lblPixel.Text = string.Empty;
             txtRGB.Text = string.Empty;
             txtHEX.Text = string.Empty;
-        }
-
-        private Color InvertColor(Color c)
-        {
-            var avgValue = 255 / 2;
-            var brightColorCounts = 0;
-            var list = new List<int>();
-
-            list.Add(c.R);
-            list.Add(c.G);
-            list.Add(c.B);
-
-            list.ForEach(li =>
-            {
-                if (li > avgValue)
-                {
-                    brightColorCounts++;
-                }
-            });
-
-
-            if (brightColorCounts > 1)
-            {
-                return Color.Black;
-            }
-
-            return Color.White;
         }
 
 
@@ -520,7 +493,7 @@ namespace ImageGlass
                 txtHEX.ForeColor =
                 txtCMYK.ForeColor =
                 txtHSL.ForeColor =
-                InvertColor(LocalSetting.Theme.BackgroundColor);
+                Theme.Theme.InvertColor(LocalSetting.Theme.BackgroundColor);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

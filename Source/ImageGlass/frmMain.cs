@@ -552,11 +552,20 @@ namespace ImageGlass
             if (LocalSetting.IsTempMemoryData)
             {
                 appName += $"  |  {GlobalSetting.LangPack.Items["frmMain._ImageData"]}";
-                imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
                 zoom = $"{picMain.Zoom.ToString()}%";
 
-                //ImageGlass (Image data)  |  {zoom}  |  {image size}
-                this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
+                if (picMain.Image != null)
+                {
+                    imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+
+                    //ImageGlass (Image data)  |  {zoom}  |  {image size}
+                    this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
+                }
+                else
+                {
+                    
+                    this.Text = $"{appName}  |  {zoom}";
+                }
             }
             else
             {
@@ -580,11 +589,22 @@ namespace ImageGlass
                 }
                 else
                 {
-                    imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
                     zoom = $"{picMain.Zoom.ToString()}%";
 
-                    //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
-                    this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
+                    if (picMain.Image != null)
+                    {
+                        imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+
+                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
+                    }
+                    else
+                    {
+                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {file size}  | {file date}
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {fileSize}  |  {fileDate}";
+                    }
+
+                    
                 }
             }
 
@@ -1010,27 +1030,44 @@ namespace ImageGlass
 
         private void CopyMultiFiles()
         {
+            //get filename
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.IsImageError || !File.Exists(filename))
                 {
                     return;
                 }
             }
             catch { return; }
 
-            //get filename
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
-            //exit if duplicated filename
-            if (LocalSetting.StringClipboard.IndexOf(filename) != -1)
+            //update the list
+            var fileList = new List<string>();
+            fileList.AddRange(LocalSetting.StringClipboard);
+
+            for (int i = 0; i < fileList.Count; i++)
             {
-                return;
+                if (!File.Exists(fileList[i]))
+                {
+                    LocalSetting.StringClipboard.Remove(fileList[i]);
+                }
             }
 
-            //add filename to clipboard
-            LocalSetting.StringClipboard.Add(filename);
-            Clipboard.SetFileDropList(LocalSetting.StringClipboard);
+
+            //exit if duplicated filename
+            if (LocalSetting.StringClipboard.IndexOf(filename) == -1)
+            {
+                //add filename to clipboard
+                LocalSetting.StringClipboard.Add(filename);
+            }
+
+            var fileDropList = new StringCollection();
+            fileDropList.AddRange(LocalSetting.StringClipboard.ToArray());
+
+            Clipboard.Clear();
+            Clipboard.SetFileDropList(fileDropList);
 
             DisplayTextMessage(
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
@@ -1039,34 +1076,51 @@ namespace ImageGlass
 
         private void CutMultiFiles()
         {
+            //get filename
+            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.IsImageError || !File.Exists(filename))
                 {
                     return;
                 }
             }
             catch { return; }
 
-            //get filename
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+            //update the list
+            var fileList = new List<string>();
+            fileList.AddRange(LocalSetting.StringClipboard);
+
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                if (!File.Exists(fileList[i]))
+                {
+                    LocalSetting.StringClipboard.Remove(fileList[i]);
+                }
+            }
+            
 
             //exit if duplicated filename
-            if (LocalSetting.StringClipboard.IndexOf(filename) != -1)
+            if (LocalSetting.StringClipboard.IndexOf(filename) == -1)
             {
-                return;
+                //add filename to clipboard
+                LocalSetting.StringClipboard.Add(filename);
             }
-
-            //add filename to clipboard
-            LocalSetting.StringClipboard.Add(filename);
+            
 
             byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
             MemoryStream dropEffect = new MemoryStream();
             dropEffect.Write(moveEffect, 0, moveEffect.Length);
 
+            var fileDropList = new StringCollection();
+            fileDropList.AddRange(LocalSetting.StringClipboard.ToArray());
+
             DataObject data = new DataObject();
-            data.SetFileDropList(LocalSetting.StringClipboard);
+            data.SetFileDropList(fileDropList);
             data.SetData("Preferred DropEffect", dropEffect);
+            
 
             Clipboard.Clear();
             Clipboard.SetDataObject(data, true);
@@ -1207,7 +1261,7 @@ namespace ImageGlass
                 sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = t.TextInfoColor;
+                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);
@@ -2262,6 +2316,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="text"></param>
         private delegate void UpdatePicMainCallback(string text);
+
         /// <summary>
         /// Update UI of the picMain control
         /// </summary>
@@ -2278,6 +2333,7 @@ namespace ImageGlass
             }
             else
             {
+                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
                 picMain.Text = text;
 
                 if (queueListForDeleting.Count == 0)
@@ -3402,7 +3458,7 @@ namespace ImageGlass
             //clear copied files in clipboard
             if (LocalSetting.StringClipboard.Count > 0)
             {
-                LocalSetting.StringClipboard = new StringCollection();
+                LocalSetting.StringClipboard = new List<string>();
                 Clipboard.Clear();
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ClearClipboard"], 1000);
             }

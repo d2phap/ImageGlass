@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Services.Configuration;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading;
 
@@ -72,7 +73,7 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets copied filename collection (multi-copy)
         /// </summary>
-        public static StringCollection StringClipboard { get; set; } = new StringCollection();
+        public static List<string> StringClipboard { get; set; } = new List<string>();
 
 
         /// <summary>

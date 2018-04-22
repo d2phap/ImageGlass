@@ -25,6 +25,7 @@ using System;
 using System.Threading;
 using Ionic.Zip;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ImageGlass.Theme
 {
@@ -716,6 +717,38 @@ namespace ImageGlass.Theme
             return ThemePackingResult.SUCCESS;
         }
 
+
+        /// <summary>
+        /// Invert the color to black or white color
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static Color InvertColor(Color c)
+        {
+            var avgValue = 255 / 2;
+            var brightColorCounts = 0;
+            var list = new List<int>();
+
+            list.Add(c.R);
+            list.Add(c.G);
+            list.Add(c.B);
+
+            list.ForEach(li =>
+            {
+                if (li > avgValue)
+                {
+                    brightColorCounts++;
+                }
+            });
+
+
+            if (brightColorCounts > 1)
+            {
+                return Color.Black;
+            }
+
+            return Color.White;
+        }
 
         #endregion
     }
