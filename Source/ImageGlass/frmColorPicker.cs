@@ -498,27 +498,34 @@ namespace ImageGlass
         }
 
 
-        private void frmColorPicker_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Apply theme
+        /// </summary>
+        public void UpdateUI()
         {
             //apply current theme ------------------------------------------------------
-            this.BackColor = 
-                txtRGB.BackColor = 
-                txtHEX.BackColor = 
-                txtCMYK.BackColor = 
-                txtHSL.BackColor = 
+            this.BackColor =
+                txtRGB.BackColor =
+                txtHEX.BackColor =
+                txtCMYK.BackColor =
+                txtHSL.BackColor =
                 LocalSetting.Theme.BackgroundColor;
 
-            lblPixel.ForeColor = 
-                lblRGB.ForeColor = 
-                lblHEX.ForeColor = 
+            lblPixel.ForeColor =
+                lblRGB.ForeColor =
+                lblHEX.ForeColor =
                 lblCMYK.ForeColor =
                 lblHSL.ForeColor =
-                txtRGB.ForeColor = 
-                txtHEX.ForeColor = 
-                txtCMYK.ForeColor = 
-                txtHSL.ForeColor = 
-                LocalSetting.Theme.TextInfoColor;
+                txtRGB.ForeColor =
+                txtHEX.ForeColor =
+                txtCMYK.ForeColor =
+                txtHSL.ForeColor =
+                InvertColor(LocalSetting.Theme.BackgroundColor);
+        }
 
+        private void frmColorPicker_Load(object sender, EventArgs e)
+        {
+            UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", $"0,0,300,160"));
@@ -557,6 +564,8 @@ namespace ImageGlass
 
 
         }
+
+        
         
         #endregion
 

@@ -1085,7 +1085,10 @@ namespace ImageGlass
             {
                 ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format(GlobalSetting.LangPack.Items[$"{this.Name}._SaveImageError"], LocalSetting.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             
             LocalSetting.ImageModifiedPath = "";
         }
@@ -1973,6 +1976,7 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
             {
                 ApplyTheme(LocalSetting.Theme.ThemeConfigFilePath);
+                LocalSetting.FColorPicker.UpdateUI();
             }
             #endregion
 
