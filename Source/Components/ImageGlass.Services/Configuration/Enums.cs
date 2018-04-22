@@ -65,12 +65,14 @@ namespace ImageGlass.Services.Configuration
     [Flags]
     public enum MainFormForceUpdateAction
     {
-        NONE = 1,
-        COLOR_PICKER_MENU = 2,
-        THEME = 4,
-        LANGUAGE = 8,
-        THUMBNAIL = 16,
-        OTHER_SETTINGS = 32
+        NONE = 0,
+        COLOR_PICKER_MENU = 1,
+        THEME = 2,
+        LANGUAGE = 4,
+        THUMBNAIL_BAR = 8,
+        THUMBNAIL_ITEMS = 16,
+        TOOLBAR = 32,
+        OTHER_SETTINGS = 64
     }
 
 }

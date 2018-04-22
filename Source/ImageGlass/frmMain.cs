@@ -1260,45 +1260,51 @@ namespace ImageGlass
         /// </summary>
         private void LoadConfig()
         {
-            //Load language pack-------------------------------------------------------------
+            #region Load language pack
             string configValue = GlobalSetting.GetConfig("Language", "English");
-            if (configValue.ToLower().CompareTo("english") != 0 && File.Exists(configValue))
+            if (File.Exists(configValue))
             {
-                GlobalSetting.LangPack = new Library.Language(configValue);
-
-                //force update language pack
-                LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.LANGUAGE;
-                frmMain_Activated(null, null);
+                GlobalSetting.LangPack = new Language(configValue);
             }
 
-            // Update the modifiable portion of the toolbar based on user config setting.
-            frmSetting.UpdateToolbarButtons(toolMain, this);
-            toolMain.Items.Add(btnMenu);
-            toolMain.Items.Add(lblInfo);
+            //force update language pack
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+            #endregion
 
 
-            //Windows Bound (Position + Size)------------------------------------------------
+            #region Load Toolbar buttons
+            
+            GlobalSetting.ToolbarButtons = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+
+            #endregion
+
+
+            #region Windows Bound (Position + Size)
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {
                 rc.Location = new Point(280, 125);
             }
-            Bounds = rc;
+            this.Bounds = rc;
+            #endregion
 
 
-            //windows state--------------------------------------------------------------
+            #region windows state
             configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
             if (configValue == "Normal")
             {
-                WindowState = FormWindowState.Normal;
+                this.WindowState = FormWindowState.Normal;
             }
             else if (configValue == "Maximized")
             {
-                WindowState = FormWindowState.Maximized;
+                this.WindowState = FormWindowState.Maximized;
             }
+            #endregion
 
-            // Read suported image formats ------------------------------------------------
+
+            #region Read suported image formats
             var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             //Load Default Image Formats
@@ -1316,56 +1322,73 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
                 GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
             }
+            #endregion
 
-            //Slideshow Interval-----------------------------------------------------------
+
+            #region Slideshow Interval
             int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
+
             if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds
             GlobalSetting.SlideShowInterval = i;
             timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
+            #endregion
 
-            //Show checked bakcground-------------------------------------------------------
+
+            #region Show checkerboard
             GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
             GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
             mnuMainCheckBackground_Click(null, EventArgs.Empty);
+            #endregion
 
-            //Recursive loading--------------------------------------------------------------
+
+            #region Recursive loading
             GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
+            #endregion
 
-            //Show hidden images------------------------------------------------------------
+
+            #region Show hidden images
             GlobalSetting.IsShowingHiddenImages = bool.Parse(GlobalSetting.GetConfig("IsShowingHiddenImages", "False"));
+            #endregion
 
-            //Load is loop back slideshow---------------------------------------------------
+
+            //Load IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
 
-            //Load is loop back slideshow---------------------------------------------------
+            //Load IsLoopBackSlideShow
             GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
 
-            //Load IsPressESCToQuit---------------------------------------------------------
+            //Load IsPressESCToQuit
             GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
 
-            //Load image order config------------------------------------------------------
+            //Load image order config
             GlobalSetting.LoadImageOrderConfig();
 
-            //Load state of Image Booster --------------------------------------------------
+            //Load state of Image Booster
             GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
 
-            //Load state of Toolbar---------------------------------------------------------
+
+            #region Load state of Toolbar 
             GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
             GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
             mnuMainToolbar_Click(null, EventArgs.Empty);
+            #endregion
 
-            //Load Zoom to Fit value---------------------------------------------------------
+
+            //Load Zoom to Fit value 
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
             btnZoomToFit.Checked = mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
 
-            //Load Zoom lock value
+
+            #region Load Zoom lock value
             int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
 
             GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
             mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
             GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
+            #endregion
 
-            //Zoom optimization method-------------------------------------------------------
+
+            #region Zoom optimization method 
             string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
             if (int.TryParse(configValue2, out int zoomValue))
             {
@@ -1377,8 +1400,10 @@ namespace ImageGlass
                 }
             }
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
+            #endregion
 
-            //Image loading order -----------------------------------------------------------
+
+            #region Image loading order
             configValue2 = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
             if (int.TryParse(configValue2, out int orderValue))
             {
@@ -1390,27 +1415,35 @@ namespace ImageGlass
                 }
             }
             GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
+            #endregion
 
-            //Load theme--------------------------------------------------------------------
+
+            #region Load theme
             thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
             LocalSetting.Theme = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
             Application.DoEvents();
+            #endregion
 
-            //Load background---------------------------------------------------------------
+
+            #region Load background
             configValue2 = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
 
             GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(configValue2, GlobalSetting.NumberFormat));
             picMain.BackColor = GlobalSetting.BackgroundColor;
+            #endregion
 
-            //Load scrollbars visibility-----------------------------------------------------
+
+            #region Load scrollbars visibility
             GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
             if (GlobalSetting.IsScrollbarsVisible)
             {
                 picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                 picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
             }
+            #endregion
 
-            //Load Thumbnail dimension-------------------------------------------------------
+
+            #region Load Thumbnail dimension
             if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out i))
             {
                 GlobalSetting.ThumbnailDimension = i;
@@ -1419,8 +1452,10 @@ namespace ImageGlass
             {
                 GlobalSetting.ThumbnailDimension = 48;
             }
+            #endregion
 
-            //Load thumbnail bar width--------------------------------------------------------
+
+            #region Load thumbnail bar width & position
             int tb_width = 0;
             if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
             {
@@ -1444,18 +1479,25 @@ namespace ImageGlass
                     GlobalSetting.ThumbnailBarWidth = vtb_width;
                 }
             }
+            #endregion
 
-            //Load state of Thumbnail---------------------------------------------------------
+
+            #region Load state of Thumbnail 
             GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+            #endregion
 
-            //Load state of IsWindowAlwaysOnTop value-----------------------------------------
+
+            #region Load state of IsWindowAlwaysOnTop value 
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
+            #endregion
 
-            //Get mouse wheel settings -----------------------------------------
+
+            #region Get mouse wheel settings 
             configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
+
             int mouseWheel;
             if (int.TryParse(configValue2, out mouseWheel))
             {
@@ -1519,15 +1561,18 @@ namespace ImageGlass
                 mouseWheel = 1;
             }
             GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
+            #endregion
 
 
-            //Get IsConfirmationDelete value --------------------------------------------------
+            //Get IsConfirmationDelete value
             GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
 
-            //Get IsSaveAfterRotating value --------------------------------------------------
+
+            //Get IsSaveAfterRotating value
             GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
 
-            //Get ImageEditingAssociationList ------------------------------------------------------
+
+            #region Get ImageEditingAssociationList
             configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
             string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -1543,8 +1588,10 @@ namespace ImageGlass
                     catch (InvalidCastException) { }
                 }
             }
+            #endregion
 
-            //Get welcome screen------------------------------------------------------------
+
+            #region Get welcome screen
             GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
             if (GlobalSetting.IsShowWelcome)
             {
@@ -1554,22 +1601,27 @@ namespace ImageGlass
                     Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
                 }
             }
+            #endregion
 
-            //Get IsNewVersionAvailable------------------------------------------------------
+
+            //Get IsNewVersionAvailable
             GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
 
-            //Get Color code format ---------------------------------------------------------
+
+            #region Load Color picker configs 
+            //Get Color code format
             GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
             GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
             GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
 
 
-            //Get IsShowColorPicker ---------------------------------------------------------
+            //Get IsShowColorPicker
             LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
             if (LocalSetting.IsShowColorPickerOnStartup)
             {
                 mnuMainColorPicker.PerformClick();
             }
+            #endregion
 
         }
 
@@ -1879,21 +1931,21 @@ namespace ImageGlass
             #endregion
 
 
-            #region THUMBNAIL
-            if ((flags & MainFormForceUpdateAction.THUMBNAIL) == MainFormForceUpdateAction.THUMBNAIL)
+            #region THUMBNAIL_BAR
+            if ((flags & MainFormForceUpdateAction.THUMBNAIL_BAR) == MainFormForceUpdateAction.THUMBNAIL_BAR)
             {
-                #region Update thumbnail bar
-                //Update thumbnail bar position--------
+                //Update thumbnail bar position
                 GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
                 mnuMainThumbnailBar_Click(null, null);
+            }
+            #endregion
 
+
+            #region THUMBNAIL_ITEMS
+            if ((flags & MainFormForceUpdateAction.THUMBNAIL_ITEMS) == MainFormForceUpdateAction.THUMBNAIL_ITEMS)
+            {
                 //Update thumbnail image size
-                if (LocalSetting.IsThumbnailDimensionChanged)
-                {
-                    LocalSetting.IsThumbnailDimensionChanged = false;
-                    LoadThumbnails();
-                }
-                #endregion
+                LoadThumbnails();
             }
             #endregion
 
@@ -1942,7 +1994,16 @@ namespace ImageGlass
             }
             #endregion
 
-            
+
+            #region TOOLBAR
+            if ((flags & MainFormForceUpdateAction.TOOLBAR) == MainFormForceUpdateAction.TOOLBAR)
+            {
+                frmSetting.UpdateToolbarButtons(toolMain, this);
+                toolMain.Items.Add(btnMenu);
+                toolMain.Items.Add(lblInfo);
+            }
+            #endregion
+
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
         }
@@ -2979,8 +3040,14 @@ namespace ImageGlass
 
         private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null || picMain.CanAnimate)
+            if (picMain.Image == null)
             {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -3003,8 +3070,14 @@ namespace ImageGlass
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null || picMain.CanAnimate)
+            if (picMain.Image == null)
             {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 

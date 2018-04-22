@@ -360,8 +360,9 @@ namespace ImageGlass.Library
             Items.Add("frmMain._Loading", "Loading..."); //v3.0
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
             Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
+            Items.Add("frmMain._CannotRotateAnimatedFile", "Rotation for animated format is not supported"); //v5.0
             #endregion
-            
+
 
             #region frmAbout
             Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0

@@ -235,6 +235,7 @@ namespace ImageGlass
             RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             Text = lang["frmSetting._Text"];
 
+
             #region Tabs label
             lblGeneral.Text = lang["frmSetting.lblGeneral"];
             lblImage.Text = lang["frmSetting.lblImage"];
@@ -1372,6 +1373,7 @@ namespace ImageGlass
                     val = "s";
                 else
                     val = ((int)item.Tag).ToString();
+
                 if (!first)
                     sb.Append(",");
 
@@ -1379,7 +1381,14 @@ namespace ImageGlass
                 sb.Append(val);
             }
 
-            GlobalSetting.ToolbarButtons = sb.ToString();
+            //Only make change if any
+            if (GlobalSetting.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
+            {
+                GlobalSetting.ToolbarButtons = sb.ToString();
+                GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+            }
         }
 
 
@@ -1530,10 +1539,7 @@ namespace ImageGlass
         /// <returns></returns>
         public static List<string> LoadToolbarConfig()
         {
-            string savedVal = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
-            GlobalSetting.ToolbarButtons = savedVal;
-
-            var xlated = TranslateToolbarButtonsFromConfig(savedVal);
+            var xlated = TranslateToolbarButtonsFromConfig(GlobalSetting.ToolbarButtons);
             List<string> lstToolbarButtonNames = new List<string>();
 
             foreach (var btnEnum in xlated)
@@ -1915,8 +1921,13 @@ namespace ImageGlass
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            //apply all changes
+            //Variables for comparision
+            int newInt;
+            bool newBool;
+            string newString;
+            Color newColor;
 
+            
             #region General tab --------------------------------------------
             // IsShowWelcome
             GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
@@ -1949,15 +1960,32 @@ namespace ImageGlass
             GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
             GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
 
+
+            #region IsScrollbarsVisible: MainFormForceUpdateAction.OTHER_SETTINGS
             //IsScrollbarsVisible
-            GlobalSetting.IsScrollbarsVisible = chkShowScrollbar.Checked;
-            GlobalSetting.SetConfig("IsScrollbarsVisible", GlobalSetting.IsScrollbarsVisible.ToString());
+            newBool = chkShowScrollbar.Checked;
+            if (GlobalSetting.IsScrollbarsVisible != newBool)
+            {
+                GlobalSetting.IsScrollbarsVisible = newBool;
+                GlobalSetting.SetConfig("IsScrollbarsVisible", GlobalSetting.IsScrollbarsVisible.ToString());
 
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
+            #endregion
+
+
+            #region BackgroundColor: MainFormForceUpdateAction.OTHER_SETTINGS
             //BackgroundColor
-            GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-            GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+            newColor = picBackgroundColor.BackColor;
+            if (GlobalSetting.BackgroundColor != newColor)
+            {
+                GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
+                GlobalSetting.SetConfig("BackgroundColor", GlobalSetting.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
+            #endregion
 
-            
+
             #endregion
 
 
@@ -1993,40 +2021,70 @@ namespace ImageGlass
             GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
             GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
 
-
-            //IsMouseNavigation
-            //GlobalSetting.IsMouseNavigation = chkMouseNavigation.Checked;
-            //GlobalSetting.SetConfig("IsMouseNavigation", GlobalSetting.IsMouseNavigation.ToString());
-
+            
             //ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
             GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
 
+
+            #region THUMBNAIL BAR
+
+            #region IsThumbnailHorizontal: MainFormForceUpdateAction.THUMBNAIL_BAR
+
             //IsThumbnailHorizontal
-            GlobalSetting.IsThumbnailHorizontal = !chkThumbnailVertical.Checked;
-            GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
+            newBool = !chkThumbnailVertical.Checked;
+            if (GlobalSetting.IsThumbnailHorizontal != newBool) //Only change when the new value selected  
+            {
+                GlobalSetting.IsThumbnailHorizontal = newBool;
+                GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+            }
+            #endregion
+
 
             //MaxThumbnailFileSize
             GlobalSetting.SetConfig("MaxThumbnailFileSize", numMaxThumbSize.Value.ToString());
 
-            //ThumbnailDimension            
-            int oldValue = GlobalSetting.ThumbnailDimension; //backup old value            
-            GlobalSetting.ThumbnailDimension = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); //Get new value
-            if (GlobalSetting.ThumbnailDimension != oldValue) //Only change when the new value selected
+
+            #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
+
+            //ThumbnailDimension
+            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); 
+            
+            if (GlobalSetting.ThumbnailDimension != newInt) //Only change when the new value selected
             {
+                GlobalSetting.ThumbnailDimension = newInt;
                 GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString(GlobalSetting.NumberFormat));
 
                 //Request frmMain to update the thumbnail bar
-                LocalSetting.IsThumbnailDimensionChanged = true;
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
             }
+            #endregion
+
+            #endregion
+
 
             //IsLoopBackSlideShow
             GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
             GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
 
+
+            #region SlideShowInterval: MainFormForceUpdateAction.OTHER_SETTINGS
+
             //SlideShowInterval
-            GlobalSetting.SlideShowInterval = barInterval.Value;
-            GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
+            newInt = barInterval.Value;
+
+            if (GlobalSetting.SlideShowInterval != newInt)
+            {
+                GlobalSetting.SlideShowInterval = newInt;
+                GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
+            #endregion
+
 
             //IsSaveAfterRotating
             GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
@@ -2036,9 +2094,21 @@ namespace ImageGlass
 
 
             #region Language tab -------------------------------------------
+
+            #region Language: MainFormForceUpdateAction.LANGUAGE
             //Language
-            GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
-            GlobalSetting.SetConfig("Language", GlobalSetting.LangPack.FileName);
+            newString = dsLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
+
+            if (GlobalSetting.LangPack.FileName.ToLower().CompareTo(newString) != 0)
+            {
+                GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+                GlobalSetting.SetConfig("Language", GlobalSetting.LangPack.FileName);
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+            }
+            #endregion
+
+
 
             #endregion
 
@@ -2060,22 +2130,12 @@ namespace ImageGlass
 
             #endregion
 
-
-            //Force frmMain applying the configurations
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS | MainFormForceUpdateAction.LANGUAGE | MainFormForceUpdateAction.THUMBNAIL;
-
+            
         }
 
 
 
-
-
-
-
-
-
-
-
+        
 
 
 

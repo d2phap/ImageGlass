@@ -55,13 +55,7 @@ namespace ImageGlass
         /// Gets, sets value indicating that picmain's scrollbar need to be reset
         /// </summary>
         public static bool IsResetScrollPosition { get; set; } = true;
-
-
-        /// <summary>
-        /// Gets, sets the value that will request frmMain to update thumbnail bar
-        /// </summary>
-        public static bool IsThumbnailDimensionChanged { get; set; } = false;
-
+        
 
         /// <summary>
         /// Gets, sets the 0-based index of the last view of Settings dialog tab.

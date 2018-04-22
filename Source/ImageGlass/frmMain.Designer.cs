@@ -322,7 +322,7 @@
             this.btnZoomToFit.Name = "btnZoomToFit";
             this.btnZoomToFit.Size = new System.Drawing.Size(33, 33);
             this.btnZoomToFit.Tag = "";
-            this.btnZoomToFit.ToolTipText = "Zoom to fit";
+            this.btnZoomToFit.ToolTipText = "Zoom to fit xxx";
             this.btnZoomToFit.Click += new System.EventHandler(this.btnZoomToFit_Click);
             // 
             // btnActualSize
@@ -593,7 +593,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 617);
+            this.mnuMain.Size = new System.Drawing.Size(409, 584);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
