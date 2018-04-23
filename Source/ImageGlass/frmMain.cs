@@ -2002,8 +2002,8 @@ namespace ImageGlass
             #endregion
 
 
-            #region THUMBNAIL_BAR
-            if ((flags & MainFormForceUpdateAction.THUMBNAIL_BAR) == MainFormForceUpdateAction.THUMBNAIL_BAR)
+            #region THUMBNAIL_BAR or THUMBNAIL_ITEMS
+            if ((flags & MainFormForceUpdateAction.THUMBNAIL_BAR) == MainFormForceUpdateAction.THUMBNAIL_BAR || (flags & MainFormForceUpdateAction.THUMBNAIL_ITEMS) == MainFormForceUpdateAction.THUMBNAIL_ITEMS)
             {
                 //Update thumbnail bar position
                 GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
