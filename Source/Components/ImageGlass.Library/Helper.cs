@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -44,6 +45,23 @@ namespace ImageGlass.Library
             }
 
             return false;
+        }
+
+
+        [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
+        static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
+
+        /// <summary>
+        /// Shorten and ellipsis the path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string ShortenPath(string path, int length)
+        {
+            StringBuilder sb = new StringBuilder(length);
+            PathCompactPathEx(sb, path, length, 0);
+            return sb.ToString();
         }
     }
 }

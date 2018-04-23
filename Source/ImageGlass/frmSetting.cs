@@ -274,6 +274,7 @@ namespace ImageGlass
             chkESCToQuit.Text = lang["frmSetting.chkESCToQuit"];
             chkConfirmationDelete.Text = lang["frmSetting.chkConfirmationDelete"];
             chkShowScrollbar.Text = lang["frmSetting.chkShowScrollbar"];
+            chkDisplayBasename.Text = lang["frmSetting.chkDisplayBasename"];
             lblBackGroundColor.Text = lang["frmSetting.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = lang["frmSetting.lnkResetBackgroundColor"];
             #endregion
@@ -530,6 +531,9 @@ namespace ImageGlass
 
             //Get value of IsScrollbarsVisible
             chkShowScrollbar.Checked = GlobalSetting.IsScrollbarsVisible;
+
+            //Get value of IsDisplayBasenameOfImage
+            chkDisplayBasename.Checked = GlobalSetting.IsDisplayBasenameOfImage;
 
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
@@ -1961,6 +1965,10 @@ namespace ImageGlass
             //IsConfirmationDelete
             GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
             GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
+
+            //IsDisplayBasenameOfImage
+            GlobalSetting.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
+            GlobalSetting.SetConfig("IsDisplayBasenameOfImage", GlobalSetting.IsDisplayBasenameOfImage.ToString());
 
 
             #region IsScrollbarsVisible: MainFormForceUpdateAction.OTHER_SETTINGS

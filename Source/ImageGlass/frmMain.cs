@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using ImageGlass.Core;
 using ImageGlass.Library.Image;
@@ -37,7 +36,6 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
-using System.Globalization;
 
 namespace ImageGlass
 {
@@ -563,7 +561,7 @@ namespace ImageGlass
                 }
                 else
                 {
-                    
+
                     this.Text = $"{appName}  |  {zoom}";
                 }
             }
@@ -577,9 +575,29 @@ namespace ImageGlass
 
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
-                filename = Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 fileSize = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 fileDate = File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/MM/dd HH:mm:ss");
+
+
+                if (GlobalSetting.IsDisplayBasenameOfImage)
+                {
+                    filename = Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                }
+                else
+                {
+                    //auto ellipsis the filename
+                    //the minimum text to show is Drive letter + basename.
+                    //ex: C:\...\example.jpg
+                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                    var basename = Path.GetFileName(filename);
+
+                    var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
+                    var textMaxLength = (this.Width / 2) / charWidth;
+
+                    var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
+
+                    filename = Helper.ShortenPath(filename, maxLength);
+                }
 
 
                 if (GlobalSetting.IsImageError)
@@ -603,8 +621,6 @@ namespace ImageGlass
                         //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {file size}  | {file date}
                         this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {fileSize}  |  {fileDate}";
                     }
-
-                    
                 }
             }
 
@@ -1410,7 +1426,7 @@ namespace ImageGlass
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
             mnuMainThumbnailBar_Click(null, EventArgs.Empty);
             #endregion
-            
+
             #endregion
 
 
@@ -1427,7 +1443,7 @@ namespace ImageGlass
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
             #endregion
 
-            
+
             #region Windows Bound (Position + Size)
             Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
 
@@ -1490,27 +1506,20 @@ namespace ImageGlass
             #region Show hidden images
             GlobalSetting.IsShowingHiddenImages = bool.Parse(GlobalSetting.GetConfig("IsShowingHiddenImages", "False"));
             #endregion
-
-
-            //Load IsLoopBackViewer
-            GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
-
-            //Load IsLoopBackSlideShow
-            GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
-
-            //Load IsPressESCToQuit
-            GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
+            
 
             //Load image order config
             GlobalSetting.LoadImageOrderConfig();
 
             //Load state of Image Booster
             GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
-            
 
             //Load Zoom to Fit value 
             GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
             btnZoomToFit.Checked = mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
+            
+            //Load IsDisplayBasenameOfImage value
+            GlobalSetting.IsDisplayBasenameOfImage = bool.Parse(GlobalSetting.GetConfig("IsDisplayBasenameOfImage", "False"));
 
 
             #region Load Zoom lock value
@@ -1519,36 +1528,6 @@ namespace ImageGlass
             GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
             mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
             GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
-            #endregion
-
-
-            #region Zoom optimization method 
-            string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
-            if (int.TryParse(configValue2, out int zoomValue))
-            {
-                if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationValue)).Length)
-                { }
-                else
-                {
-                    zoomValue = 0;
-                }
-            }
-            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
-            #endregion
-
-
-            #region Image loading order
-            configValue2 = GlobalSetting.GetConfig("ImageLoadingOrder", "0");
-            if (int.TryParse(configValue2, out int orderValue))
-            {
-                if (-1 < orderValue && orderValue < Enum.GetNames(typeof(ImageOrderBy)).Length)
-                { }
-                else
-                {
-                    orderValue = 0;
-                }
-            }
-            GlobalSetting.ImageLoadingOrder = (ImageOrderBy)orderValue;
             #endregion
 
             
@@ -1566,103 +1545,7 @@ namespace ImageGlass
             GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
             TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
             #endregion
-
-
-            #region Get mouse wheel settings 
-            configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
-
-            int mouseWheel;
-            if (int.TryParse(configValue2, out mouseWheel))
-            {
-                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                { }
-                else
-                {
-                    mouseWheel = 1; //MouseWheelActions.ZOOM
-                }
-            }
-            else
-            {
-                mouseWheel = 1;
-            }
-            GlobalSetting.MouseWheelAction = (MouseWheelActions)mouseWheel;
-
-            configValue2 = GlobalSetting.GetConfig("MouseWheelCtrlAction", "1");
-            if (int.TryParse(configValue2, out mouseWheel))
-            {
-                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                { }
-                else
-                {
-                    mouseWheel = 1; //MouseWheelActions.ZOOM
-                }
-            }
-            else
-            {
-                mouseWheel = 1;
-            }
-            GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)mouseWheel;
-
-            configValue2 = GlobalSetting.GetConfig("MouseWheelShiftAction", "1");
-            if (int.TryParse(configValue2, out mouseWheel))
-            {
-                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                { }
-                else
-                {
-                    mouseWheel = 1; //MouseWheelActions.ZOOM
-                }
-            }
-            else
-            {
-                mouseWheel = 1;
-            }
-            GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)mouseWheel;
-
-            configValue2 = GlobalSetting.GetConfig("MouseWheelAltAction", "1");
-            if (int.TryParse(configValue2, out mouseWheel))
-            {
-                if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                { }
-                else
-                {
-                    mouseWheel = 1; //MouseWheelActions.ZOOM
-                }
-            }
-            else
-            {
-                mouseWheel = 1;
-            }
-            GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
-            #endregion
-
-
-            //Get IsConfirmationDelete value
-            GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
-
-
-            //Get IsSaveAfterRotating value
-            GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
-
-
-            #region Get ImageEditingAssociationList
-            configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
-            string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            if (editingAssoclist.Length > 0)
-            {
-                foreach (var configString in editingAssoclist)
-                {
-                    try
-                    {
-                        var extAssoc = new ImageEditingAssociation(configString);
-                        GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
-                    }
-                    catch (InvalidCastException) { }
-                }
-            }
-            #endregion
-
+            
 
             #region Get welcome screen
             GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
@@ -1677,24 +1560,149 @@ namespace ImageGlass
             #endregion
 
 
-            //Get IsNewVersionAvailable
-            GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
-
-
-            #region Load Color picker configs 
-            //Get Color code format
-            GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
-            GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
-            GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
-
-
-            //Get IsShowColorPicker
-            LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
-            if (LocalSetting.IsShowColorPickerOnStartup)
+            //load other configs in another thread
+            Parallel.Invoke(() =>
             {
-                mnuMainColorPicker.PerformClick();
-            }
-            #endregion
+                //Load IsLoopBackViewer
+                GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
+
+                //Load IsLoopBackSlideShow
+                GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
+
+                //Load IsPressESCToQuit
+                GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
+
+                #region Zoom optimization method 
+                string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
+                if (int.TryParse(configValue2, out int zoomValue))
+                {
+                    if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationValue)).Length)
+                    { }
+                    else
+                    {
+                        zoomValue = 0;
+                    }
+                }
+                GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
+                #endregion
+
+
+                #region Get mouse wheel settings 
+                configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
+
+                int mouseWheel;
+                if (int.TryParse(configValue2, out mouseWheel))
+                {
+                    if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                    { }
+                    else
+                    {
+                        mouseWheel = 1; //MouseWheelActions.ZOOM
+                    }
+                }
+                else
+                {
+                    mouseWheel = 1;
+                }
+                GlobalSetting.MouseWheelAction = (MouseWheelActions)mouseWheel;
+
+                configValue2 = GlobalSetting.GetConfig("MouseWheelCtrlAction", "1");
+                if (int.TryParse(configValue2, out mouseWheel))
+                {
+                    if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                    { }
+                    else
+                    {
+                        mouseWheel = 1; //MouseWheelActions.ZOOM
+                    }
+                }
+                else
+                {
+                    mouseWheel = 1;
+                }
+                GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)mouseWheel;
+
+                configValue2 = GlobalSetting.GetConfig("MouseWheelShiftAction", "1");
+                if (int.TryParse(configValue2, out mouseWheel))
+                {
+                    if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                    { }
+                    else
+                    {
+                        mouseWheel = 1; //MouseWheelActions.ZOOM
+                    }
+                }
+                else
+                {
+                    mouseWheel = 1;
+                }
+                GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)mouseWheel;
+
+                configValue2 = GlobalSetting.GetConfig("MouseWheelAltAction", "1");
+                if (int.TryParse(configValue2, out mouseWheel))
+                {
+                    if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
+                    { }
+                    else
+                    {
+                        mouseWheel = 1; //MouseWheelActions.ZOOM
+                    }
+                }
+                else
+                {
+                    mouseWheel = 1;
+                }
+                GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
+                #endregion
+
+
+                //Get IsConfirmationDelete value
+                GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
+
+
+                //Get IsSaveAfterRotating value
+                GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
+
+
+                #region Get ImageEditingAssociationList
+                configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
+                string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                if (editingAssoclist.Length > 0)
+                {
+                    foreach (var configString in editingAssoclist)
+                    {
+                        try
+                        {
+                            var extAssoc = new ImageEditingAssociation(configString);
+                            GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
+                        }
+                        catch (InvalidCastException) { }
+                    }
+                }
+                #endregion
+
+
+                //Get IsNewVersionAvailable
+                GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
+
+
+                #region Load Color picker configs 
+                //Get Color code format
+                GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
+                GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
+                GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
+
+
+                //Get IsShowColorPicker
+                LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+                if (LocalSetting.IsShowColorPickerOnStartup)
+                {
+                    mnuMainColorPicker.PerformClick();
+                }
+                #endregion
+
+            });
 
             #endregion
 
