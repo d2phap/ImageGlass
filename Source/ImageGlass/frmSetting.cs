@@ -1887,6 +1887,8 @@ namespace ImageGlass
                 if (th != null)
                 {
                     LocalSetting.Theme = th;
+                    GlobalSetting.BackgroundColor = picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
+
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
                     th = null;
