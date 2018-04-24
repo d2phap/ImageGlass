@@ -592,7 +592,7 @@ namespace ImageGlass
                     var basename = Path.GetFileName(filename);
 
                     var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width / 2) / charWidth;
+                    var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
 
                     var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
 
