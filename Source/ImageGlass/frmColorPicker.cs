@@ -407,6 +407,10 @@ namespace ImageGlass
         {
             var txt = (TextBox)sender;
             txt.SelectAll();
+
+            //fixed: cannot copy the text if Owner form is not activated
+            this.Owner.Activate();
+            this.Activate();
         }
 
         private int[] RGBToCMYK(Color c)
@@ -538,8 +542,9 @@ namespace ImageGlass
 
         }
 
-        
-        
+
+
+
         #endregion
 
 
