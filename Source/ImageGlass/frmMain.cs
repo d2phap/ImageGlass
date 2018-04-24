@@ -2000,6 +2000,7 @@ namespace ImageGlass
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
 
+                mnuMainFirstLaunch.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstLaunch"];
                 mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
                 #endregion
@@ -3616,6 +3617,19 @@ namespace ImageGlass
             f.ShowDialog();
         }
 
+        private void mnuMainFirstLaunch_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+            p.StartInfo.Arguments = "firstlaunch";
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
+        }
+
         private void mnuMainCheckForUpdate_Click(object sender, EventArgs e)
         {
             Process p = new Process();
@@ -3733,6 +3747,7 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

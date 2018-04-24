@@ -130,6 +130,7 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
+            this.mnuMainFirstLaunch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -604,11 +605,12 @@
             this.mnuMainSettings,
             this.mnuMainAbout,
             this.toolStripMenuItem21,
+            this.mnuMainFirstLaunch,
             this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 584);
+            this.mnuMain.Size = new System.Drawing.Size(409, 648);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1395,7 +1397,7 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(920, 390);
-            this.sp1.SplitterDistance = 366;
+            this.sp1.SplitterDistance = 363;
             this.sp1.SplitterWidth = 2;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
@@ -1414,7 +1416,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(920, 366);
+            this.picMain.Size = new System.Drawing.Size(920, 363);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
@@ -1438,11 +1440,21 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(920, 22);
+            this.thumbnailBar.Size = new System.Drawing.Size(920, 25);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
+            // 
+            // mnuMainFirstLaunch
+            // 
+            this.mnuMainFirstLaunch.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFirstLaunch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
+            this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFirstLaunch.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainFirstLaunch.Text = "First-launch configurations__";
+            this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
             // 
             // frmMain
             // 
@@ -1592,6 +1604,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.ToolStripButton btnDelete;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFirstLaunch;
     }
 }
 

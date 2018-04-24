@@ -332,6 +332,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
 
+            Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations"); //v5.0
             Items.Add("frmMain.mnuMainCheckForUpdate", "A new version is available"); //v4.5
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
             #endregion

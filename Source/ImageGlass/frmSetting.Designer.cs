@@ -926,7 +926,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(113, 1574);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(35, 1574);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
             this.btnEditEditAllExt.TabIndex = 47;
@@ -938,7 +938,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(338, 1574);
+            this.btnEditResetExt.Location = new System.Drawing.Point(260, 1574);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(211, 45);
             this.btnEditResetExt.TabIndex = 26;
@@ -990,7 +990,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(504, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(426, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1340,7 +1340,7 @@ namespace ImageGlass
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveDown.Location = new System.Drawing.Point(277, 298);
+            this.btnMoveDown.Location = new System.Drawing.Point(286, 298);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 6;
@@ -1362,7 +1362,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(254, 478);
+            this.lvUsedButtons.Size = new System.Drawing.Size(263, 478);
             this.lvUsedButtons.TabIndex = 4;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -1373,7 +1373,7 @@ namespace ImageGlass
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveUp.Location = new System.Drawing.Point(277, 229);
+            this.btnMoveUp.Location = new System.Drawing.Point(286, 229);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 5;
@@ -1469,17 +1469,19 @@ namespace ImageGlass
             // 
             // lnkThemeDownload
             // 
-            this.lnkThemeDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkThemeDownload.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(104)))), ((int)(((byte)(199)))));
+            this.lnkThemeDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lnkThemeDownload.AutoSize = true;
+            this.lnkThemeDownload.BackColor = System.Drawing.Color.Transparent;
             this.lnkThemeDownload.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkThemeDownload.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkThemeDownload.Location = new System.Drawing.Point(529, 20);
+            this.lnkThemeDownload.Location = new System.Drawing.Point(22, 502);
             this.lnkThemeDownload.Name = "lnkThemeDownload";
             this.lnkThemeDownload.Size = new System.Drawing.Size(157, 25);
             this.lnkThemeDownload.TabIndex = 28;
             this.lnkThemeDownload.TabStop = true;
             this.lnkThemeDownload.Text = "Download themes";
-            this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lnkThemeDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkThemeDownload_LinkClicked);
             // 
             // spTheme
@@ -1648,7 +1650,7 @@ namespace ImageGlass
             // 
             this.btnThemeEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnThemeEdit.AutoSize = true;
-            this.btnThemeEdit.Location = new System.Drawing.Point(27, 494);
+            this.btnThemeEdit.Location = new System.Drawing.Point(179, 494);
             this.btnThemeEdit.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeEdit.Name = "btnThemeEdit";
             this.btnThemeEdit.Size = new System.Drawing.Size(250, 40);
