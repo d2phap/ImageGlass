@@ -21,13 +21,13 @@ namespace igcmd
         public frmFirstLaunch()
         {
             InitializeComponent();
+            
         }
 
-
-        private List<Theme> themeList = new List<Theme>();
-
-
-
+        private List<Theme> _themeList = new List<Theme>();
+        private List<Language> _langList = new List<Language>();
+        private Language _lang = new Language();
+        
 
         #region Events
 
@@ -35,6 +35,7 @@ namespace igcmd
         {
             //Load language list
             LoadLanguageList();
+            ApplyLanguage(_lang);
 
             //Select default layout
             cmbLayout.SelectedIndex = 0;
@@ -46,7 +47,23 @@ namespace igcmd
             //Don't run again
             GlobalSetting.SetConfig("IsRunFirstLaunchConfigurations", "False");
         }
-        
+
+
+        private void tab1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
+
+
+            if (tab1.SelectedIndex == tab1.TabCount - 1)
+            {
+                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
+            }
+            else
+            {
+                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
+            }
+        }
+
 
         private void btnNextStep_Click(object sender, EventArgs e)
         {
@@ -57,12 +74,16 @@ namespace igcmd
             }
 
             tab1.SelectedIndex++;
-            lblStepNumber.Text = $"Step {tab1.SelectedIndex + 1}/{tab1.TabCount}";
+            lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
 
             if (tab1.SelectedIndex == tab1.TabCount - 1)
             {
-                btnNextStep.Text = "Done!";
+                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
+            }
+            else
+            {
+                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
             }
         }
 
@@ -88,6 +109,35 @@ namespace igcmd
             catch { }
         }
 
+
+        private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this._lang = _langList[cmbLanguage.SelectedIndex];
+            }
+            catch
+            {
+                this._lang = new Language();
+            }
+
+            ApplyLanguage(this._lang);
+        }
+
+
+        private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedTheme = new Theme();
+
+            try
+            {
+                selectedTheme = this._themeList[cmbTheme.SelectedIndex];
+            }
+            catch { }
+
+            ApplyTheme(selectedTheme);
+        }
+
         #endregion
 
 
@@ -100,8 +150,9 @@ namespace igcmd
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
+            
 
-            var langList = new List<Language>
+            _langList = new List<Language>
             {
                 new Language()
             };
@@ -119,7 +170,7 @@ namespace igcmd
                     if (Path.GetExtension(f).ToLower() == ".iglang")
                     {
                         Language l = new Language(f);
-                        langList.Add(l);
+                        _langList.Add(l);
 
                         int iLang = cmbLanguage.Items.Add(l.LangName);
                         string curLang = GlobalSetting.LangPack.FileName;
@@ -137,6 +188,27 @@ namespace igcmd
             {
                 cmbLanguage.SelectedIndex = 0;
             }
+        }
+
+
+        /// <summary>
+        /// Apply language
+        /// </summary>
+        /// <param name="lang"></param>
+        private void ApplyLanguage(Language lang)
+        {
+            this._lang = lang;
+
+            this.Text = _lang.Items[$"{this.Name}._Text"];
+            lblStepNumber.Text = string.Format(_lang.Items[$"{this.Name}.lblStepNumber"], 1, tab1.TabCount);
+            btnNextStep.Text = _lang.Items[$"{this.Name}.btnNextStep"];
+            lnkSkip.Text = _lang.Items[$"{this.Name}.lnkSkip"];
+
+            lblLanguage.Text = _lang.Items[$"{this.Name}.lblLanguage"];
+            lblLayout.Text = _lang.Items[$"{this.Name}.lblLayout"];
+            lblTheme.Text = _lang.Items[$"{this.Name}.lblTheme"];
+            lblDefaultApp.Text = _lang.Items[$"{this.Name}.lblDefaultApp"];
+            btnSetDefaultApp.Text = _lang.Items[$"{this.Name}.btnSetDefaultApp"];
         }
 
 
@@ -160,7 +232,8 @@ namespace igcmd
         {
             //add default theme
             var defaultTheme = new Theme(Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml"));
-            themeList.Add(defaultTheme);
+            _themeList.Add(defaultTheme);
+            cmbTheme.Items.Clear();
             cmbTheme.Items.Add(defaultTheme.Name);
             cmbTheme.SelectedIndex = 0;
 
@@ -187,7 +260,7 @@ namespace igcmd
                             continue;
                         }
 
-                        themeList.Add(th);
+                        _themeList.Add(th);
                         cmbTheme.Items.Add(th.Name);
 
                         if (currentTheme.ToLower().CompareTo(th.ThemeConfigFilePath.ToLower()) == 0)
@@ -206,10 +279,36 @@ namespace igcmd
         }
 
 
+        /// <summary>
+        /// Apply theme
+        /// </summary>
+        /// <param name="th"></param>
+        private void ApplyTheme(Theme th)
+        {
+            panFooter.BackColor = th.ToolbarBackgroundColor;
+            panHeader.BackColor = 
+                tabLanguage.BackColor =
+                tabLayoutMode.BackColor = 
+                tabTheme.BackColor = 
+                tabFileAssociation.BackColor =
+                th.BackgroundColor;
+
+            lblStepNumber.ForeColor = 
+                lblLanguage.ForeColor = 
+                lblLayout.ForeColor = 
+                lblTheme.ForeColor = 
+                lblDefaultApp.ForeColor =
+                Theme.InvertColor(th.BackgroundColor);
+
+        }
+
+
+
+
+
+
         #endregion
 
-
-
-
+        
     }
 }

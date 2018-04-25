@@ -603,6 +603,23 @@ namespace ImageGlass.Library
             #endregion
 
 
+            #region frmFirstLaunch
+            Items.Add("frmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
+            Items.Add("frmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
+            Items.Add("frmFirstLaunch.btnNextStep", "Next"); //v5.0
+            Items.Add("frmFirstLaunch.btnNextStep._Done", "Done!"); //v5.0
+            Items.Add("frmFirstLaunch.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
+
+            Items.Add("frmFirstLaunch.lblLanguage", "Select Language"); //v5.0
+            Items.Add("frmFirstLaunch.lblLayout", "Select Layout"); //v5.0
+            Items.Add("frmFirstLaunch.cmbLayout._Standard", "Standard"); //v5.0
+            Items.Add("frmFirstLaunch.cmbLayout._Designer", "Designer"); //v5.0
+            Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
+            Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
+            Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
+            #endregion
+
+
             #region REMOVED strings
             //this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet"); //removed v2.0 final
             //this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email"); //removed v2.0 final
