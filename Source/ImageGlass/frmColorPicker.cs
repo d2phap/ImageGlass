@@ -539,7 +539,6 @@ namespace ImageGlass
                 lblHSL.Text = "HSLA:";
             }
 
-
         }
 
 
