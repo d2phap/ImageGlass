@@ -43,8 +43,9 @@ namespace ImageGlass
             r.ApplyTheme(lvImageEditing);
             r.ApplyTheme(lvTheme);
 
-
-            imglGeneral.Images.Add("_blank", new Bitmap(10, 50));
+            imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
+            imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
+            
         }
 
         #region PROPERTIES
