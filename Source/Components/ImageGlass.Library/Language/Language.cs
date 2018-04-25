@@ -250,7 +250,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
-            Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)");
+            //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
             Items.Add("frmMain.btnFullScreen", "Full screen (Alt + Enter)");
             Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
@@ -322,7 +322,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
-            Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v3.0
+            Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
@@ -508,7 +508,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
 
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
-            Items.Add("frmSetting.btnRegisterExt", "Register extensions"); // 4.0
+            Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer"); // 4.0, updated v5.0
             Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
