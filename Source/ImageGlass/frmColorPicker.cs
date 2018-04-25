@@ -334,6 +334,9 @@ namespace ImageGlass
 
                     Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
                     _DisplayColor(color);
+
+                    _bmpBooster.Dispose();
+                    _bmpBooster = null;
                 }
             }
             catch { }
