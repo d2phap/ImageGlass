@@ -190,12 +190,13 @@ namespace ImageGlass
                 filePath = path;
 
                 // get directory
-                dirPath = (Path.GetDirectoryName(path) + "\\").Replace("\\\\", "\\");
-                dirPath = path.Substring(0, path.LastIndexOf("\\") + 1);
+                //dirPath = (Path.GetDirectoryName(path) + "\\").Replace("\\\\", "\\");
+                //dirPath = path.Substring(0, path.LastIndexOf("\\") + 1);
+                dirPath = Path.GetDirectoryName(path);
             }
             else if (Directory.Exists(path))
             {
-                dirPath = (path + "\\").Replace("\\\\", "\\");
+                dirPath = path; // (path + "\\").Replace("\\\\", "\\");
             }
 
             //Declare a new list to store filename
@@ -243,7 +244,7 @@ namespace ImageGlass
             NextPic(0);
 
             //Watch all changes of current path
-            sysWatch.Path = Path.GetDirectoryName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            sysWatch.Path = Path.GetDirectoryName(dirPath);
             sysWatch.EnableRaisingEvents = true;
         }
 
