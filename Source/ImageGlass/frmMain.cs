@@ -2146,23 +2146,64 @@ namespace ImageGlass
         #region File System Watcher events
         private void sysWatch_Renamed(object sender, RenamedEventArgs e)
         {
+            string newFilename = e.FullPath;
+            string oldFilename = e.OldFullPath;
+
+            
+            var oldExt = Path.GetExtension(oldFilename).ToLower();
+            var newExt = Path.GetExtension(newFilename).ToLower();
+
             // Only watch the supported file types
-            var ext = Path.GetExtension(e.Name);
-            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            if (!GlobalSetting.AllImageFormats.Contains(oldExt) && !GlobalSetting.AllImageFormats.Contains(newExt))
             {
                 return;
             }
 
-            string newName = e.FullPath;
-            string oldName = e.OldFullPath;
 
             //Get index of renamed image
-            int imgIndex = GlobalSetting.ImageList.IndexOf(oldName);
+            int imgIndex = GlobalSetting.ImageList.IndexOf(oldFilename);
 
-            if (imgIndex > -1)
+
+            //if user changed file extension
+            if (oldExt.CompareTo(newExt) != 0)
             {
-                //Rename image list
-                GlobalSetting.ImageList.SetFileName(imgIndex, newName);
+                // [old] && [new]: update filename only
+                if (GlobalSetting.AllImageFormats.Contains(oldExt) && GlobalSetting.AllImageFormats.Contains(newExt))
+                {
+                    if (imgIndex > -1)
+                    {
+                        RenameAction();
+                    }
+                }
+                else
+                {
+                    // [old] && ![new]: remove from image list
+                    if (GlobalSetting.AllImageFormats.Contains(oldExt))
+                    {
+                        DoDeleteFiles(oldFilename);
+                    }
+                    // ![old] && [new]: add to image list
+                    else if (GlobalSetting.AllImageFormats.Contains(newExt))
+                    {
+                        AddNewFileAction();
+                    }
+                }
+            }
+            //if user changed filename only (not extension)
+            else
+            {
+                if (imgIndex > -1)
+                {
+                    RenameAction();
+                }
+            }
+            
+
+            
+            void RenameAction()
+            {
+                //Rename file in image list
+                GlobalSetting.ImageList.SetFileName(imgIndex, newFilename);
 
                 //Update status bar title
                 UpdateStatusBar();
@@ -2171,10 +2212,23 @@ namespace ImageGlass
                 {
                     //Rename image in thumbnail bar
                     thumbnailBar.Items[imgIndex].Text = e.Name;
-                    thumbnailBar.Items[imgIndex].Tag = newName;
+                    thumbnailBar.Items[imgIndex].Tag = newFilename;
                 }
                 catch { }
             }
+
+
+            void AddNewFileAction()
+            {
+                //Add the new image to the list
+                GlobalSetting.ImageList.AddItem(newFilename);
+
+                //Add the new image to thumbnail bar
+                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename);
+                lvi.Tag = newFilename;
+                thumbnailBar.Items.Add(lvi);
+            }
+
         }
 
         
@@ -3393,16 +3447,18 @@ namespace ImageGlass
 
             if (!GlobalSetting.IsImageError)
             {
-                FolderBrowserDialog f = new FolderBrowserDialog();
-                f.Description = GlobalSetting.LangPack.Items["frmMain._ExtractFrameText"];
-                f.ShowNewFolderButton = true;
+                FolderBrowserDialog f = new FolderBrowserDialog
+                {
+                    Description = GlobalSetting.LangPack.Items["frmMain._ExtractFrameText"],
+                    ShowNewFolderButton = true
+                };
+
                 DialogResult res = f.ShowDialog();
 
                 if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
                 {
                     Animation ani = new Animation();
-                    ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
-                                                f.SelectedPath);
+                    ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath);
                 }
 
                 f = null;

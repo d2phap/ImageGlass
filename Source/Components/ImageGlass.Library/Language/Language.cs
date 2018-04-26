@@ -124,6 +124,7 @@ namespace ImageGlass.Library
         }
 
 
+
         /// <summary>
         /// Set values of Language
         /// </summary>
@@ -136,6 +137,7 @@ namespace ImageGlass.Library
             _fileName = fileName;
             ReadLanguageFile();
         }
+
 
 
         /// <summary>
@@ -180,6 +182,8 @@ namespace ImageGlass.Library
             }
         }
 
+
+
         /// <summary>
         /// Export all language strings to xml file
         /// </summary>
@@ -214,6 +218,7 @@ namespace ImageGlass.Library
 
             doc.Save(filename);
         }
+
 
 
         /// <summary>
