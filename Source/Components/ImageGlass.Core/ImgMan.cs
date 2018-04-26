@@ -219,7 +219,8 @@ namespace ImageGlass.Core
 
         public int IndexOf(string filename)
         {
-            return lstImage.FindIndex(v => v.GetFileName() == filename);
+            // case sensitivity, esp. if filename passed on command line
+            return lstImage.FindIndex(v => v.GetFileName().ToLower() == filename.ToLower());
         }
 
 		public void Dispose()
