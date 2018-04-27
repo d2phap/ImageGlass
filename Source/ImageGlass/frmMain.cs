@@ -244,8 +244,10 @@ namespace ImageGlass
             NextPic(0);
 
             //Watch all changes of current path
-            sysWatch.Path = Path.GetDirectoryName(dirPath);
+            sysWatch.Path = dirPath;
+            sysWatch.IncludeSubdirectories = GlobalSetting.IsRecursiveLoading;
             sysWatch.EnableRaisingEvents = true;
+            
         }
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
