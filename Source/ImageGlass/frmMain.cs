@@ -1258,6 +1258,7 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("Theme", themeConfigPath);
             }
 
+
             Theme.Theme th = new Theme.Theme(themeConfigPath);
             LoadTheme(th);
 
@@ -1312,7 +1313,7 @@ namespace ImageGlass
             btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
 
             btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
-            btnCheckedBackground.Image = t.ToolbarIcons.CheckedBackground.Image;
+            btnCheckedBackground.Image = t.ToolbarIcons.Checkerboard.Image;
             btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
             btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
             btnConvert.Image = t.ToolbarIcons.Convert.Image;
@@ -1843,8 +1844,7 @@ namespace ImageGlass
         {
             //Load Other Configs
             LoadConfig(isLoadUI: false, isLoadOthers: true);
-
-
+            
             //Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
             

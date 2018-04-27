@@ -26,6 +26,7 @@ using System.Threading;
 using Ionic.Zip;
 using System.Text;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ImageGlass.Theme
 {
@@ -204,6 +205,7 @@ namespace ImageGlass.Theme
             //double scaleFactor = DPIScaling.GetDPIScaleFactor();
             int iconHeight = ThemeImage.GetCorrectIconHeight(); //(int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
+
             #region Theme <Info>
             try { Name = n.GetAttribute("name"); }
             catch (Exception ex) { };
@@ -223,6 +225,7 @@ namespace ImageGlass.Theme
             catch (Exception ex) { };
             #endregion
 
+
             #region Theme <main>
             try
             {
@@ -233,6 +236,7 @@ namespace ImageGlass.Theme
 
             n = (XmlElement)nType.SelectNodes("main")[0]; //<main>
 
+
             try
             {
                 var imgFile = Path.Combine(dir, n.GetAttribute("topbar"));
@@ -240,11 +244,25 @@ namespace ImageGlass.Theme
             }
             catch (Exception ex) { };
 
+
             try
             {
-                ToolbarBackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("topbarcolor")));
+                var colorString = n.GetAttribute("topbarcolor");
+                var inputColor = ToolbarBackgroundColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                ToolbarBackgroundColor = inputColor;
             }
             catch (Exception ex) { };
+
 
             try
             {
@@ -253,24 +271,65 @@ namespace ImageGlass.Theme
             }
             catch (Exception ex) { };
 
-            try
-            {
-                ThumbnailBackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("bottombarcolor")));
-            }
-            catch (Exception ex) { };
 
             try
             {
-                BackgroundColor = Color.FromArgb(int.Parse(n.GetAttribute("backcolor")));
+                var colorString = n.GetAttribute("bottombarcolor");
+                var inputColor = ThumbnailBackgroundColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                ThumbnailBackgroundColor = inputColor;
             }
             catch (Exception ex) { };
 
+
             try
             {
-                TextInfoColor = Color.FromArgb(int.Parse(n.GetAttribute("statuscolor")));
+                var colorString = n.GetAttribute("backcolor");
+                var inputColor = BackgroundColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                BackgroundColor = inputColor;
             }
             catch (Exception ex) { };
+
+
+            try
+            {
+                var colorString = n.GetAttribute("statuscolor");
+                var inputColor = TextInfoColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                TextInfoColor = inputColor;
+            }
+            catch (Exception ex) { };
+
             #endregion
+
 
             #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
@@ -395,8 +454,8 @@ namespace ImageGlass.Theme
 
             try
             {
-                var iconFile = Path.Combine(dir, n.GetAttribute("checkedbackground"));
-                ToolbarIcons.CheckedBackground = new ThemeImage(iconFile, iconHeight, iconHeight);
+                var iconFile = Path.Combine(dir, n.GetAttribute("checkerboard"));
+                ToolbarIcons.Checkerboard = new ThemeImage(iconFile, iconHeight, iconHeight);
             }
             catch (Exception ex) { };
 
@@ -464,6 +523,7 @@ namespace ImageGlass.Theme
             catch (Exception ex) { };
             #endregion
 
+
             this._isThemeValid = true;
             return this.IsThemeValid;
         }
@@ -471,11 +531,13 @@ namespace ImageGlass.Theme
 
         
         /// <summary>
-        /// Save as the new theme config file, compatible with v1.5+
+        /// Save as the new theme config file, compatible with v5.0+
         /// </summary>
         /// <param name="dir"></param>
         public void SaveAsThemeConfigs(string dir)
         {
+            Compatibility = "5.0";
+
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");//<ImageGlass>
             XmlElement nType = doc.CreateElement("Theme");//<Theme>
@@ -494,11 +556,11 @@ namespace ImageGlass.Theme
 
             n = doc.CreateElement("main");// <main>
             n.SetAttribute("topbar", Path.GetFileName(ToolbarBackgroundImage.Filename));
-            n.SetAttribute("topbarcolor", ToolbarBackgroundColor.ToArgb().ToString());
+            n.SetAttribute("topbarcolor", ConvertColorToHEX(ToolbarBackgroundColor, true));
             n.SetAttribute("bottombar", Path.GetFileName(ThumbnailBackgroundImage.Filename));
-            n.SetAttribute("bottombarcolor", ThumbnailBackgroundColor.ToArgb().ToString());
-            n.SetAttribute("backcolor", BackgroundColor.ToArgb().ToString());
-            n.SetAttribute("statuscolor", TextInfoColor.ToArgb().ToString());
+            n.SetAttribute("bottombarcolor", ConvertColorToHEX(ThumbnailBackgroundColor, true));
+            n.SetAttribute("backcolor", ConvertColorToHEX(BackgroundColor, true));
+            n.SetAttribute("statuscolor", ConvertColorToHEX(TextInfoColor, true));
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
@@ -519,7 +581,7 @@ namespace ImageGlass.Theme
             n.SetAttribute("refresh", Path.GetFileName(ToolbarIcons.Refresh.Filename));
             n.SetAttribute("gotoimage", Path.GetFileName(ToolbarIcons.GoToImage.Filename));
             n.SetAttribute("thumbnail", Path.GetFileName(ToolbarIcons.ThumbnailBar.Filename));
-            n.SetAttribute("caro", Path.GetFileName(ToolbarIcons.CheckedBackground.Filename));
+            n.SetAttribute("checkerboard", Path.GetFileName(ToolbarIcons.Checkerboard.Filename));
             n.SetAttribute("fullscreen", Path.GetFileName(ToolbarIcons.FullScreen.Filename));
             n.SetAttribute("slideshow", Path.GetFileName(ToolbarIcons.Slideshow.Filename));
             n.SetAttribute("convert", Path.GetFileName(ToolbarIcons.Convert.Filename));
@@ -542,6 +604,7 @@ namespace ImageGlass.Theme
 
             doc.Save(Path.Combine(dir, "config.xml")); //save file
         }
+
 
         #endregion
 
@@ -684,6 +747,9 @@ namespace ImageGlass.Theme
 
             Theme th = new Theme(Path.Combine(themeFolder, "config.xml"));
 
+            //updated theme config file
+            th.SaveAsThemeConfigs(themeFolder);
+
             //if file exist, rename & backup
             if (File.Exists(themeFileOutput))
             {
@@ -749,6 +815,137 @@ namespace ImageGlass.Theme
 
             return Color.White;
         }
+
+
+        /// <summary>
+        /// Convert Color to CMYK
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static int[] ConvertColorToCMYK(Color c)
+        {
+            if (c.R == 0 && c.G == 0 && c.B == 0)
+            {
+                return new[] { 0, 0, 0, 1 };
+            }
+
+            double black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
+            double cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
+            double magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
+            double yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
+
+            return new[] {
+                (int) Math.Round(cyan*100),
+                (int) Math.Round(magenta*100),
+                (int) Math.Round(yellow*100),
+                (int) Math.Round(black*100)
+            };
+        }
+
+
+        /// <summary>
+        /// Convert Color to HSLA
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static float[] ConvertColorToHSLA(Color c)
+        {
+            float h = (float)Math.Round(c.GetHue());
+            float s = (float)Math.Round(c.GetSaturation() * 100);
+            float l = (float)Math.Round(c.GetBrightness() * 100);
+            float a = (float)Math.Round(c.A / 255.0, 3);
+
+            return new[] { h, s, l, a };
+        }
+
+
+        /// <summary>
+        /// Convert Color to HEX (with alpha)
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="skipAlpha"></param>
+        /// <returns></returns>
+        public static string ConvertColorToHEX(Color c, bool @skipAlpha = false)
+        {
+            if (skipAlpha)
+            {
+                return string.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
+            }
+
+            return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", c.R, c.G, c.B, c.A);
+        }
+
+        /// <summary>
+        /// Convert Hex (with alpha) to Color
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        public static Color ConvertHexStringToColor(string hex, bool @skipAlpha = false)
+        {
+            //Remove # if present
+            if (hex.IndexOf('#') != -1)
+                hex = hex.Replace("#", "");
+
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            int alpha = 255;
+
+            if (hex.Length == 8)
+            {
+                //#RRGGBBAA
+                red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+                alpha = int.Parse(hex.Substring(6, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 6)
+            {
+                //#RRGGBB
+                red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+                green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+                blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 4)
+            {
+                //#RGBA
+                red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
+                green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
+                blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
+                alpha = int.Parse($"{hex[3]}{hex[3]}", NumberStyles.AllowHexSpecifier);
+            }
+            else if (hex.Length == 3)
+            {
+                //#RGB
+                red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
+                green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
+                blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
+            }
+
+            if (skipAlpha)
+            {
+                alpha = 255;
+            }
+
+            return Color.FromArgb(alpha, red, green, blue);
+        }
+
+
+        /// <summary>
+        /// Validate if Hex string is a valid color
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        public static bool IsValidHex(string hex)
+        {
+            if (hex.StartsWith("#"))
+            {
+                return hex.Length == 9 || hex.Length == 7 || hex.Length == 5 || hex.Length == 4;
+            }
+
+            return false;
+        }
+
 
         #endregion
     }
