@@ -217,7 +217,7 @@ namespace ImageGlass
 
         private Size _virtualSize;
 
-        private int _zoom;
+        private double _zoom;
 
         private ImageBoxZoomLevelCollection _zoomLevels;
 
@@ -1885,7 +1885,7 @@ namespace ImageGlass
         /// <value>The zoom.</value>
         [DefaultValue(100)]
         [Category("Appearance")]
-        public virtual int Zoom
+        public virtual double Zoom
         {
             get { return _zoom; }
             set { SetZoom(value, value > Zoom ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.Unknown); }
@@ -2926,7 +2926,7 @@ namespace ImageGlass
                     }
                 }
 
-                Zoom = (int)Math.Round(Math.Floor(zoom));
+                Zoom = zoom;
             }
         }
 
@@ -2973,7 +2973,7 @@ namespace ImageGlass
                     }
                 }
 
-                Zoom = (int)Math.Round(Math.Floor(zoom));
+                Zoom = zoom;
             }
         }
 
@@ -3021,7 +3021,7 @@ namespace ImageGlass
             cx = (int)(rectangle.X + (rectangle.Width / 2));
             cy = (int)(rectangle.Y + (rectangle.Height / 2));
 
-            Zoom = (int)(zoomFactor * 100);
+            Zoom = zoomFactor * 100;
             CenterAt(new Point(cx, cy));
         }
 
@@ -4616,12 +4616,11 @@ namespace ImageGlass
         protected virtual void ProcessImageShortcuts(KeyEventArgs e)
         {
             Point currentPixel;
-            int currentZoom;
             Point relativePoint;
 
             relativePoint = CenterPoint;
             currentPixel = PointToImage(relativePoint);
-            currentZoom = Zoom;
+            var currentZoom = Zoom;
 
             switch (e.KeyCode)
             {
@@ -4821,9 +4820,7 @@ namespace ImageGlass
         {
             if (SizeMode != ImageBoxSizeMode.Normal)
             {
-                int previousZoom;
-
-                previousZoom = Zoom;
+                var previousZoom = Zoom;
                 SizeMode = ImageBoxSizeMode.Normal;
                 Zoom = previousZoom; // Stop the zoom getting reset to 100% before calculating the new zoom
             }
@@ -4979,13 +4976,9 @@ namespace ImageGlass
         /// <param name="relativePoint">A <see cref="Point"/> describing the current center of the control.</param>
         private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition, Point relativePoint)
         {
-            Point currentPixel;
-            int currentZoom;
-            int newZoom;
-
-            currentPixel = PointToImage(relativePoint);
-            currentZoom = Zoom;
-            newZoom = GetZoomLevel(action);
+            var currentPixel = PointToImage(relativePoint);
+            var currentZoom = Zoom;
+            var newZoom = GetZoomLevel(action);
 
             RestoreSizeMode();
             SetZoom(newZoom, action, source);
@@ -5003,7 +4996,7 @@ namespace ImageGlass
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if an unsupported action is specified.</exception>
         private int GetZoomLevel(ImageBoxZoomActions action)
         {
-            int result;
+            double result;
 
             switch (action)
             {
@@ -5011,10 +5004,10 @@ namespace ImageGlass
                     result = Zoom;
                     break;
                 case ImageBoxZoomActions.ZoomIn:
-                    result = ZoomLevels.NextZoom(Zoom);
+                    result = ZoomLevels.NextZoom((int)Zoom);
                     break;
                 case ImageBoxZoomActions.ZoomOut:
-                    result = ZoomLevels.PreviousZoom(Zoom);
+                    result = ZoomLevels.PreviousZoom((int)Zoom);
                     break;
                 case ImageBoxZoomActions.ActualSize:
                     result = 100;
@@ -5023,7 +5016,7 @@ namespace ImageGlass
                     throw new ArgumentOutOfRangeException("action");
             }
 
-            return result;
+            return (int)result;
         }
 
         /// <summary>
@@ -5042,11 +5035,9 @@ namespace ImageGlass
         /// <param name="value">The new zoom value.</param>
         /// <param name="actions">The zoom actions that caused the value to be updated.</param>
         /// <param name="source">The source of the zoom operation.</param>
-        private void SetZoom(int value, ImageBoxZoomActions actions, ImageBoxActionSources source)
+        private void SetZoom(double value, ImageBoxZoomActions actions, ImageBoxActionSources source)
         {
-            int previousZoom;
-
-            previousZoom = Zoom;
+            var previousZoom = Zoom;
 
             if (value < MinZoom)
             {

@@ -480,7 +480,7 @@ namespace ImageGlass
                 if (isKeepZoomRatio)
                 {
                     GlobalSetting.IsEnabledZoomLock = true;
-                    GlobalSetting.ZoomLockValue = picMain.Zoom;
+                    GlobalSetting.ZoomLockValue = (int)picMain.Zoom; // Note: losing a little precision here, not worth changing settings
 
                     //prevent scrollbar position reset
                     LocalSetting.IsResetScrollPosition = false;
@@ -623,7 +623,7 @@ namespace ImageGlass
                 }
                 else
                 {
-                    zoom = $"{picMain.Zoom.ToString()}%";
+                    zoom = $"{picMain.Zoom.ToString("F2")}%";
 
                     if (picMain.Image != null)
                     {
@@ -2522,7 +2522,7 @@ namespace ImageGlass
 
             if (GlobalSetting.IsEnabledZoomLock)
             {
-                GlobalSetting.ZoomLockValue = e.NewZoom;
+                GlobalSetting.ZoomLockValue = (int)e.NewZoom;   // Note: losing a little precision here, not worth changing settings
             }
 
             //Zoom optimization
@@ -3347,7 +3347,7 @@ namespace ImageGlass
             if (!GlobalSetting.IsEnabledZoomLock)
             {
                 GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = true;
-                GlobalSetting.ZoomLockValue = picMain.Zoom;
+                GlobalSetting.ZoomLockValue = (int)picMain.Zoom;   // Note: losing a little precision here, not worth changing settings
             }
             else
             {
@@ -3371,7 +3371,7 @@ namespace ImageGlass
 
             // Scale to Width
             double frac = picMain.Width / (1.0 * picMain.Image.Width);
-            picMain.Zoom = (int)(frac * 100);
+            picMain.Zoom = frac * 100;
         }
 
         private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
@@ -3389,7 +3389,7 @@ namespace ImageGlass
 
             // Scale to Height
             double frac = picMain.Height / (1.0 * picMain.Image.Height);
-            picMain.Zoom = (int)(frac * 100);
+            picMain.Zoom = frac * 100;
         }
 
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
