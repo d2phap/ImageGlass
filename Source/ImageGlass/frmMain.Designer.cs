@@ -499,7 +499,7 @@
             this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
             this.btnFullScreen.Name = "btnFullScreen";
             this.btnFullScreen.Size = new System.Drawing.Size(33, 33);
-            this.btnFullScreen.ToolTipText = "Full sreen (Alt + Enter)";
+            this.btnFullScreen.ToolTipText = "Full screen (Alt + Enter)";
             this.btnFullScreen.Click += new System.EventHandler(this.btnFullScreen_Click);
             // 
             // btnSlideShow
@@ -555,7 +555,9 @@
             this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(33, 33);
+            this.btnDelete.ToolTipText = "Send to recycle bin";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+
             // 
             // btnMenu
             // 
