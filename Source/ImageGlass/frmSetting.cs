@@ -117,6 +117,7 @@ namespace ImageGlass
         }
         #endregion
 
+
         #region MOUSE ENTER - HOVER - DOWN BUTTON
         private void lblButton_MouseDown(object sender, MouseEventArgs e)
         {
@@ -580,74 +581,71 @@ namespace ImageGlass
             //Get value of chkImageBoosterBack
             chkImageBoosterBack.Checked = GlobalSetting.IsImageBoosterBack;
 
-            //Load items of cmbImageOrder
+            #region Load items of cmbImageOrder
+            var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
             cmbImageOrder.Items.Clear();
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Name"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Length"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._CreationTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastAccessTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._LastWriteTime"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Extension"]);
-            cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbImageOrder._Random"]);
+            foreach (var item in loadingOrderList)
+            {
+                cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrder._{item}"]);
+            }
 
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
+            #endregion
 
-            //Get mouse wheel actions (with no control keys pressed) ----------------------------------------------
+
+            #region Get mouse wheel actions
+
+            //mouse wheel actions (with no control keys pressed)
             cmbMouseWheel.Items.Clear();
-            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
-            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
-            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
-            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
-            cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
+
+            //mouse wheel actions with <Ctrl> key pressed
+            cmbMouseWheelCtrl.Items.Clear();
+
+            //mouse wheel actions with <Shift> key pressed
+            cmbMouseWheelShift.Items.Clear();
+
+            //mouse wheel actions with <Alt> key pressed
+            cmbMouseWheelAlt.Items.Clear();
+
+            var mouseWheelActionsList = Enum.GetNames(typeof(MouseWheelActions));
+            foreach (var item in mouseWheelActionsList)
+            {
+                cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+            }
 
             //Get value of cmbMouseWheel
             cmbMouseWheel.SelectedIndex = (int)GlobalSetting.MouseWheelAction;
 
-            //Get mouse wheel actions with <Ctrl> key pressed
-            cmbMouseWheelCtrl.Items.Clear();
-            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
-            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
-            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
-            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
-            cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
-
             //Get value of cmbMouseWheelCtrl
             cmbMouseWheelCtrl.SelectedIndex = (int)GlobalSetting.MouseWheelCtrlAction;
-
-            //Get mouse wheel actions with <Shift> key pressed
-            cmbMouseWheelShift.Items.Clear();
-            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
-            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
-            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
-            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
-            cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
 
             //Get value of cmbMouseWheelShift
             cmbMouseWheelShift.SelectedIndex = (int)GlobalSetting.MouseWheelShiftAction;
 
-            //Get mouse wheel actions with <Alt> key pressed
-            cmbMouseWheelAlt.Items.Clear();
-            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._DoNothing"]);
-            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._Zoom"]);
-            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollVertically"]);
-            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._ScrollHorizontally"]);
-            cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbMouseWheel._BrowseImages"]);
-
             //Get value of cmbMouseWheelAlt
             cmbMouseWheelAlt.SelectedIndex = (int)GlobalSetting.MouseWheelAltAction;
 
-            //Use mouse wheel to browse images ----------------------------------------------
-            //chkMouseNavigation.Checked = GlobalSetting.IsMouseNavigation;
+            #endregion
 
-            //Load items of cmbZoomOptimization 
+
+            #region Load items of cmbZoomOptimization
+
+            var zoomOptimizationList = Enum.GetNames(typeof(ZoomOptimizationMethods));
             cmbZoomOptimization.Items.Clear();
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._Auto"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._SmoothPixels"]);
-            cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items["frmSetting.cmbZoomOptimization._ClearPixels"]);
+            foreach (var item in zoomOptimizationList)
+            {
+                cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
+            }
 
             //Get value of cmbZoomOptimization
             cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
+
+            #endregion
+
 
             //Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
@@ -2006,7 +2004,7 @@ namespace ImageGlass
 
             #region Image tab ----------------------------------------------
 
-            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_FOLDER
             newBool = chkFindChildFolder.Checked;
             if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
             {
@@ -2014,7 +2012,7 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
 
                 //Request frmMain to update the thumbnail bar
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_FOLDER;
             }
             #endregion
 
@@ -2030,10 +2028,25 @@ namespace ImageGlass
             //IsImageBoosterBack
             GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
+            
 
-            //ImageLoadingOrder
-            GlobalSetting.SetConfig("ImageLoadingOrder", cmbImageOrder.SelectedIndex.ToString(GlobalSetting.NumberFormat));
-            GlobalSetting.LoadImageOrderConfig();
+            #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
+            newInt = cmbImageOrder.SelectedIndex;
+
+            if (Enum.TryParse(newInt.ToString(), out ImageOrderBy newOrder))
+            {
+                if (GlobalSetting.ImageLoadingOrder != newOrder) //Only change when the new value selected  
+                {
+                    GlobalSetting.ImageLoadingOrder = newOrder;
+                    GlobalSetting.SetConfig("ImageLoadingOrder", newInt.ToString());
+
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
+            }
+            
+            #endregion
+            
 
             //Mouse wheel actions
             GlobalSetting.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
@@ -2048,7 +2061,7 @@ namespace ImageGlass
 
             
             //ZoomOptimization
-            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)cmbZoomOptimization.SelectedIndex;
+            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
             GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
 
 

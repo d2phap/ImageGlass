@@ -189,6 +189,22 @@ namespace ImageGlass.Core
         }
 
         /// <summary>
+        /// Get file list
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetFileList()
+        {
+            var list = new List<string>();
+
+            foreach(var item in lstImage)
+            {
+                list.Add(item.GetFileName());
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// Set full path of this image
         /// </summary>
         /// <param name="i">image index</param>

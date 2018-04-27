@@ -68,7 +68,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets image laoding order
+        /// Gets, sets image loading order
         /// </summary>
         public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
 
@@ -298,23 +298,23 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel
         /// </summary>
-        public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.SCROLL_VERTICAL;
+        public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.ScrollVertically;
 
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Ctrl key
         /// </summary>
-        public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ZOOM;
+        public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.Zoom;
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Shift key
         /// </summary>
-        public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.SCROLL_HORIZONTAL;
+        public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Alt key
         /// </summary>
-        public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.DO_NOTHING;
+        public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.DoNothing;
 
 
         /// <summary>
@@ -359,22 +359,22 @@ namespace ImageGlass.Services.Configuration
         }
 
 
-        private static ZoomOptimizationValue _zoomOptimizationMethod = ZoomOptimizationValue.Auto;
+        private static ZoomOptimizationMethods _zoomOptimizationMethod = ZoomOptimizationMethods.Auto;
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
-        public static ZoomOptimizationValue ZoomOptimizationMethod
+        public static ZoomOptimizationMethods ZoomOptimizationMethod
         {
             get { return GlobalSetting._zoomOptimizationMethod; }
             set
             {
                 GlobalSetting._zoomOptimizationMethod = value;
 
-                if (value == ZoomOptimizationValue.SmoothPixels)
+                if (value == ZoomOptimizationMethods.SmoothPixels)
                 {
                     GlobalSetting.SetConfig("ZoomOptimization", "1");
                 }
-                else if (value == ZoomOptimizationValue.ClearPixels)
+                else if (value == ZoomOptimizationMethods.ClearPixels)
                 {
                     GlobalSetting.SetConfig("ZoomOptimization", "2");
                 }
@@ -511,7 +511,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Load image order from configuration file
         /// </summary>
-        public static void LoadImageOrderConfig()
+        public static ImageOrderBy LoadImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");
 
@@ -525,7 +525,9 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            ImageLoadingOrder = (ImageOrderBy)i;
+            //ImageLoadingOrder = (ImageOrderBy)i;
+
+            return (ImageOrderBy)i;
         }
 
 

@@ -287,12 +287,10 @@ namespace ImageGlass
             var list = new List<string>();
 
             //Get files from dir
-            var dsFile = DirectoryFinder.FindFiles(path,
+            var fileList = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursiveLoading,
                 new Predicate<string>(delegate (String f)
                 {
-                    Application.DoEvents();
-
                     string extension = Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
                     // checks if image is hidden and ignores it if so
                     if (GlobalSetting.IsShowingHiddenImages == false)
@@ -311,11 +309,22 @@ namespace ImageGlass
 
                     return false;
                 }));
+            
+
+            list = SortImageList(fileList);
+
+            return list;
+        }
+
+
+        private List<string> SortImageList(List<string> fileList)
+        {
+            var list = new List<string>();
 
             //Sort image file
             if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
             {
-                var arr = dsFile.ToArray();
+                var arr = fileList.ToArray();
                 Array.Sort(arr, new WindowsNaturalSort());
                 list.AddRange(arr);
 
@@ -323,37 +332,39 @@ namespace ImageGlass
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Length)
             {
-                list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => new FileInfo(f).Length));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.CreationTime)
             {
-                list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => new FileInfo(f).CreationTimeUtc));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Extension)
             {
-                list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => new FileInfo(f).Extension));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
-                list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => new FileInfo(f).LastAccessTime));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
-                list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => new FileInfo(f).LastWriteTime));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Random)
             {
                 list.AddRange(dsFile
+                list.AddRange(fileList
                     .OrderBy(f => Guid.NewGuid()));
             }
 
             return list;
         }
+
 
         /// <summary>
         /// Clear and reload all thumbnail image
@@ -557,14 +568,17 @@ namespace ImageGlass
 
                 if (picMain.Image != null)
                 {
-                    imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                    try
+                    {
+                        imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                    }
+                    catch { }
 
                     //ImageGlass (Image data)  |  {zoom}  |  {image size}
                     this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
                 }
                 else
                 {
-
                     this.Text = $"{appName}  |  {zoom}";
                 }
             }
@@ -614,7 +628,11 @@ namespace ImageGlass
 
                     if (picMain.Image != null)
                     {
-                        imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                        try
+                        {
+                            imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                        }
+                        catch { }
 
                         //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
                         this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
@@ -920,7 +938,7 @@ namespace ImageGlass
         /// </summary>
         private void ZoomOptimization()
         {
-            if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.Auto)
+            if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationMethods.Auto)
             {
                 if (picMain.Zoom > 100)
                 {
@@ -931,11 +949,11 @@ namespace ImageGlass
                     picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
                 }
             }
-            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.ClearPixels)
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationMethods.ClearPixels)
             {
                 picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             }
-            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationValue.SmoothPixels)
+            else if (GlobalSetting.ZoomOptimizationMethod == ZoomOptimizationMethods.SmoothPixels)
             {
                 picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             }
@@ -1520,7 +1538,7 @@ namespace ImageGlass
 
 
                 //Load image order config
-                GlobalSetting.LoadImageOrderConfig();
+                GlobalSetting.ImageLoadingOrder = GlobalSetting.LoadImageOrderConfig();
 
                 //Load state of Image Booster
                 GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
@@ -1587,14 +1605,14 @@ namespace ImageGlass
                     string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
                         if (int.TryParse(configValue2, out int zoomValue))
                         {
-                            if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationValue)).Length)
+                            if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationMethods)).Length)
                             { }
                             else
                             {
                                 zoomValue = 0;
                             }
                         }
-                        GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationValue)zoomValue;
+                        GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)zoomValue;
                     #endregion
 
 
@@ -2101,12 +2119,30 @@ namespace ImageGlass
             #endregion
 
 
-            #region IMAGE_LIST
-            if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
+            #region IMAGE_FOLDER and IMAGE_LIST
+
+            #region IMAGE_FOLDER
+            if ((flags & MainFormForceUpdateAction.IMAGE_FOLDER) == MainFormForceUpdateAction.IMAGE_FOLDER)
             {
                 Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             }
             #endregion
+
+            #region IMAGE_LIST
+            else
+            {
+                if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
+                {
+                    //reload image list
+                    // TODO: If IsRecursiveLoading == true,
+                    // The Prepare() function will only reload the viewing folder only (not all subfolders)
+                    Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                }
+            }
+            #endregion
+
+            #endregion
+
 
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
@@ -2453,16 +2489,16 @@ namespace ImageGlass
             }
             switch(action)
             {
-                case MouseWheelActions.ZOOM:
+                case MouseWheelActions.Zoom:
                     picMain.ZoomWithMouseWheel(e.Delta, e.Location);
                     break;
-                case MouseWheelActions.SCROLL_VERTICAL:
+                case MouseWheelActions.ScrollVertically:
                     picMain.ScrollWithMouseWheel(e.Delta);
                     break;
-                case MouseWheelActions.SCROLL_HORIZONTAL:
+                case MouseWheelActions.ScrollHorizontally:
                     picMain.ScrollWithMouseWheel(e.Delta, true);
                     break;
-                case MouseWheelActions.BROWSE_IMAGES:
+                case MouseWheelActions.BrowseImages:
                     if (e.Delta < 0)
                     {
                         //Next pic
@@ -2474,7 +2510,7 @@ namespace ImageGlass
                         mnuMainViewPrevious_Click(null, null);
                     }
                     break;
-                case MouseWheelActions.DO_NOTHING:
+                case MouseWheelActions.DoNothing:
                 default:
                     break;
             }

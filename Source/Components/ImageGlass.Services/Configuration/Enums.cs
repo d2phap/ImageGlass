@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,11 @@ using System;
 
 namespace ImageGlass.Services.Configuration
 {
+    /// <summary>
+    /// The loading order list.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
     public enum ImageOrderBy
     {
         Name = 0,
@@ -31,7 +36,12 @@ namespace ImageGlass.Services.Configuration
         Random = 6
     }
 
-    public enum ZoomOptimizationValue
+    /// <summary>
+    /// The list of Zoom Optimization.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum ZoomOptimizationMethods
     {
         Auto = 0,
         SmoothPixels = 1,
@@ -50,13 +60,19 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR_ICON_HEIGHT = 20,
         TOOLBAR_HEIGHT = 40
     }
+
+    /// <summary>
+    /// The list of mousewheel actions.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
     public enum MouseWheelActions
     {
-        DO_NOTHING = 0,
-        ZOOM = 1,
-        SCROLL_VERTICAL = 2,
-        SCROLL_HORIZONTAL = 3,
-        BROWSE_IMAGES = 4
+        DoNothing = 0,
+        Zoom = 1,
+        ScrollVertically = 2,
+        ScrollHorizontally = 3,
+        BrowseImages = 4
     }
 
     /// <summary>
@@ -73,7 +89,8 @@ namespace ImageGlass.Services.Configuration
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
         IMAGE_LIST = 64,
-        OTHER_SETTINGS = 128
+        IMAGE_FOLDER = 128,
+        OTHER_SETTINGS = 256
     }
 
 }
