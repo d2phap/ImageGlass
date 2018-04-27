@@ -357,7 +357,6 @@ namespace ImageGlass
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Random)
             {
-                list.AddRange(dsFile
                 list.AddRange(fileList
                     .OrderBy(f => Guid.NewGuid()));
             }
