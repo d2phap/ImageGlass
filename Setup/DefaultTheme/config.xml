@@ -19,7 +19,7 @@
         refresh="Refresh.svg"
         gotoimage="GoToImage.svg"
         thumbnail="ThumbnailBar.svg"
-        checkedbackground="CheckedBackground.svg"
+        checkerboard="Checkerboard.svg"
         fullscreen="FullScreen.svg"
         slideshow="Slideshow.svg"
         convert="Convert.svg"
@@ -28,6 +28,8 @@
         extension="Plugins.svg"
         settings="Settings.svg"
         about="About.svg" 
-        menu="Menu.svg" />
+        menu="Menu.svg"
+		delete="delete.svg"		
+		/>
   </Theme>
 </ImageGlass>
