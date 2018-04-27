@@ -325,7 +325,7 @@
             this.btnZoomToFit.Name = "btnZoomToFit";
             this.btnZoomToFit.Size = new System.Drawing.Size(33, 33);
             this.btnZoomToFit.Tag = "";
-            this.btnZoomToFit.ToolTipText = "Zoom to fit xxx";
+            this.btnZoomToFit.ToolTipText = "Zoom to fit  (Ctrl + /)";
             this.btnZoomToFit.Click += new System.EventHandler(this.btnZoomToFit_Click);
             // 
             // btnActualSize
