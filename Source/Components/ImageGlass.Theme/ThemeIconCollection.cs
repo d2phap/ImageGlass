@@ -24,7 +24,7 @@ namespace ImageGlass.Theme
         public ThemeImage About { get; set; }
         public ThemeImage ActualSize { get; set; }
         public ThemeImage AdjustWindowSize { get; set; }
-        public ThemeImage CheckedBackground { get; set; }
+        public ThemeImage Checkerboard { get; set; }
         public ThemeImage Convert { get; set; }
         public ThemeImage FullScreen { get; set; }
         public ThemeImage GoToImage { get; set; }
@@ -57,7 +57,7 @@ namespace ImageGlass.Theme
             About = new ThemeImage();
             ActualSize = new ThemeImage();
             AdjustWindowSize = new ThemeImage();
-            CheckedBackground = new ThemeImage();
+            Checkerboard = new ThemeImage();
             Convert = new ThemeImage();
             FullScreen = new ThemeImage();
             GoToImage = new ThemeImage();

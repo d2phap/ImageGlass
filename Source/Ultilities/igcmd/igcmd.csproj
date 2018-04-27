@@ -116,6 +116,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFirstLaunch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFirstLaunch.Designer.cs">
+      <DependentUpon>frmFirstLaunch.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMsg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFirstLaunch.resx">
+      <DependentUpon>frmFirstLaunch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMsg.resx">
       <DependentUpon>frmMsg.cs</DependentUpon>
@@ -187,6 +196,10 @@
     <None Include="Resources\loading.gif" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
+      <Name>ImageGlass.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>

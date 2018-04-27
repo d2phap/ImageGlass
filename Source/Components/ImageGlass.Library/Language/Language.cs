@@ -124,6 +124,7 @@ namespace ImageGlass.Library
         }
 
 
+
         /// <summary>
         /// Set values of Language
         /// </summary>
@@ -136,6 +137,7 @@ namespace ImageGlass.Library
             _fileName = fileName;
             ReadLanguageFile();
         }
+
 
 
         /// <summary>
@@ -180,6 +182,8 @@ namespace ImageGlass.Library
             }
         }
 
+
+
         /// <summary>
         /// Export all language strings to xml file
         /// </summary>
@@ -216,6 +220,7 @@ namespace ImageGlass.Library
         }
 
 
+
         /// <summary>
         /// This is default language of ImageGlass
         /// </summary>
@@ -250,7 +255,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
-            Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)");
+            //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
             Items.Add("frmMain.btnFullScreen", "Full screen (Alt + Enter)");
             Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
             Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
@@ -322,7 +327,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
-            Items.Add("frmMain.mnuMainCheckBackground", "Checked background"); //v3.0
+            Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
@@ -332,6 +337,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
 
+            Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations"); //v5.0
             Items.Add("frmMain.mnuMainCheckForUpdate", "A new version is available"); //v4.5
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
             #endregion
@@ -507,7 +513,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
 
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
-            Items.Add("frmSetting.btnRegisterExt", "Register extensions"); // 4.0
+            Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer"); // 4.0, updated v5.0
             Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
@@ -599,6 +605,23 @@ namespace ImageGlass.Library
             Items.Add("frmEditEditingAssocisation.btnReset", "Reset"); // 4.0
             Items.Add("frmEditEditingAssocisation.btnOK", "OK"); // 4.0
             Items.Add("frmEditEditingAssocisation.btnClose", "Close"); // 4.0
+            #endregion
+
+
+            #region frmFirstLaunch
+            Items.Add("frmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
+            Items.Add("frmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
+            Items.Add("frmFirstLaunch.btnNextStep", "Next"); //v5.0
+            Items.Add("frmFirstLaunch.btnNextStep._Done", "Done!"); //v5.0
+            Items.Add("frmFirstLaunch.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
+
+            Items.Add("frmFirstLaunch.lblLanguage", "Select Language"); //v5.0
+            Items.Add("frmFirstLaunch.lblLayout", "Select Layout"); //v5.0
+            Items.Add("frmFirstLaunch.cmbLayout._Standard", "Standard"); //v5.0
+            Items.Add("frmFirstLaunch.cmbLayout._Designer", "Designer"); //v5.0
+            Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
+            Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
+            Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion
 
 

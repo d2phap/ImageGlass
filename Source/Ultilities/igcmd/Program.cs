@@ -59,6 +59,10 @@ namespace igcmd
             {
                 Core.AutoUpdate();
             }
+            else if (topcmd == "firstlaunch")
+            {
+                Application.Run(new frmFirstLaunch());
+            }
         }
 
         

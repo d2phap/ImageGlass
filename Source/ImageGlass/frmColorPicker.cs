@@ -334,6 +334,9 @@ namespace ImageGlass
 
                     Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
                     _DisplayColor(color);
+
+                    _bmpBooster.Dispose();
+                    _bmpBooster = null;
                 }
             }
             catch { }
@@ -364,20 +367,20 @@ namespace ImageGlass
             if (GlobalSetting.IsColorPickerHEXA)
             {
                 lblHEX.Text = "HEXA:";
-                txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.R, color.G, color.B, color.A);
+                txtHEX.Text = Theme.Theme.ConvertColorToHEX(color);
             }
             else
             {
                 lblHEX.Text = "HEX:";
-                txtHEX.Text = string.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B);
+                txtHEX.Text = Theme.Theme.ConvertColorToHEX(color, true);
             }
 
             //CMYK color -----------------------------------------------
-            var cmyk = RGBToCMYK(color);
+            var cmyk = Theme.Theme.ConvertColorToCMYK(color);
             txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
 
             //HSLA color -----------------------------------------------
-            var hsla = RGBAToHSLA(color);
+            var hsla = Theme.Theme.ConvertColorToHSLA(color);
             if (GlobalSetting.IsColorPickerHSLA)
             {
                 lblHSL.Text = "HSLA:";
@@ -413,35 +416,7 @@ namespace ImageGlass
             this.Activate();
         }
 
-        private int[] RGBToCMYK(Color c)
-        {
-            if (c.R == 0 && c.G == 0 && c.B == 0)
-            {
-                return new[] { 0, 0, 0, 1 };
-            }
-
-            double black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
-            double cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
-            double magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
-            double yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
-
-            return new[] {
-                (int) Math.Round(cyan*100),
-                (int) Math.Round(magenta*100),
-                (int) Math.Round(yellow*100),
-                (int) Math.Round(black*100)
-            };
-        }
-
-        private float[] RGBAToHSLA(Color c)
-        {
-            float h = (float)Math.Round(c.GetHue());
-            float s = (float)Math.Round(c.GetSaturation() * 100);
-            float l = (float)Math.Round(c.GetBrightness() * 100);
-            float a = (float)Math.Round(c.A / 255.0, 3);
-
-            return new[] { h, s, l, a };
-        }
+        
 
 
         #endregion
@@ -538,7 +513,6 @@ namespace ImageGlass
             {
                 lblHSL.Text = "HSLA:";
             }
-
 
         }
 

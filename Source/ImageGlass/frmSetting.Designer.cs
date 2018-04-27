@@ -120,35 +120,32 @@ namespace ImageGlass
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.tabToolbar = new System.Windows.Forms.TabPage();
-            this.spToolbar = new System.Windows.Forms.SplitContainer();
-            this.lblAvailBtns = new System.Windows.Forms.Label();
-            this.lvAvailButtons = new System.Windows.Forms.ListView();
-            this.btnMoveLeft = new System.Windows.Forms.Button();
-            this.btnMoveRight = new System.Windows.Forms.Button();
             this.lblUsedBtns = new System.Windows.Forms.Label();
             this.btnMoveDown = new System.Windows.Forms.Button();
+            this.lblAvailBtns = new System.Windows.Forms.Label();
             this.lvUsedButtons = new System.Windows.Forms.ListView();
+            this.lvAvailButtons = new System.Windows.Forms.ListView();
             this.btnMoveUp = new System.Windows.Forms.Button();
+            this.btnMoveLeft = new System.Windows.Forms.Button();
+            this.btnMoveRight = new System.Windows.Forms.Button();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorCodeFormat = new System.Windows.Forms.Label();
             this.chkColorUseHEXA = new System.Windows.Forms.CheckBox();
             this.chkColorUseRGBA = new System.Windows.Forms.CheckBox();
             this.tabTheme = new System.Windows.Forms.TabPage();
-            this.btnThemeApply = new System.Windows.Forms.Button();
-            this.lnkThemeDownload = new System.Windows.Forms.LinkLabel();
-            this.spTheme = new System.Windows.Forms.SplitContainer();
-            this.lvTheme = new System.Windows.Forms.ListView();
-            this.imglGeneral = new System.Windows.Forms.ImageList(this.components);
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.picPreview = new System.Windows.Forms.PictureBox();
-            this.txtThemeInfo = new System.Windows.Forms.TextBox();
             this.panelThemeActions = new System.Windows.Forms.Panel();
+            this.picPreview = new System.Windows.Forms.PictureBox();
             this.btnThemeFolderOpen = new System.Windows.Forms.Button();
             this.btnThemeSaveAs = new System.Windows.Forms.Button();
+            this.txtThemeInfo = new System.Windows.Forms.TextBox();
             this.btnThemeRefresh = new System.Windows.Forms.Button();
             this.btnThemeInstall = new System.Windows.Forms.Button();
             this.btnThemeUninstall = new System.Windows.Forms.Button();
+            this.lvTheme = new System.Windows.Forms.ListView();
+            this.imglGeneral = new System.Windows.Forms.ImageList(this.components);
+            this.btnThemeApply = new System.Windows.Forms.Button();
+            this.lnkThemeDownload = new System.Windows.Forms.LinkLabel();
             this.btnThemeEdit = new System.Windows.Forms.Button();
             this.lblInstalledThemes = new System.Windows.Forms.Label();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
@@ -172,19 +169,10 @@ namespace ImageGlass
             this.tabImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
             this.tabToolbar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spToolbar)).BeginInit();
-            this.spToolbar.Panel1.SuspendLayout();
-            this.spToolbar.Panel2.SuspendLayout();
-            this.spToolbar.SuspendLayout();
             this.tabColorPicker.SuspendLayout();
             this.tabTheme.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spTheme)).BeginInit();
-            this.spTheme.Panel1.SuspendLayout();
-            this.spTheme.Panel2.SuspendLayout();
-            this.spTheme.SuspendLayout();
-            this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.panelThemeActions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
@@ -209,7 +197,7 @@ namespace ImageGlass
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblLanguage.Size = new System.Drawing.Size(230, 50);
+            this.lblLanguage.Size = new System.Drawing.Size(254, 50);
             this.lblLanguage.TabIndex = 6;
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
@@ -229,7 +217,7 @@ namespace ImageGlass
             this.lblFileAssociations.Margin = new System.Windows.Forms.Padding(0);
             this.lblFileAssociations.Name = "lblFileAssociations";
             this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblFileAssociations.Size = new System.Drawing.Size(230, 50);
+            this.lblFileAssociations.Size = new System.Drawing.Size(254, 50);
             this.lblFileAssociations.TabIndex = 3;
             this.lblFileAssociations.Tag = "0";
             this.lblFileAssociations.Text = "File Associations";
@@ -249,7 +237,7 @@ namespace ImageGlass
             this.lblGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.lblGeneral.Name = "lblGeneral";
             this.lblGeneral.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblGeneral.Size = new System.Drawing.Size(230, 50);
+            this.lblGeneral.Size = new System.Drawing.Size(254, 50);
             this.lblGeneral.TabIndex = 1;
             this.lblGeneral.Tag = "1";
             this.lblGeneral.Text = "General";
@@ -276,6 +264,7 @@ namespace ImageGlass
             // 
             // tabLanguage
             // 
+            this.tabLanguage.AutoScroll = true;
             this.tabLanguage.BackColor = System.Drawing.Color.White;
             this.tabLanguage.Controls.Add(this.lblLanguageWarning);
             this.tabLanguage.Controls.Add(this.lnkInstallLanguage);
@@ -288,7 +277,7 @@ namespace ImageGlass
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(699, 557);
+            this.tabLanguage.Size = new System.Drawing.Size(798, 557);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             // 
@@ -409,7 +398,7 @@ namespace ImageGlass
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(699, 557);
+            this.tabFileAssociation.Size = new System.Drawing.Size(798, 557);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             // 
@@ -424,26 +413,26 @@ namespace ImageGlass
             this.panel2.Location = new System.Drawing.Point(0, 467);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(699, 90);
+            this.panel2.Size = new System.Drawing.Size(798, 90);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(243, 12);
+            this.btnRegisterExt.Location = new System.Drawing.Point(445, 12);
             this.btnRegisterExt.Name = "btnRegisterExt";
-            this.btnRegisterExt.Size = new System.Drawing.Size(238, 45);
+            this.btnRegisterExt.Size = new System.Drawing.Size(332, 45);
             this.btnRegisterExt.TabIndex = 31;
-            this.btnRegisterExt.Text = "Register extensions";
+            this.btnRegisterExt.Text = "Set as Default photo viewer_";
             this.btnRegisterExt.UseVisualStyleBackColor = true;
             this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
             // 
             // btnResetExt
             // 
-            this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetExt.AutoSize = true;
-            this.btnResetExt.Location = new System.Drawing.Point(488, 12);
+            this.btnResetExt.Location = new System.Drawing.Point(239, 12);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(200, 45);
             this.btnResetExt.TabIndex = 32;
@@ -493,7 +482,7 @@ namespace ImageGlass
             this.lnkOpenFileAssoc.AutoSize = true;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(488, 64);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(587, 64);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
             this.lnkOpenFileAssoc.Size = new System.Drawing.Size(191, 25);
             this.lnkOpenFileAssoc.TabIndex = 27;
@@ -521,7 +510,7 @@ namespace ImageGlass
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvExtension.Location = new System.Drawing.Point(27, 90);
             this.lvExtension.Name = "lvExtension";
-            this.lvExtension.Size = new System.Drawing.Size(651, 372);
+            this.lvExtension.Size = new System.Drawing.Size(750, 372);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 28;
             this.lvExtension.UseCompatibleStateImageBehavior = false;
@@ -566,7 +555,7 @@ namespace ImageGlass
             this.tabGeneral.Location = new System.Drawing.Point(4, 37);
             this.tabGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Size = new System.Drawing.Size(699, 557);
+            this.tabGeneral.Size = new System.Drawing.Size(798, 557);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             // 
@@ -748,7 +737,7 @@ namespace ImageGlass
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(707, 598);
+            this.tab1.Size = new System.Drawing.Size(806, 598);
             this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
@@ -795,7 +784,7 @@ namespace ImageGlass
             this.tabImage.Location = new System.Drawing.Point(4, 37);
             this.tabImage.Margin = new System.Windows.Forms.Padding(0);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Size = new System.Drawing.Size(699, 557);
+            this.tabImage.Size = new System.Drawing.Size(798, 557);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
@@ -924,11 +913,10 @@ namespace ImageGlass
             // 
             // btnEditEditAllExt
             // 
-            this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(113, 1574);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(196, 1574);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
-            this.btnEditEditAllExt.Size = new System.Drawing.Size(219, 45);
+            this.btnEditEditAllExt.Size = new System.Drawing.Size(240, 45);
             this.btnEditEditAllExt.TabIndex = 47;
             this.btnEditEditAllExt.Text = "Edit all extensions";
             this.btnEditEditAllExt.UseVisualStyleBackColor = true;
@@ -936,11 +924,10 @@ namespace ImageGlass
             // 
             // btnEditResetExt
             // 
-            this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(338, 1574);
+            this.btnEditResetExt.Location = new System.Drawing.Point(442, 1574);
             this.btnEditResetExt.Name = "btnEditResetExt";
-            this.btnEditResetExt.Size = new System.Drawing.Size(211, 45);
+            this.btnEditResetExt.Size = new System.Drawing.Size(223, 45);
             this.btnEditResetExt.TabIndex = 26;
             this.btnEditResetExt.Text = "Reset to default";
             this.btnEditResetExt.UseVisualStyleBackColor = true;
@@ -952,7 +939,7 @@ namespace ImageGlass
             this.btnEditEditExt.Enabled = false;
             this.btnEditEditExt.Location = new System.Drawing.Point(45, 1574);
             this.btnEditEditExt.Name = "btnEditEditExt";
-            this.btnEditEditExt.Size = new System.Drawing.Size(119, 45);
+            this.btnEditEditExt.Size = new System.Drawing.Size(133, 45);
             this.btnEditEditExt.TabIndex = 25;
             this.btnEditEditExt.Text = "Edit";
             this.btnEditEditExt.UseVisualStyleBackColor = true;
@@ -990,7 +977,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(504, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(707, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 24;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1227,44 +1214,47 @@ namespace ImageGlass
             // 
             // tabToolbar
             // 
+            this.tabToolbar.AutoScroll = true;
             this.tabToolbar.BackColor = System.Drawing.Color.White;
-            this.tabToolbar.Controls.Add(this.spToolbar);
+            this.tabToolbar.Controls.Add(this.lblUsedBtns);
+            this.tabToolbar.Controls.Add(this.btnMoveDown);
+            this.tabToolbar.Controls.Add(this.lblAvailBtns);
+            this.tabToolbar.Controls.Add(this.lvUsedButtons);
+            this.tabToolbar.Controls.Add(this.lvAvailButtons);
+            this.tabToolbar.Controls.Add(this.btnMoveUp);
+            this.tabToolbar.Controls.Add(this.btnMoveLeft);
+            this.tabToolbar.Controls.Add(this.btnMoveRight);
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
-            this.tabToolbar.Size = new System.Drawing.Size(699, 557);
+            this.tabToolbar.Size = new System.Drawing.Size(798, 557);
             this.tabToolbar.TabIndex = 4;
             this.tabToolbar.Text = "toolbar";
             this.tabToolbar.UseVisualStyleBackColor = true;
             // 
-            // spToolbar
+            // lblUsedBtns
             // 
-            this.spToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.spToolbar.IsSplitterFixed = true;
-            this.spToolbar.Location = new System.Drawing.Point(3, 3);
-            this.spToolbar.Name = "spToolbar";
+            this.lblUsedBtns.AutoSize = true;
+            this.lblUsedBtns.BackColor = System.Drawing.Color.Transparent;
+            this.lblUsedBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsedBtns.Location = new System.Drawing.Point(407, 20);
+            this.lblUsedBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
+            this.lblUsedBtns.Name = "lblUsedBtns";
+            this.lblUsedBtns.Size = new System.Drawing.Size(147, 25);
+            this.lblUsedBtns.TabIndex = 8;
+            this.lblUsedBtns.Text = "Current Buttons:_";
             // 
-            // spToolbar.Panel1
+            // btnMoveDown
             // 
-            this.spToolbar.Panel1.Controls.Add(this.lblAvailBtns);
-            this.spToolbar.Panel1.Controls.Add(this.lvAvailButtons);
-            this.spToolbar.Panel1.Controls.Add(this.btnMoveLeft);
-            this.spToolbar.Panel1.Controls.Add(this.btnMoveRight);
-            this.spToolbar.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            // 
-            // spToolbar.Panel2
-            // 
-            this.spToolbar.Panel2.Controls.Add(this.lblUsedBtns);
-            this.spToolbar.Panel2.Controls.Add(this.btnMoveDown);
-            this.spToolbar.Panel2.Controls.Add(this.lvUsedButtons);
-            this.spToolbar.Panel2.Controls.Add(this.btnMoveUp);
-            this.spToolbar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.spToolbar.Size = new System.Drawing.Size(693, 534);
-            this.spToolbar.SplitterDistance = 358;
-            this.spToolbar.SplitterWidth = 1;
-            this.spToolbar.TabIndex = 10;
+            this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveDown.Location = new System.Drawing.Point(733, 298);
+            this.btnMoveDown.Name = "btnMoveDown";
+            this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
+            this.btnMoveDown.TabIndex = 6;
+            this.btnMoveDown.Text = "â";
+            this.btnMoveDown.UseVisualStyleBackColor = true;
+            this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
             // lblAvailBtns
             // 
@@ -1278,11 +1268,30 @@ namespace ImageGlass
             this.lblAvailBtns.TabIndex = 3;
             this.lblAvailBtns.Text = "Available Buttons:_";
             // 
+            // lvUsedButtons
+            // 
+            this.lvUsedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lvUsedButtons.BackColor = System.Drawing.Color.Black;
+            this.lvUsedButtons.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvUsedButtons.ForeColor = System.Drawing.SystemColors.Window;
+            this.lvUsedButtons.FullRowSelect = true;
+            this.lvUsedButtons.HideSelection = false;
+            this.lvUsedButtons.Location = new System.Drawing.Point(412, 53);
+            this.lvUsedButtons.Name = "lvUsedButtons";
+            this.lvUsedButtons.ShowGroups = false;
+            this.lvUsedButtons.ShowItemToolTips = true;
+            this.lvUsedButtons.Size = new System.Drawing.Size(310, 472);
+            this.lvUsedButtons.TabIndex = 4;
+            this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
+            this.lvUsedButtons.View = System.Windows.Forms.View.List;
+            this.lvUsedButtons.SelectedIndexChanged += new System.EventHandler(this.lvUsedButtons_SelectedIndexChanged);
+            this.lvUsedButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
+            // 
             // lvAvailButtons
             // 
-            this.lvAvailButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvAvailButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lvAvailButtons.BackColor = System.Drawing.Color.Black;
             this.lvAvailButtons.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvAvailButtons.ForeColor = System.Drawing.SystemColors.Window;
@@ -1293,17 +1302,29 @@ namespace ImageGlass
             this.lvAvailButtons.Name = "lvAvailButtons";
             this.lvAvailButtons.ShowGroups = false;
             this.lvAvailButtons.ShowItemToolTips = true;
-            this.lvAvailButtons.Size = new System.Drawing.Size(245, 478);
+            this.lvAvailButtons.Size = new System.Drawing.Size(310, 472);
             this.lvAvailButtons.TabIndex = 1;
             this.lvAvailButtons.UseCompatibleStateImageBehavior = false;
             this.lvAvailButtons.SelectedIndexChanged += new System.EventHandler(this.lvAvailButtons_SelectedIndexChanged);
             this.lvAvailButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
             // 
+            // btnMoveUp
+            // 
+            this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveUp.Location = new System.Drawing.Point(733, 229);
+            this.btnMoveUp.Name = "btnMoveUp";
+            this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
+            this.btnMoveUp.TabIndex = 5;
+            this.btnMoveUp.Text = "á";
+            this.btnMoveUp.UseVisualStyleBackColor = true;
+            this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
+            // 
             // btnMoveLeft
             // 
-            this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveLeft.Location = new System.Drawing.Point(290, 229);
+            this.btnMoveLeft.Location = new System.Drawing.Point(349, 229);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(50, 50);
             this.btnMoveLeft.TabIndex = 2;
@@ -1313,9 +1334,9 @@ namespace ImageGlass
             // 
             // btnMoveRight
             // 
-            this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveRight.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveRight.Location = new System.Drawing.Point(290, 298);
+            this.btnMoveRight.Location = new System.Drawing.Point(349, 298);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(50, 50);
@@ -1323,63 +1344,6 @@ namespace ImageGlass
             this.btnMoveRight.Text = "à";
             this.btnMoveRight.UseVisualStyleBackColor = true;
             this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
-            // 
-            // lblUsedBtns
-            // 
-            this.lblUsedBtns.AutoSize = true;
-            this.lblUsedBtns.BackColor = System.Drawing.Color.Transparent;
-            this.lblUsedBtns.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsedBtns.Location = new System.Drawing.Point(-2, 20);
-            this.lblUsedBtns.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
-            this.lblUsedBtns.Name = "lblUsedBtns";
-            this.lblUsedBtns.Size = new System.Drawing.Size(147, 25);
-            this.lblUsedBtns.TabIndex = 8;
-            this.lblUsedBtns.Text = "Current Buttons:_";
-            // 
-            // btnMoveDown
-            // 
-            this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveDown.Location = new System.Drawing.Point(277, 298);
-            this.btnMoveDown.Name = "btnMoveDown";
-            this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
-            this.btnMoveDown.TabIndex = 6;
-            this.btnMoveDown.Text = "â";
-            this.btnMoveDown.UseVisualStyleBackColor = true;
-            this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
-            // 
-            // lvUsedButtons
-            // 
-            this.lvUsedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvUsedButtons.BackColor = System.Drawing.Color.Black;
-            this.lvUsedButtons.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvUsedButtons.ForeColor = System.Drawing.SystemColors.Window;
-            this.lvUsedButtons.FullRowSelect = true;
-            this.lvUsedButtons.HideSelection = false;
-            this.lvUsedButtons.Location = new System.Drawing.Point(3, 53);
-            this.lvUsedButtons.Name = "lvUsedButtons";
-            this.lvUsedButtons.ShowGroups = false;
-            this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(254, 478);
-            this.lvUsedButtons.TabIndex = 4;
-            this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
-            this.lvUsedButtons.View = System.Windows.Forms.View.List;
-            this.lvUsedButtons.SelectedIndexChanged += new System.EventHandler(this.lvUsedButtons_SelectedIndexChanged);
-            this.lvUsedButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
-            // 
-            // btnMoveUp
-            // 
-            this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveUp.Location = new System.Drawing.Point(277, 229);
-            this.btnMoveUp.Name = "btnMoveUp";
-            this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
-            this.btnMoveUp.TabIndex = 5;
-            this.btnMoveUp.Text = "á";
-            this.btnMoveUp.UseVisualStyleBackColor = true;
-            this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
             // 
             // tabColorPicker
             // 
@@ -1392,7 +1356,7 @@ namespace ImageGlass
             this.tabColorPicker.Location = new System.Drawing.Point(4, 37);
             this.tabColorPicker.Margin = new System.Windows.Forms.Padding(0);
             this.tabColorPicker.Name = "tabColorPicker";
-            this.tabColorPicker.Size = new System.Drawing.Size(699, 557);
+            this.tabColorPicker.Size = new System.Drawing.Size(798, 557);
             this.tabColorPicker.TabIndex = 5;
             this.tabColorPicker.Text = "color picker";
             // 
@@ -1441,112 +1405,76 @@ namespace ImageGlass
             // 
             // tabTheme
             // 
+            this.tabTheme.AutoScroll = true;
             this.tabTheme.BackColor = System.Drawing.Color.White;
+            this.tabTheme.Controls.Add(this.panelThemeActions);
+            this.tabTheme.Controls.Add(this.lvTheme);
             this.tabTheme.Controls.Add(this.btnThemeApply);
             this.tabTheme.Controls.Add(this.lnkThemeDownload);
-            this.tabTheme.Controls.Add(this.spTheme);
             this.tabTheme.Controls.Add(this.btnThemeEdit);
             this.tabTheme.Controls.Add(this.lblInstalledThemes);
             this.tabTheme.Location = new System.Drawing.Point(4, 37);
             this.tabTheme.Margin = new System.Windows.Forms.Padding(0);
             this.tabTheme.Name = "tabTheme";
-            this.tabTheme.Size = new System.Drawing.Size(699, 557);
+            this.tabTheme.Size = new System.Drawing.Size(798, 557);
             this.tabTheme.TabIndex = 6;
             this.tabTheme.Text = "Theme";
             // 
-            // btnThemeApply
+            // panelThemeActions
             // 
-            this.btnThemeApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThemeApply.AutoSize = true;
-            this.btnThemeApply.Location = new System.Drawing.Point(436, 494);
-            this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.btnThemeApply.Name = "btnThemeApply";
-            this.btnThemeApply.Size = new System.Drawing.Size(250, 40);
-            this.btnThemeApply.TabIndex = 30;
-            this.btnThemeApply.Text = "Apply Theme";
-            this.btnThemeApply.UseVisualStyleBackColor = true;
-            this.btnThemeApply.Click += new System.EventHandler(this.btnThemeApply_Click);
-            // 
-            // lnkThemeDownload
-            // 
-            this.lnkThemeDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkThemeDownload.AutoSize = true;
-            this.lnkThemeDownload.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkThemeDownload.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkThemeDownload.Location = new System.Drawing.Point(529, 20);
-            this.lnkThemeDownload.Name = "lnkThemeDownload";
-            this.lnkThemeDownload.Size = new System.Drawing.Size(157, 25);
-            this.lnkThemeDownload.TabIndex = 28;
-            this.lnkThemeDownload.TabStop = true;
-            this.lnkThemeDownload.Text = "Download themes";
-            this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lnkThemeDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkThemeDownload_LinkClicked);
-            // 
-            // spTheme
-            // 
-            this.spTheme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelThemeActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.spTheme.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.spTheme.Location = new System.Drawing.Point(27, 48);
-            this.spTheme.Name = "spTheme";
-            // 
-            // spTheme.Panel1
-            // 
-            this.spTheme.Panel1.Controls.Add(this.lvTheme);
-            // 
-            // spTheme.Panel2
-            // 
-            this.spTheme.Panel2.Controls.Add(this.panel5);
-            this.spTheme.Panel2MinSize = 253;
-            this.spTheme.Size = new System.Drawing.Size(659, 426);
-            this.spTheme.SplitterDistance = 402;
-            this.spTheme.TabIndex = 5;
-            // 
-            // lvTheme
-            // 
-            this.lvTheme.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lvTheme.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvTheme.FullRowSelect = true;
-            this.lvTheme.LargeImageList = this.imglGeneral;
-            this.lvTheme.Location = new System.Drawing.Point(0, 0);
-            this.lvTheme.MultiSelect = false;
-            this.lvTheme.Name = "lvTheme";
-            this.lvTheme.Size = new System.Drawing.Size(402, 426);
-            this.lvTheme.SmallImageList = this.imglGeneral;
-            this.lvTheme.StateImageList = this.imglGeneral;
-            this.lvTheme.TabIndex = 3;
-            this.lvTheme.UseCompatibleStateImageBehavior = false;
-            this.lvTheme.View = System.Windows.Forms.View.List;
-            this.lvTheme.SelectedIndexChanged += new System.EventHandler(this.lvTheme_SelectedIndexChanged);
-            // 
-            // imglGeneral
-            // 
-            this.imglGeneral.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imglGeneral.ImageSize = new System.Drawing.Size(10, 50);
-            this.imglGeneral.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.picPreview);
-            this.panel5.Controls.Add(this.txtThemeInfo);
-            this.panel5.Controls.Add(this.panelThemeActions);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(253, 426);
-            this.panel5.TabIndex = 4;
+            this.panelThemeActions.AutoScroll = true;
+            this.panelThemeActions.Controls.Add(this.picPreview);
+            this.panelThemeActions.Controls.Add(this.btnThemeFolderOpen);
+            this.panelThemeActions.Controls.Add(this.btnThemeSaveAs);
+            this.panelThemeActions.Controls.Add(this.txtThemeInfo);
+            this.panelThemeActions.Controls.Add(this.btnThemeRefresh);
+            this.panelThemeActions.Controls.Add(this.btnThemeInstall);
+            this.panelThemeActions.Controls.Add(this.btnThemeUninstall);
+            this.panelThemeActions.Location = new System.Drawing.Point(532, 48);
+            this.panelThemeActions.Name = "panelThemeActions";
+            this.panelThemeActions.Size = new System.Drawing.Size(253, 427);
+            this.panelThemeActions.TabIndex = 29;
             // 
             // picPreview
             // 
+            this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.picPreview.BackColor = System.Drawing.Color.Transparent;
             this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picPreview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.picPreview.Location = new System.Drawing.Point(0, 0);
+            this.picPreview.Location = new System.Drawing.Point(3, 3);
             this.picPreview.Name = "picPreview";
-            this.picPreview.Size = new System.Drawing.Size(253, 100);
+            this.picPreview.Size = new System.Drawing.Size(247, 100);
             this.picPreview.TabIndex = 34;
             this.picPreview.TabStop = false;
+            // 
+            // btnThemeFolderOpen
+            // 
+            this.btnThemeFolderOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThemeFolderOpen.AutoSize = true;
+            this.btnThemeFolderOpen.Location = new System.Drawing.Point(3, 306);
+            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btnThemeFolderOpen.Name = "btnThemeFolderOpen";
+            this.btnThemeFolderOpen.Size = new System.Drawing.Size(247, 40);
+            this.btnThemeFolderOpen.TabIndex = 31;
+            this.btnThemeFolderOpen.Text = "Open theme folder";
+            this.btnThemeFolderOpen.UseVisualStyleBackColor = true;
+            this.btnThemeFolderOpen.Click += new System.EventHandler(this.btnThemeFolderOpen_Click);
+            // 
+            // btnThemeSaveAs
+            // 
+            this.btnThemeSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThemeSaveAs.AutoSize = true;
+            this.btnThemeSaveAs.Location = new System.Drawing.Point(3, 260);
+            this.btnThemeSaveAs.Name = "btnThemeSaveAs";
+            this.btnThemeSaveAs.Size = new System.Drawing.Size(247, 40);
+            this.btnThemeSaveAs.TabIndex = 29;
+            this.btnThemeSaveAs.Text = "Save As";
+            this.btnThemeSaveAs.UseVisualStyleBackColor = true;
+            this.btnThemeSaveAs.Click += new System.EventHandler(this.btnThemeSaveAs_Click);
             // 
             // txtThemeInfo
             // 
@@ -1561,57 +1489,17 @@ namespace ImageGlass
             this.txtThemeInfo.Name = "txtThemeInfo";
             this.txtThemeInfo.ReadOnly = true;
             this.txtThemeInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtThemeInfo.Size = new System.Drawing.Size(247, 60);
+            this.txtThemeInfo.Size = new System.Drawing.Size(247, 61);
             this.txtThemeInfo.TabIndex = 31;
-            // 
-            // panelThemeActions
-            // 
-            this.panelThemeActions.AutoScroll = true;
-            this.panelThemeActions.Controls.Add(this.btnThemeFolderOpen);
-            this.panelThemeActions.Controls.Add(this.btnThemeSaveAs);
-            this.panelThemeActions.Controls.Add(this.btnThemeRefresh);
-            this.panelThemeActions.Controls.Add(this.btnThemeInstall);
-            this.panelThemeActions.Controls.Add(this.btnThemeUninstall);
-            this.panelThemeActions.Location = new System.Drawing.Point(0, 120);
-            this.panelThemeActions.Name = "panelThemeActions";
-            this.panelThemeActions.Size = new System.Drawing.Size(268, 237);
-            this.panelThemeActions.TabIndex = 29;
-            // 
-            // btnThemeFolderOpen
-            // 
-            this.btnThemeFolderOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThemeFolderOpen.AutoSize = true;
-            this.btnThemeFolderOpen.Location = new System.Drawing.Point(3, 187);
-            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.btnThemeFolderOpen.Name = "btnThemeFolderOpen";
-            this.btnThemeFolderOpen.Size = new System.Drawing.Size(250, 40);
-            this.btnThemeFolderOpen.TabIndex = 31;
-            this.btnThemeFolderOpen.Text = "Open theme folder";
-            this.btnThemeFolderOpen.UseVisualStyleBackColor = true;
-            this.btnThemeFolderOpen.Click += new System.EventHandler(this.btnThemeFolderOpen_Click);
-            // 
-            // btnThemeSaveAs
-            // 
-            this.btnThemeSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThemeSaveAs.AutoSize = true;
-            this.btnThemeSaveAs.Location = new System.Drawing.Point(3, 141);
-            this.btnThemeSaveAs.Name = "btnThemeSaveAs";
-            this.btnThemeSaveAs.Size = new System.Drawing.Size(250, 40);
-            this.btnThemeSaveAs.TabIndex = 29;
-            this.btnThemeSaveAs.Text = "Save As";
-            this.btnThemeSaveAs.UseVisualStyleBackColor = true;
-            this.btnThemeSaveAs.Click += new System.EventHandler(this.btnThemeSaveAs_Click);
             // 
             // btnThemeRefresh
             // 
             this.btnThemeRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeRefresh.AutoSize = true;
-            this.btnThemeRefresh.Location = new System.Drawing.Point(3, 1);
+            this.btnThemeRefresh.Location = new System.Drawing.Point(3, 120);
             this.btnThemeRefresh.Name = "btnThemeRefresh";
-            this.btnThemeRefresh.Size = new System.Drawing.Size(250, 40);
+            this.btnThemeRefresh.Size = new System.Drawing.Size(247, 40);
             this.btnThemeRefresh.TabIndex = 26;
             this.btnThemeRefresh.Text = "Refresh";
             this.btnThemeRefresh.UseVisualStyleBackColor = true;
@@ -1622,9 +1510,9 @@ namespace ImageGlass
             this.btnThemeInstall.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeInstall.AutoSize = true;
-            this.btnThemeInstall.Location = new System.Drawing.Point(3, 47);
+            this.btnThemeInstall.Location = new System.Drawing.Point(3, 166);
             this.btnThemeInstall.Name = "btnThemeInstall";
-            this.btnThemeInstall.Size = new System.Drawing.Size(250, 40);
+            this.btnThemeInstall.Size = new System.Drawing.Size(247, 40);
             this.btnThemeInstall.TabIndex = 24;
             this.btnThemeInstall.Text = "Install";
             this.btnThemeInstall.UseVisualStyleBackColor = true;
@@ -1636,19 +1524,74 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeUninstall.AutoSize = true;
             this.btnThemeUninstall.Enabled = false;
-            this.btnThemeUninstall.Location = new System.Drawing.Point(3, 93);
+            this.btnThemeUninstall.Location = new System.Drawing.Point(3, 212);
             this.btnThemeUninstall.Name = "btnThemeUninstall";
-            this.btnThemeUninstall.Size = new System.Drawing.Size(250, 40);
+            this.btnThemeUninstall.Size = new System.Drawing.Size(247, 40);
             this.btnThemeUninstall.TabIndex = 25;
             this.btnThemeUninstall.Text = "Uninstall";
             this.btnThemeUninstall.UseVisualStyleBackColor = true;
             this.btnThemeUninstall.Click += new System.EventHandler(this.btnThemeUninstall_Click);
             // 
+            // lvTheme
+            // 
+            this.lvTheme.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvTheme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvTheme.FullRowSelect = true;
+            this.lvTheme.LargeImageList = this.imglGeneral;
+            this.lvTheme.Location = new System.Drawing.Point(27, 48);
+            this.lvTheme.MultiSelect = false;
+            this.lvTheme.Name = "lvTheme";
+            this.lvTheme.Size = new System.Drawing.Size(484, 427);
+            this.lvTheme.SmallImageList = this.imglGeneral;
+            this.lvTheme.StateImageList = this.imglGeneral;
+            this.lvTheme.TabIndex = 3;
+            this.lvTheme.UseCompatibleStateImageBehavior = false;
+            this.lvTheme.View = System.Windows.Forms.View.List;
+            this.lvTheme.SelectedIndexChanged += new System.EventHandler(this.lvTheme_SelectedIndexChanged);
+            // 
+            // imglGeneral
+            // 
+            this.imglGeneral.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imglGeneral.ImageSize = new System.Drawing.Size(10, 50);
+            this.imglGeneral.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // btnThemeApply
+            // 
+            this.btnThemeApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThemeApply.AutoSize = true;
+            this.btnThemeApply.Location = new System.Drawing.Point(535, 494);
+            this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btnThemeApply.Name = "btnThemeApply";
+            this.btnThemeApply.Size = new System.Drawing.Size(250, 40);
+            this.btnThemeApply.TabIndex = 30;
+            this.btnThemeApply.Text = "Apply Theme";
+            this.btnThemeApply.UseVisualStyleBackColor = true;
+            this.btnThemeApply.Click += new System.EventHandler(this.btnThemeApply_Click);
+            // 
+            // lnkThemeDownload
+            // 
+            this.lnkThemeDownload.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(104)))), ((int)(((byte)(199)))));
+            this.lnkThemeDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lnkThemeDownload.AutoSize = true;
+            this.lnkThemeDownload.BackColor = System.Drawing.Color.Transparent;
+            this.lnkThemeDownload.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkThemeDownload.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkThemeDownload.Location = new System.Drawing.Point(22, 502);
+            this.lnkThemeDownload.Name = "lnkThemeDownload";
+            this.lnkThemeDownload.Size = new System.Drawing.Size(157, 25);
+            this.lnkThemeDownload.TabIndex = 28;
+            this.lnkThemeDownload.TabStop = true;
+            this.lnkThemeDownload.Text = "Download themes";
+            this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lnkThemeDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkThemeDownload_LinkClicked);
+            // 
             // btnThemeEdit
             // 
             this.btnThemeEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnThemeEdit.AutoSize = true;
-            this.btnThemeEdit.Location = new System.Drawing.Point(27, 494);
+            this.btnThemeEdit.Location = new System.Drawing.Point(179, 494);
             this.btnThemeEdit.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeEdit.Name = "btnThemeEdit";
             this.btnThemeEdit.Size = new System.Drawing.Size(250, 40);
@@ -1688,8 +1631,8 @@ namespace ImageGlass
             // sp1.Panel2
             // 
             this.sp1.Panel2.Controls.Add(this.tab1);
-            this.sp1.Size = new System.Drawing.Size(934, 598);
-            this.sp1.SplitterDistance = 223;
+            this.sp1.Size = new System.Drawing.Size(1064, 598);
+            this.sp1.SplitterDistance = 254;
             this.sp1.TabIndex = 17;
             this.sp1.TabStop = false;
             // 
@@ -1697,7 +1640,7 @@ namespace ImageGlass
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 254F));
             this.tableLayoutPanel1.Controls.Add(this.lblTheme, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.lblGeneral, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblImage, 0, 1);
@@ -1718,7 +1661,7 @@ namespace ImageGlass
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(223, 598);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 598);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // lblTheme
@@ -1730,7 +1673,7 @@ namespace ImageGlass
             this.lblTheme.Margin = new System.Windows.Forms.Padding(0);
             this.lblTheme.Name = "lblTheme";
             this.lblTheme.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblTheme.Size = new System.Drawing.Size(230, 50);
+            this.lblTheme.Size = new System.Drawing.Size(254, 50);
             this.lblTheme.TabIndex = 7;
             this.lblTheme.Tag = "0";
             this.lblTheme.Text = "Theme";
@@ -1750,7 +1693,7 @@ namespace ImageGlass
             this.lblImage.Margin = new System.Windows.Forms.Padding(0);
             this.lblImage.Name = "lblImage";
             this.lblImage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblImage.Size = new System.Drawing.Size(230, 50);
+            this.lblImage.Size = new System.Drawing.Size(254, 50);
             this.lblImage.TabIndex = 2;
             this.lblImage.Tag = "0";
             this.lblImage.Text = "Image";
@@ -1770,7 +1713,7 @@ namespace ImageGlass
             this.lblToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.lblToolbar.Name = "lblToolbar";
             this.lblToolbar.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblToolbar.Size = new System.Drawing.Size(230, 50);
+            this.lblToolbar.Size = new System.Drawing.Size(254, 50);
             this.lblToolbar.TabIndex = 4;
             this.lblToolbar.Tag = "0";
             this.lblToolbar.Text = "Toolbar";
@@ -1790,7 +1733,7 @@ namespace ImageGlass
             this.lblColorPicker.Margin = new System.Windows.Forms.Padding(0);
             this.lblColorPicker.Name = "lblColorPicker";
             this.lblColorPicker.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblColorPicker.Size = new System.Drawing.Size(230, 50);
+            this.lblColorPicker.Size = new System.Drawing.Size(254, 50);
             this.lblColorPicker.TabIndex = 5;
             this.lblColorPicker.Tag = "0";
             this.lblColorPicker.Text = "Color Picker";
@@ -1805,7 +1748,7 @@ namespace ImageGlass
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(564, 12);
+            this.btnSave.Location = new System.Drawing.Point(694, 12);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(112, 45);
@@ -1818,7 +1761,7 @@ namespace ImageGlass
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
-            this.btnCancel.Location = new System.Drawing.Point(686, 12);
+            this.btnCancel.Location = new System.Drawing.Point(816, 12);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(112, 45);
@@ -1831,7 +1774,7 @@ namespace ImageGlass
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
-            this.btnApply.Location = new System.Drawing.Point(807, 12);
+            this.btnApply.Location = new System.Drawing.Point(937, 12);
             this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(112, 45);
@@ -1854,7 +1797,7 @@ namespace ImageGlass
             this.tblayout.RowCount = 2;
             this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tblayout.Size = new System.Drawing.Size(938, 674);
+            this.tblayout.Size = new System.Drawing.Size(1068, 674);
             this.tblayout.TabIndex = 19;
             // 
             // panel4
@@ -1867,7 +1810,7 @@ namespace ImageGlass
             this.panel4.Location = new System.Drawing.Point(0, 602);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(938, 72);
+            this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
             // frmSetting
@@ -1875,7 +1818,7 @@ namespace ImageGlass
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(938, 674);
+            this.ClientSize = new System.Drawing.Size(1068, 674);
             this.Controls.Add(this.tblayout);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1903,25 +1846,14 @@ namespace ImageGlass
             this.tabImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
             this.tabToolbar.ResumeLayout(false);
-            this.spToolbar.Panel1.ResumeLayout(false);
-            this.spToolbar.Panel1.PerformLayout();
-            this.spToolbar.Panel2.ResumeLayout(false);
-            this.spToolbar.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spToolbar)).EndInit();
-            this.spToolbar.ResumeLayout(false);
+            this.tabToolbar.PerformLayout();
             this.tabColorPicker.ResumeLayout(false);
             this.tabColorPicker.PerformLayout();
             this.tabTheme.ResumeLayout(false);
             this.tabTheme.PerformLayout();
-            this.spTheme.Panel1.ResumeLayout(false);
-            this.spTheme.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.spTheme)).EndInit();
-            this.spTheme.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.panelThemeActions.ResumeLayout(false);
             this.panelThemeActions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.sp1.Panel1.ResumeLayout(false);
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
@@ -2038,7 +1970,6 @@ namespace ImageGlass
         private System.Windows.Forms.ListView lvUsedButtons;
         private System.Windows.Forms.Label lblUsedBtns;
         private System.Windows.Forms.Label lblAvailBtns;
-        private System.Windows.Forms.SplitContainer spToolbar;
         private System.Windows.Forms.Label lblToolbar;
         private System.Windows.Forms.Label lblColorPicker;
         private System.Windows.Forms.TabPage tabColorPicker;
@@ -2049,9 +1980,7 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblTheme;
         private System.Windows.Forms.TabPage tabTheme;
         private System.Windows.Forms.Label lblInstalledThemes;
-        private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ListView lvTheme;
-        private System.Windows.Forms.SplitContainer spTheme;
         private System.Windows.Forms.LinkLabel lnkThemeDownload;
         private System.Windows.Forms.Button btnThemeRefresh;
         private System.Windows.Forms.Button btnThemeUninstall;

@@ -43,8 +43,9 @@ namespace ImageGlass
             r.ApplyTheme(lvImageEditing);
             r.ApplyTheme(lvTheme);
 
-
-            imglGeneral.Images.Add("_blank", new Bitmap(10, 50));
+            imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
+            imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
+            
         }
 
         #region PROPERTIES
@@ -1761,7 +1762,7 @@ namespace ImageGlass
                 if (file == "Default")
                 {
                     file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
-                    btnThemeSaveAs.Enabled = false;
+                    //btnThemeSaveAs.Enabled = false;
                     btnThemeUninstall.Enabled = false;
                 }
 
@@ -1858,9 +1859,13 @@ namespace ImageGlass
 
                 if (s.ShowDialog() == DialogResult.OK)
                 {
-                    var themConfig = lvTheme.SelectedItems[0].Tag.ToString();
-                    var themeDir = Path.GetDirectoryName(themConfig);
+                    var themeConfig = lvTheme.SelectedItems[0].Tag.ToString();
+                    if (!File.Exists(themeConfig))
+                    {
+                        themeConfig = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
+                    }
 
+                    var themeDir = Path.GetDirectoryName(themeConfig);
                     var result = Theme.Theme.PackTheme(themeDir, s.FileName);
 
                     if (result == ThemePackingResult.SUCCESS)
