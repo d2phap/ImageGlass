@@ -2960,7 +2960,9 @@ namespace ImageGlass
                     // Open configured app for editing
                     Process p = new Process();
                     p.StartInfo.FileName = assoc.AppPath;
-                    p.StartInfo.Arguments = $" {assoc.AppArguments} {filename}";
+                    // TODO the macro string and the substitution should be in a utility file?
+                    var txt = assoc.AppArguments.Replace("<file>", filename);
+                    p.StartInfo.Arguments = $" {txt}";
 
                     //show error dialog
                     p.StartInfo.ErrorDialog = true;

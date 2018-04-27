@@ -605,6 +605,7 @@ namespace ImageGlass.Library
             Items.Add("frmEditEditingAssocisation.btnReset", "Reset"); // 4.0
             Items.Add("frmEditEditingAssocisation.btnOK", "OK"); // 4.0
             Items.Add("frmEditEditingAssocisation.btnClose", "Close"); // 4.0
+            Items.Add("frmEditEditingAssocisation.lblPreviewLabel", "Preview"); // 5.0
             #endregion
 
 

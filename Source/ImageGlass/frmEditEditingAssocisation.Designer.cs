@@ -41,6 +41,8 @@
             this.txtAppArguments = new System.Windows.Forms.TextBox();
             this.lblAppArguments = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
+            this.lblCommandPreview = new System.Windows.Forms.Label();
+            this.lblPreviewLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +53,7 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 378);
+            this.panel1.Location = new System.Drawing.Point(0, 423);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 80);
@@ -191,12 +193,33 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
+            // lblCommandPreview
+            // 
+            this.lblCommandPreview.AutoSize = true;
+            this.lblCommandPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCommandPreview.Location = new System.Drawing.Point(19, 366);
+            this.lblCommandPreview.Name = "lblCommandPreview";
+            this.lblCommandPreview.Size = new System.Drawing.Size(310, 27);
+            this.lblCommandPreview.TabIndex = 28;
+            this.lblCommandPreview.Text = "(command line preview appears here)";
+            // 
+            // lblPreviewLabel
+            // 
+            this.lblPreviewLabel.AutoSize = true;
+            this.lblPreviewLabel.Location = new System.Drawing.Point(18, 341);
+            this.lblPreviewLabel.Name = "lblPreviewLabel";
+            this.lblPreviewLabel.Size = new System.Drawing.Size(72, 25);
+            this.lblPreviewLabel.TabIndex = 29;
+            this.lblPreviewLabel.Text = "Preview";
+            // 
             // frmEditEditingAssocisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(510, 458);
+            this.ClientSize = new System.Drawing.Size(510, 503);
+            this.Controls.Add(this.lblPreviewLabel);
+            this.Controls.Add(this.lblCommandPreview);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtAppArguments);
             this.Controls.Add(this.lblAppArguments);
@@ -240,5 +263,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label lblCommandPreview;
+        private System.Windows.Forms.Label lblPreviewLabel;
     }
 }

@@ -25,6 +25,10 @@ namespace ImageGlass
 {
     public partial class frmEditEditingAssocisation : Form
     {
+        private const string FileMacro = "<file>";
+
+        private const string FileSample = @"E:\My Photos\Abc Def.jpg";
+
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
         public string AppName { get; set; }
@@ -39,6 +43,7 @@ namespace ImageGlass
             lblAppName.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppName"];
             lblAppPath.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppPath"];
             lblAppArguments.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppArguments"];
+            lblPreviewLabel.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblPreviewLabel"];
 
             btnReset.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnReset"];
             btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
@@ -52,7 +57,13 @@ namespace ImageGlass
             txtAppPath.Text = this.AppPath;
             txtAppArguments.Text = this.AppArguments;
 
+            InsureMacro();
+            UpdateSample();
+
             txtAppName.Focus();
+
+            txtAppPath.LostFocus += Option_LostFocus;
+            txtAppArguments.LostFocus += Option_LostFocus;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -69,7 +80,7 @@ namespace ImageGlass
 
             if (AppPath.Length > 0 && !File.Exists(AppPath))
             {
-                txtAppPath.Focus();
+                txtAppPath.Focus(); // TODO shouldn't this also prevent dialog close?
             }
 
             DialogResult = DialogResult.OK;
@@ -79,6 +90,8 @@ namespace ImageGlass
         private void btnReset_Click(object sender, EventArgs e)
         {
             txtAppName.Text = txtAppPath.Text = txtAppArguments.Text = string.Empty;
+            InsureMacro();
+            UpdateSample();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -90,11 +103,12 @@ namespace ImageGlass
             {
                 txtAppPath.Text = o.FileName;
             }
+            UpdateSample();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            // disable parent form shotcuts
+            // disable parent form shortcuts
             return false;
         }
 
@@ -115,5 +129,28 @@ namespace ImageGlass
                 e.Cancel = true;
             }
         }
+
+        private void InsureMacro()
+        {
+            // Make certain the app arguments has the file substitution string
+            var txt = txtAppArguments.Text;
+            if (txt.ToLower().Contains(FileMacro))
+                return;
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + FileMacro;
+        }
+
+        private void UpdateSample()
+        {
+            // Something has changed; update the sample text
+            var txt = $"{txtAppPath.Text} {txtAppArguments.Text.Replace(FileMacro, FileSample)}";
+            lblCommandPreview.Text = txt;
+        }
+
+        private void Option_LostFocus(object sender, EventArgs e)
+        {
+            // Focus was lost from a user-edit control. Make sure the preview is updated.
+            UpdateSample();
+        }
+
     }
 }
