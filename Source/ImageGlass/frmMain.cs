@@ -2101,6 +2101,14 @@ namespace ImageGlass
             #endregion
 
 
+            #region IMAGE_LIST
+            if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
+            {
+                Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            }
+            #endregion
+
+
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
         }
 

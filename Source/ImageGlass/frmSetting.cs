@@ -2005,9 +2005,19 @@ namespace ImageGlass
 
 
             #region Image tab ----------------------------------------------
-            //IsRecursiveLoading
-            GlobalSetting.IsRecursiveLoading = chkFindChildFolder.Checked;
-            GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST
+            newBool = chkFindChildFolder.Checked;
+            if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
+            {
+                GlobalSetting.IsRecursiveLoading = newBool;
+                GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+            }
+            #endregion
+
 
             //IsShowingHiddenImages
             GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;

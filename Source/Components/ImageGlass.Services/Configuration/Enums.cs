@@ -72,7 +72,8 @@ namespace ImageGlass.Services.Configuration
         THUMBNAIL_BAR = 8,
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
-        OTHER_SETTINGS = 64
+        IMAGE_LIST = 64,
+        OTHER_SETTINGS = 128
     }
 
 }
