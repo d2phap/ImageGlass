@@ -217,6 +217,9 @@ namespace ImageGlass
 
         private Size _virtualSize;
 
+        /// <summary>
+        /// [IG_CHANGE] Zoom value changed to double
+        /// </summary>
         private double _zoom;
 
         private ImageBoxZoomLevelCollection _zoomLevels;
@@ -1881,6 +1884,7 @@ namespace ImageGlass
 
         /// <summary>
         ///   Gets or sets the zoom.
+        ///   [IG_CHANGE] Zoom value changed to double
         /// </summary>
         /// <value>The zoom.</value>
         [DefaultValue(100)]
@@ -1893,6 +1897,7 @@ namespace ImageGlass
 
         /// <summary>
         ///   Gets the zoom factor.
+        ///   [IG_CHANGE] Zoom value changed to double
         /// </summary>
         /// <value>The zoom factor.</value>
         [Browsable(false)]
