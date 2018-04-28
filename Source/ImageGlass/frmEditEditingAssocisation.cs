@@ -25,9 +25,9 @@ namespace ImageGlass
 {
     public partial class frmEditEditingAssocisation : Form
     {
-        private const string FileMacro = "<file>";
+        private const string fileMacro = "<file>";
 
-        private const string FileSample = @"E:\My Photos\Abc Def.jpg";
+        private const string fileSample = @"E:\My Photos\Abc Def.jpg";
 
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
@@ -134,15 +134,15 @@ namespace ImageGlass
         {
             // Make certain the app arguments has the file substitution string
             var txt = txtAppArguments.Text;
-            if (txt.ToLower().Contains(FileMacro))
+            if (txt.ToLower().Contains(fileMacro))
                 return;
-            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + FileMacro;
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + fileMacro;
         }
 
         private void UpdateSample()
         {
             // Something has changed; update the sample text
-            var txt = $"{txtAppPath.Text} {txtAppArguments.Text.Replace(FileMacro, FileSample)}";
+            var txt = $"{txtAppPath.Text} {txtAppArguments.Text.Replace(fileMacro, fileSample)}";
             lblCommandPreview.Text = txt;
         }
 
