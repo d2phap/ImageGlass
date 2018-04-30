@@ -2033,7 +2033,6 @@ namespace ImageGlass
                 mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
 
                 mnuMainFirstLaunch.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstLaunch"];
-                mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
                 #endregion
 
@@ -3784,7 +3783,17 @@ namespace ImageGlass
             try
             {
                 // Alert user if there is a new version
-                mnuMainCheckForUpdate.Visible = GlobalSetting.IsNewVersionAvailable;
+                if (GlobalSetting.IsNewVersionAvailable)
+                {
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate._NewVersion"];
+                    mnuMainCheckForUpdate.BackColor = Color.FromArgb(244, 227, 181);
+                }
+                else
+                {
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate._NoUpdate"];
+                }
+
+                
 
                 mnuMainExtractFrames.Enabled = false;
                 mnuMainStartStopAnimating.Enabled = false;

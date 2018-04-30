@@ -124,13 +124,13 @@
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMainFirstLaunch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReportIssue = new System.Windows.Forms.ToolStripMenuItem();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.mnuMainFirstLaunch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPopup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
@@ -557,7 +557,6 @@
             this.btnDelete.Size = new System.Drawing.Size(33, 33);
             this.btnDelete.ToolTipText = "Send to recycle bin";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-
             // 
             // btnMenu
             // 
@@ -1332,9 +1331,18 @@
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
             this.toolStripMenuItem21.Size = new System.Drawing.Size(405, 6);
             // 
+            // mnuMainFirstLaunch
+            // 
+            this.mnuMainFirstLaunch.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFirstLaunch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
+            this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFirstLaunch.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainFirstLaunch.Text = "First-launch configurations__";
+            this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
+            // 
             // mnuMainCheckForUpdate
             // 
-            this.mnuMainCheckForUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(227)))), ((int)(((byte)(181)))));
             this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
             this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
             this.mnuMainCheckForUpdate.Text = "A new version is available";
@@ -1421,6 +1429,7 @@
             this.picMain.Size = new System.Drawing.Size(920, 363);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
+            this.picMain.Zoom = 100D;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
@@ -1448,16 +1457,6 @@
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
             // 
-            // mnuMainFirstLaunch
-            // 
-            this.mnuMainFirstLaunch.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainFirstLaunch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
-            this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainFirstLaunch.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainFirstLaunch.Text = "First-launch configurations__";
-            this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1474,7 +1473,7 @@
             this.MinimumSize = new System.Drawing.Size(94, 83);
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
-            this.Text = "ImageGlass 4.5";
+            this.Text = "ImageGlass 5";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.Deactivate += new System.EventHandler(this.frmMain_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
