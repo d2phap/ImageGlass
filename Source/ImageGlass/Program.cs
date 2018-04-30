@@ -61,7 +61,7 @@ namespace ImageGlass
             #region Check First-launch Configs
             var firstLaunchVersion = 0;
 
-            int.TryParse(GlobalSetting.GetConfig("IsRunFirstLaunchConfigurations", "0"), out firstLaunchVersion);
+            int.TryParse(GlobalSetting.GetConfig("FirstLaunchVersion", "0"), out firstLaunchVersion);
 
             if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
             {

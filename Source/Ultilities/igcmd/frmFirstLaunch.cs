@@ -58,7 +58,7 @@ namespace igcmd
 
 
             //Don't run again
-            GlobalSetting.SetConfig("IsRunFirstLaunchConfigurations", GlobalSetting.FIRST_LAUNCH_VERSION.ToString());
+            GlobalSetting.SetConfig("FirstLaunchVersion", GlobalSetting.FIRST_LAUNCH_VERSION.ToString());
         }
 
 
