@@ -36,9 +36,7 @@ namespace igcmd
             //Load language list
             LoadLanguageList();
             ApplyLanguage(_lang);
-
-            //Select default layout
-            cmbLayout.SelectedIndex = 0;
+            
 
             //Load theme list
             LoadThemeList();
@@ -209,6 +207,8 @@ namespace igcmd
             lblTheme.Text = _lang.Items[$"{this.Name}.lblTheme"];
             lblDefaultApp.Text = _lang.Items[$"{this.Name}.lblDefaultApp"];
             btnSetDefaultApp.Text = _lang.Items[$"{this.Name}.btnSetDefaultApp"];
+
+            LoadLayoutList();
         }
 
 
@@ -303,7 +303,21 @@ namespace igcmd
         }
 
 
+        /// <summary>
+        /// Load layout list
+        /// </summary>
+        private void LoadLayoutList()
+        {
+            cmbLayout.Items.Clear();
+            var list = Enum.GetNames(typeof(LayoutMode));
 
+            foreach(var item in list)
+            {
+                cmbLayout.Items.Add(_lang.Items[$"{this.Name}.cmbLayout._{item}"]);
+            }
+
+            cmbLayout.SelectedIndex = 0;
+        }
 
 
 

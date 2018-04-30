@@ -93,4 +93,15 @@ namespace ImageGlass.Services.Configuration
         OTHER_SETTINGS = 256
     }
 
+
+    /// <summary>
+    /// The list of layout mode.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum LayoutMode
+    {
+        Standard = 0,
+        Designer = 1
+    }
 }
