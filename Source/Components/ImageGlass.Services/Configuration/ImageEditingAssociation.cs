@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -44,6 +41,13 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets arguments of app.
         /// </summary>
         public string AppArguments { get; set; }
+
+
+        /// <summary>
+        /// Gets the macro string
+        /// </summary>
+        public static string FileMacro { get; } = "<file>";
+
 
         /// <summary>
         /// Initial Image Editing Association

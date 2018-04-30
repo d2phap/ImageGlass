@@ -80,7 +80,7 @@ namespace ImageGlass
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
-
+        
         
         #endregion
 

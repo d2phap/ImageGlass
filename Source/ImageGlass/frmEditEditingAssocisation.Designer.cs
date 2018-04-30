@@ -41,8 +41,8 @@
             this.txtAppArguments = new System.Windows.Forms.TextBox();
             this.lblAppArguments = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.lblCommandPreview = new System.Windows.Forms.Label();
             this.lblPreviewLabel = new System.Windows.Forms.Label();
+            this.txtCommandPreview = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 423);
+            this.panel1.Location = new System.Drawing.Point(0, 494);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 80);
@@ -65,7 +65,7 @@
             this.btnReset.ForeColor = System.Drawing.Color.Black;
             this.btnReset.Location = new System.Drawing.Point(18, 20);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(112, 40);
+            this.btnReset.Size = new System.Drawing.Size(132, 40);
             this.btnReset.TabIndex = 5;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -193,33 +193,36 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // lblCommandPreview
-            // 
-            this.lblCommandPreview.AutoSize = true;
-            this.lblCommandPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCommandPreview.Location = new System.Drawing.Point(19, 366);
-            this.lblCommandPreview.Name = "lblCommandPreview";
-            this.lblCommandPreview.Size = new System.Drawing.Size(310, 27);
-            this.lblCommandPreview.TabIndex = 28;
-            this.lblCommandPreview.Text = "(command line preview appears here)";
-            // 
             // lblPreviewLabel
             // 
             this.lblPreviewLabel.AutoSize = true;
-            this.lblPreviewLabel.Location = new System.Drawing.Point(18, 341);
+            this.lblPreviewLabel.Location = new System.Drawing.Point(14, 352);
             this.lblPreviewLabel.Name = "lblPreviewLabel";
             this.lblPreviewLabel.Size = new System.Drawing.Size(72, 25);
             this.lblPreviewLabel.TabIndex = 29;
             this.lblPreviewLabel.Text = "Preview";
+            // 
+            // txtCommandPreview
+            // 
+            this.txtCommandPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCommandPreview.Location = new System.Drawing.Point(18, 381);
+            this.txtCommandPreview.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCommandPreview.Multiline = true;
+            this.txtCommandPreview.Name = "txtCommandPreview";
+            this.txtCommandPreview.ReadOnly = true;
+            this.txtCommandPreview.Size = new System.Drawing.Size(472, 93);
+            this.txtCommandPreview.TabIndex = 30;
             // 
             // frmEditEditingAssocisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(510, 503);
+            this.CancelButton = this.btnClose;
+            this.ClientSize = new System.Drawing.Size(510, 574);
+            this.Controls.Add(this.txtCommandPreview);
             this.Controls.Add(this.lblPreviewLabel);
-            this.Controls.Add(this.lblCommandPreview);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtAppArguments);
             this.Controls.Add(this.lblAppArguments);
@@ -263,7 +266,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Label lblCommandPreview;
         private System.Windows.Forms.Label lblPreviewLabel;
+        private System.Windows.Forms.TextBox txtCommandPreview;
     }
 }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,6 @@ namespace ImageGlass
 {
     public partial class frmEditEditingAssocisation : Form
     {
-        private const string fileMacro = "<file>";
-
-        private const string fileSample = @"E:\My Photos\Abc Def.jpg";
-
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
         public string AppName { get; set; }
@@ -58,7 +54,7 @@ namespace ImageGlass
             txtAppArguments.Text = this.AppArguments;
 
             InsureMacro();
-            UpdateSample();
+            UpdateCommandPreview();
 
             txtAppName.Focus();
 
@@ -91,7 +87,7 @@ namespace ImageGlass
         {
             txtAppName.Text = txtAppPath.Text = txtAppArguments.Text = string.Empty;
             InsureMacro();
-            UpdateSample();
+            UpdateCommandPreview();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -103,7 +99,7 @@ namespace ImageGlass
             {
                 txtAppPath.Text = o.FileName;
             }
-            UpdateSample();
+            UpdateCommandPreview();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -130,26 +126,43 @@ namespace ImageGlass
             }
         }
 
+        /// <summary>
+        /// Insure the macro is put in the app arguments box
+        /// </summary>
         private void InsureMacro()
         {
             // Make certain the app arguments has the file substitution string
-            var txt = txtAppArguments.Text;
-            if (txt.ToLower().Contains(fileMacro))
+            var txt = txtAppArguments.Text.Trim();
+            if (txt.ToLower().Contains(ImageEditingAssociation.FileMacro))
                 return;
-            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + fileMacro;
+
+            //use double quotes as default
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{ImageEditingAssociation.FileMacro}\"";
         }
 
-        private void UpdateSample()
+        /// <summary>
+        /// Update command preview
+        /// </summary>
+        private void UpdateCommandPreview()
         {
+            var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
+
+            var fileSample = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            if (!File.Exists(fileSample))
+            {
+                fileSample = @"C:\fake dir\sample photo.jpg";
+            }
+            
             // Something has changed; update the sample text
-            var txt = $"{txtAppPath.Text} {txtAppArguments.Text.Replace(fileMacro, fileSample)}";
-            lblCommandPreview.Text = txt;
+            var cmd = $"{appPath} {txtAppArguments.Text.Replace(ImageEditingAssociation.FileMacro, fileSample)}";
+            txtCommandPreview.Text = cmd;
         }
+
 
         private void Option_LostFocus(object sender, EventArgs e)
         {
             // Focus was lost from a user-edit control. Make sure the preview is updated.
-            UpdateSample();
+            UpdateCommandPreview();
         }
 
     }
