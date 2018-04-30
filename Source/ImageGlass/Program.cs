@@ -59,9 +59,11 @@ namespace ImageGlass
 
 
             #region Check First-launch Configs
-            var isRunFirstLaunchConfigurations = bool.Parse(GlobalSetting.GetConfig("IsRunFirstLaunchConfigurations", "True"));
+            var firstLaunchVersion = 0;
 
-            if (isRunFirstLaunchConfigurations)
+            int.TryParse(GlobalSetting.GetConfig("IsRunFirstLaunchConfigurations", "0"), out firstLaunchVersion);
+
+            if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
             {
                 Process p = new Process();
                 p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");

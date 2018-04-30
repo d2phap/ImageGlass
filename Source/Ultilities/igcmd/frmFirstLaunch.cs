@@ -55,10 +55,10 @@ namespace igcmd
 
             //Load theme list
             LoadThemeList();
-            
+
 
             //Don't run again
-            GlobalSetting.SetConfig("IsRunFirstLaunchConfigurations", "False");
+            GlobalSetting.SetConfig("IsRunFirstLaunchConfigurations", GlobalSetting.FIRST_LAUNCH_VERSION.ToString());
         }
 
 

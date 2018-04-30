@@ -38,7 +38,12 @@ namespace ImageGlass.Services.Configuration
         // Configurations file: igconfig.xml
         private static ConfigurationFile _configFile = new ConfigurationFile();
 
-        
+        /// <summary>
+        /// First launch version constant. 
+        /// If the value read from config file is less than this value, 
+        /// the First-Launch Configs screen will be launched.
+        /// </summary>
+        public const int FIRST_LAUNCH_VERSION = 5;
 
 
         #region Private Properties
