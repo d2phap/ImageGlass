@@ -66,7 +66,7 @@
             this.btnReset.Location = new System.Drawing.Point(18, 20);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(132, 40);
-            this.btnReset.TabIndex = 5;
+            this.btnReset.TabIndex = 6;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -79,7 +79,7 @@
             this.btnOK.Location = new System.Drawing.Point(261, 20);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(112, 40);
-            this.btnOK.TabIndex = 6;
+            this.btnOK.TabIndex = 7;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -92,7 +92,7 @@
             this.btnClose.Location = new System.Drawing.Point(380, 20);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(112, 40);
-            this.btnClose.TabIndex = 7;
+            this.btnClose.TabIndex = 8;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -212,7 +212,7 @@
             this.txtCommandPreview.Name = "txtCommandPreview";
             this.txtCommandPreview.ReadOnly = true;
             this.txtCommandPreview.Size = new System.Drawing.Size(472, 93);
-            this.txtCommandPreview.TabIndex = 30;
+            this.txtCommandPreview.TabIndex = 5;
             // 
             // frmEditEditingAssocisation
             // 

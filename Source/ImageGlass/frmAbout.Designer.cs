@@ -214,7 +214,7 @@
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(127, 30);
-            this.linkLabel2.TabIndex = 5;
+            this.linkLabel2.TabIndex = 6;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Skype: d2phap";
             this.linkLabel2.UseCompatibleTextRendering = true;
@@ -234,7 +234,7 @@
             this.lnkEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkEmail.Name = "lnkEmail";
             this.lnkEmail.Size = new System.Drawing.Size(224, 30);
-            this.lnkEmail.TabIndex = 4;
+            this.lnkEmail.TabIndex = 5;
             this.lnkEmail.TabStop = true;
             this.lnkEmail.Text = "Email: d2phap@gmail.com";
             this.lnkEmail.UseCompatibleTextRendering = true;
@@ -497,7 +497,7 @@
             this.lnkCollaborator.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCollaborator.Name = "lnkCollaborator";
             this.lnkCollaborator.Size = new System.Drawing.Size(335, 30);
-            this.lnkCollaborator.TabIndex = 17;
+            this.lnkCollaborator.TabIndex = 4;
             this.lnkCollaborator.TabStop = true;
             this.lnkCollaborator.Text = "Collaborator: Kevin Routley (@fire-eggs)";
             this.lnkCollaborator.UseCompatibleTextRendering = true;
