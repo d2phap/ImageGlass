@@ -1,17 +1,29 @@
-﻿using ImageGlass.Services.Configuration;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2018 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using ImageGlass.Services.Configuration;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Library;
-using ImageGlass;
 using ImageGlass.Theme;
 
 namespace igcmd
@@ -26,7 +38,10 @@ namespace igcmd
 
         private List<Theme> _themeList = new List<Theme>();
         private List<Language> _langList = new List<Language>();
+
         private Language _lang = new Language();
+        private Theme _theme = new Theme();
+        private LayoutMode _layout = LayoutMode.Standard;
         
 
         #region Events
@@ -65,8 +80,11 @@ namespace igcmd
 
         private void btnNextStep_Click(object sender, EventArgs e)
         {
+            //Done all configs, apply settings and launch ImageGlass
             if (tab1.SelectedIndex == tab1.TabCount - 1)
             {
+                ApplySettings();
+
                 LaunchImageGlass();
                 this.Close();
             }
@@ -74,11 +92,12 @@ namespace igcmd
             tab1.SelectedIndex++;
             lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
-
+            //Done
             if (tab1.SelectedIndex == tab1.TabCount - 1)
             {
                 btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
             }
+            //Next Step
             else
             {
                 btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
@@ -134,6 +153,13 @@ namespace igcmd
             catch { }
 
             ApplyTheme(selectedTheme);
+            _theme = selectedTheme;
+        }
+
+
+        private void cmbLayout_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _layout = (LayoutMode)cmbLayout.SelectedIndex;
         }
 
         #endregion
@@ -171,7 +197,7 @@ namespace igcmd
                         _langList.Add(l);
 
                         int iLang = cmbLanguage.Items.Add(l.LangName);
-                        string curLang = GlobalSetting.LangPack.FileName;
+                        string curLang = GlobalSetting.GetConfig("Language", "English");
 
                         //using current language pack
                         if (f.CompareTo(curLang) == 0)
@@ -299,7 +325,7 @@ namespace igcmd
                 lblTheme.ForeColor = 
                 lblDefaultApp.ForeColor =
                 Theme.InvertColor(th.BackgroundColor);
-
+            
         }
 
 
@@ -317,6 +343,43 @@ namespace igcmd
             }
 
             cmbLayout.SelectedIndex = 0;
+        }
+
+
+        /// <summary>
+        /// Save and apply settings
+        /// </summary>
+        private void ApplySettings()
+        {
+            GlobalSetting.SetConfig("Language", _lang.FileName);
+            GlobalSetting.SetConfig("Theme", _theme.ThemeConfigFilePath);
+
+
+            if (_layout == LayoutMode.Designer)
+            {
+                var toolbarButtons = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,s,15,16,19,20,21";
+                GlobalSetting.SetConfig("ToolbarButtons", toolbarButtons);
+
+                GlobalSetting.SetConfig("MouseWheelAction", ((int)MouseWheelActions.ScrollVertically).ToString());
+                GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)MouseWheelActions.Zoom).ToString());
+                GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)MouseWheelActions.ScrollHorizontally).ToString());
+                GlobalSetting.SetConfig("MouseWheelAltAction", ((int)MouseWheelActions.DoNothing).ToString());
+
+                GlobalSetting.SetConfig("ZoomLockValue", "100"); //lock zoom at 100%
+
+            }
+            else
+            {
+                GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
+
+                GlobalSetting.SetConfig("MouseWheelAction", MouseWheelActions.Zoom.ToString());
+                GlobalSetting.SetConfig("MouseWheelCtrlAction", MouseWheelActions.ScrollVertically.ToString());
+                GlobalSetting.SetConfig("MouseWheelShiftAction", MouseWheelActions.ScrollHorizontally.ToString());
+                GlobalSetting.SetConfig("MouseWheelAltAction", MouseWheelActions.DoNothing.ToString());
+
+                GlobalSetting.SetConfig("ZoomLockValue", "-1"); //do not lock zoom
+            }
+
         }
 
 

@@ -64,9 +64,9 @@
             this.panFooter.Controls.Add(this.lnkSkip);
             this.panFooter.Controls.Add(this.btnNextStep);
             this.panFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panFooter.Location = new System.Drawing.Point(0, 387);
+            this.panFooter.Location = new System.Drawing.Point(0, 385);
             this.panFooter.Name = "panFooter";
-            this.panFooter.Size = new System.Drawing.Size(581, 134);
+            this.panFooter.Size = new System.Drawing.Size(518, 134);
             this.panFooter.TabIndex = 0;
             // 
             // lnkSkip
@@ -79,7 +79,7 @@
             this.lnkSkip.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
             this.lnkSkip.Location = new System.Drawing.Point(12, 78);
             this.lnkSkip.Name = "lnkSkip";
-            this.lnkSkip.Size = new System.Drawing.Size(557, 35);
+            this.lnkSkip.Size = new System.Drawing.Size(494, 35);
             this.lnkSkip.TabIndex = 29;
             this.lnkSkip.TabStop = true;
             this.lnkSkip.Text = "Skip and Launch ImageGlass_";
@@ -90,7 +90,7 @@
             // btnNextStep
             // 
             this.btnNextStep.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnNextStep.Location = new System.Drawing.Point(217, 32);
+            this.btnNextStep.Location = new System.Drawing.Point(186, 32);
             this.btnNextStep.Name = "btnNextStep";
             this.btnNextStep.Size = new System.Drawing.Size(150, 40);
             this.btnNextStep.TabIndex = 0;
@@ -104,7 +104,7 @@
             this.picLogo.BackColor = System.Drawing.Color.Transparent;
             this.picLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.picLogo.Image = ((System.Drawing.Image)(resources.GetObject("picLogo.Image")));
-            this.picLogo.Location = new System.Drawing.Point(217, 43);
+            this.picLogo.Location = new System.Drawing.Point(186, 43);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(150, 150);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -126,7 +126,7 @@
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(625, 217);
+            this.tab1.Size = new System.Drawing.Size(562, 215);
             this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 2;
             this.tab1.TabStop = false;
@@ -177,7 +177,7 @@
             this.tabLayoutMode.Location = new System.Drawing.Point(4, 37);
             this.tabLayoutMode.Name = "tabLayoutMode";
             this.tabLayoutMode.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLayoutMode.Size = new System.Drawing.Size(617, 176);
+            this.tabLayoutMode.Size = new System.Drawing.Size(554, 174);
             this.tabLayoutMode.TabIndex = 8;
             this.tabLayoutMode.Text = "Quick layout mode";
             // 
@@ -189,10 +189,11 @@
             this.cmbLayout.Items.AddRange(new object[] {
             "Standard",
             "Designer"});
-            this.cmbLayout.Location = new System.Drawing.Point(186, 73);
+            this.cmbLayout.Location = new System.Drawing.Point(155, 73);
             this.cmbLayout.Name = "cmbLayout";
             this.cmbLayout.Size = new System.Drawing.Size(243, 33);
             this.cmbLayout.TabIndex = 3;
+            this.cmbLayout.SelectedIndexChanged += new System.EventHandler(this.cmbLayout_SelectedIndexChanged);
             // 
             // lblLayout
             // 
@@ -201,7 +202,7 @@
             this.lblLayout.BackColor = System.Drawing.Color.Transparent;
             this.lblLayout.Location = new System.Drawing.Point(30, 35);
             this.lblLayout.Name = "lblLayout";
-            this.lblLayout.Size = new System.Drawing.Size(557, 35);
+            this.lblLayout.Size = new System.Drawing.Size(494, 35);
             this.lblLayout.TabIndex = 2;
             this.lblLayout.Text = "Select Layout_";
             this.lblLayout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -285,7 +286,7 @@
             this.panHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panHeader.Location = new System.Drawing.Point(0, 0);
             this.panHeader.Name = "panHeader";
-            this.panHeader.Size = new System.Drawing.Size(581, 259);
+            this.panHeader.Size = new System.Drawing.Size(518, 259);
             this.panHeader.TabIndex = 1;
             // 
             // lblStepNumber
@@ -295,7 +296,7 @@
             this.lblStepNumber.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblStepNumber.Location = new System.Drawing.Point(12, 213);
             this.lblStepNumber.Name = "lblStepNumber";
-            this.lblStepNumber.Size = new System.Drawing.Size(557, 35);
+            this.lblStepNumber.Size = new System.Drawing.Size(494, 35);
             this.lblStepNumber.TabIndex = 2;
             this.lblStepNumber.Text = "Step 1/4_";
             this.lblStepNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -305,7 +306,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(581, 521);
+            this.ClientSize = new System.Drawing.Size(518, 519);
             this.Controls.Add(this.panHeader);
             this.Controls.Add(this.panFooter);
             this.Controls.Add(this.tab1);
@@ -313,6 +314,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(540, 575);
             this.Name = "frmFirstLaunch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "First-Launch Configurations_";

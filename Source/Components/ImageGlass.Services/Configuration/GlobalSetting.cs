@@ -358,32 +358,11 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-
-        private static ZoomOptimizationMethods _zoomOptimizationMethod = ZoomOptimizationMethods.Auto;
+        
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
-        public static ZoomOptimizationMethods ZoomOptimizationMethod
-        {
-            get { return GlobalSetting._zoomOptimizationMethod; }
-            set
-            {
-                GlobalSetting._zoomOptimizationMethod = value;
-
-                if (value == ZoomOptimizationMethods.SmoothPixels)
-                {
-                    GlobalSetting.SetConfig("ZoomOptimization", "1");
-                }
-                else if (value == ZoomOptimizationMethods.ClearPixels)
-                {
-                    GlobalSetting.SetConfig("ZoomOptimization", "2");
-                }
-                else
-                {
-                    GlobalSetting.SetConfig("ZoomOptimization", "0");
-                }
-            }
-        }
+        public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
 
 
         private static NumberFormatInfo _numFormat = new NumberFormatInfo();
@@ -403,15 +382,16 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// The toolbar button configuration: contents and order.
-        /// </summary>
-        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,21,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20";
-
-
-        /// <summary>
         /// Gets, sets the value indicates that to show full image path or only base name
         /// </summary>
         public static bool IsDisplayBasenameOfImage { get; set; } = false;
+
+
+        /// <summary>
+        /// The toolbar button configuration: contents and order.
+        /// </summary>
+        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20,21";
+        
 
         #endregion
 
