@@ -372,10 +372,10 @@ namespace igcmd
             {
                 GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
 
-                GlobalSetting.SetConfig("MouseWheelAction", MouseWheelActions.Zoom.ToString());
-                GlobalSetting.SetConfig("MouseWheelCtrlAction", MouseWheelActions.ScrollVertically.ToString());
-                GlobalSetting.SetConfig("MouseWheelShiftAction", MouseWheelActions.ScrollHorizontally.ToString());
-                GlobalSetting.SetConfig("MouseWheelAltAction", MouseWheelActions.DoNothing.ToString());
+                GlobalSetting.SetConfig("MouseWheelAction", ((int)MouseWheelActions.Zoom).ToString());
+                GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)MouseWheelActions.ScrollVertically).ToString());
+                GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)MouseWheelActions.ScrollHorizontally).ToString());
+                GlobalSetting.SetConfig("MouseWheelAltAction", ((int)MouseWheelActions.DoNothing).ToString());
 
                 GlobalSetting.SetConfig("ZoomLockValue", "-1"); //do not lock zoom
             }
