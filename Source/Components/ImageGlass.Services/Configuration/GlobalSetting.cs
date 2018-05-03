@@ -23,7 +23,6 @@ using Microsoft.Win32;
 using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Specialized;
 using System.Security;
 using System.IO;
 using System.Text;

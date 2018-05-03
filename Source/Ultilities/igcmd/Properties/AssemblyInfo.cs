@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("igcmd")]
+[assembly: AssemblyTitle("igcmd - ImageGlass commands")]
 [assembly: AssemblyDescription("ImageGlass commands")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
-[assembly: AssemblyProduct("igcmd")]
-[assembly: AssemblyCopyright("Copyright © 2013 - 2017 by Duong Dieu Phap")]
+[assembly: AssemblyProduct("igcmd - ImageGlass commands")]
+[assembly: AssemblyCopyright("Copyright © 2013 - 2018 by Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 

@@ -285,7 +285,7 @@ namespace ImageGlass
             // 
             this.lblLanguageWarning.AutoSize = true;
             this.lblLanguageWarning.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(160)))), ((int)(((byte)(31)))));
+            this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(115)))), ((int)(((byte)(17)))));
             this.lblLanguageWarning.Location = new System.Drawing.Point(22, 88);
             this.lblLanguageWarning.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLanguageWarning.Name = "lblLanguageWarning";
@@ -425,7 +425,7 @@ namespace ImageGlass
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRegisterExt.AutoSize = true;
-            this.btnRegisterExt.Location = new System.Drawing.Point(445, 12);
+            this.btnRegisterExt.Location = new System.Drawing.Point(525, 12);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(332, 45);
             this.btnRegisterExt.TabIndex = 37;
@@ -437,9 +437,9 @@ namespace ImageGlass
             // 
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetExt.AutoSize = true;
-            this.btnResetExt.Location = new System.Drawing.Point(239, 12);
+            this.btnResetExt.Location = new System.Drawing.Point(299, 12);
             this.btnResetExt.Name = "btnResetExt";
-            this.btnResetExt.Size = new System.Drawing.Size(200, 45);
+            this.btnResetExt.Size = new System.Drawing.Size(220, 45);
             this.btnResetExt.TabIndex = 36;
             this.btnResetExt.Text = "Reset to default";
             this.btnResetExt.UseVisualStyleBackColor = true;
@@ -451,7 +451,7 @@ namespace ImageGlass
             this.btnAddNewExt.AutoSize = true;
             this.btnAddNewExt.Location = new System.Drawing.Point(27, 12);
             this.btnAddNewExt.Name = "btnAddNewExt";
-            this.btnAddNewExt.Size = new System.Drawing.Size(100, 45);
+            this.btnAddNewExt.Size = new System.Drawing.Size(130, 45);
             this.btnAddNewExt.TabIndex = 34;
             this.btnAddNewExt.Text = "Add";
             this.btnAddNewExt.UseVisualStyleBackColor = true;
@@ -462,9 +462,9 @@ namespace ImageGlass
             this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
-            this.btnDeleteExt.Location = new System.Drawing.Point(133, 12);
+            this.btnDeleteExt.Location = new System.Drawing.Point(163, 12);
             this.btnDeleteExt.Name = "btnDeleteExt";
-            this.btnDeleteExt.Size = new System.Drawing.Size(100, 45);
+            this.btnDeleteExt.Size = new System.Drawing.Size(130, 45);
             this.btnDeleteExt.TabIndex = 35;
             this.btnDeleteExt.Text = "Delete";
             this.btnDeleteExt.UseVisualStyleBackColor = true;
@@ -484,15 +484,15 @@ namespace ImageGlass
             // 
             this.lnkOpenFileAssoc.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkOpenFileAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkOpenFileAssoc.AutoSize = true;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(587, 64);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(390, 64);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
-            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(191, 25);
+            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(391, 25);
             this.lnkOpenFileAssoc.TabIndex = 32;
             this.lnkOpenFileAssoc.TabStop = true;
             this.lnkOpenFileAssoc.Text = "Open File Associations";
+            this.lnkOpenFileAssoc.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lnkOpenFileAssoc.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenFileAssoc_LinkClicked);
             // 
             // lvExtension
@@ -919,9 +919,9 @@ namespace ImageGlass
             // btnEditEditAllExt
             // 
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(196, 1574);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1574);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
-            this.btnEditEditAllExt.Size = new System.Drawing.Size(240, 45);
+            this.btnEditEditAllExt.Size = new System.Drawing.Size(265, 45);
             this.btnEditEditAllExt.TabIndex = 30;
             this.btnEditEditAllExt.Text = "Edit all extensions";
             this.btnEditEditAllExt.UseVisualStyleBackColor = true;
@@ -930,9 +930,9 @@ namespace ImageGlass
             // btnEditResetExt
             // 
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(442, 1574);
+            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1574);
             this.btnEditResetExt.Name = "btnEditResetExt";
-            this.btnEditResetExt.Size = new System.Drawing.Size(223, 45);
+            this.btnEditResetExt.Size = new System.Drawing.Size(245, 45);
             this.btnEditResetExt.TabIndex = 31;
             this.btnEditResetExt.Text = "Reset to default";
             this.btnEditResetExt.UseVisualStyleBackColor = true;
@@ -982,7 +982,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(685, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(724, 214);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 28;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1753,10 +1753,10 @@ namespace ImageGlass
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(694, 12);
+            this.btnSave.Location = new System.Drawing.Point(651, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(112, 45);
+            this.btnSave.Size = new System.Drawing.Size(125, 45);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -1766,10 +1766,10 @@ namespace ImageGlass
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
-            this.btnCancel.Location = new System.Drawing.Point(816, 12);
+            this.btnCancel.Location = new System.Drawing.Point(784, 14);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(112, 45);
+            this.btnCancel.Size = new System.Drawing.Size(125, 45);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -1779,10 +1779,10 @@ namespace ImageGlass
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
-            this.btnApply.Location = new System.Drawing.Point(937, 12);
+            this.btnApply.Location = new System.Drawing.Point(917, 14);
             this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(112, 45);
+            this.btnApply.Size = new System.Drawing.Size(125, 45);
             this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
