@@ -51,7 +51,9 @@ namespace igcmd
             //Load language list
             LoadLanguageList();
             ApplyLanguage(_lang);
-            
+
+            //Extract & install Theme packs
+            InstallThemePacks();
 
             //Load theme list
             LoadThemeList();
@@ -328,6 +330,20 @@ namespace igcmd
             
         }
 
+
+        /// <summary>
+        /// Extract and install theme packs
+        /// </summary>
+        private void InstallThemePacks()
+        {
+            var themeFiles = Directory.GetFiles(Path.Combine(GlobalSetting.StartUpDir, "DefaultTheme"), "*.igtheme");
+
+            foreach (var file in themeFiles)
+            {
+                Theme.InstallTheme(file);
+            }
+        }
+        
 
         /// <summary>
         /// Load layout list
