@@ -97,7 +97,8 @@ Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Library.dll"; DestDir: "{ap
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Assets\default.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Assets\default.jpg"; DestDir: "{app}"; Flags: ignoreversion
+Source: "igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
