@@ -1582,7 +1582,7 @@ namespace ImageGlass
                     //Do not show welcome image if params exist.
                     if (Environment.GetCommandLineArgs().Count() < 2)
                     {
-                        Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.png"));
+                        Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.jpg"));
                     }
                 }
                 #endregion

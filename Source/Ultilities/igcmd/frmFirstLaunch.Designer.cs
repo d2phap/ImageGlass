@@ -140,7 +140,7 @@
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Name = "tabLanguage";
             this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLanguage.Size = new System.Drawing.Size(617, 176);
+            this.tabLanguage.Size = new System.Drawing.Size(554, 174);
             this.tabLanguage.TabIndex = 7;
             this.tabLanguage.Text = "Language";
             // 
@@ -151,7 +151,7 @@
             this.cmbLanguage.FormattingEnabled = true;
             this.cmbLanguage.Items.AddRange(new object[] {
             "English"});
-            this.cmbLanguage.Location = new System.Drawing.Point(186, 73);
+            this.cmbLanguage.Location = new System.Drawing.Point(153, 73);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(243, 33);
             this.cmbLanguage.TabIndex = 1;
@@ -164,7 +164,7 @@
             this.lblLanguage.BackColor = System.Drawing.Color.Transparent;
             this.lblLanguage.Location = new System.Drawing.Point(30, 35);
             this.lblLanguage.Name = "lblLanguage";
-            this.lblLanguage.Size = new System.Drawing.Size(557, 35);
+            this.lblLanguage.Size = new System.Drawing.Size(494, 35);
             this.lblLanguage.TabIndex = 0;
             this.lblLanguage.Text = "Select Language_";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -215,7 +215,7 @@
             this.tabTheme.Location = new System.Drawing.Point(4, 37);
             this.tabTheme.Name = "tabTheme";
             this.tabTheme.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTheme.Size = new System.Drawing.Size(617, 176);
+            this.tabTheme.Size = new System.Drawing.Size(554, 174);
             this.tabTheme.TabIndex = 9;
             this.tabTheme.Text = "Theme";
             // 
@@ -227,7 +227,7 @@
             this.cmbTheme.Items.AddRange(new object[] {
             "2017 (Dark)",
             "2017 (Light Gray)"});
-            this.cmbTheme.Location = new System.Drawing.Point(186, 73);
+            this.cmbTheme.Location = new System.Drawing.Point(154, 73);
             this.cmbTheme.Name = "cmbTheme";
             this.cmbTheme.Size = new System.Drawing.Size(243, 33);
             this.cmbTheme.TabIndex = 5;
@@ -240,7 +240,7 @@
             this.lblTheme.BackColor = System.Drawing.Color.Transparent;
             this.lblTheme.Location = new System.Drawing.Point(30, 35);
             this.lblTheme.Name = "lblTheme";
-            this.lblTheme.Size = new System.Drawing.Size(557, 35);
+            this.lblTheme.Size = new System.Drawing.Size(494, 35);
             this.lblTheme.TabIndex = 4;
             this.lblTheme.Text = "Select Theme_";
             this.lblTheme.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -253,14 +253,14 @@
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Name = "tabFileAssociation";
             this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFileAssociation.Size = new System.Drawing.Size(617, 176);
+            this.tabFileAssociation.Size = new System.Drawing.Size(554, 174);
             this.tabFileAssociation.TabIndex = 10;
             this.tabFileAssociation.Text = "File Association";
             // 
             // btnSetDefaultApp
             // 
             this.btnSetDefaultApp.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnSetDefaultApp.Location = new System.Drawing.Point(235, 73);
+            this.btnSetDefaultApp.Location = new System.Drawing.Point(204, 76);
             this.btnSetDefaultApp.Name = "btnSetDefaultApp";
             this.btnSetDefaultApp.Size = new System.Drawing.Size(150, 40);
             this.btnSetDefaultApp.TabIndex = 1;
@@ -273,7 +273,7 @@
             this.lblDefaultApp.BackColor = System.Drawing.Color.Transparent;
             this.lblDefaultApp.Location = new System.Drawing.Point(30, 35);
             this.lblDefaultApp.Name = "lblDefaultApp";
-            this.lblDefaultApp.Size = new System.Drawing.Size(557, 38);
+            this.lblDefaultApp.Size = new System.Drawing.Size(494, 38);
             this.lblDefaultApp.TabIndex = 0;
             this.lblDefaultApp.Text = "Set ImageGlass as Default Photo Viewer?_";
             this.lblDefaultApp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
