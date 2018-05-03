@@ -116,6 +116,9 @@ namespace igcmd
 
         private void btnSetDefaultApp_Click(object sender, EventArgs e)
         {
+            GlobalSetting.LoadBuiltInImageFormats();
+
+
             // Update extensions to registry
             Process p = new Process();
             p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");

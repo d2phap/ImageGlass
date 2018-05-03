@@ -1,0 +1,268 @@
+<ImageGlass>
+  <Language>
+    <Info langCode="ar-ae" langName="عربى" author="ImageGlass community" description="Arabic" minVersion="5.0.5.6" isRightToLeftLayout="Yes" />
+    <Content>
+      <Item key="_.ImageFormatGroup.Default" value="التنسيقات الافتراضية" />
+      <Item key="_.ImageFormatGroup.Optional" value="صيغ اختيارية" />
+      <Item key="frmMain.picMain._ErrorText" value="لا يستطيع ImageGlass فتح هذه الصورة لأن الملف يبدو معطوباً، تالف أو غير مدعوم." />
+      <Item key="frmMain._ImageNotExist" value="الصورة المعروضة غير موجودة." />
+      <Item key="frmMain.btnBack" value="الذهاب إلى الصورة السابقة (السهم الأيسر / PageUp)" />
+      <Item key="frmMain.btnNext" value="الذهاب إلى الصورة التالية (السهم الأيمن / PageDown)" />
+      <Item key="frmMain.btnRotateLeft" value="تدوير بعكس إتجاه عقارب الساعة (Ctrl + ,)" />
+      <Item key="frmMain.btnRotateRight" value="تدوير بإتجاه عقارب الساعة (Ctrl + .)" />
+      <Item key="frmMain.btnZoomIn" value="تكبير (Ctrl + =)" />
+      <Item key="frmMain.btnZoomOut" value="تصغير (Ctrl + -)" />
+      <Item key="frmMain.btnZoomToFit" value="تكبير للإحتواء (Ctrl + /)" />
+      <Item key="frmMain.btnActualSize" value="الحجم الحقيقي (Ctrl + 0)" />
+      <Item key="frmMain.btnZoomLock" value="قفل التكبير النسبي (Ctrl + L)" />
+      <Item key="frmMain.btnScaletoWidth" value="تحجيم بالنسبة للعرض (Ctrl + W)" />
+      <Item key="frmMain.btnScaletoHeight" value="تحجيم بالنسبة للإرتفاع (Ctrl + ا)" />
+      <Item key="frmMain.btnWindowAutosize" value="ضبط النافذة على أبعاد الصورة الفعلية (Ctrl + M)" />
+      <Item key="frmMain.btnOpen" value="فتح ملف (Ctrl + O)" />
+      <Item key="frmMain.btnRefresh" value="(F5) تحديث" />
+      <Item key="frmMain.btnGoto" value="الذهاب إلى ... (Ctrl + G)" />
+      <Item key="frmMain.btnThumb" value="عرض الصورة المصغّرة (Ctrl + T)" />
+      <Item key="frmMain.btnFullScreen" value="ملء الشاشة (Alt + Enter)" />
+      <Item key="frmMain.btnSlideShow" value="تشغيل عرض الشرائح (F11، ESC للخروج)" />
+      <Item key="frmMain.btnConvert" value="تحويل الصورة (Ctrl + S)" />
+      <Item key="frmMain.btnPrintImage" value="طباعة الصورة (Ctrl + P)" />
+      <Item key="frmMain.btnMenu" value="القائمة (مفتاح التشغيل السريع: ')" />
+      <Item key="frmMain.mnuMainOpenFile" value="فتح ملف" />
+      <Item key="frmMain.mnuMainOpenImageData" value="فتح بيانات الصورة من الحافظة" />
+      <Item key="frmMain.mnuMainSaveAs" value="حفظ الصورة ك..." />
+      <Item key="frmMain.mnuMainRefresh" value="تحديث" />
+      <Item key="frmMain.mnuMainEditImage" value="تحرير صورة {0}" />
+      <Item key="frmMain.mnuMainNavigation" value="التنقل" />
+      <Item key="frmMain.mnuMainViewNext" value="عرض الصورة التالية" />
+      <Item key="frmMain.mnuMainViewPrevious" value="عرض الصورة السابقة" />
+      <Item key="frmMain.mnuMainGoto" value="الانتقال إلى..." />
+      <Item key="frmMain.mnuMainGotoFirst" value="انتقل إلى الصورة الأولى" />
+      <Item key="frmMain.mnuMainGotoLast" value="اذهب إلى آخر صورة" />
+      <Item key="frmMain.mnuMainFullScreen" value="وضع ملء الشاشة" />
+      <Item key="frmMain.mnuMainSlideShow" value="عرض الشرائح" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="بدء تشغيل عرض الشرائح" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="إيقاف مؤقت/استئناف عرض الشرائح" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="الخروج من عرض الشرائح" />
+      <Item key="frmMain.mnuMainPrint" value="طباعة" />
+      <Item key="frmMain.mnuMainManipulation" value="تلاعب" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="تدوير عكس اتجاه عقارب الساعة" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="تدوير في اتجاه عقارب الساعة" />
+      <Item key="frmMain.mnuMainZoomIn" value="تكبير" />
+      <Item key="frmMain.mnuMainZoomOut" value="تصغير" />
+      <Item key="frmMain.mnuMainZoomToFit" value="تكبير للإحتواء" />
+      <Item key="frmMain.mnuMainActualSize" value="الحجم الفعلي" />
+      <Item key="frmMain.mnuMainLockZoomRatio" value="قفل نسبة التكبير/التصغير" />
+      <Item key="frmMain.mnuMainScaleToWidth" value="نسبة التكبير الى العرض" />
+      <Item key="frmMain.mnuMainScaleToHeight" value="نسبة التكبير الى الإرتفاع" />
+      <Item key="frmMain.mnuMainWindowAdaptImage" value="اضبط النافذة على أبعاد الصورة الفعلية" />
+      <Item key="frmMain.mnuMainRename" value="إعادة تسمية الصورة" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="نقل الى سلة المحذوفات" />
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="حذف من القرص الصلب" />
+      <Item key="frmMain.mnuMainExtractFrames" value="استخراج إطارات الصور ({0})" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="بدء/إيقاف تحريك الصورة" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="تعيين كخلفية لسطح المكتب" />
+      <Item key="frmMain.mnuMainImageLocation" value="فتح موقع الصورة" />
+      <Item key="frmMain.mnuMainImageProperties" value="خصائص الصورة" />
+      <Item key="frmMain.mnuMainClipboard" value="الحافظة" />
+      <Item key="frmMain.mnuMainCopy" value="نسخ" />
+      <Item key="frmMain.mnuMainCopyImageData" value="نسخ بيانات الصورة" />
+      <Item key="frmMain.mnuMainCut" value="قص" />
+      <Item key="frmMain.mnuMainCopyImagePath" value="نسخ مسار الصورة" />
+      <Item key="frmMain.mnuMainClearClipboard" value="مسح الحافظة" />
+      <Item key="frmMain.mnuMainShare" value="مشاركة..." />
+      <Item key="frmMain.mnuMainLayout" value="نسق" />
+      <Item key="frmMain.mnuMainToolbar" value="شريط الأدوات" />
+      <Item key="frmMain.mnuMainThumbnailBar" value="لوحة الصور المصغرة" />
+      <Item key="frmMain.mnuMainCheckBackground" value="خلفية الداما" />
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="إبقاء النافذة في المقدمة دوماً" />
+      <Item key="frmMain.mnuMainTools" value="الأدوات" />
+      <Item key="frmMain.mnuMainColorPicker" value="منتقي الألوان" />
+      <Item key="frmMain.mnuMainSettings" value="الاعدادات" />
+      <Item key="frmMain.mnuMainAbout" value="حول" />
+      <Item key="frmMain.mnuMainFirstLaunch" value="أولاً-إطلاق تكوينات" />
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="التحقق من وجود تحديث" />
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="إصدار جديد متوفر!" />
+      <Item key="frmMain.mnuMainReportIssue" value="الإبلاغ عن مشكلة" />
+      <Item key="frmMain._OpenFileDialog" value="جميع الملفات المدعومة" />
+      <Item key="frmMain._Text" value="ملف (ملفات)" />
+      <Item key="frmMain._ImageData" value="بيانات الصورة" />
+      <Item key="frmMain._RenameDialogText" value="إعادة تسمية" />
+      <Item key="frmMain._RenameDialog" value="أدخل اسم ملف جديد" />
+      <Item key="frmMain._GotoDialogText" value="أدخل فهرس الصور لعرضه. إضغط زر الإدخال {ENTER}" />
+      <Item key="frmMain._DeleteDialogText" value="حذف الملف '{0}'؟" />
+      <Item key="frmMain._DeleteDialogTitle" value="تأكيد" />
+      <Item key="frmMain._ExtractFrameText" value="استخراج إطارات الصورة. الرجاء تحديد مجلد الإخراج." />
+      <Item key="frmMain._FullScreenMessage" value="اضغط ALT + ENTER لإنهاء وضع ملء الشاشة. &#xA; أو CTRL + F1 لإظهار القائمة." />
+      <Item key="frmMain._SlideshowMessage" value="اضغط المفتاح ESC لإنهاء عرض الشرائح. &#xA; اضغط على الزر الأيمن للفأرة لفتح قائمة السياق." />
+      <Item key="frmMain._SlideshowMessagePause" value="تم إيقاف عرض الشرائح مؤقتاً" />
+      <Item key="frmMain._SlideshowMessageResume" value="تم استئناف عرض الشرائح" />
+      <Item key="frmMain._CopyFileText" value="نسخ {0} ملف (ملفات)" />
+      <Item key="frmMain._CutFileText" value="قص {0} ملف (ملفات)" />
+      <Item key="frmMain._CopyImageData" value="تم نسخ الصورة الى الحافظة" />
+      <Item key="frmMain._ClearClipboard" value="تم مسح الحافظة" />
+      <Item key="frmMain._SaveChanges" value="جاري حفظ التغيير..." />
+      <Item key="frmMain._SaveImage" value="تم حفظ الصورة إلى&#xD;&#xA;{0}" />
+      <Item key="frmMain._SaveImageError" value="يتعذر حفظ الصورة&#xD;&#xA;{0}." />
+      <Item key="frmMain._Loading" value="تحميل..." />
+      <Item key="frmMain._FirstItemOfList" value="وصلت إلى الصورة الأولى" />
+      <Item key="frmMain._LastItemOfList" value="وصلت إلى الصورة الأخيرة" />
+      <Item key="frmMain._CannotRotateAnimatedFile" value="الدوران في تنسيق التحريك غير مدعوم" />
+      <Item key="frmAbout.lblSlogant" value="عارض صور خفيف الوزن، متعدد الاستخدامات" />
+      <Item key="frmAbout.lblInfo" value="معلومات" />
+      <Item key="frmAbout.lblComponent" value="مكونات" />
+      <Item key="frmAbout.lblReferences" value="مراجع" />
+      <Item key="frmAbout.lblVersion" value="الإصدار: {0}" />
+      <Item key="frmAbout.lblInfoContact" value="إتصال" />
+      <Item key="frmAbout.lblSoftwareUpdate" value="تحديثات البرنامج" />
+      <Item key="frmAbout.lnkCheckUpdate" value="» التحقق من وجود تحديث" />
+      <Item key="frmAbout._Text" value="حول" />
+      <Item key="frmAbout._PortableText" value="محمول [Portable]" />
+      <Item key="frmSetting._Text" value="الاعدادات" />
+      <Item key="frmSetting.btnSave" value="حفظ" />
+      <Item key="frmSetting.btnCancel" value="إلغاء" />
+      <Item key="frmSetting.btnApply" value="تطبيق" />
+      <Item key="frmSetting.lblGeneral" value="عام" />
+      <Item key="frmSetting.lblImage" value="صورة" />
+      <Item key="frmSetting.lblFileAssociations" value="اقترانات الملفات" />
+      <Item key="frmSetting.lblToolbar" value="شريط الأدوات" />
+      <Item key="frmSetting.lblColorPicker" value="منتقي الألوان" />
+      <Item key="frmSetting.lblLanguage" value="اللغة" />
+      <Item key="frmSetting.lblTheme" value="النسق" />
+      <Item key="frmSetting.lblHeadStartup" value="بدء" />
+      <Item key="frmSetting.chkWelcomePicture" value="عرض صورة الترحيب" />
+      <Item key="frmSetting.chkShowToolBar" value="إظهار شريط الأدوات عند بدء التشغيل" />
+      <Item key="frmSetting.lblHeadPortableMode" value="الوضع المحمول" />
+      <Item key="frmSetting.chkPortableMode._Enabled" value="تم تمكين الوضع المحمول" />
+      <Item key="frmSetting.chkPortableMode._Disabled" value="تم تعطيل الوضع المحمول على المجلد المثبت:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadOthers" value="أخرى" />
+      <Item key="frmSetting.chkAutoUpdate" value="التحقق من وجود التحديث تلقائيا" />
+      <Item key="frmSetting.chkAllowMultiInstances" value="تسمح مثيلات متعددة من البرنامج" />
+      <Item key="frmSetting.chkESCToQuit" value="السماح للضغط على ESC لإنهاء التطبيق" />
+      <Item key="frmSetting.chkConfirmationDelete" value="عرض مربع حوار تأكيد الحذف" />
+      <Item key="frmSetting.chkShowScrollbar" value="عرض شريط التمرير للعارض" />
+      <Item key="frmSetting.chkDisplayBasename" value="عرض الاسم الأساسي للصورة المعروضة على شريط العنوان" />
+      <Item key="frmSetting.lblBackGroundColor" value="لون الخلفية" />
+      <Item key="frmSetting.lnkResetBackgroundColor" value="إعادة تعيين" />
+      <Item key="frmSetting.lblHeadImageLoading" value="تحميل الصورة" />
+      <Item key="frmSetting.chkFindChildFolder" value="البحث عن الصور في مجلد تابع" />
+      <Item key="frmSetting.chkShowHiddenImages" value="إظهار الصور المخفية" />
+      <Item key="frmSetting.chkLoopViewer" value="أعد تشغيل العارض الى الصورة الأولى عند الوصول إلى نهاية القائمة" />
+      <Item key="frmSetting.chkImageBoosterBack" value="شغّل معزز الصور عند الإنتقال إلى الخلف (تحتاج إلى أكثر من 20٪ من ذاكرة الوصول العشوائي &quot; RAM &quot;)" />
+      <Item key="frmSetting.lblImageLoadingOrder" value="ترتيب تحميل الصورة" />
+      <Item key="frmSetting.cmbImageOrder._Name" value="اسم (افتراضي)" />
+      <Item key="frmSetting.cmbImageOrder._Length" value="طول" />
+      <Item key="frmSetting.cmbImageOrder._CreationTime" value="وقت الإنشاء" />
+      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="آخر وقت وصول" />
+      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="آخر وقت الكتابة" />
+      <Item key="frmSetting.cmbImageOrder._Extension" value="ملحق" />
+      <Item key="frmSetting.cmbImageOrder._Random" value="عشوائي" />
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="إجراءات عجلة الماوس" />
+      <Item key="frmSetting.lblMouseWheel" value="عجلة الماوس" />
+      <Item key="frmSetting.lblMouseWheelAlt" value="عجلة الماوس + Alt" />
+      <Item key="frmSetting.lblMouseWheelCtrl" value="عجلة الماوس + Ctrl" />
+      <Item key="frmSetting.lblMouseWheelShift" value="عجلة الماوس + Shift" />
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="لا تفعل شيئا" />
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="التكبير/التصغير" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="التمرير عمودياً" />
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="التمرير أفقياً" />
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="الصورة السابقة/التالية" />
+      <Item key="frmSetting.lblHeadZooming" value="تكبير" />
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="التكبير الأمثل" />
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="تلقائي" />
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="تنعيم البكسل" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="مسح البكسل" />
+      <Item key="frmSetting.lblHeadThumbnailBar" value="شريط الصور المصغرة" />
+      <Item key="frmSetting.chkThumbnailVertical" value="إظهار الصور المصغرة على الجانب الأيمن" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="أبعاد الصورة المصغرة (بكسل)" />
+      <Item key="frmSetting.lblHeadSlideshow" value="عرض الشرائح" />
+      <Item key="frmSetting.chkLoopSlideshow" value="أعد تشغيل العارض الى الصورة الأولى عند الوصول إلى نهاية القائمة" />
+      <Item key="frmSetting.lblSlideshowInterval" value="الفاصل الزمني لعرض الشرائح: {0} ثانية" />
+      <Item key="frmSetting.lblHeadImageEditing" value="تحرير الصور" />
+      <Item key="frmSetting.chkSaveOnRotate" value="حفظ صورة العرض بعد التدوير" />
+      <Item key="frmSetting.lblSelectAppForEdit" value="حدد تطبيق لتحرير الصور" />
+      <Item key="frmSetting.btnEditEditExt" value="تعديل" />
+      <Item key="frmSetting.btnEditResetExt" value="إعادة التعيين إلى الافتراضي" />
+      <Item key="frmSetting.btnEditEditAllExt" value="تحرير كافة الملحقات" />
+      <Item key="frmSetting._allExtensions" value="كافة الملحقات" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="امتداد الملف" />
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="اسم التطبيق" />
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="مسار التطبيق" />
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="تطبيقات الوسيطات" />
+      <Item key="frmSetting.lblExtensionsGroupDescription" value="* لن يتم تحميل التنسيقات الاختيارية تلقائياً مسبقًا في الذاكرة." />
+      <Item key="frmSetting.lblSupportedExtension" value="التنسيقات المدعومة: {0}" />
+      <Item key="frmSetting.lnkOpenFileAssoc" value="افتح الملفات المقترنة" />
+      <Item key="frmSetting.btnAddNewExt" value="اضافة" />
+      <Item key="frmSetting.btnRegisterExt" value="تعيين كعارض الصور الافتراضي" />
+      <Item key="frmSetting.btnDeleteExt" value="مسح" />
+      <Item key="frmSetting.btnResetExt" value="إعادة التعيين إلى الافتراضي" />
+      <Item key="frmSetting.txtSeparator" value="الفاصل" />
+      <Item key="frmSetting.lblToolbarTT" value="تكوين أزرار شريط الأدوات" />
+      <Item key="frmSetting.lblUsedBtns" value="الأزرار الحالية:" />
+      <Item key="frmSetting.lblAvailBtns" value="الأزرار المتوفرة:" />
+      <Item key="frmSetting.btnMoveDownTT" value="تحريك الزر المحدد لأسفل" />
+      <Item key="frmSetting.btnMoveLeftTT" value="إزالة الزر (الأزرار) المحددة من شريط الأدوات" />
+      <Item key="frmSetting.btnMoveRightTT" value="إضافة الزر (الأزرار) المحدد إلى شريط الأدوات" />
+      <Item key="frmSetting.btnMoveUpTT" value="تحريك الزر المحدد لأعلى" />
+      <Item key="frmSetting.lblColorCodeFormat" value="تنسيق رمز اللون" />
+      <Item key="frmSetting.chkColorUseRGBA" value="استخدم تنسيق RGBA" />
+      <Item key="frmSetting.chkColorUseHEXA" value="استخدام HEX مع تنسيق ألفا" />
+      <Item key="frmSetting.chkColorUseHSLA" value="استخدم تنسيق HSLA" />
+      <Item key="frmSetting.lblDefaultColorCode" value="تنسيق رمز اللون الافتراضي عند النسخ" />
+      <Item key="frmSetting.lblLanguageText" value="اللغات المثبتة" />
+      <Item key="frmSetting.lnkRefresh" value="&gt; تحديث" />
+      <Item key="frmSetting.lblLanguageWarning" value="قد لا تكون حزمة اللغة هذه متوافقة مع {0} " />
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; تثبيت حزمة لغة جديدة (*.iglang)" />
+      <Item key="frmSetting.lnkCreateNew" value="&gt; إنشاء حزمة لغة جديدة" />
+      <Item key="frmSetting.lnkEdit" value="&gt; تحرير حزمة اللغة المحددة" />
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; الحصور على المزيد من حزم اللغات" />
+      <Item key="frmSetting.lblInstalledThemes" value="النسق المثبتة: {0}" />
+      <Item key="frmSetting.lnkThemeDownload" value="تحميل النسق" />
+      <Item key="frmSetting.btnThemeRefresh" value="تحديث" />
+      <Item key="frmSetting.btnThemeInstall" value="تثبيت" />
+      <Item key="frmSetting.btnThemeUninstall" value="إلغاء التثبيت" />
+      <Item key="frmSetting.btnThemeSaveAs" value="حفظ باسم" />
+      <Item key="frmSetting.btnThemeFolderOpen" value="فتح مجلد النسق" />
+      <Item key="frmSetting.btnThemeEdit._Edit" value="تحرير النسق المحدد" />
+      <Item key="frmSetting.btnThemeEdit._New" value="إنشاء نسق جديدة" />
+      <Item key="frmSetting.btnThemeApply" value="تطبيق النسق" />
+      <Item key="frmSetting.txtThemeInfo._Name" value="الإسم" />
+      <Item key="frmSetting.txtThemeInfo._Version" value="الإصدار" />
+      <Item key="frmSetting.txtThemeInfo._Author" value="مؤلف" />
+      <Item key="frmSetting.txtThemeInfo._Email" value="البريد الإلكتروني" />
+      <Item key="frmSetting.txtThemeInfo._Website" value="موقع الكتروني" />
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="التوافق" />
+      <Item key="frmSetting.txtThemeInfo._Description" value="الوصف" />
+      <Item key="frmSetting.btnThemeInstall._Success" value="تم تثبيت النسق بنجاح!" />
+      <Item key="frmSetting.btnThemeInstall._Error" value="غير قادر على تثبيت النسق." />
+      <Item key="frmSetting.btnThemeUninstall._Error" value="غير قادر على إلغاء تثبيت النسق المحدد." />
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="تم حفظ النسق الذي اخترته في {0}" />
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="غير قادر على حفظ النسق المحدد." />
+      <Item key="frmSetting.btnThemeApply._Success" value="تم تطبيق النسق المحدد بنجاح!" />
+      <Item key="frmSetting.btnThemeApply._Error" value="غير قادر على تطبيق النسق المحدد." />
+      <Item key="frmAddNewFormat.lblFileExtension" value="ملحق الملف" />
+      <Item key="frmAddNewFormat.lblFormatGroup" value="تنسيق المجموعة" />
+      <Item key="frmAddNewFormat.btnOK" value="موافق" />
+      <Item key="frmAddNewFormat.btnClose" value="إغلاق" />
+      <Item key="frmEditEditingAssocisation.lblFileExtension" value="ملحق الملف" />
+      <Item key="frmEditEditingAssocisation.lblAppName" value="اسم التطبيق" />
+      <Item key="frmEditEditingAssocisation.lblAppPath" value="مسار التطبيق" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="تطبيقات الوسيطات" />
+      <Item key="frmEditEditingAssocisation.btnReset" value="إعادة تعيين" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="موافق" />
+      <Item key="frmEditEditingAssocisation.btnClose" value="إغلاق" />
+      <Item key="frmEditEditingAssocisation.lblPreviewLabel" value="معاينة" />
+      <Item key="frmFirstLaunch._Text" value="أولاً-إطلاق تكوينات" />
+      <Item key="frmFirstLaunch.lblStepNumber" value="خطوة{0}/{1}" />
+      <Item key="frmFirstLaunch.btnNextStep" value="التالي" />
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="تم!" />
+      <Item key="frmFirstLaunch.lnkSkip" value="تخطي هذا وقم بتشغيل ImageGlass" />
+      <Item key="frmFirstLaunch.lblLanguage" value="حدد اللغة" />
+      <Item key="frmFirstLaunch.lblLayout" value="تحديد تخطيط" />
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="اساسي" />
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="مصمم" />
+      <Item key="frmFirstLaunch.lblTheme" value="اختر نسق" />
+      <Item key="frmFirstLaunch.lblDefaultApp" value="تعيين ImageGlass كعارض الصور الافتراضي؟" />
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="نعم" />
+    </Content>
+  </Language>
+</ImageGlass>
