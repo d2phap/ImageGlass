@@ -389,8 +389,7 @@ namespace ThemeConfig
         {
             if (lvTheme.SelectedItems.Count > 0)
             {
-                ImageGlass.Theme.Theme th = new ImageGlass.Theme.Theme();
-                th.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString());
+                ImageGlass.Theme.Theme.ApplyTheme(lvTheme.SelectedItems[0].Tag.ToString());
                
                 DialogResult msg = MessageBox.Show("Restart ImageGlass to complete the new theme applying ?", 
                     "Restart", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

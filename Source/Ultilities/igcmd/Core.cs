@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2016 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -30,54 +30,7 @@ namespace igcmd
 {
     public static class Core
     {
-        /// <summary>
-        /// Pack theme *.igtheme
-        /// </summary>
-        /// <param name="dir">Temporary folder path</param>
-        /// <param name="des">Destination *.igtheme file</param>
-        public static void PackTheme(string src, string des)
-        {
-            if (!Directory.Exists(src))
-            {
-                return;
-            }
-            
-            Theme th = new Theme(Path.Combine(src, "config.xml"));
 
-            //if file exist, rename & backup
-            if (File.Exists(des))
-            {
-                File.Move(des, des + ".old");
-            }
-
-            try
-            {
-                using (ZipFile z = new ZipFile(des, Encoding.UTF8))
-                {
-                    z.AddDirectory(src, th.name);
-                    z.Save();
-                };
-
-                frmMsg f = new frmMsg("ImageGlass theme", "ImageGlass theme has been successfully saved. \n\n" + des, FormMessageIcons.OK, "Close");
-                f.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                frmMsg f = new frmMsg("ImageGlass theme", "Error: \n\n" + ex.Message, FormMessageIcons.Warning, "Close");
-                f.ShowDialog();
-
-                //if file exist, rename & backup
-                if (File.Exists(des + ".old"))
-                {
-                    File.Move(des + ".old", des);
-                }
-            }
-
-            if (File.Exists(des + ".old"))
-            {
-                File.Delete(des + ".old");
-            }
-        }
 
         /// <summary>
         /// Check for update
@@ -103,6 +56,7 @@ namespace igcmd
             Application.Exit();
         }
 
+
         /// <summary>
         /// Check for update
         /// </summary>
@@ -111,14 +65,6 @@ namespace igcmd
             Application.Run(new frmCheckForUpdate());
         }
         
-
-        /// <summary>
-        /// Install theme
-        /// </summary>
-        public static void InstallTheme(string filename)
-        {
-            Application.Run(new frmInstallTheme(filename));
-        }
         
     }
 }

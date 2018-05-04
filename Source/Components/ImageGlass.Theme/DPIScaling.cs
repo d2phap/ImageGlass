@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -117,6 +117,25 @@ namespace ImageGlass.Theme
             return (double)DPIScaling.CurrentDPI / DPI_DEFAULT;
         }
         
+        /// <summary>
+        /// Transform a number to a new number after applying DPI Scale Factor
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static double TransformNumber(double num)
+        {
+            return num * GetDPIScaleFactor();
+        }
+
+        /// <summary>
+        /// Transform a number to a new number after applying DPI Scale Factor
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int TransformNumber(int num)
+        {
+            return (int) Math.Round(num * GetDPIScaleFactor());
+        }
 
     }
 }

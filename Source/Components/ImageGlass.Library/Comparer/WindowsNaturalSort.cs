@@ -30,9 +30,12 @@ namespace ImageGlass.Library.Comparer
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         static extern int StrCmpLogicalW(String x, String y);
 
-        public int Compare(string x, string y)
+        public int Compare(string filePath1, string filePath2)
         {
-            return StrCmpLogicalW(x, y);
+            var basename1 = Path.GetFileName(filePath1);
+            var basename2 = Path.GetFileName(filePath2);
+
+            return StrCmpLogicalW(basename1, basename2);
         }
         
     }

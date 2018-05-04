@@ -130,16 +130,13 @@
     <value>774, 6</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>35</value>
+    <value>42</value>
   </metadata>
   <data name="thumbnailBar.Colors" xml:space="preserve">
     <value>ControlBackColor = 0; BorderColor = 0; UnFocusedColor1 = 0; UnFocusedColor2 = 0; UnFocusedBorderColor = 0; HoverColor1 = 0; HoverColor2 = 0; HoverBorderColor = 0; SelectedColor1 = 0; SelectedColor2 = 0; SelectedBorderColor = 0; DisabledColor1 = 0; DisabledColor2 = 0; DisabledBorderColor = 0; DisabledForeColor = 0; ColumnHeaderBackColor1 = 0; ColumnHeaderBackColor2 = 0; ColumnHeaderHoverColor1 = 0; ColumnHeaderHoverColor2 = 0; ColumnSelectColor = 0; ColumnSeparatorColor = 0; PaneBackColor = 0; PaneSeparatorColor = 0; SelectionRectangleColor1 = 0; SelectionRectangleColor2 = 0</value>
   </data>
   <metadata name="toolMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>9, 5</value>
-  </metadata>
-  <metadata name="mnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>475, 4</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -721,4 +718,7 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 </value>
   </data>
+  <metadata name="mnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>475, 4</value>
+  </metadata>
 </root>

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ namespace ImageGlass
             lblAppName.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppName"];
             lblAppPath.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppPath"];
             lblAppArguments.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppArguments"];
+            lblPreviewLabel.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblPreviewLabel"];
 
             btnReset.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnReset"];
             btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
@@ -52,7 +53,13 @@ namespace ImageGlass
             txtAppPath.Text = this.AppPath;
             txtAppArguments.Text = this.AppArguments;
 
+            InsureMacro();
+            UpdateCommandPreview();
+
             txtAppName.Focus();
+
+            txtAppPath.LostFocus += Option_LostFocus;
+            txtAppArguments.LostFocus += Option_LostFocus;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -69,7 +76,7 @@ namespace ImageGlass
 
             if (AppPath.Length > 0 && !File.Exists(AppPath))
             {
-                txtAppPath.Focus();
+                txtAppPath.Focus(); // TODO shouldn't this also prevent dialog close?
             }
 
             DialogResult = DialogResult.OK;
@@ -79,6 +86,8 @@ namespace ImageGlass
         private void btnReset_Click(object sender, EventArgs e)
         {
             txtAppName.Text = txtAppPath.Text = txtAppArguments.Text = string.Empty;
+            InsureMacro();
+            UpdateCommandPreview();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -90,11 +99,12 @@ namespace ImageGlass
             {
                 txtAppPath.Text = o.FileName;
             }
+            UpdateCommandPreview();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            // disable parent form shotcuts
+            // disable parent form shortcuts
             return false;
         }
 
@@ -115,5 +125,45 @@ namespace ImageGlass
                 e.Cancel = true;
             }
         }
+
+        /// <summary>
+        /// Insure the macro is put in the app arguments box
+        /// </summary>
+        private void InsureMacro()
+        {
+            // Make certain the app arguments has the file substitution string
+            var txt = txtAppArguments.Text.Trim();
+            if (txt.ToLower().Contains(ImageEditingAssociation.FileMacro))
+                return;
+
+            //use double quotes as default
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{ImageEditingAssociation.FileMacro}\"";
+        }
+
+        /// <summary>
+        /// Update command preview
+        /// </summary>
+        private void UpdateCommandPreview()
+        {
+            var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
+
+            var fileSample = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            if (!File.Exists(fileSample))
+            {
+                fileSample = @"C:\fake dir\sample photo.jpg";
+            }
+            
+            // Something has changed; update the sample text
+            var cmd = $"{appPath} {txtAppArguments.Text.Replace(ImageEditingAssociation.FileMacro, fileSample)}";
+            txtCommandPreview.Text = cmd;
+        }
+
+
+        private void Option_LostFocus(object sender, EventArgs e)
+        {
+            // Focus was lost from a user-edit control. Make sure the preview is updated.
+            UpdateCommandPreview();
+        }
+
     }
 }

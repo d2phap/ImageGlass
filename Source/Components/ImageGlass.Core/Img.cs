@@ -120,18 +120,18 @@ namespace ImageGlass.Core
         }
 
         /// <summary>
-        /// Get relative path of this image
+        /// Get full path of this image
         /// </summary>
-        /// <returns>Relative path of image</returns>
+        /// <returns>Full path of image</returns>
         public string GetFileName()
         {
             return path;
         }
 
         /// <summary>
-        /// Set relative path of this image
+        /// Set full path of this image
         /// </summary>
-        /// <param name="s">New relative path of image</param>
+        /// <param name="s">New full path of image</param>
         public void SetFileName(string s)
         {
             path = s;

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lnkLogoDesigner = new System.Windows.Forms.Label();
             this.lnkCheckUpdate = new System.Windows.Forms.LinkLabel();
             this.lblUpdate = new System.Windows.Forms.Label();
             this.lnkFacebook = new System.Windows.Forms.LinkLabel();
@@ -48,28 +48,29 @@
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.sp0 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblReferences = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblComponent = new System.Windows.Forms.Label();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tpInfo = new System.Windows.Forms.TabPage();
+            this.lnkCollaborator = new System.Windows.Forms.LinkLabel();
             this.tpComponents = new System.Windows.Forms.TabPage();
             this.txtComponents = new System.Windows.Forms.RichTextBox();
             this.tpReferences = new System.Windows.Forms.TabPage();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
             this.btnDonation = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tpInfo.SuspendLayout();
             this.tpComponents.SuspendLayout();
             this.tpReferences.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -85,26 +86,27 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // lnkLogoDesigner
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(28, 119);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(288, 25);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Logo designer: Nguyễn Quốc Tuấn";
+            this.lnkLogoDesigner.AutoSize = true;
+            this.lnkLogoDesigner.ForeColor = System.Drawing.Color.Black;
+            this.lnkLogoDesigner.Location = new System.Drawing.Point(28, 119);
+            this.lnkLogoDesigner.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkLogoDesigner.Name = "lnkLogoDesigner";
+            this.lnkLogoDesigner.Size = new System.Drawing.Size(288, 25);
+            this.lnkLogoDesigner.TabIndex = 16;
+            this.lnkLogoDesigner.Text = "Logo designer: Nguyễn Quốc Tuấn";
             // 
             // lnkCheckUpdate
             // 
+            this.lnkCheckUpdate.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkCheckUpdate.AutoSize = true;
             this.lnkCheckUpdate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnkCheckUpdate.ForeColor = System.Drawing.Color.Black;
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkCheckUpdate.Location = new System.Drawing.Point(58, 473);
+            this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkCheckUpdate.Location = new System.Drawing.Point(58, 513);
             this.lnkCheckUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(161, 30);
@@ -120,7 +122,7 @@
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.lblUpdate.ForeColor = System.Drawing.Color.Black;
-            this.lblUpdate.Location = new System.Drawing.Point(26, 431);
+            this.lblUpdate.Location = new System.Drawing.Point(26, 471);
             this.lblUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpdate.Name = "lblUpdate";
             this.lblUpdate.Size = new System.Drawing.Size(155, 25);
@@ -129,13 +131,14 @@
             // 
             // lnkFacebook
             // 
+            this.lnkFacebook.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkFacebook.AutoSize = true;
             this.lnkFacebook.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnkFacebook.ForeColor = System.Drawing.Color.Black;
             this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkFacebook.Location = new System.Drawing.Point(58, 390);
+            this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkFacebook.Location = new System.Drawing.Point(58, 430);
             this.lnkFacebook.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkFacebook.Name = "lnkFacebook";
             this.lnkFacebook.Size = new System.Drawing.Size(413, 30);
@@ -148,13 +151,14 @@
             // 
             // lnkProjectPage
             // 
+            this.lnkProjectPage.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkProjectPage.AutoSize = true;
             this.lnkProjectPage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnkProjectPage.ForeColor = System.Drawing.Color.Black;
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkProjectPage.Location = new System.Drawing.Point(58, 356);
+            this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkProjectPage.Location = new System.Drawing.Point(58, 396);
             this.lnkProjectPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(353, 30);
@@ -167,13 +171,14 @@
             // 
             // lnkIGHomepage
             // 
+            this.lnkIGHomepage.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkIGHomepage.AutoSize = true;
             this.lnkIGHomepage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnkIGHomepage.ForeColor = System.Drawing.Color.Black;
             this.lnkIGHomepage.LinkArea = new System.Windows.Forms.LinkArea(22, 99);
             this.lnkIGHomepage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkIGHomepage.Location = new System.Drawing.Point(58, 322);
+            this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkIGHomepage.Location = new System.Drawing.Point(58, 362);
             this.lnkIGHomepage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkIGHomepage.Name = "lnkIGHomepage";
             this.lnkIGHomepage.Size = new System.Drawing.Size(375, 30);
@@ -189,7 +194,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(26, 280);
+            this.label2.Location = new System.Drawing.Point(26, 320);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 25);
@@ -198,17 +203,18 @@
             // 
             // linkLabel2
             // 
+            this.linkLabel2.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.linkLabel2.ForeColor = System.Drawing.Color.Black;
             this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.linkLabel2.Location = new System.Drawing.Point(58, 236);
+            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.linkLabel2.Location = new System.Drawing.Point(58, 276);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(127, 30);
-            this.linkLabel2.TabIndex = 5;
+            this.linkLabel2.TabIndex = 6;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Skype: d2phap";
             this.linkLabel2.UseCompatibleTextRendering = true;
@@ -217,17 +223,18 @@
             // 
             // lnkEmail
             // 
+            this.lnkEmail.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkEmail.AutoSize = true;
             this.lnkEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnkEmail.ForeColor = System.Drawing.Color.Black;
             this.lnkEmail.LinkArea = new System.Windows.Forms.LinkArea(7, 23);
             this.lnkEmail.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkEmail.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
-            this.lnkEmail.Location = new System.Drawing.Point(58, 202);
+            this.lnkEmail.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkEmail.Location = new System.Drawing.Point(58, 242);
             this.lnkEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkEmail.Name = "lnkEmail";
             this.lnkEmail.Size = new System.Drawing.Size(224, 30);
-            this.lnkEmail.TabIndex = 4;
+            this.lnkEmail.TabIndex = 5;
             this.lnkEmail.TabStop = true;
             this.lnkEmail.Text = "Email: d2phap@gmail.com";
             this.lnkEmail.UseCompatibleTextRendering = true;
@@ -239,7 +246,7 @@
             this.lblInfoContact.AutoSize = true;
             this.lblInfoContact.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
             this.lblInfoContact.ForeColor = System.Drawing.Color.Black;
-            this.lblInfoContact.Location = new System.Drawing.Point(26, 160);
+            this.lblInfoContact.Location = new System.Drawing.Point(26, 200);
             this.lblInfoContact.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblInfoContact.Name = "lblInfoContact";
             this.lblInfoContact.Size = new System.Drawing.Size(77, 25);
@@ -275,7 +282,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(238)))));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
             this.label4.Location = new System.Drawing.Point(118, 18);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
@@ -354,12 +361,28 @@
             this.sp0.SplitterDistance = 220;
             this.sp0.TabIndex = 19;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 596);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
             // lblReferences
             // 
             this.lblReferences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblReferences.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblReferences.ForeColor = System.Drawing.Color.Black;
             this.lblReferences.Location = new System.Drawing.Point(0, 100);
@@ -382,7 +405,6 @@
             this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfo.BackColor = System.Drawing.Color.Gainsboro;
-            this.lblInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblInfo.ForeColor = System.Drawing.Color.Black;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
@@ -405,7 +427,6 @@
             this.lblComponent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblComponent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblComponent.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblComponent.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblComponent.ForeColor = System.Drawing.Color.Black;
             this.lblComponent.Location = new System.Drawing.Point(0, 50);
@@ -443,7 +464,8 @@
             // tpInfo
             // 
             this.tpInfo.BackColor = System.Drawing.Color.White;
-            this.tpInfo.Controls.Add(this.label1);
+            this.tpInfo.Controls.Add(this.lnkCollaborator);
+            this.tpInfo.Controls.Add(this.lnkLogoDesigner);
             this.tpInfo.Controls.Add(this.lblVersion);
             this.tpInfo.Controls.Add(this.lnkCheckUpdate);
             this.tpInfo.Controls.Add(this.lblCopyright);
@@ -458,9 +480,29 @@
             this.tpInfo.Location = new System.Drawing.Point(4, 37);
             this.tpInfo.Margin = new System.Windows.Forms.Padding(0);
             this.tpInfo.Name = "tpInfo";
-            this.tpInfo.Size = new System.Drawing.Size(758, 555);
+            this.tpInfo.Size = new System.Drawing.Size(760, 555);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
+            // 
+            // lnkCollaborator
+            // 
+            this.lnkCollaborator.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkCollaborator.AutoSize = true;
+            this.lnkCollaborator.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkCollaborator.ForeColor = System.Drawing.Color.Black;
+            this.lnkCollaborator.LinkArea = new System.Windows.Forms.LinkArea(30, 9);
+            this.lnkCollaborator.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkCollaborator.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lnkCollaborator.Location = new System.Drawing.Point(28, 151);
+            this.lnkCollaborator.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkCollaborator.Name = "lnkCollaborator";
+            this.lnkCollaborator.Size = new System.Drawing.Size(335, 30);
+            this.lnkCollaborator.TabIndex = 4;
+            this.lnkCollaborator.TabStop = true;
+            this.lnkCollaborator.Text = "Collaborator: Kevin Routley (@fire-eggs)";
+            this.lnkCollaborator.UseCompatibleTextRendering = true;
+            this.lnkCollaborator.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkCollaborator.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCollaborator_LinkClicked);
             // 
             // tpComponents
             // 
@@ -535,23 +577,6 @@
             this.btnDonation.TabStop = false;
             this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(220, 596);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -581,13 +606,13 @@
             this.sp0.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.tab1.ResumeLayout(false);
             this.tpInfo.ResumeLayout(false);
             this.tpInfo.PerformLayout();
             this.tpComponents.ResumeLayout(false);
             this.tpReferences.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -612,7 +637,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblSoftwareUpdate;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lnkLogoDesigner;
         private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.Label lblReferences;
         private System.Windows.Forms.Label lblInfo;
@@ -625,5 +650,6 @@
         private System.Windows.Forms.PictureBox btnDonation;
         private System.Windows.Forms.RichTextBox txtComponents;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.LinkLabel lnkCollaborator;
     }
 }

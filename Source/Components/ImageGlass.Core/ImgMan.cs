@@ -172,6 +172,10 @@ namespace ImageGlass.Core
             set { }
         }
 
+        /// <summary>
+        /// Get full path of this image
+        /// </summary>
+        /// <returns>Full path of image</returns>
         public string GetFileName(int i)
         {
             try
@@ -184,6 +188,27 @@ namespace ImageGlass.Core
             }
         }
 
+        /// <summary>
+        /// Get file list
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetFileList()
+        {
+            var list = new List<string>();
+
+            foreach(var item in lstImage)
+            {
+                list.Add(item.GetFileName());
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Set full path of this image
+        /// </summary>
+        /// <param name="i">image index</param>
+        /// <param name="s">new full path</param>
         public void SetFileName(int i, string s)
         {
             lstImage[i].SetFileName(s);
@@ -210,7 +235,8 @@ namespace ImageGlass.Core
 
         public int IndexOf(string filename)
         {
-            return lstImage.FindIndex(v => v.GetFileName() == filename);
+            // case sensitivity, esp. if filename passed on command line
+            return lstImage.FindIndex(v => v.GetFileName().ToLower() == filename.ToLower());
         }
 
 		public void Dispose()

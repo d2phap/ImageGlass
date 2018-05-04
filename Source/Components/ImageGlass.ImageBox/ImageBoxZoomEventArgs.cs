@@ -25,7 +25,7 @@ namespace ImageGlass
     /// <param name="source">The source of the operation.</param>
     /// <param name="oldZoom">The old zoom level.</param>
     /// <param name="newZoom">The new zoom level.</param>
-    public ImageBoxZoomEventArgs(ImageBoxZoomActions actions, ImageBoxActionSources source, int oldZoom, int newZoom)
+    public ImageBoxZoomEventArgs(ImageBoxZoomActions actions, ImageBoxActionSources source, double oldZoom, double newZoom)
       : this()
     {
             Actions = actions;
@@ -58,13 +58,13 @@ namespace ImageGlass
     /// Gets or sets the new zoom level.
     /// </summary>
     /// <value>The new zoom level.</value>
-    public int NewZoom { get; protected set; }
+    public double NewZoom { get; protected set; }
 
     /// <summary>
     /// Gets or sets the old zoom level.
     /// </summary>
     /// <value>The old zoom level.</value>
-    public int OldZoom { get; protected set; }
+    public double OldZoom { get; protected set; }
 
     /// <summary>
     /// Gets or sets the source of the operation..

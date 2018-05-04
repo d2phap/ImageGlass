@@ -142,8 +142,6 @@ namespace ImageGlass
 
         private bool _allowDoubleClick;
 
-        private bool _allowZoom;
-
         /// <summary>
         /// [PHAP]
         /// </summary>
@@ -219,7 +217,10 @@ namespace ImageGlass
 
         private Size _virtualSize;
 
-        private int _zoom;
+        /// <summary>
+        /// [IG_CHANGE] Zoom value changed to double
+        /// </summary>
+        private double _zoom;
 
         private ImageBoxZoomLevelCollection _zoomLevels;
 
@@ -263,7 +264,6 @@ namespace ImageGlass
 
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             BorderStyle = BorderStyle.Fixed3D;
-            AllowZoom = true;
             LimitSelectionToImage = true;
             DropShadowSize = 3;
             ImageBorderStyle = ImageBoxBorderStyle.None;
@@ -589,6 +589,51 @@ namespace ImageGlass
             return ImageBox.CreateCheckerBoxTile(8, Color.Gainsboro, Color.WhiteSmoke);
         }
 
+        /// <summary>
+        /// Use mouse wheel to scroll the image vertically (by default) or horizontally
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="horizontal"></param>
+        public void ScrollWithMouseWheel(int delta, bool horizontal = false)
+        {
+            Size clientSize;
+            clientSize = GetInsideViewPort(true).Size;
+            if (horizontal)
+            {
+                if (ScaledImageWidth > clientSize.Width)
+                {
+                    AdjustScroll(-delta, 0);
+                }
+            }
+            else
+            {
+                if (ScaledImageHeight > clientSize.Height)
+                {
+                    AdjustScroll(0, -delta);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use mouse wheel to zoom the image
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="cursorPosition"></param>
+        public void ZoomWithMouseWheel(int delta, Point cursorPosition)
+        {
+            if (SizeMode == ImageBoxSizeMode.Normal)
+            {
+                int spins;
+                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
+                spins = Math.Abs(delta / SystemInformation.MouseWheelScrollDelta);
+                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
+                for (int i = 0; i < spins; i++)
+                {
+                    ProcessMouseZoom(delta > 0, cursorPosition);
+                }
+            }
+        }
+
         #endregion
 
         #region Overridden Properties
@@ -852,7 +897,7 @@ namespace ImageGlass
 
             ProcessScrollingShortcuts(e);
 
-            if (ShortcutsEnabled && AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
+            if (ShortcutsEnabled && SizeMode == ImageBoxSizeMode.Normal)
             {
                 ProcessImageShortcuts(e);
             }
@@ -916,7 +961,7 @@ namespace ImageGlass
             }
             WasDragCancelled = false;
 
-            if (!doNotProcessClick && AllowZoom && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
+            if (!doNotProcessClick && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
             {
                 if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None)
                 {
@@ -938,20 +983,6 @@ namespace ImageGlass
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            if (AllowZoom && SizeMode == ImageBoxSizeMode.Normal)
-            {
-                int spins;
-
-                // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
-                spins = Math.Abs(e.Delta / SystemInformation.MouseWheelScrollDelta);
-
-                // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
-                for (int i = 0; i < spins; i++)
-                {
-                    ProcessMouseZoom(e.Delta > 0, e.Location);
-                }
-            }
         }
 
         /// <summary>
@@ -1114,27 +1145,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the user can change the zoom level.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the zoom level can be changed; otherwise, <c>false</c>.
-        /// </value>
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        public virtual bool AllowZoom
-        {
-            get { return _allowZoom; }
-            set
-            {
-                if (AllowZoom != value)
-                {
-                    _allowZoom = value;
-
-                    OnAllowZoomChanged(EventArgs.Empty);
-                }
-            }
-        }
 
         /// <summary>
         /// [PHAP] Handles animating gif images
@@ -1874,11 +1884,12 @@ namespace ImageGlass
 
         /// <summary>
         ///   Gets or sets the zoom.
+        ///   [IG_CHANGE] Zoom value changed to double
         /// </summary>
         /// <value>The zoom.</value>
         [DefaultValue(100)]
         [Category("Appearance")]
-        public virtual int Zoom
+        public virtual double Zoom
         {
             get { return _zoom; }
             set { SetZoom(value, value > Zoom ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.Unknown); }
@@ -1886,6 +1897,7 @@ namespace ImageGlass
 
         /// <summary>
         ///   Gets the zoom factor.
+        ///   [IG_CHANGE] Zoom value changed to double
         /// </summary>
         /// <value>The zoom factor.</value>
         [Browsable(false)]
@@ -2919,7 +2931,7 @@ namespace ImageGlass
                     }
                 }
 
-                Zoom = (int)Math.Round(Math.Floor(zoom));
+                Zoom = zoom;
             }
         }
 
@@ -2966,7 +2978,7 @@ namespace ImageGlass
                     }
                 }
 
-                Zoom = (int)Math.Round(Math.Floor(zoom));
+                Zoom = zoom;
             }
         }
 
@@ -3014,7 +3026,7 @@ namespace ImageGlass
             cx = (int)(rectangle.X + (rectangle.Width / 2));
             cy = (int)(rectangle.Y + (rectangle.Height / 2));
 
-            Zoom = (int)(zoomFactor * 100);
+            Zoom = zoomFactor * 100;
             CenterAt(new Point(cx, cy));
         }
 
@@ -4609,12 +4621,11 @@ namespace ImageGlass
         protected virtual void ProcessImageShortcuts(KeyEventArgs e)
         {
             Point currentPixel;
-            int currentZoom;
             Point relativePoint;
 
             relativePoint = CenterPoint;
             currentPixel = PointToImage(relativePoint);
-            currentZoom = Zoom;
+            var currentZoom = Zoom;
 
             switch (e.KeyCode)
             {
@@ -4627,18 +4638,12 @@ namespace ImageGlass
 
                 //case Keys.PageDown:
                 case Keys.Oemplus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomIn(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomIn(ImageBoxActionSources.User, true);
                     break;
 
                 //case Keys.PageUp:
                 case Keys.OemMinus:
-                    if (AllowZoom)
-                    {
-                        PerformZoomOut(ImageBoxActionSources.User, true);
-                    }
+                    PerformZoomOut(ImageBoxActionSources.User, true);
                     break;
             }
 
@@ -4820,9 +4825,7 @@ namespace ImageGlass
         {
             if (SizeMode != ImageBoxSizeMode.Normal)
             {
-                int previousZoom;
-
-                previousZoom = Zoom;
+                var previousZoom = Zoom;
                 SizeMode = ImageBoxSizeMode.Normal;
                 Zoom = previousZoom; // Stop the zoom getting reset to 100% before calculating the new zoom
             }
@@ -4978,13 +4981,9 @@ namespace ImageGlass
         /// <param name="relativePoint">A <see cref="Point"/> describing the current center of the control.</param>
         private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition, Point relativePoint)
         {
-            Point currentPixel;
-            int currentZoom;
-            int newZoom;
-
-            currentPixel = PointToImage(relativePoint);
-            currentZoom = Zoom;
-            newZoom = GetZoomLevel(action);
+            var currentPixel = PointToImage(relativePoint);
+            var currentZoom = Zoom;
+            var newZoom = GetZoomLevel(action);
 
             RestoreSizeMode();
             SetZoom(newZoom, action, source);
@@ -5002,7 +5001,7 @@ namespace ImageGlass
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if an unsupported action is specified.</exception>
         private int GetZoomLevel(ImageBoxZoomActions action)
         {
-            int result;
+            double result;
 
             switch (action)
             {
@@ -5010,10 +5009,10 @@ namespace ImageGlass
                     result = Zoom;
                     break;
                 case ImageBoxZoomActions.ZoomIn:
-                    result = ZoomLevels.NextZoom(Zoom);
+                    result = ZoomLevels.NextZoom((int)Zoom);
                     break;
                 case ImageBoxZoomActions.ZoomOut:
-                    result = ZoomLevels.PreviousZoom(Zoom);
+                    result = ZoomLevels.PreviousZoom((int)Zoom);
                     break;
                 case ImageBoxZoomActions.ActualSize:
                     result = 100;
@@ -5022,7 +5021,7 @@ namespace ImageGlass
                     throw new ArgumentOutOfRangeException("action");
             }
 
-            return result;
+            return (int)result;
         }
 
         /// <summary>
@@ -5041,11 +5040,9 @@ namespace ImageGlass
         /// <param name="value">The new zoom value.</param>
         /// <param name="actions">The zoom actions that caused the value to be updated.</param>
         /// <param name="source">The source of the zoom operation.</param>
-        private void SetZoom(int value, ImageBoxZoomActions actions, ImageBoxActionSources source)
+        private void SetZoom(double value, ImageBoxZoomActions actions, ImageBoxActionSources source)
         {
-            int previousZoom;
-
-            previousZoom = Zoom;
+            var previousZoom = Zoom;
 
             if (value < MinZoom)
             {

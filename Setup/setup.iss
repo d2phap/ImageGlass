@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "4.5.11.27"
+#define MyAppVersion "5.0.5.7"
 #define MyAppPublisher "Duong Dieu Phap"
 #define MyAppURL "http://www.imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
@@ -29,7 +29,7 @@ SetupIconFile=D:\DEV\ImageGlass\Assets\Setup Logo\setup_logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardSmallImageFile=D:\DEV\ImageGlass\Setup\WizModernSmallImage.bmp
-AppCopyright=Copyright © 2010-2017 by {#MyAppPublisher}
+AppCopyright=Copyright © 2010-2018 by {#MyAppPublisher}
 LanguageDetectionMethod=locale
 AppContact=d2phap@gmail.com
 AppReadmeFile=http://www.imageglass.org/
@@ -39,11 +39,11 @@ VersionInfoVersion={#MyAppVersion}
 VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription=A Iightweight, versatile image viewer
 VersionInfoTextVersion={#MyAppVersion}
-VersionInfoCopyright=Copyright © 2010-2017 by {#MyAppPublisher}
+VersionInfoCopyright=Copyright © 2010-2018 by {#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
-MinVersion=0,5.01sp3
+MinVersion=0,6.1
 ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=poweruser
 EnableDirDoesntExistWarning=True
@@ -80,35 +80,31 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Source\ImageGlass\bin\Release\igcmd.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\Facebook.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Source\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Source\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\IconLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.ImageBox.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.ImageListView.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Library.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Plugins.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Assets\default.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Assets\default.jpg"; DestDir: "{app}"; Flags: ignoreversion
+Source: "igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
+
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

@@ -45,10 +45,9 @@
             this.btnOK.FlatAppearance.BorderSize = 0;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(206)))), ((int)(((byte)(219)))));
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnOK.Location = new System.Drawing.Point(219, 7);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOK.Location = new System.Drawing.Point(307, 20);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(50, 25);
+            this.btnOK.Size = new System.Drawing.Size(97, 45);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -58,10 +57,9 @@
             // 
             this.txtValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtValue.Location = new System.Drawing.Point(10, 45);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtValue.Location = new System.Drawing.Point(15, 68);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(260, 23);
+            this.txtValue.Size = new System.Drawing.Size(388, 31);
             this.txtValue.TabIndex = 0;
             this.txtValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValue_KeyPress);
             // 
@@ -69,10 +67,9 @@
             // 
             this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMessage.Location = new System.Drawing.Point(8, 6);
-            this.lblMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMessage.Location = new System.Drawing.Point(12, 9);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(261, 35);
+            this.lblMessage.Size = new System.Drawing.Size(392, 52);
             this.lblMessage.TabIndex = 2;
             this.lblMessage.Text = "#";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -82,19 +79,18 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 83);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Location = new System.Drawing.Point(0, 138);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(284, 40);
+            this.panel1.Size = new System.Drawing.Size(426, 77);
             this.panel1.TabIndex = 8;
             // 
             // frmDialogBox
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(284, 123);
+            this.ClientSize = new System.Drawing.Size(426, 215);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.lblMessage);
@@ -102,7 +98,6 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDialogBox";

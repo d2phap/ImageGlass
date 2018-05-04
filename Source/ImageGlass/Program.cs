@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
-using System.Collections.Generic;
+using System.IO;
 
 namespace ImageGlass
 {
@@ -58,7 +57,31 @@ namespace ImageGlass
             // Enable Portable mode as default if possible
             GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
-            //auto update----------------------------------------------------------------
+
+            #region Check First-launch Configs
+            var firstLaunchVersion = 0;
+
+            int.TryParse(GlobalSetting.GetConfig("FirstLaunchVersion", "0"), out firstLaunchVersion);
+
+            if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                p.StartInfo.Arguments = "firstlaunch";
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
+
+                Application.Exit();
+                return;
+            }
+            #endregion
+
+
+            #region Auto update
             string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
             
             if (lastUpdateConfig != "0")
@@ -80,8 +103,10 @@ namespace ImageGlass
                     }
                 }
             }
-            
+            #endregion
 
+
+            #region Multi instances
             //get current config
             GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
             
@@ -108,8 +133,10 @@ namespace ImageGlass
                     }
                 }
             } //end check multi instances
-            
+            #endregion
+
         }
+
 
         private static void SingleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)
         {

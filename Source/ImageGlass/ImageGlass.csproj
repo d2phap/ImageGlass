@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImageGlass</RootNamespace>
     <AssemblyName>ImageGlass</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>iglogo.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -100,6 +100,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -111,6 +112,7 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -129,15 +131,11 @@
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <HintPath>..\packages\Facebook.7.0.6\lib\net40-client\Facebook.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
     </Reference>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.7.900\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.4.4.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.4.4\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -160,29 +158,17 @@
     <Compile Include="frmAddNewFormat.Designer.cs">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmColorPicker.Designer.cs">
+      <DependentUpon>frmColorPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEditEditingAssocisation.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmEditEditingAssocisation.Designer.cs">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmExtension.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmExtension.Designer.cs">
-      <DependentUpon>frmExtension.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmFacebook.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFacebook.Designer.cs">
-      <DependentUpon>frmFacebook.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmFaceBookLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFaceBookLogin.Designer.cs">
-      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -196,7 +182,6 @@
     <Compile Include="frmSetting.Designer.cs">
       <DependentUpon>frmSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global.cs" />
     <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,18 +192,11 @@
     <EmbeddedResource Include="frmAddNewFormat.resx">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmColorPicker.resx">
+      <DependentUpon>frmColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEditEditingAssocisation.resx">
       <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmExtension.resx">
-      <DependentUpon>frmExtension.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFacebook.resx">
-      <DependentUpon>frmFacebook.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFaceBookLogin.resx">
-      <DependentUpon>frmFaceBookLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -344,10 +322,6 @@
     <ProjectReference Include="..\Components\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\ImageGlass.Plugins\ImageGlass.Plugins.csproj">
-      <Project>{3ebdaabb-077b-4308-9d69-93727dfd4554}</Project>
-      <Name>ImageGlass.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Theme\ImageGlass.Theme.csproj">
       <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+
 namespace ImageGlass.Services.Configuration
 {
+    /// <summary>
+    /// The loading order list.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
     public enum ImageOrderBy
     {
         Name = 0,
@@ -29,7 +36,12 @@ namespace ImageGlass.Services.Configuration
         Random = 6
     }
 
-    public enum ZoomOptimizationValue
+    /// <summary>
+    /// The list of Zoom Optimization.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum ZoomOptimizationMethods
     {
         Auto = 0,
         SmoothPixels = 1,
@@ -47,5 +59,49 @@ namespace ImageGlass.Services.Configuration
         MENU_ICON_HEIGHT = 21,
         TOOLBAR_ICON_HEIGHT = 20,
         TOOLBAR_HEIGHT = 40
+    }
+
+    /// <summary>
+    /// The list of mousewheel actions.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum MouseWheelActions
+    {
+        DoNothing = 0,
+        Zoom = 1,
+        ScrollVertically = 2,
+        ScrollHorizontally = 3,
+        BrowseImages = 4
+    }
+
+    /// <summary>
+    /// Define the flags to tell frmMain update the UI
+    /// </summary>
+    [Flags]
+    public enum MainFormForceUpdateAction
+    {
+        NONE = 0,
+        COLOR_PICKER_MENU = 1,
+        THEME = 2,
+        LANGUAGE = 4,
+        THUMBNAIL_BAR = 8,
+        THUMBNAIL_ITEMS = 16,
+        TOOLBAR = 32,
+        IMAGE_LIST = 64,
+        IMAGE_FOLDER = 128,
+        OTHER_SETTINGS = 256
+    }
+
+
+    /// <summary>
+    /// The list of layout mode.
+    /// **If we need to rename, have to update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum LayoutMode
+    {
+        Standard = 0,
+        Designer = 1
     }
 }
