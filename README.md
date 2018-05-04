@@ -12,17 +12,17 @@ ImageGlass is a simple picture viewer with which you will be able to display you
 ## Download & Screen shots
 
 <a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="http://imageglass.org/upload/photo/release/4.5_1.png" alt="ImageGlass 4.5.11.27">
+<img src="http://imageglass.org/upload/photo/release/5.0_1.png" alt="ImageGlass 5.0.5.7">
 </a><br/>
 
 <a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%204.5.11.27-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 4.5.11.27">
+<img src="https://img.shields.io/badge/Download-ImageGlass%205.0.5.7-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.0.5.7">
 </a>
 
 
 ## Development
 ![Visual Studio 2017](https://img.shields.io/badge/IDE-Visual%20Studio%202017-964ad4.svg?maxAge=3600)
-![.NET Framework 4](https://img.shields.io/badge/.NET-Framework%204-lightgrey.svg?maxAge=3600)
+![.NET Framework 4.7.1](https://img.shields.io/badge/.NET-Framework%204-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
 ```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
