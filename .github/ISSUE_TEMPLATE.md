@@ -1,4 +1,9 @@
-// Use this template when you want to report a **_bug_** only. **<<===== DELETE THIS LINE**
+<!-- Use this template when you want to report a **_bug_** only. **<<==== DELETE THIS LINE**  -->
+
+### System info:
+- ImageGlass version: ____tell_me_here____
+- OS version: ____tell_me_here____
+
 
 ### Expected behavior:
 ____tell_me_here____
@@ -12,11 +17,6 @@ ____tell_me_here____
 1. ____tell_me_here____
 2. ____tell_me_here____
 3. ____tell_me_here____
-
-
-### System info:
-- ImageGlass version: ____tell_me_here____
-- OS version: ____tell_me_here____
 
 
 ### Other info:
