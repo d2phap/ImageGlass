@@ -53,10 +53,11 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.ForeColor = System.Drawing.Color.Black;
-            this.btnOK.Location = new System.Drawing.Point(259, 16);
+            this.btnOK.Location = new System.Drawing.Point(231, 16);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(86, 35);
+            this.btnOK.Size = new System.Drawing.Size(100, 40);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -66,10 +67,11 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(351, 16);
+            this.btnClose.Location = new System.Drawing.Point(337, 16);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(86, 35);
+            this.btnClose.Size = new System.Drawing.Size(100, 40);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -108,6 +110,7 @@
             this.cmbFormatGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbFormatGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFormatGroup.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbFormatGroup.FormattingEnabled = true;
             this.cmbFormatGroup.Location = new System.Drawing.Point(18, 134);
             this.cmbFormatGroup.Name = "cmbFormatGroup";
