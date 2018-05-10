@@ -117,6 +117,12 @@ namespace ImageGlass.Core
 
                     if (ext.CompareTo(".heic") == 0)
                     {
+                        // NOTE: ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                        // There is a bug with Magick.NET v7.4.5 
+                        // that ToBitmap() function will return wrong colorspace:
+                        // https://github.com/dlemstra/Magick.NET/issues/153#issuecomment-388080405
+                        // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                        // Hence, we need to export to BitmapSource then convert to Bitmap again
                         bmp = BitmapBooster.BitmapFromSource(magicImg.ToBitmapSource());
                     }
                     else
