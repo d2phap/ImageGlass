@@ -1366,18 +1366,7 @@ namespace ImageGlass
         {
             string configValue = string.Empty;
 
-            // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
-            // the windows *Position* is the one UI setting which *must* be applied at
-            // the OnLoad event in order to 'take'.
-            #region Windows Bound (Position + Size)
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
-
-            if (!Helper.IsOnScreen(rc.Location))
-            {
-                rc.Location = new Point(280, 125);
-            }
-            this.Bounds = rc;
-            #endregion
+            
 
 
             #region UI SETTINGS
@@ -1486,6 +1475,19 @@ namespace ImageGlass
             #region OTHER SETTINGS
             if (isLoadOthers)
             {
+                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
+                // the windows *Position* is the one UI setting which *must* be applied at
+                // the OnLoad event in order to 'take'.
+                #region Windows Bound (Position + Size)
+                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+                this.Bounds = rc;
+                #endregion
+
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
