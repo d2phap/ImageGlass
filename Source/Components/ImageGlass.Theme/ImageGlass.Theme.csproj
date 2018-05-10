@@ -57,8 +57,8 @@
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.4.4.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.4.4\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.4.5.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.4.5\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
