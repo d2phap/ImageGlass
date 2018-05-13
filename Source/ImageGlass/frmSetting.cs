@@ -38,11 +38,6 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            RenderTheme r = new RenderTheme();
-            r.ApplyTheme(lvExtension);
-            r.ApplyTheme(lvImageEditing);
-            r.ApplyTheme(lvTheme);
-
             imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
             imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
             
@@ -455,6 +450,9 @@ namespace ImageGlass
                 lblImage.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabImageConfig();
+
+                RenderTheme r = new RenderTheme();
+                r.ApplyTheme(lvImageEditing);
             }
             else if (tab1.SelectedTab == tabFileAssociation)
             {
@@ -463,6 +461,11 @@ namespace ImageGlass
 
                 // Load image formats to the list
                 LoadExtensionList();
+
+                lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
+
+                RenderTheme r = new RenderTheme();
+                r.ApplyTheme(lvExtension);
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -491,6 +494,7 @@ namespace ImageGlass
                 lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabTheme();
+                
             }
         }
 

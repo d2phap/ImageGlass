@@ -505,7 +505,6 @@ namespace ImageGlass
             this.lvExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvExtension.CheckBoxes = true;
             this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvExtension.FullRowSelect = true;
@@ -523,8 +522,9 @@ namespace ImageGlass
             this.lvExtension.Size = new System.Drawing.Size(750, 372);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 33;
+            this.lvExtension.TileSize = new System.Drawing.Size(100, 30);
             this.lvExtension.UseCompatibleStateImageBehavior = false;
-            this.lvExtension.View = System.Windows.Forms.View.Details;
+            this.lvExtension.View = System.Windows.Forms.View.Tile;
             this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
             // 
             // columnHeader1
@@ -940,7 +940,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.AutoSize = true;
             this.btnEditEditAllExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1574);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1630);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(265, 45);
             this.btnEditEditAllExt.TabIndex = 30;
@@ -952,7 +952,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.AutoSize = true;
             this.btnEditResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1574);
+            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1630);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(245, 45);
             this.btnEditResetExt.TabIndex = 31;
@@ -965,7 +965,7 @@ namespace ImageGlass
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
             this.btnEditEditExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1574);
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1630);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(133, 45);
             this.btnEditEditExt.TabIndex = 29;
@@ -975,7 +975,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1606);
+            this.panel3.Location = new System.Drawing.Point(27, 1662);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -985,7 +985,6 @@ namespace ImageGlass
             // 
             this.lvImageEditing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvImageEditing.CheckBoxes = true;
             this.lvImageEditing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clnFileExtension,
             this.clnAppName,
@@ -1005,7 +1004,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(698, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(724, 271);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 28;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
