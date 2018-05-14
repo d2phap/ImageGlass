@@ -45,18 +45,20 @@ namespace ImageGlass
         {
             InitializeComponent();
 
+            //Check DPI Scaling ratio
+            DPIScaling.CurrentDPI = this.DeviceDpi; // DPIScaling.GetSystemDpi();
+
             //Modern UI menu renderer
             mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();
 
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
-
+            
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
 
-            //Check DPI Scaling ratio
-            DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
+            //Update form with new DPI
             OnDpiChanged();
         }
 
@@ -1434,7 +1436,8 @@ namespace ImageGlass
                 //Get the greater width value
                 GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
 
-                //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
+                //Load thumbnail orientation state: 
+                //NOTE: needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
                 GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
 
                 //Load vertical thumbnail bar width
