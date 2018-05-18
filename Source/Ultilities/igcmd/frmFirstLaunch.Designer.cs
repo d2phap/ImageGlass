@@ -71,12 +71,12 @@
             // 
             // lnkSkip
             // 
-            this.lnkSkip.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(104)))), ((int)(((byte)(199)))));
+            this.lnkSkip.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkSkip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkSkip.BackColor = System.Drawing.Color.Transparent;
             this.lnkSkip.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-            this.lnkSkip.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkSkip.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
             this.lnkSkip.Location = new System.Drawing.Point(12, 78);
             this.lnkSkip.Name = "lnkSkip";
             this.lnkSkip.Size = new System.Drawing.Size(494, 35);
@@ -84,18 +84,19 @@
             this.lnkSkip.TabStop = true;
             this.lnkSkip.Text = "Skip and Launch ImageGlass_";
             this.lnkSkip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkSkip.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(131)))), ((int)(((byte)(244)))));
+            this.lnkSkip.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
             this.lnkSkip.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSkip_LinkClicked);
             // 
             // btnNextStep
             // 
             this.btnNextStep.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnNextStep.FlatAppearance.BorderSize = 0;
+            this.btnNextStep.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnNextStep.Location = new System.Drawing.Point(186, 32);
             this.btnNextStep.Name = "btnNextStep";
             this.btnNextStep.Size = new System.Drawing.Size(150, 40);
             this.btnNextStep.TabIndex = 0;
             this.btnNextStep.Text = "Next_";
-            this.btnNextStep.UseVisualStyleBackColor = true;
             this.btnNextStep.Click += new System.EventHandler(this.btnNextStep_Click);
             // 
             // picLogo
@@ -118,8 +119,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tab1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tab1.Controls.Add(this.tabLanguage);
-            this.tab1.Controls.Add(this.tabLayoutMode);
             this.tab1.Controls.Add(this.tabTheme);
+            this.tab1.Controls.Add(this.tabLayoutMode);
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Location = new System.Drawing.Point(-22, 213);
             this.tab1.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -148,12 +149,13 @@
             // 
             this.cmbLanguage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cmbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLanguage.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbLanguage.FormattingEnabled = true;
             this.cmbLanguage.Items.AddRange(new object[] {
             "English"});
-            this.cmbLanguage.Location = new System.Drawing.Point(153, 73);
+            this.cmbLanguage.Location = new System.Drawing.Point(158, 73);
             this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(243, 33);
+            this.cmbLanguage.Size = new System.Drawing.Size(240, 33);
             this.cmbLanguage.TabIndex = 1;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
@@ -185,13 +187,14 @@
             // 
             this.cmbLayout.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cmbLayout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLayout.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbLayout.FormattingEnabled = true;
             this.cmbLayout.Items.AddRange(new object[] {
             "Standard",
             "Designer"});
-            this.cmbLayout.Location = new System.Drawing.Point(155, 73);
+            this.cmbLayout.Location = new System.Drawing.Point(158, 73);
             this.cmbLayout.Name = "cmbLayout";
-            this.cmbLayout.Size = new System.Drawing.Size(243, 33);
+            this.cmbLayout.Size = new System.Drawing.Size(240, 33);
             this.cmbLayout.TabIndex = 3;
             this.cmbLayout.SelectedIndexChanged += new System.EventHandler(this.cmbLayout_SelectedIndexChanged);
             // 
@@ -223,13 +226,14 @@
             // 
             this.cmbTheme.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cmbTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTheme.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbTheme.FormattingEnabled = true;
             this.cmbTheme.Items.AddRange(new object[] {
             "2017 (Dark)",
             "2017 (Light Gray)"});
-            this.cmbTheme.Location = new System.Drawing.Point(154, 73);
+            this.cmbTheme.Location = new System.Drawing.Point(158, 73);
             this.cmbTheme.Name = "cmbTheme";
-            this.cmbTheme.Size = new System.Drawing.Size(243, 33);
+            this.cmbTheme.Size = new System.Drawing.Size(240, 33);
             this.cmbTheme.TabIndex = 5;
             this.cmbTheme.SelectedIndexChanged += new System.EventHandler(this.cmbTheme_SelectedIndexChanged);
             // 
@@ -260,6 +264,7 @@
             // btnSetDefaultApp
             // 
             this.btnSetDefaultApp.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnSetDefaultApp.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSetDefaultApp.Location = new System.Drawing.Point(204, 76);
             this.btnSetDefaultApp.Name = "btnSetDefaultApp";
             this.btnSetDefaultApp.Size = new System.Drawing.Size(150, 40);
@@ -273,7 +278,7 @@
             this.lblDefaultApp.BackColor = System.Drawing.Color.Transparent;
             this.lblDefaultApp.Location = new System.Drawing.Point(30, 35);
             this.lblDefaultApp.Name = "lblDefaultApp";
-            this.lblDefaultApp.Size = new System.Drawing.Size(494, 38);
+            this.lblDefaultApp.Size = new System.Drawing.Size(494, 35);
             this.lblDefaultApp.TabIndex = 0;
             this.lblDefaultApp.Text = "Set ImageGlass as Default Photo Viewer?_";
             this.lblDefaultApp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

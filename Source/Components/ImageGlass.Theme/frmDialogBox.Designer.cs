@@ -45,9 +45,10 @@
             this.btnOK.FlatAppearance.BorderSize = 0;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(206)))), ((int)(((byte)(219)))));
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnOK.Location = new System.Drawing.Point(307, 20);
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnOK.Location = new System.Drawing.Point(303, 21);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(97, 45);
+            this.btnOK.Size = new System.Drawing.Size(100, 40);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;

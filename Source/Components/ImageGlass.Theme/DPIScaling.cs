@@ -86,9 +86,10 @@ namespace ImageGlass.Theme
         {
             return (short)number;
         }
-        
+
         /// <summary>
-        /// Get system Dpi
+        /// Get system Dpi.
+        /// Since .NET Framework 4.7.1, we can use this.DeviceDpi instead
         /// </summary>
         /// <returns></returns>
         public static int GetSystemDpi()
