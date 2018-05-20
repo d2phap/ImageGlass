@@ -2,18 +2,15 @@
 
 ## Introduction
 
-First, thank you for considering contributing to imageglass! It's people like you that make the open source community such a great community! 😊
+First, thank you for considering contributing to ImageGlass! It's people like you that make the open source community such a great community! 😊
 
 We welcome any type of contribution, not only code. You can help with 
 - **QA**: file bug reports, the more details you can give the better (e.g. screenshots with the console open)
 - **Marketing**: writing blog posts, howto's, printing stickers, ...
 - **Community**: presenting the project at meetups, organizing a dedicated meetup for the local community, ...
-- **Code**: take a look at the [open issues](issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
+- **Code**: take a look at the [open issues](https://github.com/d2phap/ImageGlass/issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
 - **Money**: we welcome financial contributions in full transparency on our [Open Collective](https://opencollective.com/imageglass) or [Paypal](https://www.paypal.me/d2phap).
 
-## Your First Contribution
-
-Working on your first Pull Request? You can learn how from this *free* series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github).
 
 ## Submitting code
 
@@ -31,7 +28,7 @@ Anyone can file an expense. If the expense makes sense for the development of th
 
 ## Questions
 
-If you have any questions, create an [issue](issue) (protip: do a quick search first to see if someone else didn't ask the same question before!).
+If you have any questions, create an [issue](https://github.com/d2phap/ImageGlass/issues) (protip: do a quick search first to see if someone else didn't ask the same question before!).
 You can also reach us at phap@imageglass.org.
 
 ## Credits
