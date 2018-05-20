@@ -6,17 +6,18 @@ ImageGlass - A lightweight, versatile image viewer.
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/imageglass/localized.svg)](https://crowdin.com/project/imageglass)
 
 
-ImageGlass is a simple picture viewer with which you will be able to display your image collection in a very similar way to the one that Windows provides by default, but with some additional functions. This application will allow you to better manage your pictures thanks to the options it includes and the extension it enables to install for adding more functions and widening its possibilities.
+ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment. 
+It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
 ## Download & Screen shots
 
 <a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="http://imageglass.org/upload/photo/release/5.0_1.png" alt="ImageGlass 5.0.5.7">
+<img src="http://imageglass.org/upload/photo/release/5.0_1.png" alt="ImageGlass 5.1.5.20">
 </a><br/>
 
 <a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%205.0.5.7-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.0.5.7">
+<img src="https://img.shields.io/badge/Download-ImageGlass%205.1.5.20-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.1.5.20">
 </a>
 
 
