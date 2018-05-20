@@ -173,26 +173,6 @@ namespace ImageGlass.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap imageerror {
-            get {
-                object obj = ResourceManager.GetObject("imageerror", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap imagetoolarge {
-            get {
-                object obj = ResourceManager.GetObject("imagetoolarge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap leftrotate {
             get {
                 object obj = ResourceManager.GetObject("leftrotate", resourceCulture);

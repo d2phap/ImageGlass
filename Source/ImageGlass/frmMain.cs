@@ -45,8 +45,9 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            //Check DPI Scaling ratio
-            DPIScaling.CurrentDPI = this.DeviceDpi; // DPIScaling.GetSystemDpi();
+            //Get DPI Scaling ratio
+            //NOTE: the this.DeviceDpi property is not accurate
+            DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
             //Modern UI menu renderer
             mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();

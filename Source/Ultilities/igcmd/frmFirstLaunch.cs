@@ -385,6 +385,7 @@ namespace igcmd
                 GlobalSetting.SetConfig("MouseWheelAltAction", ((int)MouseWheelActions.DoNothing).ToString());
 
                 GlobalSetting.SetConfig("ZoomLockValue", "100"); //lock zoom at 100%
+                GlobalSetting.SetConfig("IsShowColorPickerOnStartup", "True");
 
             }
             else

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "5.0.5.7"
+#define MyAppVersion "5.1.5.20"
 #define MyAppPublisher "Duong Dieu Phap"
 #define MyAppURL "http://www.imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
