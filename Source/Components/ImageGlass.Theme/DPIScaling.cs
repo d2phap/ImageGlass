@@ -86,9 +86,10 @@ namespace ImageGlass.Theme
         {
             return (short)number;
         }
-        
+
         /// <summary>
-        /// Get system Dpi
+        /// Get system Dpi.
+        /// NOTE: the this.DeviceDpi property is not accurate
         /// </summary>
         /// <returns></returns>
         public static int GetSystemDpi()

@@ -45,18 +45,21 @@ namespace ImageGlass
         {
             InitializeComponent();
 
+            //Get DPI Scaling ratio
+            //NOTE: the this.DeviceDpi property is not accurate
+            DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
+
             //Modern UI menu renderer
             mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();
 
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
-
+            
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
 
-            //Check DPI Scaling ratio
-            DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
+            //Update form with new DPI
             OnDpiChanged();
         }
 
@@ -1366,6 +1369,9 @@ namespace ImageGlass
         {
             string configValue = string.Empty;
 
+            
+
+
             #region UI SETTINGS
             if (isLoadUI)
             {
@@ -1431,7 +1437,8 @@ namespace ImageGlass
                 //Get the greater width value
                 GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
 
-                //Load thumbnail orientation state: NOTE needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
+                //Load thumbnail orientation state: 
+                //NOTE: needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
                 GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
 
                 //Load vertical thumbnail bar width
@@ -1450,17 +1457,6 @@ namespace ImageGlass
                 GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
                 GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
                 mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-                #endregion
-
-
-                #region Windows Bound (Position + Size)
-                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
-
-                if (!Helper.IsOnScreen(rc.Location))
-                {
-                    rc.Location = new Point(280, 125);
-                }
-                this.Bounds = rc;
                 #endregion
 
 
@@ -1483,6 +1479,19 @@ namespace ImageGlass
             #region OTHER SETTINGS
             if (isLoadOthers)
             {
+                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
+                // the windows *Position* is the one UI setting which *must* be applied at
+                // the OnLoad event in order to 'take'.
+                #region Windows Bound (Position + Size)
+                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+                this.Bounds = rc;
+                #endregion
+
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");

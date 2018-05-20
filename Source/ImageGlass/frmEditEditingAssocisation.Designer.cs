@@ -62,6 +62,7 @@
             // btnReset
             // 
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnReset.ForeColor = System.Drawing.Color.Black;
             this.btnReset.Location = new System.Drawing.Point(18, 20);
             this.btnReset.Name = "btnReset";
@@ -75,6 +76,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.ForeColor = System.Drawing.Color.Black;
             this.btnOK.Location = new System.Drawing.Point(261, 20);
             this.btnOK.Name = "btnOK";
@@ -88,6 +90,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
             this.btnClose.Location = new System.Drawing.Point(380, 20);
             this.btnClose.Name = "btnClose";
@@ -183,6 +186,7 @@
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.AutoSize = true;
             this.btnBrowse.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse.ForeColor = System.Drawing.Color.Black;
             this.btnBrowse.Location = new System.Drawing.Point(410, 212);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(4);

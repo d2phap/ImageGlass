@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+//using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ImageGlass.Core
 {
@@ -78,6 +80,26 @@ namespace ImageGlass.Core
                 ret = Math.Max(ret, values[a]);
             }
             return ret;
+        }
+
+
+        /// <summary>
+        /// Convert BitmapSource to Bitmap
+        /// </summary>
+        /// <param name="bitmapsource"></param>
+        /// <returns></returns>
+        public static Bitmap BitmapFromSource(BitmapSource bitmapsource)
+        {
+            Bitmap bitmap;
+            using (System.IO.MemoryStream outStream = new System.IO.MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+
+                enc.Frames.Add(BitmapFrame.Create(bitmapsource));
+                enc.Save(outStream);
+                bitmap = new Bitmap(outStream);
+            }
+            return bitmap;
         }
     }
 }

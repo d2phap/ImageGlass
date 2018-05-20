@@ -371,6 +371,7 @@ namespace ImageGlass
             // cmbLanguage
             // 
             this.cmbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLanguage.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbLanguage.FormattingEnabled = true;
             this.cmbLanguage.Items.AddRange(new object[] {
             "English (default)",
@@ -425,6 +426,7 @@ namespace ImageGlass
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRegisterExt.AutoSize = true;
+            this.btnRegisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnRegisterExt.Location = new System.Drawing.Point(525, 12);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(332, 45);
@@ -437,6 +439,7 @@ namespace ImageGlass
             // 
             this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetExt.AutoSize = true;
+            this.btnResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnResetExt.Location = new System.Drawing.Point(299, 12);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(220, 45);
@@ -449,6 +452,7 @@ namespace ImageGlass
             // 
             this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddNewExt.AutoSize = true;
+            this.btnAddNewExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAddNewExt.Location = new System.Drawing.Point(27, 12);
             this.btnAddNewExt.Name = "btnAddNewExt";
             this.btnAddNewExt.Size = new System.Drawing.Size(130, 45);
@@ -462,6 +466,7 @@ namespace ImageGlass
             this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
+            this.btnDeleteExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDeleteExt.Location = new System.Drawing.Point(163, 12);
             this.btnDeleteExt.Name = "btnDeleteExt";
             this.btnDeleteExt.Size = new System.Drawing.Size(130, 45);
@@ -500,7 +505,6 @@ namespace ImageGlass
             this.lvExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvExtension.CheckBoxes = true;
             this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvExtension.FullRowSelect = true;
@@ -518,8 +522,9 @@ namespace ImageGlass
             this.lvExtension.Size = new System.Drawing.Size(750, 372);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 33;
+            this.lvExtension.TileSize = new System.Drawing.Size(100, 30);
             this.lvExtension.UseCompatibleStateImageBehavior = false;
-            this.lvExtension.View = System.Windows.Forms.View.Details;
+            this.lvExtension.View = System.Windows.Forms.View.Tile;
             this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
             // 
             // columnHeader1
@@ -567,10 +572,11 @@ namespace ImageGlass
             // chkDisplayBasename
             // 
             this.chkDisplayBasename.AutoSize = true;
+            this.chkDisplayBasename.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkDisplayBasename.Location = new System.Drawing.Point(45, 465);
             this.chkDisplayBasename.Margin = new System.Windows.Forms.Padding(2);
             this.chkDisplayBasename.Name = "chkDisplayBasename";
-            this.chkDisplayBasename.Size = new System.Drawing.Size(456, 29);
+            this.chkDisplayBasename.Size = new System.Drawing.Size(455, 30);
             this.chkDisplayBasename.TabIndex = 13;
             this.chkDisplayBasename.Text = "Display base name of the viewing image on title bar_";
             this.chkDisplayBasename.UseVisualStyleBackColor = true;
@@ -578,10 +584,11 @@ namespace ImageGlass
             // chkShowScrollbar
             // 
             this.chkShowScrollbar.AutoSize = true;
+            this.chkShowScrollbar.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowScrollbar.Location = new System.Drawing.Point(45, 431);
             this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
-            this.chkShowScrollbar.Size = new System.Drawing.Size(231, 29);
+            this.chkShowScrollbar.Size = new System.Drawing.Size(230, 30);
             this.chkShowScrollbar.TabIndex = 12;
             this.chkShowScrollbar.Text = "Display viewer scrollbars";
             this.chkShowScrollbar.UseVisualStyleBackColor = true;
@@ -634,10 +641,11 @@ namespace ImageGlass
             // 
             this.chkPortableMode.AutoSize = true;
             this.chkPortableMode.Enabled = false;
+            this.chkPortableMode.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkPortableMode.Location = new System.Drawing.Point(45, 197);
             this.chkPortableMode.Margin = new System.Windows.Forms.Padding(2);
             this.chkPortableMode.Name = "chkPortableMode";
-            this.chkPortableMode.Size = new System.Drawing.Size(212, 29);
+            this.chkPortableMode.Size = new System.Drawing.Size(211, 30);
             this.chkPortableMode.TabIndex = 7;
             this.chkPortableMode.Text = "Enable Portable mode";
             this.chkPortableMode.UseVisualStyleBackColor = true;
@@ -653,10 +661,11 @@ namespace ImageGlass
             // chkConfirmationDelete
             // 
             this.chkConfirmationDelete.AutoSize = true;
+            this.chkConfirmationDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 397);
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
-            this.chkConfirmationDelete.Size = new System.Drawing.Size(317, 29);
+            this.chkConfirmationDelete.Size = new System.Drawing.Size(316, 30);
             this.chkConfirmationDelete.TabIndex = 11;
             this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
             this.chkConfirmationDelete.UseVisualStyleBackColor = true;
@@ -664,10 +673,11 @@ namespace ImageGlass
             // chkAllowMultiInstances
             // 
             this.chkAllowMultiInstances.AutoSize = true;
+            this.chkAllowMultiInstances.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 330);
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
-            this.chkAllowMultiInstances.Size = new System.Drawing.Size(355, 29);
+            this.chkAllowMultiInstances.Size = new System.Drawing.Size(354, 30);
             this.chkAllowMultiInstances.TabIndex = 9;
             this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
             this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
@@ -675,10 +685,11 @@ namespace ImageGlass
             // chkESCToQuit
             // 
             this.chkESCToQuit.AutoSize = true;
+            this.chkESCToQuit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkESCToQuit.Location = new System.Drawing.Point(45, 364);
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
-            this.chkESCToQuit.Size = new System.Drawing.Size(336, 29);
+            this.chkESCToQuit.Size = new System.Drawing.Size(335, 30);
             this.chkESCToQuit.TabIndex = 10;
             this.chkESCToQuit.Text = "Allow to press ESC to quit application";
             this.chkESCToQuit.UseVisualStyleBackColor = true;
@@ -686,10 +697,11 @@ namespace ImageGlass
             // chkShowToolBar
             // 
             this.chkShowToolBar.AutoSize = true;
+            this.chkShowToolBar.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowToolBar.Location = new System.Drawing.Point(45, 86);
             this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToolBar.Name = "chkShowToolBar";
-            this.chkShowToolBar.Size = new System.Drawing.Size(283, 29);
+            this.chkShowToolBar.Size = new System.Drawing.Size(282, 30);
             this.chkShowToolBar.TabIndex = 6;
             this.chkShowToolBar.Text = "Show toolbar when starting up";
             this.chkShowToolBar.UseVisualStyleBackColor = true;
@@ -707,10 +719,11 @@ namespace ImageGlass
             // chkWelcomePicture
             // 
             this.chkWelcomePicture.AutoSize = true;
+            this.chkWelcomePicture.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkWelcomePicture.Location = new System.Drawing.Point(45, 52);
             this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
-            this.chkWelcomePicture.Size = new System.Drawing.Size(216, 29);
+            this.chkWelcomePicture.Size = new System.Drawing.Size(215, 30);
             this.chkWelcomePicture.TabIndex = 5;
             this.chkWelcomePicture.Text = "Show welcome picture";
             this.chkWelcomePicture.UseVisualStyleBackColor = true;
@@ -718,10 +731,11 @@ namespace ImageGlass
             // chkAutoUpdate
             // 
             this.chkAutoUpdate.AutoSize = true;
+            this.chkAutoUpdate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkAutoUpdate.Location = new System.Drawing.Point(45, 297);
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
-            this.chkAutoUpdate.Size = new System.Drawing.Size(284, 29);
+            this.chkAutoUpdate.Size = new System.Drawing.Size(283, 30);
             this.chkAutoUpdate.TabIndex = 8;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
@@ -796,6 +810,7 @@ namespace ImageGlass
             // cmbMouseWheelAlt
             // 
             this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelAlt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelAlt.FormattingEnabled = true;
             this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 629);
             this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
@@ -806,6 +821,7 @@ namespace ImageGlass
             // cmbMouseWheelShift
             // 
             this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelShift.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelShift.FormattingEnabled = true;
             this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 542);
             this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
@@ -816,6 +832,7 @@ namespace ImageGlass
             // cmbMouseWheelCtrl
             // 
             this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheelCtrl.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelCtrl.FormattingEnabled = true;
             this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 454);
             this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
@@ -826,6 +843,7 @@ namespace ImageGlass
             // cmbMouseWheel
             // 
             this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMouseWheel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheel.FormattingEnabled = true;
             this.cmbMouseWheel.Location = new System.Drawing.Point(45, 369);
             this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
@@ -897,10 +915,11 @@ namespace ImageGlass
             // chkSaveOnRotate
             // 
             this.chkSaveOnRotate.AutoSize = true;
+            this.chkSaveOnRotate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1277);
             this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
-            this.chkSaveOnRotate.Size = new System.Drawing.Size(333, 29);
+            this.chkSaveOnRotate.Size = new System.Drawing.Size(332, 30);
             this.chkSaveOnRotate.TabIndex = 27;
             this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
             this.chkSaveOnRotate.UseVisualStyleBackColor = true;
@@ -908,10 +927,11 @@ namespace ImageGlass
             // chkShowHiddenImages
             // 
             this.chkShowHiddenImages.AutoSize = true;
+            this.chkShowHiddenImages.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowHiddenImages.Location = new System.Drawing.Point(45, 83);
             this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowHiddenImages.Name = "chkShowHiddenImages";
-            this.chkShowHiddenImages.Size = new System.Drawing.Size(204, 29);
+            this.chkShowHiddenImages.Size = new System.Drawing.Size(203, 30);
             this.chkShowHiddenImages.TabIndex = 14;
             this.chkShowHiddenImages.Text = "Show hidden images";
             this.chkShowHiddenImages.UseVisualStyleBackColor = true;
@@ -919,7 +939,8 @@ namespace ImageGlass
             // btnEditEditAllExt
             // 
             this.btnEditEditAllExt.AutoSize = true;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1574);
+            this.btnEditEditAllExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1630);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(265, 45);
             this.btnEditEditAllExt.TabIndex = 30;
@@ -930,7 +951,8 @@ namespace ImageGlass
             // btnEditResetExt
             // 
             this.btnEditResetExt.AutoSize = true;
-            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1574);
+            this.btnEditResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1630);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(245, 45);
             this.btnEditResetExt.TabIndex = 31;
@@ -942,7 +964,8 @@ namespace ImageGlass
             // 
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
-            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1574);
+            this.btnEditEditExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1630);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(133, 45);
             this.btnEditEditExt.TabIndex = 29;
@@ -952,7 +975,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1606);
+            this.panel3.Location = new System.Drawing.Point(27, 1662);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -962,7 +985,6 @@ namespace ImageGlass
             // 
             this.lvImageEditing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvImageEditing.CheckBoxes = true;
             this.lvImageEditing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clnFileExtension,
             this.clnAppName,
@@ -982,7 +1004,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(724, 214);
+            this.lvImageEditing.Size = new System.Drawing.Size(724, 271);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 28;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1062,10 +1084,11 @@ namespace ImageGlass
             // chkLoopViewer
             // 
             this.chkLoopViewer.AutoSize = true;
+            this.chkLoopViewer.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkLoopViewer.Location = new System.Drawing.Point(45, 114);
             this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopViewer.Name = "chkLoopViewer";
-            this.chkLoopViewer.Size = new System.Drawing.Size(580, 29);
+            this.chkLoopViewer.Size = new System.Drawing.Size(579, 30);
             this.chkLoopViewer.TabIndex = 15;
             this.chkLoopViewer.Text = "Loop back viewer to the first image when reaching the end of the list";
             this.chkLoopViewer.UseVisualStyleBackColor = true;
@@ -1083,6 +1106,7 @@ namespace ImageGlass
             // cmbZoomOptimization
             // 
             this.cmbZoomOptimization.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbZoomOptimization.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
@@ -1095,10 +1119,11 @@ namespace ImageGlass
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
+            this.chkThumbnailVertical.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 899);
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
-            this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 29);
+            this.chkThumbnailVertical.Size = new System.Drawing.Size(256, 30);
             this.chkThumbnailVertical.TabIndex = 23;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
@@ -1116,6 +1141,7 @@ namespace ImageGlass
             // cmbThumbnailDimension
             // 
             this.cmbThumbnailDimension.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbThumbnailDimension.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbThumbnailDimension.FormattingEnabled = true;
             this.cmbThumbnailDimension.Items.AddRange(new object[] {
             "32",
@@ -1135,10 +1161,11 @@ namespace ImageGlass
             // chkImageBoosterBack
             // 
             this.chkImageBoosterBack.AutoSize = true;
+            this.chkImageBoosterBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkImageBoosterBack.Location = new System.Drawing.Point(45, 147);
             this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2);
             this.chkImageBoosterBack.Name = "chkImageBoosterBack";
-            this.chkImageBoosterBack.Size = new System.Drawing.Size(578, 29);
+            this.chkImageBoosterBack.Size = new System.Drawing.Size(577, 30);
             this.chkImageBoosterBack.TabIndex = 16;
             this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
             this.chkImageBoosterBack.UseVisualStyleBackColor = true;
@@ -1146,10 +1173,11 @@ namespace ImageGlass
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
+            this.chkLoopSlideshow.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1091);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
-            this.chkLoopSlideshow.Size = new System.Drawing.Size(608, 29);
+            this.chkLoopSlideshow.Size = new System.Drawing.Size(607, 30);
             this.chkLoopSlideshow.TabIndex = 25;
             this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
@@ -1167,6 +1195,7 @@ namespace ImageGlass
             // cmbImageOrder
             // 
             this.cmbImageOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageOrder.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbImageOrder.FormattingEnabled = true;
             this.cmbImageOrder.Items.AddRange(new object[] {
             "Name (default)",
@@ -1209,10 +1238,11 @@ namespace ImageGlass
             // chkFindChildFolder
             // 
             this.chkFindChildFolder.AutoSize = true;
+            this.chkFindChildFolder.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkFindChildFolder.Location = new System.Drawing.Point(45, 49);
             this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
-            this.chkFindChildFolder.Size = new System.Drawing.Size(247, 29);
+            this.chkFindChildFolder.Size = new System.Drawing.Size(246, 30);
             this.chkFindChildFolder.TabIndex = 13;
             this.chkFindChildFolder.Text = "Find images in child folder";
             this.chkFindChildFolder.UseVisualStyleBackColor = true;
@@ -1252,6 +1282,7 @@ namespace ImageGlass
             // btnMoveDown
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
             this.btnMoveDown.Location = new System.Drawing.Point(733, 298);
             this.btnMoveDown.Name = "btnMoveDown";
@@ -1316,6 +1347,7 @@ namespace ImageGlass
             // btnMoveUp
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
             this.btnMoveUp.Location = new System.Drawing.Point(733, 229);
             this.btnMoveUp.Name = "btnMoveUp";
@@ -1328,6 +1360,7 @@ namespace ImageGlass
             // btnMoveLeft
             // 
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings", 9.75F);
             this.btnMoveLeft.Location = new System.Drawing.Point(349, 229);
             this.btnMoveLeft.Name = "btnMoveLeft";
@@ -1340,6 +1373,7 @@ namespace ImageGlass
             // btnMoveRight
             // 
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveRight.Font = new System.Drawing.Font("Wingdings", 9.75F);
             this.btnMoveRight.Location = new System.Drawing.Point(349, 298);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
@@ -1368,10 +1402,11 @@ namespace ImageGlass
             // chkColorUseHSLA
             // 
             this.chkColorUseHSLA.AutoSize = true;
+            this.chkColorUseHSLA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseHSLA.Location = new System.Drawing.Point(45, 120);
             this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseHSLA.Name = "chkColorUseHSLA";
-            this.chkColorUseHSLA.Size = new System.Drawing.Size(175, 29);
+            this.chkColorUseHSLA.Size = new System.Drawing.Size(174, 30);
             this.chkColorUseHSLA.TabIndex = 46;
             this.chkColorUseHSLA.Text = "Use HSLA format";
             this.chkColorUseHSLA.UseVisualStyleBackColor = true;
@@ -1389,10 +1424,11 @@ namespace ImageGlass
             // chkColorUseHEXA
             // 
             this.chkColorUseHEXA.AutoSize = true;
+            this.chkColorUseHEXA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseHEXA.Location = new System.Drawing.Point(45, 86);
             this.chkColorUseHEXA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseHEXA.Name = "chkColorUseHEXA";
-            this.chkColorUseHEXA.Size = new System.Drawing.Size(250, 29);
+            this.chkColorUseHEXA.Size = new System.Drawing.Size(249, 30);
             this.chkColorUseHEXA.TabIndex = 45;
             this.chkColorUseHEXA.Text = "Use HEX with alpha format";
             this.chkColorUseHEXA.UseVisualStyleBackColor = true;
@@ -1400,10 +1436,11 @@ namespace ImageGlass
             // chkColorUseRGBA
             // 
             this.chkColorUseRGBA.AutoSize = true;
+            this.chkColorUseRGBA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseRGBA.Location = new System.Drawing.Point(45, 52);
             this.chkColorUseRGBA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseRGBA.Name = "chkColorUseRGBA";
-            this.chkColorUseRGBA.Size = new System.Drawing.Size(176, 29);
+            this.chkColorUseRGBA.Size = new System.Drawing.Size(175, 30);
             this.chkColorUseRGBA.TabIndex = 44;
             this.chkColorUseRGBA.Text = "Use RGBA format";
             this.chkColorUseRGBA.UseVisualStyleBackColor = true;
@@ -1459,6 +1496,7 @@ namespace ImageGlass
             this.btnThemeFolderOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeFolderOpen.AutoSize = true;
+            this.btnThemeFolderOpen.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeFolderOpen.Location = new System.Drawing.Point(3, 306);
             this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeFolderOpen.Name = "btnThemeFolderOpen";
@@ -1473,6 +1511,7 @@ namespace ImageGlass
             this.btnThemeSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeSaveAs.AutoSize = true;
+            this.btnThemeSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeSaveAs.Location = new System.Drawing.Point(3, 260);
             this.btnThemeSaveAs.Name = "btnThemeSaveAs";
             this.btnThemeSaveAs.Size = new System.Drawing.Size(247, 40);
@@ -1502,6 +1541,7 @@ namespace ImageGlass
             this.btnThemeRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeRefresh.AutoSize = true;
+            this.btnThemeRefresh.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeRefresh.Location = new System.Drawing.Point(3, 120);
             this.btnThemeRefresh.Name = "btnThemeRefresh";
             this.btnThemeRefresh.Size = new System.Drawing.Size(247, 40);
@@ -1515,6 +1555,7 @@ namespace ImageGlass
             this.btnThemeInstall.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeInstall.AutoSize = true;
+            this.btnThemeInstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeInstall.Location = new System.Drawing.Point(3, 166);
             this.btnThemeInstall.Name = "btnThemeInstall";
             this.btnThemeInstall.Size = new System.Drawing.Size(247, 40);
@@ -1529,6 +1570,7 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeUninstall.AutoSize = true;
             this.btnThemeUninstall.Enabled = false;
+            this.btnThemeUninstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeUninstall.Location = new System.Drawing.Point(3, 212);
             this.btnThemeUninstall.Name = "btnThemeUninstall";
             this.btnThemeUninstall.Size = new System.Drawing.Size(247, 40);
@@ -1566,6 +1608,7 @@ namespace ImageGlass
             // 
             this.btnThemeApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeApply.AutoSize = true;
+            this.btnThemeApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeApply.Location = new System.Drawing.Point(535, 494);
             this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeApply.Name = "btnThemeApply";
@@ -1596,6 +1639,7 @@ namespace ImageGlass
             // 
             this.btnThemeEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnThemeEdit.AutoSize = true;
+            this.btnThemeEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeEdit.Location = new System.Drawing.Point(179, 494);
             this.btnThemeEdit.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeEdit.Name = "btnThemeEdit";
@@ -1753,6 +1797,7 @@ namespace ImageGlass
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSave.Location = new System.Drawing.Point(651, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
@@ -1766,6 +1811,7 @@ namespace ImageGlass
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(784, 14);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
@@ -1779,6 +1825,7 @@ namespace ImageGlass
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
+            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(917, 14);
             this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
