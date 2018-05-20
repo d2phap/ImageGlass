@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Describe this issue template's purpose here.
+about: General questions about ImageGlass
 
 ---
 
