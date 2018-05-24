@@ -125,10 +125,10 @@ namespace ImageGlass.ImageListView
 			context = null;
 			bw = new QueuedBackgroundWorker ();
 			bw.IsBackground = true;
-			bw.DoWork += bw_DoWork;
-			bw.RunWorkerCompleted += bw_RunWorkerCompleted;
-			
-			checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
+            checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
 			
 			mImageListView = owner;
 			RetryOnError = false;
@@ -214,13 +214,13 @@ namespace ImageGlass.ImageListView
 			if (e.Error != null && mImageListView != null)
 				mImageListView.OnCacheErrorInternal (request.Guid, e.Error, CacheThread.Details);
 		}
-		/// <summary>
-		/// Handles the DoWork event of the queued background worker.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
-		/// containing the event data.</param>
-		void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
+        /// <summary>
+        /// [IG_CHANGE] Handles the DoWork event of the queued background worker.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
+        /// containing the event data.</param>
+        void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
 		{
 			CacheRequest request = e.Argument as CacheRequest;
 			
@@ -232,10 +232,12 @@ namespace ImageGlass.ImageListView
 				e.Cancel = true;
 				return;
 			}
-			
-			// Get item details
-			e.Result = request.Adaptor.GetDetails (request.VirtualItemKey, request.UseWIC);
-		}
+
+            // Get item details
+            // Note: 
+            // If we use WIC, it will cause Memory Leak issue: https://github.com/d2phap/ImageGlass/issues/119
+            e.Result = request.Adaptor.GetDetails(request.VirtualItemKey, false);// request.UseWIC);
+        }
 		#endregion
 
 		#region Instance Methods

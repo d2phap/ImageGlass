@@ -281,14 +281,7 @@ namespace ImageGlass.ImageListView
                     // Revert to source image if an embedded thumbnail of required size was not found.
                     if (source == null)
                     {
-                        if (ext.CompareTo(".heic") == 0)
-                        {
-                            source = Core.BitmapBooster.BitmapFromSource(magicImg.ToBitmapSource());
-                        }
-                        else
-                        {
-                            source = magicImg.ToBitmap();
-                        }
+                        source = magicImg.ToBitmap();
                     }
 
                 }//END using MagickImage 
