@@ -1752,8 +1752,6 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
-            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
-
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------

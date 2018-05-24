@@ -57,6 +57,8 @@ namespace ImageGlass
             // Enable Portable mode as default if possible
             GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
+            // Save App version
+            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
 
             #region Check First-launch Configs
             var firstLaunchVersion = 0;
