@@ -93,15 +93,25 @@ namespace ImageGlass
                     //Check for update every 3 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
                     {
-                        Process p = new Process();
-                        p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
-                        p.StartInfo.Arguments = "igautoupdate";
-                        p.Start();
-
-                        //save last update
-                        GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                        RunCheckForUpdate();
                     }
                 }
+                else
+                {
+                    RunCheckForUpdate();
+                }
+            }
+
+
+            void RunCheckForUpdate()
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
+                p.StartInfo.Arguments = "igautoupdate";
+                p.Start();
+
+                //save last update
+                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
             }
             #endregion
 
