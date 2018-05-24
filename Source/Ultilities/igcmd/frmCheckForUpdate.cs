@@ -140,7 +140,7 @@ namespace igcmd
         {
             try
             {
-                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
                 Process.Start(up.Info.Decription + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
@@ -153,7 +153,7 @@ namespace igcmd
         {
             try
             {
-                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
                 Process.Start(up.Info.Link.ToString() + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch

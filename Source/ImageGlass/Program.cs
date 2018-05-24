@@ -102,7 +102,7 @@ namespace ImageGlass
                 }
             }
 
-
+            
             void RunCheckForUpdate()
             {
                 Process p = new Process();
