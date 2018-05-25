@@ -278,6 +278,29 @@ namespace ImageGlass
         }
 
         /// <summary>
+        /// Take the supported extensions string from GlobalSetting and convert it 
+        /// to a faster lookup mechanism and with wildcard removed.
+        /// 
+        /// Intended to fix the observed issue where "string.Contains" would cause
+        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
+        /// </summary>
+        /// <returns>HashSet of each extension in form ".foo"</returns>
+        private HashSet<string> MakeImageTypeSet()
+        {
+            char[] wildtrim = { '*' };
+            var allTypes = GlobalSetting.AllImageFormats;
+
+            var typesArray = allTypes.Split(';');
+            HashSet<string> supportedExtensions = new HashSet<string>();
+            foreach (var aType in typesArray)
+            {
+                string wildRemoved = aType.Trim(wildtrim);
+                supportedExtensions.Add(wildRemoved);
+            }
+            return supportedExtensions;
+        }
+
+        /// <summary>
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
@@ -285,6 +308,8 @@ namespace ImageGlass
         {
             //Load image order from config
             GlobalSetting.LoadImageOrderConfig();
+
+            HashSet<string> supportedExtensions = MakeImageTypeSet();
 
             var list = new List<string>();
 
@@ -304,7 +329,7 @@ namespace ImageGlass
                             return false;
                         }
                     }
-                    if (extension.Length > 0 && GlobalSetting.AllImageFormats.Contains(extension))
+                    if (extension.Length > 0 && supportedExtensions.Contains(extension))
                     {
                         return true;
                     }
