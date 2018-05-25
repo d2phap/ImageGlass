@@ -3529,14 +3529,26 @@ namespace ImageGlass
 
             try
             {
+                var args = string.Format("setwallpaper \"{0}\" {1}",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
+                    (int)DesktopWallapaper.Style.Current);
+
+                // Issue #326: first attempt to set wallpaper w/o privs. If that
+                // fails _due_to_ privs error, re-attempt with admin privs.
                 Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                p.WaitForExit();
+                int result = p.ExitCode;
+                if (result != (int)DesktopWallapaper.Result.PrivsFail)
+                    return;
+
                 p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-                p.StartInfo.Arguments = "setwallpaper " + //name of param
-                                        "\"" + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\" " + //arg 1
-                                        "\"" + "0" + "\" "; //arg 2
+                p.StartInfo.Arguments = args;
                 p.Start();
             }
-            catch (Exception)
+            catch
             { }
         }
 

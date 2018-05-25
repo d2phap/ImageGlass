@@ -34,8 +34,14 @@ namespace igcmd
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
+            string topcmd = args[0].ToLower().Trim();
+            if (topcmd == "setwallpaper")
+            {
+                return Core.SetWallpaper(args); // Note: no GUI
+            }
+
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
                 SetProcessDPIAware();
@@ -49,7 +55,6 @@ namespace igcmd
             // Enable Portable mode as default if possible
             GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
-            string topcmd = args[0].ToLower().Trim();
 
             if (topcmd == "igupdate")// check for update
             {
@@ -63,6 +68,7 @@ namespace igcmd
             {
                 Application.Run(new frmFirstLaunch());
             }
+            return 0;
         }
 
         

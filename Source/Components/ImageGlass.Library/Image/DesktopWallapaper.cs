@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2013-2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ namespace ImageGlass.Library.Image
         const int SPIF_UPDATEINIFILE = 0x01;
         const int SPIF_SENDWININICHANGE = 0x02;
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
         public enum Style : int
@@ -103,6 +103,75 @@ namespace ImageGlass.Library.Image
                 SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
             }
             catch (Exception) { }
+        }
+
+        public enum Result
+        {
+            Success=0, // Wallpaper successfully set
+            PrivsFail, // Wallpaper failure due to privileges - can re-attempt with Admin privs.
+            Fail       // Wallpaper failure - no point in re-attempting
+        }
+
+        /// <summary>
+        /// Set the desktop wallpaper.
+        /// </summary>
+        /// <param name="path">File system path to the image</param>
+        /// <param name="style">Style of wallpaper</param>
+        /// <returns>Success/failure indication.</returns>
+        public static Result Set(string path, Style style)
+        {
+            //System.Diagnostics.Debugger.Break();
+
+            // TODO use ImageMagick to load image
+            var tempPath = Path.Combine(Path.GetTempPath(), "imageglass.bmp");
+            try
+            {
+                var img = System.Drawing.Image.FromFile(path);
+                // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
+                img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
+            }
+            catch
+            {
+                // Couldn't open/save image file: Fail, and don't re-try
+                return Result.Fail;
+            }
+
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true))
+                {
+                    if (key == null)
+                        return Result.Fail;
+
+                    string tileVal = "0"; // default not-tiled
+                    string winStyle = "1"; // default centered
+                    switch (style)
+                    {
+                        case Style.Tiled:
+                            tileVal = "1";
+                            break;
+                        case Style.Stretched:
+                            winStyle = "2";
+                            break;
+                        case Style.Current:
+                            tileVal = (string)key.GetValue("TileWallpaper");
+                            winStyle = (string)key.GetValue("WallpaperStyle");
+                            break;
+                    }
+                    key.SetValue("TileWallpaper", "0");
+                    key.SetValue("WallpaperStyle", "1");
+                    key.SetValue("Wallpaper", tempPath);
+                }
+                SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.Security.SecurityException ||
+                    ex is UnauthorizedAccessException)
+                    return Result.PrivsFail;
+                return Result.Fail;
+            }
+            return Result.Success;
         }
     }
 }
