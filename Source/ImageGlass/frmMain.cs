@@ -403,6 +403,11 @@ namespace ImageGlass
         /// <param name="isSkippingCache"></param>
         private void NextPic(int step, bool isKeepZoomRatio, bool isSkippingCache = false)
         {
+            if (picMain.IsAnimating)
+            {
+                picMain.StopAnimating();
+            }
+
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
