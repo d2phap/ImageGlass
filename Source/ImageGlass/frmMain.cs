@@ -1793,7 +1793,7 @@ namespace ImageGlass
             }
 
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath))
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 1000);
 
