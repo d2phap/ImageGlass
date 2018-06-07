@@ -311,18 +311,27 @@ namespace ImageGlass
 
             HashSet<string> supportedExtensions = MakeImageTypeSet();
 
-            var list = new List<string>();
-
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursiveLoading,
-                new Predicate<string>(delegate (String f)
+                new Predicate<FileInfo>(delegate (FileInfo fi)
                 {
-                    string extension = Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
+                    // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
+                    // By doing so, can use the attribute data already loaded into memory, 
+                    // instead of fetching it again (via File.GetAttributes). A re-fetch is
+                    // very slow across network paths. For me, improves image load from 4+ 
+                    // seconds to 0.4 seconds for a specific network path.
+
+                    if (fi.FullName == null) // KBR not sure why but occasionally getting null filename
+                        return false;
+
+                    string extension = fi.Extension ?? "";
+                    extension = extension.ToLower(); // Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
+
                     // checks if image is hidden and ignores it if so
                     if (GlobalSetting.IsShowingHiddenImages == false)
                     {
-                        var attributes = File.GetAttributes(f);
+                        var attributes = fi.Attributes; // File.GetAttributes(f);
                         var isHidden = attributes.HasFlag(FileAttributes.Hidden);
                         if (isHidden)
                         {
@@ -338,7 +347,7 @@ namespace ImageGlass
                 }));
             
 
-            list = SortImageList(fileList);
+            var list = SortImageList(fileList);
 
             return list;
         }

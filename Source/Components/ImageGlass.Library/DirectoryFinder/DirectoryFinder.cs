@@ -82,7 +82,7 @@ namespace ImageGlass.Library
         /// <param name="Filter">filter to be done on files/directory. use null for no filtering</param>
         /// <returns></returns>
         public static List<string> FindFiles(string RootDirectory,
-            bool SearchAllDirectories, Predicate<string> Filter)
+            bool SearchAllDirectories, Predicate<FileInfo> Filter)
         {
             List<string> retList = new List<string>();
 
@@ -109,7 +109,7 @@ namespace ImageGlass.Library
                             try
                             {
                                 // add the file if it passes the filter 
-                                if ((Filter == null) || (Filter(file.FullName)))
+                                if ((Filter == null) || (Filter(file)))
                                     retList.Add(file.FullName);
                             }
 
