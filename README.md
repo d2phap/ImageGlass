@@ -4,6 +4,7 @@ ImageGlass - A lightweight, versatile image viewer.
 [![Backers on Open Collective](https://opencollective.com/imageglass/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/imageglass/sponsors/badge.svg)](#sponsors) [![Website](https://img.shields.io/badge/www-imageglass.org-0099BC.svg?maxAge=3600)](http://www.imageglass.org)
 [![GPL Licence](https://img.shields.io/badge/license-GPLv3-green.svg?maxAge=3600)](https://github.com/d2phap/ImageGlass/blob/master/LICENSE)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/imageglass/localized.svg)](https://crowdin.com/project/imageglass)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fd2phap%2FImageGlass.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fd2phap%2FImageGlass?ref=badge_shield)
 
 
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment. 
@@ -84,3 +85,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/imageglass/sponsor/9/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/9/avatar.svg"></a>
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fd2phap%2FImageGlass.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fd2phap%2FImageGlass?ref=badge_large)
