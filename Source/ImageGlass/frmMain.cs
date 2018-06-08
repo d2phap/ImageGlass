@@ -36,6 +36,7 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
+using System.Collections.Concurrent;
 
 namespace ImageGlass
 {
@@ -353,7 +354,7 @@ namespace ImageGlass
         }
 
 
-        private List<string> SortImageList(List<string> fileList)
+        private List<string> SortImageList(ConcurrentBag<string> fileList)
         {
             var list = new List<string>();
 
