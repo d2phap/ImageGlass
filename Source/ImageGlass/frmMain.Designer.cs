@@ -115,6 +115,7 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainToolbarBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -1201,6 +1202,7 @@
             // 
             this.mnuMainLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainToolbar,
+            this.mnuMainToolbarBottom,
             this.mnuMainThumbnailBar,
             this.mnuMainCheckBackground,
             this.toolStripMenuItem2,
@@ -1228,6 +1230,21 @@
             this.mnuMainToolbar.Size = new System.Drawing.Size(318, 31);
             this.mnuMainToolbar.Text = "Toolbar";
             this.mnuMainToolbar.Click += new System.EventHandler(this.mnuMainToolbar_Click);
+            // 
+            // mnuMainToolbarBottom
+            // 
+            this.mnuMainToolbarBottom.BackColor = System.Drawing.Color.Transparent;
+            this.mnuMainToolbarBottom.Checked = false;
+            this.mnuMainToolbarBottom.CheckOnClick = true;
+            this.mnuMainToolbarBottom.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.mnuMainToolbarBottom.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainToolbarBottom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainToolbarBottom.Name = "mnuMainToolbarBottom";
+            this.mnuMainToolbarBottom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainToolbarBottom.ShortcutKeyDisplayString = "";
+            this.mnuMainToolbarBottom.Size = new System.Drawing.Size(318, 31);
+            this.mnuMainToolbarBottom.Text = "Toolbar below image";
+            this.mnuMainToolbarBottom.Click += new System.EventHandler(this.mnuMainToolbarBottom_Click);
             // 
             // mnuMainThumbnailBar
             // 
@@ -1574,6 +1591,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainToolbarBottom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckBackground;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;

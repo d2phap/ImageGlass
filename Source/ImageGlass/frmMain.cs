@@ -1446,6 +1446,12 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+                #region Load state of Toolbar Below Image
+                GlobalSetting.IsShowToolBarBottom = bool.Parse(GlobalSetting.GetConfig("IsShowToolBarBottom", "False"));
+                GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
+                mnuMainToolbarBottom_Click(null, EventArgs.Empty);
+                #endregion
+
 
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out int thumbDimension))
@@ -1802,6 +1808,7 @@ namespace ImageGlass
 
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
+            GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
@@ -2065,6 +2072,7 @@ namespace ImageGlass
 
                 mnuMainLayout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLayout"];
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
+                mnuMainToolbarBottom.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbarBottom"];
                 mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
                 mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
                 mnuMainAlwaysOnTop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAlwaysOnTop"];
@@ -3659,6 +3667,22 @@ namespace ImageGlass
                 toolMain.Visible = false;
             }
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
+        }
+
+        private void mnuMainToolbarBottom_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
+            if (GlobalSetting.IsShowToolBarBottom)
+            {
+                toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+                toolMain.Dock = DockStyle.Bottom;
+            }
+            else
+            {
+                toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                toolMain.Dock = DockStyle.Top;
+            }
+            mnuMainToolbarBottom.Checked = GlobalSetting.IsShowToolBarBottom;
         }
 
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
