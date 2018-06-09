@@ -202,11 +202,10 @@ namespace ImageGlass
                 dirPath = path; // (path + "\\").Replace("\\\\", "\\");
             }
 
-            //Declare a new list to store filename
-            var _imageFilenameList = new List<string>();
-
             //Get supported image extensions from directory
-            _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+            var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+
+            logit("Prep2");
 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
@@ -407,6 +406,7 @@ namespace ImageGlass
         /// </summary>
         private void LoadThumbnails()
         {
+            thumbnailBar.SuspendLayout();
             thumbnailBar.Items.Clear();
             thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension, GlobalSetting.ThumbnailDimension);
 
@@ -417,7 +417,7 @@ namespace ImageGlass
 
                 thumbnailBar.Items.Add(lvi);
             }
-
+            thumbnailBar.ResumeLayout();
         }
 
         /// <summary>
