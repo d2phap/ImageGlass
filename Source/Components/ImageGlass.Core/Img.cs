@@ -137,5 +137,9 @@ namespace ImageGlass.Core
             path = s;
         }
 
+        public Image GetThumbnail(Size size, bool useEmbeddedThumbnail)
+        {
+            return Interpreter.GetThumbnail(path, size, useEmbeddedThumbnail);
+        }
     }
 }
