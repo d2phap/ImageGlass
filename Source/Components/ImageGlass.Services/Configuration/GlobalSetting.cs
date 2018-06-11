@@ -234,6 +234,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets value whether thumbnail scrollbars visible
+        /// </summary>
+        public static bool IsShowThumbnailScroll { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
         public static bool IsLoopBackSlideShow { get; set; } = false;

@@ -117,6 +117,7 @@
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbarBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainThumbnailScroll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -1204,6 +1205,7 @@
             this.mnuMainToolbar,
             this.mnuMainToolbarBottom,
             this.mnuMainThumbnailBar,
+            this.mnuMainThumbnailScroll,
             this.mnuMainCheckBackground,
             this.toolStripMenuItem2,
             this.mnuMainAlwaysOnTop});
@@ -1259,6 +1261,19 @@
             this.mnuMainThumbnailBar.Size = new System.Drawing.Size(318, 31);
             this.mnuMainThumbnailBar.Text = "Thumbnail panel";
             this.mnuMainThumbnailBar.Click += new System.EventHandler(this.mnuMainThumbnailBar_Click);
+            // 
+            // mnuMainThumbnailScroll
+            // 
+            this.mnuMainThumbnailScroll.BackColor = System.Drawing.Color.Transparent;
+            this.mnuMainThumbnailScroll.CheckOnClick = true;
+            this.mnuMainThumbnailScroll.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainThumbnailScroll.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainThumbnailScroll.Name = "mnuMainThumbnailScroll";
+            this.mnuMainThumbnailScroll.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainThumbnailScroll.ShortcutKeyDisplayString = "";
+            this.mnuMainThumbnailScroll.Size = new System.Drawing.Size(318, 31);
+            this.mnuMainThumbnailScroll.Text = "Show Thumbnail scrollbars";
+            this.mnuMainThumbnailScroll.Click += new System.EventHandler(this.mnuMainThumbnailScroll_Click);
             // 
             // mnuMainCheckBackground
             // 
@@ -1594,6 +1609,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbarBottom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailScroll;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckBackground;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mnuMainFullScreen;

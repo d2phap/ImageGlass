@@ -1499,6 +1499,11 @@ namespace ImageGlass
                 mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 #endregion
 
+                #region Load state of Thumbnail Scrollbars
+                GlobalSetting.IsShowThumbnailScroll = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnailScroll", "True"));
+                GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
+                mnuMainThumbnailScroll_Click(null, EventArgs.Empty);
+                #endregion
 
                 #region Windows state
                 configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
@@ -1809,6 +1814,7 @@ namespace ImageGlass
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
             GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
+            GlobalSetting.SetConfig("IsShowThumbnailScroll", GlobalSetting.IsShowThumbnailScroll.ToString());
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
@@ -2074,6 +2080,7 @@ namespace ImageGlass
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
                 mnuMainToolbarBottom.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbarBottom"];
                 mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
+                mnuMainThumbnailScroll.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailScroll"];
                 mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
                 mnuMainAlwaysOnTop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAlwaysOnTop"];
 

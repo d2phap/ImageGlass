@@ -326,7 +326,9 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
+            Items.Add("frmMain.mnuMainToolbarBottom", "Toolbar below image"); //v6.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
+            Items.Add("frmMain.mnuMainThumbnailScroll", "Show Thumbnail scrollbars"); //v6.0
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
