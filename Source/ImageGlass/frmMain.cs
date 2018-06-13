@@ -2819,9 +2819,12 @@ namespace ImageGlass
                     {
                         var mi = Library.Menu.Clone(mnuMainExtractFrames);
                         mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+                        mi.Enabled = true;
 
-                        mnuPopup.Items.Add(Library.Menu.Clone(mi));
-                        mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
+                        mnuPopup.Items.Add(mi);
+                        var mi2 = Library.Menu.Clone(mnuMainStartStopAnimating);
+                        mi2.Enabled = true;
+                        mnuPopup.Items.Add(mi2);
                     }
 
                 }
