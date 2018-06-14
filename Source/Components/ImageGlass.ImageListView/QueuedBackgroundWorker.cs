@@ -408,18 +408,24 @@ namespace ImageGlass.ImageListView
 		{
 			OnRunWorkerCompleted ((QueuedWorkerCompletedEventArgs)arg);
 		}
-		#endregion
+        #endregion
 
-		#region Virtual Methods
-		/// <summary>
-		/// Raises the RunWorkerCompleted event.
-		/// </summary>
-		/// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
-		protected virtual void OnRunWorkerCompleted (QueuedWorkerCompletedEventArgs e)
+        #region Virtual Methods
+        /// <summary>
+        /// Raises the RunWorkerCompleted event.
+        /// [IG_CHANGE] Issue #359: unhandled exception could cause next invocation to crash
+        /// </summary>
+        /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
+        protected virtual void OnRunWorkerCompleted (QueuedWorkerCompletedEventArgs e)
 		{
-			if (RunWorkerCompleted != null)
-				RunWorkerCompleted (this, e);
-		}
+            try
+            {
+                if (RunWorkerCompleted != null)
+                    RunWorkerCompleted(this, e);
+            }
+            catch { } // [IG_CHANGE] not un-caught exceptions
+
+        }
 		/// <summary>
 		/// Raises the DoWork event.
 		/// </summary>

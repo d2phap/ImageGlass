@@ -303,28 +303,33 @@ namespace ImageGlass.ImageListView
 			// Add to cache queue
 			RunWorker (new CacheRequest (guid, adaptor, virtualItemKey, useWIC));
 		}
-		#endregion
+        #endregion
 
-		#region RunWorker
-		/// <summary>
-		/// Pushes the given item to the worker queue.
-		/// </summary>
-		/// <param name="item">The cache item.</param>
-		private void RunWorker (CacheRequest item)
+        #region RunWorker
+        /// <summary>
+        /// Pushes the given item to the worker queue.
+        /// [IG_CHANGE] Issue #359: dictionary is not thread-safe, Add could crash; catch exceptions
+        /// </summary>
+        /// <param name="item">The cache item.</param>
+        private void RunWorker (CacheRequest item)
 		{
-			// Get the current synchronization context
-			if (context == null)
-				context = SynchronizationContext.Current;
-			
-			// Already being processed?
-			if (processing.ContainsKey (item.Guid))
-				return;
-			else
-				processing.Add (item.Guid, false);
-			
-			// Add the item to the queue for processing
-			bw.RunWorkerAsync (item);
-		}
+            try
+            {
+                // Get the current synchronization context
+                if (context == null)
+                    context = SynchronizationContext.Current;
+
+                // Already being processed?
+                if (processing.ContainsKey(item.Guid))
+                    return;
+                else
+                    processing.Add(item.Guid, false);
+
+                // Add the item to the queue for processing
+                bw.RunWorkerAsync(item);
+            }
+            catch { } // [IG_CHANGE]
+        }
 		#endregion
 
 		#region Dispose
