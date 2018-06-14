@@ -214,21 +214,23 @@ namespace ImageGlass.ImageListView
 			
 			arg.ContinueProcessing = canProcess;
 		}
-		#endregion
+        #endregion
 
-		#region QueuedBackgroundWorker Events
-		/// <summary>
-		/// Handles the RunWorkerCompleted event of the queued background worker.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerCompletedEventArgs"/> 
-		/// instance containing the event data.</param>
-		void bw_RunWorkerCompleted (object sender, QueuedWorkerCompletedEventArgs e)
+        #region QueuedBackgroundWorker Events
+        /// <summary>
+        /// Handles the RunWorkerCompleted event of the queued background worker.
+        /// [IG_CHANGE] Issue #359: thread collision? leftover context? failed to check null
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerCompletedEventArgs"/> 
+        /// instance containing the event data.</param>
+        void bw_RunWorkerCompleted (object sender, QueuedWorkerCompletedEventArgs e)
 		{
 			CacheItem result = e.Result as CacheItem;
-			
-			// We are done processing
-			processing.Remove (result.Extension);
+
+            // We are done processing
+            if (result != null) // [IG_CHANGE] result might be null with quick re-execution
+                processing.Remove (result.Extension);
 			
 			// Add to cache
 			if (result != null) {
