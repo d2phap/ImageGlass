@@ -205,8 +205,6 @@ namespace ImageGlass
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
-            logit("Prep2");
-
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
 
@@ -3693,6 +3691,13 @@ namespace ImageGlass
                 toolMain.Dock = DockStyle.Top;
             }
             mnuMainToolbarBottom.Checked = GlobalSetting.IsShowToolBarBottom;
+        }
+
+        private void mnuMainThumbnailScroll_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
+            thumbnailBar.ScrollBars = GlobalSetting.IsShowThumbnailScroll;
+            mnuMainThumbnailScroll.Checked = GlobalSetting.IsShowThumbnailScroll;
         }
 
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
