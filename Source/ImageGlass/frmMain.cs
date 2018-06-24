@@ -2353,8 +2353,23 @@ namespace ImageGlass
             //Console.WriteLine(timeDiff.ToString());
 
 
+            void onFileUpdated()
+            {
+                // update the viewing image
+                var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+                if (imgIndex == GlobalSetting.CurrentIndex)
+                {
+                    NextPic(0, true, true);
+                }
+
+                //update thumbnail
+                thumbnailBar.Items[imgIndex].Update();
+            }
+
+
             //Formular
             //update: delete - create   |  all
+            //update: change - change   |  all
             //create: create            |  all
             //delete: delete            |  all
 
@@ -2363,15 +2378,7 @@ namespace ImageGlass
                 // File change type = Updated
                 if (_lastAction == WatcherChangeTypes.Deleted && timeDiff < 5)
                 {
-                    // update the viewing image
-                    var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
-                    if (imgIndex == GlobalSetting.CurrentIndex)
-                    {
-                        NextPic(0, true, true);
-                    }
-
-                    //update thumbnail
-                    thumbnailBar.Items[imgIndex].Update();
+                    onFileUpdated();
                 }
                 // File change type = Created
                 else
@@ -2388,6 +2395,13 @@ namespace ImageGlass
                     }
                 }
                 
+            }
+            else if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                if (_lastAction == WatcherChangeTypes.Changed && timeDiff < 300)
+                {
+                    onFileUpdated();
+                }
             }
             // Still not sure if File change type = Deleted,
             // need to wait few ms to check the next action
