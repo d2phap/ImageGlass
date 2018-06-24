@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -15,10 +16,10 @@ namespace ImageGlass.Library
         /// <param name="SearchAllDirectories">when true, all sub directories will be searched as well</param>
         /// <param name="Filter">filter to be done on directory. use null for no filtering</param>
         /// <returns></returns>
-        public static List<string> FindDirectories(string RootDirectory,
+        public static ConcurrentBag<string> FindDirectories(string RootDirectory,
             bool SearchAllDirectories, Predicate<string> Filter)
         {
-            List<string> retList = new List<string>();
+            ConcurrentBag<string> retList = new ConcurrentBag<string>();
 
             try
             {
@@ -36,10 +37,12 @@ namespace ImageGlass.Library
                             // add the folder 
                             retList.Add(folder.FullName);
 
-                            // get it's sub folders 
+                            // get its sub folders 
                             if (SearchAllDirectories)
-                                retList.AddRange(FindDirectories(folder.FullName, true,
-                                    Filter));
+                            {
+                                foreach (var dir in FindDirectories(folder.FullName, true, Filter))
+                                    retList.Add(dir);
+                            }
                         }
                     }
 
@@ -81,10 +84,10 @@ namespace ImageGlass.Library
         /// <param name="SearchAllDirectories">>when true, all sub directories will be searched as well</param>
         /// <param name="Filter">filter to be done on files/directory. use null for no filtering</param>
         /// <returns></returns>
-        public static List<string> FindFiles(string RootDirectory,
-            bool SearchAllDirectories, Predicate<string> Filter)
+        public static ConcurrentBag<string> FindFiles(string RootDirectory,
+            bool SearchAllDirectories, Predicate<FileInfo> Filter)
         {
-            List<string> retList = new List<string>();
+            ConcurrentBag<string> retList = new ConcurrentBag<string>();
 
             try
             {
@@ -109,7 +112,7 @@ namespace ImageGlass.Library
                             try
                             {
                                 // add the file if it passes the filter 
-                                if ((Filter == null) || (Filter(file.FullName)))
+                                if ((Filter == null) || (Filter(file)))
                                     retList.Add(file.FullName);
                             }
 

@@ -225,6 +225,56 @@ namespace ImageGlass.Core
             return 0;
         }
 
+        public static Image GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails)
+        {
+            var ext = Path.GetExtension(filename).ToLower();
 
+            Image source = null;
+            try
+            {
+                var settings = new MagickReadSettings();
+
+                if (ext.CompareTo(".svg") == 0)
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
+
+                if (size.Width > 0 && size.Height > 0)
+                {
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
+                }
+
+                using (var magicImg = new MagickImage(filename, settings))
+                {
+                    // Try to read the exif thumbnail
+                    if (useEmbeddedThumbnails)
+                    {
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
+                        {
+                            // Fetch the embedded thumbnail
+                            var magicThumb = profile.CreateThumbnail();
+                            if (magicThumb != null)
+                            {
+                                source = magicThumb.ToBitmap();
+                            }
+                        }
+                    }
+
+                    // Revert to source image if an embedded thumbnail of required size was not found.
+                    if (source == null)
+                    {
+                        source = magicImg.ToBitmap();
+                    }
+
+                }//END using MagickImage 
+            }
+            catch
+            {
+                source = null;
+            }
+            return source;
+        }
     }
 }

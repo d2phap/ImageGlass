@@ -180,7 +180,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\DefaultImage.png" />
   </ItemGroup>
   <ItemGroup>
