@@ -46,8 +46,9 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            //Check DPI Scaling ratio
-            DPIScaling.CurrentDPI = this.DeviceDpi; // DPIScaling.GetSystemDpi();
+            //Get DPI Scaling ratio
+            //NOTE: the this.DeviceDpi property is not accurate
+            DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
             //Modern UI menu renderer
             mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();
@@ -435,8 +436,13 @@ namespace ImageGlass
         /// <param name="isSkippingCache"></param>
         private void NextPic(int step, bool isKeepZoomRatio, bool isSkippingCache = false)
         {
+            if (picMain.IsAnimating)
+            {
+                picMain.StopAnimating();
+            }
+
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath))
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 2000);
 
@@ -1795,8 +1801,6 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
-            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
-
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
@@ -1840,7 +1844,7 @@ namespace ImageGlass
             }
 
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath))
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 1000);
 

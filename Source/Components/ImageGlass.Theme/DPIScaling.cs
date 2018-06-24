@@ -89,7 +89,7 @@ namespace ImageGlass.Theme
 
         /// <summary>
         /// Get system Dpi.
-        /// Since .NET Framework 4.7.1, we can use this.DeviceDpi instead
+        /// NOTE: the this.DeviceDpi property is not accurate
         /// </summary>
         /// <returns></returns>
         public static int GetSystemDpi()

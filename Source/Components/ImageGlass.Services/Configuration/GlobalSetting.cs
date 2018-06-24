@@ -354,7 +354,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
         /// </summary>
-        public static bool IsSaveAfterRotating { get; set; } = true;
+        public static bool IsSaveAfterRotating { get; set; } = false;
 
 
         /// <summary>

@@ -734,11 +734,11 @@ namespace ImageGlass
 
         private void btnEditEditExt_Click(object sender, EventArgs e)
         {
-            if (lvImageEditing.CheckedItems.Count == 0)
+            if (lvImageEditing.SelectedItems.Count == 0)
                 return;
 
             //Get select Association item
-            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.CheckedItems[0].Text);
+            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.SelectedItems[0].Text);
 
             if (assoc == null)
                 return;
@@ -790,12 +790,7 @@ namespace ImageGlass
 
         private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvImageEditing.Items)
-            {
-                item.Checked = item.Selected;
-            }
-
-            btnEditEditExt.Enabled = (lvImageEditing.CheckedIndices.Count > 0);
+            btnEditEditExt.Enabled = (lvImageEditing.SelectedItems.Count > 0);
         }
         #endregion
 
@@ -1007,7 +1002,7 @@ namespace ImageGlass
 
         private void btnDeleteExt_Click(object sender, EventArgs e)
         {
-            if (lvExtension.CheckedItems.Count == 0)
+            if (lvExtension.SelectedItems.Count == 0)
                 return;
 
             var selectedDefaultExts = new StringBuilder();
@@ -1015,7 +1010,7 @@ namespace ImageGlass
 
             // Get checked extensions in the list then
             // remove extensions from settings
-            foreach (ListViewItem li in lvExtension.CheckedItems)
+            foreach (ListViewItem li in lvExtension.SelectedItems)
             {
                 if (li.Group.Name == "Default")
                 {
@@ -1069,12 +1064,7 @@ namespace ImageGlass
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvExtension.Items)
-            {
-                item.Checked = item.Selected;
-            }
-
-            btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
+            btnDeleteExt.Enabled = (lvExtension.SelectedItems.Count > 0);
         }
 
 

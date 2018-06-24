@@ -22,6 +22,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using ImageMagick;
 #if USEWIC
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -230,14 +231,70 @@ namespace ImageGlass.ImageListView
             if (size.Width <= 0 || size.Height <= 0)
                 throw new ArgumentException();
 
-            Image source = new Core.Img(filename).GetThumbnail(size, useEmbeddedThumbnails != UseEmbeddedThumbnails.Never);
+            Image source = null;
+            Image thumb = null;
+            var ext = Path.GetExtension(filename).ToLower();
+
+            try
+            {
+                var settings = new MagickReadSettings();
+
+                if (ext.CompareTo(".svg") == 0)
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
+
+                if (size.Width > 0 && size.Height > 0)
+                {
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
+                }
+
+                using (var magicImg = new MagickImage(filename, settings))
+                {
+                    // Try to read the exif thumbnail
+                    if (useEmbeddedThumbnails != UseEmbeddedThumbnails.Never)
+                    {
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
+                        {
+                            // Fetch the embedded thumbnail
+                            var magicThumb = profile.CreateThumbnail();
+                            if (magicThumb != null)
+                            {
+                                source = magicThumb.ToBitmap();
+
+                                if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Auto)
+                                {
+                                    // Check that the embedded thumbnail is large enough.
+                                    if (Math.Max((float)source.Width / (float)size.Width, (float)source.Height / (float)size.Height) < 1.0f)
+                                    {
+                                        source.Dispose();
+                                        source = null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Revert to source image if an embedded thumbnail of required size was not found.
+                    if (source == null)
+                    {
+                        source = magicImg.ToBitmap();
+                    }
+
+                }//END using MagickImage 
+            }
+            catch
+            {
+                source = null;
+            }
 
             // If all failed, return null.
             if (source == null)
                 return null;
 
             // Create the thumbnail
-            Image thumb = null;
             try
             {
                 thumb = GetThumbnailBmp(source, size, rotate);
