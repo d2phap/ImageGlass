@@ -1804,7 +1804,7 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
@@ -1890,7 +1890,7 @@ namespace ImageGlass
             }
             else if (m.Msg == 0x0112) // WM_SYSCOMMAND
             {
-                // Check your window state here
+                // When user clicks on MAXIMIZE button on title bar
                 if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
                 {
                     // The window is being maximized
@@ -1904,7 +1904,7 @@ namespace ImageGlass
                         picMain.ScrollTo(0, 0, 0, 0);
                     }
                 }
-                // Check your window state here
+                // When user clicks on the RESTORE button on title bar
                 else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
                 {
                     // The window is being restored
@@ -2209,10 +2209,12 @@ namespace ImageGlass
         private void frmMain_ResizeBegin(object sender, EventArgs e)
         {
             _windowSize = Size;
+            Console.WriteLine("Begin resize >>>>");
         }
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
+            Console.WriteLine("End resize <<<<");
             if (Size != _windowSize)
             {
                 SaveConfig();
@@ -2221,10 +2223,13 @@ namespace ImageGlass
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
+            Console.WriteLine("Size changed ====");
+            Console.WriteLine("State = " + this.WindowState.ToString());
             if (!_isZoomed)
             {
                 mnuMainRefresh_Click(null, null);
             }
+            
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
