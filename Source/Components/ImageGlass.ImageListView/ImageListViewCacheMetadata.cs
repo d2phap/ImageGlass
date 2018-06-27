@@ -15,8 +15,14 @@
 //
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
+// Dictionary<> is not thread safe if modified while being read. Launching
+// ImageGlass with a filename argument in a directory with many files was
+// throwing an IndexOutOfRange exception. Using a ConcrrentDictionary
+// prevents that. (dnadle)
+
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 
 namespace ImageGlass.ImageListView
@@ -35,7 +41,7 @@ namespace ImageGlass.ImageListView
 		private ImageListView mImageListView;
 
 		private Dictionary<Guid, bool> editCache;
-		private Dictionary<Guid, bool> processing;
+		private ConcurrentDictionary<Guid, bool> processing;
 		private Dictionary<Guid, bool> removedItems;
 
 		private bool disposed;
@@ -134,7 +140,7 @@ namespace ImageGlass.ImageListView
 			RetryOnError = false;
 			
 			editCache = new Dictionary<Guid, bool> ();
-			processing = new Dictionary<Guid, bool> ();
+			processing = new ConcurrentDictionary<Guid, bool> ();
 			removedItems = new Dictionary<Guid, bool> ();
 			
 			disposed = false;
@@ -190,13 +196,20 @@ namespace ImageGlass.ImageListView
 		void bw_RunWorkerCompleted (object sender, QueuedWorkerCompletedEventArgs e)
 		{
 			CacheRequest request = e.UserState as CacheRequest;
-			
-			// We are done processing
-			processing.Remove (request.Guid);
-			
-			// Do not process the result if the cache operation
-			// was cancelled.
-			if (e.Cancelled)
+
+            // We are done processing
+            bool removedValue;
+			var removed = processing.TryRemove (request.Guid, out removedValue);
+            if (!removed && mImageListView != null)
+            {
+                var ex = new InvalidOperationException("Image already processed");
+                mImageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Details);
+                return;
+            }
+
+            // Do not process the result if the cache operation
+            // was cancelled.
+            if (e.Cancelled)
 				return;
 			
 			// Get result
@@ -313,12 +326,11 @@ namespace ImageGlass.ImageListView
 			// Get the current synchronization context
 			if (context == null)
 				context = SynchronizationContext.Current;
-			
-			// Already being processed?
-			if (processing.ContainsKey (item.Guid))
-				return;
-			else
-				processing.Add (item.Guid, false);
+
+            // Already being processed?
+            var added = processing.TryAdd (item.Guid, false);
+            if (!added)
+                return;
 			
 			// Add the item to the queue for processing
 			bw.RunWorkerAsync (item);

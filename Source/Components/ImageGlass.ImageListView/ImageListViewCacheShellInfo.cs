@@ -15,8 +15,11 @@
 //
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
+// Dictionary<> is not thread safe if modified while being read.
+
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Threading;
 
@@ -36,7 +39,7 @@ namespace ImageGlass.ImageListView
 		private ImageListView mImageListView;
 
 		private Dictionary<string, CacheItem> shellCache;
-		private Dictionary<string, bool> processing;
+		private ConcurrentDictionary<string, bool> processing;
 
 		private bool disposed;
 		#endregion
@@ -177,7 +180,7 @@ namespace ImageGlass.ImageListView
 			RetryOnError = false;
 			
 			shellCache = new Dictionary<string, CacheItem> ();
-			processing = new Dictionary<string, bool> ();
+			processing = new ConcurrentDictionary<string, bool> ();
 			
 			disposed = false;
 		}
@@ -226,13 +229,18 @@ namespace ImageGlass.ImageListView
 		void bw_RunWorkerCompleted (object sender, QueuedWorkerCompletedEventArgs e)
 		{
 			CacheItem result = e.Result as CacheItem;
-			
-			// We are done processing
-			processing.Remove (result.Extension);
-			
+
 			// Add to cache
 			if (result != null) {
-				CacheItem existing = null;
+                // We are done processing
+                bool removedValue;
+                var removed = processing.TryRemove (result.Extension, out removedValue);
+                if (!removed)
+                {
+                    throw new InvalidOperationException("processing.TryRemove failed");
+                }
+
+                CacheItem existing = null;
 				if (shellCache.TryGetValue (result.Extension, out existing)) {
 					existing.Dispose ();
 					shellCache.Remove (result.Extension);
@@ -417,12 +425,11 @@ namespace ImageGlass.ImageListView
 			// Get the current synchronization context
 			if (context == null)
 				context = SynchronizationContext.Current;
-			
-			// Already being processed?
-			if (processing.ContainsKey (extension))
-				return;
-			else
-				processing.Add (extension, false);
+
+            // Already being processed?
+            bool added = processing.TryAdd(extension, false);
+            if (!added)
+                return;
 			
 			// Add the item to the queue for processing
 			bw.RunWorkerAsync (extension);
