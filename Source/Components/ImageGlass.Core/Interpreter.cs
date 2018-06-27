@@ -115,22 +115,9 @@ namespace ImageGlass.Core
                     //corect the image color
                     magicImg.AddProfile(ColorProfile.SRGB);
 
-                    if (ext.CompareTo(".heic") == 0)
-                    {
-                        // NOTE: ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                        // There is a bug with Magick.NET v7.4.5 
-                        // that ToBitmap() function will return wrong colorspace:
-                        // https://github.com/dlemstra/Magick.NET/issues/153#issuecomment-388080405
-                        // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                        // Hence, we need to export to BitmapSource then convert to Bitmap again
-                        bmp = BitmapBooster.BitmapFromSource(magicImg.ToBitmapSource());
-                    }
-                    else
-                    {
-                        bmp = magicImg.ToBitmap();
-                    }
-
-                        
+                    //get bitmap
+                    bmp = magicImg.ToBitmap();
+                    
                 }
             }
 
@@ -238,6 +225,56 @@ namespace ImageGlass.Core
             return 0;
         }
 
+        public static Image GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails)
+        {
+            var ext = Path.GetExtension(filename).ToLower();
 
+            Image source = null;
+            try
+            {
+                var settings = new MagickReadSettings();
+
+                if (ext.CompareTo(".svg") == 0)
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
+
+                if (size.Width > 0 && size.Height > 0)
+                {
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
+                }
+
+                using (var magicImg = new MagickImage(filename, settings))
+                {
+                    // Try to read the exif thumbnail
+                    if (useEmbeddedThumbnails)
+                    {
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
+                        {
+                            // Fetch the embedded thumbnail
+                            var magicThumb = profile.CreateThumbnail();
+                            if (magicThumb != null)
+                            {
+                                source = magicThumb.ToBitmap();
+                            }
+                        }
+                    }
+
+                    // Revert to source image if an embedded thumbnail of required size was not found.
+                    if (source == null)
+                    {
+                        source = magicImg.ToBitmap();
+                    }
+
+                }//END using MagickImage 
+            }
+            catch
+            {
+                source = null;
+            }
+            return source;
+        }
     }
 }

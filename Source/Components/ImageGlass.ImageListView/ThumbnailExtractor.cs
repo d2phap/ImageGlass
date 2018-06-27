@@ -22,7 +22,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Text;
 using ImageMagick;
 #if USEWIC
 using System.Windows.Media;
@@ -281,14 +280,7 @@ namespace ImageGlass.ImageListView
                     // Revert to source image if an embedded thumbnail of required size was not found.
                     if (source == null)
                     {
-                        if (ext.CompareTo(".heic") == 0)
-                        {
-                            source = Core.BitmapBooster.BitmapFromSource(magicImg.ToBitmapSource());
-                        }
-                        else
-                        {
-                            source = magicImg.ToBitmap();
-                        }
+                        source = magicImg.ToBitmap();
                     }
 
                 }//END using MagickImage 
@@ -299,30 +291,13 @@ namespace ImageGlass.ImageListView
             }
 
             // If all failed, return null.
-            if (source == null) return null;
+            if (source == null)
+                return null;
 
             // Create the thumbnail
             try
             {
-                double scale;
-                if (rotate % 180 != 0)
-                {
-                    scale = Math.Min(size.Height / (double)source.Width,
-                        size.Width / (double)source.Height);
-                }
-                else
-                {
-                    scale = Math.Min(size.Width / (double)source.Width,
-                        size.Height / (double)source.Height);
-                }
-
-                thumb = ScaleDownRotateBitmap(source, scale, rotate);
-            }
-            catch
-            {
-                if (thumb != null)
-                    thumb.Dispose();
-                thumb = null;
+                thumb = GetThumbnailBmp(source, size, rotate);
             }
             finally
             {

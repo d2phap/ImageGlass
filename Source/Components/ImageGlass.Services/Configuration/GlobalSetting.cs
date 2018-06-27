@@ -228,6 +228,18 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets value whether toolbar is at the bottom of window when visible
+        /// </summary>
+        public static bool IsShowToolBarBottom { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value whether thumbnail scrollbars visible
+        /// </summary>
+        public static bool IsShowThumbnailScroll { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
         public static bool IsLoopBackSlideShow { get; set; } = false;
@@ -342,7 +354,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
         /// </summary>
-        public static bool IsSaveAfterRotating { get; set; } = true;
+        public static bool IsSaveAfterRotating { get; set; } = false;
 
 
         /// <summary>

@@ -131,10 +131,10 @@ namespace ImageGlass.ImageListView
 			context = null;
 			bw = new QueuedBackgroundWorker ();
 			bw.IsBackground = true;
-			bw.DoWork += bw_DoWork;
-			bw.RunWorkerCompleted += bw_RunWorkerCompleted;
-			
-			checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
+            checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
 			
 			mImageListView = owner;
 			RetryOnError = false;
@@ -227,13 +227,13 @@ namespace ImageGlass.ImageListView
 			if (e.Error != null && mImageListView != null)
 				mImageListView.OnCacheErrorInternal (request.Guid, e.Error, CacheThread.Details);
 		}
-		/// <summary>
-		/// Handles the DoWork event of the queued background worker.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
-		/// containing the event data.</param>
-		void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
+        /// <summary>
+        /// [IG_CHANGE] Handles the DoWork event of the queued background worker.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
+        /// containing the event data.</param>
+        void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
 		{
 			CacheRequest request = e.Argument as CacheRequest;
 			
@@ -245,10 +245,12 @@ namespace ImageGlass.ImageListView
 				e.Cancel = true;
 				return;
 			}
-			
-			// Get item details
-			e.Result = request.Adaptor.GetDetails (request.VirtualItemKey, request.UseWIC);
-		}
+
+            // Get item details
+            // Note: 
+            // If we use WIC, it will cause Memory Leak issue: https://github.com/d2phap/ImageGlass/issues/119
+            e.Result = request.Adaptor.GetDetails(request.VirtualItemKey, false);// request.UseWIC);
+        }
 		#endregion
 
 		#region Instance Methods
@@ -314,14 +316,15 @@ namespace ImageGlass.ImageListView
 			// Add to cache queue
 			RunWorker (new CacheRequest (guid, adaptor, virtualItemKey, useWIC));
 		}
-		#endregion
+        #endregion
 
-		#region RunWorker
-		/// <summary>
-		/// Pushes the given item to the worker queue.
-		/// </summary>
-		/// <param name="item">The cache item.</param>
-		private void RunWorker (CacheRequest item)
+        #region RunWorker
+        /// <summary>
+        /// Pushes the given item to the worker queue.
+        /// [IG_CHANGE] Issue #359: dictionary is not thread-safe, Add could crash; catch exceptions
+        /// </summary>
+        /// <param name="item">The cache item.</param>
+        private void RunWorker (CacheRequest item)
 		{
 			// Get the current synchronization context
 			if (context == null)
@@ -335,6 +338,7 @@ namespace ImageGlass.ImageListView
 			// Add the item to the queue for processing
 			bw.RunWorkerAsync (item);
 		}
+
 		#endregion
 
 		#region Dispose

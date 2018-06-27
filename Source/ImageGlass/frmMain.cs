@@ -36,6 +36,7 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
+using System.Collections.Concurrent;
 
 namespace ImageGlass
 {
@@ -202,11 +203,8 @@ namespace ImageGlass
                 dirPath = path; // (path + "\\").Replace("\\\\", "\\");
             }
 
-            //Declare a new list to store filename
-            var _imageFilenameList = new List<string>();
-
             //Get supported image extensions from directory
-            _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+            var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
@@ -279,6 +277,29 @@ namespace ImageGlass
         }
 
         /// <summary>
+        /// Take the supported extensions string from GlobalSetting and convert it 
+        /// to a faster lookup mechanism and with wildcard removed.
+        /// 
+        /// Intended to fix the observed issue where "string.Contains" would cause
+        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
+        /// </summary>
+        /// <returns>HashSet of each extension in form ".foo"</returns>
+        private HashSet<string> MakeImageTypeSet()
+        {
+            char[] wildtrim = { '*' };
+            var allTypes = GlobalSetting.AllImageFormats;
+
+            var typesArray = allTypes.Split(';');
+            HashSet<string> supportedExtensions = new HashSet<string>();
+            foreach (var aType in typesArray)
+            {
+                string wildRemoved = aType.Trim(wildtrim);
+                supportedExtensions.Add(wildRemoved);
+            }
+            return supportedExtensions;
+        }
+
+        /// <summary>
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
@@ -287,25 +308,36 @@ namespace ImageGlass
             //Load image order from config
             GlobalSetting.LoadImageOrderConfig();
 
-            var list = new List<string>();
+            HashSet<string> supportedExtensions = MakeImageTypeSet();
 
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursiveLoading,
-                new Predicate<string>(delegate (String f)
+                new Predicate<FileInfo>(delegate (FileInfo fi)
                 {
-                    string extension = Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
+                    // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
+                    // By doing so, can use the attribute data already loaded into memory, 
+                    // instead of fetching it again (via File.GetAttributes). A re-fetch is
+                    // very slow across network paths. For me, improves image load from 4+ 
+                    // seconds to 0.4 seconds for a specific network path.
+
+                    if (fi.FullName == null) // KBR not sure why but occasionally getting null filename
+                        return false;
+
+                    string extension = fi.Extension ?? "";
+                    extension = extension.ToLower(); // Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
+
                     // checks if image is hidden and ignores it if so
                     if (GlobalSetting.IsShowingHiddenImages == false)
                     {
-                        var attributes = File.GetAttributes(f);
+                        var attributes = fi.Attributes; // File.GetAttributes(f);
                         var isHidden = attributes.HasFlag(FileAttributes.Hidden);
                         if (isHidden)
                         {
                             return false;
                         }
                     }
-                    if (extension.Length > 0 && GlobalSetting.AllImageFormats.Contains(extension))
+                    if (extension.Length > 0 && supportedExtensions.Contains(extension))
                     {
                         return true;
                     }
@@ -314,13 +346,13 @@ namespace ImageGlass
                 }));
             
 
-            list = SortImageList(fileList);
+            var list = SortImageList(fileList);
 
             return list;
         }
 
 
-        private List<string> SortImageList(List<string> fileList)
+        private List<string> SortImageList(ConcurrentBag<string> fileList)
         {
             var list = new List<string>();
 
@@ -373,6 +405,7 @@ namespace ImageGlass
         /// </summary>
         private void LoadThumbnails()
         {
+            thumbnailBar.SuspendLayout();
             thumbnailBar.Items.Clear();
             thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension, GlobalSetting.ThumbnailDimension);
 
@@ -383,7 +416,7 @@ namespace ImageGlass
 
                 thumbnailBar.Items.Add(lvi);
             }
-
+            thumbnailBar.ResumeLayout();
         }
 
         /// <summary>
@@ -403,8 +436,13 @@ namespace ImageGlass
         /// <param name="isSkippingCache"></param>
         private void NextPic(int step, bool isKeepZoomRatio, bool isSkippingCache = false)
         {
+            if (picMain.IsAnimating)
+            {
+                picMain.StopAnimating();
+            }
+
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath))
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 2000);
 
@@ -1412,6 +1450,12 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+                #region Load state of Toolbar Below Image
+                GlobalSetting.IsShowToolBarBottom = bool.Parse(GlobalSetting.GetConfig("IsShowToolBarBottom", "False"));
+                GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
+                mnuMainToolbarBottom_Click(null, EventArgs.Empty);
+                #endregion
+
 
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out int thumbDimension))
@@ -1459,6 +1503,11 @@ namespace ImageGlass
                 mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 #endregion
 
+                #region Load state of Thumbnail Scrollbars
+                GlobalSetting.IsShowThumbnailScroll = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnailScroll", "True"));
+                GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
+                mnuMainThumbnailScroll_Click(null, EventArgs.Empty);
+                #endregion
 
                 #region Windows state
                 configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
@@ -1752,12 +1801,10 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
-            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
-
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
@@ -1768,6 +1815,8 @@ namespace ImageGlass
 
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
+            GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
+            GlobalSetting.SetConfig("IsShowThumbnailScroll", GlobalSetting.IsShowThumbnailScroll.ToString());
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
@@ -1795,7 +1844,7 @@ namespace ImageGlass
             }
 
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath))
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 1000);
 
@@ -1841,7 +1890,7 @@ namespace ImageGlass
             }
             else if (m.Msg == 0x0112) // WM_SYSCOMMAND
             {
-                // Check your window state here
+                // When user clicks on MAXIMIZE button on title bar
                 if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
                 {
                     // The window is being maximized
@@ -1855,7 +1904,7 @@ namespace ImageGlass
                         picMain.ScrollTo(0, 0, 0, 0);
                     }
                 }
-                // Check your window state here
+                // When user clicks on the RESTORE button on title bar
                 else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
                 {
                     // The window is being restored
@@ -2031,7 +2080,9 @@ namespace ImageGlass
 
                 mnuMainLayout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLayout"];
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
+                mnuMainToolbarBottom.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbarBottom"];
                 mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
+                mnuMainThumbnailScroll.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailScroll"];
                 mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
                 mnuMainAlwaysOnTop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAlwaysOnTop"];
 
@@ -2158,10 +2209,12 @@ namespace ImageGlass
         private void frmMain_ResizeBegin(object sender, EventArgs e)
         {
             _windowSize = Size;
+            Console.WriteLine("Begin resize >>>>");
         }
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
+            Console.WriteLine("End resize <<<<");
             if (Size != _windowSize)
             {
                 SaveConfig();
@@ -2170,10 +2223,13 @@ namespace ImageGlass
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
+            Console.WriteLine("Size changed ====");
+            Console.WriteLine("State = " + this.WindowState.ToString());
             if (!_isZoomed)
             {
                 mnuMainRefresh_Click(null, null);
             }
+            
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
@@ -2302,8 +2358,23 @@ namespace ImageGlass
             //Console.WriteLine(timeDiff.ToString());
 
 
+            void onFileUpdated()
+            {
+                // update the viewing image
+                var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+                if (imgIndex == GlobalSetting.CurrentIndex)
+                {
+                    NextPic(0, true, true);
+                }
+
+                //update thumbnail
+                thumbnailBar.Items[imgIndex].Update();
+            }
+
+
             //Formular
             //update: delete - create   |  all
+            //update: change - change   |  all
             //create: create            |  all
             //delete: delete            |  all
 
@@ -2312,15 +2383,7 @@ namespace ImageGlass
                 // File change type = Updated
                 if (_lastAction == WatcherChangeTypes.Deleted && timeDiff < 5)
                 {
-                    // update the viewing image
-                    var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
-                    if (imgIndex == GlobalSetting.CurrentIndex)
-                    {
-                        NextPic(0, true, true);
-                    }
-
-                    //update thumbnail
-                    thumbnailBar.Items[imgIndex].Update();
+                    onFileUpdated();
                 }
                 // File change type = Created
                 else
@@ -2337,6 +2400,13 @@ namespace ImageGlass
                     }
                 }
                 
+            }
+            else if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                if (_lastAction == WatcherChangeTypes.Changed && timeDiff < 300)
+                {
+                    onFileUpdated();
+                }
             }
             // Still not sure if File change type = Deleted,
             // need to wait few ms to check the next action
@@ -2770,9 +2840,12 @@ namespace ImageGlass
                     {
                         var mi = Library.Menu.Clone(mnuMainExtractFrames);
                         mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+                        mi.Enabled = true;
 
-                        mnuPopup.Items.Add(Library.Menu.Clone(mi));
-                        mnuPopup.Items.Add(Library.Menu.Clone(mnuMainStartStopAnimating));
+                        mnuPopup.Items.Add(mi);
+                        var mi2 = Library.Menu.Clone(mnuMainStartStopAnimating);
+                        mi2.Enabled = true;
+                        mnuPopup.Items.Add(mi2);
                     }
 
                 }
@@ -3530,14 +3603,26 @@ namespace ImageGlass
 
             try
             {
+                var args = string.Format("setwallpaper \"{0}\" {1}",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
+                    (int)DesktopWallapaper.Style.Current);
+
+                // Issue #326: first attempt to set wallpaper w/o privs. If that
+                // fails _due_to_ privs error, re-attempt with admin privs.
                 Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                p.WaitForExit();
+                int result = p.ExitCode;
+                if (result != (int)DesktopWallapaper.Result.PrivsFail)
+                    return;
+
                 p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-                p.StartInfo.Arguments = "setwallpaper " + //name of param
-                                        "\"" + GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\" " + //arg 1
-                                        "\"" + "0" + "\" "; //arg 2
+                p.StartInfo.Arguments = args;
                 p.Start();
             }
-            catch (Exception)
+            catch
             { }
         }
 
@@ -3613,6 +3698,29 @@ namespace ImageGlass
                 toolMain.Visible = false;
             }
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
+        }
+
+        private void mnuMainToolbarBottom_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
+            if (GlobalSetting.IsShowToolBarBottom)
+            {
+                toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+                toolMain.Dock = DockStyle.Bottom;
+            }
+            else
+            {
+                toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                toolMain.Dock = DockStyle.Top;
+            }
+            mnuMainToolbarBottom.Checked = GlobalSetting.IsShowToolBarBottom;
+        }
+
+        private void mnuMainThumbnailScroll_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
+            thumbnailBar.ScrollBars = GlobalSetting.IsShowThumbnailScroll;
+            mnuMainThumbnailScroll.Checked = GlobalSetting.IsShowThumbnailScroll;
         }
 
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
