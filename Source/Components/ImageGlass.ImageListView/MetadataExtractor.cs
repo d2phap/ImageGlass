@@ -59,7 +59,7 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
         private static readonly string[] WICPathSoftware = new string[] { "/app1/ifd/{ushort=305}", "/xmp/xmp:CreatorTool", "/xmp/xmp:creatortool", "/xmp/tiff:Software", "/xmp/tiff:software", "/app13/irb/8bimiptc/iptc/Originating Program" };
         private static readonly string[] WICPathSimpleRating = new string[] { "/app1/ifd/{ushort=18246}", "/xmp/xmp:Rating" };
-        private static readonly string[] WICPathRating = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
+        private static readonly string[] WICPathRating = new string[] { "/app1/ifd/{ushort=18249}", "/xmp/MicrosoftPhoto:Rating" };
         private static readonly string[] WICPathArtist = new string[] { "/app1/ifd/{ushort=315}", "/app13/irb/8bimiptc/iptc/by-line", "/app1/ifd/{ushort=40093}", "/xmp/tiff:artist" };
         private static readonly string[] WICPathEquipmentManufacturer = new string[] { "/app1/ifd/{ushort=271}", "/xmp/tiff:Make", "/xmp/tiff:make" };
         private static readonly string[] WICPathEquipmentModel = new string[] { "/app1/ifd/{ushort=272}", "/xmp/tiff:Model", "/xmp/tiff:model" };
@@ -102,9 +102,17 @@ namespace ImageGlass.ImageListView
         {
             try
             {
-                return DateTime.ParseExact(value,
+                // Don't throw unnecessary FormatExceptions
+                DateTime dt;
+                var converted = DateTime.TryParseExact(value,
                     "yyyy:MM:dd HH:mm:ss",
-                    System.Globalization.CultureInfo.InvariantCulture);
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None,
+                    out dt);
+                return converted ? dt : DateTime.MinValue;
+                //return DateTime.ParseExact(value,
+                //    "yyyy:MM:dd HH:mm:ss",
+                //    System.Globalization.CultureInfo.InvariantCulture);
             }
             catch
             {
@@ -504,7 +512,8 @@ namespace ImageGlass.ImageListView
             val = GetMetadataObject(data, WICPathSimpleRating);
             if (val != null)
             {
-                ushort simpleRating = (ushort)val;
+                //ushort simpleRating = (ushort)val;
+                ushort simpleRating = Convert.ToUInt16(val);
 
                 if (simpleRating == 1)
                     Rating = 1;
@@ -520,7 +529,14 @@ namespace ImageGlass.ImageListView
             // Rating
             val = GetMetadataObject(data, WICPathRating);
             if (val != null)
-                Rating = (int)((ushort)val);
+            {
+                var a = val as Array;
+                if (a != null)
+                    Rating = Convert.ToInt32(a.GetValue(0));
+                else
+                    Rating = Convert.ToInt32(val);
+                //Rating = (int)((ushort)val);
+            }
             // Authors
             val = GetMetadataObject(data, WICPathArtist);
             if (val != null)
@@ -566,7 +582,13 @@ namespace ImageGlass.ImageListView
             // ISOSpeed
             val = GetMetadataObject(data, WICPathISOSpeed);
             if (val != null)
-                ISOSpeed = (ushort)val;
+            {
+                var a = val as Array;
+                if (a != null)
+                    ISOSpeed = Convert.ToUInt16(a.GetValue(0));
+                else
+                    ISOSpeed = Convert.ToUInt16(val);
+            }
             // FocalLength
             val = GetMetadataObject(data, WICPathFocalLength);
             if (val != null)
