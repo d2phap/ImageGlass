@@ -119,6 +119,10 @@ namespace ImageGlass
         {
             // Drag file from DESKTOP to APP
             string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+
+            if (Path.GetExtension(filePath).ToLower() == ".lnk")
+                filePath = Shortcuts.FolderFromShortcut(filePath);
+
             int imageIndex = GlobalSetting.ImageList.IndexOf(filePath);
 
             // The file is located another folder, load the entire folder
