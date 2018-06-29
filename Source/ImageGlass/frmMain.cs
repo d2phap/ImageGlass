@@ -628,16 +628,23 @@ namespace ImageGlass
             }
             else
             {
-                if (GlobalSetting.ImageList.Length < 1 || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.ImageList.Length < 1)
                 {
                     this.Text = appName;
                     return;
                 }
 
+                string currFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                // when there is a problem with a file, don't try to show some info
+                bool moredata = File.Exists(currFilePath);
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
-                fileSize = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-                fileDate = File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/MM/dd HH:mm:ss");
+                if (moredata)
+                {
+                    fileSize = ImageInfo.GetFileSize(currFilePath);
+                    fileDate = File.GetCreationTime(currFilePath).ToString("yyyy/MM/dd HH:mm:ss");
+                }
 
 
                 if (GlobalSetting.IsDisplayBasenameOfImage)
@@ -664,7 +671,10 @@ namespace ImageGlass
                 if (GlobalSetting.IsImageError)
                 {
                     //ImageGlass - {index/total} - {filename}  |  {file size}  |  {file date}
-                    this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
+                    if (!moredata) // size and date not available
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}";
+                    else
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
                 }
                 else
                 {
