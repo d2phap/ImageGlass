@@ -1214,7 +1214,7 @@ namespace ImageGlass
         {
             try
             {
-                ImageInfo.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+                Interpreter.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
             }
             catch (Exception ex)
             {

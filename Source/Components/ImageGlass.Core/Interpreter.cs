@@ -276,5 +276,50 @@ namespace ImageGlass.Core
             }
             return source;
         }
+
+        /// <summary>
+        /// Save image
+        /// </summary>
+        /// <param name="pic">Image source</param>
+        /// <param name="filename">New image file name</param>
+        public static void SaveImage(Image pic, string filename)
+        {
+            string ext = Path.GetExtension(filename).Substring(1).ToLower();
+
+            using (var img = new MagickImage(new Bitmap(pic)))
+            {
+                img.Quality = 100;
+                img.Write(filename);
+            }
+        }
+
+        /// <summary>
+        /// Load image
+        /// </summary>
+        /// <param name="Filename">path to image to load</param>
+        /// <param name="width">Set width for Scalable Format</param>
+        /// <param name="height">Set height for Scalable Format</param>
+        public static Bitmap LoadIcon(string Filename, int @width = 0, int @height = 0)
+        {
+            var settings = new MagickReadSettings();
+            var ext = Path.GetExtension(Filename).ToLower();
+
+            if (ext.CompareTo(".svg") == 0)
+            {
+                settings.BackgroundColor = MagickColors.Transparent;
+            }
+
+            if (width > 0 && height > 0)
+            {
+                settings.Width = width;
+                settings.Height = height;
+            }
+
+            using (var magicImg = new MagickImage(Filename, settings))
+            {
+                return magicImg.ToBitmap();
+            }
+        }
+
     }
 }
