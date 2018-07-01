@@ -232,7 +232,7 @@
             this.btnBack.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(33, 33);
-            this.btnBack.ToolTipText = "Go to previous image (Left arrow / PageDown)";
+            this.btnBack.ToolTipText = "Go to previous image (Left arrow / PageUp)";
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnNext
@@ -246,7 +246,7 @@
             this.btnNext.Margin = new System.Windows.Forms.Padding(0);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(33, 33);
-            this.btnNext.ToolTipText = "Go to next image (Right arrow / PageUp)";
+            this.btnNext.ToolTipText = "Go to next image (Right arrow / PageDown)";
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // toolStripSeparator1
@@ -705,7 +705,7 @@
             this.mnuMainViewNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainViewNext.Name = "mnuMainViewNext";
             this.mnuMainViewNext.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainViewNext.ShortcutKeyDisplayString = "Arrow right / PageUp";
+            this.mnuMainViewNext.ShortcutKeyDisplayString = "Right arrow / PageDown";
             this.mnuMainViewNext.Size = new System.Drawing.Size(452, 31);
             this.mnuMainViewNext.Text = "View &next image";
             this.mnuMainViewNext.Click += new System.EventHandler(this.mnuMainViewNext_Click);
@@ -716,7 +716,7 @@
             this.mnuMainViewPrevious.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainViewPrevious.Name = "mnuMainViewPrevious";
             this.mnuMainViewPrevious.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainViewPrevious.ShortcutKeyDisplayString = "Arrow left / PageDown";
+            this.mnuMainViewPrevious.ShortcutKeyDisplayString = "Left arrow / PageUp";
             this.mnuMainViewPrevious.Size = new System.Drawing.Size(452, 31);
             this.mnuMainViewPrevious.Text = "View &previous image";
             this.mnuMainViewPrevious.Click += new System.EventHandler(this.mnuMainViewPrevious_Click);
