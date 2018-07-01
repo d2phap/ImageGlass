@@ -86,6 +86,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
+      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
+      <Name>ImageGlass.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
