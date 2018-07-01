@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using Microsoft.VisualBasic.FileIO;
-
+using ImageGlass.Core;
 
 namespace ImageGlass.Library.Image
 {
@@ -133,7 +133,10 @@ namespace ImageGlass.Library.Image
                 switch (s.FilterIndex)
                 {
                     case 1:
-                        SaveImage(clonedPic, s.FileName);
+                    case 4:
+                    case 6:
+                    case 7:
+                        Interpreter.SaveImage(clonedPic, s.FileName);
                         break;
                     case 2:
                         clonedPic.Save(s.FileName, ImageFormat.Emf);
@@ -141,17 +144,8 @@ namespace ImageGlass.Library.Image
                     case 3:
                         clonedPic.Save(s.FileName, ImageFormat.Exif);
                         break;
-                    case 4:
-                        SaveImage(clonedPic, s.FileName);
-                        break;
                     case 5:
                         clonedPic.Save(s.FileName, ImageFormat.Icon);
-                        break;
-                    case 6:
-                        SaveImage(clonedPic, s.FileName);
-                        break;
-                    case 7:
-                        SaveImage(clonedPic, s.FileName);
                         break;
                     case 8:
                         clonedPic.Save(s.FileName, ImageFormat.Tiff);
@@ -189,71 +183,6 @@ namespace ImageGlass.Library.Image
             }
 
             return string.Empty;
-        }
-
-        /// <summary>
-        /// Save image
-        /// </summary>
-        /// <param name="originalFilename">Image file name</param>
-        /// <param name="filename">New image file name</param>
-        public static void SaveImage(string originalFilename, string filename)
-        {
-            string ext = Path.GetExtension(filename).Substring(1).ToLower();
-
-            using (var img = new ImageMagick.MagickImage(originalFilename))
-            {
-                img.Quality = 100;
-                img.Write(filename);
-            }
-        }
-
-            /// <summary>
-            /// Save image
-            /// </summary>
-            /// <param name="pic">Image source</param>
-            /// <param name="filename">New image file name</param>
-            public static void SaveImage(System.Drawing.Image pic, string filename)
-        {
-            string ext = Path.GetExtension(filename).Substring(1).ToLower();
-
-            using (var img = new ImageMagick.MagickImage(new Bitmap(pic)))
-            {
-                img.Quality = 100;
-                img.Write(filename);
-            }
-
-            //if (ext == "bmp")
-            //{
-            //    pic.Save(filename, ImageFormat.Bmp);
-            //}
-            //else if (ext == "emf")
-            //{
-            //    pic.Save(filename, ImageFormat.Emf);
-            //}
-            //else if (ext == "exif")
-            //{
-            //    pic.Save(filename, ImageFormat.Exif);
-            //}
-            //else if (ext == "ico")
-            //{
-            //    pic.Save(filename, ImageFormat.Icon);
-            //}
-            //else if (ext == "jpeg" || ext == "jpg" || ext == "jfif")
-            //{
-            //    pic.Save(filename, ImageFormat.Jpeg);
-            //}
-            //else if (ext == "png")
-            //{
-            //    pic.Save(filename, ImageFormat.Png);
-            //}
-            //else if (ext == "tiff")
-            //{
-            //    pic.Save(filename, ImageFormat.Tiff);
-            //}
-            //else if (ext == "wmf")
-            //{
-            //    pic.Save(filename, ImageFormat.Wmf);
-            //}
         }
 
         /// <summary>
