@@ -229,6 +229,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\zoomout.png" />
     <None Include="Resources\zoomlock.png" />
     <None Include="Resources\zoomin.png" />
@@ -346,8 +349,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>resources.bat</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
