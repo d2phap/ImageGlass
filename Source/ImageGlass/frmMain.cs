@@ -3316,13 +3316,7 @@ namespace ImageGlass
                 return;
             }
 
-            var bmp = new Bitmap(picMain.Image);
-            using (var img = new ImageMagick.MagickImage(bmp))
-            {
-                img.Rotate(270);
-                img.Quality = 100;
-                picMain.Image = img.ToBitmap();
-            }
+            picMain.Image = Interpreter.RotateImage(picMain.Image, 270);
 
             try
             {
@@ -3346,13 +3340,7 @@ namespace ImageGlass
                 return;
             }
 
-            var bmp = new Bitmap(picMain.Image);
-            using (var img = new ImageMagick.MagickImage(bmp))
-            {
-                img.Rotate(90);
-                img.Quality = 100;
-                picMain.Image = img.ToBitmap();
-            }
+            picMain.Image = Interpreter.RotateImage(picMain.Image, 90);
 
             try
             {

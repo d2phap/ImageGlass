@@ -321,5 +321,16 @@ namespace ImageGlass.Core
             }
         }
 
+        public static Image RotateImage(Image input, int degrees)
+        {
+            var bmp = new Bitmap(input);
+            using (var img = new MagickImage(bmp))
+            {
+                img.Rotate(degrees);
+                img.Quality = 100;
+                return img.ToBitmap();
+            }
+        }
+
     }
 }
