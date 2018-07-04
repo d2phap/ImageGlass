@@ -84,9 +84,6 @@
     <Compile Include="WinAPI\TimerAPI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
       <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
       <Name>ImageGlass.Core</Name>
