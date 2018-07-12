@@ -444,9 +444,6 @@ namespace ImageGlass
         {
             LocalSetting.IsColorPickerToolOpening = false;
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
-
-            //Windows Bound-------------------------------------------------------------------
-            GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
         }
 
 
@@ -480,7 +477,7 @@ namespace ImageGlass
             UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", $"0,0,300,160"));
+            Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {

@@ -119,6 +119,10 @@ namespace ImageGlass
         {
             // Drag file from DESKTOP to APP
             string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+
+            if (Path.GetExtension(filePath).ToLower() == ".lnk")
+                filePath = Shortcuts.FolderFromShortcut(filePath);
+
             int imageIndex = GlobalSetting.ImageList.IndexOf(filePath);
 
             // The file is located another folder, load the entire folder
@@ -624,16 +628,23 @@ namespace ImageGlass
             }
             else
             {
-                if (GlobalSetting.ImageList.Length < 1 || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.ImageList.Length < 1)
                 {
                     this.Text = appName;
                     return;
                 }
 
+                string currFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                // when there is a problem with a file, don't try to show some info
+                bool moredata = File.Exists(currFilePath);
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
-                fileSize = ImageInfo.GetFileSize(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-                fileDate = File.GetCreationTime(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToString("yyyy/MM/dd HH:mm:ss");
+                if (moredata)
+                {
+                    fileSize = ImageInfo.GetFileSize(currFilePath);
+                    fileDate = File.GetCreationTime(currFilePath).ToString("yyyy/MM/dd HH:mm:ss");
+                }
 
 
                 if (GlobalSetting.IsDisplayBasenameOfImage)
@@ -660,7 +671,10 @@ namespace ImageGlass
                 if (GlobalSetting.IsImageError)
                 {
                     //ImageGlass - {index/total} - {filename}  |  {file size}  |  {file date}
-                    this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
+                    if (!moredata) // size and date not available
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}";
+                    else
+                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
                 }
                 else
                 {
@@ -1810,7 +1824,7 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
             }
 
             //Windows State-------------------------------------------------------------------
@@ -1896,7 +1910,7 @@ namespace ImageGlass
             }
             else if (m.Msg == 0x0112) // WM_SYSCOMMAND
             {
-                // Check your window state here
+                // When user clicks on MAXIMIZE button on title bar
                 if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
                 {
                     // The window is being maximized
@@ -1910,7 +1924,7 @@ namespace ImageGlass
                         picMain.ScrollTo(0, 0, 0, 0);
                     }
                 }
-                // Check your window state here
+                // When user clicks on the RESTORE button on title bar
                 else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
                 {
                     // The window is being restored
@@ -2215,10 +2229,12 @@ namespace ImageGlass
         private void frmMain_ResizeBegin(object sender, EventArgs e)
         {
             _windowSize = Size;
+            Console.WriteLine("Begin resize >>>>");
         }
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
+            Console.WriteLine("End resize <<<<");
             if (Size != _windowSize)
             {
                 SaveConfig();
@@ -2227,10 +2243,13 @@ namespace ImageGlass
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
+            Console.WriteLine("Size changed ====");
+            Console.WriteLine("State = " + this.WindowState.ToString());
             if (!_isZoomed)
             {
                 mnuMainRefresh_Click(null, null);
             }
+            
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
@@ -2359,8 +2378,23 @@ namespace ImageGlass
             //Console.WriteLine(timeDiff.ToString());
 
 
+            void onFileUpdated()
+            {
+                // update the viewing image
+                var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+                if (imgIndex == GlobalSetting.CurrentIndex)
+                {
+                    NextPic(0, true, true);
+                }
+
+                //update thumbnail
+                thumbnailBar.Items[imgIndex].Update();
+            }
+
+
             //Formular
             //update: delete - create   |  all
+            //update: change - change   |  all
             //create: create            |  all
             //delete: delete            |  all
 
@@ -2369,15 +2403,7 @@ namespace ImageGlass
                 // File change type = Updated
                 if (_lastAction == WatcherChangeTypes.Deleted && timeDiff < 5)
                 {
-                    // update the viewing image
-                    var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
-                    if (imgIndex == GlobalSetting.CurrentIndex)
-                    {
-                        NextPic(0, true, true);
-                    }
-
-                    //update thumbnail
-                    thumbnailBar.Items[imgIndex].Update();
+                    onFileUpdated();
                 }
                 // File change type = Created
                 else
@@ -2394,6 +2420,13 @@ namespace ImageGlass
                     }
                 }
                 
+            }
+            else if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+                if (_lastAction == WatcherChangeTypes.Changed && timeDiff < 300)
+                {
+                    onFileUpdated();
+                }
             }
             // Still not sure if File change type = Deleted,
             // need to wait few ms to check the next action

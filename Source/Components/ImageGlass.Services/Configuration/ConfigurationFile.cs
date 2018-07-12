@@ -190,6 +190,10 @@ namespace ImageGlass.Services.Configuration
             string xpath = "//Configuration/Content/Item[@key = \"" + key + "\"]";
             XmlElement nItem = (XmlElement)root.SelectNodes(xpath)[0]; //<Item />
 
+            // Don't throw unnecessary NullReferenceExceptions
+            if (nItem == null)
+                return defaultValue != null ? defaultValue : null;
+
             //Get all config items
             try
             {
