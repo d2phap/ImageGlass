@@ -3319,6 +3319,16 @@ namespace ImageGlass
                 IsAnimating = false;
                 Animator.StopAnimate(Image, OnFrameChangedHandler);
             }
+            catch (InvalidOperationException)
+            {
+                // #issue #373: a race condition caused this exception: deleting the image from underneath us could
+                // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
+                // the correct response.
+
+                // stop the animation and reset to the first frame.
+                IsAnimating = false;
+                Animator.StopAnimate(Image, OnFrameChangedHandler);
+            }
 
             g.PixelOffsetMode = currentPixelOffsetMode;
             g.InterpolationMode = currentInterpolationMode;
