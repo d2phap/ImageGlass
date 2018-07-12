@@ -356,6 +356,10 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsSaveAfterRotating { get; set; } = false;
 
+        /// <summary>
+        /// Setting to control whether the image's original modified date value is preserved on save
+        /// </summary>
+        public static bool PreserveModifiedDate { get; set; } = false;
 
         /// <summary>
         /// Gets, sets the value indicates that there is a new version

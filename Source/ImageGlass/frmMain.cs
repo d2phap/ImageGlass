@@ -1214,7 +1214,11 @@ namespace ImageGlass
         {
             try
             {
+                DateTime lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
                 Interpreter.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+                // Issue #307: option to preserve the modified date/time
+                if (GlobalSetting.PreserveModifiedDate)
+                    File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
             }
             catch (Exception ex)
             {
@@ -1749,6 +1753,8 @@ namespace ImageGlass
                     //Get IsSaveAfterRotating value
                     GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
 
+                    // Fetch PreserveModifiedDate
+                    GlobalSetting.PreserveModifiedDate = bool.Parse(GlobalSetting.GetConfig("PreserveModifiedDate", "False"));
 
                     #region Get ImageEditingAssociationList
                     configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");

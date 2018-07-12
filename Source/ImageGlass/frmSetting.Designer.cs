@@ -91,6 +91,7 @@ namespace ImageGlass
             this.lblHeadMouseWheelActions = new System.Windows.Forms.Label();
             this.lblSelectAppForEdit = new System.Windows.Forms.Label();
             this.chkSaveOnRotate = new System.Windows.Forms.CheckBox();
+            this.chkSaveModifyDate = new System.Windows.Forms.CheckBox();
             this.chkShowHiddenImages = new System.Windows.Forms.CheckBox();
             this.btnEditEditAllExt = new System.Windows.Forms.Button();
             this.btnEditResetExt = new System.Windows.Forms.Button();
@@ -776,6 +777,7 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.lblHeadMouseWheelActions);
             this.tabImage.Controls.Add(this.lblSelectAppForEdit);
             this.tabImage.Controls.Add(this.chkSaveOnRotate);
+            this.tabImage.Controls.Add(this.chkSaveModifyDate);
             this.tabImage.Controls.Add(this.chkShowHiddenImages);
             this.tabImage.Controls.Add(this.btnEditEditAllExt);
             this.tabImage.Controls.Add(this.btnEditResetExt);
@@ -905,7 +907,7 @@ namespace ImageGlass
             // lblSelectAppForEdit
             // 
             this.lblSelectAppForEdit.AutoSize = true;
-            this.lblSelectAppForEdit.Location = new System.Drawing.Point(40, 1317);
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(38, 1349);
             this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
             this.lblSelectAppForEdit.Size = new System.Drawing.Size(296, 25);
@@ -916,13 +918,25 @@ namespace ImageGlass
             // 
             this.chkSaveOnRotate.AutoSize = true;
             this.chkSaveOnRotate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1277);
+            this.chkSaveOnRotate.Location = new System.Drawing.Point(45, 1264);
             this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(332, 30);
             this.chkSaveOnRotate.TabIndex = 27;
             this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
             this.chkSaveOnRotate.UseVisualStyleBackColor = true;
+            // 
+            // chkSaveModifyDate
+            // 
+            this.chkSaveModifyDate.AutoSize = true;
+            this.chkSaveModifyDate.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkSaveModifyDate.Location = new System.Drawing.Point(45, 1304);
+            this.chkSaveModifyDate.Margin = new System.Windows.Forms.Padding(2);
+            this.chkSaveModifyDate.Name = "chkSaveModifyDate";
+            this.chkSaveModifyDate.Size = new System.Drawing.Size(344, 30);
+            this.chkSaveModifyDate.TabIndex = 53;
+            this.chkSaveModifyDate.Text = "Preserve the modification date on save";
+            this.chkSaveModifyDate.UseVisualStyleBackColor = true;
             // 
             // chkShowHiddenImages
             // 
@@ -940,7 +954,7 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.AutoSize = true;
             this.btnEditEditAllExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(184, 1630);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(182, 1662);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(265, 45);
             this.btnEditEditAllExt.TabIndex = 30;
@@ -952,7 +966,7 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.AutoSize = true;
             this.btnEditResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditResetExt.Location = new System.Drawing.Point(455, 1630);
+            this.btnEditResetExt.Location = new System.Drawing.Point(453, 1662);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(245, 45);
             this.btnEditResetExt.TabIndex = 31;
@@ -965,7 +979,7 @@ namespace ImageGlass
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
             this.btnEditEditExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditExt.Location = new System.Drawing.Point(45, 1630);
+            this.btnEditEditExt.Location = new System.Drawing.Point(43, 1662);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(133, 45);
             this.btnEditEditExt.TabIndex = 29;
@@ -999,12 +1013,12 @@ namespace ImageGlass
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(45, 1345);
+            this.lvImageEditing.Location = new System.Drawing.Point(43, 1377);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(710, 271);
+            this.lvImageEditing.Size = new System.Drawing.Size(684, 271);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 28;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1035,7 +1049,7 @@ namespace ImageGlass
             // 
             this.lblHeadImageEditing.AutoSize = true;
             this.lblHeadImageEditing.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 1241);
+            this.lblHeadImageEditing.Location = new System.Drawing.Point(22, 1228);
             this.lblHeadImageEditing.Name = "lblHeadImageEditing";
             this.lblHeadImageEditing.Size = new System.Drawing.Size(130, 25);
             this.lblHeadImageEditing.TabIndex = 44;
@@ -2013,6 +2027,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkShowHiddenImages;
         private System.Windows.Forms.Label lblSelectAppForEdit;
         private System.Windows.Forms.CheckBox chkSaveOnRotate;
+        private System.Windows.Forms.CheckBox chkSaveModifyDate;
         private System.Windows.Forms.TabPage tabToolbar;
         private System.Windows.Forms.Button btnMoveUp;
         private System.Windows.Forms.Button btnMoveDown;
