@@ -506,6 +506,9 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
+
+            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v6.0
+
             #endregion
 
             #endregion

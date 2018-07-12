@@ -306,6 +306,7 @@ namespace ImageGlass
 
             lblHeadImageEditing.Text = lang["frmSetting.lblHeadImageEditing"];//
             chkSaveOnRotate.Text = lang["frmSetting.chkSaveOnRotate"];
+            chkSaveModifyDate.Text = lang["frmSetting.chkSaveModifyDate"];
             lblSelectAppForEdit.Text = lang["frmSetting.lblSelectAppForEdit"];
             btnEditEditExt.Text = lang["frmSetting.btnEditEditExt"];
             btnEditResetExt.Text = lang["frmSetting.btnEditResetExt"];
@@ -666,6 +667,7 @@ namespace ImageGlass
 
             //Get value of IsSaveAfterRotating
             chkSaveOnRotate.Checked = GlobalSetting.IsSaveAfterRotating;
+            chkSaveModifyDate.Checked = GlobalSetting.PreserveModifiedDate;
 
             //Load Image Editing extension list
             LoadImageEditingAssociationList();
@@ -2117,6 +2119,10 @@ namespace ImageGlass
             //IsSaveAfterRotating
             GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
             GlobalSetting.SetConfig("IsSaveAfterRotating", GlobalSetting.IsSaveAfterRotating.ToString());
+
+            // PreserveModifiedDate
+            GlobalSetting.PreserveModifiedDate = chkSaveModifyDate.Checked;
+            GlobalSetting.SetConfig("PreserveModifiedDate", GlobalSetting.PreserveModifiedDate.ToString());
 
             #endregion
 

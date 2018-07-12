@@ -53,10 +53,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.4.6.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET-Q16-AnyCPU.7.4.6\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="System" />
@@ -90,7 +86,10 @@
     <Compile Include="WinAPI\TimerAPI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
+      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
+      <Name>ImageGlass.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
