@@ -239,8 +239,10 @@ namespace ImageGlass.Library
 
 
             #region Tool bar
-            Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)");
-            Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)");
+
+            //Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)"); // removed V6.0
+            //Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)"); // removed V6.0
+
             Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
@@ -277,8 +279,13 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
+
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
+            Items.Add("frmMain.mnuMainViewNext.Shortcut", "Right Arrow / PageDown"); //v6.0
+
             Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v3.0
+            Items.Add("frmMain.mnuMainViewPrevious.Shortcut", "Left Arrow / PageUp"); // V6.0
+
             Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v3.0
             Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
             Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0

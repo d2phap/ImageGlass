@@ -2022,8 +2022,15 @@ namespace ImageGlass
             {
                 #region Update language strings
                 //Toolbar
-                btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
-                btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
+
+                //btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
+                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"],
+                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
+
+                //btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
+                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"],
+                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
+
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
                 btnDelete.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
@@ -2054,8 +2061,13 @@ namespace ImageGlass
                 mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
 
                 mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
+
                 mnuMainViewNext.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"];
+                mnuMainViewNext.ShortcutKeyDisplayString = GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"];
+
                 mnuMainViewPrevious.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"];
+                mnuMainViewPrevious.ShortcutKeyDisplayString = GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"];
+
                 mnuMainGoto.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGoto"];
                 mnuMainGotoFirst.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoFirst"];
                 mnuMainGotoLast.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoLast"];
