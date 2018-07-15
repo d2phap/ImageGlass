@@ -72,7 +72,7 @@ namespace ImageGlass
         private Size _windowSize = new Size(600, 500);
 
         // determine if the image is zoomed
-        private bool _isZoomed = false;
+        private bool _isManuallyZoomed = false;
 
         // determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
@@ -437,8 +437,8 @@ namespace ImageGlass
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
-        /// <param name="isSkippingCache"></param>
-        private void NextPic(int step, bool isKeepZoomRatio, bool isSkippingCache = false)
+        /// <param name="isSkipCache"></param>
+        private void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
             if (picMain.IsAnimating)
             {
@@ -514,40 +514,41 @@ namespace ImageGlass
             try
             {
                 //Read image data
-                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkippingCache);
+                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache);
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
                 //picMain.ZoomToFit();
 
                 //Lock zoom ratio if required
-                bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
-                if (isKeepZoomRatio)
-                {
-                    GlobalSetting.IsEnabledZoomLock = true;
-                    GlobalSetting.ZoomLockValue = (int)picMain.Zoom; // Note: losing a little precision here, not worth changing settings
+                //bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
+                //if (isKeepZoomRatio)
+                //{
+                //    GlobalSetting.IsEnabledZoomLock = true;
+                //    GlobalSetting.ZoomLockValue = (int)picMain.Zoom; // Note: losing a little precision here, not worth changing settings
 
-                    //prevent scrollbar position reset
-                    LocalSetting.IsResetScrollPosition = false;
-                }
+                //    //prevent scrollbar position reset
+                //    LocalSetting.IsResetScrollPosition = false;
+                //}
 
                 //Show image
                 picMain.Image = im;
 
                 //refresh image
-                mnuMainRefresh_Click(null, null);
+                //mnuMainRefresh_Click(null, null);
+                ApplyZoomMode(GlobalSetting.ZoomMode);
 
                 //Run in another thread
                 Parallel.Invoke(() =>
                 {
                     //Unlock zoom ratio before
-                    if (isKeepZoomRatio)
-                    {
-                        //reset to default values
-                        GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
-                        GlobalSetting.ZoomLockValue = 100;
-                        LocalSetting.IsResetScrollPosition = true;
-                    }
+                    //if (isKeepZoomRatio)
+                    //{
+                    //    //reset to default values
+                    //    GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
+                    //    GlobalSetting.ZoomLockValue = 100;
+                    //    LocalSetting.IsResetScrollPosition = true;
+                    //}
 
                     //Release unused images
                     if (GlobalSetting.CurrentIndex - 2 >= 0)
@@ -572,6 +573,7 @@ namespace ImageGlass
                     GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
                 }
             }
+
 
             if (GlobalSetting.IsImageError)
             {
@@ -814,7 +816,7 @@ namespace ImageGlass
             #region CTRL + `
             if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
             {
-                mnuMainZoomToFit_Click(null, null);
+                mnuMainScaleToFit_Click(null, null);
                 return;
             }
             #endregion
@@ -986,6 +988,152 @@ namespace ImageGlass
 
             mnuMainEditImage.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"], appName);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Select and Active Zoom Mode, use GlobalSetting.ZoomMode
+        /// </summary>
+        private void SelectUIZoomMode()
+        {
+            // Reset (Disable) Zoom Lock
+            GlobalSetting.ZoomLockValue = 100.0;
+
+
+            switch (GlobalSetting.ZoomMode)
+            {
+                case ZoomMode.ScaleToFit:
+                    btnScaleToFit.Checked = mnuMainScaleToFit.Checked = true;
+
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
+                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
+                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
+                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
+                    break;
+
+                case ZoomMode.ScaleToWidth:
+                    btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked = true;
+
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
+                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
+                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
+                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
+                    break;
+
+                case ZoomMode.ScaleToHeight:
+                    btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = true;
+
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
+                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
+                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
+                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
+                    break;
+
+                case ZoomMode.LockZoomRatio:
+                    btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
+
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
+                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
+                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
+                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = false;
+
+                    //Enable Zoom Lock
+                    GlobalSetting.ZoomLockValue = picMain.Zoom;
+                    break;
+
+                case ZoomMode.AutoZoom:
+                default:
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked = true;
+
+                    btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
+                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
+                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
+                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
+
+                    break;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Apply zoom mode
+        /// </summary>
+        /// <param name="zoomMode"></param>
+        private void ApplyZoomMode(ZoomMode zoomMode)
+        {
+            // Reset scrollbar position
+            if (LocalSetting.IsResetScrollPosition)
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
+            
+
+            if (zoomMode == ZoomMode.ScaleToWidth)
+            {
+                if (picMain.Image == null)
+                {
+                    return;
+                }
+
+                // Scale to Width
+                double frac = picMain.Width / (1.0 * picMain.Image.Width);
+                picMain.Zoom = frac * 100;
+            }
+            else if (zoomMode == ZoomMode.ScaleToHeight)
+            {
+                if (picMain.Image == null)
+                {
+                    return;
+                }
+
+                // Scale to Height
+                double frac = picMain.Height / (1.0 * picMain.Image.Height);
+                picMain.Zoom = frac * 100;
+            }
+            else if (zoomMode == ZoomMode.ScaleToFit)
+            {
+                picMain.ZoomToFit();
+            }
+            else if (zoomMode == ZoomMode.LockZoomRatio)
+            {
+                picMain.Zoom = GlobalSetting.ZoomLockValue;
+            }
+            else //zoomMode == ZoomMode.AutoZoom
+            {
+                picMain.ZoomAuto();
+            }
+
+            //Tell the app that it's not zoomed by user
+            _isManuallyZoomed = false;
+
+            //Get image file information
+            UpdateStatusBar();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// Start Zoom optimization
@@ -1380,7 +1528,7 @@ namespace ImageGlass
 
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
-            btnZoomToFit.Image = t.ToolbarIcons.ZoomToFit.Image;
+            btnScaleToFit.Image = t.ToolbarIcons.ZoomToFit.Image;
             btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
             btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
             btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
@@ -1468,6 +1616,7 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+
                 #region Load state of Toolbar Below Image
                 GlobalSetting.IsShowToolBarBottom = bool.Parse(GlobalSetting.GetConfig("IsShowToolBarBottom", "False"));
                 GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
@@ -1521,11 +1670,13 @@ namespace ImageGlass
                 mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 #endregion
 
+
                 #region Load state of Thumbnail Scrollbars
                 GlobalSetting.IsShowThumbnailScroll = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnailScroll", "True"));
                 GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
                 mnuMainThumbnailScroll_Click(null, EventArgs.Empty);
                 #endregion
+
 
                 #region Windows state
                 configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
@@ -1569,6 +1720,7 @@ namespace ImageGlass
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                this.Activate();
                 #endregion
 
 
@@ -1617,23 +1769,26 @@ namespace ImageGlass
 
                 //Load state of Image Booster
                 GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
-
-                //Load Zoom to Fit value 
-                GlobalSetting.IsZoomToFit = bool.Parse(GlobalSetting.GetConfig("IsZoomToFit", "False"));
-                btnZoomToFit.Checked = mnuMainZoomToFit.Checked = GlobalSetting.IsZoomToFit;
+                
 
                 //Load IsDisplayBasenameOfImage value
                 GlobalSetting.IsDisplayBasenameOfImage = bool.Parse(GlobalSetting.GetConfig("IsDisplayBasenameOfImage", "False"));
+                
+
+                #region Load Zoom Mode
+                GlobalSetting.ZoomMode = (ZoomMode) Enum.Parse(typeof(ZoomMode), GlobalSetting.GetConfig("ZoomMode", "0"));
 
 
-                #region Load Zoom lock value
+                // Load and Active Zoom Mode
+                SelectUIZoomMode();
+                
+
+                // Load Zoom Lock Value
                 int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
-
-                GlobalSetting.IsEnabledZoomLock = zoomLock > 0 ? true : false;
-                mnuMainLockZoomRatio.Checked = btnZoomLock.Checked = GlobalSetting.IsEnabledZoomLock;
                 GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
-                #endregion
 
+                #endregion
+                
 
                 #region Load scrollbars visibility
                 GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
@@ -1840,12 +1995,12 @@ namespace ImageGlass
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
-            
-            //Zoom to fit
-            GlobalSetting.SetConfig("IsZoomToFit", GlobalSetting.IsZoomToFit.ToString());
 
+            //Zoom Mode
+            GlobalSetting.SetConfig("ZoomMode", GlobalSetting.ZoomMode.ToString());
+            
             //Lock zoom ratio
-            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.IsEnabledZoomLock) ? GlobalSetting.ZoomLockValue.ToString(GlobalSetting.NumberFormat) : "-1");
+            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.ZoomMode == ZoomMode.LockZoomRatio) ? GlobalSetting.ZoomLockValue.ToString(GlobalSetting.NumberFormat) : "-1");
 
             //Thumbnail panel
             GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
@@ -1914,7 +2069,7 @@ namespace ImageGlass
                 if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
                 {
                     // The window is being maximized
-                    if (!_isZoomed)
+                    if (!_isManuallyZoomed)
                     {
                         mnuMainRefresh_Click(null, null);
                     }
@@ -1928,7 +2083,7 @@ namespace ImageGlass
                 else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
                 {
                     // The window is being restored
-                    if (!_isZoomed)
+                    if (!_isManuallyZoomed)
                     {
                         mnuMainRefresh_Click(null, null);
                     }
@@ -2029,7 +2184,8 @@ namespace ImageGlass
                 btnDelete.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
                 btnZoomIn.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomIn"];
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomOut"];
-                btnZoomToFit.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomToFit"];
+                btnAutoZoom.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnAutoZoom"];
+                btnScaleToFit.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnScaleToFit"];
                 btnActualSize.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnActualSize"];
                 btnZoomLock.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomLock"];
                 btnScaletoWidth.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnScaletoWidth"];
@@ -2074,9 +2230,10 @@ namespace ImageGlass
                 mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateClockwise"];
                 mnuMainZoomIn.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomIn"];
                 mnuMainZoomOut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomOut"];
-                mnuMainZoomToFit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomToFit"];
+                mnuMainScaleToFit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToFit"];
                 mnuMainActualSize.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainActualSize"];
                 mnuMainLockZoomRatio.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLockZoomRatio"];
+                mnuMainAutoZoom.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAutoZoom"];
                 mnuMainScaleToWidth.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToWidth"];
                 mnuMainScaleToHeight.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToHeight"];
                 mnuMainWindowAdaptImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainWindowAdaptImage"];
@@ -2245,7 +2402,7 @@ namespace ImageGlass
         {
             Console.WriteLine("Size changed ====");
             Console.WriteLine("State = " + this.WindowState.ToString());
-            if (!_isZoomed)
+            if (!_isManuallyZoomed)
             {
                 mnuMainRefresh_Click(null, null);
             }
@@ -2616,16 +2773,18 @@ namespace ImageGlass
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e)
         {
-            _isZoomed = true;
+            _isManuallyZoomed = true;
 
-            if (GlobalSetting.IsEnabledZoomLock)
+            // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
+            if (GlobalSetting.ZoomMode == ZoomMode.LockZoomRatio)
             {
-                GlobalSetting.ZoomLockValue = (int)e.NewZoom;   // Note: losing a little precision here, not worth changing settings
+                GlobalSetting.ZoomLockValue = e.NewZoom;
             }
 
-            //Zoom optimization
+            // Zoom optimization
             ZoomOptimization();
 
+            // Update zoom info
             UpdateStatusBar();
         }
 
@@ -2637,7 +2796,8 @@ namespace ImageGlass
             }
             else
             {
-                mnuMainRefresh_Click(null, null);
+                //mnuMainRefresh_Click(null, null);
+                mnuMainAutoZoom_Click(null, null);
             }
         }
 
@@ -2759,9 +2919,9 @@ namespace ImageGlass
             mnuMainZoomOut_Click(null, e);
         }
 
-        private void btnZoomToFit_Click(object sender, EventArgs e)
+        private void btnScaleToFit_Click(object sender, EventArgs e)
         {
-            mnuMainZoomToFit_Click(null, e);
+            mnuMainScaleToFit_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
@@ -3007,27 +3167,27 @@ namespace ImageGlass
             }
             
             //Zoom condition
-            if (GlobalSetting.IsEnabledZoomLock)
-            {
-                picMain.Zoom = GlobalSetting.ZoomLockValue;
-            }
-            else
-            {
-                //Reset zoom
-                if (GlobalSetting.IsZoomToFit)
-                {
-                    picMain.ZoomToFit();
-                }
-                else
-                {
-                    picMain.ZoomAuto();
-                }
+            //if (GlobalSetting.IsEnabledZoomLock)
+            //{
+            //    picMain.Zoom = GlobalSetting.ZoomLockValue;
+            //}
+            //else
+            //{
+            //    //Reset zoom
+            //    if (GlobalSetting.IsZoomToFit)
+            //    {
+            //        picMain.ZoomToFit();
+            //    }
+            //    else
+            //    {
+            //        picMain.ZoomAuto();
+            //    }
 
-                _isZoomed = false;
-            }
+            //    _isManuallyZoomed = false;
+            //}
 
             //Get image file information
-            UpdateStatusBar();
+            //UpdateStatusBar();
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -3181,7 +3341,7 @@ namespace ImageGlass
                 mnuMainThumbnailBar_Click(null, null);
 
                 //realign image
-                if (!_isZoomed)
+                if (!_isManuallyZoomed)
                 {
                     mnuMainRefresh_Click(null, null);
                 }
@@ -3230,7 +3390,7 @@ namespace ImageGlass
                 }
 
                 //realign image
-                if (!_isZoomed)
+                if (!_isManuallyZoomed)
                 {
                     mnuMainRefresh_Click(null, null);
                 }
@@ -3409,20 +3569,6 @@ namespace ImageGlass
             picMain.ZoomOut();
         }
 
-        private void mnuMainZoomToFit_Click(object sender, EventArgs e)
-        {
-            if (!GlobalSetting.IsZoomToFit)
-            {
-                GlobalSetting.IsZoomToFit = btnZoomToFit.Checked = mnuMainZoomToFit.Checked = true;
-            }
-            else
-            {
-                GlobalSetting.IsZoomToFit = btnZoomToFit.Checked = mnuMainZoomToFit.Checked = false;
-            }
-
-            mnuMainRefresh_Click(null, null);
-        }
-
         private void mnuMainActualSize_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
@@ -3431,58 +3577,9 @@ namespace ImageGlass
             }
 
             picMain.ActualSize();
-            picMain.CenterToImage();            
+            picMain.CenterToImage();
         }
 
-        private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
-        {
-            if (!GlobalSetting.IsEnabledZoomLock)
-            {
-                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = true;
-                GlobalSetting.ZoomLockValue = (int)picMain.Zoom;   // Note: losing a little precision here, not worth changing settings
-            }
-            else
-            {
-                GlobalSetting.IsEnabledZoomLock = btnZoomLock.Checked = false;
-                GlobalSetting.ZoomLockValue = 100;
-            }
-        }
-
-        private void mnuMainScaleToWidth_Click(object sender, EventArgs e)
-        {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            // Reset scrollbar position
-            if (LocalSetting.IsResetScrollPosition)
-            {
-                picMain.ScrollTo(0, 0, 0, 0);
-            }
-
-            // Scale to Width
-            double frac = picMain.Width / (1.0 * picMain.Image.Width);
-            picMain.Zoom = frac * 100;
-        }
-
-        private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
-        {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            // Reset scrollbar position
-            if (LocalSetting.IsResetScrollPosition)
-            {
-                picMain.ScrollTo(0, 0, 0, 0);
-            }
-
-            // Scale to Height
-            double frac = picMain.Height / (1.0 * picMain.Image.Height);
-            picMain.Zoom = frac * 100;
-        }
 
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
@@ -3490,7 +3587,7 @@ namespace ImageGlass
             {
                 return;
             }
-            
+
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             WindowState = FormWindowState.Normal;
 
@@ -3511,6 +3608,57 @@ namespace ImageGlass
             //reset zoom
             mnuMainRefresh_Click(null, null);
         }
+
+
+
+
+
+
+        private void mnuMainAutoZoom_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.AutoZoom;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+        private void mnuMainScaleToWidth_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.ScaleToWidth;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+        private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.ScaleToHeight;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+        private void mnuMainScaleToFit_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.ScaleToFit;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+        private void mnuMainLockZoomRatio_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.LockZoomRatio;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+
+
+        
+
+
 
         private void mnuMainRename_Click(object sender, EventArgs e)
         {
@@ -3998,6 +4146,7 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

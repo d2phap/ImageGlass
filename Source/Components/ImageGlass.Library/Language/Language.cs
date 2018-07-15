@@ -245,7 +245,9 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
-            Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5
+            //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom"); //5.5
+            Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
@@ -297,9 +299,11 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5
+            //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
+            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
+            Items.Add("frmMain.mnuMainAutoZoom", "Scale to width"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
             Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0

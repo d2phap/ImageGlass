@@ -176,19 +176,19 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value indicating that Zoom Lock enabled
         /// </summary>
-        public static bool IsEnabledZoomLock { get; set; } = false;
+        //public static bool IsEnabledZoomLock { get; set; } = false;
 
 
         /// <summary>
         /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
         /// </summary>
-        public static bool IsZoomToFit { get; set; } = false;
+        //public static bool IsZoomToFit { get; set; } = false;
 
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
-        public static int ZoomLockValue { get; set; } = 100;
+        public static double ZoomLockValue { get; set; } = 100.0;
 
 
         /// <summary>
@@ -378,6 +378,12 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
+
+        /// <summary>
+        /// Gets, sets zoom mode value
+        /// </summary>
+        public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
+
         
         /// <summary>
         /// Gets, sets zoom optimization value
@@ -410,7 +416,39 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
-        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20,21";
+        public static string ToolbarButtons { get; set; } = $"" +
+            $"{(int)Configuration.ToolbarButtons.btnBack}," +
+            $"{(int)Configuration.ToolbarButtons.btnNext}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnRotateLeft}," +
+            $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
+            $"{(int)Configuration.ToolbarButtons.btnActualSize}," +
+            $"{(int)Configuration.ToolbarButtons.btnWindowAutosize}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnAutoZoom}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaletoWidth}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaletoHeight}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaleToFit}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomLock}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnOpen}," +
+            $"{(int)Configuration.ToolbarButtons.btnRefresh}," +
+            $"{(int)Configuration.ToolbarButtons.btnGoto}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnThumb}," +
+            $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
+            $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
+            $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
+            $"{(int)Configuration.ToolbarButtons.btnConvert}," +
+            $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
+            $"{(int)Configuration.ToolbarButtons.btnDelete},";
+        
         
 
         #endregion
