@@ -10,12 +10,17 @@
  </g>
  <g>
   <title>Layer 1</title>
-  <rect y="-0.0625" stroke-width="1.5" stroke="#fff" id="svg_1" height="20" width="20" fill="none"/>
+  <rect x="0" y="0" stroke-width="1.5" stroke="#fff" id="svg_1" height="20" width="20" fill="none"/>
   <g id="svg_5"/>
-  <g transform="rotate(-45 5.194132328033446,5.737693786621094) " id="svg_52">
-   <line stroke="#fff" transform="rotate(-405 5.215963840484618,4.722085952758789) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_50" y2="4.722086" x2="6.944256" y1="4.722086" x1="3.487671" stroke-opacity="null" fill="none"/>
-   <line stroke="#fff" transform="rotate(45 5.175951004028325,6.749649524688719) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_51" y2="6.749649" x2="6.909407" y1="6.749649" x1="3.442496" stroke-opacity="null" fill="none"/>
+  <g id="svg_48">
+   <line stroke="#fff" transform="rotate(-270 14.445952415466309,5.546168804168702) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_21" y2="5.546169" x2="17.38328" y1="5.546169" x1="11.508626" stroke-opacity="null" fill="none"/>
+   <line stroke="#fff" transform="rotate(-315 15.42848587036133,3.7434339523315443) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_22" y2="3.743434" x2="17.15678" y1="3.743434" x1="13.700195" stroke-opacity="null" fill="none"/>
+   <line stroke="#fff" transform="rotate(-225 13.463419914245604,3.703423023223877) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_23" y2="3.703423" x2="15.196876" y1="3.703423" x1="11.729965" stroke-opacity="null" fill="none"/>
   </g>
-  <path stroke="#fff" transform="rotate(67.04261779785156 11.707114219665527,9.427298545837402) " id="svg_9" d="m5.905776,14.497029c-2.26701,-3.79599 0.01736,-9.89213 5.84098,-10.13946c5.97043,0.16489 7.34216,5.46773 6.313,9.31627" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <g transform="rotate(-90 5.7688379287719735,14.57244873046875) " id="svg_52">
+   <line stroke="#fff" transform="rotate(-270 5.7706613540649405,14.638026237487793) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_49" y2="14.638027" x2="8.707988" y1="14.638027" x1="2.833334" stroke-opacity="null" fill="none"/>
+   <line stroke="#fff" transform="rotate(-315 6.7531948089599645,12.835291862487793) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_50" y2="12.835292" x2="8.481488" y1="12.835292" x1="5.024903" stroke-opacity="null" fill="none"/>
+   <line stroke="#fff" transform="rotate(-225 4.788128852844238,12.795281410217283) " stroke-width="0.7" stroke-linecap="null" stroke-linejoin="null" id="svg_51" y2="12.795281" x2="6.521584" y1="12.795281" x1="3.054673" stroke-opacity="null" fill="none"/>
+  </g>
  </g>
 </svg>
