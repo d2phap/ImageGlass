@@ -344,9 +344,10 @@ namespace ImageGlass.Theme
             ToolbarIcons.Detele = LoadThemeImage(dir, n, "delete", iconHeight);
             ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin", iconHeight);
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout", iconHeight);
-            ToolbarIcons.ZoomToFit = LoadThemeImage(dir, n, "zoomtofit", iconHeight);
+            ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit", iconHeight);
             ToolbarIcons.ActualSize = LoadThemeImage(dir, n, "scaletofit", iconHeight);
             ToolbarIcons.LockRatio = LoadThemeImage(dir, n, "zoomlock", iconHeight);
+            ToolbarIcons.AutoZoom = LoadThemeImage(dir, n, "autozoom", iconHeight);
             ToolbarIcons.ScaleToWidth = LoadThemeImage(dir, n, "scaletowidth", iconHeight);
             ToolbarIcons.ScaleToHeight = LoadThemeImage(dir, n, "scaletoheight", iconHeight);
             ToolbarIcons.AdjustWindowSize = LoadThemeImage(dir, n, "autosizewindow", iconHeight);
@@ -417,8 +418,9 @@ namespace ImageGlass.Theme
             n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Detele.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
-            n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ZoomToFit.Filename));
+            n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ScaleToFit.Filename));
             n.SetAttribute("zoomlock", Path.GetFileName(ToolbarIcons.LockRatio.Filename));
+            n.SetAttribute("autozoom", Path.GetFileName(ToolbarIcons.AutoZoom.Filename));
             n.SetAttribute("scaletofit", Path.GetFileName(ToolbarIcons.ActualSize.Filename));
             n.SetAttribute("scaletowidth", Path.GetFileName(ToolbarIcons.ScaleToWidth.Filename));
             n.SetAttribute("scaletoheight", Path.GetFileName(ToolbarIcons.ScaleToHeight.Filename));

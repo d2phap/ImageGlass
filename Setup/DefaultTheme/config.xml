@@ -10,6 +10,7 @@
         zoomin="ZoomIn.svg"
         zoomout="ZoomOut.svg"
         zoomlock="LockRatio.svg"
+        autozoom="AutoZoom.svg"
         zoomtofit="ZoomToFit.svg"
         scaletofit="ActualSize.svg"
         scaletowidth="ScaleToWidth.svg"

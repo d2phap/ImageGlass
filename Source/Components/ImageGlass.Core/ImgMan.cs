@@ -79,13 +79,13 @@ namespace ImageGlass.Core
         /// Returns image i, applying all configured enhancements
         /// </summary>
         /// <param name="i">The image to return</param>
-        /// <param name="isSkippingCache">Option to skip the cache</param>
+        /// <param name="isSkipCache">Option to skip the image cache</param>
         /// <returns>Image i</returns>
-        public Image GetImage(int i, bool isSkippingCache = false)
+        public Image GetImage(int i, bool isSkipCache = false)
         {
             Image img = null;
 
-            if (!isSkippingCache)
+            if (!isSkipCache)
             {
                 // Start off with unloading excessive images
                 for (int a = 0; a < i - 2; a++)

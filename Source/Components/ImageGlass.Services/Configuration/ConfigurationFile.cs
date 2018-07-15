@@ -179,7 +179,7 @@ namespace ImageGlass.Services.Configuration
         public string GetConfig(string key, string @defaultValue = null)
         {
             // write default configs if not exist
-            if (!System.IO.File.Exists(Filename))
+            if (!File.Exists(Filename))
             {
                 WriteConfigFile();
             }
