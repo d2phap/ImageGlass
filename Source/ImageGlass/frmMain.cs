@@ -1527,9 +1527,10 @@ namespace ImageGlass
 
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
-            btnScaleToFit.Image = t.ToolbarIcons.ZoomToFit.Image;
+            btnScaleToFit.Image = t.ToolbarIcons.ScaleToFit.Image;
             btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
             btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
+            btnAutoZoom.Image = t.ToolbarIcons.AutoZoom.Image;
             btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
             btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
             btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
