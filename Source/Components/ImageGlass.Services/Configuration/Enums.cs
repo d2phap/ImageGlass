@@ -104,4 +104,57 @@ namespace ImageGlass.Services.Configuration
         Standard = 0,
         Designer = 1
     }
+
+
+    /// <summary>
+    /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
+    /// name in frmMain! Reflection is used to fetch the image and string from the
+    /// frmMain field.
+    ///
+    /// The integer value of the enum is used for storing the config info.
+    /// </summary>
+    public enum ToolbarButtons
+    {
+        Separator = -1,
+        btnBack = 0,
+        btnNext = 1,
+        btnRotateLeft = 2,
+        btnRotateRight = 3,
+        btnZoomIn = 4,
+        btnZoomOut = 5,
+        btnScaleToFit = 6,
+        btnActualSize = 7,
+        btnZoomLock = 8,
+        btnScaletoWidth = 9,
+        btnScaletoHeight = 10,
+        btnWindowAutosize = 11,
+        btnOpen = 12,
+        btnReloadImage = 13,
+        btnGoto = 14,
+        btnThumb = 15,
+        btnCheckedBackground = 16,
+        btnFullScreen = 17,
+        btnSlideShow = 18,
+        btnConvert = 19,
+        btnPrintImage = 20,
+        btnDelete = 21,
+        btnAutoZoom = 22,
+        // NOTE: add new items here, must match order in _lstToolbarImg.Images list
+
+
+        MAX // DO NOT ADD ANYTHING AFTER THIS
+    }
+
+
+    /// <summary>
+    /// Zooming modes.
+    /// </summary>
+    public enum ZoomMode
+    {
+        AutoZoom = 0,
+        ScaleToFit = 1,
+        ScaleToWidth = 2,
+        ScaleToHeight = 4,
+        LockZoomRatio = 8
+    }
 }

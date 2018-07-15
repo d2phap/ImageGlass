@@ -150,7 +150,7 @@ namespace ImageGlass
 
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,900,700"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {
@@ -1114,45 +1114,6 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
-        /// name in frmMain! Reflection is used to fetch the image and string from the
-        /// frmMain field.
-        ///
-        /// The integer value of the enum is used for storing the config info.
-        /// </summary>
-        enum ToolbarButtons
-        {
-            Separator = -1,
-            btnBack = 0,
-            btnNext = 1,
-            btnRotateLeft = 2,
-            btnRotateRight = 3,
-            btnZoomIn = 4,
-            btnZoomOut = 5,
-            btnZoomToFit = 6,
-            btnActualSize = 7,
-            btnZoomLock = 8,
-            btnScaletoWidth = 9,
-            btnScaletoHeight = 10,
-            btnWindowAutosize = 11,
-            btnOpen = 12,
-            btnRefresh = 13,
-            btnGoto = 14,
-            btnThumb = 15,
-            btnCheckedBackground = 16,
-            btnFullScreen = 17,
-            btnSlideShow = 18,
-            btnConvert = 19,
-            btnPrintImage = 20,
-            btnDelete = 21,
-            // NOTE: add new items here, must match order in _lstToolbarImg.Images list
-
-
-            MAX // DO NOT ADD ANYTHING AFTER THIS
-        }
-
-
-        /// <summary>
         /// Fetch all the toolbar images via reflection from the ToolStripButton
         /// instances in the frmMain instance. This is why the enum name MUST
         /// match the frmMain field name!
@@ -1309,24 +1270,16 @@ namespace ImageGlass
 
             foreach (var splitval in splitvals)
             {
-                if (splitval == "s")
+                if (int.TryParse(splitval, out int numVal))
                 {
-                    outVal.Add(ToolbarButtons.Separator);
-                }
-                else
-                {
-                    int numVal;
-                    if (int.TryParse(splitval, out numVal))
+                    try
                     {
-                        try
-                        {
-                            ToolbarButtons enumVal = (ToolbarButtons)numVal;
-                            outVal.Add(enumVal);
-                        }
-                        catch (Exception)
-                        {
-                            // when the enumeration value doesn't exist, don't add it!
-                        }
+                        ToolbarButtons enumVal = (ToolbarButtons)numVal;
+                        outVal.Add(enumVal);
+                    }
+                    catch (Exception)
+                    {
+                        // when the enumeration value doesn't exist, don't add it!
                     }
                 }
             }
@@ -1366,12 +1319,7 @@ namespace ImageGlass
 
             foreach (ListViewItem item in lvUsedButtons.Items)
             {
-                string val;
-
-                if ((ToolbarButtons)item.Tag == ToolbarButtons.Separator)
-                    val = "s";
-                else
-                    val = ((int)item.Tag).ToString();
+                string val = ((int)item.Tag).ToString();
 
                 if (!first)
                     sb.Append(",");
@@ -1577,10 +1525,12 @@ namespace ImageGlass
                 {
                     var hIcon = ThemeImage.GetCorrectIconHeight();
 
-                    ToolStripSeparator sep = new ToolStripSeparator();
-                    sep.AutoSize = false;
-                    sep.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
-                    sep.Height = (int)(hIcon * 1.2);
+                    ToolStripSeparator sep = new ToolStripSeparator
+                    {
+                        AutoSize = false,
+                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
+                        Height = (int)(hIcon * 1.2)
+                    };
 
                     toolMain.Items.Add(sep);
                 }

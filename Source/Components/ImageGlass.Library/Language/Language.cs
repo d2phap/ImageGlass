@@ -247,14 +247,17 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
-            Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5
+            //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom (F5)"); //5.5
+            Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
             Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
             Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 4.0
             Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
-            Items.Add("frmMain.btnRefresh", "Refresh (F5)");
+            //Items.Add("frmMain.btnRefresh", "Refresh (F5)"); //removed 5.5
+            Items.Add("frmMain.btnReloadImage", "Reload image (Ctrl + F5)"); //5.5
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
             //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
@@ -275,7 +278,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
-            Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
+            //Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0, removed 5.5
+            Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
@@ -304,9 +308,11 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5
+            //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
+            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
+            Items.Add("frmMain.mnuMainAutoZoom", "Auto Zoom"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
             Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
