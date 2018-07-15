@@ -1270,26 +1270,18 @@ namespace ImageGlass
 
             foreach (var splitval in splitvals)
             {
-                //if (splitval == "s")
-                //{
-                //    outVal.Add(ToolbarButtons.Separator);
-                //}
-                //else
-                //{
-                    int numVal;
-                    if (int.TryParse(splitval, out numVal))
+                if (int.TryParse(splitval, out int numVal))
+                {
+                    try
                     {
-                        try
-                        {
-                            ToolbarButtons enumVal = (ToolbarButtons)numVal;
-                            outVal.Add(enumVal);
-                        }
-                        catch (Exception)
-                        {
-                            // when the enumeration value doesn't exist, don't add it!
-                        }
+                        ToolbarButtons enumVal = (ToolbarButtons)numVal;
+                        outVal.Add(enumVal);
                     }
-                //}
+                    catch (Exception)
+                    {
+                        // when the enumeration value doesn't exist, don't add it!
+                    }
+                }
             }
             return outVal;
         }
@@ -1327,12 +1319,7 @@ namespace ImageGlass
 
             foreach (ListViewItem item in lvUsedButtons.Items)
             {
-                string val;
-
-                if ((ToolbarButtons)item.Tag == ToolbarButtons.Separator)
-                    val = "s";
-                else
-                    val = ((int)item.Tag).ToString();
+                string val = ((int)item.Tag).ToString();
 
                 if (!first)
                     sb.Append(",");
@@ -1538,10 +1525,12 @@ namespace ImageGlass
                 {
                     var hIcon = ThemeImage.GetCorrectIconHeight();
 
-                    ToolStripSeparator sep = new ToolStripSeparator();
-                    sep.AutoSize = false;
-                    sep.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
-                    sep.Height = (int)(hIcon * 1.2);
+                    ToolStripSeparator sep = new ToolStripSeparator
+                    {
+                        AutoSize = false,
+                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
+                        Height = (int)(hIcon * 1.2)
+                    };
 
                     toolMain.Items.Add(sep);
                 }
