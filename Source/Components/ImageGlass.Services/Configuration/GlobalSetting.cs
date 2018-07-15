@@ -278,7 +278,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static int ThumbnailDimension { get; set; } = 48;
+        public static int ThumbnailDimension { get; set; } = 96;
 
 
         /// <summary>

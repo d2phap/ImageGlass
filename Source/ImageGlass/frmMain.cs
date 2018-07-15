@@ -1625,7 +1625,7 @@ namespace ImageGlass
 
 
                 #region Load Thumbnail dimension
-                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", "48"), out int thumbDimension))
+                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
                 {
                     GlobalSetting.ThumbnailDimension = thumbDimension;
                 }

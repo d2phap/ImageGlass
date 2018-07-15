@@ -246,7 +246,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
-            Items.Add("frmMain.btnAutoZoom", "Auto zoom (Ctrl + A)"); //5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom (F5)"); //5.5
             Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
@@ -255,7 +255,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 4.0
             Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
             //Items.Add("frmMain.btnRefresh", "Refresh (F5)"); //removed 5.5
-            Items.Add("frmMain.btnReloadImage", "Reload image (F5)"); //5.5
+            Items.Add("frmMain.btnReloadImage", "Reload image (Ctrl + F5)"); //5.5
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
             //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0

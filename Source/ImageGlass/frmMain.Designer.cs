@@ -642,7 +642,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuPopup";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 615);
+            this.mnuMain.Size = new System.Drawing.Size(409, 648);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -701,7 +701,7 @@
             this.mnuMainReloadImage.Name = "mnuMainReloadImage";
             this.mnuMainReloadImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainReloadImage.ShortcutKeyDisplayString = "";
-            this.mnuMainReloadImage.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuMainReloadImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
             this.mnuMainReloadImage.Size = new System.Drawing.Size(408, 31);
             this.mnuMainReloadImage.Text = "[Reload image]";
             this.mnuMainReloadImage.Click += new System.EventHandler(this.mnuMainReloadImage_Click);
@@ -987,7 +987,7 @@
             this.mnuMainAutoZoom.Name = "mnuMainAutoZoom";
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "";
-            this.mnuMainAutoZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.mnuMainAutoZoom.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.mnuMainAutoZoom.Size = new System.Drawing.Size(584, 31);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
@@ -1415,7 +1415,7 @@
             this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
             this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainFirstLaunch.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainFirstLaunch.Text = "First-launch configurations__";
+            this.mnuMainFirstLaunch.Text = "[First-launch configurations]";
             this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
             // 
             // mnuMainCheckForUpdate
