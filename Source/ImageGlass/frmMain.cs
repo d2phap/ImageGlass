@@ -69,7 +69,7 @@ namespace ImageGlass
         #region Local variables
 
         // window size value before resizing
-        private Size _windowSize = new Size(600, 500);
+        private Size _windowSize = new Size(1000, 800);
 
         // determine if the image is zoomed
         private bool _isManuallyZoomed = false;
@@ -1575,7 +1575,6 @@ namespace ImageGlass
 
             
 
-
             #region UI SETTINGS
             if (isLoadUI)
             {
@@ -1677,8 +1676,28 @@ namespace ImageGlass
                 GlobalSetting.IsShowThumbnailScroll = !GlobalSetting.IsShowThumbnailScroll;
                 mnuMainThumbnailScroll_Click(null, EventArgs.Empty);
                 #endregion
+                
+            }
+            #endregion
 
 
+            #region OTHER SETTINGS
+            if (isLoadOthers)
+            {
+                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
+                // the windows *Position* is the one UI setting which *must* be applied at
+                // the OnLoad event in order to 'take'.
+                #region Windows Bound (Position + Size)
+                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+                this.Bounds = rc;
+                #endregion
+
+                // Windows state must be loaded after Windows Bound!
                 #region Windows state
                 configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
                 if (configValue == "Normal")
@@ -1691,25 +1710,6 @@ namespace ImageGlass
                 }
                 #endregion
 
-            }
-            #endregion
-
-
-            #region OTHER SETTINGS
-            if (isLoadOthers)
-            {
-                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
-                // the windows *Position* is the one UI setting which *must* be applied at
-                // the OnLoad event in order to 'take'.
-                #region Windows Bound (Position + Size)
-                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,850,550"));
-
-                if (!Helper.IsOnScreen(rc.Location))
-                {
-                    rc.Location = new Point(280, 125);
-                }
-                this.Bounds = rc;
-                #endregion
 
 
                 #region Load language pack
@@ -2387,12 +2387,10 @@ namespace ImageGlass
         private void frmMain_ResizeBegin(object sender, EventArgs e)
         {
             _windowSize = Size;
-            Console.WriteLine("Begin resize >>>>");
         }
 
         private void frmMain_ResizeEnd(object sender, EventArgs e)
         {
-            Console.WriteLine("End resize <<<<");
             if (Size != _windowSize)
             {
                 SaveConfig();
@@ -2401,13 +2399,11 @@ namespace ImageGlass
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("Size changed ====");
-            Console.WriteLine("State = " + this.WindowState.ToString());
             if (!_isManuallyZoomed)
             {
                 ApplyZoomMode(GlobalSetting.ZoomMode);
             }
-            
+
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
