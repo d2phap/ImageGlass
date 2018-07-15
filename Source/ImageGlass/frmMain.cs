@@ -534,8 +534,7 @@ namespace ImageGlass
                 //Show image
                 picMain.Image = im;
 
-                //refresh image
-                //mnuMainRefresh_Click(null, null);
+                //reset zoom mode
                 ApplyZoomMode(GlobalSetting.ZoomMode);
 
                 //Run in another thread
@@ -1536,7 +1535,7 @@ namespace ImageGlass
             btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
 
             btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
-            btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
+            btnReloadImage.Image = t.ToolbarIcons.Refresh.Image;
             btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
 
             btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
@@ -1606,6 +1605,7 @@ namespace ImageGlass
 
                 GlobalSetting.ToolbarButtons = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+                frmMain_Activated(null, null);
 
                 #endregion
 
@@ -1720,7 +1720,7 @@ namespace ImageGlass
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
-                this.Activate();
+                frmMain_Activated(null, null);
                 #endregion
 
 
@@ -2071,7 +2071,7 @@ namespace ImageGlass
                     // The window is being maximized
                     if (!_isManuallyZoomed)
                     {
-                        mnuMainRefresh_Click(null, null);
+                        ApplyZoomMode(GlobalSetting.ZoomMode);
                     }
                     else
                     {
@@ -2085,7 +2085,7 @@ namespace ImageGlass
                     // The window is being restored
                     if (!_isManuallyZoomed)
                     {
-                        mnuMainRefresh_Click(null, null);
+                        ApplyZoomMode(GlobalSetting.ZoomMode);
                     }
                 }
             }
@@ -2192,7 +2192,7 @@ namespace ImageGlass
                 btnScaletoHeight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnScaletoHeight"];
                 btnWindowAutosize.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnWindowAutosize"];
                 btnOpen.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnOpen"];
-                btnRefresh.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRefresh"];
+                btnReloadImage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnReloadImage"];
                 btnGoto.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnGoto"];
                 btnThumb.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnThumb"];
                 btnCheckedBackground.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"]} (Ctrl + B)"; ;
@@ -2206,7 +2206,7 @@ namespace ImageGlass
                 mnuMainOpenFile.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenFile"];
                 mnuMainOpenImageData.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenImageData"];
                 mnuMainSaveAs.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSaveAs"];
-                mnuMainRefresh.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRefresh"];
+                mnuMainReloadImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImage"];
                 mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
 
                 mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
@@ -2404,7 +2404,7 @@ namespace ImageGlass
             Console.WriteLine("State = " + this.WindowState.ToString());
             if (!_isManuallyZoomed)
             {
-                mnuMainRefresh_Click(null, null);
+                ApplyZoomMode(GlobalSetting.ZoomMode);
             }
             
         }
@@ -2796,8 +2796,7 @@ namespace ImageGlass
             }
             else
             {
-                //mnuMainRefresh_Click(null, null);
-                mnuMainAutoZoom_Click(null, null);
+                ApplyZoomMode(GlobalSetting.ZoomMode);
             }
         }
 
@@ -2805,8 +2804,8 @@ namespace ImageGlass
         {
             switch (e.Button)
             {
-                case MouseButtons.Middle: //Refresh
-                    mnuMainRefresh_Click(null, null);
+                case MouseButtons.Middle: //Reset zoom mode
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
                     break;
 
                 case MouseButtons.XButton1: //Back
@@ -2849,9 +2848,9 @@ namespace ImageGlass
             mnuMainViewPrevious_Click(null, e);
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void btnReloadImage_Click(object sender, EventArgs e)
         {
-            mnuMainRefresh_Click(null, e);
+            mnuMainReloadImage_Click(null, e);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
@@ -2882,6 +2881,11 @@ namespace ImageGlass
         private void btnActualSize_Click(object sender, EventArgs e)
         {
             mnuMainActualSize_Click(null, e);
+        }
+
+        private void btnAutoZoom_Click(object sender, EventArgs e)
+        {
+            mnuMainAutoZoom_Click(null, e);
         }
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
@@ -3158,13 +3162,16 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMainRefresh_Click(object sender, EventArgs e)
+        private void mnuMainReloadImage_Click(object sender, EventArgs e)
         {
+            //Reload the viewing image
+            NextPic(step: 0, isKeepZoomRatio: true, isSkipCache: true);
+
             // Reset scrollbar position
-            if (LocalSetting.IsResetScrollPosition)
-            {
-                picMain.ScrollTo(0, 0, 0, 0);
-            }
+            //if (LocalSetting.IsResetScrollPosition)
+            //{
+            //    picMain.ScrollTo(0, 0, 0, 0);
+            //}
             
             //Zoom condition
             //if (GlobalSetting.IsEnabledZoomLock)
@@ -3343,7 +3350,7 @@ namespace ImageGlass
                 //realign image
                 if (!_isManuallyZoomed)
                 {
-                    mnuMainRefresh_Click(null, null);
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
                 }
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
@@ -3392,7 +3399,7 @@ namespace ImageGlass
                 //realign image
                 if (!_isManuallyZoomed)
                 {
-                    mnuMainRefresh_Click(null, null);
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
                 }
             }
         }
@@ -3606,7 +3613,7 @@ namespace ImageGlass
             }
 
             //reset zoom
-            mnuMainRefresh_Click(null, null);
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
 
@@ -4146,6 +4153,7 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

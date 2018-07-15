@@ -49,7 +49,7 @@
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
-            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btnReloadImage = new System.Windows.Forms.ToolStripButton();
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnThumb = new System.Windows.Forms.ToolStripButton();
@@ -66,7 +66,7 @@
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainEditImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainReloadImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainViewNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,7 +206,7 @@
             this.btnZoomLock,
             this.toolStripSeparator2,
             this.btnOpen,
-            this.btnRefresh,
+            this.btnReloadImage,
             this.btnGoto,
             this.toolStripSeparator3,
             this.btnThumb,
@@ -358,6 +358,7 @@
             // 
             this.btnAutoZoom.AutoSize = false;
             this.btnAutoZoom.BackColor = System.Drawing.Color.Transparent;
+            this.btnAutoZoom.CheckOnClick = true;
             this.btnAutoZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnAutoZoom.Image = global::ImageGlass.Properties.Resources.about;
             this.btnAutoZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -366,6 +367,7 @@
             this.btnAutoZoom.Name = "btnAutoZoom";
             this.btnAutoZoom.Size = new System.Drawing.Size(33, 33);
             this.btnAutoZoom.ToolTipText = "[Auto zoom]";
+            this.btnAutoZoom.Click += new System.EventHandler(this.btnAutoZoom_Click);
             // 
             // btnScaletoWidth
             // 
@@ -451,19 +453,19 @@
             this.btnOpen.ToolTipText = "Open file (Ctrl + O)";
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // btnRefresh
+            // btnReloadImage
             // 
-            this.btnRefresh.AutoSize = false;
-            this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
-            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = global::ImageGlass.Properties.Resources.refresh;
-            this.btnRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(33, 33);
-            this.btnRefresh.ToolTipText = "Refresh (F5)";
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.btnReloadImage.AutoSize = false;
+            this.btnReloadImage.BackColor = System.Drawing.Color.Transparent;
+            this.btnReloadImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnReloadImage.Image = global::ImageGlass.Properties.Resources.refresh;
+            this.btnReloadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnReloadImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnReloadImage.Margin = new System.Windows.Forms.Padding(0);
+            this.btnReloadImage.Name = "btnReloadImage";
+            this.btnReloadImage.Size = new System.Drawing.Size(33, 33);
+            this.btnReloadImage.ToolTipText = "Refresh (F5)";
+            this.btnReloadImage.Click += new System.EventHandler(this.btnReloadImage_Click);
             // 
             // btnGoto
             // 
@@ -619,7 +621,7 @@
             this.mnuMainOpenImageData,
             this.mnuMainSaveAs,
             this.mnuMainEditImage,
-            this.mnuMainRefresh,
+            this.mnuMainReloadImage,
             this.toolStripSeparator6,
             this.mnuMainNavigation,
             this.mnuMainFullScreen,
@@ -692,17 +694,17 @@
             this.mnuMainEditImage.Text = "&Edit image";
             this.mnuMainEditImage.Click += new System.EventHandler(this.mnuMainEditImage_Click);
             // 
-            // mnuMainRefresh
+            // mnuMainReloadImage
             // 
-            this.mnuMainRefresh.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainRefresh.Name = "mnuMainRefresh";
-            this.mnuMainRefresh.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainRefresh.ShortcutKeyDisplayString = "";
-            this.mnuMainRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnuMainRefresh.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainRefresh.Text = "&Refresh";
-            this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
+            this.mnuMainReloadImage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainReloadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainReloadImage.Name = "mnuMainReloadImage";
+            this.mnuMainReloadImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainReloadImage.ShortcutKeyDisplayString = "";
+            this.mnuMainReloadImage.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuMainReloadImage.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainReloadImage.Text = "[Reload image]";
+            this.mnuMainReloadImage.Click += new System.EventHandler(this.mnuMainReloadImage_Click);
             // 
             // toolStripSeparator6
             // 
@@ -985,6 +987,7 @@
             this.mnuMainAutoZoom.Name = "mnuMainAutoZoom";
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "";
+            this.mnuMainAutoZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.mnuMainAutoZoom.Size = new System.Drawing.Size(584, 31);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
@@ -1590,7 +1593,7 @@
         private System.Windows.Forms.ToolStripButton btnWindowAutosize;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnOpen;
-        private System.Windows.Forms.ToolStripButton btnRefresh;
+        private System.Windows.Forms.ToolStripButton btnReloadImage;
         private System.Windows.Forms.ToolStripButton btnGoto;
         private System.Windows.Forms.ToolStripButton btnThumb;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -1610,7 +1613,7 @@
         private System.Windows.Forms.ContextMenuStrip mnuMain;
         private System.Windows.Forms.ToolStripMenuItem mnuMainOpenFile;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSaveAs;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainReloadImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem mnuMainManipulation;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
