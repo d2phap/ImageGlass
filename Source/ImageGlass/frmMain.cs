@@ -51,7 +51,7 @@ namespace ImageGlass
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
             //Modern UI menu renderer
-            mnuMain.Renderer = mnuPopup.Renderer = new ModernMenuRenderer();
+            mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer();
 
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
@@ -987,18 +987,7 @@ namespace ImageGlass
 
             mnuMainEditImage.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"], appName);
         }
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         /// <summary>
         /// Select and Active Zoom Mode, use GlobalSetting.ZoomMode
@@ -1062,8 +1051,7 @@ namespace ImageGlass
                     break;
             }
         }
-
-
+        
 
         /// <summary>
         /// Apply zoom mode
@@ -1120,20 +1108,7 @@ namespace ImageGlass
             UpdateStatusBar();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         /// <summary>
         /// Start Zoom optimization
         /// </summary>
@@ -1159,6 +1134,7 @@ namespace ImageGlass
                 picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             }
         }
+
 
         /// <summary>
         /// Rename image
@@ -1219,6 +1195,7 @@ namespace ImageGlass
             }
         }
 
+
         /// <summary>
         /// Display a message on picture box
         /// </summary>
@@ -1250,6 +1227,7 @@ namespace ImageGlass
             tmsg.Start();
         }
 
+
         private void tmsg_Tick(object sender, EventArgs e)
         {
             Timer tmsg = (Timer)sender;
@@ -1265,6 +1243,7 @@ namespace ImageGlass
             picMain.ForeColor = Color.Black;
             picMain.Text = string.Empty;
         }
+
 
         private void CopyMultiFiles()
         {
@@ -1311,6 +1290,7 @@ namespace ImageGlass
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CopyFileText"],
                 LocalSetting.StringClipboard.Count), 1000);
         }
+
 
         private void CutMultiFiles()
         {
@@ -1367,6 +1347,7 @@ namespace ImageGlass
                 string.Format(GlobalSetting.LangPack.Items["frmMain._CutFileText"],
                 LocalSetting.StringClipboard.Count), 1000);
         }
+
 
         /// <summary>
         /// Save all change of image
@@ -1467,6 +1448,25 @@ namespace ImageGlass
 
             UpdateStatusBar();
         }
+
+
+        /// <summary>
+        /// Save current loaded image to file and print it
+        /// </summary>
+        private string SaveTemporaryMemoryData()
+        {
+            if (!Directory.Exists(GlobalSetting.TempDir))
+            {
+                Directory.CreateDirectory(GlobalSetting.TempDir);
+            }
+
+            string filename = Path.Combine(GlobalSetting.TempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
+
+            picMain.Image.Save(filename, ImageFormat.Png);
+
+            return filename;
+        }
+
         #endregion
 
 
@@ -2973,8 +2973,8 @@ namespace ImageGlass
 
 
 
-        #region Popup Menu
-        private void mnuPopup_Opening(object sender, CancelEventArgs e)
+        #region Context Menu
+        private void mnuContext_Opening(object sender, CancelEventArgs e)
         {
             bool isImageError = false;
 
@@ -2988,27 +2988,27 @@ namespace ImageGlass
             catch { e.Cancel = true; return; }
 
             //clear current items
-            mnuPopup.Items.Clear();
+            mnuContext.Items.Clear();
 
             if (GlobalSetting.IsPlaySlideShow && !isImageError)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
-                mnuPopup.Items.Add(new ToolStripSeparator());//---------------
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
+                mnuContext.Items.Add(new ToolStripSeparator());//---------------
             }
 
             //toolbar menu
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainToolbar));
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
+            mnuContext.Items.Add(Library.Menu.Clone(mnuMainToolbar));
+            mnuContext.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
             
 
             //Get Editing Assoc App info
             if (!isImageError)
             {
-                mnuPopup.Items.Add(new ToolStripSeparator());//---------------
+                mnuContext.Items.Add(new ToolStripSeparator());//---------------
 
                 UpdateEditingAssocAppInfoForMenu();
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainEditImage));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainEditImage));
 
                 //check if image can animate (GIF)
                 try
@@ -3023,10 +3023,10 @@ namespace ImageGlass
                         mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
                         mi.Enabled = true;
 
-                        mnuPopup.Items.Add(mi);
+                        mnuContext.Items.Add(mi);
                         var mi2 = Library.Menu.Clone(mnuMainStartStopAnimating);
                         mi2.Enabled = true;
-                        mnuPopup.Items.Add(mi2);
+                        mnuContext.Items.Add(mi2);
                     }
 
                 }
@@ -3036,43 +3036,43 @@ namespace ImageGlass
 
             if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
             }
 
 
             #region Menu group: CLIPBOARD
-            mnuPopup.Items.Add(new ToolStripSeparator());//------------
-            mnuPopup.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
+            mnuContext.Items.Add(new ToolStripSeparator());//------------
+            mnuContext.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
 
             if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopy));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopy));
             }
 
             if (picMain.Image != null)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
             }
 
             if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCut));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCut));
             }
             #endregion
 
 
             if (!isImageError && !LocalSetting.IsTempMemoryData)
             {
-                mnuPopup.Items.Add(new ToolStripSeparator());//------------
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainRename));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
+                mnuContext.Items.Add(new ToolStripSeparator());//------------
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainRename));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
 
-                mnuPopup.Items.Add(new ToolStripSeparator());//------------
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
-                mnuPopup.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
+                mnuContext.Items.Add(new ToolStripSeparator());//------------
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
             }
 
         }
@@ -3080,7 +3080,7 @@ namespace ImageGlass
 
 
 
-        #region Main Menu (Main function)
+        #region Main Menu (Main functions)
 
         private void mnuMainOpenFile_Click(object sender, EventArgs e)
         {
@@ -3459,24 +3459,7 @@ namespace ImageGlass
             picMain.BackColor = GlobalSetting.BackgroundColor;
             btnFullScreen.PerformClick();
         }
-
-        /// <summary>
-        /// Save current loaded image to file and print it
-        /// </summary>
-        private string SaveTemporaryMemoryData()
-        {
-            if (!Directory.Exists(GlobalSetting.TempDir))
-            {
-                Directory.CreateDirectory(GlobalSetting.TempDir);
-            }
-
-            string filename = Path.Combine(GlobalSetting.TempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
-
-            picMain.Image.Save(filename, ImageFormat.Png);
-
-            return filename;
-        }
-
+        
         private void mnuMainPrint_Click(object sender, EventArgs e)
         {
             //image error
@@ -3583,8 +3566,7 @@ namespace ImageGlass
             picMain.ActualSize();
             picMain.CenterToImage();
         }
-
-
+        
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
@@ -3613,11 +3595,7 @@ namespace ImageGlass
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
-
-
-
-
-
+        
         private void mnuMainAutoZoom_Click(object sender, EventArgs e)
         {
             GlobalSetting.ZoomMode = ZoomMode.AutoZoom;
@@ -3657,11 +3635,6 @@ namespace ImageGlass
             SelectUIZoomMode();
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
-
-
-
-        
-
 
 
         private void mnuMainRename_Click(object sender, EventArgs e)
@@ -4151,12 +4124,7 @@ namespace ImageGlass
             }
         }
 
-
-
-
-
-
-
+        
 
         #endregion
 

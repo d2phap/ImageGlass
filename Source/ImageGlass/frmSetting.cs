@@ -150,7 +150,7 @@ namespace ImageGlass
 
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,900,700"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {

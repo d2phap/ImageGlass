@@ -26,7 +26,7 @@
             this.components = new System.ComponentModel.Container();
             ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.mnuPopup = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -136,7 +136,7 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.mnuPopup.SuspendLayout();
+            this.mnuContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
@@ -149,16 +149,16 @@
             this.sp1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mnuPopup
+            // mnuContext
             // 
-            this.mnuPopup.BackColor = System.Drawing.Color.White;
-            this.mnuPopup.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.mnuPopup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuContext.BackColor = System.Drawing.Color.White;
+            this.mnuContext.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleMenuItemToolStripMenuItem});
-            this.mnuPopup.Name = "mnuPopup";
-            this.mnuPopup.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuPopup.Size = new System.Drawing.Size(232, 34);
-            this.mnuPopup.Opening += new System.ComponentModel.CancelEventHandler(this.mnuPopup_Opening);
+            this.mnuContext.Name = "mnuContext";
+            this.mnuContext.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mnuContext.Size = new System.Drawing.Size(232, 34);
+            this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
             // 
             // sampleMenuItemToolStripMenuItem
             // 
@@ -185,7 +185,6 @@
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
             this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.toolMain.BackgroundImage = global::ImageGlass.Properties.Resources.topbar;
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolMain.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -640,9 +639,9 @@
             this.mnuMainFirstLaunch,
             this.mnuMainCheckForUpdate,
             this.mnuMainReportIssue});
-            this.mnuMain.Name = "mnuPopup";
+            this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 648);
+            this.mnuMain.Size = new System.Drawing.Size(409, 615);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1495,7 +1494,7 @@
             this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.picMain.ContextMenuStrip = this.mnuPopup;
+            this.picMain.ContextMenuStrip = this.mnuContext;
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
@@ -1560,7 +1559,7 @@
             this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
-            this.mnuPopup.ResumeLayout(false);
+            this.mnuContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
@@ -1603,7 +1602,7 @@
         private System.Windows.Forms.ToolStripButton btnConvert;
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
-        private System.Windows.Forms.ContextMenuStrip mnuPopup;
+        private System.Windows.Forms.ContextMenuStrip mnuContext;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
