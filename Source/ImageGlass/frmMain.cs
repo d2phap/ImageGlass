@@ -1618,9 +1618,19 @@ namespace ImageGlass
 
 
                 #region Load state of Toolbar Below Image
-                GlobalSetting.IsShowToolBarBottom = bool.Parse(GlobalSetting.GetConfig("IsShowToolBarBottom", "False"));
-                GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
-                mnuMainToolbarBottom_Click(null, EventArgs.Empty);
+
+                var vString = GlobalSetting.GetConfig("ToolbarPosition", GlobalSetting.ToolbarPosition.ToString());
+
+                if (Enum.TryParse(vString, out ToolbarPosition toolbarPos))
+                {
+                    GlobalSetting.ToolbarPosition = toolbarPos;
+
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                    frmMain_Activated(null, EventArgs.Empty);
+                }
+
+
                 #endregion
 
 
@@ -1991,7 +2001,7 @@ namespace ImageGlass
 
             //Tool bar state
             GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
-            GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
+            //GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
             GlobalSetting.SetConfig("IsShowThumbnailScroll", GlobalSetting.IsShowThumbnailScroll.ToString());
 
             //Window always on top
@@ -2259,7 +2269,6 @@ namespace ImageGlass
 
                 mnuMainLayout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainLayout"];
                 mnuMainToolbar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbar"];
-                mnuMainToolbarBottom.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainToolbarBottom"];
                 mnuMainThumbnailBar.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailBar"];
                 mnuMainThumbnailScroll.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainThumbnailScroll"];
                 mnuMainCheckBackground.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"];
@@ -2352,6 +2361,23 @@ namespace ImageGlass
                 frmSetting.UpdateToolbarButtons(toolMain, this);
                 toolMain.Items.Add(btnMenu);
                 toolMain.Items.Add(lblInfo);
+            }
+            #endregion
+
+
+            #region TOOLBAR_POSITION
+            if ((flags & MainFormForceUpdateAction.TOOLBAR_POSITION) == MainFormForceUpdateAction.TOOLBAR_POSITION)
+            {
+                if (GlobalSetting.ToolbarPosition == ToolbarPosition.Top)
+                {
+                    toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                    toolMain.Dock = DockStyle.Top;
+                }
+                else if (GlobalSetting.ToolbarPosition == ToolbarPosition.Bottom)
+                {
+                    toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+                    toolMain.Dock = DockStyle.Bottom;
+                }
             }
             #endregion
 
@@ -3810,21 +3836,6 @@ namespace ImageGlass
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
         }
 
-        private void mnuMainToolbarBottom_Click(object sender, EventArgs e)
-        {
-            GlobalSetting.IsShowToolBarBottom = !GlobalSetting.IsShowToolBarBottom;
-            if (GlobalSetting.IsShowToolBarBottom)
-            {
-                toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-                toolMain.Dock = DockStyle.Bottom;
-            }
-            else
-            {
-                toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-                toolMain.Dock = DockStyle.Top;
-            }
-            mnuMainToolbarBottom.Checked = GlobalSetting.IsShowToolBarBottom;
-        }
 
         private void mnuMainThumbnailScroll_Click(object sender, EventArgs e)
         {

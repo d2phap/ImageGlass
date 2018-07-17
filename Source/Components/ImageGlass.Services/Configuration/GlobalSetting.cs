@@ -230,7 +230,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value whether toolbar is at the bottom of window when visible
         /// </summary>
-        public static bool IsShowToolBarBottom { get; set; } = false;
+        //public static bool IsShowToolBarBottom { get; set; } = false;
 
 
         /// <summary>
@@ -411,6 +411,12 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that to show full image path or only base name
         /// </summary>
         public static bool IsDisplayBasenameOfImage { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets toolbar position
+        /// </summary>
+        public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
 
         /// <summary>

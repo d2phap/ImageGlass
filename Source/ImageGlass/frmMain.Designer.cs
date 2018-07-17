@@ -119,7 +119,6 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainToolbarBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailScroll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
@@ -1263,7 +1262,6 @@
             // 
             this.mnuMainLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainToolbar,
-            this.mnuMainToolbarBottom,
             this.mnuMainThumbnailBar,
             this.mnuMainThumbnailScroll,
             this.mnuMainCheckBackground,
@@ -1292,19 +1290,6 @@
             this.mnuMainToolbar.Size = new System.Drawing.Size(318, 31);
             this.mnuMainToolbar.Text = "Toolbar";
             this.mnuMainToolbar.Click += new System.EventHandler(this.mnuMainToolbar_Click);
-            // 
-            // mnuMainToolbarBottom
-            // 
-            this.mnuMainToolbarBottom.BackColor = System.Drawing.Color.Transparent;
-            this.mnuMainToolbarBottom.CheckOnClick = true;
-            this.mnuMainToolbarBottom.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainToolbarBottom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainToolbarBottom.Name = "mnuMainToolbarBottom";
-            this.mnuMainToolbarBottom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainToolbarBottom.ShortcutKeyDisplayString = "";
-            this.mnuMainToolbarBottom.Size = new System.Drawing.Size(318, 31);
-            this.mnuMainToolbarBottom.Text = "Toolbar below image";
-            this.mnuMainToolbarBottom.Click += new System.EventHandler(this.mnuMainToolbarBottom_Click);
             // 
             // mnuMainThumbnailBar
             // 
@@ -1532,7 +1517,6 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1665,7 +1649,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainToolbarBottom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailScroll;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckBackground;

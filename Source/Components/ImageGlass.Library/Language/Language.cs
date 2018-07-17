@@ -331,7 +331,6 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
-            Items.Add("frmMain.mnuMainToolbarBottom", "Toolbar below image"); //v6.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
             Items.Add("frmMain.mnuMainThumbnailScroll", "Show Thumbnail scrollbars"); //v6.0
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
@@ -530,8 +529,12 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
 
-            
+
             #region TAB Toolbar
+            Items.Add("frmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
+
             // V5.0
             Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
             Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip

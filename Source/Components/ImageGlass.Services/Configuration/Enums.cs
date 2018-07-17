@@ -88,9 +88,10 @@ namespace ImageGlass.Services.Configuration
         THUMBNAIL_BAR = 8,
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
-        IMAGE_LIST = 64,
-        IMAGE_FOLDER = 128,
-        OTHER_SETTINGS = 256
+        TOOLBAR_POSITION = 64,
+        IMAGE_LIST = 128,
+        IMAGE_FOLDER = 256,
+        OTHER_SETTINGS = 512
     }
 
 
@@ -156,5 +157,14 @@ namespace ImageGlass.Services.Configuration
         ScaleToWidth = 2,
         ScaleToHeight = 4,
         LockZoomRatio = 8
+    }
+
+    /// <summary>
+    /// Toolbar position
+    /// </summary>
+    public enum ToolbarPosition
+    {
+        Top = 0,
+        Bottom = 1
     }
 }
