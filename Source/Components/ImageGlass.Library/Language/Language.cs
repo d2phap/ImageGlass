@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "5.0.5.6";
+            _minVersion = "5.5.7.26";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -332,7 +332,6 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
-            Items.Add("frmMain.mnuMainThumbnailScroll", "Show Thumbnail scrollbars"); //v6.0
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
@@ -486,6 +485,7 @@ namespace ImageGlass.Library
             #region Thumbnail bar
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
+            Items.Add("frmSetting.chkShowThumbnailScrollbar", "Show thumbnails scroll bar"); //v5.5
             //Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)"); //removed v5.0
             Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
             #endregion
@@ -511,7 +511,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
-            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v6.0
+            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
 
             #endregion
 

@@ -297,7 +297,7 @@ namespace ImageGlass
 
             lblHeadThumbnailBar.Text = lang["frmSetting.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang["frmSetting.chkThumbnailVertical"];
-            //lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
+            chkShowThumbnailScrollbar.Text = lang["frmSetting.chkShowThumbnailScrollbar"];
             lblGeneral_ThumbnailSize.Text = lang["frmSetting.lblGeneral_ThumbnailSize"];
 
             lblHeadSlideshow.Text = lang["frmSetting.lblHeadSlideshow"];//
@@ -656,6 +656,9 @@ namespace ImageGlass
 
             //Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
+
+            //Show thumbnail scrollbar
+            chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
 
             //load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
@@ -2036,6 +2039,21 @@ namespace ImageGlass
             {
                 GlobalSetting.IsThumbnailHorizontal = newBool;
                 GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+            }
+            #endregion
+
+
+            #region IsShowThumbnailScrollbar: MainFormForceUpdateAction.THUMBNAIL_BAR
+
+            //IsShowThumbnailScrollbar
+            newBool = chkShowThumbnailScrollbar.Checked;
+            if (GlobalSetting.IsShowThumbnailScrollbar != newBool) //Only change when the new value selected  
+            {
+                GlobalSetting.IsShowThumbnailScrollbar = newBool;
+                GlobalSetting.SetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString());
 
                 //Request frmMain to update the thumbnail bar
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
