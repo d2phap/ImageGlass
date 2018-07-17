@@ -129,7 +129,7 @@ namespace ImageGlass.Services.Configuration
         btnScaletoHeight = 10,
         btnWindowAutosize = 11,
         btnOpen = 12,
-        btnReloadImage = 13,
+        btnRefresh = 13,
         btnGoto = 14,
         btnThumb = 15,
         btnCheckedBackground = 16,

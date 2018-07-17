@@ -437,7 +437,7 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
             $"{(int)Configuration.ToolbarButtons.btnOpen}," +
-            $"{(int)Configuration.ToolbarButtons.btnReloadImage}," +
+            $"{(int)Configuration.ToolbarButtons.btnRefresh}," +
             $"{(int)Configuration.ToolbarButtons.btnGoto}," +
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 

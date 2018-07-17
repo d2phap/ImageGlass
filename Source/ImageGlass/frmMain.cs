@@ -1536,7 +1536,7 @@ namespace ImageGlass
             btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
 
             btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
-            btnReloadImage.Image = t.ToolbarIcons.Refresh.Image;
+            btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
             btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
 
             btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
@@ -2193,7 +2193,7 @@ namespace ImageGlass
                 btnScaletoHeight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnScaletoHeight"];
                 btnWindowAutosize.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnWindowAutosize"];
                 btnOpen.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnOpen"];
-                btnReloadImage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnReloadImage"];
+                btnRefresh.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRefresh"];
                 btnGoto.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnGoto"];
                 btnThumb.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnThumb"];
                 btnCheckedBackground.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainCheckBackground"]} (Ctrl + B)"; ;
@@ -2207,6 +2207,7 @@ namespace ImageGlass
                 mnuMainOpenFile.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenFile"];
                 mnuMainOpenImageData.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainOpenImageData"];
                 mnuMainSaveAs.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSaveAs"];
+                mnuMainRefresh.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRefresh"];
                 mnuMainReloadImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImage"];
                 mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
 
@@ -2845,9 +2846,9 @@ namespace ImageGlass
             mnuMainViewPrevious_Click(null, e);
         }
 
-        private void btnReloadImage_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
-            mnuMainReloadImage_Click(null, e);
+            mnuMainRefresh_Click(null, null);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
@@ -3159,39 +3160,15 @@ namespace ImageGlass
             }
         }
 
+        private void mnuMainRefresh_Click(object sender, EventArgs e)
+        {
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
         private void mnuMainReloadImage_Click(object sender, EventArgs e)
         {
             //Reload the viewing image
             NextPic(step: 0, isKeepZoomRatio: true, isSkipCache: true);
-
-            // Reset scrollbar position
-            //if (LocalSetting.IsResetScrollPosition)
-            //{
-            //    picMain.ScrollTo(0, 0, 0, 0);
-            //}
-            
-            //Zoom condition
-            //if (GlobalSetting.IsEnabledZoomLock)
-            //{
-            //    picMain.Zoom = GlobalSetting.ZoomLockValue;
-            //}
-            //else
-            //{
-            //    //Reset zoom
-            //    if (GlobalSetting.IsZoomToFit)
-            //    {
-            //        picMain.ZoomToFit();
-            //    }
-            //    else
-            //    {
-            //        picMain.ZoomAuto();
-            //    }
-
-            //    _isManuallyZoomed = false;
-            //}
-
-            //Get image file information
-            //UpdateStatusBar();
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -4124,10 +4101,10 @@ namespace ImageGlass
             }
         }
 
-        
+
+
 
         #endregion
 
-        
     }
 }

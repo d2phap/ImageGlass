@@ -254,8 +254,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
             Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 4.0
             Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
-            //Items.Add("frmMain.btnRefresh", "Refresh (F5)"); //removed 5.5
-            Items.Add("frmMain.btnReloadImage", "Reload image (Ctrl + F5)"); //5.5
+            Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
             //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
@@ -276,7 +275,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
-            //Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0, removed 5.5
+            Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
