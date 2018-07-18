@@ -85,13 +85,13 @@ namespace ImageGlass
 
 
             #region Auto update
-            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "07/26/1991 12:13:08 AM");
+            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
 
             if (lastUpdateConfig != "0")
             {
                 DateTime lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParseExact(lastUpdateConfig, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
+                if (DateTime.TryParseExact(lastUpdateConfig, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
                 {
                     //Check for update every 3 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
@@ -114,7 +114,7 @@ namespace ImageGlass
                 p.Start();
 
                 //save last update
-                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("M/d/yyyy HH:mm:ss"));
             }
             #endregion
 

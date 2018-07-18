@@ -1376,13 +1376,13 @@ namespace ImageGlass
         /// </summary>
         private void OnDpiChanged()
         {
-            //Get Scaling factor
-            double scaleFactor = DPIScaling.GetDPIScaleFactor();
+            //Change grid cell size
+            picMain.GridCellSize = DPIScaling.TransformNumber((int)Constants.VIEWER_GRID_SIZE);
 
 
             #region change size of toolbar
             //Update size of toolbar
-            toolMain.Height = (int)((int)Constants.TOOLBAR_HEIGHT * scaleFactor);
+            toolMain.Height = DPIScaling.TransformNumber((int) Constants.TOOLBAR_HEIGHT);
 
             //Get new toolbar item height
             int currentToolbarHeight = toolMain.Height;
@@ -1420,7 +1420,7 @@ namespace ImageGlass
             #endregion
 
             #region change size of menu items
-            int newMenuIconHeight = (int)((int)Constants.MENU_ICON_HEIGHT * scaleFactor);
+            int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
 
             mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
@@ -1495,6 +1495,9 @@ namespace ImageGlass
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
                 GlobalSetting.BackgroundColor = t.BackgroundColor;
+
+                picMain.GridColor = Color.FromArgb(30, 0, 0, 0);
+                picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
 
                 toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
                 toolMain.BackColor = t.ToolbarBackgroundColor;

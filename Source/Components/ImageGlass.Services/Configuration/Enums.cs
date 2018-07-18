@@ -58,7 +58,8 @@ namespace ImageGlass.Services.Configuration
     {
         MENU_ICON_HEIGHT = 21,
         TOOLBAR_ICON_HEIGHT = 20,
-        TOOLBAR_HEIGHT = 40
+        TOOLBAR_HEIGHT = 40,
+        VIEWER_GRID_SIZE = 8
     }
 
     /// <summary>
