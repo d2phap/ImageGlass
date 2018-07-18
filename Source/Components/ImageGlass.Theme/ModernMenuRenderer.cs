@@ -26,11 +26,37 @@ namespace ImageGlass.Theme
 {
     public class ModernMenuRenderer : ToolStripProfessionalRenderer
     {
-        public ModernMenuRenderer() : base(new ModernColors()) { }
+        public Color ThemeBackgroundColor { get; set; } = Color.White;
+        public Color ThemeTextColor { get; set; } = Color.White;
+
+        public ModernMenuRenderer(Color backgroundColor, Color textColor) : base(new ModernColors())
+        {
+            this.ThemeBackgroundColor = backgroundColor;
+            this.ThemeTextColor = textColor;
+
+            
+        }
+
+        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        {
+            e.TextColor = this.ThemeTextColor;
+
+            base.OnRenderItemText(e);
+        }
+
+        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+        {
+            if (e.ToolStrip is ToolStripDropDown dropdown)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(this.ThemeBackgroundColor), e.AffectedBounds);
+            }
+            
+            base.OnRenderToolStripBackground(e);
+        }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
-            Pen pen = new Pen(Color.Black, 1);
+            Pen pen = new Pen(this.ThemeTextColor, 1);
 
             e.Graphics.DrawLine(pen,
                 e.Item.Width - (5*e.Item.Height / 8),
@@ -47,7 +73,7 @@ namespace ImageGlass.Theme
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
         {
-            Pen pen = new Pen(Color.Black, 2);
+            Pen pen = new Pen(this.ThemeTextColor, 2);
 
             e.Graphics.DrawLine(pen,
                 2* e.Item.Height / 10 + 1,
@@ -63,20 +89,23 @@ namespace ImageGlass.Theme
         }
     }
 
+
+
     public class ModernColors : ProfessionalColorTable
     {
+
         public override Color MenuItemSelected
         {
             get
             {
-                return Color.FromArgb(229, 229, 229);
+                return Color.FromArgb(35, 0, 0, 0);
             }
         }
         public override Color MenuBorder
         {
             get
             {
-                return Color.FromArgb(160, 160, 160);
+                return Color.FromArgb(35, 0, 0, 0);
             }
         }
         public override Color MenuItemBorder
@@ -112,14 +141,14 @@ namespace ImageGlass.Theme
         {
             get
             {
-                return Color.FromArgb(215,215,215);
+                return Color.FromArgb(35, 0, 0, 0);
             }
         }
         public override Color SeparatorLight
         {
             get
             {
-                return Color.FromArgb(215, 215, 215);
+                return Color.FromArgb(0, 0, 0, 0);
             }
         }
         public override Color CheckBackground
@@ -151,5 +180,6 @@ namespace ImageGlass.Theme
             }
         }
 
+        public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
     }
 }
