@@ -329,7 +329,7 @@ namespace igcmd
                 lblLayout.ForeColor = 
                 lblTheme.ForeColor = 
                 lblDefaultApp.ForeColor =
-                Theme.InvertColor(th.BackgroundColor);
+                Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
             
         }
 

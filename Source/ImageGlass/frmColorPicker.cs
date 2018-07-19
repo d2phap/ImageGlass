@@ -395,7 +395,7 @@ namespace ImageGlass
                 
             
 
-            lblPixel.ForeColor = Theme.Theme.InvertColor(color);
+            lblPixel.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(color);
         }
 
         private void _ResetColor()
@@ -469,7 +469,7 @@ namespace ImageGlass
                 txtHEX.ForeColor =
                 txtCMYK.ForeColor =
                 txtHSL.ForeColor =
-                Theme.Theme.InvertColor(LocalSetting.Theme.BackgroundColor);
+                Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

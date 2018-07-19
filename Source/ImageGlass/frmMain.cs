@@ -1493,7 +1493,7 @@ namespace ImageGlass
                 picMain.BackColor = t.BackgroundColor;
                 GlobalSetting.BackgroundColor = t.BackgroundColor;
 
-                picMain.GridColor = Color.FromArgb(30, 0, 0, 0);
+                picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
                 picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
 
                 toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
@@ -1504,10 +1504,10 @@ namespace ImageGlass
                 sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
 
                 //Modern UI menu renderer
-                mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.ToolbarBackgroundColor, t.TextInfoColor);
+                mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.MenuBackgroundColor, t.MenuTextColor);
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);
@@ -2744,7 +2744,7 @@ namespace ImageGlass
             }
             else
             {
-                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
                 picMain.Text = text;
 
                 if (queueListForDeleting.Count == 0)
@@ -4112,7 +4112,9 @@ namespace ImageGlass
             {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
-            
+
+
+            mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
 

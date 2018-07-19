@@ -39,18 +39,84 @@ namespace ImageGlass.Theme
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
-            e.TextColor = this.ThemeTextColor;
 
-            base.OnRenderItemText(e);
+
+            if (e.Item.Enabled)
+            {
+                e.TextColor = this.ThemeTextColor;
+                base.OnRenderItemText(e);
+            }
+            else
+            {
+                e.Item.Enabled = true;
+
+                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                {
+                    e.TextColor = Theme.DarkenColor(this.ThemeBackgroundColor, 0.5f);
+                }
+                else //dark background color
+                {
+                    e.TextColor = Theme.LightenColor(this.ThemeBackgroundColor, 0.5f);
+                }
+
+
+                base.OnRenderItemText(e);
+                e.Item.Enabled = false;
+            }
+        }
+
+        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+        {
+            if (e.Vertical || (e.Item as ToolStripSeparator) == null)
+            {
+                base.OnRenderSeparator(e);
+            }
+            else
+            {
+                var tsBounds = new Rectangle(Point.Empty, e.Item.Size);
+
+                var lineY = tsBounds.Bottom - (tsBounds.Height / 2);
+                var lineLeft = tsBounds.Left;
+                var lineRight = tsBounds.Right;
+                var pen = new Pen(Color.Black);
+
+                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                {
+                    pen.Color = Color.FromArgb(35, 0, 0, 0);
+                }
+                else //dark background color
+                {
+                    pen.Color = Color.FromArgb(35, 255, 255, 255);
+                }
+
+                e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
+                base.OnRenderSeparator(e);
+            }
         }
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
             if (e.ToolStrip is ToolStripDropDown dropdown)
             {
+                // draw background
                 e.Graphics.FillRectangle(new SolidBrush(this.ThemeBackgroundColor), e.AffectedBounds);
+
+
+                // draw border
+                var pen = new Pen(Color.Black);
+
+                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                {
+                    pen.Color = Color.FromArgb(35, 0, 0, 0);
+                }
+                else //dark background color
+                {
+                    pen.Color = Color.FromArgb(35, 255, 255, 255);
+                }
+
+                e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
             }
-            
+
             base.OnRenderToolStripBackground(e);
         }
 
@@ -87,6 +153,7 @@ namespace ImageGlass.Theme
                 8 * e.Item.Height / 10,
                 3 * e.Item.Height / 10);
         }
+        
     }
 
 
@@ -105,7 +172,7 @@ namespace ImageGlass.Theme
         {
             get
             {
-                return Color.FromArgb(35, 0, 0, 0);
+                return Color.Transparent;
             }
         }
         public override Color MenuItemBorder
@@ -141,14 +208,14 @@ namespace ImageGlass.Theme
         {
             get
             {
-                return Color.FromArgb(35, 0, 0, 0);
+                return Color.Transparent;
             }
         }
         public override Color SeparatorLight
         {
             get
             {
-                return Color.FromArgb(0, 0, 0, 0);
+                return Color.Transparent;
             }
         }
         public override Color CheckBackground
