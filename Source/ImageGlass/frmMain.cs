@@ -50,9 +50,6 @@ namespace ImageGlass
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
-            //Modern UI menu renderer
-            mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer();
-
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
             
@@ -1496,7 +1493,7 @@ namespace ImageGlass
                 picMain.BackColor = t.BackgroundColor;
                 GlobalSetting.BackgroundColor = t.BackgroundColor;
 
-                picMain.GridColor = Color.FromArgb(30, 0, 0, 0);
+                picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
                 picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
 
                 toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
@@ -1507,7 +1504,10 @@ namespace ImageGlass
                 sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
+
+                //Modern UI menu renderer
+                mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.MenuBackgroundColor, t.MenuTextColor);
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);
@@ -2744,7 +2744,7 @@ namespace ImageGlass
             }
             else
             {
-                picMain.ForeColor = Theme.Theme.InvertColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
                 picMain.Text = text;
 
                 if (queueListForDeleting.Count == 0)
@@ -3112,7 +3112,7 @@ namespace ImageGlass
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
             }
-
+            
         }
         #endregion
 
@@ -4027,7 +4027,7 @@ namespace ImageGlass
                 if (GlobalSetting.IsNewVersionAvailable)
                 {
                     mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate._NewVersion"];
-                    mnuMainCheckForUpdate.BackColor = Color.FromArgb(244, 227, 181);
+                    mnuMainCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
                 }
                 else
                 {
@@ -4089,9 +4089,8 @@ namespace ImageGlass
             int maxWidth = 0;
             foreach (var subItem in mnuItem.DropDownItems)
             {
-                if (subItem.GetType() == typeof(ToolStripMenuItem))
+                if (subItem is ToolStripMenuItem mnu)
                 {
-                    var mnu = (ToolStripMenuItem) subItem;
                     maxWidth = Math.Max(mnu.Width, maxWidth);
                 }
             }
@@ -4113,6 +4112,9 @@ namespace ImageGlass
             {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
+
+
+            mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
 
