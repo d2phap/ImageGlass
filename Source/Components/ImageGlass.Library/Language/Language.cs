@@ -246,7 +246,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
-            Items.Add("frmMain.btnAutoZoom", "Auto zoom (F5)"); //5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom (Ctrl + A)"); //5.5
             Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
