@@ -30,7 +30,6 @@
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.sysWatch = new System.IO.FileSystemWatcher();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -136,7 +135,6 @@
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
             this.mnuContext.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -169,15 +167,6 @@
             // 
             this.timSlideShow.Interval = 2000;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
-            // 
-            // sysWatch
-            // 
-            this.sysWatch.EnableRaisingEvents = true;
-            this.sysWatch.SynchronizingObject = this;
-            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
             // 
             // toolMain
             // 
@@ -1544,7 +1533,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
             this.mnuContext.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
             this.mnuMain.ResumeLayout(false);
@@ -1590,7 +1578,6 @@
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
-        private System.IO.FileSystemWatcher sysWatch;
         private ImageBox picMain;
         private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.ContextMenuStrip mnuMain;

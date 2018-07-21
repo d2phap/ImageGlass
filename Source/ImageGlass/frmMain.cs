@@ -37,6 +37,7 @@ using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
+using FileWatcherEx;
 
 namespace ImageGlass
 {
@@ -49,7 +50,7 @@ namespace ImageGlass
             //Get DPI Scaling ratio
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
-
+            
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
             
@@ -87,9 +88,15 @@ namespace ImageGlass
         /***********************************
          * Variables for FileSystemWatcher
          ***********************************/
-        WatcherChangeTypes _lastAction = WatcherChangeTypes.All; //Last action fired.
-        DateTime _lastActionTime = DateTime.Now; //When the last action was fired.
-        List<string> queueListForDeleting = new List<string>(); // the list of local deleted files, need to be deleted in the memory list
+        //WatcherChangeTypes _lastAction = WatcherChangeTypes.All; //Last action fired.
+        //DateTime _lastActionTime = DateTime.Now; //When the last action was fired.
+
+        // the list of local deleted files, need to be deleted in the memory list
+        private List<string> _queueListForDeleting = new List<string>();
+
+        // File system watcher
+        private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
+
         #endregion
 
 
@@ -246,11 +253,22 @@ namespace ImageGlass
             NextPic(0);
 
             //Watch all changes of current path
-            sysWatch.Path = dirPath;
-            sysWatch.IncludeSubdirectories = GlobalSetting.IsRecursiveLoading;
-            sysWatch.EnableRaisingEvents = true;
-            
+            this._fileWatcher.Stop();
+            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+            {
+                FolderPath = dirPath,
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading
+            };
+
+            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+
+            this._fileWatcher.Start();            
         }
+
+
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
@@ -2169,6 +2187,10 @@ namespace ImageGlass
         {
             try
             {
+                //stop the file system watcher
+                this._fileWatcher.Stop();
+                this._fileWatcher.Dispose();
+
                 //clear temp files
                 if (Directory.Exists(GlobalSetting.TempDir))
                 {
@@ -2465,13 +2487,18 @@ namespace ImageGlass
         }
 
 
+
+
+
+
         #region File System Watcher events
-        private void sysWatch_Renamed(object sender, RenamedEventArgs e)
+
+        private void FileWatcher_OnRenamed(object sender, FileChangedEvent e)
         {
             string newFilename = e.FullPath;
             string oldFilename = e.OldFullPath;
 
-            
+
             var oldExt = Path.GetExtension(oldFilename).ToLower();
             var newExt = Path.GetExtension(newFilename).ToLower();
 
@@ -2519,9 +2546,9 @@ namespace ImageGlass
                     RenameAction();
                 }
             }
-            
 
-            
+
+
             void RenameAction()
             {
                 //Rename file in image list
@@ -2533,7 +2560,7 @@ namespace ImageGlass
                 try
                 {
                     //Rename image in thumbnail bar
-                    thumbnailBar.Items[imgIndex].Text = e.Name;
+                    thumbnailBar.Items[imgIndex].Text = Path.GetFileName(e.FullPath);
                     thumbnailBar.Items[imgIndex].Tag = newFilename;
                 }
                 catch { }
@@ -2546,123 +2573,109 @@ namespace ImageGlass
                 GlobalSetting.ImageList.AddItem(newFilename);
 
                 //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename);
-                lvi.Tag = newFilename;
+                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
+                {
+                    Tag = newFilename
+                };
                 thumbnailBar.Items.Add(lvi);
             }
 
         }
 
-        
 
-        private void sysWatch_Changed(object sender, FileSystemEventArgs e)
+        private void FileWatcher_OnChanged(object sender, FileChangedEvent e)
         {
             // Only watch the supported file types
-            var ext = Path.GetExtension(e.Name).ToLower();
+            var ext = Path.GetExtension(e.FullPath).ToLower();
             if (!GlobalSetting.AllImageFormats.Contains(ext))
             {
                 return;
             }
 
-            var timeDiff = (DateTime.Now - _lastActionTime).TotalSeconds;
-
-            //Console.WriteLine(DateTime.Now.ToString("hh:mm:ss.fff") + ": " + e.ChangeType.ToString());
-            //Console.WriteLine(timeDiff.ToString());
-
-
-            void onFileUpdated()
+            // update the viewing image
+            var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+            if (imgIndex == GlobalSetting.CurrentIndex)
             {
-                // update the viewing image
-                var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
-                if (imgIndex == GlobalSetting.CurrentIndex)
-                {
-                    NextPic(0, true, true);
-                }
-
-                //update thumbnail
-                thumbnailBar.Items[imgIndex].Update();
+                NextPic(0, true, true);
             }
 
+            //update thumbnail
+            UpdateThumbnailBar(imgIndex);
 
-            //Formular
-            //update: delete - create   |  all
-            //update: change - change   |  all
-            //create: create            |  all
-            //delete: delete            |  all
-
-            if (e.ChangeType == WatcherChangeTypes.Created)
+            void UpdateThumbnailBar(int index)
             {
-                // File change type = Updated
-                if (_lastAction == WatcherChangeTypes.Deleted && timeDiff < 5)
+                if (thumbnailBar.InvokeRequired)
                 {
-                    onFileUpdated();
+                    thumbnailBar.Invoke(new Action<int>(UpdateThumbnailBar), index);
                 }
-                // File change type = Created
                 else
                 {
-                    if (GlobalSetting.ImageList.IndexOf(e.FullPath) == -1)
-                    {
-                        //Add the new image to the list
-                        GlobalSetting.ImageList.AddItem(e.FullPath);
+                    //update thumbnail
+                    thumbnailBar.Items[index].Update();
+                }
+            }
+        }
+        
 
-                        //Add the new image to thumbnail bar
-                        ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(e.FullPath);
-                        lvi.Tag = e.FullPath;
-                        thumbnailBar.Items.Add(lvi);
-                    }
-                }
-                
-            }
-            else if (e.ChangeType == WatcherChangeTypes.Changed)
+        private void FileWatcher_OnCreated(object sender, FileChangedEvent e)
+        {
+            // Only watch the supported file types
+            var ext = Path.GetExtension(e.FullPath).ToLower();
+
+            if (!GlobalSetting.AllImageFormats.Contains(ext))
             {
-                if (_lastAction == WatcherChangeTypes.Changed && timeDiff < 300)
-                {
-                    onFileUpdated();
-                }
+                return;
             }
-            // Still not sure if File change type = Deleted,
-            // need to wait few ms to check the next action
-            else if (e.ChangeType == WatcherChangeTypes.Deleted)
+
+            if (GlobalSetting.ImageList.IndexOf(e.FullPath) == -1)
             {
-                Timer tim_waitingForNextActionAfterDelete = new Timer
+                FileWatcher_AddNewFileAction(e.FullPath);
+            }
+        }
+
+
+        private void FileWatcher_AddNewFileAction(string newFilename)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (thumbnailBar.InvokeRequired)
+            {
+                thumbnailBar.Invoke(new Action<string>(FileWatcher_AddNewFileAction), newFilename);
+            }
+            else
+            {
+                //Add the new image to the list
+                GlobalSetting.ImageList.AddItem(newFilename);
+
+                //Add the new image to thumbnail bar
+                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
                 {
-                    Interval = 50
+                    Tag = newFilename
                 };
 
-                tim_waitingForNextActionAfterDelete.Tick += Tim_waitingForNextActionAfterDelete_Tick;
-                tim_waitingForNextActionAfterDelete.Tag = e.FullPath;
-                tim_waitingForNextActionAfterDelete.Enabled = true;
-
-                _lastAction = e.ChangeType;
-                
+                thumbnailBar.Items.Add(lvi);
             }
-
-
-            _lastAction = e.ChangeType;
-            _lastActionTime = DateTime.Now;
         }
 
-        /// <summary>
-        /// Wait for a short time to confirm the file was deleted or modified.
-        /// If it was actually deleted, add it to the queue
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Tim_waitingForNextActionAfterDelete_Tick(object sender, EventArgs e)
+
+        private void FileWatcher_OnDeleted(object sender, FileChangedEvent e)
         {
-            var timer = (Timer)sender;
-            timer.Enabled = false;
-
-            if (_lastAction == WatcherChangeTypes.Deleted || _lastAction == WatcherChangeTypes.All)
+            // Only watch the supported file types
+            var ext = Path.GetExtension(e.FullPath).ToLower();
+            if (!GlobalSetting.AllImageFormats.Contains(ext))
             {
-                // add to queue list for deleting
-                queueListForDeleting.Add(timer.Tag.ToString());
-                //Console.WriteLine("Will del file: " + timer.Tag.ToString());
+                return;
             }
 
-            //reset
-            _lastAction = WatcherChangeTypes.All;
+            // add to queue list for deleting
+            this._queueListForDeleting.Add(e.FullPath);
         }
+
+
+
+
+
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
@@ -2671,10 +2684,10 @@ namespace ImageGlass
         {
             while (true)
             {
-                if (queueListForDeleting.Count > 0)
+                if (_queueListForDeleting.Count > 0)
                 {
-                    var filename = queueListForDeleting[0];
-                    queueListForDeleting.RemoveAt(0);
+                    var filename = _queueListForDeleting[0];
+                    _queueListForDeleting.RemoveAt(0);
 
                     DoDeleteFiles(filename);
                     Application.DoEvents();
@@ -2726,7 +2739,7 @@ namespace ImageGlass
         /// Update UI of the picMain control
         /// </summary>
         /// <param name="text"></param>
-        private delegate void UpdatePicMainCallback(string text);
+        //private delegate void UpdatePicMainCallback(string text);
 
         /// <summary>
         /// Update UI of the picMain control
@@ -2739,21 +2752,32 @@ namespace ImageGlass
             // If these threads are different, it returns true.
             if (picMain.InvokeRequired)
             {
-                UpdatePicMainCallback d = new UpdatePicMainCallback(UpdatePicMain);
-                Invoke(d, new object[] { text });
+                //UpdatePicMainCallback d = new UpdatePicMainCallback(UpdatePicMain);
+                //Invoke(d, new object[] { text });
+
+                picMain.Invoke(new Action<string>(UpdatePicMain), text);
             }
             else
             {
                 picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
                 picMain.Text = text;
 
-                if (queueListForDeleting.Count == 0)
+                if (_queueListForDeleting.Count == 0)
                 {
                     NextPic(0);
                 }
             }
         }
         #endregion
+
+
+
+
+
+
+
+
+
 
 
         // Use mouse wheel to navigate, scroll, or zoom images
