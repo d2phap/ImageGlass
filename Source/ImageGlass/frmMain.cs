@@ -540,37 +540,20 @@ namespace ImageGlass
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
-                //picMain.ZoomToFit();
-
-                //Lock zoom ratio if required
-                //bool isEnabledZoomLock = GlobalSetting.IsEnabledZoomLock;
-                //if (isKeepZoomRatio)
-                //{
-                //    GlobalSetting.IsEnabledZoomLock = true;
-                //    GlobalSetting.ZoomLockValue = (int)picMain.Zoom; // Note: losing a little precision here, not worth changing settings
-
-                //    //prevent scrollbar position reset
-                //    LocalSetting.IsResetScrollPosition = false;
-                //}
-
                 //Show image
                 picMain.Image = im;
 
-                //reset zoom mode
-                ApplyZoomMode(GlobalSetting.ZoomMode);
+
+                //Reset the zoom mode if isKeepZoomRatio = FALSE
+                if (!isKeepZoomRatio)
+                {
+                    //reset zoom mode
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                }
 
                 //Run in another thread
                 Parallel.Invoke(() =>
                 {
-                    //Unlock zoom ratio before
-                    //if (isKeepZoomRatio)
-                    //{
-                    //    //reset to default values
-                    //    GlobalSetting.IsEnabledZoomLock = isEnabledZoomLock;
-                    //    GlobalSetting.ZoomLockValue = 100;
-                    //    LocalSetting.IsResetScrollPosition = true;
-                    //}
-
                     //Release unused images
                     if (GlobalSetting.CurrentIndex - 2 >= 0)
                     {
@@ -581,7 +564,7 @@ namespace ImageGlass
                         GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
                     }
                 });
-                
+
             }
             catch
             {
@@ -1073,16 +1056,17 @@ namespace ImageGlass
                     break;
             }
         }
-        
+
 
         /// <summary>
         /// Apply zoom mode
         /// </summary>
         /// <param name="zoomMode"></param>
-        private void ApplyZoomMode(ZoomMode zoomMode)
+        /// <param name="isResetScrollPosition"></param>
+        private void ApplyZoomMode(ZoomMode zoomMode, bool isResetScrollPosition = true)
         {
             // Reset scrollbar position
-            if (LocalSetting.IsResetScrollPosition)
+            if (isResetScrollPosition)
             {
                 picMain.ScrollTo(0, 0, 0, 0);
             }
@@ -2601,6 +2585,12 @@ namespace ImageGlass
                 return;
             }
 
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnChanged), sender, e);
+                return;
+            }
+
             // update the viewing image
             var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
             if (imgIndex == GlobalSetting.CurrentIndex)
@@ -2609,19 +2599,7 @@ namespace ImageGlass
             }
 
             //update thumbnail
-            UpdateThumbnailBar(imgIndex);
-
-            void UpdateThumbnailBar(int index)
-            {
-                if (this.InvokeRequired)
-                {
-                    this.Invoke(new Action<int>(UpdateThumbnailBar), index);
-                    return;
-                }
-
-                //update thumbnail
-                thumbnailBar.Items[index].Update();
-            }
+            thumbnailBar.Items[imgIndex].Update();
         }
         
 
