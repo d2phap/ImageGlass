@@ -179,6 +179,9 @@ namespace ImageGlass
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
+
+            //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
+            LoadTabToolbar();
         }
 
 

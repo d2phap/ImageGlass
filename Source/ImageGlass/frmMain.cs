@@ -1607,7 +1607,7 @@ namespace ImageGlass
 
                 #region Load state of Toolbar Below Image
 
-                var vString = GlobalSetting.GetConfig("ToolbarPosition", GlobalSetting.ToolbarPosition.ToString());
+                var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
 
                 if (Enum.TryParse(vString, out ToolbarPosition toolbarPos))
                 {
