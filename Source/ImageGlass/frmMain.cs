@@ -2488,6 +2488,12 @@ namespace ImageGlass
 
         private void FileWatcher_OnRenamed(object sender, FileChangedEvent e)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
+                return;
+            }
+
             string newFilename = e.FullPath;
             string oldFilename = e.OldFullPath;
 
