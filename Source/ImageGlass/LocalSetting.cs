@@ -52,12 +52,6 @@ namespace ImageGlass
         
 
         /// <summary>
-        /// Gets, sets value indicating that picmain's scrollbar need to be reset
-        /// </summary>
-        public static bool IsResetScrollPosition { get; set; } = true;
-        
-
-        /// <summary>
         /// Gets, sets the 0-based index of the last view of Settings dialog tab.
         /// </summary>
         public static int SettingsTabLastView { get; set; } = 0;
@@ -80,7 +74,7 @@ namespace ImageGlass
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
 
-        
+
         #endregion
 
 
