@@ -2640,8 +2640,9 @@ namespace ImageGlass
             {
                 Tag = newFilename
             };
-
+            
             thumbnailBar.Items.Add(lvi);
+            thumbnailBar.Refresh();
         }
 
 
@@ -2672,8 +2673,6 @@ namespace ImageGlass
                     _queueListForDeleting.RemoveAt(0);
 
                     DoDeleteFiles(filename);
-                    Application.DoEvents();
-                    GC.Collect();
                 }
                 else
                 {
