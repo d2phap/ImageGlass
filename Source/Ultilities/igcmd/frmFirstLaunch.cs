@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 using ImageGlass.Services.Configuration;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace igcmd
         public frmFirstLaunch()
         {
             InitializeComponent();
-            
+
         }
 
         private List<Theme> _themeList = new List<Theme>();
@@ -42,7 +43,7 @@ namespace igcmd
         private Language _lang = new Language();
         private Theme _theme = new Theme();
         private LayoutMode _layout = LayoutMode.Standard;
-        
+
 
         #region Events
 
@@ -179,7 +180,7 @@ namespace igcmd
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
-            
+
 
             _langList = new List<Language>
             {
@@ -306,7 +307,7 @@ namespace igcmd
                 Directory.CreateDirectory(dir);
             }
 
-            
+
         }
 
 
@@ -317,20 +318,20 @@ namespace igcmd
         private void ApplyTheme(Theme th)
         {
             panFooter.BackColor = th.ToolbarBackgroundColor;
-            panHeader.BackColor = 
+            panHeader.BackColor =
                 tabLanguage.BackColor =
-                tabLayoutMode.BackColor = 
-                tabTheme.BackColor = 
+                tabLayoutMode.BackColor =
+                tabTheme.BackColor =
                 tabFileAssociation.BackColor =
                 th.BackgroundColor;
 
-            lblStepNumber.ForeColor = 
-                lblLanguage.ForeColor = 
-                lblLayout.ForeColor = 
-                lblTheme.ForeColor = 
+            lblStepNumber.ForeColor =
+                lblLanguage.ForeColor =
+                lblLayout.ForeColor =
+                lblTheme.ForeColor =
                 lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
-            
+
         }
 
 
@@ -346,7 +347,7 @@ namespace igcmd
                 Theme.InstallTheme(file);
             }
         }
-        
+
 
         /// <summary>
         /// Load layout list
@@ -356,7 +357,7 @@ namespace igcmd
             cmbLayout.Items.Clear();
             var list = Enum.GetNames(typeof(LayoutMode));
 
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 cmbLayout.Items.Add(_lang.Items[$"{this.Name}.cmbLayout._{item}"]);
             }
@@ -376,8 +377,7 @@ namespace igcmd
 
             if (_layout == LayoutMode.Designer)
             {
-                var toolbarButtons = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,s,15,16,19,20,21";
-                GlobalSetting.SetConfig("ToolbarButtons", toolbarButtons);
+                GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
 
                 GlobalSetting.SetConfig("MouseWheelAction", ((int)MouseWheelActions.ScrollVertically).ToString());
                 GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)MouseWheelActions.Zoom).ToString());
@@ -386,7 +386,6 @@ namespace igcmd
 
                 GlobalSetting.SetConfig("ZoomLockValue", "100"); //lock zoom at 100%
                 GlobalSetting.SetConfig("IsShowColorPickerOnStartup", "True");
-
             }
             else
             {
@@ -406,6 +405,6 @@ namespace igcmd
 
         #endregion
 
-        
+
     }
 }
