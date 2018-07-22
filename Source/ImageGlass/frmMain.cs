@@ -455,6 +455,13 @@ namespace ImageGlass
         /// <param name="isSkipCache"></param>
         private void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<int, bool, bool>(NextPic), step, isKeepZoomRatio, isSkipCache);
+
+                return;
+            }
+
             if (picMain.IsAnimating)
             {
                 picMain.StopAnimating();
@@ -1218,6 +1225,12 @@ namespace ImageGlass
         /// <param name="duration">Duration (milisecond)</param>
         private void DisplayTextMessage(string msg, int duration)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<string, int>(DisplayTextMessage), msg, duration);
+                return;
+            }
+
             if (duration == 0)
             {
                 picMain.TextBackColor = Color.Transparent;
@@ -1240,6 +1253,7 @@ namespace ImageGlass
             //Start timer
             tmsg.Enabled = true;
             tmsg.Start();
+
         }
 
 
@@ -1247,11 +1261,6 @@ namespace ImageGlass
         {
             Timer tmsg = (Timer)sender;
             tmsg.Stop();
-
-            if(GlobalSetting.IsImageError)
-            {
-                return;
-            }
 
             picMain.TextBackColor = Color.Transparent;
             picMain.Font = Font;
@@ -2604,15 +2613,14 @@ namespace ImageGlass
 
             void UpdateThumbnailBar(int index)
             {
-                if (thumbnailBar.InvokeRequired)
+                if (this.InvokeRequired)
                 {
-                    thumbnailBar.Invoke(new Action<int>(UpdateThumbnailBar), index);
+                    this.Invoke(new Action<int>(UpdateThumbnailBar), index);
+                    return;
                 }
-                else
-                {
-                    //update thumbnail
-                    thumbnailBar.Items[index].Update();
-                }
+
+                //update thumbnail
+                thumbnailBar.Items[index].Update();
             }
         }
         
@@ -2639,23 +2647,22 @@ namespace ImageGlass
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
-            if (thumbnailBar.InvokeRequired)
+            if (this.InvokeRequired)
             {
-                thumbnailBar.Invoke(new Action<string>(FileWatcher_AddNewFileAction), newFilename);
+                this.Invoke(new Action<string>(FileWatcher_AddNewFileAction), newFilename);
+                return;
             }
-            else
+
+            //Add the new image to the list
+            GlobalSetting.ImageList.AddItem(newFilename);
+
+            //Add the new image to thumbnail bar
+            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
             {
-                //Add the new image to the list
-                GlobalSetting.ImageList.AddItem(newFilename);
+                Tag = newFilename
+            };
 
-                //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-                {
-                    Tag = newFilename
-                };
-
-                thumbnailBar.Items.Add(lvi);
-            }
+            thumbnailBar.Items.Add(lvi);
         }
 
 
@@ -2671,11 +2678,7 @@ namespace ImageGlass
             // add to queue list for deleting
             this._queueListForDeleting.Add(e.FullPath);
         }
-
-
-
-
-
+        
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
@@ -2695,10 +2698,11 @@ namespace ImageGlass
                 }
                 else
                 {
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(200);
                 }
             }
         }
+
 
         /// <summary>
         /// Proceed deleting file in memory
@@ -2706,6 +2710,12 @@ namespace ImageGlass
         /// <param name="filename"></param>
         private void DoDeleteFiles(string filename)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<string>(DoDeleteFiles), filename);
+                return;
+            }
+
             //Get index of deleted image
             int imgIndex = GlobalSetting.ImageList.IndexOf(filename);
 
@@ -2714,14 +2724,8 @@ namespace ImageGlass
                 //delete image list
                 GlobalSetting.ImageList.Remove(imgIndex);
 
-                try
-                {
-                    //delete thumbnail list
-                    thumbnailBar.Items.RemoveAt(imgIndex);
-                }
-#pragma warning disable CS0168 // Variable is declared but never used
-                catch (Exception ex) { }
-#pragma warning restore CS0168 // Variable is declared but never used
+                //delete thumbnail list
+                thumbnailBar.Items.RemoveAt(imgIndex);
 
                 // change the viewing image to memory data mode
                 if (imgIndex == GlobalSetting.CurrentIndex)
@@ -2729,45 +2733,20 @@ namespace ImageGlass
                     GlobalSetting.IsImageError = true;
                     LocalSetting.IsTempMemoryData = true;
 
-                    UpdatePicMain(GlobalSetting.LangPack.Items["frmMain._ImageNotExist"]);
+                    DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._ImageNotExist"], 1300);
+
+                    if (_queueListForDeleting.Count == 0)
+                    {
+                        NextPic(0);
+                    }
                 }
 
             }
         }
 
-        /// <summary>
-        /// Update UI of the picMain control
-        /// </summary>
-        /// <param name="text"></param>
-        //private delegate void UpdatePicMainCallback(string text);
 
-        /// <summary>
-        /// Update UI of the picMain control
-        /// </summary>
-        /// <param name="text"></param>
-        private void UpdatePicMain(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (picMain.InvokeRequired)
-            {
-                //UpdatePicMainCallback d = new UpdatePicMainCallback(UpdatePicMain);
-                //Invoke(d, new object[] { text });
 
-                picMain.Invoke(new Action<string>(UpdatePicMain), text);
-            }
-            else
-            {
-                picMain.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
-                picMain.Text = text;
 
-                if (_queueListForDeleting.Count == 0)
-                {
-                    NextPic(0);
-                }
-            }
-        }
         #endregion
 
 
