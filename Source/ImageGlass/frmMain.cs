@@ -83,14 +83,12 @@ namespace ImageGlass
 
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
+        
 
 
         /***********************************
-         * Variables for FileSystemWatcher
+         * Variables for FileWatcherEx
          ***********************************/
-        //WatcherChangeTypes _lastAction = WatcherChangeTypes.All; //Last action fired.
-        //DateTime _lastActionTime = DateTime.Now; //When the last action was fired.
-
         // the list of local deleted files, need to be deleted in the memory list
         private List<string> _queueListForDeleting = new List<string>();
 
@@ -295,28 +293,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        /// Take the supported extensions string from GlobalSetting and convert it 
-        /// to a faster lookup mechanism and with wildcard removed.
-        /// 
-        /// Intended to fix the observed issue where "string.Contains" would cause
-        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
-        /// </summary>
-        /// <returns>HashSet of each extension in form ".foo"</returns>
-        private HashSet<string> MakeImageTypeSet()
-        {
-            char[] wildtrim = { '*' };
-            var allTypes = GlobalSetting.AllImageFormats;
-
-            var typesArray = allTypes.Split(';');
-            HashSet<string> supportedExtensions = new HashSet<string>();
-            foreach (var aType in typesArray)
-            {
-                string wildRemoved = aType.Trim(wildtrim);
-                supportedExtensions.Add(wildRemoved);
-            }
-            return supportedExtensions;
-        }
 
         /// <summary>
         /// Sort and find all supported image from directory
@@ -326,8 +302,6 @@ namespace ImageGlass
         {
             //Load image order from config
             GlobalSetting.LoadImageOrderConfig();
-
-            HashSet<string> supportedExtensions = MakeImageTypeSet();
 
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
@@ -356,7 +330,7 @@ namespace ImageGlass
                             return false;
                         }
                     }
-                    if (extension.Length > 0 && supportedExtensions.Contains(extension))
+                    if (extension.Length > 0 && GlobalSetting.ImageFormatHashSet.Contains(extension))
                     {
                         return true;
                     }
@@ -1773,6 +1747,9 @@ namespace ImageGlass
                     GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
                     GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
                 }
+
+                // build the hashset GlobalSetting.ImageFormatHashSet
+                GlobalSetting.BuildImageFormatHashSet();
                 #endregion
 
 
@@ -2502,7 +2479,7 @@ namespace ImageGlass
             var newExt = Path.GetExtension(newFilename).ToLower();
 
             // Only watch the supported file types
-            if (!GlobalSetting.AllImageFormats.Contains(oldExt) && !GlobalSetting.AllImageFormats.Contains(newExt))
+            if (!GlobalSetting.ImageFormatHashSet.Contains(oldExt) && !GlobalSetting.ImageFormatHashSet.Contains(newExt))
             {
                 return;
             }
@@ -2516,7 +2493,7 @@ namespace ImageGlass
             if (oldExt.CompareTo(newExt) != 0)
             {
                 // [old] && [new]: update filename only
-                if (GlobalSetting.AllImageFormats.Contains(oldExt) && GlobalSetting.AllImageFormats.Contains(newExt))
+                if (GlobalSetting.ImageFormatHashSet.Contains(oldExt) && GlobalSetting.ImageFormatHashSet.Contains(newExt))
                 {
                     if (imgIndex > -1)
                     {
@@ -2526,12 +2503,12 @@ namespace ImageGlass
                 else
                 {
                     // [old] && ![new]: remove from image list
-                    if (GlobalSetting.AllImageFormats.Contains(oldExt))
+                    if (GlobalSetting.ImageFormatHashSet.Contains(oldExt))
                     {
                         DoDeleteFiles(oldFilename);
                     }
                     // ![old] && [new]: add to image list
-                    else if (GlobalSetting.AllImageFormats.Contains(newExt))
+                    else if (GlobalSetting.ImageFormatHashSet.Contains(newExt))
                     {
                         AddNewFileAction();
                     }
@@ -2586,7 +2563,7 @@ namespace ImageGlass
         {
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
-            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
             {
                 return;
             }
@@ -2614,7 +2591,7 @@ namespace ImageGlass
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
 
-            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
             {
                 return;
             }
@@ -2654,7 +2631,7 @@ namespace ImageGlass
         {
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
-            if (!GlobalSetting.AllImageFormats.Contains(ext))
+            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
             {
                 return;
             }

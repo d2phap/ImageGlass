@@ -965,6 +965,9 @@ namespace ImageGlass
             GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
             // Load Optional Image Formats
             GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+
+            // build the hashset GlobalSetting.ImageFormatHashSet
+            GlobalSetting.BuildImageFormatHashSet();
         }
 
         /// <summary>

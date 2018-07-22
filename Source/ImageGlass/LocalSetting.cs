@@ -74,7 +74,7 @@ namespace ImageGlass
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
 
-        
+
         #endregion
 
 
