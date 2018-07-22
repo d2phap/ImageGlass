@@ -1681,16 +1681,10 @@ namespace ImageGlass
                 #endregion
 
 
-            }
-            #endregion
-
-
-            #region OTHER SETTINGS
-            if (isLoadOthers)
-            {
-                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
-                // the windows *Position* is the one UI setting which *must* be applied at
-                // the OnLoad event in order to 'take'.
+                // NOTE: ***
+                // Need to load the Windows state here to fix the issue:
+                // https://github.com/d2phap/ImageGlass/issues/358
+                // And to IMPROVE the startup loading speed.
                 #region Windows Bound (Position + Size)
                 Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
 
@@ -1700,6 +1694,7 @@ namespace ImageGlass
                 }
                 this.Bounds = rc;
                 #endregion
+
 
                 // Windows state must be loaded after Windows Bound!
                 #region Windows state
@@ -1714,7 +1709,27 @@ namespace ImageGlass
                 }
                 #endregion
 
+            }
+            #endregion
 
+
+            #region OTHER SETTINGS
+            if (isLoadOthers)
+            {
+                // NOTE: ***
+                // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
+                // the windows *Position* is the one UI setting which *must* be applied at
+                // the OnLoad event in order to 'take'.
+                #region Windows Bound (Position + Size)
+                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+                this.Bounds = rc;
+                #endregion
+                
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
@@ -2097,9 +2112,12 @@ namespace ImageGlass
                     }
                 }
             }
+            
+
             base.WndProc(ref m);
         }
-        
+
+
 
         private void frmMain_Load(object sender, EventArgs e)
         {
