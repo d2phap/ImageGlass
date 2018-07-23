@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Alapértelmezett formátum" />
       <Item key="_.ImageFormatGroup.Optional" value="Választható formátumok" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Forgatás jobbra (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Nagyítás (Ctrl + Ó)" />
       <Item key="frmMain.btnZoomOut" value="Kicsinyítés (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Nagyítás illesztés (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Tényleges méret (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Nagyítási arány rögzítés (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Szélességigazítás (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Képadatok megnyitása a vágólapról" />
       <Item key="frmMain.mnuMainSaveAs" value="Kép mentése másként..." />
       <Item key="frmMain.mnuMainRefresh" value="Frissítés" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Kép szerkesztés {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navigáció" />
       <Item key="frmMain.mnuMainViewNext" value="Következő kép megtekintése" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Forgatás jobbra" />
       <Item key="frmMain.mnuMainZoomIn" value="Nagyít" />
       <Item key="frmMain.mnuMainZoomOut" value="Kicsinyít" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Mérethez igazítás" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Mérethez igazítás" />
       <Item key="frmMain.mnuMainActualSize" value="Tényleges méret" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Nagyítási arány rögzítése" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Szélesség igazítás" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Magasság igazítás" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Ablak igazítása az aktuális képmérethez" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Tiszta képpont" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Bélyegképek" />
       <Item key="frmSetting.chkThumbnailVertical" value="Bélyegképek megjelenítése a jobb oldalon" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Bélyegkép méret (pixel)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Diavetítés" />
       <Item key="frmSetting.chkLoopSlideshow" value="Diavetítés újrakezdése amikor a végére ér" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Alkalmazás neve" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Alkalmazás könyvtára" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Alkalmazás értékek" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="*Választható formátumok nem lesznek automatikusan előre betöltve a memóriába." />
       <Item key="frmSetting.lblSupportedExtension" value="Támogatott formátumok: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Fájl társítások megnyitása" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Beállítás alapértelmezett képnézegetőként" />
       <Item key="frmSetting.btnDeleteExt" value="Törlés" />
       <Item key="frmSetting.btnResetExt" value="Alapbeállítások visszaállítása" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Elválasztó" />
       <Item key="frmSetting.lblToolbarTT" value="Gombok szerkesztése az eszköztáron" />
       <Item key="frmSetting.lblUsedBtns" value="Aktuális gombok:" />

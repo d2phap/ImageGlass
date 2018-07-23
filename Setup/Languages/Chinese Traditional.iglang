@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="預設格式" />
       <Item key="_.ImageFormatGroup.Optional" value="可選格式" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="順時針旋轉 (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="放大 (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="縮小 (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="縮放至適合 (Ctrl +/)" />
+      <Item key="frmMain.btnAutoZoom" value="自動縮放 (ctrl+ A)" />
+      <Item key="frmMain.btnScaleToFit" value="縮放至適合 (Ctrl +/)" />
       <Item key="frmMain.btnActualSize" value="實際大小 (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="鎖定縮放比例 (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="縮放至與寬度相符 (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="從剪貼簿開啟圖片資料" />
       <Item key="frmMain.mnuMainSaveAs" value="另存圖片為 ..." />
       <Item key="frmMain.mnuMainRefresh" value="重新整理" />
+      <Item key="frmMain.mnuMainReloadImage" value="重新載入圖像" />
       <Item key="frmMain.mnuMainEditImage" value="編輯圖片 {0}" />
       <Item key="frmMain.mnuMainNavigation" value="導航" />
       <Item key="frmMain.mnuMainViewNext" value="檢視下一張圖片" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="順時針旋轉" />
       <Item key="frmMain.mnuMainZoomIn" value="放大" />
       <Item key="frmMain.mnuMainZoomOut" value="縮小" />
-      <Item key="frmMain.mnuMainZoomToFit" value="縮放到適合的大小" />
+      <Item key="frmMain.mnuMainScaleToFit" value="縮放到適合的大小" />
       <Item key="frmMain.mnuMainActualSize" value="實際大小" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="鎖定縮放比例" />
+      <Item key="frmMain.mnuMainAutoZoom" value="自動縮放" />
       <Item key="frmMain.mnuMainScaleToWidth" value="縮放至與寬度相符" />
       <Item key="frmMain.mnuMainScaleToHeight" value="縮放至與高度相符" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="調整視窗至實際圖片尺寸" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="清晰像素" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="縮圖列" />
       <Item key="frmSetting.chkThumbnailVertical" value="在右側顯示縮圖" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="顯示縮略圖捲軸" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="縮圖尺寸（像素）" />
       <Item key="frmSetting.lblHeadSlideshow" value="幻燈片" />
       <Item key="frmSetting.chkLoopSlideshow" value="當到達清單的結尾時，再從第一張圖片開始播放" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="應用程式名稱" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="應用程式路徑" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="應用程式參數" />
+      <Item key="frmSetting.chkSaveModifyDate" value="保存圖像的修改日期" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* 可選格式將不會自動預載入到記憶體中。" />
       <Item key="frmSetting.lblSupportedExtension" value="支援的格式：{0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="開啟檔案關聯" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="設定為預設圖片檢視器" />
       <Item key="frmSetting.btnDeleteExt" value="刪除" />
       <Item key="frmSetting.btnResetExt" value="重設為預設值" />
+      <Item key="frmSetting.lblToolbarPosition" value="工具列的方位：" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="頂部" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="底部" />
       <Item key="frmSetting.txtSeparator" value="分隔符號" />
       <Item key="frmSetting.lblToolbarTT" value="設定工具列按鈕" />
       <Item key="frmSetting.lblUsedBtns" value="目前的按鈕" />

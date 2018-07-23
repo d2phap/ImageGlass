@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ar-ae" langName="عربى" author="ImageGlass community" description="Arabic" minVersion="5.0.5.6" isRightToLeftLayout="Yes" />
+    <Info langCode="ar-ae" langName="عربى" author="ImageGlass community" description="Arabic" minVersion="5.5.7.26" isRightToLeftLayout="Yes" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="التنسيقات الافتراضية" />
       <Item key="_.ImageFormatGroup.Optional" value="صيغ اختيارية" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="تدوير بإتجاه عقارب الساعة (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="تكبير (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="تصغير (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="تكبير للإحتواء (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="الحجم الحقيقي (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="قفل التكبير النسبي (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="تحجيم بالنسبة للعرض (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="فتح بيانات الصورة من الحافظة" />
       <Item key="frmMain.mnuMainSaveAs" value="حفظ الصورة ك..." />
       <Item key="frmMain.mnuMainRefresh" value="تحديث" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="تحرير صورة {0}" />
       <Item key="frmMain.mnuMainNavigation" value="التنقل" />
       <Item key="frmMain.mnuMainViewNext" value="عرض الصورة التالية" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="تدوير في اتجاه عقارب الساعة" />
       <Item key="frmMain.mnuMainZoomIn" value="تكبير" />
       <Item key="frmMain.mnuMainZoomOut" value="تصغير" />
-      <Item key="frmMain.mnuMainZoomToFit" value="تكبير للإحتواء" />
+      <Item key="frmMain.mnuMainScaleToFit" value="تكبير للإحتواء" />
       <Item key="frmMain.mnuMainActualSize" value="الحجم الفعلي" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="قفل نسبة التكبير/التصغير" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="نسبة التكبير الى العرض" />
       <Item key="frmMain.mnuMainScaleToHeight" value="نسبة التكبير الى الإرتفاع" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="اضبط النافذة على أبعاد الصورة الفعلية" />
@@ -100,7 +103,7 @@
       <Item key="frmMain._CutFileText" value="قص {0} ملف (ملفات)" />
       <Item key="frmMain._CopyImageData" value="تم نسخ الصورة الى الحافظة" />
       <Item key="frmMain._ClearClipboard" value="تم مسح الحافظة" />
-      <Item key="frmMain._SaveChanges" value="جاري حفظ التغيير..." />
+      <Item key="frmMain._SaveChanges" value="حفظ التغيير..." />
       <Item key="frmMain._SaveImage" value="تم حفظ الصورة إلى&#xD;&#xA;{0}" />
       <Item key="frmMain._SaveImageError" value="يتعذر حفظ الصورة&#xD;&#xA;{0}." />
       <Item key="frmMain._Loading" value="تحميل..." />
@@ -120,7 +123,7 @@
       <Item key="frmSetting._Text" value="الاعدادات" />
       <Item key="frmSetting.btnSave" value="حفظ" />
       <Item key="frmSetting.btnCancel" value="إلغاء" />
-      <Item key="frmSetting.btnApply" value="تطبيق" />
+      <Item key="frmSetting.btnApply" value="تفعيل" />
       <Item key="frmSetting.lblGeneral" value="عام" />
       <Item key="frmSetting.lblImage" value="صورة" />
       <Item key="frmSetting.lblFileAssociations" value="اقترانات الملفات" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="مسح البكسل" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="شريط الصور المصغرة" />
       <Item key="frmSetting.chkThumbnailVertical" value="إظهار الصور المصغرة على الجانب الأيمن" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="أبعاد الصورة المصغرة (بكسل)" />
       <Item key="frmSetting.lblHeadSlideshow" value="عرض الشرائح" />
       <Item key="frmSetting.chkLoopSlideshow" value="أعد تشغيل العارض الى الصورة الأولى عند الوصول إلى نهاية القائمة" />
@@ -184,10 +188,11 @@
       <Item key="frmSetting.btnEditResetExt" value="إعادة التعيين إلى الافتراضي" />
       <Item key="frmSetting.btnEditEditAllExt" value="تحرير كافة الملحقات" />
       <Item key="frmSetting._allExtensions" value="كافة الملحقات" />
-      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="امتداد الملف" />
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="ملحق الملف" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="اسم التطبيق" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="مسار التطبيق" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="تطبيقات الوسيطات" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* لن يتم تحميل التنسيقات الاختيارية تلقائياً مسبقًا في الذاكرة." />
       <Item key="frmSetting.lblSupportedExtension" value="التنسيقات المدعومة: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="افتح الملفات المقترنة" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="تعيين كعارض الصور الافتراضي" />
       <Item key="frmSetting.btnDeleteExt" value="مسح" />
       <Item key="frmSetting.btnResetExt" value="إعادة التعيين إلى الافتراضي" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="الفاصل" />
       <Item key="frmSetting.lblToolbarTT" value="تكوين أزرار شريط الأدوات" />
       <Item key="frmSetting.lblUsedBtns" value="الأزرار الحالية:" />

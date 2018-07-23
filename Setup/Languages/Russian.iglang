@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Формат по умолчанию" />
       <Item key="_.ImageFormatGroup.Optional" value="Дополнительные форматы" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Повернуть по часовой стрелке (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Увеличить (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Уменьшить (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Масштаб по размеру (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Авто масштаб (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Масштаб по размеру (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Истинный размер (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Зафиксировать масштаб (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Масштаб по ширине (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Открытый изображение из буфера обмена" />
       <Item key="frmMain.mnuMainSaveAs" value="Сохранить как ..." />
       <Item key="frmMain.mnuMainRefresh" value="Обновить" />
+      <Item key="frmMain.mnuMainReloadImage" value="Обновить изображение" />
       <Item key="frmMain.mnuMainEditImage" value="Редактировать изображение {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Навигация" />
       <Item key="frmMain.mnuMainViewNext" value="Следующее изображение" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Повернуть ПО ЧАСОВОЙ стрелке" />
       <Item key="frmMain.mnuMainZoomIn" value="Увеличить" />
       <Item key="frmMain.mnuMainZoomOut" value="Уменьшить" />
-      <Item key="frmMain.mnuMainZoomToFit" value="По размеру окна" />
+      <Item key="frmMain.mnuMainScaleToFit" value="По размеру окна" />
       <Item key="frmMain.mnuMainActualSize" value="Истинный размер" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Зафиксировать масштаб" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Авто масштаб" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Масштаб по ширине" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Масштаб по высоте" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Растянуть окно до размера изображения" />
@@ -77,7 +80,7 @@
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Закрепить по верх всех окон" />
       <Item key="frmMain.mnuMainTools" value="Инструменты" />
       <Item key="frmMain.mnuMainColorPicker" value="Панель подбора цвета" />
-      <Item key="frmMain.mnuMainSettings" value="Настройки" />
+      <Item key="frmMain.mnuMainSettings" value="Настройки программы" />
       <Item key="frmMain.mnuMainAbout" value="О программе" />
       <Item key="frmMain.mnuMainFirstLaunch" value="Конфигуратор первичных настроек" />
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Проверить обновления" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Пиксели с четкими краями" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Панель эскизов" />
       <Item key="frmSetting.chkThumbnailVertical" value="Панель эскизов с право" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Показать полосу прокрутки панели эскизов" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Размер эскиза (пиксель)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Слайд-шоу" />
       <Item key="frmSetting.chkLoopSlideshow" value="Повторять слайд-шоу с первого изображения при достижении конца" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Имя приложения" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путь к приложению" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Аргументы приложения" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Изменить дату при сохранении файла" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* Дополнительные форматы автоматически не загружаются в память." />
       <Item key="frmSetting.lblSupportedExtension" value="Поддерживаемые форматы: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Открыть Ассоциации файлов" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Использовать по умолчанию для фотографий" />
       <Item key="frmSetting.btnDeleteExt" value="Удалить" />
       <Item key="frmSetting.btnResetExt" value="Восстановить по умолчанию" />
+      <Item key="frmSetting.lblToolbarPosition" value="Положение панели инструментов:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Вверху" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Внизу" />
       <Item key="frmSetting.txtSeparator" value="Разделитель" />
       <Item key="frmSetting.lblToolbarTT" value="Настройка панели инструментов" />
       <Item key="frmSetting.lblUsedBtns" value="Текущие кнопки:" />
