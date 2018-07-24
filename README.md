@@ -13,11 +13,11 @@ It gives you the possibility to view over **70+** common image formats, includin
 ## Download & Screen shots
 
 <a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="http://imageglass.org/upload/photo/release/5.0_1.png" alt="ImageGlass 5.1.5.20">
+<img src="http://imageglass.org/upload/photo/release/5.5_1.png" alt="ImageGlass 5.5.7.26">
 </a><br/>
 
 <a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%205.1.5.20-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.1.5.20">
+<img src="https://img.shields.io/badge/Download-ImageGlass%205.5.7.26-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.5.7.26">
 </a>
 
 
