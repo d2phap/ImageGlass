@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2018 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -133,14 +133,14 @@ namespace igcmd
             txtUpdates.Text += sb.ToString();
 
             //save last update
-            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("M/d/yyyy HH:mm:ss"));
         }
 
         private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
                 Process.Start(up.Info.Decription + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
@@ -153,7 +153,7 @@ namespace igcmd
         {
             try
             {
-                string version = GlobalSetting.GetConfig("igVersion", "1.0").Replace(".", "_");
+                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
                 Process.Start(up.Info.Link.ToString() + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch

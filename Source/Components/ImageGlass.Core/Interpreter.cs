@@ -115,22 +115,9 @@ namespace ImageGlass.Core
                     //corect the image color
                     magicImg.AddProfile(ColorProfile.SRGB);
 
-                    if (ext.CompareTo(".heic") == 0)
-                    {
-                        // NOTE: ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                        // There is a bug with Magick.NET v7.4.5 
-                        // that ToBitmap() function will return wrong colorspace:
-                        // https://github.com/dlemstra/Magick.NET/issues/153#issuecomment-388080405
-                        // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                        // Hence, we need to export to BitmapSource then convert to Bitmap again
-                        bmp = BitmapBooster.BitmapFromSource(magicImg.ToBitmapSource());
-                    }
-                    else
-                    {
-                        bmp = magicImg.ToBitmap();
-                    }
-
-                        
+                    //get bitmap
+                    bmp = magicImg.ToBitmap();
+                    
                 }
             }
 
@@ -238,6 +225,112 @@ namespace ImageGlass.Core
             return 0;
         }
 
+        public static Image GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails)
+        {
+            var ext = Path.GetExtension(filename).ToLower();
+
+            Image source = null;
+            try
+            {
+                var settings = new MagickReadSettings();
+
+                if (ext.CompareTo(".svg") == 0)
+                {
+                    settings.BackgroundColor = MagickColors.Transparent;
+                }
+
+                if (size.Width > 0 && size.Height > 0)
+                {
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
+                }
+
+                using (var magicImg = new MagickImage(filename, settings))
+                {
+                    // Try to read the exif thumbnail
+                    if (useEmbeddedThumbnails)
+                    {
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
+                        {
+                            // Fetch the embedded thumbnail
+                            var magicThumb = profile.CreateThumbnail();
+                            if (magicThumb != null)
+                            {
+                                source = magicThumb.ToBitmap();
+                            }
+                        }
+                    }
+
+                    // Revert to source image if an embedded thumbnail of required size was not found.
+                    if (source == null)
+                    {
+                        source = magicImg.ToBitmap();
+                    }
+
+                }//END using MagickImage 
+            }
+            catch
+            {
+                source = null;
+            }
+            return source;
+        }
+
+        /// <summary>
+        /// Save image
+        /// </summary>
+        /// <param name="pic">Image source</param>
+        /// <param name="filename">New image file name</param>
+        public static void SaveImage(Image pic, string filename)
+        {
+            string ext = Path.GetExtension(filename).Substring(1).ToLower();
+
+            using (var img = new MagickImage(new Bitmap(pic)))
+            {
+                img.Quality = 100;
+                img.Write(filename);
+            }
+        }
+
+        /// <summary>
+        /// Load image
+        /// </summary>
+        /// <param name="Filename">path to image to load</param>
+        /// <param name="width">Set width for Scalable Format</param>
+        /// <param name="height">Set height for Scalable Format</param>
+        public static Bitmap LoadIcon(string Filename, int @width = 0, int @height = 0)
+        {
+            var settings = new MagickReadSettings();
+            var ext = Path.GetExtension(Filename).ToLower();
+
+            if (ext.CompareTo(".svg") == 0)
+            {
+                settings.BackgroundColor = MagickColors.Transparent;
+            }
+
+            if (width > 0 && height > 0)
+            {
+                settings.Width = width;
+                settings.Height = height;
+            }
+
+            using (var magicImg = new MagickImage(Filename, settings))
+            {
+                return magicImg.ToBitmap();
+            }
+        }
+
+        public static Image RotateImage(Image input, int degrees)
+        {
+            var bmp = new Bitmap(input);
+            using (var img = new MagickImage(bmp))
+            {
+                img.Rotate(degrees);
+                img.Quality = 100;
+                return img.ToBitmap();
+            }
+        }
 
     }
 }

@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="sv-SE" langName="Svenska" author="ImageGlass community" description="Swedish" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="sv-SE" langName="Svenska" author="ImageGlass community" description="Swedish" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Standardformat" />
       <Item key="_.ImageFormatGroup.Optional" value="Valbara format" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Rotera medsols (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Förstora (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Förminska (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Anpassa bild efter fönsteryta (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Originalstorlek (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Lås proportioner vid storleksändring (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Anpassa till fullbredd (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Öppna bildegenskaper från urklipp" />
       <Item key="frmMain.mnuMainSaveAs" value="Spara bild som..." />
       <Item key="frmMain.mnuMainRefresh" value="Uppdatera" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Redigera bild {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navigera" />
       <Item key="frmMain.mnuMainViewNext" value="Visa nästa bild" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Rotera medsols" />
       <Item key="frmMain.mnuMainZoomIn" value="Förstora" />
       <Item key="frmMain.mnuMainZoomOut" value="Förminska" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Anpassa storlek" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Anpassa storlek" />
       <Item key="frmMain.mnuMainActualSize" value="Originalstorlek" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Lås proportioner vid storleksändring" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Anpassa till fullbredd" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Anpassa till fullhöjd" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Anpassa fönster efter bildens storlek" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Skarp förstoring" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Miniatyrfält" />
       <Item key="frmSetting.chkThumbnailVertical" value="Visa tumnaglar på höger sida" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Miniatyrernas storlek (pixlar)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Bildspel" />
       <Item key="frmSetting.chkLoopSlideshow" value="Starta om bildspel efter sista bilden" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Appnamn" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Programmets sökväg" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Programvariabler" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="*Valbara format kommer inte automatiskt att förladdas till minnet." />
       <Item key="frmSetting.lblSupportedExtension" value="Format som stöds: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Öppna Windows associationshanterare" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Ange som standardprogram för att visa foton" />
       <Item key="frmSetting.btnDeleteExt" value="Radera" />
       <Item key="frmSetting.btnResetExt" value="Återställ till standard" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Avskiljare" />
       <Item key="frmSetting.lblToolbarTT" value="Anpassa knapparna i verktygsfältet" />
       <Item key="frmSetting.lblUsedBtns" value="Nuvarande knappar:" />

@@ -93,7 +93,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// [PHAP] Gets value whether the image can animate or not
+        /// [IG_CHANGE] Gets value whether the image can animate or not
         /// </summary>
         public bool CanAnimate
         {
@@ -143,7 +143,7 @@ namespace ImageGlass
         private bool _allowDoubleClick;
 
         /// <summary>
-        /// [PHAP]
+        /// [IG_CHANGE]
         /// </summary>
         private GifAnimator _animator;
 
@@ -229,17 +229,17 @@ namespace ImageGlass
         #region Public Constructors
 
         /// <summary>
-        /// [PHAP] Initializes a new instance of the <see cref="ImageBox" /> class.
+        /// [IG_CHANGE] Initializes a new instance of the <see cref="ImageBox" /> class.
         /// </summary>
         public ImageBox()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            // [PHAP] double click event
+            // [IG_CHANGE] double click event
             // Enable 
             //SetStyle(ControlStyles.StandardDoubleClick, false);
 
-            //[PHAP]
+            //[IG_CHANGE]
             _animator = new DefaultGifAnimator();
 
             _vScrollBar = new VScrollBar
@@ -1147,7 +1147,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// [PHAP] Handles animating gif images
+        /// [IG_CHANGE] Handles animating gif images
         /// </summary>
         public GifAnimator Animator {
             set {
@@ -1943,7 +1943,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// [PHAP] Gets or sets a value indicating whether the current image is animated.
+        /// [IG_CHANGE] Gets or sets a value indicating whether the current image is animated.
         /// </summary>
         /// <value><c>true</c> if the current image is animated; otherwise, <c>false</c>.</value>
         public bool IsAnimating { get; protected set; }
@@ -2014,7 +2014,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Start animating 
+        /// Stop animating 
         /// </summary>
         public void StopAnimating()
         {
@@ -2025,7 +2025,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Stop animating
+        /// Start animating
         /// </summary>
         public void StartAnimating()
         {
@@ -2936,7 +2936,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// [PHAP] Zooms to the maximum size for displaying the entire image within the bounds of the control. If image size is smaller than viewer size, keep its original size.
+        /// [IG_CHANGE] Zooms to the maximum size for displaying the entire image within the bounds of the control. If image size is smaller than viewer size, keep its original size.
         /// </summary>
         public virtual void ZoomAuto()
         {
@@ -3315,6 +3315,16 @@ namespace ImageGlass
             }
             catch (ExternalException)
             {
+                // stop the animation and reset to the first frame.
+                IsAnimating = false;
+                Animator.StopAnimate(Image, OnFrameChangedHandler);
+            }
+            catch (InvalidOperationException)
+            {
+                // #issue #373: a race condition caused this exception: deleting the image from underneath us could
+                // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
+                // the correct response.
+
                 // stop the animation and reset to the first frame.
                 IsAnimating = false;
                 Animator.StopAnimate(Image, OnFrameChangedHandler);

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "5.1.5.20"
+#define MyAppVersion "5.5.7.26"
 #define MyAppPublisher "Duong Dieu Phap"
 #define MyAppURL "http://www.imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
@@ -32,7 +32,7 @@ WizardSmallImageFile=D:\DEV\ImageGlass\Setup\WizModernSmallImage.bmp
 AppCopyright=Copyright © 2010-2018 by {#MyAppPublisher}
 LanguageDetectionMethod=locale
 AppContact=d2phap@gmail.com
-AppReadmeFile=http://www.imageglass.org/
+AppReadmeFile=https://imageglass.org/
 UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\ImageGlass.exe
 VersionInfoVersion={#MyAppVersion}
@@ -47,6 +47,7 @@ MinVersion=0,6.1
 ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=poweruser
 EnableDirDoesntExistWarning=True
+CloseApplications=True
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -97,6 +98,7 @@ Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Library.dll"; DestDir: "{ap
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Source\ImageGlass\bin\Release\FileWatcherEx.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Assets\default.jpg"; DestDir: "{app}"; Flags: ignoreversion
 Source: "igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
 

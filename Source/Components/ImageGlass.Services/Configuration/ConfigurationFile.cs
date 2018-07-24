@@ -179,7 +179,7 @@ namespace ImageGlass.Services.Configuration
         public string GetConfig(string key, string @defaultValue = null)
         {
             // write default configs if not exist
-            if (!System.IO.File.Exists(Filename))
+            if (!File.Exists(Filename))
             {
                 WriteConfigFile();
             }
@@ -189,6 +189,10 @@ namespace ImageGlass.Services.Configuration
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
             string xpath = "//Configuration/Content/Item[@key = \"" + key + "\"]";
             XmlElement nItem = (XmlElement)root.SelectNodes(xpath)[0]; //<Item />
+
+            // Don't throw unnecessary NullReferenceExceptions
+            if (nItem == null)
+                return defaultValue != null ? defaultValue : null;
 
             //Get all config items
             try

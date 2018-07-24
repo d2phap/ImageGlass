@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "5.0.5.6";
+            _minVersion = "5.5.7.26";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -245,7 +245,9 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
-            Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5
+            //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom (Ctrl + A)"); //5.5
+            Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
             Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
@@ -274,6 +276,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
+            Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
@@ -297,9 +300,11 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5
+            //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
+            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
+            Items.Add("frmMain.mnuMainAutoZoom", "Auto Zoom"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
             Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
@@ -480,6 +485,7 @@ namespace ImageGlass.Library
             #region Thumbnail bar
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
+            Items.Add("frmSetting.chkShowThumbnailScrollbar", "Show thumbnails scroll bar"); //v5.5
             //Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)"); //removed v5.0
             Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
             #endregion
@@ -504,6 +510,9 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
+
+            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
+
             #endregion
 
             #endregion
@@ -520,8 +529,12 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
 
-            
+
             #region TAB Toolbar
+            Items.Add("frmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
+
             // V5.0
             Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
             Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip

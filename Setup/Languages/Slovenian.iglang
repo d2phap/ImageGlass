@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="sl-SI" langName="Slovenščina" author="ImageGlass community" description="Slovenian" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="sl-SI" langName="Slovenščina" author="ImageGlass community" description="Slovenian" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Privzeti formati" />
       <Item key="_.ImageFormatGroup.Optional" value="Neobvezni formati" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Obrni v smeri urnega kazalca (Ctrl + .)" />
       <Item key="frmMain.btnZoomIn" value="Povečaj (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Pomanjšaj (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Povečaj, da se pilega (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Dejanska velikost (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Zakleni razmerje povečave (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Prilagodi na širino (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Odpri slikovne podatke iz odložišča" />
       <Item key="frmMain.mnuMainSaveAs" value="Shrani sliko kot..." />
       <Item key="frmMain.mnuMainRefresh" value="Osveži" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Uredi sliko {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Krmarjenje" />
       <Item key="frmMain.mnuMainViewNext" value="Ogled naslednje slike" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Obrni v smeri urnega kazalca" />
       <Item key="frmMain.mnuMainZoomIn" value="Povečaj" />
       <Item key="frmMain.mnuMainZoomOut" value="Pomanjšaj" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Povečaj, da se prilega" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Povečaj, da se prilega" />
       <Item key="frmMain.mnuMainActualSize" value="Dejanska velikost" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Zakleni razmerje povečave" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Povečava na širino" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Povečava na višino" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Prilagodi okno dejanskim dimenzijam slike" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Počisti zaslonske pike" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Vrstica sličic" />
       <Item key="frmSetting.chkThumbnailVertical" value="Prikaži sličice na desni strani" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimenzije sličice (zaslon. pike)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Diaprojekcija" />
       <Item key="frmSetting.chkLoopSlideshow" value="Predvajaj diaprojekcijo od začetka po dosegu konca seznama" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Ime aplikacije" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Pot aplikacije" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumenti aplikacije" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* Neobvezno, formati ne bo samodejno vnaprej naloženi v pomnilnik." />
       <Item key="frmSetting.lblSupportedExtension" value="Podprti formati: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Odpri povezave z vrstami datotek" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Nastavi kot privzeti pregledovalnik fotografij" />
       <Item key="frmSetting.btnDeleteExt" value="Izbriši" />
       <Item key="frmSetting.btnResetExt" value="Ponastavi na privzeto" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Ločilo" />
       <Item key="frmSetting.lblToolbarTT" value="Konfiguriraj gumbe orodne vrstice" />
       <Item key="frmSetting.lblUsedBtns" value="Trenutni gumbi:" />

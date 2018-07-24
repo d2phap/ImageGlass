@@ -15,8 +15,14 @@
 //
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
+// Dictionary<> is not thread safe if modified while being read. Launching
+// ImageGlass with a filename argument in a directory with many files was
+// throwing an IndexOutOfRange exception. Using a ConcrrentDictionary
+// prevents that. (dnadle)
+
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 
 namespace ImageGlass.ImageListView
@@ -35,7 +41,7 @@ namespace ImageGlass.ImageListView
 		private ImageListView mImageListView;
 
 		private Dictionary<Guid, bool> editCache;
-		private Dictionary<Guid, bool> processing;
+		private ConcurrentDictionary<Guid, bool> processing;
 		private Dictionary<Guid, bool> removedItems;
 
 		private bool disposed;
@@ -125,16 +131,16 @@ namespace ImageGlass.ImageListView
 			context = null;
 			bw = new QueuedBackgroundWorker ();
 			bw.IsBackground = true;
-			bw.DoWork += bw_DoWork;
-			bw.RunWorkerCompleted += bw_RunWorkerCompleted;
-			
-			checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
+            checkProcessingCallback = new SendOrPostCallback (CanContinueProcessing);
 			
 			mImageListView = owner;
 			RetryOnError = false;
 			
 			editCache = new Dictionary<Guid, bool> ();
-			processing = new Dictionary<Guid, bool> ();
+			processing = new ConcurrentDictionary<Guid, bool> ();
 			removedItems = new Dictionary<Guid, bool> ();
 			
 			disposed = false;
@@ -190,13 +196,20 @@ namespace ImageGlass.ImageListView
 		void bw_RunWorkerCompleted (object sender, QueuedWorkerCompletedEventArgs e)
 		{
 			CacheRequest request = e.UserState as CacheRequest;
-			
-			// We are done processing
-			processing.Remove (request.Guid);
-			
-			// Do not process the result if the cache operation
-			// was cancelled.
-			if (e.Cancelled)
+
+            // We are done processing
+            bool removedValue;
+			var removed = processing.TryRemove (request.Guid, out removedValue);
+            if (!removed && mImageListView != null)
+            {
+                var ex = new InvalidOperationException("Image already processed");
+                mImageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Details);
+                return;
+            }
+
+            // Do not process the result if the cache operation
+            // was cancelled.
+            if (e.Cancelled)
 				return;
 			
 			// Get result
@@ -214,13 +227,13 @@ namespace ImageGlass.ImageListView
 			if (e.Error != null && mImageListView != null)
 				mImageListView.OnCacheErrorInternal (request.Guid, e.Error, CacheThread.Details);
 		}
-		/// <summary>
-		/// Handles the DoWork event of the queued background worker.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
-		/// containing the event data.</param>
-		void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
+        /// <summary>
+        /// [IG_CHANGE] Handles the DoWork event of the queued background worker.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
+        /// containing the event data.</param>
+        void bw_DoWork (object sender, QueuedWorkerDoWorkEventArgs e)
 		{
 			CacheRequest request = e.Argument as CacheRequest;
 			
@@ -232,10 +245,12 @@ namespace ImageGlass.ImageListView
 				e.Cancel = true;
 				return;
 			}
-			
-			// Get item details
-			e.Result = request.Adaptor.GetDetails (request.VirtualItemKey, request.UseWIC);
-		}
+
+            // Get item details
+            // Note: 
+            // If we use WIC, it will cause Memory Leak issue: https://github.com/d2phap/ImageGlass/issues/119
+            e.Result = request.Adaptor.GetDetails(request.VirtualItemKey, false);// request.UseWIC);
+        }
 		#endregion
 
 		#region Instance Methods
@@ -301,28 +316,29 @@ namespace ImageGlass.ImageListView
 			// Add to cache queue
 			RunWorker (new CacheRequest (guid, adaptor, virtualItemKey, useWIC));
 		}
-		#endregion
+        #endregion
 
-		#region RunWorker
-		/// <summary>
-		/// Pushes the given item to the worker queue.
-		/// </summary>
-		/// <param name="item">The cache item.</param>
-		private void RunWorker (CacheRequest item)
+        #region RunWorker
+        /// <summary>
+        /// Pushes the given item to the worker queue.
+        /// [IG_CHANGE] Issue #359: dictionary is not thread-safe, Add could crash; catch exceptions
+        /// </summary>
+        /// <param name="item">The cache item.</param>
+        private void RunWorker (CacheRequest item)
 		{
 			// Get the current synchronization context
 			if (context == null)
 				context = SynchronizationContext.Current;
-			
-			// Already being processed?
-			if (processing.ContainsKey (item.Guid))
-				return;
-			else
-				processing.Add (item.Guid, false);
+
+            // Already being processed?
+            var added = processing.TryAdd (item.Guid, false);
+            if (!added)
+                return;
 			
 			// Add the item to the queue for processing
 			bw.RunWorkerAsync (item);
 		}
+
 		#endregion
 
 		#region Dispose

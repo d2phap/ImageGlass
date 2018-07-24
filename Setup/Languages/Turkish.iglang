@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="tr-TR" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="tr-TR" langName="Türk" author="ImageGlass community" description="Turkish" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Ön tanımlı formatlar" />
       <Item key="_.ImageFormatGroup.Optional" value="Opsiyonel formatlar" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Saat yönünde döndür (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Zoom (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Uzaklaştırmak (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Sığdırmak için yakınlaştırın (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Gerçek boyut (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Yakınlaştırma oranını kilitle (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Ölçek genişliği (Ctrl + W)" />
@@ -30,7 +31,8 @@
       <Item key="frmMain.mnuMainOpenFile" value="Dosyayı aç" />
       <Item key="frmMain.mnuMainOpenImageData" value="Açık görüntü verilerini Pano'dan" />
       <Item key="frmMain.mnuMainSaveAs" value="Resmi farklı kaydet ..." />
-      <Item key="frmMain.mnuMainRefresh" value="Yenile" />
+      <Item key="frmMain.mnuMainRefresh" value="yenile" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Resmi düzenle {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Gezinti Tuşları" />
       <Item key="frmMain.mnuMainViewNext" value="Görünümü sonraki resim" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Saat yönünde döndür" />
       <Item key="frmMain.mnuMainZoomIn" value="Yakınlaş" />
       <Item key="frmMain.mnuMainZoomOut" value="Uzaklaş" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Uyacak şekilde Yakınlaştır" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Uyacak şekilde Yakınlaştır" />
       <Item key="frmMain.mnuMainActualSize" value="Gerçek boyut" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Yakınlaştırma oranını kilitle" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Genişlik için ölçek" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Yükseklik için ölçek" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Pencereyi özgün resim boyutlarına ayarla" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Açık piksel" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Ön izleme barı" />
       <Item key="frmSetting.chkThumbnailVertical" value="Sağ tarafta minik resimleri göster" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Ön izleme ölçüsü (pixel)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Slayt Gösterisi" />
       <Item key="frmSetting.chkLoopSlideshow" value="Listenin sonuna ulaşan ilk görüntü için döngü arka slideshow" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="App ismi" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="App yolu" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="App değerleri" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="*Opsiyonel formatlar hafızaya otomatik olarak ön-yükleme yapılmaz." />
       <Item key="frmSetting.lblSupportedExtension" value="Desteklenen formatlar: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Açık dosya ilişkileri" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Varsayılan fotoğraf görüntüleyici olarak ayarla" />
       <Item key="frmSetting.btnDeleteExt" value="Sil" />
       <Item key="frmSetting.btnResetExt" value="Ön değerleri geri döndür" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Ayraç" />
       <Item key="frmSetting.lblToolbarTT" value="Araç çubuğu butonlarını düzenle" />
       <Item key="frmSetting.lblUsedBtns" value="Mevcut Butonlar:" />
@@ -239,7 +247,7 @@
       <Item key="frmSetting.btnThemeSaveAs._Error" value="Seçilen temanız kaydedilemedi." />
       <Item key="frmSetting.btnThemeApply._Success" value="Seçilen tema başarıyla uygulandı!" />
       <Item key="frmSetting.btnThemeApply._Error" value="Seçilen tema uygulanamadı." />
-      <Item key="frmAddNewFormat.lblFileExtension" value="Dosya uzantısı" />
+      <Item key="frmAddNewFormat.lblFileExtension" value="Dosya uzantıları" />
       <Item key="frmAddNewFormat.lblFormatGroup" value="Format grubu" />
       <Item key="frmAddNewFormat.btnOK" value="TAMAM" />
       <Item key="frmAddNewFormat.btnClose" value="Çıkış" />

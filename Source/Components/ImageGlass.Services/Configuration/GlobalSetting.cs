@@ -89,6 +89,13 @@ namespace ImageGlass.Services.Configuration
         public static string BuiltInImageFormats { get; } = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
 
 
+        /// <summary>
+        /// Gets or sets the hash array of all supported formats. 
+        /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
+        /// </summary>
+        public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
+
+
         private static bool _isPortableMode = false;
         /// <summary>
         /// Gets, sets value indicating that ImageGlass will run in portable mode
@@ -176,19 +183,19 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value indicating that Zoom Lock enabled
         /// </summary>
-        public static bool IsEnabledZoomLock { get; set; } = false;
+        //public static bool IsEnabledZoomLock { get; set; } = false;
 
 
         /// <summary>
         /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
         /// </summary>
-        public static bool IsZoomToFit { get; set; } = false;
+        //public static bool IsZoomToFit { get; set; } = false;
 
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
-        public static int ZoomLockValue { get; set; } = 100;
+        public static double ZoomLockValue { get; set; } = 100.0;
 
 
         /// <summary>
@@ -225,6 +232,12 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
         public static bool IsShowToolBar { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets value whether thumbnail scrollbars visible
+        /// </summary>
+        public static bool IsShowThumbnailScrollbar { get; set; } = false;
 
 
         /// <summary>
@@ -266,7 +279,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static int ThumbnailDimension { get; set; } = 48;
+        public static int ThumbnailDimension { get; set; } = 96;
 
 
         /// <summary>
@@ -342,8 +355,12 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
         /// </summary>
-        public static bool IsSaveAfterRotating { get; set; } = true;
+        public static bool IsSaveAfterRotating { get; set; } = false;
 
+        /// <summary>
+        /// Setting to control whether the image's original modified date value is preserved on save
+        /// </summary>
+        public static bool PreserveModifiedDate { get; set; } = false;
 
         /// <summary>
         /// Gets, sets the value indicates that there is a new version
@@ -361,6 +378,12 @@ namespace ImageGlass.Services.Configuration
                 return (Application.StartupPath + "\\").Replace("\\\\", "\\");
             }
         }
+
+
+        /// <summary>
+        /// Gets, sets zoom mode value
+        /// </summary>
+        public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
         
         /// <summary>
@@ -392,9 +415,47 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets toolbar position
+        /// </summary>
+        public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
-        public static string ToolbarButtons { get; set; } = "0,1,s,2,3,s,4,5,6,7,8,9,10,11,s,12,13,14,s,15,16,17,18,19,20,21";
+        public static string ToolbarButtons { get; set; } = $"" +
+            $"{(int)Configuration.ToolbarButtons.btnBack}," +
+            $"{(int)Configuration.ToolbarButtons.btnNext}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnRotateLeft}," +
+            $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
+            $"{(int)Configuration.ToolbarButtons.btnActualSize}," +
+            $"{(int)Configuration.ToolbarButtons.btnWindowAutosize}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnAutoZoom}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaletoWidth}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaletoHeight}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaleToFit}," +
+            $"{(int)Configuration.ToolbarButtons.btnZoomLock}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnOpen}," +
+            $"{(int)Configuration.ToolbarButtons.btnRefresh}," +
+            $"{(int)Configuration.ToolbarButtons.btnGoto}," +
+            $"{(int)Configuration.ToolbarButtons.Separator}," +
+
+            $"{(int)Configuration.ToolbarButtons.btnThumb}," +
+            $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
+            $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
+            $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
+            $"{(int)Configuration.ToolbarButtons.btnConvert}," +
+            $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
+            $"{(int)Configuration.ToolbarButtons.btnDelete},";
+        
         
 
         #endregion
@@ -639,6 +700,30 @@ namespace ImageGlass.Services.Configuration
         {
             return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
         }
+
+
+        /// <summary>
+        /// Take the supported extensions string from GlobalSetting and convert it 
+        /// to a faster lookup mechanism and with wildcard removed.
+        /// 
+        /// Intended to fix the observed issue where "string.Contains" would cause
+        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
+        /// </summary>
+        public static void BuildImageFormatHashSet()
+        {
+            char[] wildtrim = { '*' };
+            var allTypes = GlobalSetting.AllImageFormats;
+
+            var typesArray = allTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            GlobalSetting.ImageFormatHashSet = new HashSet<string>();
+
+            foreach (var aType in typesArray)
+            {
+                string wildRemoved = aType.Trim(wildtrim);
+                GlobalSetting.ImageFormatHashSet.Add(wildRemoved);
+            }
+        }
+
 
         #endregion
 

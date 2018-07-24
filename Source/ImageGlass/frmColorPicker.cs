@@ -395,7 +395,7 @@ namespace ImageGlass
                 
             
 
-            lblPixel.ForeColor = Theme.Theme.InvertColor(color);
+            lblPixel.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(color);
         }
 
         private void _ResetColor()
@@ -444,9 +444,6 @@ namespace ImageGlass
         {
             LocalSetting.IsColorPickerToolOpening = false;
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
-
-            //Windows Bound-------------------------------------------------------------------
-            GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(Bounds));
         }
 
 
@@ -472,7 +469,7 @@ namespace ImageGlass
                 txtHEX.ForeColor =
                 txtCMYK.ForeColor =
                 txtHSL.ForeColor =
-                Theme.Theme.InvertColor(LocalSetting.Theme.BackgroundColor);
+                Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)
@@ -480,7 +477,7 @@ namespace ImageGlass
             UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", $"0,0,300,160"));
+            Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {

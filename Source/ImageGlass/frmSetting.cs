@@ -150,7 +150,7 @@ namespace ImageGlass
 
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,610,570"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,900,700"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {
@@ -179,6 +179,9 @@ namespace ImageGlass
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
+
+            //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
+            LoadTabToolbar();
         }
 
 
@@ -297,7 +300,7 @@ namespace ImageGlass
 
             lblHeadThumbnailBar.Text = lang["frmSetting.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang["frmSetting.chkThumbnailVertical"];
-            //lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
+            chkShowThumbnailScrollbar.Text = lang["frmSetting.chkShowThumbnailScrollbar"];
             lblGeneral_ThumbnailSize.Text = lang["frmSetting.lblGeneral_ThumbnailSize"];
 
             lblHeadSlideshow.Text = lang["frmSetting.lblHeadSlideshow"];//
@@ -306,6 +309,7 @@ namespace ImageGlass
 
             lblHeadImageEditing.Text = lang["frmSetting.lblHeadImageEditing"];//
             chkSaveOnRotate.Text = lang["frmSetting.chkSaveOnRotate"];
+            chkSaveModifyDate.Text = lang["frmSetting.chkSaveModifyDate"];
             lblSelectAppForEdit.Text = lang["frmSetting.lblSelectAppForEdit"];
             btnEditEditExt.Text = lang["frmSetting.btnEditEditExt"];
             btnEditResetExt.Text = lang["frmSetting.btnEditResetExt"];
@@ -344,6 +348,8 @@ namespace ImageGlass
 
 
             #region TOOLBAR TAB
+            lblToolbarPosition.Text = lang["frmSetting.lblToolbarPosition"];
+
             _separatorText = lang["frmSetting.txtSeparator"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
             lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
@@ -654,6 +660,9 @@ namespace ImageGlass
             //Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
 
+            //Show thumbnail scrollbar
+            chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
+
             //load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
 
@@ -666,6 +675,7 @@ namespace ImageGlass
 
             //Get value of IsSaveAfterRotating
             chkSaveOnRotate.Checked = GlobalSetting.IsSaveAfterRotating;
+            chkSaveModifyDate.Checked = GlobalSetting.PreserveModifiedDate;
 
             //Load Image Editing extension list
             LoadImageEditingAssociationList();
@@ -734,11 +744,11 @@ namespace ImageGlass
 
         private void btnEditEditExt_Click(object sender, EventArgs e)
         {
-            if (lvImageEditing.CheckedItems.Count == 0)
+            if (lvImageEditing.SelectedItems.Count == 0)
                 return;
 
             //Get select Association item
-            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.CheckedItems[0].Text);
+            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.SelectedItems[0].Text);
 
             if (assoc == null)
                 return;
@@ -790,12 +800,7 @@ namespace ImageGlass
 
         private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvImageEditing.Items)
-            {
-                item.Checked = item.Selected;
-            }
-
-            btnEditEditExt.Enabled = (lvImageEditing.CheckedIndices.Count > 0);
+            btnEditEditExt.Enabled = (lvImageEditing.SelectedItems.Count > 0);
         }
         #endregion
 
@@ -963,6 +968,9 @@ namespace ImageGlass
             GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
             // Load Optional Image Formats
             GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+
+            // build the hashset GlobalSetting.ImageFormatHashSet
+            GlobalSetting.BuildImageFormatHashSet();
         }
 
         /// <summary>
@@ -1007,7 +1015,7 @@ namespace ImageGlass
 
         private void btnDeleteExt_Click(object sender, EventArgs e)
         {
-            if (lvExtension.CheckedItems.Count == 0)
+            if (lvExtension.SelectedItems.Count == 0)
                 return;
 
             var selectedDefaultExts = new StringBuilder();
@@ -1015,7 +1023,7 @@ namespace ImageGlass
 
             // Get checked extensions in the list then
             // remove extensions from settings
-            foreach (ListViewItem li in lvExtension.CheckedItems)
+            foreach (ListViewItem li in lvExtension.SelectedItems)
             {
                 if (li.Group.Name == "Default")
                 {
@@ -1069,12 +1077,7 @@ namespace ImageGlass
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvExtension.Items)
-            {
-                item.Checked = item.Selected;
-            }
-
-            btnDeleteExt.Enabled = (lvExtension.CheckedIndices.Count > 0);
+            btnDeleteExt.Enabled = (lvExtension.SelectedItems.Count > 0);
         }
 
 
@@ -1104,6 +1107,19 @@ namespace ImageGlass
 
         private void LoadTabToolbar()
         {
+            var lang = GlobalSetting.LangPack.Items;
+
+            // Load toolbar position
+            cmbToolbarPosition.Items.Clear();
+            var toolbarPositions = Enum.GetNames(typeof(ToolbarPosition));
+            foreach (var pos in toolbarPositions)
+            {
+                cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
+            }
+            
+            cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
+            
+
             // Apply Windows System theme to listview
             RenderTheme th = new RenderTheme();
             th.ApplyTheme(lvAvailButtons);
@@ -1118,45 +1134,6 @@ namespace ImageGlass
             InitUsedList();
             InitAvailList();
             UpdateNavigationButtonsState();
-        }
-
-
-        /// <summary>
-        /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
-        /// name in frmMain! Reflection is used to fetch the image and string from the
-        /// frmMain field.
-        ///
-        /// The integer value of the enum is used for storing the config info.
-        /// </summary>
-        enum ToolbarButtons
-        {
-            Separator = -1,
-            btnBack = 0,
-            btnNext = 1,
-            btnRotateLeft = 2,
-            btnRotateRight = 3,
-            btnZoomIn = 4,
-            btnZoomOut = 5,
-            btnZoomToFit = 6,
-            btnActualSize = 7,
-            btnZoomLock = 8,
-            btnScaletoWidth = 9,
-            btnScaletoHeight = 10,
-            btnWindowAutosize = 11,
-            btnOpen = 12,
-            btnRefresh = 13,
-            btnGoto = 14,
-            btnThumb = 15,
-            btnCheckedBackground = 16,
-            btnFullScreen = 17,
-            btnSlideShow = 18,
-            btnConvert = 19,
-            btnPrintImage = 20,
-            btnDelete = 21,
-            // NOTE: add new items here, must match order in _lstToolbarImg.Images list
-
-
-            MAX // DO NOT ADD ANYTHING AFTER THIS
         }
 
 
@@ -1317,24 +1294,16 @@ namespace ImageGlass
 
             foreach (var splitval in splitvals)
             {
-                if (splitval == "s")
+                if (int.TryParse(splitval, out int numVal))
                 {
-                    outVal.Add(ToolbarButtons.Separator);
-                }
-                else
-                {
-                    int numVal;
-                    if (int.TryParse(splitval, out numVal))
+                    try
                     {
-                        try
-                        {
-                            ToolbarButtons enumVal = (ToolbarButtons)numVal;
-                            outVal.Add(enumVal);
-                        }
-                        catch (Exception)
-                        {
-                            // when the enumeration value doesn't exist, don't add it!
-                        }
+                        ToolbarButtons enumVal = (ToolbarButtons)numVal;
+                        outVal.Add(enumVal);
+                    }
+                    catch (Exception)
+                    {
+                        // when the enumeration value doesn't exist, don't add it!
                     }
                 }
             }
@@ -1374,12 +1343,7 @@ namespace ImageGlass
 
             foreach (ListViewItem item in lvUsedButtons.Items)
             {
-                string val;
-
-                if ((ToolbarButtons)item.Tag == ToolbarButtons.Separator)
-                    val = "s";
-                else
-                    val = ((int)item.Tag).ToString();
+                string val = ((int)item.Tag).ToString();
 
                 if (!first)
                     sb.Append(",");
@@ -1585,10 +1549,12 @@ namespace ImageGlass
                 {
                     var hIcon = ThemeImage.GetCorrectIconHeight();
 
-                    ToolStripSeparator sep = new ToolStripSeparator();
-                    sep.AutoSize = false;
-                    sep.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
-                    sep.Height = (int)(hIcon * 1.2);
+                    ToolStripSeparator sep = new ToolStripSeparator
+                    {
+                        AutoSize = false,
+                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
+                        Height = (int)(hIcon * 1.2)
+                    };
 
                     toolMain.Items.Add(sep);
                 }
@@ -2086,6 +2052,21 @@ namespace ImageGlass
             #endregion
 
 
+            #region IsShowThumbnailScrollbar: MainFormForceUpdateAction.THUMBNAIL_BAR
+
+            //IsShowThumbnailScrollbar
+            newBool = chkShowThumbnailScrollbar.Checked;
+            if (GlobalSetting.IsShowThumbnailScrollbar != newBool) //Only change when the new value selected  
+            {
+                GlobalSetting.IsShowThumbnailScrollbar = newBool;
+                GlobalSetting.SetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+            }
+            #endregion
+
+
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             //ThumbnailDimension
@@ -2128,6 +2109,10 @@ namespace ImageGlass
             GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
             GlobalSetting.SetConfig("IsSaveAfterRotating", GlobalSetting.IsSaveAfterRotating.ToString());
 
+            // PreserveModifiedDate
+            GlobalSetting.PreserveModifiedDate = chkSaveModifyDate.Checked;
+            GlobalSetting.SetConfig("PreserveModifiedDate", GlobalSetting.PreserveModifiedDate.ToString());
+
             #endregion
 
 
@@ -2152,6 +2137,24 @@ namespace ImageGlass
 
 
             #region Toolbar tab --------------------------------------------
+
+            #region ToolbarPosition: MainFormForceUpdateAction.TOOLBAR_POSITION
+            newInt = cmbToolbarPosition.SelectedIndex;
+
+            if (Enum.TryParse(newInt.ToString(), out ToolbarPosition newPosition))
+            {
+                if (GlobalSetting.ToolbarPosition != newPosition) //Only change when the new value selected  
+                {
+                    GlobalSetting.ToolbarPosition = newPosition;
+                    GlobalSetting.SetConfig("ToolbarPosition", newInt.ToString());
+
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                }
+            }
+
+            #endregion
+
             ApplyToolbarChanges();
             #endregion
 
@@ -2168,14 +2171,10 @@ namespace ImageGlass
 
             #endregion
 
-            
         }
 
 
-
         
-
-
 
         #endregion
 

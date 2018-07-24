@@ -180,10 +180,10 @@ License: GNU GPL v2
 
 -----------------------------------------
 ImageGlass.ImageBox based on Cyotek ImageBox Control v2.0.0.0. Copyright © 2010-2015 Cyotek.
-License: MIT License
+License: MIT
 
 -----------------------------------------
-IconLib v0.73: copyright © 2006 Franco, Gustavo
+IconLib: copyright © 2006 Franco, Gustavo
 License: Creative Commons Attribution-Share Alike 3.0 Unported License.
 
 -----------------------------------------
@@ -191,8 +191,12 @@ ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
 License: Apache 2.0
 
 -----------------------------------------
-Magick.NET v7.4.4.0: copyright © 2018 Dirk Lemstra
+Magick.NET: copyright © 2013-2018 Dirk Lemstra
 License: Apache 2.0
+
+-----------------------------------------
+FileWatcherEx based on VS Code FileWatcher: copyright © 2018 Duong Dieu Phap
+License: MIT
 </value>
   </data>
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
