@@ -87,6 +87,8 @@
             this.mnuMainManipulation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateCounterclockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFlipHorz = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFlipVert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -902,6 +904,8 @@
             this.mnuMainManipulation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainRotateCounterclockwise,
             this.mnuMainRotateClockwise,
+            this.mnuMainFlipHorz,
+            this.mnuMainFlipVert,
             this.toolStripMenuItem6,
             this.mnuMainZoomIn,
             this.mnuMainZoomOut,
@@ -952,6 +956,26 @@
             this.mnuMainRotateClockwise.Size = new System.Drawing.Size(584, 31);
             this.mnuMainRotateClockwise.Text = "R&otate Clockwise";
             this.mnuMainRotateClockwise.Click += new System.EventHandler(this.mnuMainRotateClockwise_Click);
+            // 
+            // mnuMainFlipHorz
+            // 
+            this.mnuMainFlipHorz.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFlipHorz.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFlipHorz.Name = "mnuMainFlipHorz";
+            this.mnuMainFlipHorz.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFlipHorz.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainFlipHorz.Text = "Flip Horizontal";
+            this.mnuMainFlipHorz.Click += new System.EventHandler(this.btnFlipHorz_Click);
+            // 
+            // mnuMainFlipVert
+            // 
+            this.mnuMainFlipVert.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFlipVert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFlipVert.Name = "mnuMainFlipVert";
+            this.mnuMainFlipVert.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFlipVert.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainFlipVert.Text = "Flip Vertical";
+            this.mnuMainFlipVert.Click += new System.EventHandler(this.btnFlipVert_Click);
             // 
             // toolStripMenuItem6
             // 
@@ -1656,6 +1680,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateCounterclockwise;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateClockwise;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFlipHorz;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFlipVert;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomIn;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomOut;
