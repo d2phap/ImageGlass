@@ -57,8 +57,8 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Theme name
         /// </summary>
-        public string Name { get; set; } = string.Empty;   
-        
+        public string Name { get; set; } = string.Empty;
+
         /// <summary>
         /// Theme version
         /// </summary>
@@ -67,8 +67,8 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Author's information
         /// </summary>
-        public string Author { get; set; } = string.Empty;    
-        
+        public string Author { get; set; } = string.Empty;
+
         /// <summary>
         /// Author's email
         /// </summary>
@@ -77,13 +77,13 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Author's website
         /// </summary>
-        public string Website { get; set; } = string.Empty;    
-        
+        public string Website { get; set; } = string.Empty;
+
         /// <summary>
         /// Theme file description
         /// </summary>
-        public string Description { get; set; } = string.Empty;   
-        
+        public string Description { get; set; } = string.Empty;
+
         /// <summary>
         /// Theme Config file type
         /// </summary>
@@ -122,7 +122,7 @@ namespace ImageGlass.Theme
         /// Thumbnail bar background image
         /// </summary>
         public ThemeImage ThumbnailBackgroundImage { get; set; } = new ThemeImage();
-        
+
         /// <summary>
         /// Thumbnail bar background color
         /// </summary>
@@ -132,6 +132,19 @@ namespace ImageGlass.Theme
         /// Text color
         /// </summary>
         public Color TextInfoColor { get; set; } = Color.Black;
+
+
+        /// <summary>
+        /// Menu background color
+        /// </summary>
+        public Color MenuBackgroundColor { get; set; } = Color.White;
+
+
+        /// <summary>
+        /// Menu text color
+        /// </summary>
+        public Color MenuTextColor { get; set; } = Color.Black;
+
         #endregion
 
 
@@ -175,7 +188,7 @@ namespace ImageGlass.Theme
         /// <param name="attribname">name of theme attribute</param>
         /// <param name="iconHigh">optional target height/width</param>
         /// <returns></returns>
-        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHigh=0)
+        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHigh = 0)
         {
             try
             {
@@ -331,6 +344,44 @@ namespace ImageGlass.Theme
             }
             catch (Exception ex) { };
 
+
+            try
+            {
+                var colorString = n.GetAttribute("menubackgroundcolor");
+                var inputColor = this.MenuBackgroundColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                this.MenuBackgroundColor = inputColor;
+            }
+            catch (Exception ex) { };
+
+
+            try
+            {
+                var colorString = n.GetAttribute("menutextcolor");
+                var inputColor = this.MenuTextColor;
+
+                if (IsValidHex(colorString))
+                {
+                    inputColor = ConvertHexStringToColor(colorString, true);
+                }
+                else
+                {
+                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+
+                this.MenuTextColor = inputColor;
+            }
+            catch (Exception ex) { };
+
             #endregion
 
 
@@ -369,7 +420,7 @@ namespace ImageGlass.Theme
             // TODO Not used?
             //ToolbarIcons.Sharing = LoadThemeImage(dir, n, "uploadfb", iconHeight);
             //ToolbarIcons.Plugins = LoadThemeImage(dir, n, "extension", iconHeight);
-            
+
             #endregion
 
 
@@ -378,7 +429,7 @@ namespace ImageGlass.Theme
         }
 
 
-        
+
         /// <summary>
         /// Save as the new theme config file, compatible with v5.0+
         /// </summary>
@@ -410,6 +461,8 @@ namespace ImageGlass.Theme
             n.SetAttribute("bottombarcolor", ConvertColorToHEX(ThumbnailBackgroundColor, true));
             n.SetAttribute("backcolor", ConvertColorToHEX(BackgroundColor, true));
             n.SetAttribute("statuscolor", ConvertColorToHEX(TextInfoColor, true));
+            n.SetAttribute("menubackgroundcolor", ConvertColorToHEX(this.MenuBackgroundColor, true));
+            n.SetAttribute("menutextcolor", ConvertColorToHEX(this.MenuTextColor, true));
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
@@ -505,7 +558,7 @@ namespace ImageGlass.Theme
         }
         #endregion
 
-        
+
 
         #region PUBLIC STATIC FUNCS
         /// <summary>
@@ -554,7 +607,7 @@ namespace ImageGlass.Theme
             return ExtractTheme(themePath, dir);
         }
 
-        
+
         /// <summary>
         /// Uninstall ImageGlass theme pack
         /// </summary>
@@ -641,26 +694,9 @@ namespace ImageGlass.Theme
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static Color InvertColor(Color c)
+        public static Color InvertBlackAndWhiteColor(Color c)
         {
-            var avgValue = 255 / 2;
-            var brightColorCounts = 0;
-            var list = new List<int>();
-
-            list.Add(c.R);
-            list.Add(c.G);
-            list.Add(c.B);
-
-            list.ForEach(li =>
-            {
-                if (li > avgValue)
-                {
-                    brightColorCounts++;
-                }
-            });
-
-
-            if (brightColorCounts > 1)
+            if (c.GetBrightness() > 0.5)
             {
                 return Color.Black;
             }
@@ -796,6 +832,57 @@ namespace ImageGlass.Theme
             }
 
             return false;
+        }
+
+
+
+        /// <summary>
+        /// Makes the color lighter by the given factor (0 = no change, 1 = white).
+        /// </summary>
+        /// <param name="color">The color to make lighter.</param>
+        /// <param name="factor">The factor to make the color lighter (0 = no change, 1 = white).</param>
+        /// <returns>The lighter color.</returns>
+        public static Color LightenColor(Color color, float factor)
+        {
+            float min = 0.001f;
+            float max = 1.999f;
+
+            return System.Windows.Forms.ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
+        }
+
+
+        /// <summary>
+        /// Makes the color darker by the given factor (0 = no change, 1 = black).
+        /// </summary>
+        /// <param name="color">The color to make darker.</param>
+        /// <param name="factor">The factor to make the color darker (0 = no change, 1 = black).</param>
+        /// <returns>The darker color.</returns>
+        public static Color DarkenColor(Color color, float factor)
+        {
+            float min = -0.5f;
+            float max = 1f;
+
+            return System.Windows.Forms.ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
+        }
+
+
+        /// <summary>
+        /// Lightness of the color between black (-1) and white (+1).
+        /// </summary>
+        /// <param name="color">The color to change the lightness.</param>
+        /// <param name="factor">The factor (-1 = black ... +1 = white) to change the lightness.</param>
+        /// <returns>The color with the changed lightness.</returns>
+        public static Color LightnessColor(Color color, float factor)
+        {
+            factor = MinMax(factor, -1f, 1f);
+            return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);
+        }
+
+
+
+        private static float MinMax(float value, float min, float max)
+        {
+            return Math.Min(Math.Max(value, min), max);
         }
 
 

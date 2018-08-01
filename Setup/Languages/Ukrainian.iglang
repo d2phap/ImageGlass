@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="uk-UA" langName="Українська" author="ImageGlass community" description="Ukrainian" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="uk-UA" langName="Українська" author="ImageGlass community" description="Ukrainian" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Типові формати" />
       <Item key="_.ImageFormatGroup.Optional" value="Додаткові формати" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Повернути за годинниковою стрілкою (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Збільшити (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Зменшити (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Масштаб за розміром (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Фактичний розмір (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Закріпити масштаб (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Масштаб за шириною (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Відкрити зображення з буфера обміну" />
       <Item key="frmMain.mnuMainSaveAs" value="Зберегти як..." />
       <Item key="frmMain.mnuMainRefresh" value="Оновити" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Редагувати зображення {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Навігація" />
       <Item key="frmMain.mnuMainViewNext" value="Наступне зображення" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Повернути за годинниковою стрілкою" />
       <Item key="frmMain.mnuMainZoomIn" value="Збільшити" />
       <Item key="frmMain.mnuMainZoomOut" value="Зменшити" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Масштаб за розміром" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Масштаб за розміром" />
       <Item key="frmMain.mnuMainActualSize" value="Фактичний розмір" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Закріпити масштаб" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Масштаб за шириною" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Масштаб за висотою" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Вікно під розмір зображення" />
@@ -117,7 +120,7 @@
       <Item key="frmAbout.lnkCheckUpdate" value="» Перевірити наявність оновлень" />
       <Item key="frmAbout._Text" value="Про застосунок" />
       <Item key="frmAbout._PortableText" value="[Портативний]" />
-      <Item key="frmSetting._Text" value="Налаштування" />
+      <Item key="frmSetting._Text" value="Параметри" />
       <Item key="frmSetting.btnSave" value="Зберегти" />
       <Item key="frmSetting.btnCancel" value="Скасувати" />
       <Item key="frmSetting.btnApply" value="Застосувати" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Чіткі пікселі" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Панель мініатюр" />
       <Item key="frmSetting.chkThumbnailVertical" value="Показувати мініатюри на правій стороні" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Розмір мініатюри (пікселі)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Слайд-шоу" />
       <Item key="frmSetting.chkLoopSlideshow" value="Повертатися до першого зображення при досягненні кінця слайд-шоу" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Назва застосунка" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Шлях до застосунка" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Аргументи для застосунка" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="*Додаткові формати не будуть автоматично завантажуватись у па'ять." />
       <Item key="frmSetting.lblSupportedExtension" value="Підтримувані формати: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Відкрити файлові асоціації" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Встановити як типовий засіб перегляду фотографій" />
       <Item key="frmSetting.btnDeleteExt" value="Видалити" />
       <Item key="frmSetting.btnResetExt" value="Скинути до типових" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Розділювач" />
       <Item key="frmSetting.lblToolbarTT" value="Налаштування панелі інструментів" />
       <Item key="frmSetting.lblUsedBtns" value="Поточні кнопки:" />

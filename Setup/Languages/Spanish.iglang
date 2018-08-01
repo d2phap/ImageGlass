@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="es-ES" langName="Español" author="ImageGlass community" description="Spanish" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="es-ES" langName="Español" author="ImageGlass community" description="Spanish" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Formatos por defecto" />
       <Item key="_.ImageFormatGroup.Optional" value="Formatos opcionales" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Rotar hacia la derecha (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Acercar la imagen (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Alejar la imagen (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Zoom para vista completa (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Auto zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Scale to fit (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Tamaño real (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Bloquear zoom (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Ajustar al ancho (Ctrl + W)" />
@@ -30,7 +31,8 @@
       <Item key="frmMain.mnuMainOpenFile" value="Abrir archivo" />
       <Item key="frmMain.mnuMainOpenImageData" value="Abrir imagen desde el portapapeles" />
       <Item key="frmMain.mnuMainSaveAs" value="Guardar imagen como ..." />
-      <Item key="frmMain.mnuMainRefresh" value="Refrescar" />
+      <Item key="frmMain.mnuMainRefresh" value="Recargar" />
+      <Item key="frmMain.mnuMainReloadImage" value="Reload image" />
       <Item key="frmMain.mnuMainEditImage" value="Editar imagen {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navegación" />
       <Item key="frmMain.mnuMainViewNext" value="Ver imagen siguiente" />
@@ -51,9 +53,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Girar a la derecha" />
       <Item key="frmMain.mnuMainZoomIn" value="Acercar" />
       <Item key="frmMain.mnuMainZoomOut" value="Alejar" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Ajustar" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Ajustar" />
       <Item key="frmMain.mnuMainActualSize" value="Tamaño real" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Fijar zoom" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Ajustar al ancho" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Ajustar a la altura" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Ajustar ventana al tamaño real de la imagen (Ctrl + M)" />
@@ -81,7 +84,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Selector de color" />
       <Item key="frmMain.mnuMainSettings" value="Preferencias" />
       <Item key="frmMain.mnuMainAbout" value="Acerca de" />
-      <Item key="frmMain.mnuMainFirstLaunch" value="First-launch configurations" />
+      <Item key="frmMain.mnuMainFirstLaunch" value="Configuraciones de lanzamiento primera" />
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Buscar actualizaciones" />
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Está disponible una nueva versión!" />
       <Item key="frmMain.mnuMainReportIssue" value="Reportar un problema" />
@@ -103,8 +106,8 @@
       <Item key="frmMain._CopyImageData" value="Imagen copiada al portapapeles" />
       <Item key="frmMain._ClearClipboard" value="Portapapeles vaciado" />
       <Item key="frmMain._SaveChanges" value="Guardando cambios..." />
-      <Item key="frmMain._SaveImage" value="Image was saved to&#xD;&#xA;{0}" />
-      <Item key="frmMain._SaveImageError" value="Unable to save image&#xD;&#xA;{0}." />
+      <Item key="frmMain._SaveImage" value="Imagen se guarda en &#xD; &#xA;{0}" />
+      <Item key="frmMain._SaveImageError" value="No se puede guardar la imagen &#xD; &#xA;{0}." />
       <Item key="frmMain._Loading" value="Cargando..." />
       <Item key="frmMain._FirstItemOfList" value="Se alcanzó la primera imagen" />
       <Item key="frmMain._LastItemOfList" value="Se alcanzó la última imagen" />
@@ -142,7 +145,7 @@
       <Item key="frmSetting.chkESCToQuit" value="Presionar ESC cierra la aplicación" />
       <Item key="frmSetting.chkConfirmationDelete" value="Mostrar cuadro de diálogo para confirmar Eliminar" />
       <Item key="frmSetting.chkShowScrollbar" value="Mostrar barras de desplazamiento" />
-      <Item key="frmSetting.chkDisplayBasename" value="Display basename of the viewing image on title bar" />
+      <Item key="frmSetting.chkDisplayBasename" value="Mostrar nombre de la imagen de visualización en la barra de título" />
       <Item key="frmSetting.lblBackGroundColor" value="Color de fondo" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Restablecer" />
       <Item key="frmSetting.lblHeadImageLoading" value="Carga de imagen" />
@@ -175,6 +178,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Píxeles definidos" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Barra en miniatura" />
       <Item key="frmSetting.chkThumbnailVertical" value="Mostrar miniaturas en el lado derecho" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Tamaño de miniatura (píxeles)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Presentación" />
       <Item key="frmSetting.chkLoopSlideshow" value="Volver al inicio de la presentación al llegar al final de la lista" />
@@ -190,6 +194,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nombre de la aplicación" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Ruta de la aplicación" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumentos de la aplicación" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="*Los formatos opcionales no se pre-cargarán automáticamente en la memoria." />
       <Item key="frmSetting.lblSupportedExtension" value="Formatos soportados: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Abrir Asociaciones de Archivo" />
@@ -197,6 +202,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Configurar como visualizador de fotos por defecto" />
       <Item key="frmSetting.btnDeleteExt" value="Eliminar" />
       <Item key="frmSetting.btnResetExt" value="Restablecer valores predeterminados" />
+      <Item key="frmSetting.lblToolbarPosition" value="Toolbar position:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bottom" />
       <Item key="frmSetting.txtSeparator" value="Separador" />
       <Item key="frmSetting.lblToolbarTT" value="Configurar botones de barra de herramientas" />
       <Item key="frmSetting.lblUsedBtns" value="Botones actuales:" />
@@ -252,8 +260,8 @@
       <Item key="frmEditEditingAssocisation.btnReset" value="Restablecer" />
       <Item key="frmEditEditingAssocisation.btnOK" value="Confirmar" />
       <Item key="frmEditEditingAssocisation.btnClose" value="Cerrar" />
-      <Item key="frmEditEditingAssocisation.lblPreviewLabel" value="Preview" />
-      <Item key="frmFirstLaunch._Text" value="First-Launch Configurations" />
+      <Item key="frmEditEditingAssocisation.lblPreviewLabel" value="Vista previa" />
+      <Item key="frmFirstLaunch._Text" value="Configuraciones de lanzamiento primera" />
       <Item key="frmFirstLaunch.lblStepNumber" value="Paso {0}/{1}" />
       <Item key="frmFirstLaunch.btnNextStep" value="Siguiente" />
       <Item key="frmFirstLaunch.btnNextStep._Done" value="¡Hecho!" />

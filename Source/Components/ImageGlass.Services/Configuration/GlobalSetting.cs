@@ -89,6 +89,13 @@ namespace ImageGlass.Services.Configuration
         public static string BuiltInImageFormats { get; } = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
 
 
+        /// <summary>
+        /// Gets or sets the hash array of all supported formats. 
+        /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
+        /// </summary>
+        public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
+
+
         private static bool _isPortableMode = false;
         /// <summary>
         /// Gets, sets value indicating that ImageGlass will run in portable mode
@@ -228,15 +235,9 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets value whether toolbar is at the bottom of window when visible
-        /// </summary>
-        public static bool IsShowToolBarBottom { get; set; } = false;
-
-
-        /// <summary>
         /// Gets, sets value whether thumbnail scrollbars visible
         /// </summary>
-        public static bool IsShowThumbnailScroll { get; set; } = false;
+        public static bool IsShowThumbnailScrollbar { get; set; } = false;
 
 
         /// <summary>
@@ -414,6 +415,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets toolbar position
+        /// </summary>
+        public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
@@ -439,7 +446,7 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
             $"{(int)Configuration.ToolbarButtons.btnOpen}," +
-            $"{(int)Configuration.ToolbarButtons.btnReloadImage}," +
+            $"{(int)Configuration.ToolbarButtons.btnRefresh}," +
             $"{(int)Configuration.ToolbarButtons.btnGoto}," +
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
@@ -695,6 +702,30 @@ namespace ImageGlass.Services.Configuration
         {
             return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
         }
+
+
+        /// <summary>
+        /// Take the supported extensions string from GlobalSetting and convert it 
+        /// to a faster lookup mechanism and with wildcard removed.
+        /// 
+        /// Intended to fix the observed issue where "string.Contains" would cause
+        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
+        /// </summary>
+        public static void BuildImageFormatHashSet()
+        {
+            char[] wildtrim = { '*' };
+            var allTypes = GlobalSetting.AllImageFormats;
+
+            var typesArray = allTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            GlobalSetting.ImageFormatHashSet = new HashSet<string>();
+
+            foreach (var aType in typesArray)
+            {
+                string wildRemoved = aType.Trim(wildtrim);
+                GlobalSetting.ImageFormatHashSet.Add(wildRemoved);
+            }
+        }
+
 
         #endregion
 

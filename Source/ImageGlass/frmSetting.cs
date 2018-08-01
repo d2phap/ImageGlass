@@ -179,6 +179,9 @@ namespace ImageGlass
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
+
+            //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
+            LoadTabToolbar();
         }
 
 
@@ -297,7 +300,7 @@ namespace ImageGlass
 
             lblHeadThumbnailBar.Text = lang["frmSetting.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang["frmSetting.chkThumbnailVertical"];
-            //lblGeneral_MaxFileSize.Text = lang["frmSetting.lblGeneral_MaxFileSize"];
+            chkShowThumbnailScrollbar.Text = lang["frmSetting.chkShowThumbnailScrollbar"];
             lblGeneral_ThumbnailSize.Text = lang["frmSetting.lblGeneral_ThumbnailSize"];
 
             lblHeadSlideshow.Text = lang["frmSetting.lblHeadSlideshow"];//
@@ -345,6 +348,8 @@ namespace ImageGlass
 
 
             #region TOOLBAR TAB
+            lblToolbarPosition.Text = lang["frmSetting.lblToolbarPosition"];
+
             _separatorText = lang["frmSetting.txtSeparator"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
             lblAvailBtns.Text = lang["frmSetting.lblAvailBtns"];
@@ -655,6 +660,9 @@ namespace ImageGlass
             //Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
 
+            //Show thumbnail scrollbar
+            chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
+
             //load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
 
@@ -960,6 +968,9 @@ namespace ImageGlass
             GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
             // Load Optional Image Formats
             GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+
+            // build the hashset GlobalSetting.ImageFormatHashSet
+            GlobalSetting.BuildImageFormatHashSet();
         }
 
         /// <summary>
@@ -1096,6 +1107,19 @@ namespace ImageGlass
 
         private void LoadTabToolbar()
         {
+            var lang = GlobalSetting.LangPack.Items;
+
+            // Load toolbar position
+            cmbToolbarPosition.Items.Clear();
+            var toolbarPositions = Enum.GetNames(typeof(ToolbarPosition));
+            foreach (var pos in toolbarPositions)
+            {
+                cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
+            }
+            
+            cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
+            
+
             // Apply Windows System theme to listview
             RenderTheme th = new RenderTheme();
             th.ApplyTheme(lvAvailButtons);
@@ -2028,6 +2052,21 @@ namespace ImageGlass
             #endregion
 
 
+            #region IsShowThumbnailScrollbar: MainFormForceUpdateAction.THUMBNAIL_BAR
+
+            //IsShowThumbnailScrollbar
+            newBool = chkShowThumbnailScrollbar.Checked;
+            if (GlobalSetting.IsShowThumbnailScrollbar != newBool) //Only change when the new value selected  
+            {
+                GlobalSetting.IsShowThumbnailScrollbar = newBool;
+                GlobalSetting.SetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString());
+
+                //Request frmMain to update the thumbnail bar
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+            }
+            #endregion
+
+
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             //ThumbnailDimension
@@ -2098,6 +2137,24 @@ namespace ImageGlass
 
 
             #region Toolbar tab --------------------------------------------
+
+            #region ToolbarPosition: MainFormForceUpdateAction.TOOLBAR_POSITION
+            newInt = cmbToolbarPosition.SelectedIndex;
+
+            if (Enum.TryParse(newInt.ToString(), out ToolbarPosition newPosition))
+            {
+                if (GlobalSetting.ToolbarPosition != newPosition) //Only change when the new value selected  
+                {
+                    GlobalSetting.ToolbarPosition = newPosition;
+                    GlobalSetting.SetConfig("ToolbarPosition", newInt.ToString());
+
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                }
+            }
+
+            #endregion
+
             ApplyToolbarChanges();
             #endregion
 
@@ -2114,14 +2171,10 @@ namespace ImageGlass
 
             #endregion
 
-            
         }
 
 
-
         
-
-
 
         #endregion
 

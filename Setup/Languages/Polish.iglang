@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="pl-PL" langName="Polski" author="ImageGlass community" description="Polish" minVersion="5.0.5.6" isRightToLeftLayout="No" />
+    <Info langCode="pl-PL" langName="Polski" author="ImageGlass community" description="Polish" minVersion="5.5.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Standardowe formaty" />
       <Item key="_.ImageFormatGroup.Optional" value="Opcjonalne formaty" />
@@ -12,7 +12,8 @@
       <Item key="frmMain.btnRotateRight" value="Obróć w prawo (Ctrl +.)" />
       <Item key="frmMain.btnZoomIn" value="Powiększenie (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Pomniejszenie (Ctrl + -)" />
-      <Item key="frmMain.btnZoomToFit" value="Dopasuj powiększenie (Ctrl + /)" />
+      <Item key="frmMain.btnAutoZoom" value="Automatyczny zoom (Ctrl + A)" />
+      <Item key="frmMain.btnScaleToFit" value="Dopasuj powiększenie (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Rzeczywisty rozmiar (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Zablokuj współczynnik powiększenia (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Przeskaluj do szerokości (Ctrl + W)" />
@@ -31,6 +32,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Otwórz obraz ze schowka" />
       <Item key="frmMain.mnuMainSaveAs" value="Zapisz obraz jako ..." />
       <Item key="frmMain.mnuMainRefresh" value="Odśwież" />
+      <Item key="frmMain.mnuMainReloadImage" value="Odśwież obraz" />
       <Item key="frmMain.mnuMainEditImage" value="Edytuj obraz {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Nawigacja" />
       <Item key="frmMain.mnuMainViewNext" value="Wyświetl następny obraz" />
@@ -49,9 +51,10 @@
       <Item key="frmMain.mnuMainRotateClockwise" value="Obróć w prawo" />
       <Item key="frmMain.mnuMainZoomIn" value="Powiększ" />
       <Item key="frmMain.mnuMainZoomOut" value="Pomniejsz" />
-      <Item key="frmMain.mnuMainZoomToFit" value="Dopasuj powiększenie" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Dopasuj powiększenie" />
       <Item key="frmMain.mnuMainActualSize" value="Aktualny rozmiar" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Zablokuj współczynnik powiększenia" />
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto Zoom" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Skalowanie do szerokości" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Skalowanie do wysokości" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Dostosuj wielkość okna do aktualnego rozmiaru obrazu" />
@@ -173,6 +176,7 @@
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Wyczyść piksele" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Pasek podglądu miniaturek" />
       <Item key="frmSetting.chkThumbnailVertical" value="Pokaż miniaturki po prawej stronie" />
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar" />
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Wielkość miniaturek (piksele)" />
       <Item key="frmSetting.lblHeadSlideshow" value="Pokaz slajdów" />
       <Item key="frmSetting.chkLoopSlideshow" value="Wróć do pierwszego obrazu po osiągnięciu końca listy przeglądanych obrazów" />
@@ -188,6 +192,7 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nazwa aplikacji" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Ścieżka aplikacji" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Dodatkowe parametry aplikacji" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's Modify Date on save" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* Opcjonalne formaty nie zostaną automatycznie wstępnie wczytane do pamięci." />
       <Item key="frmSetting.lblSupportedExtension" value="Obsługiwane typy plików: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Otwórz skojarzenia plików" />
@@ -195,6 +200,9 @@
       <Item key="frmSetting.btnRegisterExt" value="Ustaw jako domyślna przeglądarka grafik" />
       <Item key="frmSetting.btnDeleteExt" value="Usuń" />
       <Item key="frmSetting.btnResetExt" value="Przywróć ustawienia domyślne" />
+      <Item key="frmSetting.lblToolbarPosition" value="Pozycja paska narzędzi:" />
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Góra" />
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Dół" />
       <Item key="frmSetting.txtSeparator" value="Roździelacz" />
       <Item key="frmSetting.lblToolbarTT" value="Ustaw przyciski paska narzędzi" />
       <Item key="frmSetting.lblUsedBtns" value="Aktualne przyciski:" />

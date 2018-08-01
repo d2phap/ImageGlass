@@ -115,7 +115,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "5.0.5.6";
+            _minVersion = "5.5.7.26";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -252,7 +252,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
-            Items.Add("frmMain.btnAutoZoom", "Auto zoom (F5)"); //5.5
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom (Ctrl + A)"); //5.5
             Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
             Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
             Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
@@ -260,8 +260,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
             Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 4.0
             Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
-            //Items.Add("frmMain.btnRefresh", "Refresh (F5)"); //removed 5.5
-            Items.Add("frmMain.btnReloadImage", "Reload image (Ctrl + F5)"); //5.5
+            Items.Add("frmMain.btnRefresh", "Refresh (F5)");
             Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
             Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
             //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
@@ -282,7 +281,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
-            //Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0, removed 5.5
+            Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
@@ -345,9 +344,7 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
-            Items.Add("frmMain.mnuMainToolbarBottom", "Toolbar below image"); //v6.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
-            Items.Add("frmMain.mnuMainThumbnailScroll", "Show Thumbnail scrollbars"); //v6.0
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
@@ -501,6 +498,7 @@ namespace ImageGlass.Library
             #region Thumbnail bar
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
+            Items.Add("frmSetting.chkShowThumbnailScrollbar", "Show thumbnails scroll bar"); //v5.5
             //Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)"); //removed v5.0
             Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
             #endregion
@@ -526,7 +524,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppPath", "App path"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
-            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v6.0
+            Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
 
             #endregion
 
@@ -544,8 +542,12 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             #endregion
 
-            
+
             #region TAB Toolbar
+            Items.Add("frmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
+            Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
+
             // V5.0
             Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
             Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip

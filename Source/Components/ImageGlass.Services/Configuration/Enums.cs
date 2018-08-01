@@ -58,7 +58,8 @@ namespace ImageGlass.Services.Configuration
     {
         MENU_ICON_HEIGHT = 21,
         TOOLBAR_ICON_HEIGHT = 20,
-        TOOLBAR_HEIGHT = 40
+        TOOLBAR_HEIGHT = 40,
+        VIEWER_GRID_SIZE = 8
     }
 
     /// <summary>
@@ -88,9 +89,10 @@ namespace ImageGlass.Services.Configuration
         THUMBNAIL_BAR = 8,
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
-        IMAGE_LIST = 64,
-        IMAGE_FOLDER = 128,
-        OTHER_SETTINGS = 256
+        TOOLBAR_POSITION = 64,
+        IMAGE_LIST = 128,
+        IMAGE_FOLDER = 256,
+        OTHER_SETTINGS = 512
     }
 
 
@@ -129,7 +131,7 @@ namespace ImageGlass.Services.Configuration
         btnScaletoHeight = 10,
         btnWindowAutosize = 11,
         btnOpen = 12,
-        btnReloadImage = 13,
+        btnRefresh = 13,
         btnGoto = 14,
         btnThumb = 15,
         btnCheckedBackground = 16,
@@ -157,5 +159,14 @@ namespace ImageGlass.Services.Configuration
         ScaleToWidth = 2,
         ScaleToHeight = 4,
         LockZoomRatio = 8
+    }
+
+    /// <summary>
+    /// Toolbar position
+    /// </summary>
+    public enum ToolbarPosition
+    {
+        Top = 0,
+        Bottom = 1
     }
 }

@@ -24,13 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.sysWatch = new System.IO.FileSystemWatcher();
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -51,7 +50,7 @@
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
-            this.btnReloadImage = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnGoto = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnThumb = new System.Windows.Forms.ToolStripButton();
@@ -68,6 +67,7 @@
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainEditImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReloadImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainNavigation = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,9 +122,7 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainToolbarBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainThumbnailScroll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,7 +139,6 @@
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
             this.mnuContext.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).BeginInit();
             this.toolMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -175,15 +172,6 @@
             this.timSlideShow.Interval = 2000;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
             // 
-            // sysWatch
-            // 
-            this.sysWatch.EnableRaisingEvents = true;
-            this.sysWatch.SynchronizingObject = this;
-            this.sysWatch.Changed += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Created += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Deleted += new System.IO.FileSystemEventHandler(this.sysWatch_Changed);
-            this.sysWatch.Renamed += new System.IO.RenamedEventHandler(this.sysWatch_Renamed);
-            // 
             // toolMain
             // 
             this.toolMain.AllowMerge = false;
@@ -211,7 +199,7 @@
             this.btnZoomLock,
             this.toolStripSeparator2,
             this.btnOpen,
-            this.btnReloadImage,
+            this.btnRefresh,
             this.btnGoto,
             this.toolStripSeparator3,
             this.btnThumb,
@@ -486,19 +474,19 @@
             this.btnOpen.ToolTipText = "Open file (Ctrl + O)";
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // btnReloadImage
+            // btnRefresh
             // 
-            this.btnReloadImage.AutoSize = false;
-            this.btnReloadImage.BackColor = System.Drawing.Color.Transparent;
-            this.btnReloadImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnReloadImage.Image = global::ImageGlass.Properties.Resources.refresh;
-            this.btnReloadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnReloadImage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnReloadImage.Margin = new System.Windows.Forms.Padding(0);
-            this.btnReloadImage.Name = "btnReloadImage";
-            this.btnReloadImage.Size = new System.Drawing.Size(33, 33);
-            this.btnReloadImage.ToolTipText = "Refresh (F5)";
-            this.btnReloadImage.Click += new System.EventHandler(this.btnReloadImage_Click);
+            this.btnRefresh.AutoSize = false;
+            this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = global::ImageGlass.Properties.Resources.refresh;
+            this.btnRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(33, 33);
+            this.btnRefresh.ToolTipText = "[Refresh (F5)]";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnGoto
             // 
@@ -654,6 +642,7 @@
             this.mnuMainOpenImageData,
             this.mnuMainSaveAs,
             this.mnuMainEditImage,
+            this.mnuMainRefresh,
             this.mnuMainReloadImage,
             this.toolStripSeparator6,
             this.mnuMainNavigation,
@@ -675,7 +664,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 615);
+            this.mnuMain.Size = new System.Drawing.Size(409, 646);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -726,6 +715,18 @@
             this.mnuMainEditImage.Size = new System.Drawing.Size(408, 30);
             this.mnuMainEditImage.Text = "&Edit image";
             this.mnuMainEditImage.Click += new System.EventHandler(this.mnuMainEditImage_Click);
+            // 
+            // mnuMainRefresh
+            // 
+            this.mnuMainRefresh.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainRefresh.Name = "mnuMainRefresh";
+            this.mnuMainRefresh.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainRefresh.ShortcutKeyDisplayString = "";
+            this.mnuMainRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuMainRefresh.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainRefresh.Text = "[Refresh]";
+            this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
             // 
             // mnuMainReloadImage
             // 
@@ -1042,7 +1043,7 @@
             this.mnuMainAutoZoom.Name = "mnuMainAutoZoom";
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "";
-            this.mnuMainAutoZoom.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuMainAutoZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.mnuMainAutoZoom.Size = new System.Drawing.Size(584, 31);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
@@ -1305,9 +1306,7 @@
             // 
             this.mnuMainLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainToolbar,
-            this.mnuMainToolbarBottom,
             this.mnuMainThumbnailBar,
-            this.mnuMainThumbnailScroll,
             this.mnuMainCheckBackground,
             this.toolStripMenuItem2,
             this.mnuMainAlwaysOnTop});
@@ -1335,19 +1334,6 @@
             this.mnuMainToolbar.Text = "Toolbar";
             this.mnuMainToolbar.Click += new System.EventHandler(this.mnuMainToolbar_Click);
             // 
-            // mnuMainToolbarBottom
-            // 
-            this.mnuMainToolbarBottom.BackColor = System.Drawing.Color.Transparent;
-            this.mnuMainToolbarBottom.CheckOnClick = true;
-            this.mnuMainToolbarBottom.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainToolbarBottom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainToolbarBottom.Name = "mnuMainToolbarBottom";
-            this.mnuMainToolbarBottom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainToolbarBottom.ShortcutKeyDisplayString = "";
-            this.mnuMainToolbarBottom.Size = new System.Drawing.Size(318, 31);
-            this.mnuMainToolbarBottom.Text = "Toolbar below image";
-            this.mnuMainToolbarBottom.Click += new System.EventHandler(this.mnuMainToolbarBottom_Click);
-            // 
             // mnuMainThumbnailBar
             // 
             this.mnuMainThumbnailBar.BackColor = System.Drawing.Color.Transparent;
@@ -1361,19 +1347,6 @@
             this.mnuMainThumbnailBar.Size = new System.Drawing.Size(318, 31);
             this.mnuMainThumbnailBar.Text = "Thumbnail panel";
             this.mnuMainThumbnailBar.Click += new System.EventHandler(this.mnuMainThumbnailBar_Click);
-            // 
-            // mnuMainThumbnailScroll
-            // 
-            this.mnuMainThumbnailScroll.BackColor = System.Drawing.Color.Transparent;
-            this.mnuMainThumbnailScroll.CheckOnClick = true;
-            this.mnuMainThumbnailScroll.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainThumbnailScroll.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainThumbnailScroll.Name = "mnuMainThumbnailScroll";
-            this.mnuMainThumbnailScroll.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainThumbnailScroll.ShortcutKeyDisplayString = "";
-            this.mnuMainThumbnailScroll.Size = new System.Drawing.Size(318, 31);
-            this.mnuMainThumbnailScroll.Text = "Show Thumbnail scrollbars";
-            this.mnuMainThumbnailScroll.Click += new System.EventHandler(this.mnuMainThumbnailScroll_Click);
             // 
             // mnuMainCheckBackground
             // 
@@ -1547,12 +1520,11 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
             this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
             this.picMain.HorizontalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
@@ -1574,6 +1546,7 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1616,7 +1589,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
             this.mnuContext.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sysWatch)).EndInit();
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
             this.mnuMain.ResumeLayout(false);
@@ -1650,7 +1622,7 @@
         private System.Windows.Forms.ToolStripButton btnWindowAutosize;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnOpen;
-        private System.Windows.Forms.ToolStripButton btnReloadImage;
+        private System.Windows.Forms.ToolStripButton btnRefresh;
         private System.Windows.Forms.ToolStripButton btnGoto;
         private System.Windows.Forms.ToolStripButton btnThumb;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -1664,7 +1636,6 @@
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
-        private System.IO.FileSystemWatcher sysWatch;
         private ImageBox picMain;
         private System.Windows.Forms.SplitContainer sp0;
         private System.Windows.Forms.ContextMenuStrip mnuMain;
@@ -1710,9 +1681,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainToolbarBottom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailScroll;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckBackground;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mnuMainFullScreen;
@@ -1747,6 +1716,7 @@
         private System.Windows.Forms.ToolStripButton btnAutoZoom;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAutoZoom;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
     }
 }
 

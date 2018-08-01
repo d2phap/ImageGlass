@@ -35,12 +35,31 @@ namespace ImageGlass
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
+#if ERRORMODE
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+
+        [Flags]
+        public enum ErrorModes : uint
+        {
+            SYSTEM_DEFAULT = 0x0,
+            SEM_FAILCRITICALERRORS = 0x0001,
+            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+            SEM_NOGPFAULTERRORBOX = 0x0002,
+            SEM_NOOPENFILEERRORBOX = 0x8000
+        }
+#endif
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] argv)
         {
+#if ERRORMODE
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+#endif
+
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
             {
@@ -85,13 +104,13 @@ namespace ImageGlass
 
 
             #region Auto update
-            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "07/26/1991 12:13:08 AM");
+            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
 
             if (lastUpdateConfig != "0")
             {
                 DateTime lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParseExact(lastUpdateConfig, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
+                if (DateTime.TryParseExact(lastUpdateConfig, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
                 {
                     //Check for update every 3 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
