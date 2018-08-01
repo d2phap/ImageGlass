@@ -245,6 +245,10 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
+
+            Items.Add("frmMain.btnFlipHorz", "Flip Horizontal"); // Added V6.0
+            Items.Add("frmMain.btnFlipVert", "Flip Vertical");   // Added V6.0
+
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5

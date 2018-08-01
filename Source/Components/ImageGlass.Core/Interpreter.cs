@@ -332,5 +332,19 @@ namespace ImageGlass.Core
             }
         }
 
+        public static Image Flip(Image input, bool horz)
+        {
+            var bmp = new Bitmap(input);
+            using (var img = new MagickImage(bmp))
+            {
+                if (horz)
+                    img.Flop();
+                else
+                    img.Flip();
+                img.Quality = 100;
+                return img.ToBitmap();
+            }
+
+        }
     }
 }

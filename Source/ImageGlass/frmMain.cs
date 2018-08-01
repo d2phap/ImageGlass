@@ -1523,6 +1523,8 @@ namespace ImageGlass
 
             btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
             btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+            btnFlipHorz.Image = t.ToolbarIcons.FlipHorz.Image;
+            btnFlipVert.Image = t.ToolbarIcons.FlipVert.Image;
             btnDelete.Image = t.ToolbarIcons.Detele.Image;
 
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
@@ -2189,6 +2191,8 @@ namespace ImageGlass
 
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
+                btnFlipHorz.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFlipHorz"];
+                btnFlipVert.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFlipVert"];
                 btnDelete.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
                 btnZoomIn.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomIn"];
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomOut"];
@@ -2870,6 +2874,53 @@ namespace ImageGlass
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
             mnuMainRotateCounterclockwise_Click(null, e);
+        }
+
+        private void btnFlipHorz_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
+
+        }
+
+        private void btnFlipVert_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

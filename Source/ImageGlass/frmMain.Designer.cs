@@ -37,6 +37,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRotateLeft = new System.Windows.Forms.ToolStripButton();
             this.btnRotateRight = new System.Windows.Forms.ToolStripButton();
+            this.btnFlipHorz = new System.Windows.Forms.ToolStripButton();
+            this.btnFlipVert = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnActualSize = new System.Windows.Forms.ToolStripButton();
@@ -193,6 +195,8 @@
             this.toolStripSeparator1,
             this.btnRotateLeft,
             this.btnRotateRight,
+            this.btnFlipHorz,
+            this.btnFlipVert,
             this.btnZoomIn,
             this.btnZoomOut,
             this.btnActualSize,
@@ -288,6 +292,34 @@
             this.btnRotateRight.Text = "Next";
             this.btnRotateRight.ToolTipText = "Rotate Clockwise (Ctrl + .)";
             this.btnRotateRight.Click += new System.EventHandler(this.btnRotateRight_Click);
+            // 
+            // btnFlipHorz
+            // 
+            this.btnFlipHorz.AutoSize = false;
+            this.btnFlipHorz.BackColor = System.Drawing.Color.Transparent;
+            this.btnFlipHorz.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFlipHorz.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipHorz.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFlipHorz.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFlipHorz.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlipHorz.Name = "btnFlipHorz";
+            this.btnFlipHorz.Size = new System.Drawing.Size(33, 33);
+            this.btnFlipHorz.ToolTipText = "Flip Horizontal";
+            this.btnFlipHorz.Click += new System.EventHandler(this.btnFlipHorz_Click);
+            // 
+            // btnFlipVert
+            // 
+            this.btnFlipVert.AutoSize = false;
+            this.btnFlipVert.BackColor = System.Drawing.Color.Transparent;
+            this.btnFlipVert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFlipVert.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipVert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFlipVert.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFlipVert.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlipVert.Name = "btnFlipVert";
+            this.btnFlipVert.Size = new System.Drawing.Size(33, 33);
+            this.btnFlipVert.ToolTipText = "Flip Horizontal";
+            this.btnFlipVert.Click += new System.EventHandler(this.btnFlipVert_Click);
             // 
             // btnZoomIn
             // 
@@ -1583,6 +1615,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnRotateLeft;
         private System.Windows.Forms.ToolStripButton btnRotateRight;
+        private System.Windows.Forms.ToolStripButton btnFlipHorz;
+        private System.Windows.Forms.ToolStripButton btnFlipVert;
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
         private System.Windows.Forms.ToolStripButton btnScaleToFit;
