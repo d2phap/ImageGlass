@@ -120,7 +120,14 @@ namespace ImageGlass
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
             // Drag file from DESKTOP to APP
-            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
+            if (filepaths.Length > 1)
+            {
+                PrepareMulti(filepaths);
+                return;
+            }
+
+            string filePath = filepaths[0];
 
             if (Path.GetExtension(filePath).ToLower() == ".lnk")
                 filePath = Shortcuts.FolderFromShortcut(filePath);
@@ -212,6 +219,31 @@ namespace ImageGlass
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
+            LoadImages(_imageFilenameList, filePath);
+
+            //Watch all changes of current path
+            this._fileWatcher.Stop();
+            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+            {
+                FolderPath = dirPath,
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading
+            };
+
+            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+
+            this._fileWatcher.Start();
+        }
+
+        /// <summary>
+        /// Load the images.
+        /// </summary>
+        /// <param name="_imageFilenameList"></param>
+        /// <param name="filePath"></param>
+        private void LoadImages(List<string> _imageFilenameList, string filePath)
+        { 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
 
@@ -249,24 +281,42 @@ namespace ImageGlass
 
             //Start loading image
             NextPic(0);
-
-            //Watch all changes of current path
-            this._fileWatcher.Stop();
-            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
-            {
-                FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading
-            };
-
-            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
-            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
-            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
-            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
-
-            this._fileWatcher.Start();            
         }
 
+        /// <summary>
+        /// Prepare to load images. User has dragged multiple files / paths onto IG.
+        /// </summary>
+        /// <param name="paths"></param>
+        private void PrepareMulti(string[] paths)
+        {
+            List<string> allFilesToLoad = new List<string>();
+            foreach (var apath in paths)
+            {
+                string dirPath = "";
+                if (File.Exists(apath))
+                {
+                    if (Path.GetExtension(apath).ToLower() == ".lnk")
+                        dirPath = Shortcuts.FolderFromShortcut(apath);
+                    else
+                        dirPath = Path.GetDirectoryName(apath);
+                }
+                else if (Directory.Exists(apath))
+                {
+                    dirPath = apath;
+                }
+                else
+                {
+                    continue; 
+                }
 
+                var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                allFilesToLoad.AddRange(imageFilenameList);
+            }
+
+            LoadImages(allFilesToLoad, "");
+
+            // TODO watching multiple folders?
+        }
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
@@ -3907,7 +3957,7 @@ namespace ImageGlass
 
                 // Only show gap if thumbnail scrollbars are enabled
                 int gap = 0;
-                // TODO KBR if (GlobalSetting.IsShowThumbnailScroll)
+                if (GlobalSetting.IsShowThumbnailScrollbar)
                     gap = (int)((SystemInformation.HorizontalScrollBarHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
                 //show
