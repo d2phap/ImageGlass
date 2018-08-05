@@ -52,7 +52,7 @@ namespace ImageGlass
         public const int HT_CAPTION = 0x2;
 
         [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, Int32 lParam);
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
