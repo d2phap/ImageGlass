@@ -313,9 +313,11 @@ namespace ImageGlass.Library.Image
             {
                 if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
                 {
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
-                    //get Width x Height
-                    return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
+                    {
+                        //get Width x Height
+                        return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
+                    }
                 }
                 else
                 {
@@ -345,13 +347,15 @@ namespace ImageGlass.Library.Image
 
                 if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
                 {
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
+                    {
 
-                    //get HorizontalResolution 
-                    h = Math.Round((double)img.HorizontalResolution, 2);
+                        //get HorizontalResolution 
+                        h = Math.Round((double)img.HorizontalResolution, 2);
 
-                    //get VerticalResolution
-                    v = Math.Round((double)img.VerticalResolution, 2);
+                        //get VerticalResolution
+                        v = Math.Round((double)img.VerticalResolution, 2);
+                    }
                 }
                 else
                 {

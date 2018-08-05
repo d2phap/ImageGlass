@@ -126,9 +126,11 @@ namespace ImageGlass.Library.Image
             var tempPath = Path.Combine(Path.GetTempPath(), "imageglass.bmp");
             try
             {
-                var img = System.Drawing.Image.FromFile(path);
-                // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
-                img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
+                using (var img = System.Drawing.Image.FromFile(path))
+                {
+                    // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
+                    img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
+                }
             }
             catch
             {
