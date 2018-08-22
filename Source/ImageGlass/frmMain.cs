@@ -1662,21 +1662,15 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load state of Thumbnail 
-                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-                #endregion
-
-
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
                 {
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
 
-                    //Request frmMain to update
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
-                    frmMain_Activated(null, EventArgs.Empty);
+                    // Issue #402: don't update the thumbnail bar state twice. Do it once below.
+                    ////Request frmMain to update
+                    //LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                    //frmMain_Activated(null, EventArgs.Empty);
                 }
                 #endregion
 
@@ -1693,6 +1687,15 @@ namespace ImageGlass
                     rc.Location = new Point(280, 125);
                 }
                 this.Bounds = rc;
+                #endregion
+
+
+                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
+                // The splitter dimensions may be too small for the user's last splitter bar position.
+                #region Load state of Thumbnail 
+                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 #endregion
 
 
