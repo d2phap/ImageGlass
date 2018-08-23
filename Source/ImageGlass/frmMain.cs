@@ -1130,18 +1130,15 @@ namespace ImageGlass
             }
             catch { return; }
 
-            //Get filename
-            string oldName;
-            string newName;
-            oldName = newName = Path.GetFileName(
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-            string currentPath = (Path.GetDirectoryName(
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\\")
-                .Replace("\\\\", "\\");
+            // Fix issue #397. Original logic didn't take network paths into account.
+            // Replace original logic with the Path functions to access filename bits.
 
-            //Get file extension
-            string ext = newName.Substring(newName.LastIndexOf("."));
-            newName = newName.Substring(0, newName.Length - ext.Length);
+            // Extract the various bits of the image path
+            var filepath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            string currentFolder = Path.GetDirectoryName(filepath);
+            string oldName  = Path.GetFileName(filepath);
+            string ext = Path.GetExtension(filepath);
+            string newName = Path.GetFileNameWithoutExtension(filepath);
 
             //Show input box
             string str = null;            
@@ -1166,8 +1163,9 @@ namespace ImageGlass
 
             try
             {
+                string newFilePath = Path.Combine(currentFolder, newName);
                 //Rename file
-                ImageInfo.RenameFile(currentPath + oldName, currentPath + newName);
+                ImageInfo.RenameFile(filepath, newFilePath);
             }
             catch (Exception ex)
             {
