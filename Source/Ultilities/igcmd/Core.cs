@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ namespace igcmd
         public static void AutoUpdate()
         {
             string updateXML = Path.Combine(GlobalSetting.StartUpDir, "update.xml");
-            Update up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), updateXML);
+            Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
             if (File.Exists(updateXML))
             {
