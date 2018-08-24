@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -375,7 +375,10 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                return (Application.StartupPath + "\\").Replace("\\\\", "\\");
+                var path = Application.StartupPath;
+                if (!path.EndsWith("\\"))
+                    path += "\\";
+                return path;
             }
         }
 
@@ -544,7 +547,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Check is ImageGlass can write config file in the startup folder
+        /// Check if ImageGlass can write config file in the startup folder
         /// </summary>
         /// <returns></returns>
         public static bool CheckStartUpDirWritable()
