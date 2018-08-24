@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -3873,9 +3873,11 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
                 }
+                sp1.SplitterWidth = 1; // right-side splitter will 'flash' unless width reset
             }
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
             SelectCurrentThumbnail();
+            ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when thumbbar turned off
         }
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
@@ -4104,5 +4106,10 @@ namespace ImageGlass
 
         #endregion
 
+        private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            // User has moved the thumbnail splitter bar. Update image size.
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
     }
 }
