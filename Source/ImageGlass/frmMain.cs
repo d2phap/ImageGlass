@@ -3517,7 +3517,7 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
-
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
@@ -3541,6 +3541,7 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
