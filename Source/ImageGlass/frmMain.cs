@@ -2595,6 +2595,17 @@ namespace ImageGlass
 
             // update the viewing image
             var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
+
+            // KBR 20180827 When downloading using Chrome, the downloaded file quickly transits
+            // from ".tmp" > ".jpg.crdownload" > ".jpg". The last is a "changed" event, and the
+            // final ".jpg" cannot exist in the ImageList. Fire this off to the "rename" logic
+            // so the new file is correctly added. [Could it be the "created" instead?]
+            if (imgIndex == -1)
+            {
+                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
+                return;
+            }
+
             if (imgIndex == GlobalSetting.CurrentIndex)
             {
                 NextPic(0, true, true);
