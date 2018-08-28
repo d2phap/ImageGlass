@@ -46,7 +46,7 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-
+            
             //Get DPI Scaling ratio
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
@@ -57,7 +57,7 @@ namespace ImageGlass
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
-
+            
             //Update form with new DPI
             OnDpiChanged();
         }
@@ -2476,9 +2476,7 @@ namespace ImageGlass
         }
 
 
-
-
-
+        
 
         #region File System Watcher events
 
@@ -2740,13 +2738,7 @@ namespace ImageGlass
         #endregion
 
 
-
-
-
-
-
-
-
+        
 
 
         // Use mouse wheel to navigate, scroll, or zoom images
@@ -2859,6 +2851,13 @@ namespace ImageGlass
             {
                 btnMenu.Alignment = ToolStripItemAlignment.Right;
             }
+        }
+
+
+        private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            // User has moved the thumbnail splitter bar. Update image size.
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         #endregion
@@ -4118,10 +4117,6 @@ namespace ImageGlass
 
         #endregion
 
-        private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            // User has moved the thumbnail splitter bar. Update image size.
-            ApplyZoomMode(GlobalSetting.ZoomMode);
-        }
+        
     }
 }
