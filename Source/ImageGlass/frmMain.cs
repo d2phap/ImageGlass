@@ -2974,6 +2974,7 @@ namespace ImageGlass
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnFlipHorz);
             if (picMain.Image == null)
             {
                 return;
@@ -2998,6 +2999,7 @@ namespace ImageGlass
 
         private void btnFlipVert_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnFlipVert);
             if (picMain.Image == null)
             {
                 return;
