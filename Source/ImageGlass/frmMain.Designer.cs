@@ -35,6 +35,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRotateLeft = new System.Windows.Forms.ToolStripButton();
             this.btnRotateRight = new System.Windows.Forms.ToolStripButton();
+            this.btnFlipHorz = new System.Windows.Forms.ToolStripButton();
+            this.btnFlipVert = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnActualSize = new System.Windows.Forms.ToolStripButton();
@@ -84,6 +86,8 @@
             this.mnuMainManipulation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateCounterclockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFlipHorz = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFlipVert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -180,6 +184,8 @@
             this.toolStripSeparator1,
             this.btnRotateLeft,
             this.btnRotateRight,
+            this.btnFlipHorz,
+            this.btnFlipVert,
             this.btnZoomIn,
             this.btnZoomOut,
             this.btnActualSize,
@@ -275,6 +281,34 @@
             this.btnRotateRight.Text = "Next";
             this.btnRotateRight.ToolTipText = "Rotate Clockwise (Ctrl + .)";
             this.btnRotateRight.Click += new System.EventHandler(this.btnRotateRight_Click);
+            // 
+            // btnFlipHorz
+            // 
+            this.btnFlipHorz.AutoSize = false;
+            this.btnFlipHorz.BackColor = System.Drawing.Color.Transparent;
+            this.btnFlipHorz.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFlipHorz.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipHorz.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFlipHorz.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFlipHorz.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlipHorz.Name = "btnFlipHorz";
+            this.btnFlipHorz.Size = new System.Drawing.Size(33, 33);
+            this.btnFlipHorz.ToolTipText = "Flip Horizontal";
+            this.btnFlipHorz.Click += new System.EventHandler(this.btnFlipHorz_Click);
+            // 
+            // btnFlipVert
+            // 
+            this.btnFlipVert.AutoSize = false;
+            this.btnFlipVert.BackColor = System.Drawing.Color.Transparent;
+            this.btnFlipVert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFlipVert.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipVert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFlipVert.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFlipVert.Margin = new System.Windows.Forms.Padding(0);
+            this.btnFlipVert.Name = "btnFlipVert";
+            this.btnFlipVert.Size = new System.Drawing.Size(33, 33);
+            this.btnFlipVert.ToolTipText = "Flip Horizontal";
+            this.btnFlipVert.Click += new System.EventHandler(this.btnFlipVert_Click);
             // 
             // btnZoomIn
             // 
@@ -870,6 +904,8 @@
             this.mnuMainManipulation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainRotateCounterclockwise,
             this.mnuMainRotateClockwise,
+            this.mnuMainFlipHorz,
+            this.mnuMainFlipVert,
             this.toolStripMenuItem6,
             this.mnuMainZoomIn,
             this.mnuMainZoomOut,
@@ -920,6 +956,26 @@
             this.mnuMainRotateClockwise.Size = new System.Drawing.Size(584, 31);
             this.mnuMainRotateClockwise.Text = "R&otate Clockwise";
             this.mnuMainRotateClockwise.Click += new System.EventHandler(this.mnuMainRotateClockwise_Click);
+            // 
+            // mnuMainFlipHorz
+            // 
+            this.mnuMainFlipHorz.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFlipHorz.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFlipHorz.Name = "mnuMainFlipHorz";
+            this.mnuMainFlipHorz.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFlipHorz.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainFlipHorz.Text = "Flip Horizontal";
+            this.mnuMainFlipHorz.Click += new System.EventHandler(this.btnFlipHorz_Click);
+            // 
+            // mnuMainFlipVert
+            // 
+            this.mnuMainFlipVert.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFlipVert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFlipVert.Name = "mnuMainFlipVert";
+            this.mnuMainFlipVert.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFlipVert.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainFlipVert.Text = "Flip Vertical";
+            this.mnuMainFlipVert.Click += new System.EventHandler(this.btnFlipVert_Click);
             // 
             // toolStripMenuItem6
             // 
@@ -1554,6 +1610,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnRotateLeft;
         private System.Windows.Forms.ToolStripButton btnRotateRight;
+        private System.Windows.Forms.ToolStripButton btnFlipHorz;
+        private System.Windows.Forms.ToolStripButton btnFlipVert;
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
         private System.Windows.Forms.ToolStripButton btnScaleToFit;
@@ -1591,6 +1649,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateCounterclockwise;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateClockwise;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFlipHorz;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFlipVert;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomIn;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomOut;

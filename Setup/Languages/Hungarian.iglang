@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Kép szerkesztés {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navigáció" />
       <Item key="frmMain.mnuMainViewNext" value="Következő kép megtekintése" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Jobbra nyíl / Page Down" />
       <Item key="frmMain.mnuMainViewPrevious" value="Előző kép megtekintése" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Balra nyíl / Page Up" />
       <Item key="frmMain.mnuMainGoto" value="Ugrás..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Ugrás az első képhez" />
       <Item key="frmMain.mnuMainGotoLast" value="Ugrás az utolsó képhez" />

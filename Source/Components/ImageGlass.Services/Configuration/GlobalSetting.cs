@@ -433,6 +433,8 @@ namespace ImageGlass.Services.Configuration
 
             $"{(int)Configuration.ToolbarButtons.btnRotateLeft}," +
             $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
+            $"{(int)Configuration.ToolbarButtons.btnFlipHorz}," +
+            $"{(int)Configuration.ToolbarButtons.btnFlipVert}," +
             $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
             $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
             $"{(int)Configuration.ToolbarButtons.btnActualSize}," +

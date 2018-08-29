@@ -38,6 +38,8 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
+using System.Reflection;
+
 
 namespace ImageGlass
 {
@@ -120,7 +122,14 @@ namespace ImageGlass
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
             // Drag file from DESKTOP to APP
-            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
+            if (filepaths.Length > 1)
+            {
+                PrepareMulti(filepaths);
+                return;
+            }
+
+            string filePath = filepaths[0];
 
             if (Path.GetExtension(filePath).ToLower() == ".lnk")
                 filePath = Shortcuts.FolderFromShortcut(filePath);
@@ -212,6 +221,34 @@ namespace ImageGlass
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
+            LoadImages(_imageFilenameList, filePath);
+
+            //Watch all changes of current path
+            this._fileWatcher.Stop();
+            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+            {
+                FolderPath = dirPath,
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                
+                // auto Invoke the form if required, no need to invidiually invoke in each event
+                SynchronizingObject = this
+            };
+
+            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+
+            this._fileWatcher.Start();
+        }
+
+        /// <summary>
+        /// Load the images.
+        /// </summary>
+        /// <param name="_imageFilenameList"></param>
+        /// <param name="filePath"></param>
+        private void LoadImages(List<string> _imageFilenameList, string filePath)
+        { 
             //Dispose all garbage
             GlobalSetting.ImageList.Dispose();
 
@@ -249,24 +286,43 @@ namespace ImageGlass
 
             //Start loading image
             NextPic(0);
+        }
 
-            //Watch all changes of current path
-            this._fileWatcher.Stop();
-            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+
+        /// <summary>
+        /// Prepare to load images. User has dragged multiple files / paths onto IG.
+        /// </summary>
+        /// <param name="paths"></param>
+        private void PrepareMulti(string[] paths)
+        {
+            List<string> allFilesToLoad = new List<string>();
+            foreach (var apath in paths)
             {
-                FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                string dirPath = "";
+                if (File.Exists(apath))
+                {
+                    if (Path.GetExtension(apath).ToLower() == ".lnk")
+                        dirPath = Shortcuts.FolderFromShortcut(apath);
+                    else
+                        dirPath = Path.GetDirectoryName(apath);
+                }
+                else if (Directory.Exists(apath))
+                {
+                    dirPath = apath;
+                }
+                else
+                {
+                    continue; 
+                }
 
-                // auto Invoke the form if required, no need to invidiually invoke in each event
-                SynchronizingObject = this
-            };
+                var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                allFilesToLoad.AddRange(imageFilenameList);
+            }
 
-            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
-            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
-            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
-            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+            LoadImages(allFilesToLoad, "");
 
-            this._fileWatcher.Start();            
+            // TODO watching multiple folders?
+            // 
         }
 
 
@@ -1512,6 +1568,8 @@ namespace ImageGlass
 
             btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
             btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
+            btnFlipHorz.Image = t.ToolbarIcons.FlipHorz.Image;
+            btnFlipVert.Image = t.ToolbarIcons.FlipVert.Image;
             btnDelete.Image = t.ToolbarIcons.Detele.Image;
 
             btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
@@ -1672,6 +1730,7 @@ namespace ImageGlass
                     ////Request frmMain to update
                     //LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                     //frmMain_Activated(null, EventArgs.Empty);
+
                 }
                 #endregion
 
@@ -2211,10 +2270,19 @@ namespace ImageGlass
             {
                 #region Update language strings
                 //Toolbar
-                btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
-                btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
+
+                //btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
+                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"],
+                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
+
+                //btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
+                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"],
+                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
+
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
+                btnFlipHorz.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFlipHorz"];
+                btnFlipVert.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnFlipVert"];
                 btnDelete.ToolTipText = $"{GlobalSetting.LangPack.Items["frmMain.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
                 btnZoomIn.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomIn"];
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnZoomOut"];
@@ -2246,7 +2314,11 @@ namespace ImageGlass
 
                 mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
                 mnuMainViewNext.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"];
+                mnuMainViewNext.ShortcutKeyDisplayString = GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"];
+
                 mnuMainViewPrevious.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"];
+                mnuMainViewPrevious.ShortcutKeyDisplayString = GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"];
+
                 mnuMainGoto.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGoto"];
                 mnuMainGotoFirst.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoFirst"];
                 mnuMainGotoLast.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainGotoLast"];
@@ -2479,12 +2551,18 @@ namespace ImageGlass
         }
 
 
-        
+
 
         #region File System Watcher events
 
         private void FileWatcher_OnRenamed(object sender, FileChangedEvent e)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
+                return;
+            }
+
             string newFilename = e.FullPath;
             string oldFilename = e.OldFullPath;
 
@@ -2650,6 +2728,7 @@ namespace ImageGlass
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
         }
+        
 
 
 
@@ -2716,12 +2795,11 @@ namespace ImageGlass
         }
 
 
-
-
         #endregion
 
 
-        
+
+
 
 
         // Use mouse wheel to navigate, scroll, or zoom images
@@ -2848,135 +2926,221 @@ namespace ImageGlass
 
 
         #region Toolbar Buttons Events
+
+        private MethodInfo onMouseLeave = null;
+
+        private void clearTooltip(ToolStripButton btn)
+        {
+            // Issue #409: user requested the toolbar button tooltip should vanish when the button is clicked.
+            // MS doesn't give us the means to control tooltips very well, the implementation is internal to
+            // the ToolStrip control.
+            // HOWEVER by studing the ToolStripItem source code, I noticed tooltips are disabled on the mouse
+            // leave event on a ToolStripItem. By raising that event, the tooltip vanishes. As the OnMouseLeave
+            // event is not public, the following reflection convolution is required.
+            if (onMouseLeave == null)
+                onMouseLeave = btn.GetType().GetMethod("OnMouseLeave", BindingFlags.NonPublic | BindingFlags.Instance);
+            onMouseLeave.Invoke(btn, new object[] { new EventArgs() });
+        }
+
         private void btnNext_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnNext);
             mnuMainViewNext_Click(null, e);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnBack);
             mnuMainViewPrevious_Click(null, e);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnRefresh);
             mnuMainRefresh_Click(null, null);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnRotateRight);
             mnuMainRotateClockwise_Click(null, e);
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnRotateLeft);
             mnuMainRotateCounterclockwise_Click(null, e);
+        }
+
+        private void btnFlipHorz_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
+
+        }
+
+        private void btnFlipVert_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnDelete);
             mnuMainMoveToRecycleBin_Click(null, e);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnOpen);
             mnuMainOpenFile_Click(null, e);
         }
 
         private void btnThumb_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnThumb);
             mnuMainThumbnailBar_Click(null, e);
         }
 
         private void btnActualSize_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnActualSize);
             mnuMainActualSize_Click(null, e);
         }
 
         private void btnAutoZoom_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnAutoZoom);
             mnuMainAutoZoom_Click(null, e);
         }
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnScaletoWidth);
             mnuMainScaleToWidth_Click(null, e);
         }
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnScaletoHeight);
             mnuMainScaleToHeight_Click(null, e);
         }
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnWindowAutosize);
             mnuMainWindowAdaptImage_Click(null, e);
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnGoto);
             mnuMainGoto_Click(null, e);
         }
 
         private void btnCheckedBackground_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnCheckedBackground);
             mnuMainCheckBackground_Click(null, e);
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnZoomIn);
             mnuMainZoomIn_Click(null, e);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnZoomOut);
             mnuMainZoomOut_Click(null, e);
         }
 
         private void btnScaleToFit_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnScaleToFit);
             mnuMainScaleToFit_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnZoomLock);
             mnuMainLockZoomRatio_Click(null, e);
         }
 
         private void btnSlideShow_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnSlideShow);
             mnuMainSlideShowStart_Click(null, null);
         }
 
         private void btnFullScreen_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnFullScreen);
             mnuMainFullScreen_Click(null, e);
         }
 
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnPrintImage);
             mnuMainPrint_Click(null, e);
         }
 
-        private void btnSetting_Click(object sender, EventArgs e)
-        {
-            mnuMainSettings_Click(null, e);
-        }
+        //private void btnSetting_Click(object sender, EventArgs e)
+        //{
+        //    mnuMainSettings_Click(null, e);
+        //}
 
-        private void btnHelp_Click(object sender, EventArgs e)
-        {
-            mnuMainAbout_Click(null, e);
-        }
+        //private void btnHelp_Click(object sender, EventArgs e)
+        //{
+        //    mnuMainAbout_Click(null, e);
+        //}
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnConvert);
             mnuMainSaveAs_Click(null, e);
         }
 
-        private void btnReport_Click(object sender, EventArgs e)
-        {
-            mnuMainReportIssue_Click(null, e);
-        }
+        //private void btnReport_Click(object sender, EventArgs e)
+        //{
+        //    mnuMainReportIssue_Click(null, e);
+        //}
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
@@ -3826,13 +3990,22 @@ namespace ImageGlass
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
         {
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+
+#if THUMBS_TOP
+            sp1.Panel1Collapsed = !GlobalSetting.IsShowThumbnail;
+#else
             sp1.Panel2Collapsed = !GlobalSetting.IsShowThumbnail;
+#endif
             btnThumb.Checked = GlobalSetting.IsShowThumbnail;
 
             if (GlobalSetting.IsShowThumbnail)
             {
                 float scaleFactor = ((float)DPIScaling.CurrentDPI) / DPIScaling.DPI_DEFAULT;
-                int gap = (int)((SystemInformation.HorizontalScrollBarHeight * scaleFactor) + (25 / scaleFactor * 1.05));
+
+                // Only show gap if thumbnail scrollbars are enabled
+                int gap = 0;
+                if (GlobalSetting.IsShowThumbnailScrollbar)
+                    gap = (int)((SystemInformation.HorizontalScrollBarHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
@@ -3844,11 +4017,32 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
+#if THUMBS_TOP
+                    sp1.SuspendLayout();
+                    sp1.Panel1.SuspendLayout();
+                    sp1.Panel2.SuspendLayout();
+#endif
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
                     sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
+#if THUMBS_TOP
+                    sp1.SplitterDistance = minSize;
+
+                    // TODO turning off thumbnails needs to hide Panel1, not Panel2
+                    sp1.Panel1.Controls.Remove(picMain);
+                    sp1.Panel2.Controls.Remove(thumbnailBar);
+
+                    sp1.Panel1.Controls.Add(thumbnailBar);
+                    sp1.Panel2.Controls.Add(picMain);
+
+                    sp1.FixedPanel = FixedPanel.Panel1;
+
+                    sp1.Panel2.ResumeLayout();
+                    sp1.Panel1.ResumeLayout();
+                    sp1.ResumeLayout();
+#endif
                 }
                 else
                 {
@@ -4100,6 +4294,5 @@ namespace ImageGlass
 
         #endregion
 
-        
     }
 }

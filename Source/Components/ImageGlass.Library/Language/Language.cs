@@ -239,10 +239,16 @@ namespace ImageGlass.Library
 
 
             #region Tool bar
-            Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)");
-            Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)");
+
+            //Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)"); // removed V6.0
+            //Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)"); // removed V6.0
+
             Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
             Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
+
+            Items.Add("frmMain.btnFlipHorz", "Flip Horizontal"); // Added V6.0
+            Items.Add("frmMain.btnFlipVert", "Flip Vertical");   // Added V6.0
+
             Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
             Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
             //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
@@ -280,8 +286,13 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
+
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
+            Items.Add("frmMain.mnuMainViewNext.Shortcut", "Right Arrow / PageDown"); //v6.0
+
             Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v3.0
+            Items.Add("frmMain.mnuMainViewPrevious.Shortcut", "Left Arrow / PageUp"); // V6.0
+
             Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v3.0
             Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
             Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
@@ -298,6 +309,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainManipulation", "Manipulation"); //v3.0
             Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
+            Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
+            Items.Add("frmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
             //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
@@ -374,7 +387,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._Loading", "Loading..."); //v3.0
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
             Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
-            Items.Add("frmMain._CannotRotateAnimatedFile", "Rotation for animated format is not supported"); //v5.0
+            Items.Add("frmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); //Added V5.0; Modified V6.0
             #endregion
 
 

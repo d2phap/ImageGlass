@@ -35,12 +35,31 @@ namespace ImageGlass
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
+#if ERRORMODE
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+
+        [Flags]
+        public enum ErrorModes : uint
+        {
+            SYSTEM_DEFAULT = 0x0,
+            SEM_FAILCRITICALERRORS = 0x0001,
+            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+            SEM_NOGPFAULTERRORBOX = 0x0002,
+            SEM_NOOPENFILEERRORBOX = 0x8000
+        }
+#endif
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] argv)
         {
+#if ERRORMODE
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+#endif
+
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
             {
