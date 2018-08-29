@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2013 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -85,12 +85,12 @@ namespace ImageGlass.Library.Image
             ImageAnimator.UpdateFrames();
 
             //Draw the next frame in the animation.
-            _img.Save((_desFolder + "\\").Replace("\\\\", "\\") +
+            _img.Save(Path.Combine(_desFolder,
                     Path.GetFileNameWithoutExtension(_filename) + " - " +
-                    _i.ToString() + ".png",
+                    _i.ToString() + ".png"),
                     System.Drawing.Imaging.ImageFormat.Png);
 
-            //go to next frmae
+            //go to next frame
             _i = _i + 1;
 
         }

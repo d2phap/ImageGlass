@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ using System.Collections.Concurrent;
 using FileWatcherEx;
 using System.Reflection;
 
+
 namespace ImageGlass
 {
     public partial class frmMain : Form
@@ -47,7 +48,7 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-
+            
             //Get DPI Scaling ratio
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
@@ -58,7 +59,7 @@ namespace ImageGlass
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
-
+            
             //Update form with new DPI
             OnDpiChanged();
         }
@@ -227,7 +228,10 @@ namespace ImageGlass
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
                 FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                
+                // auto Invoke the form if required, no need to invidiually invoke in each event
+                SynchronizingObject = this
             };
 
             this._fileWatcher.OnCreated += FileWatcher_OnCreated;
@@ -284,6 +288,7 @@ namespace ImageGlass
             NextPic(0);
         }
 
+
         /// <summary>
         /// Prepare to load images. User has dragged multiple files / paths onto IG.
         /// </summary>
@@ -317,7 +322,10 @@ namespace ImageGlass
             LoadImages(allFilesToLoad, "");
 
             // TODO watching multiple folders?
+            // 
         }
+
+
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
@@ -1181,18 +1189,15 @@ namespace ImageGlass
             }
             catch { return; }
 
-            //Get filename
-            string oldName;
-            string newName;
-            oldName = newName = Path.GetFileName(
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-            string currentPath = (Path.GetDirectoryName(
-                GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) + "\\")
-                .Replace("\\\\", "\\");
+            // Fix issue #397. Original logic didn't take network paths into account.
+            // Replace original logic with the Path functions to access filename bits.
 
-            //Get file extension
-            string ext = newName.Substring(newName.LastIndexOf("."));
-            newName = newName.Substring(0, newName.Length - ext.Length);
+            // Extract the various bits of the image path
+            var filepath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            string currentFolder = Path.GetDirectoryName(filepath);
+            string oldName  = Path.GetFileName(filepath);
+            string ext = Path.GetExtension(filepath);
+            string newName = Path.GetFileNameWithoutExtension(filepath);
 
             //Show input box
             string str = null;            
@@ -1217,8 +1222,9 @@ namespace ImageGlass
 
             try
             {
+                string newFilePath = Path.Combine(currentFolder, newName);
                 //Rename file
-                ImageInfo.RenameFile(currentPath + oldName, currentPath + newName);
+                ImageInfo.RenameFile(filepath, newFilePath);
             }
             catch (Exception ex)
             {
@@ -1715,21 +1721,16 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load state of Thumbnail 
-                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-                #endregion
-
-
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
                 {
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
 
-                    //Request frmMain to update
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
-                    frmMain_Activated(null, EventArgs.Empty);
+                    // Issue #402: don't update the thumbnail bar state twice. Do it once below.
+                    ////Request frmMain to update
+                    //LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                    //frmMain_Activated(null, EventArgs.Empty);
+
                 }
                 #endregion
 
@@ -1746,6 +1747,15 @@ namespace ImageGlass
                     rc.Location = new Point(280, 125);
                 }
                 this.Bounds = rc;
+                #endregion
+
+
+                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
+                // The splitter dimensions may be too small for the user's last splitter bar position.
+                #region Load state of Thumbnail 
+                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 #endregion
 
 
@@ -2543,8 +2553,6 @@ namespace ImageGlass
 
 
 
-
-
         #region File System Watcher events
 
         private void FileWatcher_OnRenamed(object sender, FileChangedEvent e)
@@ -2651,15 +2659,20 @@ namespace ImageGlass
             {
                 return;
             }
+            
+            // update the viewing image
+            var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
 
-            if (this.InvokeRequired)
+            // KBR 20180827 When downloading using Chrome, the downloaded file quickly transits
+            // from ".tmp" > ".jpg.crdownload" > ".jpg". The last is a "changed" event, and the
+            // final ".jpg" cannot exist in the ImageList. Fire this off to the "rename" logic
+            // so the new file is correctly added. [Could it be the "created" instead?]
+            if (imgIndex == -1)
             {
-                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnChanged), sender, e);
+                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
                 return;
             }
 
-            // update the viewing image
-            var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
             if (imgIndex == GlobalSetting.CurrentIndex)
             {
                 NextPic(0, true, true);
@@ -2685,32 +2698,7 @@ namespace ImageGlass
                 FileWatcher_AddNewFileAction(e.FullPath);
             }
         }
-
-
-        private void FileWatcher_AddNewFileAction(string newFilename)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action<string>(FileWatcher_AddNewFileAction), newFilename);
-                return;
-            }
-
-            //Add the new image to the list
-            GlobalSetting.ImageList.AddItem(newFilename);
-
-            //Add the new image to thumbnail bar
-            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-            {
-                Tag = newFilename
-            };
-            
-            thumbnailBar.Items.Add(lvi);
-            thumbnailBar.Refresh();
-        }
-
+        
 
         private void FileWatcher_OnDeleted(object sender, FileChangedEvent e)
         {
@@ -2724,7 +2712,25 @@ namespace ImageGlass
             // add to queue list for deleting
             this._queueListForDeleting.Add(e.FullPath);
         }
+
+
+        private void FileWatcher_AddNewFileAction(string newFilename)
+        {
+            //Add the new image to the list
+            GlobalSetting.ImageList.AddItem(newFilename);
+
+            //Add the new image to thumbnail bar
+            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
+            {
+                Tag = newFilename
+            };
+
+            thumbnailBar.Items.Add(lvi);
+            thumbnailBar.Refresh();
+        }
         
+
+
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
@@ -2789,14 +2795,7 @@ namespace ImageGlass
         }
 
 
-
-
         #endregion
-
-
-
-
-
 
 
 
@@ -2913,6 +2912,13 @@ namespace ImageGlass
             {
                 btnMenu.Alignment = ToolStripItemAlignment.Right;
             }
+        }
+
+
+        private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            // User has moved the thumbnail splitter bar. Update image size.
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         #endregion
@@ -3657,7 +3663,7 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
-
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
@@ -3681,6 +3687,7 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
             catch { }
+            ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
@@ -4054,9 +4061,11 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
                 }
+                sp1.SplitterWidth = 1; // right-side splitter will 'flash' unless width reset
             }
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
             SelectCurrentThumbnail();
+            ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when thumbbar turned off
         }
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)

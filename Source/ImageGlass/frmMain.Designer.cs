@@ -29,7 +29,6 @@
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
-            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolMain = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -1633,7 +1632,6 @@
         private System.Windows.Forms.ToolStripLabel lblInfo;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ContextMenuStrip mnuContext;
-        private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolStripButton btnPrintImage;
         private System.Windows.Forms.ToolStripButton btnZoomLock;
         private ImageBox picMain;

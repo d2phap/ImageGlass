@@ -133,7 +133,7 @@ namespace ImageGlass
                 p.Start();
 
                 //save last update
-                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
+                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("M/d/yyyy HH:mm:ss"));
             }
             #endregion
 
