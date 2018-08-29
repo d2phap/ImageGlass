@@ -255,7 +255,10 @@ namespace ImageGlass
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
                 FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+
+                // auto Invoke the form if required, no need to invidiually invoke in each event
+                SynchronizingObject = this
             };
 
             this._fileWatcher.OnCreated += FileWatcher_OnCreated;
@@ -2482,12 +2485,6 @@ namespace ImageGlass
 
         private void FileWatcher_OnRenamed(object sender, FileChangedEvent e)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
-                return;
-            }
-
             string newFilename = e.FullPath;
             string oldFilename = e.OldFullPath;
 
@@ -2584,13 +2581,7 @@ namespace ImageGlass
             {
                 return;
             }
-
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnChanged), sender, e);
-                return;
-            }
-
+            
             // update the viewing image
             var imgIndex = GlobalSetting.ImageList.IndexOf(e.FullPath);
 
@@ -2629,32 +2620,7 @@ namespace ImageGlass
                 FileWatcher_AddNewFileAction(e.FullPath);
             }
         }
-
-
-        private void FileWatcher_AddNewFileAction(string newFilename)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action<string>(FileWatcher_AddNewFileAction), newFilename);
-                return;
-            }
-
-            //Add the new image to the list
-            GlobalSetting.ImageList.AddItem(newFilename);
-
-            //Add the new image to thumbnail bar
-            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-            {
-                Tag = newFilename
-            };
-            
-            thumbnailBar.Items.Add(lvi);
-            thumbnailBar.Refresh();
-        }
-
+        
 
         private void FileWatcher_OnDeleted(object sender, FileChangedEvent e)
         {
@@ -2668,7 +2634,24 @@ namespace ImageGlass
             // add to queue list for deleting
             this._queueListForDeleting.Add(e.FullPath);
         }
-        
+
+
+        private void FileWatcher_AddNewFileAction(string newFilename)
+        {
+            //Add the new image to the list
+            GlobalSetting.ImageList.AddItem(newFilename);
+
+            //Add the new image to thumbnail bar
+            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
+            {
+                Tag = newFilename
+            };
+
+            thumbnailBar.Items.Add(lvi);
+            thumbnailBar.Refresh();
+        }
+
+
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
