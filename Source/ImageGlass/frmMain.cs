@@ -206,16 +206,16 @@ namespace ImageGlass
             //Check path is file or directory?
             if (File.Exists(path))
             {
-                filePath = path;
+                if (Path.GetExtension(path).ToLower() == ".lnk")
+                    dirPath = Shortcuts.FolderFromShortcut(path);
+                else
+                    dirPath = Path.GetDirectoryName(path);
 
-                // get directory
-                //dirPath = (Path.GetDirectoryName(path) + "\\").Replace("\\\\", "\\");
-                //dirPath = path.Substring(0, path.LastIndexOf("\\") + 1);
-                dirPath = Path.GetDirectoryName(path);
+                filePath = path;
             }
             else if (Directory.Exists(path))
             {
-                dirPath = path; // (path + "\\").Replace("\\\\", "\\");
+                dirPath = path;
             }
 
             //Get supported image extensions from directory
@@ -223,24 +223,9 @@ namespace ImageGlass
 
             LoadImages(_imageFilenameList, filePath);
 
-            //Watch all changes of current path
-            this._fileWatcher.Stop();
-            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
-            {
-                FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
-                
-                // auto Invoke the form if required, no need to invidiually invoke in each event
-                SynchronizingObject = this
-            };
-
-            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
-            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
-            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
-            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
-
-            this._fileWatcher.Start();
+            WatchPath(dirPath);
         }
+
 
         /// <summary>
         /// Load the images.
@@ -290,12 +275,39 @@ namespace ImageGlass
 
 
         /// <summary>
+        /// Watch a folder for changes.
+        /// </summary>
+        /// <param name="dirPath">The path to the folder to watch.</param>
+        private void WatchPath(string dirPath)
+        {
+            //Watch all changes of current path
+            this._fileWatcher.Stop();
+            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+            {
+                FolderPath = dirPath,
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+
+                // auto Invoke the form if required, no need to invidiually invoke in each event
+                SynchronizingObject = this
+            };
+
+            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+
+            this._fileWatcher.Start();
+        }
+
+
+        /// <summary>
         /// Prepare to load images. User has dragged multiple files / paths onto IG.
         /// </summary>
         /// <param name="paths"></param>
         private void PrepareMulti(string[] paths)
         {
             List<string> allFilesToLoad = new List<string>();
+            bool firstPath = true;
             foreach (var apath in paths)
             {
                 string dirPath = "";
@@ -315,16 +327,19 @@ namespace ImageGlass
                     continue; 
                 }
 
+                // TODO Currently only have the ability to watch a single path for changes!
+                if (firstPath)
+                {
+                    firstPath = false;
+                    WatchPath(dirPath);
+                }
+
                 var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
                 allFilesToLoad.AddRange(imageFilenameList);
             }
 
             LoadImages(allFilesToLoad, "");
-
-            // TODO watching multiple folders?
-            // 
         }
-
 
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
