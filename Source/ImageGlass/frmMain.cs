@@ -1690,12 +1690,14 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailDimension = 48;
                 }
+
                 #endregion
-                
+                #region Load thumbnail bar width & position
+                #endregion
+
 
                 #region Load thumbnail bar width & position
-                int tb_width = 0;
-                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
+                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
                 {
                     tb_width = 0;
                 }
@@ -1712,27 +1714,39 @@ namespace ImageGlass
                 //Load vertical thumbnail bar width
                 if (GlobalSetting.IsThumbnailHorizontal == false)
                 {
-                    int vtb_width;
-                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
+                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out int vtb_width))
                     {
                         GlobalSetting.ThumbnailBarWidth = vtb_width;
                     }
                 }
                 #endregion
+                
 
 
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
                 {
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
-
-                    // Issue #402: don't update the thumbnail bar state twice. Do it once below.
-                    ////Request frmMain to update
-                    //LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
-                    //frmMain_Activated(null, EventArgs.Empty);
-
+                    
+                    // Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                 }
                 #endregion
+
+
+
+                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
+                // The splitter dimensions may be too small for the user's last splitter bar position.
+                #region Load state of Thumbnail 
+                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+
+                // Request frmMain to update
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                
+                // Update thumbnail bar state
+                frmMain_Activated(null, EventArgs.Empty);
+                #endregion
+
 
 
                 // NOTE: ***
@@ -1749,15 +1763,7 @@ namespace ImageGlass
                 this.Bounds = rc;
                 #endregion
 
-
-                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
-                // The splitter dimensions may be too small for the user's last splitter bar position.
-                #region Load state of Thumbnail 
-                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
-                #endregion
-
+                
 
                 // Windows state must be loaded after Windows Bound!
                 #region Windows state
