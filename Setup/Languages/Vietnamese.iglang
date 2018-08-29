@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Chỉnh sửa ảnh {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Điều hướng" />
       <Item key="frmMain.mnuMainViewNext" value="Xem hình ảnh kế tiếp" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Mũi tên phải / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Xem ảnh trước đó" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Mũi tên trái / PageUp" />
       <Item key="frmMain.mnuMainGoto" value="Đi tới..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Đi đến hình ảnh đầu tiên" />
       <Item key="frmMain.mnuMainGotoLast" value="Đi đến hình ảnh cuối cùng" />

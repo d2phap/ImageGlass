@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Editar {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navegação" />
       <Item key="frmMain.mnuMainViewNext" value="Ver imagem seguinte" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="seta à direita/PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Ver imagem anterior" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="seta à esquerda/PageUp" />
       <Item key="frmMain.mnuMainGoto" value="Ir para..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Ir para a primeira imagem" />
       <Item key="frmMain.mnuMainGotoLast" value="Ir para a última imagem" />

@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Редактировать изображение {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Навигация" />
       <Item key="frmMain.mnuMainViewNext" value="Следующее изображение" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Стрелка вправо / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Предыдущее изображение" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Стрелка влево / PageUp" />
       <Item key="frmMain.mnuMainGoto" value="Перейти к ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Перейти к первому изображению" />
       <Item key="frmMain.mnuMainGotoLast" value="Перейти к последнему изображению" />

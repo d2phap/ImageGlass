@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Sunting gambar {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navigasi" />
       <Item key="frmMain.mnuMainViewNext" value="Lihat gambar berikutnya" />
+	  <Item key="frmMain.mnuMainViewNext.Shortcut" value="Panah Kanan / Pg Dn" />
       <Item key="frmMain.mnuMainViewPrevious" value="Lihat gambar sebelumnya" />
+	  <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Panah kiri /Pg Up" />
       <Item key="frmMain.mnuMainGoto" value="Pergi ke ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Pergi ke gambar pertama" />
       <Item key="frmMain.mnuMainGotoLast" value="Pergi ke gambar terakhir" />
