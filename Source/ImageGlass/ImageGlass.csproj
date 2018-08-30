@@ -131,7 +131,6 @@
     <Reference Include="DotNetZip, Version=1.11.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.11.0\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-
     <Reference Include="FileWatcherEx, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FileWatcherEx.1.3.0\lib\net45\FileWatcherEx.dll</HintPath>
     </Reference>
@@ -334,6 +333,10 @@
     <ProjectReference Include="..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ultilities\igcmdWin10\igcmdWin10.csproj">
+      <Project>{e1b466b0-8ece-4d5c-807a-600aae97bec7}</Project>
+      <Name>igcmdWin10</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
       <Project>{cc391e3e-9137-4857-85dc-c4cf6df37584}</Project>

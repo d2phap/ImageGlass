@@ -2365,6 +2365,7 @@ namespace ImageGlass
                 mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"];
                 mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainStartStopAnimating"];
                 mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsDesktop"];
+                mnuMainSetAsLockImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsLockImage"];
                 mnuMainImageLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageLocation"];
                 mnuMainImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageProperties"];
 
@@ -2518,6 +2519,18 @@ namespace ImageGlass
 
             #endregion
 
+
+            #region Windows 10 Specific Actions
+            bool enable = true;
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                enable = false; // Not running Windows 8 or later
+
+            mnuMainSetAsLockImage.Enabled = enable;
+            #endregion
 
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
@@ -3930,6 +3943,33 @@ namespace ImageGlass
             { }
         }
 
+        private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                return;
+
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                return; // Not running Windows 8 or later
+
+            // TODO consider adding privilege check and retry?
+            try
+            {
+                var args = string.Format("setlockimage \"{0}\"",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmdWin10.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                return;
+            }
+            catch
+            { }
+        }
+
         private void mnuMainImageLocation_Click(object sender, EventArgs e)
         {
             if (GlobalSetting.ImageList.Length > 0)
@@ -4008,11 +4048,7 @@ namespace ImageGlass
         {
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
 
-#if THUMBS_TOP
-            sp1.Panel1Collapsed = !GlobalSetting.IsShowThumbnail;
-#else
             sp1.Panel2Collapsed = !GlobalSetting.IsShowThumbnail;
-#endif
             btnThumb.Checked = GlobalSetting.IsShowThumbnail;
 
             if (GlobalSetting.IsShowThumbnail)
@@ -4034,32 +4070,11 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
-#if THUMBS_TOP
-                    sp1.SuspendLayout();
-                    sp1.Panel1.SuspendLayout();
-                    sp1.Panel2.SuspendLayout();
-#endif
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
                     sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
-#if THUMBS_TOP
-                    sp1.SplitterDistance = minSize;
-
-                    // TODO turning off thumbnails needs to hide Panel1, not Panel2
-                    sp1.Panel1.Controls.Remove(picMain);
-                    sp1.Panel2.Controls.Remove(thumbnailBar);
-
-                    sp1.Panel1.Controls.Add(thumbnailBar);
-                    sp1.Panel2.Controls.Add(picMain);
-
-                    sp1.FixedPanel = FixedPanel.Panel1;
-
-                    sp1.Panel2.ResumeLayout();
-                    sp1.Panel1.ResumeLayout();
-                    sp1.ResumeLayout();
-#endif
                 }
                 else
                 {

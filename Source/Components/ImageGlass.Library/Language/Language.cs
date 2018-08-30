@@ -327,6 +327,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainExtractFrames", "Extract image frames ({0})"); //v3.0
             Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
             Items.Add("frmMain.mnuMainSetAsDesktop", "Set as desktop background"); //v3.0
+            Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock Screen image"); // V6.0
+
             Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
             Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
 

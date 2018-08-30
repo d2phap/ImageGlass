@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.ImageBox", "Comp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.ImageListView", "Components\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj", "{0C295FB8-C6C6-4A40-9F19-05A43F353A04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "igcmdWin10", "Ultilities\igcmdWin10\igcmdWin10.csproj", "{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Designer|Any CPU = Debug Designer|Any CPU
@@ -258,6 +260,30 @@ Global
 		{0C295FB8-C6C6-4A40-9F19-05A43F353A04}.Release|x64.Build.0 = Release|Any CPU
 		{0C295FB8-C6C6-4A40-9F19-05A43F353A04}.Release|x86.ActiveCfg = Release|Any CPU
 		{0C295FB8-C6C6-4A40-9F19-05A43F353A04}.Release|x86.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|Any CPU.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|x64.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|x64.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|x86.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug Designer|x86.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|x64.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|Any CPU.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|x64.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|x64.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|x86.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release without WIC|x86.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|x64.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|x64.Build.0 = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -271,6 +297,7 @@ Global
 		{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 		{4159C8D3-C18D-4BED-8BE6-9BAD1B0CA4F6} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 		{0C295FB8-C6C6-4A40-9F19-05A43F353A04} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
+		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7} = {CA86D298-03CA-4A54-A796-B3EBAF2CF841}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B615DD31-5898-4B61-82D5-F63AB5690C5F}
