@@ -1705,12 +1705,14 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailDimension = 48;
                 }
+
                 #endregion
-                
+                #region Load thumbnail bar width & position
+                #endregion
+
 
                 #region Load thumbnail bar width & position
-                int tb_width = 0;
-                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
+                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
                 {
                     tb_width = 0;
                 }
@@ -1727,13 +1729,13 @@ namespace ImageGlass
                 //Load vertical thumbnail bar width
                 if (GlobalSetting.IsThumbnailHorizontal == false)
                 {
-                    int vtb_width;
-                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
+                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out int vtb_width))
                     {
                         GlobalSetting.ThumbnailBarWidth = vtb_width;
                     }
                 }
                 #endregion
+                
 
 
 
@@ -1744,6 +1746,7 @@ namespace ImageGlass
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
                 }
                 #endregion
+
 
 
                 // NOTE: ***
@@ -1759,7 +1762,6 @@ namespace ImageGlass
                 }
                 this.Bounds = rc;
                 #endregion
-
 
 
                 // Issue #402: need to wait to load thumbnail size etc until after window bounds.
