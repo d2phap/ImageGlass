@@ -31,8 +31,6 @@ namespace igcmdWin10
     {
         public static async Task<int> SetAsync(string path)
         {
-            // TODO test with non-windows images
-
             //System.Diagnostics.Debugger.Break();
 
             var folder = Path.GetDirectoryName(path);

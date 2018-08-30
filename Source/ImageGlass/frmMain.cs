@@ -1705,12 +1705,12 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailDimension = 48;
                 }
+
                 #endregion
                 
 
                 #region Load thumbnail bar width & position
-                int tb_width = 0;
-                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out tb_width))
+                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
                 {
                     tb_width = 0;
                 }
@@ -1727,8 +1727,7 @@ namespace ImageGlass
                 //Load vertical thumbnail bar width
                 if (GlobalSetting.IsThumbnailHorizontal == false)
                 {
-                    int vtb_width;
-                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out vtb_width))
+                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out int vtb_width))
                     {
                         GlobalSetting.ThumbnailBarWidth = vtb_width;
                     }
@@ -1769,8 +1768,10 @@ namespace ImageGlass
                 // The splitter dimensions may be too small for the user's last splitter bar position.
                 #region Load state of Thumbnail 
                 GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+                //GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                //mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                frmMain_Activated(null, EventArgs.Empty);
                 #endregion
 
 
@@ -4057,8 +4058,12 @@ namespace ImageGlass
 
                 // Only show gap if thumbnail scrollbars are enabled
                 int gap = 0;
+                double hScrollHeight = 7 * scaleFactor - 1;
                 if (GlobalSetting.IsShowThumbnailScrollbar)
-                    gap = (int)((SystemInformation.HorizontalScrollBarHeight * scaleFactor) + (25 / scaleFactor * 1.05));
+                {
+                    hScrollHeight = SystemInformation.HorizontalScrollBarHeight;
+                }
+                gap = (int)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);

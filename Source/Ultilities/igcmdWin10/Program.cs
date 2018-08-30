@@ -22,7 +22,7 @@ using System;
 /// Application to perform Windows 8/10 specific operations.
 /// These require using Windows 8/10 DLLs which aren't available
 /// on Windows 7. [... and would cause igcmd to crash on Win7 if 
-/// the references were added there]
+/// the references were added to that project]
 /// </summary>
 namespace igcmdWin10
 {
