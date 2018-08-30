@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="编辑图片{0}" />
       <Item key="frmMain.mnuMainNavigation" value="导航" />
       <Item key="frmMain.mnuMainViewNext" value="查看下一张图片" />
+	  <Item key="frmMain.mnuMainViewNext.Shortcut" value="右方向键／PageDown键" />
       <Item key="frmMain.mnuMainViewPrevious" value="查看上一张图片" />
+	  <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="左方向键／PageUp键" />
       <Item key="frmMain.mnuMainGoto" value="前往…" />
       <Item key="frmMain.mnuMainGotoFirst" value="前往第一张图片" />
       <Item key="frmMain.mnuMainGotoLast" value="转到最后一张图片" />

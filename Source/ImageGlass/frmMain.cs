@@ -206,16 +206,16 @@ namespace ImageGlass
             //Check path is file or directory?
             if (File.Exists(path))
             {
-                filePath = path;
+                if (Path.GetExtension(path).ToLower() == ".lnk")
+                    dirPath = Shortcuts.FolderFromShortcut(path);
+                else
+                    dirPath = Path.GetDirectoryName(path);
 
-                // get directory
-                //dirPath = (Path.GetDirectoryName(path) + "\\").Replace("\\\\", "\\");
-                //dirPath = path.Substring(0, path.LastIndexOf("\\") + 1);
-                dirPath = Path.GetDirectoryName(path);
+                filePath = path;
             }
             else if (Directory.Exists(path))
             {
-                dirPath = path; // (path + "\\").Replace("\\\\", "\\");
+                dirPath = path;
             }
 
             //Get supported image extensions from directory
@@ -223,24 +223,9 @@ namespace ImageGlass
 
             LoadImages(_imageFilenameList, filePath);
 
-            //Watch all changes of current path
-            this._fileWatcher.Stop();
-            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
-            {
-                FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
-                
-                // auto Invoke the form if required, no need to invidiually invoke in each event
-                SynchronizingObject = this
-            };
-
-            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
-            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
-            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
-            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
-
-            this._fileWatcher.Start();
+            WatchPath(dirPath);
         }
+
 
         /// <summary>
         /// Load the images.
@@ -290,12 +275,39 @@ namespace ImageGlass
 
 
         /// <summary>
+        /// Watch a folder for changes.
+        /// </summary>
+        /// <param name="dirPath">The path to the folder to watch.</param>
+        private void WatchPath(string dirPath)
+        {
+            //Watch all changes of current path
+            this._fileWatcher.Stop();
+            this._fileWatcher = new FileWatcherEx.FileWatcherEx()
+            {
+                FolderPath = dirPath,
+                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+
+                // auto Invoke the form if required, no need to invidiually invoke in each event
+                SynchronizingObject = this
+            };
+
+            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+
+            this._fileWatcher.Start();
+        }
+
+
+        /// <summary>
         /// Prepare to load images. User has dragged multiple files / paths onto IG.
         /// </summary>
         /// <param name="paths"></param>
         private void PrepareMulti(string[] paths)
         {
             List<string> allFilesToLoad = new List<string>();
+            bool firstPath = true;
             foreach (var apath in paths)
             {
                 string dirPath = "";
@@ -315,16 +327,19 @@ namespace ImageGlass
                     continue; 
                 }
 
+                // TODO Currently only have the ability to watch a single path for changes!
+                if (firstPath)
+                {
+                    firstPath = false;
+                    WatchPath(dirPath);
+                }
+
                 var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
                 allFilesToLoad.AddRange(imageFilenameList);
             }
 
             LoadImages(allFilesToLoad, "");
-
-            // TODO watching multiple folders?
-            // 
         }
-
 
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
@@ -1723,28 +1738,13 @@ namespace ImageGlass
                 
 
 
+
+                
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
                 {
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
-                    
-                    // Request frmMain to update
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                 }
-                #endregion
-
-
-
-                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
-                // The splitter dimensions may be too small for the user's last splitter bar position.
-                #region Load state of Thumbnail 
-                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-
-                // Request frmMain to update
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
-                
-                // Update thumbnail bar state
-                frmMain_Activated(null, EventArgs.Empty);
                 #endregion
 
 
@@ -1763,7 +1763,18 @@ namespace ImageGlass
                 this.Bounds = rc;
                 #endregion
 
-                
+
+                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
+                // The splitter dimensions may be too small for the user's last splitter bar position.
+                #region Load state of Thumbnail 
+                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+                //GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                //mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                frmMain_Activated(null, EventArgs.Empty);
+                #endregion
+
+
 
                 // Windows state must be loaded after Windows Bound!
                 #region Windows state
@@ -2980,6 +2991,7 @@ namespace ImageGlass
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnFlipHorz);
             if (picMain.Image == null)
             {
                 return;
@@ -3004,6 +3016,7 @@ namespace ImageGlass
 
         private void btnFlipVert_Click(object sender, EventArgs e)
         {
+            clearTooltip(btnFlipVert);
             if (picMain.Image == null)
             {
                 return;
@@ -4008,10 +4021,15 @@ namespace ImageGlass
             {
                 float scaleFactor = ((float)DPIScaling.CurrentDPI) / DPIScaling.DPI_DEFAULT;
 
-                // Only show gap if thumbnail scrollbars are enabled
+                // calculate the gap
                 int gap = 0;
+                double hScrollHeight = 7 * scaleFactor - 1;
+
                 if (GlobalSetting.IsShowThumbnailScrollbar)
-                    gap = (int)((SystemInformation.HorizontalScrollBarHeight * scaleFactor) + (25 / scaleFactor * 1.05));
+                {
+                    hScrollHeight = SystemInformation.HorizontalScrollBarHeight;
+                }
+                gap = (int)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
                 //show
                 var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);

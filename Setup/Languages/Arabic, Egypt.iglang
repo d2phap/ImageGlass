@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="تحرير صورة {0}" />
       <Item key="frmMain.mnuMainNavigation" value="التنقل" />
       <Item key="frmMain.mnuMainViewNext" value="عرض الصورة التالية" />
+	  <Item key="frmMain.mnuMainViewNext.Shortcut" value="السهم الأيمن / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="عرض الصورة السابقة" />
+	  <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="لسهم الأيسر / PageUp" />
       <Item key="frmMain.mnuMainGoto" value="الانتقال إلى..." />
       <Item key="frmMain.mnuMainGotoFirst" value="انتقل إلى الصورة الأولى" />
       <Item key="frmMain.mnuMainGotoLast" value="اذهب إلى آخر صورة" />

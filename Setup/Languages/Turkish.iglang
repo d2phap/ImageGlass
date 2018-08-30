@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Resmi düzenle {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Gezinti Tuşları" />
       <Item key="frmMain.mnuMainViewNext" value="Görünümü sonraki resim" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="sağ ok / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Görünümü önceki görüntü" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Sol ok / Sayfa Yukarı" />
       <Item key="frmMain.mnuMainGoto" value="Git ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="İlk resim gidin" />
       <Item key="frmMain.mnuMainGotoLast" value="Son görüntü gitmek" />
