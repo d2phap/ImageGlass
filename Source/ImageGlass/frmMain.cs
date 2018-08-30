@@ -1707,9 +1707,7 @@ namespace ImageGlass
                 }
 
                 #endregion
-                #region Load thumbnail bar width & position
-                #endregion
-
+                
 
                 #region Load thumbnail bar width & position
                 if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
@@ -4010,11 +4008,7 @@ namespace ImageGlass
         {
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
 
-#if THUMBS_TOP
-            sp1.Panel1Collapsed = !GlobalSetting.IsShowThumbnail;
-#else
             sp1.Panel2Collapsed = !GlobalSetting.IsShowThumbnail;
-#endif
             btnThumb.Checked = GlobalSetting.IsShowThumbnail;
 
             if (GlobalSetting.IsShowThumbnail)
@@ -4041,32 +4035,11 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
-#if THUMBS_TOP
-                    sp1.SuspendLayout();
-                    sp1.Panel1.SuspendLayout();
-                    sp1.Panel2.SuspendLayout();
-#endif
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
                     sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
-#if THUMBS_TOP
-                    sp1.SplitterDistance = minSize;
-
-                    // TODO turning off thumbnails needs to hide Panel1, not Panel2
-                    sp1.Panel1.Controls.Remove(picMain);
-                    sp1.Panel2.Controls.Remove(thumbnailBar);
-
-                    sp1.Panel1.Controls.Add(thumbnailBar);
-                    sp1.Panel2.Controls.Add(picMain);
-
-                    sp1.FixedPanel = FixedPanel.Panel1;
-
-                    sp1.Panel2.ResumeLayout();
-                    sp1.Panel1.ResumeLayout();
-                    sp1.ResumeLayout();
-#endif
                 }
                 else
                 {
