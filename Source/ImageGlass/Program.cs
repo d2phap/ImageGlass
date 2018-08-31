@@ -24,6 +24,7 @@ using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
 using System.IO;
 using System.Globalization;
+using System.Runtime;
 
 namespace ImageGlass
 {
@@ -56,6 +57,11 @@ namespace ImageGlass
         [STAThread]
         static void Main(string[] argv)
         {
+            // Set up Startup Profile to improve launch performance
+            // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
+            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir);
+            ProfileOptimization.StartProfile("igstartup.profile");
+
 #if ERRORMODE
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 #endif
@@ -175,14 +181,14 @@ namespace ImageGlass
             if (formMain == null)
                 return;
 
-            Action<String[]> updateForm = arguments =>
+            Action<String[]> UpdateForm = arguments =>
             {
                 formMain.WindowState = FormWindowState.Normal;
                 formMain.LoadFromParams(arguments);
             };
 
             //Execute our delegate on the forms thread!
-            formMain.Invoke(updateForm, (Object)e.Args); 
+            formMain.Invoke(UpdateForm, (Object)e.Args); 
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
