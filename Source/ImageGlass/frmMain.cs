@@ -590,7 +590,7 @@ namespace ImageGlass
 
                 //Show image
                 picMain.Image = im;
-
+                LocalSetting.FMetadata.Image = thumbnailBar.Items[GlobalSetting.CurrentIndex];
 
                 //Reset the zoom mode if isKeepZoomRatio = FALSE
                 if (!isKeepZoomRatio)

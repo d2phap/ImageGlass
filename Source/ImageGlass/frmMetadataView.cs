@@ -23,6 +23,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using ImageGlass.ImageListView;
 
 namespace ImageGlass
 {
@@ -34,9 +35,52 @@ namespace ImageGlass
         private Form _currentOwner = null;
         private Point _locationOffset = DefaultLocationOffset;
 
+        private ListView _dataView;
+
+        private string[] _dataIds = { "Date Taken: ", "Camera: ", "Artist: ",
+            "Copyright: ", "Exposure: ", "FNumber: ", "ISO Speed: ",
+            "Comment: ", "Focal Length: "
+        };
+        private string[] _dataProps = {"DateTaken", "EquipmentModel", "Artist",
+            "Copyright", "ExposureTime", "FNumber", "ISOSpeed",
+            "UserComment", "FocalLength"
+        };
+
         public frmMetadataView()
         {
             InitializeComponent();
+
+            AutoSize = true;
+
+            _dataView = new ListView();
+            _dataView.Scrollable = false;
+            _dataView.BorderStyle = BorderStyle.None;
+            _dataView.View = System.Windows.Forms.View.Details;
+            _dataView.Columns.Add("");
+            _dataView.Columns.Add("Id");
+            _dataView.Columns.Add("Data");
+            //_dataView.GridLines = true;
+            _dataView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            _dataView.Columns[1].TextAlign = HorizontalAlignment.Right;
+
+            int maxW = int.MinValue;
+            using (Graphics g = this.CreateGraphics())
+                foreach (var id in _dataIds)
+                {
+                    SizeF s = g.MeasureString(id, this.Font);
+                    maxW = Math.Max(maxW, (int)(Math.Ceiling(s.Width)) + 10);
+                    _dataView.Items.Add(new ListViewItem(new string[] { "", id, "____________________" }));
+                }
+
+            _dataView.Columns[0].Width = 1;
+            _dataView.Columns[1].Width = maxW; // AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+            _dataView.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            _dataView.Height = (int)(_dataIds.Length * 25 * DPIScaling.GetDPIScaleFactor());
+            _dataView.Width = 225;
+
+            this.Height = _dataView.Height + 10;
+            Controls.Add(_dataView);
         }
 		
         #region Borderless form moving
@@ -158,6 +202,52 @@ namespace ImageGlass
 
 
                 return baseParams;
+            }
+        }
+
+        public ImageListViewItem Image
+        {
+            set
+            {
+                // active image has been changed
+                // update metadata controls
+                var local = value;
+                var dt = local.DateTaken;
+
+
+                var lvi = _dataView.Items[0];
+                if (dt == DateTime.MinValue)
+                    lvi.SubItems[2].Text = " ";
+                else
+                    lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss");
+
+                lvi = _dataView.Items[1];
+                lvi.SubItems[2].Text = local.EquipmentModel;
+
+                lvi = _dataView.Items[2];
+                lvi.SubItems[2].Text = local.Artist;
+
+                lvi = _dataView.Items[3];
+                lvi.SubItems[2].Text = local.Copyright;
+
+                lvi = _dataView.Items[4];
+                lvi.SubItems[2].Text = local.ExposureTime.ToString();
+
+                lvi = _dataView.Items[5];
+                lvi.SubItems[2].Text = local.FNumber.ToString();
+
+                lvi = _dataView.Items[6];
+                if (local.ISOSpeed == 0)
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = local.ISOSpeed.ToString();
+
+                lvi = _dataView.Items[7];
+                lvi.SubItems[2].Text = local.UserComment.Trim();
+
+                lvi = _dataView.Items[8];
+                lvi.SubItems[2].Text = local.FocalLength.ToString();
+
             }
         }
 
@@ -290,8 +380,12 @@ namespace ImageGlass
 		{
 			// Apply current theme
 			this.BackColor = LocalSetting.Theme.BackgroundColor;
-		}
-	
+            _dataView.BackColor = BackColor;
+
+            ForeColor = Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
+            _dataView.ForeColor = ForeColor;
+        }
+
         private void frmColorPicker_Load(object sender, EventArgs e)
         {
             UpdateUI();
