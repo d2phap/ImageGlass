@@ -14,6 +14,7 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+[Rr]elease_x86/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
@@ -171,3 +172,4 @@ Setup/ImageGlass_4.1.7.26.exe
 *.ide-shm
 *.ide-wal
 *.ide
+
