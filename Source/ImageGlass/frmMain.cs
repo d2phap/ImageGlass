@@ -1484,6 +1484,7 @@ namespace ImageGlass
             mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainColorPicker.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainMetadataView.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             #endregion
 
@@ -2064,6 +2065,14 @@ namespace ImageGlass
                         }
                     #endregion
 
+                    #region Metadata Viewer
+                    LocalSetting.IsShowMetadataViewOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowMetadataViewOnStartup", "False"));
+                    if (LocalSetting.IsShowMetadataViewOnStartup)
+                    {
+                        mnuMainMetadataView.PerformClick();
+                    }
+                    #endregion
+
                 });
 
             }
@@ -2425,6 +2434,14 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.COLOR_PICKER_MENU) == MainFormForceUpdateAction.COLOR_PICKER_MENU)
             {
                 mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
+            }
+            #endregion
+
+
+            #region METADATA_VIEW_MENU
+            if ((flags & MainFormForceUpdateAction.METADATA_VIEW_MENU) != 0)
+            {
+                mnuMainMetadataView.Checked = LocalSetting.IsMetadataViewOpening;
             }
             #endregion
 
@@ -4091,6 +4108,22 @@ namespace ImageGlass
                 GlobalSetting.IsWindowAlwaysOnTop = !GlobalSetting.IsWindowAlwaysOnTop;
         }
         
+
+        private void mnuMainMetadataView_Click(object sender, EventArgs e)
+        {
+            LocalSetting.IsShowMetadataViewOnStartup = LocalSetting.IsMetadataViewOpening = mnuMainMetadataView.Checked;
+
+            if (mnuMainMetadataView.Checked)
+            {
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
+                LocalSetting.FMetadata.Show(this);
+                this.Activate();
+            }
+            else
+            {
+                LocalSetting.FMetadata.Close();
+            }
+        }
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {

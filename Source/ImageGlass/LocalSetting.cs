@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ namespace ImageGlass
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
+        private static frmMetadataView _fMetadataView;
         private static Theme.Theme _theme;
         
 
@@ -74,6 +75,18 @@ namespace ImageGlass
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
 
+        /// <summary>
+        /// Check if frmColorPicker is opening.
+        /// This is for toggle Color Picker menu in frmMain
+        /// </summary>
+        public static bool IsMetadataViewOpening { get; set; } = false;
+
+
+        /// <summary>
+        /// Check if frmColorPicker is not closed by user (toggle the menu / press ESC on frmColorPicker form). 
+        /// This is for auto open Color Picker tool when startup
+        /// </summary>
+        public static bool IsShowMetadataViewOnStartup { get; set; } = false;
 
         #endregion
 
@@ -97,6 +110,15 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
+        }
+
+        /// <summary>
+        /// Metadata Viewer
+        /// </summary>
+        public static frmMetadataView FMetadata
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fMetadataView); }
+            set { _fMetadataView = value; }
         }
 
 
