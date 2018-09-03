@@ -1733,20 +1733,18 @@ namespace ImageGlass
                     }
                 }
                 #endregion
+                
 
 
+
+                
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
                 {
                     GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
-
-                    // Issue #402: don't update the thumbnail bar state twice. Do it once below.
-                    ////Request frmMain to update
-                    //LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
-                    //frmMain_Activated(null, EventArgs.Empty);
-
                 }
                 #endregion
+
 
 
                 // NOTE: ***
@@ -1773,6 +1771,7 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                 frmMain_Activated(null, EventArgs.Empty);
                 #endregion
+
 
 
                 // Windows state must be loaded after Windows Bound!
@@ -4056,9 +4055,10 @@ namespace ImageGlass
             {
                 float scaleFactor = ((float)DPIScaling.CurrentDPI) / DPIScaling.DPI_DEFAULT;
 
-                // Only show gap if thumbnail scrollbars are enabled
+                // calculate the gap
                 int gap = 0;
                 double hScrollHeight = 7 * scaleFactor - 1;
+
                 if (GlobalSetting.IsShowThumbnailScrollbar)
                 {
                     hScrollHeight = SystemInformation.HorizontalScrollBarHeight;
