@@ -219,6 +219,15 @@ namespace ImageGlass
                 dirPath = path;
             }
 
+
+            // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+            // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+            // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+            if (!dirPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                dirPath += Path.DirectorySeparatorChar;
+
+
             LocalSetting.CurrentBaseFile = filePath;
 
             //Get supported image extensions from directory
@@ -2246,6 +2255,12 @@ namespace ImageGlass
                         }
                         else if (Directory.Exists(filename))
                         {
+                            // Issue #415: If the folder name ends in ALT+255 (), DirectoryInfo strips it.
+                            // By ensuring a terminating slash, the problem disappears.
+                            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                            if (!filename.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                                filename += Path.DirectorySeparatorChar;
+
                             DirectoryInfo d = new DirectoryInfo(filename);
                             Prepare(d.FullName);
                         }
