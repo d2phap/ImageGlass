@@ -2365,6 +2365,7 @@ namespace ImageGlass
                 mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"];
                 mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainStartStopAnimating"];
                 mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsDesktop"];
+                mnuMainSetAsLockImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsLockImage"];
                 mnuMainImageLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageLocation"];
                 mnuMainImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageProperties"];
 
@@ -2518,6 +2519,18 @@ namespace ImageGlass
 
             #endregion
 
+
+            #region Windows 10 Specific Actions
+            bool enable = true;
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                enable = false; // Not running Windows 8 or later
+
+            mnuMainSetAsLockImage.Enabled = enable;
+            #endregion
 
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
@@ -3925,6 +3938,33 @@ namespace ImageGlass
                 p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
                 p.StartInfo.Arguments = args;
                 p.Start();
+            }
+            catch
+            { }
+        }
+
+        private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                return;
+
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                return; // Not running Windows 8 or later
+
+            // TODO consider adding privilege check and retry?
+            try
+            {
+                var args = string.Format("setlockimage \"{0}\"",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmdWin10.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                return;
             }
             catch
             { }
