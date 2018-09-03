@@ -192,8 +192,9 @@ namespace ImageGlass
         /// <summary>
         /// Prepare to load image
         /// </summary>
-        /// <param name="path">Path</param>
-        public void Prepare(string path)
+        /// <param name="path">Initial file/folder to load with</param>
+        /// <param name="target">When re-loading the image list, this is the desired image to remain visible</param>
+        public void Prepare(string path, string target=null)
         {
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
@@ -218,10 +219,12 @@ namespace ImageGlass
                 dirPath = path;
             }
 
+            LocalSetting.CurrentBaseFile = filePath;
+
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
-            LoadImages(_imageFilenameList, filePath);
+            LoadImages(_imageFilenameList, target ?? filePath);
 
             WatchPath(dirPath);
         }
@@ -306,6 +309,9 @@ namespace ImageGlass
         /// <param name="paths"></param>
         private void PrepareMulti(string[] paths)
         {
+            // TODO re-loading of the image list/folder currently does NOT invoke this code!
+            // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
+
             List<string> allFilesToLoad = new List<string>();
             bool firstPath = true;
             foreach (var apath in paths)
@@ -2501,7 +2507,8 @@ namespace ImageGlass
             #region IMAGE_FOLDER
             if ((flags & MainFormForceUpdateAction.IMAGE_FOLDER) == MainFormForceUpdateAction.IMAGE_FOLDER)
             {
-                Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Prepare(LocalSetting.CurrentBaseFile,
+                        GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             }
             #endregion
 
@@ -2511,9 +2518,10 @@ namespace ImageGlass
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
                     //reload image list
-                    // TODO: If IsRecursiveLoading == true,
-                    // The Prepare() function will only reload the viewing folder only (not all subfolders)
-                    Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
+                    // but keep the currently visible file in mind!
+                    Prepare(LocalSetting.CurrentBaseFile,
+                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 }
             }
             #endregion

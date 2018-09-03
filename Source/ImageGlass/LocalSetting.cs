@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -73,6 +73,13 @@ namespace ImageGlass
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
+
+
+        /// <summary>
+        /// The current "base" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
+        /// the image list, but otherwise we don't know what image/folder we started with.
+        /// </summary>
+        public static string CurrentBaseFile { get; set; } = "";
 
 
         #endregion
