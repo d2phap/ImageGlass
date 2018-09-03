@@ -2140,6 +2140,8 @@ namespace ImageGlass
             //Save IsShowColorPickerOnStartup
             GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsShowColorPickerOnStartup.ToString());
 
+            GlobalSetting.SetConfig("IsShowMetadataViewOnStartup", LocalSetting.IsShowMetadataViewOnStartup.ToString());
+
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
         }
