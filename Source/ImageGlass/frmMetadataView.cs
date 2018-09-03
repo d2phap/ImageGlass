@@ -38,12 +38,12 @@ namespace ImageGlass
         private ListView _dataView;
 
         private string[] _dataIds = { "Date Taken: ", "Camera: ", "Artist: ",
-            "Copyright: ", "Exposure: ", "FNumber: ", "ISO Speed: ",
-            "Comment: ", "Focal Length: "
+            "Copyright: ", "Exposure: ", "F-stop: ", "ISO speed: ",
+            "Comment: ", "Focal Length: ", "Software: "
         };
         private string[] _dataProps = {"DateTaken", "EquipmentModel", "Artist",
             "Copyright", "ExposureTime", "FNumber", "ISOSpeed",
-            "UserComment", "FocalLength"
+            "UserComment", "FocalLength", "Software"
         };
 
         public frmMetadataView()
@@ -51,8 +51,11 @@ namespace ImageGlass
             InitializeComponent();
 
             AutoSize = true;
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+
 
             _dataView = new ListView();
+            _dataView.Font = new System.Drawing.Font("Segoe UI", 9F);
             _dataView.Scrollable = false;
             _dataView.BorderStyle = BorderStyle.None;
             _dataView.View = System.Windows.Forms.View.Details;
@@ -81,6 +84,8 @@ namespace ImageGlass
 
             this.Height = _dataView.Height + 10;
             Controls.Add(_dataView);
+
+            _dataView.MouseDown += frmColorPicker_MouseDown;
         }
 		
         #region Borderless form moving
@@ -231,23 +236,34 @@ namespace ImageGlass
                 lvi.SubItems[2].Text = local.Copyright;
 
                 lvi = _dataView.Items[4];
-                lvi.SubItems[2].Text = local.ExposureTime.ToString();
+                if (local.ExposureTime == 0)
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = local.ExposureTime.ToString() + " sec.";
 
                 lvi = _dataView.Items[5];
-                lvi.SubItems[2].Text = local.FNumber.ToString();
+                if (local.FNumber == 0)
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
 
                 lvi = _dataView.Items[6];
                 if (local.ISOSpeed == 0)
                     lvi.SubItems[2].Text = "";
                 else
-                    lvi.SubItems[2].Text = local.ISOSpeed.ToString();
+                    lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
 
                 lvi = _dataView.Items[7];
                 lvi.SubItems[2].Text = local.UserComment.Trim();
 
                 lvi = _dataView.Items[8];
-                lvi.SubItems[2].Text = local.FocalLength.ToString();
+                if (local.FocalLength == 0)
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
 
+                lvi = _dataView.Items[9];
+                lvi.SubItems[2].Text = local.Software.Trim();
             }
         }
 
