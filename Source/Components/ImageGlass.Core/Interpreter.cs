@@ -5,6 +5,7 @@ using System.Linq;
 using System.Drawing.IconLib;
 using System.Windows.Media.Imaging;
 using ImageMagick;
+using System.Collections.Generic;
 
 namespace ImageGlass.Core
 {
@@ -345,6 +346,22 @@ namespace ImageGlass.Core
                 return img.ToBitmap();
             }
 
+        }
+
+        public static List<Tuple<int,object>> GetExifData(string file)
+        {
+            using (var img = new MagickImage(file))
+            {
+                ExifProfile prof = img.GetExifProfile();
+                if (prof == null)
+                    return null;
+                List<Tuple<int, object>> ret = new List<Tuple<int, object>>();
+                foreach (ExifValue val in prof.Values)
+                {
+                    ret.Add(new Tuple<int, object>((int)val.Tag, val.Value));
+                }
+                return ret;
+            }
         }
     }
 }

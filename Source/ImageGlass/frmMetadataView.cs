@@ -254,7 +254,10 @@ namespace ImageGlass
                     lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
 
                 lvi = _dataView.Items[7];
-                lvi.SubItems[2].Text = local.UserComment.Trim();
+                if (string.IsNullOrEmpty(local.UserComment))
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = local.UserComment.Trim();
 
                 lvi = _dataView.Items[8];
                 if (local.FocalLength == 0)
@@ -263,7 +266,10 @@ namespace ImageGlass
                     lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
 
                 lvi = _dataView.Items[9];
-                lvi.SubItems[2].Text = local.Software.Trim();
+                if (string.IsNullOrEmpty(local.Software))
+                    lvi.SubItems[2].Text = "";
+                else
+                    lvi.SubItems[2].Text = local.Software.Trim();
             }
         }
 
