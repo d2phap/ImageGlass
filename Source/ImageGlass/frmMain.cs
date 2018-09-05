@@ -228,7 +228,7 @@ namespace ImageGlass
                 dirPath += Path.DirectorySeparatorChar;
 
 
-            LocalSetting.CurrentBaseFile = filePath;
+            LocalSetting.InitialInputImageFilename = filePath;
 
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
@@ -2521,7 +2521,7 @@ namespace ImageGlass
             #region IMAGE_FOLDER
             if ((flags & MainFormForceUpdateAction.IMAGE_FOLDER) == MainFormForceUpdateAction.IMAGE_FOLDER)
             {
-                Prepare(LocalSetting.CurrentBaseFile,
+                Prepare(LocalSetting.InitialInputImageFilename,
                         GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             }
             #endregion
@@ -2534,7 +2534,7 @@ namespace ImageGlass
                     //reload image list
                     // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
                     // but keep the currently visible file in mind!
-                    Prepare(LocalSetting.CurrentBaseFile,
+                    Prepare(LocalSetting.InitialInputImageFilename,
                             GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 }
             }
