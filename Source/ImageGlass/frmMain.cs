@@ -228,7 +228,7 @@ namespace ImageGlass
                 dirPath += Path.DirectorySeparatorChar;
 
 
-            LocalSetting.InitialInputImageFilename = filePath;
+            LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
 
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
@@ -2671,6 +2671,10 @@ namespace ImageGlass
                     thumbnailBar.Items[imgIndex].Tag = newFilename;
                 }
                 catch { }
+
+                // User renamed the initial file - update in case of list reload
+                if (oldFilename == LocalSetting.InitialInputImageFilename)
+                    LocalSetting.InitialInputImageFilename = newFilename;
             }
 
 
@@ -2830,6 +2834,10 @@ namespace ImageGlass
                     }
                 }
 
+                // If user deletes the initially loaded image, use the path instead, in case
+                // of list re-load.
+                if (filename == LocalSetting.InitialInputImageFilename)
+                    LocalSetting.InitialInputImageFilename = Path.GetDirectoryName(filename);
             }
         }
 
