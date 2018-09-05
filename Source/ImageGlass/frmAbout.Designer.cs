@@ -42,7 +42,7 @@
             this.lblInfoContact = new System.Windows.Forms.Label();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblAppName = new System.Windows.Forms.Label();
             this.lblSlogant = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblSoftwareUpdate = new System.Windows.Forms.Label();
@@ -277,18 +277,18 @@
             this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "Version: [xxxx]";
             // 
-            // label4
+            // lblAppName
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
-            this.label4.Location = new System.Drawing.Point(118, 18);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(224, 54);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "ImageGlass";
+            this.lblAppName.AutoSize = true;
+            this.lblAppName.BackColor = System.Drawing.Color.Transparent;
+            this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.lblAppName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
+            this.lblAppName.Location = new System.Drawing.Point(118, 18);
+            this.lblAppName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAppName.Name = "lblAppName";
+            this.lblAppName.Size = new System.Drawing.Size(224, 54);
+            this.lblAppName.TabIndex = 7;
+            this.lblAppName.Text = "ImageGlass";
             // 
             // lblSlogant
             // 
@@ -589,7 +589,7 @@
             this.Controls.Add(this.sp0);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblSlogant);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblAppName);
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -632,7 +632,7 @@
         private System.Windows.Forms.LinkLabel lnkFacebook;
         private System.Windows.Forms.Label lblUpdate;
         private System.Windows.Forms.LinkLabel lnkCheckUpdate;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblAppName;
         private System.Windows.Forms.Label lblSlogant;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblSoftwareUpdate;

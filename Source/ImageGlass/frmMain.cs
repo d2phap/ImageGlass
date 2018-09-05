@@ -665,7 +665,7 @@ namespace ImageGlass
         /// </summary>
         private void UpdateStatusBar()
         {
-            string appName = "ImageGlass";
+            string appName = Application.ProductName;
             string indexTotal = string.Empty;
             string filename = string.Empty;
             string zoom = string.Empty;
