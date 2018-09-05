@@ -193,8 +193,8 @@ namespace ImageGlass
         /// Prepare to load image
         /// </summary>
         /// <param name="path">Initial file/folder to load with</param>
-        /// <param name="target">When re-loading the image list, this is the desired image to remain visible</param>
-        public void Prepare(string path, string target=null)
+        /// <param name="targetImgFile">When re-loading the image list, this is the desired image to remain visible</param>
+        public void Prepare(string path, string targetImgFile = null)
         {
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
@@ -233,11 +233,11 @@ namespace ImageGlass
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
-            LoadImages(_imageFilenameList, target ?? filePath);
-
+            LoadImages(_imageFilenameList, targetImgFile ?? filePath);
+            
             WatchPath(dirPath);
         }
-
+        
 
         /// <summary>
         /// Load the images.
@@ -676,7 +676,7 @@ namespace ImageGlass
 
             if (LocalSetting.IsTempMemoryData)
             {
-                appName += $"  |  {GlobalSetting.LangPack.Items["frmMain._ImageData"]}";
+                var imgData = GlobalSetting.LangPack.Items["frmMain._ImageData"];
                 zoom = $"{picMain.Zoom.ToString()}%";
 
                 if (picMain.Image != null)
@@ -687,12 +687,12 @@ namespace ImageGlass
                     }
                     catch { }
 
-                    //ImageGlass (Image data)  |  {zoom}  |  {image size}
-                    this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
+                    //(Image data)  |  {zoom}  |  {image size} - ImageGlass
+                    this.Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
                 }
                 else
                 {
-                    this.Text = $"{appName}  |  {zoom}";
+                    this.Text = $"{imgData}  |  {zoom}  - {appName}";
                 }
             }
             else
@@ -703,16 +703,17 @@ namespace ImageGlass
                     return;
                 }
 
-                string currFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                string currentFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
                 // when there is a problem with a file, don't try to show some info
-                bool moredata = File.Exists(currFilePath);
+                bool isShowMoreData = File.Exists(currentFilePath);
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
-                if (moredata)
+
+                if (isShowMoreData)
                 {
-                    fileSize = ImageInfo.GetFileSize(currFilePath);
-                    fileDate = File.GetCreationTime(currFilePath).ToString("yyyy/MM/dd HH:mm:ss");
+                    fileSize = ImageInfo.GetFileSize(currentFilePath);
+                    fileDate = File.GetCreationTime(currentFilePath).ToString("yyyy/MM/dd HH:mm:ss");
                 }
 
 
@@ -739,11 +740,10 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsImageError)
                 {
-                    //ImageGlass - {index/total} - {filename}  |  {file size}  |  {file date}
-                    if (!moredata) // size and date not available
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}";
+                    if (!isShowMoreData) // size and date not available
+                        this.Text = $"{filename}  |  {indexTotal}  - {appName}";
                     else
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {fileSize}  |  {fileDate}  - {appName}";
                 }
                 else
                 {
@@ -757,13 +757,12 @@ namespace ImageGlass
                         }
                         catch { }
 
-                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
+
+                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                     else
                     {
-                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {file size}  | {file date}
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {fileSize}  |  {fileDate}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                 }
             }
@@ -3386,7 +3385,7 @@ namespace ImageGlass
         private void mnuMainReloadImage_Click(object sender, EventArgs e)
         {
             //Reload the viewing image
-            NextPic(step: 0, isKeepZoomRatio: true, isSkipCache: true);
+            NextPic(step: 0, isKeepZoomRatio: false, isSkipCache: true);
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
