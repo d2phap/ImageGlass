@@ -96,21 +96,24 @@ namespace ImageGlass.Core
                     var profile = magicImg.GetExifProfile();
                     if (profile != null)
                     {
-                        //Get Orieantation Flag
-                        var exifTag = profile.GetValue(ExifTag.Orientation);
-
-                        if (exifTag != null)
+                        try
                         {
-                            int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+                            //Get Orieantation Flag
+                            var exifTag = profile.GetValue(ExifTag.Orientation);
 
-                            var orientationDegree = GetOrientationDegree(orientationFlag);
-                            if (orientationDegree != 0)
+                            if (exifTag != null)
                             {
-                                //Rotate image accordingly
-                                magicImg.Rotate(orientationDegree);
+                                int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+
+                                var orientationDegree = GetOrientationDegree(orientationFlag);
+                                if (orientationDegree != 0)
+                                {
+                                    //Rotate image accordingly
+                                    magicImg.Rotate(orientationDegree);
+                                }
                             }
                         }
-
+                        catch { } // KBR imageMagick may throw
                     }
 
                     //corect the image color
@@ -350,17 +353,43 @@ namespace ImageGlass.Core
 
         public static List<Tuple<int,object>> GetExifData(string file)
         {
-            using (var img = new MagickImage(file))
+            try
             {
-                ExifProfile prof = img.GetExifProfile();
-                if (prof == null)
-                    return null;
-                List<Tuple<int, object>> ret = new List<Tuple<int, object>>();
-                foreach (ExifValue val in prof.Values)
+                using (var img = new MagickImage(file))
                 {
-                    ret.Add(new Tuple<int, object>((int)val.Tag, val.Value));
+                    ExifProfile prof = img.GetExifProfile();
+                    if (prof == null)
+                        return null;
+                    List<Tuple<int, object>> ret = new List<Tuple<int, object>>();
+                    ImageMagick.Rational rat;
+                    foreach (ExifValue val in prof.Values)
+                    {
+                        if (val.Value == null)
+                            continue;
+
+                        switch ((int)val.Tag)
+                        {
+                            case 0x829A: // exposure time
+                                rat = (ImageMagick.Rational)val.Value;
+                                ret.Add(new Tuple<int, object>((int)val.Tag,
+                                    string.Format("{0}/{1} sec.", rat.Numerator, rat.Denominator)));
+                                break;
+                            case 0x829D: // fnumber
+                            case 0x920A: // focal length
+                                rat = (ImageMagick.Rational)val.Value;
+                                ret.Add(new Tuple<int, object>((int)val.Tag, rat.ToDouble()));
+                                break;
+                            default:
+                                ret.Add(new Tuple<int, object>((int)val.Tag, val.Value));
+                                break;
+                        }
+                    }
+                    return ret;
                 }
-                return ret;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

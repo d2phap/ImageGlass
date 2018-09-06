@@ -22,6 +22,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 #if USEWIC
 using System.Windows.Media.Imaging;
 #endif
@@ -233,6 +234,7 @@ namespace ImageGlass.ImageListView
         /// Exposure time.
         /// </summary>
         public double ExposureTime = 0.0;
+        public string ExposureTimeAsString = null;
         /// <summary>
         /// F number.
         /// </summary>
@@ -338,6 +340,8 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
+
         /// <summary>
         /// Read metadata using .NET 2.0 methods.
         /// </summary>
@@ -685,6 +689,97 @@ namespace ImageGlass.ImageListView
             return metadata;
         }
 #endif
+
+        public static MetadataExtractor FromTuple(List<System.Tuple<int,object>> exifData)
+        {
+            MetadataExtractor metadata = new MetadataExtractor();
+
+            double dVal;
+            int iVal;
+            DateTime dateTime;
+            string str;
+            foreach (System.Tuple<int,object> prop in exifData)
+            {
+                if (prop.Item2 == null)
+                    continue;
+
+                string sval = prop.Item2 as string;
+
+                switch (prop.Item1)
+                {
+                case TagImageDescription:
+                    metadata.ImageDescription = sval == null ? "" : sval.Trim();
+                    break;
+                case TagArtist:
+                    metadata.Artist = sval == null ? "" : sval.Trim();
+                    break;
+                case TagEquipmentManufacturer:
+                    metadata.EquipmentManufacturer = sval == null ? "" : sval.Trim();
+                    break;
+                case TagEquipmentModel:
+                    metadata.EquipmentModel = sval == null ? "" : sval.Trim();
+                    break;
+                case TagDateTimeOriginal:
+                    dateTime = ExifDateTime(sval);
+                    if (dateTime != DateTime.MinValue)
+                    {
+                        metadata.DateTaken = dateTime;
+                    }
+                    break;
+                case TagExposureTime:
+                    metadata.ExposureTimeAsString = sval == null ? "" : sval.Trim();
+                    break;
+                case TagFNumber:
+                    dVal = (double)prop.Item2;
+                    if (dVal != 0.0)
+                        metadata.FNumber = dVal;
+                    break;
+                case TagISOSpeed:
+                    //iVal = ushort.Parse(sval);
+                    //if (iVal != 0)
+                    //    metadata.ISOSpeed = iVal;
+                    break;
+                case TagCopyright:
+                    metadata.Copyright = sval;
+                    break;
+                case TagRating:
+                    //if (Rating == 0 && prop.Value.Length == 2)
+                    //{
+                    //    iVal = ExifUShort(prop.Value);
+                    //    if (iVal == 1)
+                    //        Rating = 1;
+                    //    else if (iVal == 2)
+                    //        Rating = 25;
+                    //    else if (iVal == 3)
+                    //        Rating = 50;
+                    //    else if (iVal == 4)
+                    //        Rating = 75;
+                    //    else if (iVal == 5)
+                    //        Rating = 99;
+                    //}
+                    break;
+                case TagRatingPercent:
+                    //if (prop.Value.Length == 2)
+                    //{
+                    //    iVal = ExifUShort(prop.Value);
+                    //    Rating = iVal;
+                    //}
+                    break;
+                case TagUserComment:
+                    metadata.Comment = sval;
+                    break;
+                case TagSoftware:
+                    metadata.Software = sval;
+                    break;
+                case TagFocalLength:
+                    dVal = (double)prop.Item2;
+                    if (dVal != 0.0)
+                        metadata.FocalLength = dVal;
+                    break;
+                }
+            }
+            return metadata;
+        }
         #endregion
     }
 }

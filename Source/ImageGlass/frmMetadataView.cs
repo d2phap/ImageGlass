@@ -77,10 +77,11 @@ namespace ImageGlass
 
             _dataView.Columns[0].Width = 1;
             _dataView.Columns[1].Width = maxW; // AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-            _dataView.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+            _dataView.Columns[2].Width = 300 - maxW - 10;
+            //_dataView.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             _dataView.Height = (int)(_dataIds.Length * 25 * DPIScaling.GetDPIScaleFactor());
-            _dataView.Width = 225;
+            _dataView.Width = 300;
 
             this.Height = _dataView.Height + 10;
             Controls.Add(_dataView);
@@ -214,62 +215,63 @@ namespace ImageGlass
         {
             set
             {
-                // active image has been changed
-                // update metadata controls
-                var local = value;
-                var dt = local.DateTaken;
+                try
+                {
+                    // active image has been changed
+                    // update metadata controls
+                    var local = value;
+                    var dt = local.DateTaken;
 
 
-                var lvi = _dataView.Items[0];
-                if (dt == DateTime.MinValue)
-                    lvi.SubItems[2].Text = " ";
-                else
-                    lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss");
+                    var lvi = _dataView.Items[0];
+                    if (dt == DateTime.MinValue)
+                        lvi.SubItems[2].Text = " ";
+                    else
+                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss");
 
-                lvi = _dataView.Items[1];
-                lvi.SubItems[2].Text = local.EquipmentModel;
+                    lvi = _dataView.Items[1];
+                    lvi.SubItems[2].Text = local.EquipmentModel;
 
-                lvi = _dataView.Items[2];
-                lvi.SubItems[2].Text = local.Artist;
+                    lvi = _dataView.Items[2];
+                    lvi.SubItems[2].Text = local.Artist;
 
-                lvi = _dataView.Items[3];
-                lvi.SubItems[2].Text = local.Copyright;
+                    lvi = _dataView.Items[3];
+                    lvi.SubItems[2].Text = local.Copyright;
 
-                lvi = _dataView.Items[4];
-                if (local.ExposureTime == 0)
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = local.ExposureTime.ToString() + " sec.";
+                    lvi = _dataView.Items[4];
+                    lvi.SubItems[2].Text = local.ExposureString;
 
-                lvi = _dataView.Items[5];
-                if (local.FNumber == 0)
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
+                    lvi = _dataView.Items[5];
+                    if (local.FNumber == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
 
-                lvi = _dataView.Items[6];
-                if (local.ISOSpeed == 0)
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
+                    lvi = _dataView.Items[6];
+                    if (local.ISOSpeed == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
 
-                lvi = _dataView.Items[7];
-                if (string.IsNullOrEmpty(local.UserComment))
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = local.UserComment.Trim();
+                    lvi = _dataView.Items[7];
+                    if (string.IsNullOrEmpty(local.UserComment))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.UserComment.Trim();
 
-                lvi = _dataView.Items[8];
-                if (local.FocalLength == 0)
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
+                    lvi = _dataView.Items[8];
+                    if (local.FocalLength == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
 
-                lvi = _dataView.Items[9];
-                if (string.IsNullOrEmpty(local.Software))
-                    lvi.SubItems[2].Text = "";
-                else
-                    lvi.SubItems[2].Text = local.Software.Trim();
+                    lvi = _dataView.Items[9];
+                    if (string.IsNullOrEmpty(local.Software))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.Software.Trim();
+                }
+                catch { }
             }
         }
 

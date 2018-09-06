@@ -209,6 +209,7 @@ namespace ImageGlass.ImageListView
         /// Focal length (Exif tag).
         /// </summary>
         FocalLength,
+        ExposureTimeAsString,
     }
     /// <summary>
     /// Represents the order by which items are drawn.

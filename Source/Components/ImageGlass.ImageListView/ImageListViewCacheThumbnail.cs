@@ -588,7 +588,8 @@ namespace ImageGlass.ImageListView
         public void Clear()
         {
             foreach (CacheItem item in thumbCache.Values)
-                item.Dispose();
+                if (item != null) // KBR observed bug
+                    item.Dispose();
             thumbCache.Clear();
 
             if (rendererItem != null)

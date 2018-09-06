@@ -58,6 +58,7 @@ namespace ImageGlass.ImageListView
         private string mArtist;
         private string mCopyright;
         private float mExposureTime;
+        private string mExposureString;
         private float mFNumber;
         private ushort mISOSpeed;
         private string mUserComment;
@@ -436,6 +437,8 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Category("Camera Properties"), Browsable(true), Description("Gets the exposure time in seconds.")]
         public float ExposureTime { get { UpdateFileInfo(); return mExposureTime; } }
+
+        public string ExposureString { get { UpdateFileInfo(); return mExposureString; } }
         /// <summary>
         /// Gets the F number.
         /// </summary>
@@ -1013,6 +1016,9 @@ namespace ImageGlass.ImageListView
                         break;
                     case ColumnType.ExposureTime:
                         mExposureTime = (float)item.Item3;
+                        break;
+                    case ColumnType.ExposureTimeAsString:
+                        mExposureString = (string)item.Item3;
                         break;
                     case ColumnType.FNumber:
                         mFNumber = (float)item.Item3;
