@@ -50,11 +50,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Metadata Viewer";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmColorPicker_FormClosing);
-            this.Load += new System.EventHandler(this.frmColorPicker_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmColorPicker_KeyDown);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
-            this.Move += new System.EventHandler(this.frmColorPicker_Move);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
+            this.Load += new System.EventHandler(this.OnLoad);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+            this.Move += new System.EventHandler(this.OnMove);
 			
             this.ResumeLayout(false);
             this.PerformLayout();

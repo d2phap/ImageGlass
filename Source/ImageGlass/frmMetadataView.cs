@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using ImageGlass.Core;
 using ImageGlass.Theme;
 using ImageGlass.Services.Configuration;
 using System;
@@ -51,19 +50,18 @@ namespace ImageGlass
             InitializeComponent();
 
             AutoSize = true;
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Font = new Font("Segoe UI", 9F);
 
 
             _dataView = new ListView();
-            _dataView.Font = new System.Drawing.Font("Segoe UI", 9F);
+            _dataView.Font = new Font("Segoe UI", 9F);
             _dataView.Scrollable = false;
             _dataView.BorderStyle = BorderStyle.None;
             _dataView.View = System.Windows.Forms.View.Details;
             _dataView.Columns.Add("");
             _dataView.Columns.Add("Id");
             _dataView.Columns.Add("Data");
-            //_dataView.GridLines = true;
-            _dataView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            _dataView.HeaderStyle = ColumnHeaderStyle.None;
             _dataView.Columns[1].TextAlign = HorizontalAlignment.Right;
 
             int maxW = int.MinValue;
@@ -77,19 +75,27 @@ namespace ImageGlass
 
             _dataView.Columns[0].Width = 1;
             _dataView.Columns[1].Width = maxW; // AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-            _dataView.Columns[2].Width = 300 - maxW - 10;
+            _dataView.Columns[2].Width = 250 - maxW - 10; // TODO const
             //_dataView.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-            _dataView.Height = (int)(_dataIds.Length * 25 * DPIScaling.GetDPIScaleFactor());
-            _dataView.Width = 300;
+            _dataView.Height = (int)(_dataIds.Length * 20 * DPIScaling.GetDPIScaleFactor()); // TODO const?
+            _dataView.Width = (int)(250 * DPIScaling.GetDPIScaleFactor()); // TODO const
+
+            _dataView.MultiSelect = false;
 
             this.Height = _dataView.Height + 10;
             Controls.Add(_dataView);
 
-            _dataView.MouseDown += frmColorPicker_MouseDown;
+            _dataView.ItemSelectionChanged += _dataView_ItemSelectionChanged;
+            _dataView.MouseDown += OnMouseDown;
             _dataView.MouseMove += _dataView_MouseMove;
         }
-		
+
+        private void _dataView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected) e.Item.Selected = false;
+        }
+
         #region Borderless form moving
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -100,7 +106,7 @@ namespace ImageGlass
         public static extern bool ReleaseCapture();
 
 
-        private void frmColorPicker_MouseDown(object sender, MouseEventArgs e)
+        private void OnMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -228,19 +234,22 @@ namespace ImageGlass
                     if (dt == DateTime.MinValue)
                         lvi.SubItems[2].Text = " ";
                     else
-                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss");
+                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss").Trim();
 
                     lvi = _dataView.Items[1];
-                    lvi.SubItems[2].Text = local.EquipmentModel;
+                    lvi.SubItems[2].Text = local.EquipmentModel.Trim();
 
                     lvi = _dataView.Items[2];
-                    lvi.SubItems[2].Text = local.Artist;
+                    lvi.SubItems[2].Text = local.Artist.Trim();
 
                     lvi = _dataView.Items[3];
-                    lvi.SubItems[2].Text = local.Copyright;
+                    lvi.SubItems[2].Text = local.Copyright.Trim();
 
                     lvi = _dataView.Items[4];
-                    lvi.SubItems[2].Text = local.ExposureString;
+                    if (local.ExposureTime == 0.0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.ExposureTime.ToString();
 
                     lvi = _dataView.Items[5];
                     if (local.FNumber == 0)
@@ -283,7 +292,6 @@ namespace ImageGlass
         private Point parentLocation = Point.Empty;
         private Point parentOffset = Point.Empty;
         private bool formOwnerMoving = false;
-
 
 
         private void _AttachEventsToParent(Form frmOwner)
@@ -335,7 +343,7 @@ namespace ImageGlass
             parentLocation = this.Owner.Location;
         }
 
-        private void frmColorPicker_Move(object sender, EventArgs e)
+        private void OnMove(object sender, EventArgs e)
         {
             if (!formOwnerMoving)
             {
@@ -377,7 +385,7 @@ namespace ImageGlass
 
         #endregion
 
-        private void frmColorPicker_KeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
             //lblPixel.Text = e.KeyCode.ToString();
 
@@ -394,8 +402,7 @@ namespace ImageGlass
         }
 
 
-        // KBR abstract
-        private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnClosing(object sender, FormClosingEventArgs e)
         {
             LocalSetting.IsMetadataViewOpening = false;
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
@@ -411,7 +418,7 @@ namespace ImageGlass
             _dataView.ForeColor = ForeColor;
         }
 
-        private void frmColorPicker_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             UpdateUI();
 
@@ -431,6 +438,7 @@ namespace ImageGlass
             }
 		}
 
+        #region Tooltip for listview items
         private ToolTip mTooltip;
         private Point mLastPos = new Point(-1, -1);
 
@@ -457,5 +465,6 @@ namespace ImageGlass
             mLastPos = e.Location;
         }
 
+        #endregion
     }
 }
