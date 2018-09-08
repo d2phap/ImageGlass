@@ -87,6 +87,7 @@ namespace ImageGlass
             Controls.Add(_dataView);
 
             _dataView.MouseDown += frmColorPicker_MouseDown;
+            _dataView.MouseMove += _dataView_MouseMove;
         }
 		
         #region Borderless form moving
@@ -429,6 +430,32 @@ namespace ImageGlass
                 this.Location = rc.Location;
             }
 		}
-		
+
+        private ToolTip mTooltip;
+        private Point mLastPos = new Point(-1, -1);
+
+        private void _dataView_MouseMove(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo info = _dataView.HitTest(e.X, e.Y);
+
+            if (mTooltip == null)
+                mTooltip = new ToolTip();
+
+            if (mLastPos != e.Location)
+            {
+                if (info.Item != null && info.SubItem != null)
+                {
+                    mTooltip.ToolTipTitle = info.Item.Text;
+                    mTooltip.Show(info.SubItem.Text, info.Item.ListView, e.X, e.Y, 2000);
+                }
+                else
+                {
+                    mTooltip.SetToolTip(_dataView, string.Empty);
+                }
+            }
+
+            mLastPos = e.Location;
+        }
+
     }
 }
