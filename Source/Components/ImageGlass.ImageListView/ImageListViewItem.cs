@@ -54,6 +54,10 @@ namespace ImageGlass.ImageListView
         // Exif tags
         private string mImageDescription;
         private string mEquipmentModel;
+        private string mEquipmentMaker;
+        private string mTags;
+        private string mHeadline;
+        private string mTitle;
         private DateTime mDateTaken;
         private string mArtist;
         private string mCopyright;
@@ -418,6 +422,11 @@ namespace ImageGlass.ImageListView
         [Category("Camera Properties"), Browsable(true), Description("Gets the camera model.")]
         public string EquipmentModel { get { UpdateFileInfo(); return mEquipmentModel; } }
         /// <summary>
+        /// Gets the camera manufacturer.
+        /// </summary>
+        [Category("Camera Properties"), Browsable(true), Description("Gets the camera model.")]
+        public string EquipmentMaker { get { UpdateFileInfo(); return mEquipmentMaker; } }
+        /// <summary>
         /// Gets the date and time the image was taken.
         /// </summary>
         [Category("Image Properties"), Browsable(true), Description("Gets the date and time the image was taken.")]
@@ -439,6 +448,12 @@ namespace ImageGlass.ImageListView
         public float ExposureTime { get { UpdateFileInfo(); return mExposureTime; } }
 
         public string ExposureString { get { UpdateFileInfo(); return mExposureString; } }
+
+        public string Tags { get { UpdateFileInfo(); return mTags; } }
+
+        public string Title { get { UpdateFileInfo(); return mTitle; } }
+        public string Headline { get { UpdateFileInfo(); return mHeadline; } }
+
         /// <summary>
         /// Gets the F number.
         /// </summary>
@@ -1037,6 +1052,18 @@ namespace ImageGlass.ImageListView
                         break;
                     case ColumnType.FocalLength:
                         mFocalLength = (float)item.Item3;
+                        break;
+                    case ColumnType.EquipmentMaker:
+                        mEquipmentMaker = (string)item.Item3;
+                        break;
+                    case ColumnType.Tags:
+                        mTags = (string)item.Item3;
+                        break;
+                    case ColumnType.Title:
+                        mTitle = (string)item.Item3;
+                        break;
+                    case ColumnType.Headline:
+                        mHeadline = (string)item.Item3;
                         break;
                     case ColumnType.Custom:
                         string label = item.Item2;

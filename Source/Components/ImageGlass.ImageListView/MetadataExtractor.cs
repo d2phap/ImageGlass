@@ -55,7 +55,8 @@ namespace ImageGlass.ImageListView
 
 #if USEWIC
         #region WIC Metadata Paths
-        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
+        //private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
+        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}" };
         private static readonly string[] WICPathCopyright = new string[] { "/app1/ifd/{ushort=33432}", "/app13/irb/8bimiptc/iptc/copyright notice", "/xmp/<xmpalt>dc:rights", "/xmp/dc:rights" };
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
         private static readonly string[] WICPathSoftware = new string[] { "/app1/ifd/{ushort=305}", "/xmp/xmp:CreatorTool", "/xmp/xmp:creatortool", "/xmp/tiff:Software", "/xmp/tiff:software", "/app13/irb/8bimiptc/iptc/Originating Program" };
@@ -69,6 +70,9 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathFNumber = new string[] { "/app1/ifd/exif/{ushort=33437}", "/xmp/exif:FNumber" };
         private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
         private static readonly string[] WICPathFocalLength = new string[] { "/app1/ifd/exif/{ushort=37386}", "/xmp/exif:FocalLength" };
+        private static readonly string[] WICTags = new string[] { "/app13/irb/8bimiptc/iptc/keywords"};
+        private static readonly string[] WICHeadline = new string[] { "/app13/irb/8bimiptc/iptc/headline" };
+        private static readonly string[] WICTitle = new string[] { "/app13/irb/8bimiptc/iptc/title" };
         #endregion
 #endif
 
@@ -259,6 +263,10 @@ namespace ImageGlass.ImageListView
         /// Focal length.
         /// </summary>
         public double FocalLength = 0.0;
+
+        public string Tags = null; // tags or keywords
+        public string Headline = null; // IPTC headline
+        public string Title = null; // IPTC Title
         #endregion
 
         #region Helper Methods
@@ -597,7 +605,27 @@ namespace ImageGlass.ImageListView
             val = GetMetadataObject(data, WICPathFocalLength);
             if (val != null)
                 FocalLength = ExifDouble(BitConverter.GetBytes((ulong)val));
+
+            val = GetMetadataObject(data, WICTags);
+            if (val != null)
+            {
+                var val2 = val as string[];
+                foreach (var atag in val2)
+                    Tags += atag + ",";
+            }
+
+            val = GetMetadataObject(data, WICHeadline);
+            if (val != null)
+            {
+                Headline = val as string;
+            }
+            val = GetMetadataObject(data, WICTitle);
+            if (val != null)
+            {
+                Title = val as string;
+            }
         }
+
         /// <summary>
         /// [PHAP] Returns the metadata for the given query.
         /// </summary>

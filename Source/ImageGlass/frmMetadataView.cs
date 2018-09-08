@@ -36,9 +36,11 @@ namespace ImageGlass
 
         private ListView _dataView;
 
-        private string[] _dataIds = { "Date Taken: ", "Camera: ", "Artist: ",
+        private string[] _dataIds = { "Date Taken: ", "Camera Model: ", "Artist: ",
             "Copyright: ", "Exposure: ", "F-stop: ", "ISO speed: ",
-            "Comment: ", "Focal Length: ", "Software: "
+            "Comment: ", "Focal Length: ", "Software: ",
+            "Description: ", "Camera Maker: ", "Tags: ", "Title: "
+//                , "Headline: "
         };
         private string[] _dataProps = {"DateTaken", "EquipmentModel", "Artist",
             "Copyright", "ExposureTime", "FNumber", "ISOSpeed",
@@ -218,72 +220,6 @@ namespace ImageGlass
             }
         }
 
-        public ImageListViewItem Image
-        {
-            set
-            {
-                try
-                {
-                    // active image has been changed
-                    // update metadata controls
-                    var local = value;
-                    var dt = local.DateTaken;
-
-
-                    var lvi = _dataView.Items[0];
-                    if (dt == DateTime.MinValue)
-                        lvi.SubItems[2].Text = " ";
-                    else
-                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss").Trim();
-
-                    lvi = _dataView.Items[1];
-                    lvi.SubItems[2].Text = local.EquipmentModel.Trim();
-
-                    lvi = _dataView.Items[2];
-                    lvi.SubItems[2].Text = local.Artist.Trim();
-
-                    lvi = _dataView.Items[3];
-                    lvi.SubItems[2].Text = local.Copyright.Trim();
-
-                    lvi = _dataView.Items[4];
-                    if (local.ExposureTime == 0.0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.ExposureTime.ToString();
-
-                    lvi = _dataView.Items[5];
-                    if (local.FNumber == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
-
-                    lvi = _dataView.Items[6];
-                    if (local.ISOSpeed == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
-
-                    lvi = _dataView.Items[7];
-                    if (string.IsNullOrEmpty(local.UserComment))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.UserComment.Trim();
-
-                    lvi = _dataView.Items[8];
-                    if (local.FocalLength == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
-
-                    lvi = _dataView.Items[9];
-                    if (string.IsNullOrEmpty(local.Software))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.Software.Trim();
-                }
-                catch { }
-            }
-        }
 
         #endregion
 
@@ -466,5 +402,104 @@ namespace ImageGlass
         }
 
         #endregion
+
+        public ImageListViewItem Image
+        {
+            set
+            {
+                try
+                {
+                    // active image has been changed
+                    // update metadata controls
+                    var local = value;
+                    var dt = local.DateTaken;
+
+
+                    var lvi = _dataView.Items[0];
+                    if (dt == DateTime.MinValue)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss").Trim();
+
+                    lvi = _dataView.Items[1];
+                    lvi.SubItems[2].Text = local.EquipmentModel.Trim();
+
+                    lvi = _dataView.Items[2];
+                    lvi.SubItems[2].Text = local.Artist.Trim();
+
+                    lvi = _dataView.Items[3];
+                    lvi.SubItems[2].Text = local.Copyright.Trim();
+
+                    lvi = _dataView.Items[4];
+                    if (local.ExposureTime == 0.0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.ExposureTime.ToString();
+
+                    lvi = _dataView.Items[5];
+                    if (local.FNumber == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
+
+                    lvi = _dataView.Items[6];
+                    if (local.ISOSpeed == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
+
+                    lvi = _dataView.Items[7];
+                    if (string.IsNullOrEmpty(local.UserComment))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.UserComment.Trim();
+
+                    lvi = _dataView.Items[8];
+                    if (local.FocalLength == 0)
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
+
+                    lvi = _dataView.Items[9];
+                    if (string.IsNullOrEmpty(local.Software))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.Software.Trim();
+
+                    lvi = _dataView.Items[10];
+                    if (string.IsNullOrEmpty(local.ImageDescription))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.ImageDescription.Trim();
+
+                    lvi = _dataView.Items[11];
+                    if (string.IsNullOrEmpty(local.EquipmentMaker))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.EquipmentMaker.Trim();
+
+                    lvi = _dataView.Items[12];
+                    if (string.IsNullOrEmpty(local.Tags))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.Tags.Trim();
+
+                    lvi = _dataView.Items[13];
+                    if (string.IsNullOrEmpty(local.Title))
+                        lvi.SubItems[2].Text = "";
+                    else
+                        lvi.SubItems[2].Text = local.Title.Trim();
+
+                    //lvi = _dataView.Items[14];
+                    //if (string.IsNullOrEmpty(local.Headline))
+                    //    lvi.SubItems[2].Text = "";
+                    //else
+                    //    lvi.SubItems[2].Text = local.Headline.Trim();
+
+                }
+                catch { }
+            }
+        }
+
     }
 }

@@ -210,6 +210,10 @@ namespace ImageGlass.ImageListView
         /// </summary>
         FocalLength,
         ExposureTimeAsString,
+        EquipmentMaker,
+        Tags,
+        Title,
+        Headline,
     }
     /// <summary>
     /// Represents the order by which items are drawn.
