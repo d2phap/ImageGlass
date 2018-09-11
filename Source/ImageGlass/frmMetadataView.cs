@@ -16,13 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using ImageGlass.Theme;
+using ImageGlass.ImageListView;
 using ImageGlass.Services.Configuration;
+using ImageGlass.Theme;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using ImageGlass.ImageListView;
 
 namespace ImageGlass
 {
@@ -288,18 +289,19 @@ namespace ImageGlass
 
         #endregion
 
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            #region ESC or CTRL + SHIFT + K
-            //ESC or CTRL + SHIFT + K --------------------------------------------------------
-            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
-                (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
-            {
-                LocalSetting.IsShowMetadataViewOnStartup = false;
-                this.Close();
-            }
-            #endregion
-        }
+        // KBR disabled pending the assignment of a keyboard shortcut for the menu
+        //private void OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    #region ESC or CTRL + SHIFT + K
+        //    //ESC or CTRL + SHIFT + K --------------------------------------------------------
+        //    if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
+        //        (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
+        //    {
+        //        LocalSetting.IsShowMetadataViewOnStartup = false;
+        //        this.Close();
+        //    }
+        //    #endregion
+        //}
 
 
         private void OnClosing(object sender, FormClosingEventArgs e)
@@ -339,7 +341,7 @@ namespace ImageGlass
 		}
 
         #region Tooltip for listview items
-        private ToolTip mTooltip;
+        private CToolTip mTooltip;
         private Point mLastPos = new Point(-1, -1);
 
         private void _dataView_MouseMove(object sender, MouseEventArgs e)
@@ -353,7 +355,10 @@ namespace ImageGlass
             ListViewHitTestInfo info = _dataView.HitTest(e.X, e.Y);
 
             if (mTooltip == null)
-                mTooltip = new ToolTip();
+            {
+                mTooltip = new CToolTip();
+
+            }
 
             if (mLastPos != e.Location)
             {
@@ -504,5 +509,31 @@ namespace ImageGlass
             }
         }
         #endregion
+    }
+
+    /// <summary>
+    /// Custom tooltip class to wrap long tooltips. As some metadata strings can
+    /// be really long, the default ToolTip behavior is to make the tooltip as 
+    /// wide as the screen!
+    /// </summary>
+    public class CToolTip : ToolTip
+    {
+        private Regex rgx = new Regex("(.{50}\\s)");
+
+        public CToolTip() : base()
+        {
+        }
+
+        public new void SetToolTip(Control control, string text)
+        {
+            string WrappedMessage = rgx.Replace(text, "$1\n");
+            base.SetToolTip(control, WrappedMessage);
+        }
+
+        public new void Show(string text, IWin32Window window, int x, int y, int duration)
+        {
+            string WrappedMessage = rgx.Replace(text, "$1\n");
+            base.Show(WrappedMessage, window, x, y, duration);
+        }
     }
 }

@@ -52,7 +52,6 @@
             this.TopMost = false;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Load += new System.EventHandler(this.OnLoad);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
             this.Move += new System.EventHandler(this.OnMove);
 			
