@@ -327,7 +327,7 @@ namespace ImageGlass
             UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect("0,300,100,100");
+            Rectangle rc = GlobalSetting.StringToRect("0,0,100,100");
 
             if (rc.X == 0 && rc.Y == 0)
             {
