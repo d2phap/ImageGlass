@@ -4123,6 +4123,8 @@ namespace ImageGlass
                 }
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
                 LocalSetting.FMetadata.Show(this);
+                if (GlobalSetting.CurrentIndex != -1)
+                    LocalSetting.FMetadata.Image = thumbnailBar.Items[GlobalSetting.CurrentIndex];
                 this.Activate();
             }
             else
