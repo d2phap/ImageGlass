@@ -4117,6 +4117,10 @@ namespace ImageGlass
 
             if (mnuMainMetadataView.Checked)
             {
+                if (LocalSetting.FMetadata.IsDisposed)
+                {
+                    LocalSetting.FMetadata = new frmMetadataView();
+                }
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
                 LocalSetting.FMetadata.Show(this);
                 this.Activate();
