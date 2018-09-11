@@ -64,11 +64,6 @@ namespace ImageGlass
             BuildDataView();
         }
 
-        private void _dataView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            if (e.IsSelected) e.Item.Selected = false;
-        }
-
         #region Borderless form moving
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -348,6 +343,12 @@ namespace ImageGlass
 
         private void _dataView_MouseMove(object sender, MouseEventArgs e)
         {
+            // Display a tooltip for list view items. This is useful when the metadata value
+            // is longer than can be viewed. NOTE: the viewer must have focus before tooltips
+            // will show!
+
+            // TODO width limit on tooltip? Currently sizes to width of screen.
+
             ListViewHitTestInfo info = _dataView.HitTest(e.X, e.Y);
 
             if (mTooltip == null)
@@ -358,7 +359,7 @@ namespace ImageGlass
                 if (info.Item != null && info.SubItem != null)
                 {
                     mTooltip.ToolTipTitle = info.Item.Text;
-                    mTooltip.Show(info.SubItem.Text, info.Item.ListView, e.X, e.Y, 2000);
+                    mTooltip.Show(info.SubItem.Text, info.Item.ListView, e.X, e.Y, 4000);
                 }
                 else
                 {
@@ -375,6 +376,8 @@ namespace ImageGlass
 
         private void BuildDataView()
         {
+            // Create the control containing the labels and values. 
+
             _dataView = new ListView();
             Font dvFont = new Font("Segoe UI", 9F);
             _dataView.Font = dvFont;
@@ -409,9 +412,9 @@ namespace ImageGlass
             _dataView.Columns[1].Width = DATAVIEW_WIDE - maxW - 10;
 
             // Size the form to fit.
-            // TODO might not be tall enough depending on font size?
-            _dataView.Height = (int)(_dataIds.Length * 20 * DPIScaling.GetDPIScaleFactor()); // TODO const?
-            _dataView.Width = (int)(DATAVIEW_WIDE * DPIScaling.GetDPIScaleFactor()); // TODO const
+            // TODO might not be tall enough depending on font size? (i.e. when user changes scale)
+            _dataView.Height = (int)(_dataIds.Length * 20 * DPIScaling.GetDPIScaleFactor());
+            _dataView.Width = (int)(DATAVIEW_WIDE * DPIScaling.GetDPIScaleFactor());
             this.Height = _dataView.Height + 10;
 
             Controls.Add(_dataView);
@@ -419,6 +422,54 @@ namespace ImageGlass
             _dataView.ItemSelectionChanged += _dataView_ItemSelectionChanged;
             _dataView.MouseDown += OnMouseDown; // let the form have the event
             _dataView.MouseMove += _dataView_MouseMove;
+        }
+
+        private void _dataView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            // Prevent any side-effects from selection
+            if (e.IsSelected) e.Item.Selected = false;
+        }
+
+        #region Populate the metadata from an image
+        private void SetValueString(int rowdex, string val)
+        {
+            // vanilla string
+            try
+            {
+                var lvi = _dataView.Items[rowdex];
+                if (string.IsNullOrEmpty(val))
+                    lvi.SubItems[1].Text = "";
+                else
+                    lvi.SubItems[1].Text = val.Trim();
+            }
+            catch { }
+        }
+
+        private void SetFloatString(int rowdex, float val, string format)
+        {
+            // floating point value
+            try
+            {
+                if (val == 0.0)
+                    SetValueString(rowdex, "");
+                else
+                    SetValueString(rowdex, string.Format(format, val));
+            }
+            catch { }
+        }
+
+        private void SetIntString(int rowdex, int val, string format)
+        {
+            // integer value
+            // TODO don't really need this, use SetFloatString?
+            try
+            {
+                if (val == 0)
+                    SetValueString(rowdex, "");
+                else
+                    SetValueString(rowdex, string.Format(format, val));
+            }
+            catch { }
         }
 
         public ImageListViewItem Image
@@ -430,94 +481,29 @@ namespace ImageGlass
                     // active image has been changed
                     // update metadata controls
                     var local = value;
-                    var dt = local.DateTaken;
 
-
-                    var lvi = _dataView.Items[0];
-                    if (dt == DateTime.MinValue)
-                        lvi.SubItems[2].Text = "";
+                    if (local.DateTaken == DateTime.MinValue)
+                        SetValueString(0, "");
                     else
-                        lvi.SubItems[2].Text = dt.ToString("yyyy / MM / dd HH:mm:ss").Trim();
+                        SetValueString(0, local.DateTaken.ToString("yyyy / MM / dd HH:mm:ss").Trim());
 
-                    lvi = _dataView.Items[1];
-                    lvi.SubItems[2].Text = local.EquipmentModel.Trim();
-
-                    lvi = _dataView.Items[2];
-                    lvi.SubItems[2].Text = local.Artist.Trim();
-
-                    lvi = _dataView.Items[3];
-                    lvi.SubItems[2].Text = local.Copyright.Trim();
-
-                    lvi = _dataView.Items[4];
-                    if (local.ExposureTime == 0.0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.ExposureTime.ToString();
-
-                    lvi = _dataView.Items[5];
-                    if (local.FNumber == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = "f/" + local.FNumber.ToString();
-
-                    lvi = _dataView.Items[6];
-                    if (local.ISOSpeed == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = "ISO-" + local.ISOSpeed.ToString();
-
-                    lvi = _dataView.Items[7];
-                    if (string.IsNullOrEmpty(local.UserComment))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.UserComment.Trim();
-
-                    lvi = _dataView.Items[8];
-                    if (local.FocalLength == 0)
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = Math.Round(local.FocalLength).ToString() + " mm";
-
-                    lvi = _dataView.Items[9];
-                    if (string.IsNullOrEmpty(local.Software))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.Software.Trim();
-
-                    lvi = _dataView.Items[10];
-                    if (string.IsNullOrEmpty(local.ImageDescription))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.ImageDescription.Trim();
-
-                    lvi = _dataView.Items[11];
-                    if (string.IsNullOrEmpty(local.EquipmentMaker))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.EquipmentMaker.Trim();
-
-                    lvi = _dataView.Items[12];
-                    if (string.IsNullOrEmpty(local.Tags))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.Tags.Trim();
-
-                    lvi = _dataView.Items[13];
-                    if (string.IsNullOrEmpty(local.Title))
-                        lvi.SubItems[2].Text = "";
-                    else
-                        lvi.SubItems[2].Text = local.Title.Trim();
-
-                    //lvi = _dataView.Items[14];
-                    //if (string.IsNullOrEmpty(local.Headline))
-                    //    lvi.SubItems[2].Text = "";
-                    //else
-                    //    lvi.SubItems[2].Text = local.Headline.Trim();
-
+                    SetValueString(1, local.EquipmentModel);
+                    SetValueString(2, local.Artist);
+                    SetValueString(3, local.Copyright);
+                    SetFloatString(4, local.ExposureTime, "{0}");
+                    SetFloatString(5, local.FNumber, "f/{0}");
+                    SetIntString  (6, local.ISOSpeed, "ISO-{0}");
+                    SetValueString(7, local.UserComment);
+                    SetIntString  (8, (int)Math.Round(local.FocalLength), "{0} mm"); // technically a float but we want it forced to int
+                    SetValueString(9, local.Software);
+                    SetValueString(10, local.ImageDescription);
+                    SetValueString(11, local.EquipmentMaker);
+                    SetValueString(12, local.Tags);
+                    SetValueString(13, local.Title);
                 }
                 catch { }
             }
         }
-
+        #endregion
     }
 }
