@@ -209,6 +209,8 @@ namespace ImageGlass.ImageListView
         /// Focal length (Exif tag).
         /// </summary>
         FocalLength,
+
+        // [IG_CHANGE] attempting to fetch more metadata - with mixed results
         ExposureTimeAsString,
         EquipmentMaker,
         Tags,

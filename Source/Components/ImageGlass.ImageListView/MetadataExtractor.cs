@@ -22,7 +22,6 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Collections.Generic;
 #if USEWIC
 using System.Windows.Media.Imaging;
 #endif
@@ -51,12 +50,13 @@ namespace ImageGlass.ImageListView
         private const int TagEquipmentManufacturer = 0x010F;
         private const int TagFocalLength = 0x920A;
         private const int TagSoftware = 0x0131;
+        private const int TagImageTitle = 0x0320; // [IG_CHANGE]
         #endregion
 
 #if USEWIC
         #region WIC Metadata Paths
         //private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
-        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}" };
+        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}", "/ifd/exif/{ushort=270}" };
         private static readonly string[] WICPathCopyright = new string[] { "/app1/ifd/{ushort=33432}", "/app13/irb/8bimiptc/iptc/copyright notice", "/xmp/<xmpalt>dc:rights", "/xmp/dc:rights" };
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
         private static readonly string[] WICPathSoftware = new string[] { "/app1/ifd/{ushort=305}", "/xmp/xmp:CreatorTool", "/xmp/xmp:creatortool", "/xmp/tiff:Software", "/xmp/tiff:software", "/app13/irb/8bimiptc/iptc/Originating Program" };
@@ -64,11 +64,11 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathRating = new string[] { "/app1/ifd/{ushort=18249}", "/xmp/MicrosoftPhoto:Rating" };
         private static readonly string[] WICPathArtist = new string[] { "/app1/ifd/{ushort=315}", "/app13/irb/8bimiptc/iptc/by-line", "/app1/ifd/{ushort=40093}", "/xmp/tiff:artist" };
         private static readonly string[] WICPathEquipmentManufacturer = new string[] { "/app1/ifd/{ushort=271}", "/xmp/tiff:Make", "/xmp/tiff:make" };
-        private static readonly string[] WICPathEquipmentModel = new string[] { "/app1/ifd/{ushort=272}", "/xmp/tiff:Model", "/xmp/tiff:model" };
+        private static readonly string[] WICPathEquipmentModel = new string[] { "/app1/ifd/{ushort=272}", "/xmp/tiff:Model", "/xmp/tiff:model", "/ifd/exif/{ushort=272}" };
         private static readonly string[] WICPathDateTaken = new string[] { "/app1/ifd/exif/{ushort=36867}", "/app13/irb/8bimiptc/iptc/date created", "/xmp/xmp:CreateDate", "/app1/ifd/exif/{ushort=36868}", "/app13/irb/8bimiptc/iptc/date created", "/xmp/exif:DateTimeOriginal" };
         private static readonly string[] WICPathExposureTime = new string[] { "/app1/ifd/exif/{ushort=33434}", "/xmp/exif:ExposureTime" };
         private static readonly string[] WICPathFNumber = new string[] { "/app1/ifd/exif/{ushort=33437}", "/xmp/exif:FNumber" };
-        private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
+        private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed", "/ifd/exif/{ushort=34867}" };
         private static readonly string[] WICPathFocalLength = new string[] { "/app1/ifd/exif/{ushort=37386}", "/xmp/exif:FocalLength" };
         private static readonly string[] WICTags = new string[] { "/app13/irb/8bimiptc/iptc/keywords"};
         private static readonly string[] WICHeadline = new string[] { "/app13/irb/8bimiptc/iptc/headline" };
@@ -264,6 +264,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public double FocalLength = 0.0;
 
+        // [IG_CHANGE] attempting to fetch more metadata, with mixed results
         public string Tags = null; // tags or keywords
         public string Headline = null; // IPTC headline
         public string Title = null; // IPTC Title
@@ -490,6 +491,13 @@ namespace ImageGlass.ImageListView
                                 }
                             }
                             break;
+                        case TagImageTitle: // [IG_CHANGE]
+                            str = ExifAscii(prop.Value).Trim();
+                            if (str != String.Empty)
+                            {
+                                Title = str;
+                            }
+                            break;
                     }
                 }
             }
@@ -627,7 +635,7 @@ namespace ImageGlass.ImageListView
         }
 
         /// <summary>
-        /// [PHAP] Returns the metadata for the given query.
+        /// [IG_CHANGE] Returns the metadata for the given query.
         /// </summary>
         /// <param name="metadata">The image metadata.</param>
         /// <param name="query">A list of query strings.</param>
@@ -718,96 +726,6 @@ namespace ImageGlass.ImageListView
         }
 #endif
 
-        public static MetadataExtractor FromTuple(List<System.Tuple<int,object>> exifData)
-        {
-            MetadataExtractor metadata = new MetadataExtractor();
-
-            double dVal;
-            int iVal;
-            DateTime dateTime;
-            string str;
-            foreach (System.Tuple<int,object> prop in exifData)
-            {
-                if (prop.Item2 == null)
-                    continue;
-
-                string sval = prop.Item2 as string;
-
-                switch (prop.Item1)
-                {
-                case TagImageDescription:
-                    metadata.ImageDescription = sval == null ? "" : sval.Trim();
-                    break;
-                case TagArtist:
-                    metadata.Artist = sval == null ? "" : sval.Trim();
-                    break;
-                case TagEquipmentManufacturer:
-                    metadata.EquipmentManufacturer = sval == null ? "" : sval.Trim();
-                    break;
-                case TagEquipmentModel:
-                    metadata.EquipmentModel = sval == null ? "" : sval.Trim();
-                    break;
-                case TagDateTimeOriginal:
-                    dateTime = ExifDateTime(sval);
-                    if (dateTime != DateTime.MinValue)
-                    {
-                        metadata.DateTaken = dateTime;
-                    }
-                    break;
-                case TagExposureTime:
-                    metadata.ExposureTimeAsString = sval == null ? "" : sval.Trim();
-                    break;
-                case TagFNumber:
-                    dVal = (double)prop.Item2;
-                    if (dVal != 0.0)
-                        metadata.FNumber = dVal;
-                    break;
-                case TagISOSpeed:
-                    //iVal = ushort.Parse(sval);
-                    //if (iVal != 0)
-                    //    metadata.ISOSpeed = iVal;
-                    break;
-                case TagCopyright:
-                    metadata.Copyright = sval;
-                    break;
-                case TagRating:
-                    //if (Rating == 0 && prop.Value.Length == 2)
-                    //{
-                    //    iVal = ExifUShort(prop.Value);
-                    //    if (iVal == 1)
-                    //        Rating = 1;
-                    //    else if (iVal == 2)
-                    //        Rating = 25;
-                    //    else if (iVal == 3)
-                    //        Rating = 50;
-                    //    else if (iVal == 4)
-                    //        Rating = 75;
-                    //    else if (iVal == 5)
-                    //        Rating = 99;
-                    //}
-                    break;
-                case TagRatingPercent:
-                    //if (prop.Value.Length == 2)
-                    //{
-                    //    iVal = ExifUShort(prop.Value);
-                    //    Rating = iVal;
-                    //}
-                    break;
-                case TagUserComment:
-                    metadata.Comment = sval;
-                    break;
-                case TagSoftware:
-                    metadata.Software = sval;
-                    break;
-                case TagFocalLength:
-                    dVal = (double)prop.Item2;
-                    if (dVal != 0.0)
-                        metadata.FocalLength = dVal;
-                    break;
-                }
-            }
-            return metadata;
-        }
         #endregion
     }
 }

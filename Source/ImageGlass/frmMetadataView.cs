@@ -28,30 +28,31 @@ namespace ImageGlass
 {
     public partial class frmMetadataView : Form
     {
+        // width of the dataview (and therefore the form)
+        private const int DATAVIEW_WIDE = 250;
+
         // default location offset on the parent form
-        private static Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(250 * DPIScaling.GetDPIScaleFactor()));
+        private static Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(DATAVIEW_WIDE * DPIScaling.GetDPIScaleFactor()));
 
         private Form _currentOwner = null;
         private Point _locationOffset = DefaultLocationOffset;
 
         private ListView _dataView;
 
+        // The label strings - the lookup names from the localization dataset. The format is "frmMetadataView.<id>",
+        // e.g. "frmMetadataView.DateTaken".
+        //
+        // This is ALSO the order in which the metadata will be displayed in the list! The metadata _values_ are 
+        // difficult to fetch via code, so their position is hard coded: if you want to change the order of the
+        // items here, you MUST change the row indices in which the _values_ are placed!
+        //
+        // TODO establish a better mechanism!
         private string[] _dataIds =
         {
-            "DateTaken", "CameraModel", "Artist", "Copyright", "Exposure",
-            "FStop", "ISO", "Comment", "FocalLen", "Software",
-            "Description", "CameraMaker", "Tags", "Title"
-        };
-//            { "Date Taken: ", "Camera Model: ", "Artist: ",
-//            "Copyright: ", "Exposure: ", "F-stop: ", "ISO speed: ",
-//            "Comment: ", "Focal Length: ", "Software: ",
-//            "Description: ", "Camera Maker: ", "Tags: ", "Title: "
-////                , "Headline: "
-        //};
-
-        private string[] _dataProps = {"DateTaken", "EquipmentModel", "Artist",
-            "Copyright", "ExposureTime", "FNumber", "ISOSpeed",
-            "UserComment", "FocalLength", "Software"
+            "DateTaken", "CameraMaker", "CameraModel", "Exposure", "FStop",
+            "ISO", "FocalLen", "Software", "Artist", "Copyright",
+            "Title", "Comment", "Description"
+            //TODO not available via GDI, "Tags"
         };
 
         public frmMetadataView()
@@ -372,8 +373,6 @@ namespace ImageGlass
 
         #endregion
 
-        private const int DATAVIEW_WIDE = 250;
-
         private void BuildDataView()
         {
             // Create the control containing the labels and values. 
@@ -487,19 +486,19 @@ namespace ImageGlass
                     else
                         SetValueString(0, local.DateTaken.ToString("yyyy / MM / dd HH:mm:ss").Trim());
 
-                    SetValueString(1, local.EquipmentModel);
-                    SetValueString(2, local.Artist);
-                    SetValueString(3, local.Copyright);
-                    SetFloatString(4, local.ExposureTime, "{0}");
-                    SetFloatString(5, local.FNumber, "f/{0}");
-                    SetIntString  (6, local.ISOSpeed, "ISO-{0}");
-                    SetValueString(7, local.UserComment);
-                    SetIntString  (8, (int)Math.Round(local.FocalLength), "{0} mm"); // technically a float but we want it forced to int
-                    SetValueString(9, local.Software);
-                    SetValueString(10, local.ImageDescription);
-                    SetValueString(11, local.EquipmentMaker);
-                    SetValueString(12, local.Tags);
-                    SetValueString(13, local.Title);
+                    SetValueString(1, local.EquipmentMaker);
+                    SetValueString(2, local.EquipmentModel);
+                    SetFloatString(3, local.ExposureTime, "{0} sec.");
+                    SetFloatString(4, local.FNumber, "f/{0}");
+                    SetIntString  (5, local.ISOSpeed, "ISO-{0}");
+                    SetIntString  (6, (int)Math.Round(local.FocalLength), "{0} mm"); // technically a float but we want it forced to int
+                    SetValueString(7, local.Software);
+                    SetValueString(8, local.Artist);
+                    SetValueString(9, local.Copyright);
+                    SetValueString(10, local.Title);
+                    SetValueString(11, local.UserComment);
+                    SetValueString(12, local.ImageDescription);
+                    // TODO not available via GDI SetValueString(13, local.Tags);
                 }
                 catch { }
             }
