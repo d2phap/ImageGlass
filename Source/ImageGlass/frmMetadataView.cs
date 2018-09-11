@@ -211,7 +211,7 @@ namespace ImageGlass
             frmOwner.Move += Owner_Move;
             frmOwner.SizeChanged += Owner_Move;
             frmOwner.VisibleChanged += Owner_Move;
-            frmOwner.Deactivate += FrmOwner_Deactivate;
+            //frmOwner.Deactivate += FrmOwner_Deactivate;  // KBR disabled: color picker and this form fighting for focus
             frmOwner.LocationChanged += FrmOwner_LocationChanged;
         }
 
@@ -228,15 +228,15 @@ namespace ImageGlass
             frmOwner.Move -= Owner_Move;
             frmOwner.SizeChanged -= Owner_Move;
             frmOwner.VisibleChanged -= Owner_Move;
-            frmOwner.Deactivate -= FrmOwner_Deactivate;
+            //frmOwner.Deactivate -= FrmOwner_Deactivate; // KBR disabled: color picker and this form fighting for focus
             frmOwner.LocationChanged -= FrmOwner_LocationChanged;
         }
 
-
-        private void FrmOwner_Deactivate(object sender, EventArgs e)
-        {
-            this.TopMost = false;
-        }
+        // KBR disabled: doesn't need to be topmost
+        //private void FrmOwner_Deactivate(object sender, EventArgs e)
+        //{
+        //    this.TopMost = false;
+        //}
 
         private void Owner_Move(object sender, EventArgs e)
         {
@@ -294,9 +294,6 @@ namespace ImageGlass
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            //lblPixel.Text = e.KeyCode.ToString();
-
-
             #region ESC or CTRL + SHIFT + K
             //ESC or CTRL + SHIFT + K --------------------------------------------------------
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 

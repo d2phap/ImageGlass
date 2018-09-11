@@ -230,7 +230,8 @@ namespace ImageGlass
 
         private void FrmOwner_Deactivate(object sender, EventArgs e)
         {
-            this.TopMost = false;
+            // KBR metadataviewer & color picker fighting for focus from this. Neither needs to be topmost as far as I know.
+            //this.TopMost = false;
         }
 
         private void Owner_Move(object sender, EventArgs e)
