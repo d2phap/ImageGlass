@@ -36,12 +36,19 @@ namespace ImageGlass
 
         private ListView _dataView;
 
-        private string[] _dataIds = { "Date Taken: ", "Camera Model: ", "Artist: ",
-            "Copyright: ", "Exposure: ", "F-stop: ", "ISO speed: ",
-            "Comment: ", "Focal Length: ", "Software: ",
-            "Description: ", "Camera Maker: ", "Tags: ", "Title: "
-//                , "Headline: "
+        private string[] _dataIds =
+        {
+            "DateTaken", "CameraModel", "Artist", "Copyright", "Exposure",
+            "FStop", "ISO", "Comment", "FocalLen", "Software",
+            "Description", "CameraMaker", "Tags", "Title"
         };
+//            { "Date Taken: ", "Camera Model: ", "Artist: ",
+//            "Copyright: ", "Exposure: ", "F-stop: ", "ISO speed: ",
+//            "Comment: ", "Focal Length: ", "Software: ",
+//            "Description: ", "Camera Maker: ", "Tags: ", "Title: "
+////                , "Headline: "
+        //};
+
         private string[] _dataProps = {"DateTaken", "EquipmentModel", "Artist",
             "Copyright", "ExposureTime", "FNumber", "ISOSpeed",
             "UserComment", "FocalLength", "Software"
@@ -51,46 +58,10 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            AutoSize = true;
             this.Font = new Font("Segoe UI", 9F);
+            AutoSize = true; // size to fit contents
 
-
-            _dataView = new ListView();
-            _dataView.Font = new Font("Segoe UI", 9F);
-            _dataView.Scrollable = false;
-            _dataView.BorderStyle = BorderStyle.None;
-            _dataView.View = System.Windows.Forms.View.Details;
-            _dataView.Columns.Add("");
-            _dataView.Columns.Add("Id");
-            _dataView.Columns.Add("Data");
-            _dataView.HeaderStyle = ColumnHeaderStyle.None;
-            _dataView.Columns[1].TextAlign = HorizontalAlignment.Right;
-
-            int maxW = int.MinValue;
-            using (Graphics g = this.CreateGraphics())
-                foreach (var id in _dataIds)
-                {
-                    SizeF s = g.MeasureString(id, this.Font);
-                    maxW = Math.Max(maxW, (int)(Math.Ceiling(s.Width)) + 10);
-                    _dataView.Items.Add(new ListViewItem(new string[] { "", id, "____________________" }));
-                }
-
-            _dataView.Columns[0].Width = 1;
-            _dataView.Columns[1].Width = maxW; // AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-            _dataView.Columns[2].Width = 250 - maxW - 10; // TODO const
-            //_dataView.Columns[2].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-            _dataView.Height = (int)(_dataIds.Length * 20 * DPIScaling.GetDPIScaleFactor()); // TODO const?
-            _dataView.Width = (int)(250 * DPIScaling.GetDPIScaleFactor()); // TODO const
-
-            _dataView.MultiSelect = false;
-
-            this.Height = _dataView.Height + 10;
-            Controls.Add(_dataView);
-
-            _dataView.ItemSelectionChanged += _dataView_ItemSelectionChanged;
-            _dataView.MouseDown += OnMouseDown;
-            _dataView.MouseMove += _dataView_MouseMove;
+            BuildDataView();
         }
 
         private void _dataView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -402,6 +373,56 @@ namespace ImageGlass
         }
 
         #endregion
+
+        private const int DATAVIEW_WIDE = 250;
+
+        private void BuildDataView()
+        {
+            _dataView = new ListView();
+            Font dvFont = new Font("Segoe UI", 9F);
+            _dataView.Font = dvFont;
+            _dataView.Scrollable = false; // window will be sized to fit height
+            _dataView.BorderStyle = BorderStyle.None;
+            _dataView.View = System.Windows.Forms.View.Details; // force list style
+            _dataView.Columns.Add("Id");
+            _dataView.Columns.Add("Data");
+            _dataView.HeaderStyle = ColumnHeaderStyle.None; // don't need header
+            _dataView.Columns[0].TextAlign = HorizontalAlignment.Right;
+            _dataView.MultiSelect = false; // prevent select rect appearing on mouse down
+
+            // 1. Set the label in the left column. Label is pulled from localized strings.
+            // 2. Determine the maximum width of the label text in order to size the first
+            //    column to fit.
+            int maxW = int.MinValue;
+            using (Graphics g = this.CreateGraphics())
+                foreach (var id in _dataIds)
+                {
+                    string lookup = "frmMetadataView." + id;
+                    string label = GlobalSetting.LangPack.Items[lookup];
+
+                    SizeF s = g.MeasureString(label, dvFont);
+                    maxW = Math.Max(maxW, (int)(Math.Ceiling(s.Width)) + 10); // extra 10 pixel buffer seems necessary
+                    _dataView.Items.Add(new ListViewItem(new string[] { label, "" }));
+                }
+
+            // First column as wide as longest label.
+            // Second column as wide as we have space left
+            // TODO does this need DPIScaling?
+            _dataView.Columns[0].Width = maxW; 
+            _dataView.Columns[1].Width = DATAVIEW_WIDE - maxW - 10;
+
+            // Size the form to fit.
+            // TODO might not be tall enough depending on font size?
+            _dataView.Height = (int)(_dataIds.Length * 20 * DPIScaling.GetDPIScaleFactor()); // TODO const?
+            _dataView.Width = (int)(DATAVIEW_WIDE * DPIScaling.GetDPIScaleFactor()); // TODO const
+            this.Height = _dataView.Height + 10;
+
+            Controls.Add(_dataView);
+
+            _dataView.ItemSelectionChanged += _dataView_ItemSelectionChanged;
+            _dataView.MouseDown += OnMouseDown; // let the form have the event
+            _dataView.MouseMove += _dataView_MouseMove;
+        }
 
         public ImageListViewItem Image
         {
