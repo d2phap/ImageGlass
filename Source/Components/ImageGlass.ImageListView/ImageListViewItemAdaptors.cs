@@ -1,5 +1,4 @@
-﻿using ImageGlass.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -17,7 +16,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public class FileSystemAdaptor : ImageListView.ImageListViewItemAdaptor
         {
-            internal bool disposed;
+            private bool disposed;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="FileSystemAdaptor"/> class.
@@ -89,7 +88,7 @@ namespace ImageGlass.ImageListView
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Dimensions, string.Empty, new Size(metadata.Width, metadata.Height)));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Resolution, string.Empty, new SizeF((float)metadata.DPIX, (float)metadata.DPIY)));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.ImageDescription, string.Empty, metadata.ImageDescription ?? ""));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.EquipmentMaker, string.Empty, metadata.EquipmentManufacturer ?? ""));
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.EquipmentMaker, string.Empty, metadata.EquipmentManufacturer ?? "")); // [IG_CHANGE]
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.EquipmentModel, string.Empty, metadata.EquipmentModel ?? ""));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateTaken, string.Empty, metadata.DateTaken));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Artist, string.Empty, metadata.Artist ?? ""));
@@ -101,9 +100,9 @@ namespace ImageGlass.ImageListView
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Rating, string.Empty, (ushort)metadata.Rating));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Software, string.Empty, metadata.Software ?? ""));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FocalLength, string.Empty, (float)metadata.FocalLength));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Tags, string.Empty, metadata.Tags ?? ""));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Title, string.Empty, metadata.Title ?? ""));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Headline, string.Empty, metadata.Headline ?? ""));
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Tags, string.Empty, metadata.Tags ?? "")); // [IG_CHANGE]
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Title, string.Empty, metadata.Title ?? "")); // [IG_CHANGE]
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Headline, string.Empty, metadata.Headline ?? "")); // [IG_CHANGE]
                 }
 
                 return details.ToArray();

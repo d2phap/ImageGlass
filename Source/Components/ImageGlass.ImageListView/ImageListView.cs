@@ -1062,7 +1062,6 @@ namespace ImageGlass.ImageListView
             navigationManager = new ImageListViewNavigationManager(this);
 
             // Cache nabagers
-            //defaultAdaptor = new ImageListViewItemAdaptors.ImageMagickAdaptor();
             defaultAdaptor = new ImageListViewItemAdaptors.FileSystemAdaptor();
             thumbnailCache = new ImageListViewCacheThumbnail(this);
             shellInfoCache = new ImageListViewCacheShellInfo(this);

@@ -54,15 +54,14 @@ namespace ImageGlass.ImageListView
         // Exif tags
         private string mImageDescription;
         private string mEquipmentModel;
-        private string mEquipmentMaker;
-        private string mTags;
-        private string mHeadline;
-        private string mTitle;
+        private string mEquipmentMaker;  // [IG_CHANGE]
+        private string mTags;            // [IG_CHANGE]
+        private string mHeadline;        // [IG_CHANGE]
+        private string mTitle;           // [IG_CHANGE]
         private DateTime mDateTaken;
         private string mArtist;
         private string mCopyright;
         private float mExposureTime;
-        private string mExposureString;
         private float mFNumber;
         private ushort mISOSpeed;
         private string mUserComment;
@@ -422,6 +421,7 @@ namespace ImageGlass.ImageListView
         [Category("Camera Properties"), Browsable(true), Description("Gets the camera model.")]
         public string EquipmentModel { get { UpdateFileInfo(); return mEquipmentModel; } }
         /// <summary>
+		/// [IG_CHANGE]
         /// Gets the camera manufacturer.
         /// </summary>
         [Category("Camera Properties"), Browsable(true), Description("Gets the camera model.")]
@@ -446,12 +446,11 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Category("Camera Properties"), Browsable(true), Description("Gets the exposure time in seconds.")]
         public float ExposureTime { get { UpdateFileInfo(); return mExposureTime; } }
-
-        public string ExposureString { get { UpdateFileInfo(); return mExposureString; } }
-
+		/// [IG_CHANGE]
         public string Tags { get { UpdateFileInfo(); return mTags; } }
-
+		/// [IG_CHANGE]
         public string Title { get { UpdateFileInfo(); return mTitle; } }
+		/// [IG_CHANGE]
         public string Headline { get { UpdateFileInfo(); return mHeadline; } }
 
         /// <summary>
@@ -1032,9 +1031,6 @@ namespace ImageGlass.ImageListView
                     case ColumnType.ExposureTime:
                         mExposureTime = (float)item.Item3;
                         break;
-                    case ColumnType.ExposureTimeAsString:
-                        mExposureString = (string)item.Item3;
-                        break;
                     case ColumnType.FNumber:
                         mFNumber = (float)item.Item3;
                         break;
@@ -1053,16 +1049,16 @@ namespace ImageGlass.ImageListView
                     case ColumnType.FocalLength:
                         mFocalLength = (float)item.Item3;
                         break;
-                    case ColumnType.EquipmentMaker:
+                    case ColumnType.EquipmentMaker: 		// [IG_CHANGE]
                         mEquipmentMaker = (string)item.Item3;
                         break;
-                    case ColumnType.Tags:
+                    case ColumnType.Tags: 		// [IG_CHANGE]
                         mTags = (string)item.Item3;
                         break;
-                    case ColumnType.Title:
+                    case ColumnType.Title: 		// [IG_CHANGE]
                         mTitle = (string)item.Item3;
                         break;
-                    case ColumnType.Headline:
+                    case ColumnType.Headline: 		// [IG_CHANGE]
                         mHeadline = (string)item.Item3;
                         break;
                     case ColumnType.Custom:

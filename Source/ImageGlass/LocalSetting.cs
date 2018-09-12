@@ -76,15 +76,15 @@ namespace ImageGlass
         public static bool IsTempMemoryData { get; set; } = false;
 
         /// <summary>
-        /// Check if frmColorPicker is opening.
-        /// This is for toggle Color Picker menu in frmMain
+        /// Check if Metadata Viewer is opening.
+        /// This is to toggle the Metadata Viewer menu in frmMain
         /// </summary>
         public static bool IsMetadataViewOpening { get; set; } = false;
 
 
         /// <summary>
-        /// Check if frmColorPicker is not closed by user (toggle the menu / press ESC on frmColorPicker form). 
-        /// This is for auto open Color Picker tool when startup
+        /// Check if Metadata Viewer is not closed by user (toggle the menu / press ESC on Metadata Viewer form). 
+        /// This is for auto open Metadata Viewer tool at startup
         /// </summary>
         public static bool IsShowMetadataViewOnStartup { get; set; } = false;
 

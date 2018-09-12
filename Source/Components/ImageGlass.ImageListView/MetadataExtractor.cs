@@ -55,8 +55,7 @@ namespace ImageGlass.ImageListView
 
 #if USEWIC
         #region WIC Metadata Paths
-        //private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
-        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}", "/ifd/exif/{ushort=270}" };
+        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}", "/ifd/exif/{ushort=270}" }; // [IG_CHANGE]
         private static readonly string[] WICPathCopyright = new string[] { "/app1/ifd/{ushort=33432}", "/app13/irb/8bimiptc/iptc/copyright notice", "/xmp/<xmpalt>dc:rights", "/xmp/dc:rights" };
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
         private static readonly string[] WICPathSoftware = new string[] { "/app1/ifd/{ushort=305}", "/xmp/xmp:CreatorTool", "/xmp/xmp:creatortool", "/xmp/tiff:Software", "/xmp/tiff:software", "/app13/irb/8bimiptc/iptc/Originating Program" };
@@ -64,15 +63,15 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathRating = new string[] { "/app1/ifd/{ushort=18249}", "/xmp/MicrosoftPhoto:Rating" };
         private static readonly string[] WICPathArtist = new string[] { "/app1/ifd/{ushort=315}", "/app13/irb/8bimiptc/iptc/by-line", "/app1/ifd/{ushort=40093}", "/xmp/tiff:artist" };
         private static readonly string[] WICPathEquipmentManufacturer = new string[] { "/app1/ifd/{ushort=271}", "/xmp/tiff:Make", "/xmp/tiff:make" };
-        private static readonly string[] WICPathEquipmentModel = new string[] { "/app1/ifd/{ushort=272}", "/xmp/tiff:Model", "/xmp/tiff:model", "/ifd/exif/{ushort=272}" };
+        private static readonly string[] WICPathEquipmentModel = new string[] { "/app1/ifd/{ushort=272}", "/xmp/tiff:Model", "/xmp/tiff:model" };
         private static readonly string[] WICPathDateTaken = new string[] { "/app1/ifd/exif/{ushort=36867}", "/app13/irb/8bimiptc/iptc/date created", "/xmp/xmp:CreateDate", "/app1/ifd/exif/{ushort=36868}", "/app13/irb/8bimiptc/iptc/date created", "/xmp/exif:DateTimeOriginal" };
         private static readonly string[] WICPathExposureTime = new string[] { "/app1/ifd/exif/{ushort=33434}", "/xmp/exif:ExposureTime" };
         private static readonly string[] WICPathFNumber = new string[] { "/app1/ifd/exif/{ushort=33437}", "/xmp/exif:FNumber" };
-        private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed", "/ifd/exif/{ushort=34867}" };
+        private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
         private static readonly string[] WICPathFocalLength = new string[] { "/app1/ifd/exif/{ushort=37386}", "/xmp/exif:FocalLength" };
-        private static readonly string[] WICTags = new string[] { "/app13/irb/8bimiptc/iptc/keywords"};
-        private static readonly string[] WICHeadline = new string[] { "/app13/irb/8bimiptc/iptc/headline" };
-        private static readonly string[] WICTitle = new string[] { "/app13/irb/8bimiptc/iptc/title" };
+        private static readonly string[] WICTags = new string[] { "/app13/irb/8bimiptc/iptc/keywords"};  // [IG_CHANGE]
+        private static readonly string[] WICHeadline = new string[] { "/app13/irb/8bimiptc/iptc/headline" }; // [IG_CHANGE]
+        private static readonly string[] WICTitle = new string[] { "/app13/irb/8bimiptc/iptc/title" }; // [IG_CHANGE]
         #endregion
 #endif
 
@@ -238,7 +237,6 @@ namespace ImageGlass.ImageListView
         /// Exposure time.
         /// </summary>
         public double ExposureTime = 0.0;
-        public string ExposureTimeAsString = null;
         /// <summary>
         /// F number.
         /// </summary>
@@ -614,6 +612,7 @@ namespace ImageGlass.ImageListView
             if (val != null)
                 FocalLength = ExifDouble(BitConverter.GetBytes((ulong)val));
 
+			// [IG_CHANGE]
             val = GetMetadataObject(data, WICTags);
             if (val != null)
             {
@@ -622,11 +621,14 @@ namespace ImageGlass.ImageListView
                     Tags += atag + ",";
             }
 
+			// [IG_CHANGE]
             val = GetMetadataObject(data, WICHeadline);
             if (val != null)
             {
                 Headline = val as string;
             }
+			
+			// [IG_CHANGE]
             val = GetMetadataObject(data, WICTitle);
             if (val != null)
             {
@@ -725,7 +727,6 @@ namespace ImageGlass.ImageListView
             return metadata;
         }
 #endif
-
         #endregion
     }
 }
