@@ -4122,9 +4122,12 @@ namespace ImageGlass
                     LocalSetting.FMetadata = new frmMetadataView();
                 }
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
-                LocalSetting.FMetadata.Show(this);
                 if (GlobalSetting.CurrentIndex != -1)
                     LocalSetting.FMetadata.Image = thumbnailBar.Items[GlobalSetting.CurrentIndex];
+                LocalSetting.FMetadata.Show(this);
+                // Without the next statement, the form wouldn't appear in front of main window
+                // (but only if image already loaded, and only on first showing)
+                LocalSetting.FMetadata.Activate(); 
                 this.Activate();
             }
             else
