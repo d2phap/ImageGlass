@@ -55,7 +55,7 @@ namespace ImageGlass
             
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
-            
+
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
@@ -2974,54 +2974,33 @@ namespace ImageGlass
 
         #region Toolbar Buttons Events
 
-        private MethodInfo onMouseLeave = null;
-
-        private void clearTooltip(ToolStripButton btn)
-        {
-            // Issue #409: user requested the toolbar button tooltip should vanish when the button is clicked.
-            // MS doesn't give us the means to control tooltips very well, the implementation is internal to
-            // the ToolStrip control.
-            // HOWEVER by studing the ToolStripItem source code, I noticed tooltips are disabled on the mouse
-            // leave event on a ToolStripItem. By raising that event, the tooltip vanishes. As the OnMouseLeave
-            // event is not public, the following reflection convolution is required.
-            if (onMouseLeave == null)
-                onMouseLeave = btn.GetType().GetMethod("OnMouseLeave", BindingFlags.NonPublic | BindingFlags.Instance);
-            onMouseLeave.Invoke(btn, new object[] { new EventArgs() });
-        }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnNext);
             mnuMainViewNext_Click(null, e);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnBack);
             mnuMainViewPrevious_Click(null, e);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRefresh);
             mnuMainRefresh_Click(null, null);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRotateRight);
             mnuMainRotateClockwise_Click(null, e);
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRotateLeft);
             mnuMainRotateCounterclockwise_Click(null, e);
         }
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFlipHorz);
             if (picMain.Image == null)
             {
                 return;
@@ -3046,7 +3025,6 @@ namespace ImageGlass
 
         private void btnFlipVert_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFlipVert);
             if (picMain.Image == null)
             {
                 return;
@@ -3070,103 +3048,86 @@ namespace ImageGlass
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnDelete);
             mnuMainMoveToRecycleBin_Click(null, e);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnOpen);
             mnuMainOpenFile_Click(null, e);
         }
 
         private void btnThumb_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnThumb);
             mnuMainThumbnailBar_Click(null, e);
         }
 
         private void btnActualSize_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnActualSize);
             mnuMainActualSize_Click(null, e);
         }
 
         private void btnAutoZoom_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnAutoZoom);
             mnuMainAutoZoom_Click(null, e);
         }
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaletoWidth);
             mnuMainScaleToWidth_Click(null, e);
         }
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaletoHeight);
             mnuMainScaleToHeight_Click(null, e);
         }
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnWindowAutosize);
             mnuMainWindowAdaptImage_Click(null, e);
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnGoto);
             mnuMainGoto_Click(null, e);
         }
 
         private void btnCheckedBackground_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnCheckedBackground);
             mnuMainCheckBackground_Click(null, e);
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomIn);
             mnuMainZoomIn_Click(null, e);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomOut);
             mnuMainZoomOut_Click(null, e);
         }
 
         private void btnScaleToFit_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaleToFit);
             mnuMainScaleToFit_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomLock);
             mnuMainLockZoomRatio_Click(null, e);
         }
 
         private void btnSlideShow_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnSlideShow);
             mnuMainSlideShowStart_Click(null, null);
         }
 
         private void btnFullScreen_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFullScreen);
             mnuMainFullScreen_Click(null, e);
         }
 
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnPrintImage);
             mnuMainPrint_Click(null, e);
         }
 
@@ -3182,7 +3143,6 @@ namespace ImageGlass
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnConvert);
             mnuMainSaveAs_Click(null, e);
         }
 
