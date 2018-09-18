@@ -39,6 +39,7 @@ using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
 using System.Reflection;
+using Ionic.Zip;
 
 
 namespace ImageGlass
@@ -85,7 +86,6 @@ namespace ImageGlass
 
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
-        
 
 
         /***********************************
@@ -179,8 +179,11 @@ namespace ImageGlass
         private void OpenFile()
         {
             OpenFileDialog o = new OpenFileDialog();
+
+            // TODO KBR to settings/const
+            // TODO KBR can dotnetzip handle 7zip?
             o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats;
+                        GlobalSetting.AllImageFormats + "|Archive Files|*.zip;*.cbz;*.cbr;*.rar";
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
@@ -203,13 +206,28 @@ namespace ImageGlass
             string filePath = "";
             string dirPath = "";
 
+            // Reset search from subfolders
+            LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
+
             //Check path is file or directory?
             if (File.Exists(path))
             {
-                if (Path.GetExtension(path).ToLower() == ".lnk")
-                    dirPath = Shortcuts.FolderFromShortcut(path);
-                else
-                    dirPath = Path.GetDirectoryName(path);
+                var ext = Path.GetExtension(path).ToLower();
+                switch (ext)
+                {
+                    case ".lnk":
+                        dirPath = Shortcuts.FolderFromShortcut(path);
+                        break;
+                    case ".cbr": // TODO KBR check via string/setting
+                    case ".cbz": // TODO KBR consider asking dotnetzip to determine if it is an archive
+                    case ".zip":
+                    case ".rar":
+                        LoadFromArchive(path);
+                        return;
+                    default:
+                        dirPath = Path.GetDirectoryName(path);
+                        break;
+                }
 
                 filePath = path;
             }
@@ -285,9 +303,9 @@ namespace ImageGlass
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
                 FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                IncludeSubdirectories = LocalSetting.LoadFromSubfolders, // GlobalSetting.IsRecursiveLoading,
 
-                // auto Invoke the form if required, no need to invidiually invoke in each event
+                // auto Invoke the form if required, no need to individually invoke in each event
                 SynchronizingObject = this
             };
 
@@ -342,6 +360,91 @@ namespace ImageGlass
         }
 
 
+
+        private void LoadFromArchive(string zippath)
+        {
+            // TODO KBR Ionic.Zip.dll doesn't support RAR
+
+            // Load all images from within an archive file.
+
+            // 1. Open the archive [if fail, done]
+            ZipFile zip;// do not use 'using': would interfere with background extract
+            try
+            {
+                zip = ZipFile.Read(zippath);
+            } catch { return; }
+
+            // 2. Get the list of archive entries [if fail, done]
+            var zipentries = zip.Entries;
+            if (zipentries.Count == 0)
+            {
+                zip.Dispose(); // do not use 'using': would interfere with background extract
+                return;
+            }
+
+            // 3. Scan for image files [if none, done]
+            List<ZipEntry> filesToExtract = new List<ZipEntry>();
+            foreach (var entry in zipentries)
+            {
+                if (entry.IsDirectory)
+                    continue;
+                var extension = Path.GetExtension(entry.FileName).ToLower();
+                if (GlobalSetting.ImageFormatHashSet.Contains(extension))
+                    filesToExtract.Add(entry);
+            }
+
+            if (filesToExtract.Count < 1)
+            {
+                zip.Dispose();// do not use 'using': would interfere with background extract
+                return;
+            }
+
+            // 4. Create a folder in the user's temp directory [if fail, done]
+            var outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath));
+            Directory.CreateDirectory(outpath); // KBR TODO could fail
+
+            // KBR TODO verify the path doesn't already exist
+            // KBR TODO remember the created path and cleanup on next open
+
+            // 5. Force "load from subfolders"
+            LocalSetting.LoadFromSubfolders = true;
+
+            // 6. Point FileWatcherEx at the created folder
+            WatchPath(outpath);
+
+            // TODO KBR are these next two steps necessary? will FileWatcher handle it?
+            // 7. Extract the first image file with path to the created folder
+            filesToExtract[0].Extract(outpath, ExtractExistingFileAction.OverwriteSilently);
+
+            // 8. Initialize the image list
+            var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
+            LoadImages(new List<string> { filepath }, filepath);
+
+            // 9. Have dotnetzip extract image files (with paths) to the created folder ASYNCHRONOUSLY
+            Task.Run(() => ExtractZipFiles(filesToExtract, outpath));
+
+            // TODO KBR need to dispose zip when extract is done
+
+            // Some error cases to watch out for:
+            // a. privs failure
+            // b. disk space
+
+            // TODO KBR should this support file sort order setting?
+            // TODO KBR need to change the title bar
+            // TODO KBR need to clean up the temp directory on next open
+            // TODO KBR drag-and-drop of archive file
+            // TODO KBR zipfile password support(?)
+        }
+
+        private void ExtractZipFiles(List<ZipEntry> filesToExtract, string outpath)
+        {
+            foreach (var entry in filesToExtract)
+            {
+                entry.Extract(outpath, ExtractExistingFileAction.OverwriteSilently);
+                System.Threading.Thread.Sleep(100);
+            }
+        }
+
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
             //clear text when finishing
@@ -379,7 +482,7 @@ namespace ImageGlass
 
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
-                GlobalSetting.IsRecursiveLoading,
+                LocalSetting.LoadFromSubfolders, //GlobalSetting.IsRecursiveLoading,
                 new Predicate<FileInfo>(delegate (FileInfo fi)
                 {
                     // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.

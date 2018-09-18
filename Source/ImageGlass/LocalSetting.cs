@@ -75,6 +75,8 @@ namespace ImageGlass
         public static bool IsTempMemoryData { get; set; } = false;
 
 
+        public static bool LoadFromSubfolders { get; set; }
+
         #endregion
 
 
