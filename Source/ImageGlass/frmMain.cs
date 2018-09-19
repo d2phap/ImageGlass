@@ -39,7 +39,7 @@ using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
 using System.Reflection;
-using Ionic.Zip;
+using SevenZip;
 
 
 namespace ImageGlass
@@ -181,10 +181,10 @@ namespace ImageGlass
             OpenFileDialog o = new OpenFileDialog();
 
             // TODO KBR to settings/const
-            // TODO KBR can dotnetzip handle 7zip?
             o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats + "|Archive Files|*.zip;*.cbz;*.cbr;*.rar";
+                        GlobalSetting.AllImageFormats + "|Archive Files|*.zip;*.cbz;*.cbr;*.rar;*.7z;*.cb7";
 
+            // TODO KBR 7z,xz,bzip2,gzip,tar,zip,wim,ar,arj,cab,chm,cpio,cramfs,dmg,ext,fat,gpt,hfs,ihex,iso,lzh,lzma,mbr,msi,nsis,ntfs,qcow2,rar,rpm,squashfs,udf,uefi,vdi,vhd,vmdk,wim,xar,z
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
                 Prepare(o.FileName);
@@ -208,6 +208,7 @@ namespace ImageGlass
 
             // Reset search from subfolders
             LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
+            Task.Run(() => DeleteUnzipFolder()); // KBR TODO this will be a problem if re-opening the same archive
 
             //Check path is file or directory?
             if (File.Exists(path))
@@ -219,9 +220,11 @@ namespace ImageGlass
                         dirPath = Shortcuts.FolderFromShortcut(path);
                         break;
                     case ".cbr": // TODO KBR check via string/setting
-                    case ".cbz": // TODO KBR consider asking dotnetzip to determine if it is an archive
+                    case ".cbz": 
                     case ".zip":
                     case ".rar":
+                    case ".cb7":
+                    case ".7z":
                         LoadFromArchive(path);
                         return;
                     default:
@@ -236,6 +239,8 @@ namespace ImageGlass
                 dirPath = path;
             }
 
+            _FolderToDelete = null; // not loading from archive
+
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
@@ -244,6 +249,14 @@ namespace ImageGlass
             WatchPath(dirPath);
         }
 
+
+        private void DeleteUnzipFolder()
+        {
+            if (Directory.Exists(_FolderToDelete))
+            {
+                Directory.Delete(_FolderToDelete, true);
+            }
+        }
 
         /// <summary>
         /// Load the images.
@@ -361,29 +374,44 @@ namespace ImageGlass
 
 
 
+        private List<IDisposable> _toDispose = new List<IDisposable>();
+        private string _FolderToDelete;
+
+
         private void LoadFromArchive(string zippath)
         {
-            // TODO KBR Ionic.Zip.dll doesn't support RAR
-
             // Load all images from within an archive file.
 
-            // 1. Open the archive [if fail, done]
-            ZipFile zip;// do not use 'using': would interfere with background extract
             try
             {
-                zip = ZipFile.Read(zippath);
-            } catch { return; }
+                // KBR TODO check program files first, then use supplied copy?
+
+                // KBR TODO need to invoke 32 or 64 bit DLL as required for machine, not target!
+                if (sizeof(int) == 8) // KBR TODO 64-bit path never hit: target is Any CPU
+                    SevenZipExtractor.SetLibraryPath("7z64.dll");
+                else
+                    SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-64.dll"));
+            }
+            catch { return; }
+
+            // 1. Open the archive [if fail, done]
+            SevenZipExtractor extr;
+            try
+            {
+                extr = new SevenZipExtractor(zippath);
+            }
+            catch { return; } // KBR TODO check for null?
 
             // 2. Get the list of archive entries [if fail, done]
-            var zipentries = zip.Entries;
+            var zipentries = extr.ArchiveFileData;
             if (zipentries.Count == 0)
             {
-                zip.Dispose(); // do not use 'using': would interfere with background extract
+                extr.Dispose();// do not use 'using': would interfere with background extract
                 return;
             }
 
             // 3. Scan for image files [if none, done]
-            List<ZipEntry> filesToExtract = new List<ZipEntry>();
+            var filesToExtract = new List<ArchiveFileInfo>();
             foreach (var entry in zipentries)
             {
                 if (entry.IsDirectory)
@@ -395,16 +423,20 @@ namespace ImageGlass
 
             if (filesToExtract.Count < 1)
             {
-                zip.Dispose();// do not use 'using': would interfere with background extract
+                extr.Dispose();// do not use 'using': would interfere with background extract
                 return;
             }
 
+            _toDispose.Add(extr);
+
             // 4. Create a folder in the user's temp directory [if fail, done]
-            var outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath));
+            var outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath)); // KBR TODO strip extension
             Directory.CreateDirectory(outpath); // KBR TODO could fail
 
-            // KBR TODO verify the path doesn't already exist
-            // KBR TODO remember the created path and cleanup on next open
+            // Remember the created path and cleanup on next open
+            _FolderToDelete = outpath;
+
+            // KBR TODO verify the path doesn't already exist?
 
             // 5. Force "load from subfolders"
             LocalSetting.LoadFromSubfolders = true;
@@ -414,16 +446,19 @@ namespace ImageGlass
 
             // TODO KBR are these next two steps necessary? will FileWatcher handle it?
             // 7. Extract the first image file with path to the created folder
-            filesToExtract[0].Extract(outpath, ExtractExistingFileAction.OverwriteSilently);
+            var file0 = filesToExtract[0].FileName;
+            var path0 = Path.Combine(outpath, file0);
+            var outfold = Path.GetDirectoryName(path0);
+            Directory.CreateDirectory(outfold);
+            using (FileStream fs = File.OpenWrite(path0))
+                extr.ExtractFile(filesToExtract[0].Index, fs);
 
             // 8. Initialize the image list
             var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
             LoadImages(new List<string> { filepath }, filepath);
 
-            // 9. Have dotnetzip extract image files (with paths) to the created folder ASYNCHRONOUSLY
-            Task.Run(() => ExtractZipFiles(filesToExtract, outpath));
-
-            // TODO KBR need to dispose zip when extract is done
+            // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
+            Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath));
 
             // Some error cases to watch out for:
             // a. privs failure
@@ -431,17 +466,36 @@ namespace ImageGlass
 
             // TODO KBR should this support file sort order setting?
             // TODO KBR need to change the title bar
-            // TODO KBR need to clean up the temp directory on next open
             // TODO KBR drag-and-drop of archive file
             // TODO KBR zipfile password support(?)
         }
 
-        private void ExtractZipFiles(List<ZipEntry> filesToExtract, string outpath)
+        private void ExtractZipFiles(string inpath, List<ArchiveFileInfo> filesToExtract, string outbase)
         {
-            foreach (var entry in filesToExtract)
+            var extr = new SevenZipExtractor(inpath); // KBR TODO why is a second extractor required for background??
+            try
             {
-                entry.Extract(outpath, ExtractExistingFileAction.OverwriteSilently);
-                System.Threading.Thread.Sleep(100);
+                foreach (var entry in filesToExtract)
+                {
+                    var outpath = Path.Combine(outbase, entry.FileName);
+                    var outfold = Path.GetDirectoryName(outpath);
+                    Directory.CreateDirectory(outfold);
+
+                    try
+                    {
+                        using (FileStream fs = File.OpenWrite(outpath))
+                            extr.ExtractFile(entry.FileName, fs);
+                    }
+                    catch { }
+                }
+            }
+            finally
+            {
+                // Done extracting. Clean up anything needing disposal.
+                extr.Dispose();
+                foreach (var obj in _toDispose)
+                    obj.Dispose();
+                _toDispose.Clear();
             }
         }
 
@@ -2365,6 +2419,8 @@ namespace ImageGlass
                 {
                     Directory.Delete(GlobalSetting.TempDir, true);
                 }
+
+                DeleteUnzipFolder();
 
                 SaveConfig();
             }
