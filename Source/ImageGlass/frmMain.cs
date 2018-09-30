@@ -387,13 +387,11 @@ namespace ImageGlass
 
             try
             {
-                // KBR TODO check program files first, then use supplied copy?
-
-                // KBR TODO need to invoke 32 or 64 bit DLL as required for machine, not target!
-                if (sizeof(int) == 8) // KBR TODO 64-bit path never hit: target is Any CPU
-                    SevenZipExtractor.SetLibraryPath("7z64.dll");
-                else
+                // Need to invoke 32 or 64 bit DLL as required for running OS (_not_ the build target!)
+                if (Environment.Is64BitOperatingSystem)
                     SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-64.dll"));
+                else
+                    SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-32.dll"));
             }
             catch { return; }
 
