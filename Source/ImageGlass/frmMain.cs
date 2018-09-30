@@ -174,17 +174,18 @@ namespace ImageGlass
 
         #region Preparing image
         /// <summary>
-        /// Open an image
+        /// Open an image or archive
         /// </summary>
         private void OpenFile()
         {
             OpenFileDialog o = new OpenFileDialog();
 
-            // TODO KBR to settings/const
-            o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats + "|Archive Files|*.zip;*.cbz;*.cbr;*.rar;*.7z;*.cb7";
+            o.Filter = string.Format("{0}|{1}|{2}|{3}",
+                GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"],
+                GlobalSetting.AllImageFormats,
+                GlobalSetting.LangPack.Items["frmMain._ArchiveFormats"],
+                GlobalSetting.AllArchiveFormats);
 
-            // TODO KBR 7z,xz,bzip2,gzip,tar,zip,wim,ar,arj,cab,chm,cpio,cramfs,dmg,ext,fat,gpt,hfs,ihex,iso,lzh,lzma,mbr,msi,nsis,ntfs,qcow2,rar,rpm,squashfs,udf,uefi,vdi,vhd,vmdk,wim,xar,z
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
                 Prepare(o.FileName);
@@ -2000,6 +2001,22 @@ namespace ImageGlass
 
                 // build the hashset GlobalSetting.ImageFormatHashSet
                 GlobalSetting.BuildImageFormatHashSet();
+
+                // KBR TODO copy-pasta
+                // KBR TODO move to GlobalSetting
+                extGroups = GlobalSetting.BuiltInArchiveFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                GlobalSetting.DefaultArchiveFormats = GlobalSetting.GetConfig("DefaultArchiveFormats", extGroups[0]);
+                GlobalSetting.OptionalArchiveFormats = GlobalSetting.GetConfig("OptionalArchiveFormats", extGroups[1]);
+
+                if (GlobalSetting.AllArchiveFormats.Length == 0)
+                {
+                    GlobalSetting.LoadBuiltInArchiveFormats();
+
+                    GlobalSetting.SetConfig("DefaultArchiveFormats", GlobalSetting.DefaultArchiveFormats);
+                    GlobalSetting.SetConfig("OptionalArchiveFormats", GlobalSetting.OptionalArchiveFormats);
+                }
+
+                GlobalSetting.BuildArchiveFormatHashSet();
                 #endregion
 
 
