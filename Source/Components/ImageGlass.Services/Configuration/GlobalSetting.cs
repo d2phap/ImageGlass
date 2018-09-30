@@ -171,6 +171,7 @@ namespace ImageGlass.Services.Configuration
         public static string BuiltInArchiveFormats { get; } = "*.zip;*.cbz;*.cbr;*.rar;*.7z;*.cb7" +
             "|*.xz;*.bzip2;*.gzip;*.tar;*.zip;*.wim;*.ar;*.arj;*.cab;*.chm;*.cpio;*.cramfs;*.dmg;*.ext;*.fat;*.gpt;*.hfs;*.ihex;*.iso;*.lzh;*.lzma;*.mbr;*.msi;*.nsis;*.ntfs;*.qcow2;*.rar;*.rpm;*.squashfs;*.udf;*.uefi;*.vdi;*.vhd;*.vmdk;*.wim;*.xar;*.z;";
 
+        // KBR TODO move to LocalSetting?
         public static HashSet<string> ArchiveFormatHashSet { get; set; } = new HashSet<string>();
 
 
