@@ -77,6 +77,11 @@ namespace ImageGlass
 
         public static bool LoadFromSubfolders { get; set; }
 
+
+        /// <summary>
+        /// Is the currently active image list from an archive file? (zip, cbr, etc)
+        /// </summary>
+        public static bool FilesFromArchive { get; set; }
         #endregion
 
 

@@ -240,7 +240,9 @@ namespace ImageGlass
                 dirPath = path;
             }
 
-            _FolderToDelete = null; // not loading from archive
+            // Not loading from an archive
+            _FolderToDelete = null;
+            LocalSetting.FilesFromArchive = false;
 
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
@@ -458,6 +460,8 @@ namespace ImageGlass
             var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
             LoadImages(new List<string> { filepath }, filepath);
 
+            LocalSetting.FilesFromArchive = true;
+
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
             Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath));
 
@@ -465,7 +469,6 @@ namespace ImageGlass
             // a. privs failure
             // b. disk space
 
-            // TODO KBR should this support file sort order setting?
             // TODO KBR need to change the title bar
             // TODO KBR drag-and-drop of archive file
             // TODO KBR zipfile password support(?)
@@ -673,8 +676,8 @@ namespace ImageGlass
                 picMain.StopAnimating();
             }
 
-            //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
+            // Save previous image if it was modified, except if from archive file
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating && !LocalSetting.FilesFromArchive)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 2000);
 
