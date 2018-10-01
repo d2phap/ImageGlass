@@ -215,23 +215,15 @@ namespace ImageGlass
             if (File.Exists(path))
             {
                 var ext = Path.GetExtension(path).ToLower();
-                switch (ext)
+                if (GlobalSetting.ArchiveFormatHashSet.Contains(ext))
                 {
-                    case ".lnk":
-                        dirPath = Shortcuts.FolderFromShortcut(path);
-                        break;
-                    case ".cbr": // TODO KBR check via string/setting
-                    case ".cbz": 
-                    case ".zip":
-                    case ".rar":
-                    case ".cb7":
-                    case ".7z":
-                        LoadFromArchive(path);
-                        return;
-                    default:
-                        dirPath = Path.GetDirectoryName(path);
-                        break;
+                    LoadFromArchive(path);
+                    return;
                 }
+                if (ext == ".lnk")
+                    dirPath = Shortcuts.FolderFromShortcut(path);
+                else
+                    dirPath = Path.GetDirectoryName(path);
 
                 filePath = path;
             }
@@ -347,7 +339,14 @@ namespace ImageGlass
                 string dirPath = "";
                 if (File.Exists(apath))
                 {
-                    if (Path.GetExtension(apath).ToLower() == ".lnk")
+                    var ext = Path.GetExtension(apath).ToLower();
+                    // If first path is an archive, load that one, and only that one
+                    if (GlobalSetting.ArchiveFormatHashSet.Contains(ext) && firstPath)
+                    {
+                        LoadFromArchive(apath);
+                        return;
+                    }
+                    if (ext == ".lnk")
                         dirPath = Shortcuts.FolderFromShortcut(apath);
                     else
                         dirPath = Path.GetDirectoryName(apath);
@@ -2807,7 +2806,7 @@ namespace ImageGlass
                     // ![old] && [new]: add to image list
                     else if (GlobalSetting.ImageFormatHashSet.Contains(newExt))
                     {
-                        AddNewFileAction();
+                        FileWatcher_AddNewFileAction(newFilename);
                     }
                 }
             }
@@ -2838,21 +2837,6 @@ namespace ImageGlass
                 }
                 catch { }
             }
-
-
-            void AddNewFileAction()
-            {
-                //Add the new image to the list
-                GlobalSetting.ImageList.AddItem(newFilename);
-
-                //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-                {
-                    Tag = newFilename
-                };
-                thumbnailBar.Items.Add(lvi);
-            }
-
         }
 
 
@@ -2932,8 +2916,10 @@ namespace ImageGlass
 
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
+
+            UpdateStatusBar(); // File count has changed: update the title bar
         }
-        
+
 
 
 
@@ -2996,6 +2982,7 @@ namespace ImageGlass
                     }
                 }
 
+                UpdateStatusBar(); // File count has changed: update the title bar
             }
         }
 
