@@ -2641,7 +2641,7 @@ namespace ImageGlass
                     // ![old] && [new]: add to image list
                     else if (GlobalSetting.ImageFormatHashSet.Contains(newExt))
                     {
-                        AddNewFileAction();
+                        FileWatcher_AddNewFileAction(newFilename);
                     }
                 }
             }
@@ -2653,7 +2653,6 @@ namespace ImageGlass
                     RenameAction();
                 }
             }
-
 
 
             void RenameAction()
@@ -2677,19 +2676,6 @@ namespace ImageGlass
                     LocalSetting.InitialInputImageFilename = newFilename;
             }
 
-
-            void AddNewFileAction()
-            {
-                //Add the new image to the list
-                GlobalSetting.ImageList.AddItem(newFilename);
-
-                //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-                {
-                    Tag = newFilename
-                };
-                thumbnailBar.Items.Add(lvi);
-            }
 
         }
 
@@ -2770,10 +2756,10 @@ namespace ImageGlass
 
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
+
+            UpdateStatusBar(); // File count has changed - update title bar
         }
         
-
-
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
