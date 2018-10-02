@@ -209,7 +209,8 @@ namespace ImageGlass
 
             // Reset search from subfolders
             LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
-            Task.Run(() => DeleteUnzipFolder()); // KBR TODO this will be a problem if re-opening the same archive
+            // Clean up any previously opened archive
+            Task.Run(() => DeleteUnzipFolder()); // TODO KBR will this be a problem if re-opening the same archive?
 
             //Check path is file or directory?
             if (File.Exists(path))
@@ -245,6 +246,9 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Delete the folder and contents we created to extract an archive into.
+        /// </summary>
         private void DeleteUnzipFolder()
         {
             if (Directory.Exists(_FolderToDelete))
@@ -375,14 +379,18 @@ namespace ImageGlass
         }
 
 
+        #region Archive (ZIP) support
 
-        private List<IDisposable> _toDispose = new List<IDisposable>();
+        // Remember the path created to extract the archive into; cleanup on next open, app exit
         private string _FolderToDelete;
 
 
+        /// <summary>
+        /// Load all images from within an archive file.
+        /// </summary>
+        /// <param name="zippath">path to an archive file</param>
         private void LoadFromArchive(string zippath)
         {
-            // Load all images from within an archive file.
 
             try
             {
@@ -392,66 +400,84 @@ namespace ImageGlass
                 else
                     SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-32.dll"));
             }
-            catch { return; }
+            catch
+            {
+                // TODO inform the user?
+                return;
+            }
+
+            string outpath; // location to extract to
+            var filesToExtract = new List<ArchiveFileInfo>();
 
             // 1. Open the archive [if fail, done]
-            SevenZipExtractor extr;
-            try
+            using (SevenZipExtractor extr = new SevenZipExtractor(zippath))
             {
-                extr = new SevenZipExtractor(zippath);
+
+                // 2. Get the list of archive entries [if fail, done]
+                var zipentries = extr.ArchiveFileData;
+                if (zipentries.Count == 0)
+                {
+                    OnError("ArchiveEmptyBad");
+                    return;
+                }
+
+                // 3. Scan for image files [if none, done]
+                foreach (var entry in zipentries)
+                {
+                    if (entry.IsDirectory)
+                        continue;
+                    var extension = Path.GetExtension(entry.FileName).ToLower();
+                    if (GlobalSetting.ImageFormatHashSet.Contains(extension))
+                        filesToExtract.Add(entry);
+                }
+
+                if (filesToExtract.Count < 1)
+                {
+                    OnError("ArchiveEmptyBad");
+                    return;
+                }
+
+                // 4. Create a folder in the user's temp directory [if fail, done]
+                outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath));
+                try
+                {
+                    Directory.CreateDirectory(outpath);
+                }
+                catch
+                {
+                    OnError("ArchiveExtractFail");
+                    return;
+                }
+
+                // Remember the created path and cleanup on next open, app exit
+                _FolderToDelete = outpath;
+
+                // 5. Extract the first image file with path to the created folder. If fail, don't do further steps.
+                var file0 = filesToExtract[0].FileName;
+                var path0 = Path.Combine(outpath, file0);
+                var outfold = Path.GetDirectoryName(path0);
+                try
+                {
+                    Directory.CreateDirectory(outfold);
+                    using (FileStream fs = File.OpenWrite(path0))
+                        extr.ExtractFile(filesToExtract[0].Index, fs);
+                }
+                catch
+                {
+                    OnError("ArchiveExtractFail");
+                    return;
+                }
+
             }
-            catch { return; } // KBR TODO check for null?
 
-            // 2. Get the list of archive entries [if fail, done]
-            var zipentries = extr.ArchiveFileData;
-            if (zipentries.Count == 0)
-            {
-                extr.Dispose();// do not use 'using': would interfere with background extract
-                return;
-            }
+            // Done with original extractor now. The background extract needs its own.
 
-            // 3. Scan for image files [if none, done]
-            var filesToExtract = new List<ArchiveFileInfo>();
-            foreach (var entry in zipentries)
-            {
-                if (entry.IsDirectory)
-                    continue;
-                var extension = Path.GetExtension(entry.FileName).ToLower();
-                if (GlobalSetting.ImageFormatHashSet.Contains(extension))
-                    filesToExtract.Add(entry);
-            }
 
-            if (filesToExtract.Count < 1)
-            {
-                extr.Dispose();// do not use 'using': would interfere with background extract
-                return;
-            }
-
-            _toDispose.Add(extr);
-
-            // 4. Create a folder in the user's temp directory [if fail, done]
-            var outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath)); // KBR TODO strip extension
-            Directory.CreateDirectory(outpath); // KBR TODO could fail
-
-            // Remember the created path and cleanup on next open
-            _FolderToDelete = outpath;
-
-            // KBR TODO verify the path doesn't already exist?
-
-            // 5. Force "load from subfolders"
+            // 6. Force "load from subfolders" for the image list
             LocalSetting.LoadFromSubfolders = true;
 
-            // 6. Point FileWatcherEx at the created folder
+            // 7. Point FileWatcherEx at the created folder
             WatchPath(outpath);
-
-            // TODO KBR are these next two steps necessary? will FileWatcher handle it?
-            // 7. Extract the first image file with path to the created folder
-            var file0 = filesToExtract[0].FileName;
-            var path0 = Path.Combine(outpath, file0);
-            var outfold = Path.GetDirectoryName(path0);
-            Directory.CreateDirectory(outfold);
-            using (FileStream fs = File.OpenWrite(path0))
-                extr.ExtractFile(filesToExtract[0].Index, fs);
 
             // 8. Initialize the image list
             var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
@@ -462,43 +488,48 @@ namespace ImageGlass
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
             Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath));
 
-            // Some error cases to watch out for:
-            // a. privs failure
-            // b. disk space
-
-            // TODO KBR need to change the title bar
-            // TODO KBR drag-and-drop of archive file
-            // TODO KBR zipfile password support(?)
+            void OnError(string msgEnd)
+            {
+                GlobalSetting.IsImageError = true;
+                string msg = "frmMain.picMain." + msgEnd;
+                picMain.Text = GlobalSetting.LangPack.Items[msg];
+                picMain.Image = null;
+            }
         }
 
+
+        /// <summary>
+        /// Extract image files from an archive. This is intended to be executed as a background task
+        /// from the "load from archive" function.
+        /// </summary>
+        /// <param name="inpath">path to archive</param>
+        /// <param name="filesToExtract">the files to extract from the archive</param>
+        /// <param name="outbase">the path to the base folder we're extracting to</param>
         private void ExtractZipFiles(string inpath, List<ArchiveFileInfo> filesToExtract, string outbase)
         {
-            var extr = new SevenZipExtractor(inpath); // KBR TODO why is a second extractor required for background??
-            try
+            using (var extr = new SevenZipExtractor(inpath))
             {
                 foreach (var entry in filesToExtract)
                 {
                     var outpath = Path.Combine(outbase, entry.FileName);
                     var outfold = Path.GetDirectoryName(outpath);
-                    Directory.CreateDirectory(outfold);
 
                     try
                     {
+                        Directory.CreateDirectory(outfold);
                         using (FileStream fs = File.OpenWrite(outpath))
                             extr.ExtractFile(entry.FileName, fs);
                     }
-                    catch { }
+                    catch
+                    {
+                        // Note no message: hoping we've successfully extracted one image
+                    }
                 }
             }
-            finally
-            {
-                // Done extracting. Clean up anything needing disposal.
-                extr.Dispose();
-                foreach (var obj in _toDispose)
-                    obj.Dispose();
-                _toDispose.Clear();
-            }
         }
+
+        #endregion
+
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {

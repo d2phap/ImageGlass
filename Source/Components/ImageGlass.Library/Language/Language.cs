@@ -236,6 +236,8 @@ namespace ImageGlass.Library
             #region frmMain
             Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
             Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");//4.5
+            Items.Add("frmMain.picMain.ArchiveEmptyBad", "ImageGlass cannot open this archive: the file is invalid or contains no supported images."); // V6.0
+            Items.Add("frmMain.picMain.ArchiveExtractFail", "ImageGlass cannot extract this archive: possible privilege or disk space issue."); // V6.0
 
 
             #region Tool bar
