@@ -321,6 +321,7 @@ namespace ImageGlass
             // TODO re-loading of the image list/folder currently does NOT invoke this code!
             // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
 
+            HashSet<string> pathsLoaded = new HashSet<string>(); // track paths loaded to prevent duplicates
             List<string> allFilesToLoad = new List<string>();
             bool firstPath = true;
             foreach (var apath in paths)
@@ -348,6 +349,13 @@ namespace ImageGlass
                     firstPath = false;
                     WatchPath(dirPath);
                 }
+
+                // KBR 20181004 Fix observed bug: dropping multiple files from the same path
+                // would load ALL files in said path multiple times! Prevent loading the same
+                // path more than once.
+                if (pathsLoaded.Contains(dirPath))
+                    continue;
+                pathsLoaded.Add(dirPath);
 
                 var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
                 allFilesToLoad.AddRange(imageFilenameList);
