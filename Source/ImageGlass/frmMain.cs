@@ -263,6 +263,15 @@ namespace ImageGlass
             if (filePath.Length > 0)
             {
                 GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
+
+                // KBR 20181009 Changing "include subfolder" setting could lose the "current" image.
+                // Prefer not to report said image is "corrupt", merely reset the index in that case.
+                // 1. Setting: "include subfolders: ON". Open image in folder with images in subfolders.
+                // 2. Move to an image in a subfolder.
+                // 3. Change setting "include subfolders: OFF".
+                // Issue: the image in the subfolder is attempted to be shown, declared as corrupt/missing.
+                if (GlobalSetting.CurrentIndex == -1 && !GlobalSetting.ImageList.HasFolder(filePath))
+                    GlobalSetting.CurrentIndex = 0;
             }
             else
             {
