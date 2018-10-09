@@ -1696,6 +1696,13 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load Toolbar button centering state
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                // NOTE: no action necessary to force update, is performed via Form OnSize
+                #endregion
+
+
+
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
                 {
@@ -2133,6 +2140,9 @@ namespace ImageGlass
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
+
+            // Save centering of toolbar buttons
+            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
         }
 
         #endregion
@@ -2939,6 +2949,17 @@ namespace ImageGlass
             else
             {
                 btnMenu.Alignment = ToolStripItemAlignment.Right;
+
+                // Issue 425: option to center the toolbar buttons horizontally [useful for wide screen]
+                // I'm assuming the btnMenu stays to the right, in order to always be at a fixed location.
+                if (GlobalSetting.IsCenterToolbar)
+                {
+                    var firstbtn = toolMain.Items[0];
+                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; // TODO why is there still a label after the menu button?
+                    int delta = btnMenu.Bounds.Right - lastbut1btn.Bounds.Right;
+                    var marg = new Padding((int)(delta * 0.5), firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
+                    firstbtn.Margin = marg;
+                }
             }
         }
 
