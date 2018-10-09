@@ -62,6 +62,11 @@ namespace ImageGlass
             
             //Update form with new DPI
             OnDpiChanged();
+
+            // KBR 20181009 - Fix observed bug. If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*.
+            // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
+            // is visible.
+            picMain.ShortcutsEnabled = false;
         }
 
 
