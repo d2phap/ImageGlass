@@ -133,6 +133,7 @@ namespace ImageGlass
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.cmbToolbarPosition = new System.Windows.Forms.ComboBox();
             this.lblToolbarPosition = new System.Windows.Forms.Label();
+            this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorCodeFormat = new System.Windows.Forms.Label();
@@ -1286,6 +1287,7 @@ namespace ImageGlass
             this.tabToolbar.Controls.Add(this.panel5);
             this.tabToolbar.Controls.Add(this.cmbToolbarPosition);
             this.tabToolbar.Controls.Add(this.lblToolbarPosition);
+            this.tabToolbar.Controls.Add(this.chkHorzCenterToolbarBtns);
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
@@ -1450,6 +1452,18 @@ namespace ImageGlass
             this.lblToolbarPosition.Size = new System.Drawing.Size(155, 25);
             this.lblToolbarPosition.TabIndex = 44;
             this.lblToolbarPosition.Text = "[Toolbar position:]";
+            // 
+            // chkHorzCenterToolbarBtns
+            // 
+            this.chkHorzCenterToolbarBtns.AutoSize = true;
+            this.chkHorzCenterToolbarBtns.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkHorzCenterToolbarBtns.Location = new System.Drawing.Point(350, 20);
+            this.chkHorzCenterToolbarBtns.Margin = new System.Windows.Forms.Padding(2);
+            this.chkHorzCenterToolbarBtns.Name = "chkHorzCenterToolbarBtns";
+            this.chkHorzCenterToolbarBtns.Size = new System.Drawing.Size(150, 30);
+            this.chkHorzCenterToolbarBtns.TabIndex = 46;
+            this.chkHorzCenterToolbarBtns.Text = "Center Toolbar Buttons Horizontally in Window";
+            this.chkHorzCenterToolbarBtns.UseVisualStyleBackColor = true;
             // 
             // tabColorPicker
             // 
@@ -2120,5 +2134,6 @@ namespace ImageGlass
         private System.Windows.Forms.ComboBox cmbToolbarPosition;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.CheckBox chkShowThumbnailScrollbar;
+        private System.Windows.Forms.CheckBox chkHorzCenterToolbarBtns;
     }
 }

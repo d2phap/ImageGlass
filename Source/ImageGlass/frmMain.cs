@@ -2501,6 +2501,7 @@ namespace ImageGlass
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
                 }
+                toolMain_SizeChanged(null, null); // For centered toolbar buttons
             }
             #endregion
 
@@ -2952,14 +2953,19 @@ namespace ImageGlass
 
                 // Issue 425: option to center the toolbar buttons horizontally [useful for wide screen]
                 // I'm assuming the btnMenu stays to the right, in order to always be at a fixed location.
+                var firstbtn = toolMain.Items[0];
+                var marg = new Padding(2, firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
                 if (GlobalSetting.IsCenterToolbar)
                 {
-                    var firstbtn = toolMain.Items[0];
-                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; // TODO why is there still a label after the menu button?
+
+                    // NOTE: relies on the label control on the right of the menu button!
+                    // NOTE: assumes at least one control to the left of the menu button in the toolbar!
+                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; 
+
                     int delta = btnMenu.Bounds.Right - lastbut1btn.Bounds.Right;
-                    var marg = new Padding((int)(delta * 0.5), firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
-                    firstbtn.Margin = marg;
+                    marg.Left = delta / 2;
                 }
+                firstbtn.Margin = marg;
             }
         }
 
