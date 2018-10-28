@@ -152,7 +152,7 @@ namespace ImageGlass
             ShowItemToolTips = false;
             timer = new Timer();
             timer.Enabled = false;
-            timer.Interval = 2000; // KBR enforce long initial time SystemInformation.MouseHoverTime;
+            timer.Interval = 200; // KBR enforce long initial time SystemInformation.MouseHoverTime;
             timer.Tick += new EventHandler(timer_Tick);
         }
     }
