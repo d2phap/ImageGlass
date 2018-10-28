@@ -24,6 +24,7 @@ using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
 using System.IO;
 using System.Globalization;
+using System.Runtime;
 
 namespace ImageGlass
 {
@@ -56,6 +57,11 @@ namespace ImageGlass
         [STAThread]
         static void Main(string[] argv)
         {
+            // Set up Startup Profile to improve launch performance
+            // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
+            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir);
+            ProfileOptimization.StartProfile("igstartup.profile");
+
 #if ERRORMODE
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 #endif
@@ -175,14 +181,23 @@ namespace ImageGlass
             if (formMain == null)
                 return;
 
-            Action<String[]> updateForm = arguments =>
+            Action<String[]> UpdateForm = arguments =>
             {
                 formMain.WindowState = FormWindowState.Normal;
                 formMain.LoadFromParams(arguments);
             };
 
+            // KBR 20181009 Attempt to run a 2d instance of IG when multi-instance turned off. Primary instance
+            // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
+            int realcount = 0;
+            foreach (var arg in e.Args)
+                if (arg != null)
+                    realcount++;
+            string[] realargs = new string[realcount];
+            Array.Copy(e.Args, realargs, realcount);
+
             //Execute our delegate on the forms thread!
-            formMain.Invoke(updateForm, (Object)e.Args); 
+            formMain.Invoke(UpdateForm, (Object)realargs); 
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);

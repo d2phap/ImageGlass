@@ -257,16 +257,9 @@ namespace ImageGlass
             chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
             chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
-            lblHeadPortableMode.Text = lang["frmSetting.lblHeadPortableMode"];//
-            if (GlobalSetting.IsPortableMode)
-            {
-                chkPortableMode.Text = lang["frmSetting.chkPortableMode._Enabled"];
-            }
-            else
-            {
-                chkPortableMode.Text = string.Format(lang["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
-                chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
-            }
+
+            lblHeadConfigDir.Text = lang["frmSetting.lblHeadConfigDir"];//
+            lnkConfigDir.Text = GlobalSetting.ConfigDir;
 
 
             lblHeadOthers.Text = lang["frmSetting.lblHeadOthers"];//
@@ -519,8 +512,6 @@ namespace ImageGlass
             //Get value of chkShowToolBar
             chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
 
-            //Get Portable mode value -----------------------------------------------------------
-            chkPortableMode.Checked = GlobalSetting.IsPortableMode;
 
             //Get value of cmbAutoUpdate --------------------------------------------------------
             string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
@@ -550,6 +541,12 @@ namespace ImageGlass
 
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
+        }
+
+
+        private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe", GlobalSetting.ConfigDir);
         }
 
 
@@ -2189,10 +2186,11 @@ namespace ImageGlass
         }
 
 
-        
+
+
 
         #endregion
 
-
+        
     }
 }

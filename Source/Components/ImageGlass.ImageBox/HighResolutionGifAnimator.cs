@@ -241,7 +241,11 @@ namespace ImageGlass {
                     //
                     // 0.1 seconds appears to be chromes default setting... I'll use that
                     // 
-                    if (myFrameDelaysInCentiseconds[i] < 1)
+                    // KBR 20181009 Older GIF editors could set the delay to 0, relying on the behavior
+                    // of Netscape Navigator to provide the default minimum of 10ms. On Windows 7, it
+                    // appears necessary to enforce this same default minimum, with no negative impact
+                    // on Windows 10.
+                    if (myFrameDelaysInCentiseconds[i] < 10)
                         myFrameDelaysInCentiseconds[i] = 10;
                 }
             }

@@ -29,7 +29,7 @@
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
-            this.toolMain = new System.Windows.Forms.ToolStrip();
+            this.toolMain = new ToolStripToolTip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -1615,7 +1615,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolMain;
+        private ToolStripToolTip toolMain;
         private System.Windows.Forms.Timer timSlideShow;
         private System.Windows.Forms.ToolStripButton btnNext;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

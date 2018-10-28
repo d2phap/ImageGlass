@@ -289,9 +289,28 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\Temp\
+        /// Gets temporary directory of ImageGlass, 
+        /// e.g. ${ConfigsDir}\Temp\
         /// </summary>
-        public static string TempDir { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
+        public static string TempDir { get; } =  Path.Combine(GlobalSetting.ConfigDir, "Temp");
+
+
+        /// <summary>
+        /// Get the configuration folder of ImageGlass.
+        /// For portable mode, ConfigsDir = Installed Dir, else %appdata%\ImageGlass
+        /// </summary>
+        public static string ConfigDir
+        {
+            get
+            {
+                if (IsStartUpDirWritable)
+                {
+                    return GlobalSetting.StartUpDir;
+                }
+
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
+            }
+        }
 
 
         /// <summary>

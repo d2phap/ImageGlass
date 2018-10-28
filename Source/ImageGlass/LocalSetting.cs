@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -73,6 +73,19 @@ namespace ImageGlass
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
+
+
+        /// <summary>
+        /// The current "initial" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
+        /// the image list, but otherwise we don't know what image/folder we started with.
+        /// 
+        /// Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the 
+        /// images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after 
+        /// a rescan of the image list, only the _sub_-folders images were re-loaded!
+        ///
+        /// But if we reload the list using the original image, then the original folder's images, and the sub-folders, are reloaded.
+        /// </summary>
+        public static string InitialInputImageFilename { get; set; } = "";
 
 
         #endregion
