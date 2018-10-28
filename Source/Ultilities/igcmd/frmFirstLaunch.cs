@@ -270,24 +270,24 @@ namespace igcmd
             cmbTheme.SelectedIndex = 0;
 
 
-            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
+            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
 
             //get the current theme
-            var currentTheme = GlobalSetting.GetConfig("Theme", "Default");
+            var currentTheme = GlobalSetting.GetConfig("Theme", "default");
 
 
-            if (Directory.Exists(dir))
+            if (Directory.Exists(themeFolder))
             {
-                foreach (string d in Directory.GetDirectories(dir))
+                foreach (string d in Directory.GetDirectories(themeFolder))
                 {
                     string configFile = Path.Combine(d, "config.xml");
 
                     if (File.Exists(configFile))
                     {
-                        Theme th = new Theme();
+                        Theme th = new Theme(d);
 
                         //invalid theme
-                        if (!th.LoadTheme(configFile))
+                        if (!th.IsThemeValid)
                         {
                             continue;
                         }
@@ -295,7 +295,7 @@ namespace igcmd
                         _themeList.Add(th);
                         cmbTheme.Items.Add(th.Name);
 
-                        if (currentTheme.ToLower().CompareTo(th.ThemeConfigFilePath.ToLower()) == 0)
+                        if (currentTheme.ToLower().CompareTo(th.ThemeFolderName.ToLower()) == 0)
                         {
                             cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                         }
@@ -304,7 +304,7 @@ namespace igcmd
             }
             else
             {
-                Directory.CreateDirectory(dir);
+                Directory.CreateDirectory(themeFolder);
             }
 
 
@@ -371,8 +371,8 @@ namespace igcmd
         /// </summary>
         private void ApplySettings()
         {
-            GlobalSetting.SetConfig("Language", _lang.FileName);
-            GlobalSetting.SetConfig("Theme", _theme.ThemeConfigFilePath);
+            GlobalSetting.SetConfig("Language", Path.GetFileName(_lang.FileName));
+            GlobalSetting.SetConfig("Theme", _theme.ThemeFolderName);
 
 
             if (_layout == LayoutMode.Designer)

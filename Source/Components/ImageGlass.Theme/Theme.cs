@@ -32,11 +32,18 @@ namespace ImageGlass.Theme
 {
     public class Theme
     {
+        private string _themeFolderName = string.Empty;
         private string _themeConfigFilePath = string.Empty;
         private bool _isThemeValid = true;
 
 
         #region CLASS PROPERTIES
+
+        /// <summary>
+        /// Get thename of theme folder
+        /// </summary>
+        public string ThemeFolderName { get => _themeFolderName; }
+
         /// <summary>
         /// Get theme config file path (config.xml)
         /// </summary>
@@ -158,22 +165,15 @@ namespace ImageGlass.Theme
 
         #endregion
 
-
-        /// <summary>
-        /// Initiate empty theme onject
-        /// </summary>
-        public Theme()
-        {
-
-        }
+       
 
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
-        /// <param name="file"></param>
-        public Theme(string file)
+        /// <param name="themeFolderPath">The absolute path of theme folder.</param>
+        public Theme(string themeFolderPath = "")
         {
-            this._isThemeValid = LoadTheme(file);
+            this._isThemeValid = LoadTheme(themeFolderPath);
         }
 
 
@@ -208,20 +208,23 @@ namespace ImageGlass.Theme
         /// Read theme data from theme configuration file (Version 1.5+). 
         /// Return TRUE if successful, FALSE if the theme format is invalid
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="themeFolderPath">The absolute path of theme file.</param>
         /// <returns></returns>
-        public bool LoadTheme(string file)
+        public bool LoadTheme(string themeFolderPath)
         {
-            if (!File.Exists(file))
+            string configFilePath = Path.Combine(themeFolderPath, "config.xml");
+
+            if (!File.Exists(configFilePath))
             {
-                file = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
+                configFilePath = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
             }
 
-            this._themeConfigFilePath = file;
+            this._themeConfigFilePath = configFilePath;
+            this._themeFolderName = Path.GetFileName(themeFolderPath); // get folder name
 
-            string dir = Path.GetDirectoryName(file);
+            string dir = Path.GetDirectoryName(configFilePath);
             XmlDocument doc = new XmlDocument();
-            doc.Load(file);
+            doc.Load(configFilePath);
 
             XmlElement root = doc.DocumentElement;
             XmlElement nType = null;
@@ -567,21 +570,21 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Apply the new theme and save configs
         /// </summary>
-        /// <param name="themeConfigPath">Full path of config.xml</param>
+        /// <param name="themeFolderPath">The absolute theme folder path</param>
         /// <returns>Return Theme object if success, else NULL</returns>
-        public static Theme ApplyTheme(string themeConfigPath)
+        public static Theme ApplyTheme(string themeFolderPath)
         {
             //Save background color
             try
             {
-                Theme th = new Theme();
-
-                if (th.LoadTheme(themeConfigPath))
+                Theme th = new Theme(themeFolderPath);
+                
+                if (th.IsThemeValid)
                 {
-                    GlobalSetting.SetConfig("BackgroundColor", th.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+                    GlobalSetting.SetConfig("BackgroundColor", ConvertColorToHEX(th.BackgroundColor, true));
 
                     //Save theme path
-                    GlobalSetting.SetConfig("Theme", themeConfigPath);
+                    GlobalSetting.SetConfig("Theme", Path.GetFileName(themeFolderPath)); // get theme folder name
 
                     return th;
                 }
@@ -614,13 +617,15 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Uninstall ImageGlass theme pack
         /// </summary>
-        /// <param name="themeConfigPath">Full path of config.xml</param>
+        /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
-        public static ThemeUninstallingResult UninstallTheme(string themeConfigPath)
+        public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
         {
-            if (File.Exists(themeConfigPath))
+            string fullFilename = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName, "config.xml");
+
+            if (File.Exists(fullFilename))
             {
-                string dir = Path.GetDirectoryName(themeConfigPath);
+                string dir = Path.GetDirectoryName(fullFilename);
 
                 try
                 {

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -129,13 +130,18 @@ namespace ImageGlass.Library
         /// Set values of Language
         /// </summary>
         /// <param name="fileName">*.igLang path</param>
-        public Language(string fileName)
+        /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
+        public Language(string fileName, string dirPath = "")
         {
             _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
-            _fileName = fileName;
-            ReadLanguageFile();
+            _fileName = Path.Combine(dirPath, fileName);
+
+            if (File.Exists(_fileName))
+            {
+                ReadLanguageFile();
+            }
         }
 
 
