@@ -607,10 +607,10 @@ namespace ImageGlass.Theme
                 return ThemeInstallingResult.ERROR;
             }
 
-            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
-            Directory.CreateDirectory(dir);
+            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
+            Directory.CreateDirectory(themeFolder);
 
-            return ExtractTheme(themePath, dir);
+            return ExtractTheme(themePath, themeFolder);
         }
 
 
@@ -621,17 +621,17 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
         {
-            string fullFilename = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName, "config.xml");
+            string fullConfigPath = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName, "config.xml");
 
-            if (File.Exists(fullFilename))
+            if (File.Exists(fullConfigPath))
             {
-                string dir = Path.GetDirectoryName(fullFilename);
+                string dir = Path.GetDirectoryName(fullConfigPath);
 
                 try
                 {
                     Directory.Delete(dir, true);
                 }
-                catch (Exception ex)
+                catch
                 {
                     return ThemeUninstallingResult.ERROR;
                 }
@@ -648,49 +648,49 @@ namespace ImageGlass.Theme
         /// <summary>
         /// Pack the theme folder to *.igtheme file
         /// </summary>
-        /// <param name="themeFolder">Theme folder</param>
-        /// <param name="themeFileOutput">Output *.igtheme file</param>
+        /// <param name="themeFolderPath">The absolute path of theme folder</param>
+        /// <param name="outputThemeFile">Output *.igtheme file</param>
         /// <returns></returns>
-        public static ThemePackingResult PackTheme(string themeFolder, string themeFileOutput)
+        public static ThemePackingResult PackTheme(string themeFolderPath, string outputThemeFile)
         {
-            if (!Directory.Exists(themeFolder))
+            if (!Directory.Exists(themeFolderPath))
             {
                 return ThemePackingResult.ERROR;
             }
 
-            Theme th = new Theme(Path.Combine(themeFolder, "config.xml"));
+            Theme th = new Theme(themeFolderPath);
 
             //updated theme config file
-            th.SaveAsThemeConfigs(themeFolder);
+            th.SaveAsThemeConfigs(themeFolderPath);
 
             //if file exist, rename & backup
-            if (File.Exists(themeFileOutput))
+            if (File.Exists(outputThemeFile))
             {
-                File.Move(themeFileOutput, themeFileOutput + ".old");
+                File.Move(outputThemeFile, outputThemeFile + ".old");
             }
 
             try
             {
-                using (ZipFile z = new ZipFile(themeFileOutput, Encoding.UTF8))
+                using (ZipFile z = new ZipFile(outputThemeFile, Encoding.UTF8))
                 {
-                    z.AddDirectory(themeFolder, th.Name);
+                    z.AddDirectory(themeFolderPath, th.Name);
                     z.Save();
                 };
             }
             catch (Exception ex)
             {
                 //restore backup file
-                if (File.Exists(themeFileOutput + ".old"))
+                if (File.Exists(outputThemeFile + ".old"))
                 {
-                    File.Move(themeFileOutput + ".old", themeFileOutput);
+                    File.Move(outputThemeFile + ".old", outputThemeFile);
                 }
 
                 return ThemePackingResult.ERROR;
             }
 
-            if (File.Exists(themeFileOutput + ".old"))
+            if (File.Exists(outputThemeFile + ".old"))
             {
-                File.Delete(themeFileOutput + ".old");
+                File.Delete(outputThemeFile + ".old");
             }
 
             return ThemePackingResult.SUCCESS;
