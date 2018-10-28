@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -342,6 +342,7 @@ namespace ImageGlass
 
             #region TOOLBAR TAB
             lblToolbarPosition.Text = lang["frmSetting.lblToolbarPosition"];
+            chkHorzCenterToolbarBtns.Text = lang["frmSetting.chkHorzCenterToolbarBtns"];
 
             _separatorText = lang["frmSetting.txtSeparator"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
@@ -1115,7 +1116,8 @@ namespace ImageGlass
             }
             
             cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
-            
+
+            chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
 
             // Apply Windows System theme to listview
             RenderTheme th = new RenderTheme();
@@ -2151,6 +2153,19 @@ namespace ImageGlass
             }
 
             #endregion
+
+            #region HorzCenterToolbarBtns: MainFormForceUpdateAction.TOOLBAR_POSITION
+
+            newBool = chkHorzCenterToolbarBtns.Checked;
+            if (GlobalSetting.IsCenterToolbar != newBool)
+            {
+                GlobalSetting.IsCenterToolbar = newBool;
+                GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+            }
+            #endregion
+
 
             ApplyToolbarChanges();
             #endregion

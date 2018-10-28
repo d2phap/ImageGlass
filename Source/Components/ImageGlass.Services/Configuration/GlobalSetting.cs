@@ -479,8 +479,15 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnConvert}," +
             $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
             $"{(int)Configuration.ToolbarButtons.btnDelete},";
-        
-        
+
+
+
+        /// <summary>
+        /// Are toolbar buttons to be centered horizontally in the window? [useful for wide screens?]
+        /// </summary>
+        public static bool IsCenterToolbar { get; set; } = false;
+
+
 
         #endregion
 
