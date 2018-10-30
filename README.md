@@ -13,7 +13,7 @@ It gives you the possibility to view over **70+** common image formats, includin
 ## Download & Screen shots
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/5.5_1.png" alt="ImageGlass 5.5.7.26">
+<img src="https://imageglass.org/upload/photo/release/5.5_1.jpg" alt="ImageGlass 5.5.7.26">
 </a><br/>
 
 <a href="https://www.imageglass.org/download" target="_blank" title="Download the latest version">
