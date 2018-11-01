@@ -26,7 +26,7 @@ using System.Windows.Forms;
 using System.Security;
 using System.IO;
 using System.Text;
-using ImageGlass.Library.FileAssociations;
+//using ImageGlass.Library.FileAssociations;
 using System.Linq;
 using System.Globalization;
 
@@ -91,7 +91,6 @@ namespace ImageGlass.Services.Configuration
 
         /// <summary>
         /// Gets or sets the hash array of all supported formats. 
-        /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
@@ -156,6 +155,10 @@ namespace ImageGlass.Services.Configuration
         public static string OptionalImageFormats { get; set; } = string.Empty;
 
 
+        #region Archive File extensions
+        /// <summary>
+        /// All supported archive file extensions.
+        /// </summary>
         public static string AllArchiveFormats
         {
             get
@@ -164,16 +167,31 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
+        /// <summary>
+        /// "Default" archive file extensions list. Intended to be user-modifiable.
+        /// </summary>
         public static string DefaultArchiveFormats { get; set; } = "";
 
+        /// <summary>
+        /// "Optional" archive file extensions list. Intended to be user-modifiable.
+        /// </summary>
         public static string OptionalArchiveFormats { get; set; } = "";
 
+        /// <summary>
+        /// The supported (known) archive file extensions. The list is divided in two
+        /// parts by the "|"; the first part is the "default" list, the second part is
+        /// the "optional" list.
+        /// </summary>
         public static string BuiltInArchiveFormats { get; } = "*.zip;*.cbz;*.cbr;*.rar;*.7z;*.cb7" +
             "|*.xz;*.bzip2;*.gzip;*.tar;*.zip;*.wim;*.ar;*.arj;*.cab;*.chm;*.cpio;*.cramfs;*.dmg;*.ext;*.fat;*.gpt;*.hfs;*.ihex;*.iso;*.lzh;*.lzma;*.mbr;*.msi;*.nsis;*.ntfs;*.qcow2;*.rar;*.rpm;*.squashfs;*.udf;*.uefi;*.vdi;*.vhd;*.vmdk;*.wim;*.xar;*.z;";
 
-        // KBR TODO move to LocalSetting?
+        /// <summary>
+        /// The hash of all known archive image extensions. This is used for fast and correct
+        /// extension lookup during file open.
+        /// </summary>
         public static HashSet<string> ArchiveFormatHashSet { get; set; } = new HashSet<string>();
 
+        #endregion
 
         /// <summary>
         /// Gets, sets value of slideshow state
@@ -500,14 +518,6 @@ namespace ImageGlass.Services.Configuration
         }
 
 
-        public static void LoadBuiltInArchiveFormats()
-        {
-            var exts = BuiltInArchiveFormats.Split("|".ToCharArray());
-
-            DefaultArchiveFormats = exts[0];
-            OptionalArchiveFormats = exts[1];
-        }
-
         /// <summary>
         /// Save ImageEditingAssociationList to Settings
         /// </summary>
@@ -550,29 +560,29 @@ namespace ImageGlass.Services.Configuration
         }
 
 
-        /// <summary>
-        /// Get file extensions from registry
-        /// Ex: *.svg;*.png;
-        /// </summary>
-        /// <returns></returns>
-        public static string GetFileExtensionsFromRegistry()
-        {
-            StringBuilder exts = new StringBuilder();
+        ///// <summary>
+        ///// Get file extensions from registry
+        ///// Ex: *.svg;*.png;
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetFileExtensionsFromRegistry()
+        //{
+        //    StringBuilder exts = new StringBuilder();
 
-            RegistryHelper reg = new RegistryHelper()
-            {
-                BaseRegistryKey = Registry.LocalMachine,
-                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
-            };
-            var extList = reg.GetValueNames();
+        //    RegistryHelper reg = new RegistryHelper()
+        //    {
+        //        BaseRegistryKey = Registry.LocalMachine,
+        //        SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+        //    };
+        //    var extList = reg.GetValueNames();
 
-            foreach(var ext in extList)
-            {
-                exts.Append($"*{ext};");
-            }
+        //    foreach(var ext in extList)
+        //    {
+        //        exts.Append($"*{ext};");
+        //    }
 
-            return exts.ToString();
-        }
+        //    return exts.ToString();
+        //}
 
 
         /// <summary>
@@ -608,15 +618,15 @@ namespace ImageGlass.Services.Configuration
         }
 
 
-        /// <summary>
-        /// Gets a specify config. Return "" if not found.
-        /// </summary>
-        /// <param name="key">Configuration key</param>
-        /// <returns></returns>
-        public static string GetConfig(string key)
-        {
-            return GetConfig(key, "");
-        }
+        ///// <summary>
+        ///// Gets a specify config. Return "" if not found.
+        ///// </summary>
+        ///// <param name="key">Configuration key</param>
+        ///// <returns></returns>
+        //public static string GetConfig(string key)
+        //{
+        //    return GetConfig(key, "");
+        //}
 
 
         /// <summary>
@@ -756,20 +766,51 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-        public static void BuildArchiveFormatHashSet()
-        {
-            // KBR TODO copy-pasta
-            char[] wildtrim = { '*' };
-            var allTypes = AllArchiveFormats;
 
+        /// <summary>
+        /// Given an extensions string and convert it to a faster lookup mechanism and 
+        /// with wildcards removed.
+        /// 
+        /// Intended to fix the observed issue where "string.Contains" applied against
+        /// the image extensions list would cause unsupported extensions such as 
+        /// ".c", ".h", ".md", etc to pass.
+        /// </summary>
+        public static HashSet<string> BuildFileFormatHashSet(string allTypes)
+        {
+            char[] wildtrim = { '*' };
             var typesArray = allTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            ArchiveFormatHashSet = new HashSet<string>();
+            HashSet<string> dest = new HashSet<string>();
 
             foreach (var aType in typesArray)
             {
                 string wildRemoved = aType.Trim(wildtrim);
-                ArchiveFormatHashSet.Add(wildRemoved);
+                dest.Add(wildRemoved);
             }
+            return dest;
+        }
+
+
+        /// <summary>
+        /// Load the various lists of supported archive file extensions.
+        /// </summary>
+        public static void BuildArchiveExtensions()
+        {
+            var extGroups = BuiltInArchiveFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            DefaultArchiveFormats = GetConfig("DefaultArchiveFormats", extGroups[0]);
+            OptionalArchiveFormats = GetConfig("OptionalArchiveFormats", extGroups[1]);
+
+            // If the user has not made any changes to the default/optional lists, 
+            // or this is the initial run, establish the "built-in" lists.
+            if (AllArchiveFormats.Length == 0)
+            {
+                DefaultArchiveFormats = extGroups[0];
+                OptionalArchiveFormats = extGroups[1];
+
+                SetConfig("DefaultArchiveFormats", DefaultArchiveFormats);
+                SetConfig("OptionalArchiveFormats", OptionalArchiveFormats);
+            }
+
+            ArchiveFormatHashSet = BuildFileFormatHashSet(AllArchiveFormats);
         }
 
         #endregion

@@ -2011,7 +2011,7 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Read suported image formats
+                #region Read supported image formats
                 var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                 //Load Default Image Formats
@@ -2033,21 +2033,9 @@ namespace ImageGlass
                 // build the hashset GlobalSetting.ImageFormatHashSet
                 GlobalSetting.BuildImageFormatHashSet();
 
-                // KBR TODO copy-pasta
-                // KBR TODO move to GlobalSetting
-                extGroups = GlobalSetting.BuiltInArchiveFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                GlobalSetting.DefaultArchiveFormats = GlobalSetting.GetConfig("DefaultArchiveFormats", extGroups[0]);
-                GlobalSetting.OptionalArchiveFormats = GlobalSetting.GetConfig("OptionalArchiveFormats", extGroups[1]);
+                // All the Archive File extensions settings
+                GlobalSetting.BuildArchiveExtensions();
 
-                if (GlobalSetting.AllArchiveFormats.Length == 0)
-                {
-                    GlobalSetting.LoadBuiltInArchiveFormats();
-
-                    GlobalSetting.SetConfig("DefaultArchiveFormats", GlobalSetting.DefaultArchiveFormats);
-                    GlobalSetting.SetConfig("OptionalArchiveFormats", GlobalSetting.OptionalArchiveFormats);
-                }
-
-                GlobalSetting.BuildArchiveFormatHashSet();
                 #endregion
 
 
