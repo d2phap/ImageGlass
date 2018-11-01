@@ -744,6 +744,7 @@ namespace ImageGlass.Services.Configuration
         }
 
 
+        // TODO KBR refactor image format stuff
         /// <summary>
         /// Take the supported extensions string from GlobalSetting and convert it 
         /// to a faster lookup mechanism and with wildcard removed.

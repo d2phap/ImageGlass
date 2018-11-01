@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -82,6 +82,13 @@ namespace ImageGlass
         /// Is the currently active image list from an archive file? (zip, cbr, etc)
         /// </summary>
         public static bool FilesFromArchive { get; set; }
+
+
+        /// <summary>
+        /// When extracting from an archive file, this is the path to the ORIGINAL archive file
+        /// </summary>
+        public static string ArchiveFilePath { get; set; }
+
         #endregion
 
 

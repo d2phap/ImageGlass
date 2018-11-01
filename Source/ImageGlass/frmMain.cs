@@ -481,6 +481,8 @@ namespace ImageGlass
             LoadImages(new List<string> { filepath }, filepath);
 
             LocalSetting.FilesFromArchive = true; // Prevent attempts to modify images from an archive
+            LocalSetting.ArchiveFilePath = zippath; // Display original archive path on title bar
+
              _unzipCancelSource = new CancellationTokenSource(); // Need a new one for each extract
 
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
@@ -934,18 +936,16 @@ namespace ImageGlass
                 }
                 else
                 {
-                    //auto ellipsis the filename
-                    //the minimum text to show is Drive letter + basename.
-                    //ex: C:\...\example.jpg
-                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                    var basename = Path.GetFileName(filename);
-
-                    var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
-
-                    var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
-
-                    filename = Helper.ShortenPath(filename, maxLength);
+                    if (LocalSetting.FilesFromArchive)
+                    {
+                        filename = Ellipsis(LocalSetting.ArchiveFilePath);
+                        filename += " : " + Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    }
+                    else
+                    {
+                        filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                        filename = Ellipsis(filename);
+                    }
                 }
 
 
@@ -980,6 +980,20 @@ namespace ImageGlass
                 }
             }
 
+            //auto ellipsis the filename
+            //the minimum text to show is Drive letter + basename.
+            //ex: C:\...\example.jpg
+            string Ellipsis(string fname)
+            {
+                var basename = Path.GetFileName(fname);
+
+                var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
+                var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
+
+                var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
+
+                return Helper.ShortenPath(fname, maxLength);
+            }
         }
         #endregion
 
