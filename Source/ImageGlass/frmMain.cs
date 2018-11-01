@@ -379,7 +379,7 @@ namespace ImageGlass
         // This provides the means to cancel the background archive extraction.
         // Cancellation is necessary if the user opens/drops a new image before
         // the archive extraction is complete.
-        private CancellationTokenSource _unzipCancelSource = new CancellationTokenSource();
+        private CancellationTokenSource _unzipCancelSource;
 
 
         /// <summary>
@@ -481,6 +481,7 @@ namespace ImageGlass
             LoadImages(new List<string> { filepath }, filepath);
 
             LocalSetting.FilesFromArchive = true; // Prevent attempts to modify images from an archive
+             _unzipCancelSource = new CancellationTokenSource(); // Need a new one for each extract
 
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
             Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath), _unzipCancelSource.Token);
@@ -538,11 +539,19 @@ namespace ImageGlass
         private void CancelAndCleanupArchiveExtract()
         {
             // Cancel any existing archive extraction
-            if (LocalSetting.FilesFromArchive)
+            if (LocalSetting.FilesFromArchive && _unzipCancelSource != null)
+            {
                 _unzipCancelSource.Cancel();
+            }
 
             // Clean up any previously opened archive
             Task.Run(() => DeleteUnzipFolder(_FolderToDelete)); // TODO KBR will this be a problem if re-opening the same archive?
+
+            if (_unzipCancelSource != null)
+            {
+                _unzipCancelSource.Dispose();
+                _unzipCancelSource = null;
+            }
         }
 
 
