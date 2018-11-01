@@ -212,12 +212,7 @@ namespace ImageGlass
             // Reset search from subfolders
             LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
 
-            // Cancel any existing archive extraction
-            if (LocalSetting.FilesFromArchive)
-                _unzipCancelSource.Cancel();
-
-            // Clean up any previously opened archive
-            Task.Run(() => DeleteUnzipFolder()); // TODO KBR will this be a problem if re-opening the same archive?
+            CancelAndCleanupArchiveExtract();
 
             //Check path is file or directory?
             if (File.Exists(path))
@@ -252,17 +247,6 @@ namespace ImageGlass
             WatchPath(dirPath);
         }
 
-
-        /// <summary>
-        /// Delete the folder and contents we created to extract an archive into.
-        /// </summary>
-        private void DeleteUnzipFolder()
-        {
-            if (Directory.Exists(_FolderToDelete))
-            {
-                Directory.Delete(_FolderToDelete, true);
-            }
-        }
 
         /// <summary>
         /// Load the images.
@@ -391,11 +375,12 @@ namespace ImageGlass
         // Remember the path created to extract the archive into; cleanup on next open, app exit
         private string _FolderToDelete;
 
-        // These provide the means to cancel the background archive extraction.
+
+        // This provides the means to cancel the background archive extraction.
         // Cancellation is necessary if the user opens/drops a new image before
         // the archive extraction is complete.
         private CancellationTokenSource _unzipCancelSource = new CancellationTokenSource();
-        private CancellationToken _unzipCancelToken;
+
 
         /// <summary>
         /// Load all images from within an archive file.
@@ -542,6 +527,33 @@ namespace ImageGlass
                         // Note no message: hoping we've successfully extracted one image
                     }
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Archive extraction may still be going, and/or left a temp folder. Cancel and
+        /// cleanup when necessary.
+        /// </summary>
+        private void CancelAndCleanupArchiveExtract()
+        {
+            // Cancel any existing archive extraction
+            if (LocalSetting.FilesFromArchive)
+                _unzipCancelSource.Cancel();
+
+            // Clean up any previously opened archive
+            Task.Run(() => DeleteUnzipFolder()); // TODO KBR will this be a problem if re-opening the same archive?
+        }
+
+
+        /// <summary>
+        /// Delete the folder and contents we created to extract an archive into.
+        /// </summary>
+        private void DeleteUnzipFolder()
+        {
+            if (Directory.Exists(_FolderToDelete))
+            {
+                Directory.Delete(_FolderToDelete, true);
             }
         }
 
@@ -2473,7 +2485,7 @@ namespace ImageGlass
                     Directory.Delete(GlobalSetting.TempDir, true);
                 }
 
-                DeleteUnzipFolder();
+                CancelAndCleanupArchiveExtract(); // deal with archive extract
 
                 SaveConfig();
             }
