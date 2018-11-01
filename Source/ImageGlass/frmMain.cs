@@ -40,7 +40,9 @@ using System.Collections.Concurrent;
 using FileWatcherEx;
 using System.Reflection;
 using SevenZip;
+using System.Threading;
 
+using Timer = System.Windows.Forms.Timer;
 
 namespace ImageGlass
 {
@@ -209,6 +211,11 @@ namespace ImageGlass
 
             // Reset search from subfolders
             LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
+
+            // Cancel any existing archive extraction
+            if (LocalSetting.FilesFromArchive)
+                _unzipCancelSource.Cancel();
+
             // Clean up any previously opened archive
             Task.Run(() => DeleteUnzipFolder()); // TODO KBR will this be a problem if re-opening the same archive?
 
@@ -384,6 +391,11 @@ namespace ImageGlass
         // Remember the path created to extract the archive into; cleanup on next open, app exit
         private string _FolderToDelete;
 
+        // These provide the means to cancel the background archive extraction.
+        // Cancellation is necessary if the user opens/drops a new image before
+        // the archive extraction is complete.
+        private CancellationTokenSource _unzipCancelSource = new CancellationTokenSource();
+        private CancellationToken _unzipCancelToken;
 
         /// <summary>
         /// Load all images from within an archive file.
@@ -402,7 +414,7 @@ namespace ImageGlass
             }
             catch
             {
-                // TODO inform the user?
+                // TODO KBR inform the user?
                 return;
             }
 
@@ -470,7 +482,7 @@ namespace ImageGlass
 
             }
 
-            // Done with original extractor now. The background extract needs its own.
+            // NOTE: Done with original extractor now. The background extract needs its own.
 
 
             // 6. Force "load from subfolders" for the image list
@@ -483,10 +495,10 @@ namespace ImageGlass
             var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
             LoadImages(new List<string> { filepath }, filepath);
 
-            LocalSetting.FilesFromArchive = true;
+            LocalSetting.FilesFromArchive = true; // Prevent attempts to modify images from an archive
 
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
-            Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath));
+            Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath), _unzipCancelSource.Token);
 
             void OnError(string msgEnd)
             {
@@ -501,6 +513,10 @@ namespace ImageGlass
         /// <summary>
         /// Extract image files from an archive. This is intended to be executed as a background task
         /// from the "load from archive" function.
+        /// 
+        /// By performing as a background task, the user can see the first image(s) from within the
+        /// archive without having to wait for the entire archive to be extracted. The FileWatch
+        /// mechanism is used to update the GUI when files have been extracted.
         /// </summary>
         /// <param name="inpath">path to archive</param>
         /// <param name="filesToExtract">the files to extract from the archive</param>
@@ -522,6 +538,7 @@ namespace ImageGlass
                     }
                     catch
                     {
+                        // TODO KBR should something happen here?
                         // Note no message: hoping we've successfully extracted one image
                     }
                 }
