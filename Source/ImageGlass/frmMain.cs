@@ -542,18 +542,18 @@ namespace ImageGlass
                 _unzipCancelSource.Cancel();
 
             // Clean up any previously opened archive
-            Task.Run(() => DeleteUnzipFolder()); // TODO KBR will this be a problem if re-opening the same archive?
+            Task.Run(() => DeleteUnzipFolder(_FolderToDelete)); // TODO KBR will this be a problem if re-opening the same archive?
         }
 
 
         /// <summary>
         /// Delete the folder and contents we created to extract an archive into.
         /// </summary>
-        private void DeleteUnzipFolder()
+        private void DeleteUnzipFolder(string folderToDelete)
         {
-            if (Directory.Exists(_FolderToDelete))
+            if (folderToDelete != null && Directory.Exists(folderToDelete))
             {
-                Directory.Delete(_FolderToDelete, true);
+                Directory.Delete(folderToDelete, true);
             }
         }
 
