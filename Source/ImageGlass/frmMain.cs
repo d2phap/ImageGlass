@@ -399,7 +399,7 @@ namespace ImageGlass
             }
             catch
             {
-                // TODO KBR inform the user?
+                OnError("ArchiveSupportMissing");
                 return;
             }
 
@@ -410,11 +410,20 @@ namespace ImageGlass
             using (SevenZipExtractor extr = new SevenZipExtractor(zippath))
             {
 
+                IReadOnlyCollection<ArchiveFileInfo> zipentries;
                 // 2. Get the list of archive entries [if fail, done]
-                var zipentries = extr.ArchiveFileData;
-                if (zipentries.Count == 0)
+                try
                 {
-                    OnError("ArchiveEmptyBad");
+                    zipentries = extr.ArchiveFileData;
+                    if (zipentries.Count == 0)
+                    {
+                        OnError("ArchiveEmptyBad");
+                        return;
+                    }
+                }
+                catch
+                {
+                    OnError("ArchiveEmptyBad"); // extractor throws on empty file
                     return;
                 }
 
@@ -490,8 +499,11 @@ namespace ImageGlass
 
             void OnError(string msgEnd)
             {
+                GlobalSetting.ImageList.Dispose();  // possibly draconian but previous images must be wiped
+                LoadThumbnails();                   // clear thumbbar
                 GlobalSetting.IsImageError = true;
                 string msg = "frmMain.picMain." + msgEnd;
+                this.Text = $"ImageGlass - {Path.GetFileName(zippath)}";
                 picMain.Text = GlobalSetting.LangPack.Items[msg];
                 picMain.Image = null;
             }
