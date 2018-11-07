@@ -486,16 +486,23 @@ namespace ImageGlass
             WatchPath(outpath);
 
             // 8. Initialize the image list
-            var filepath = Path.Combine(outpath, filesToExtract[0].FileName);
+            var filepath = Path.Combine(outpath, filesToExtract[0].FileName); // TODO remove the first entry to not extract it twice
             LoadImages(new List<string> { filepath }, filepath);
 
             LocalSetting.FilesFromArchive = true; // Prevent attempts to modify images from an archive
             LocalSetting.ArchiveFilePath = zippath; // Display original archive path on title bar
 
-             _unzipCancelSource = new CancellationTokenSource(); // Need a new one for each extract
+            _unzipCancelSource = new CancellationTokenSource(); // Need a new one for each extract
 
             // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
-            Task.Run(() => ExtractZipFiles(zippath, filesToExtract, outpath), _unzipCancelSource.Token);
+            // The cancellation token allows the extract to be cancelled if interrupted by user
+            // (e.g. dropping a different file onto IG).
+            var token = _unzipCancelSource.Token;
+            Task.Run(() =>
+            {
+                var capturedToken = token;
+                ExtractZipFiles(zippath, filesToExtract, outpath, capturedToken);
+            }, token);
 
             void OnError(string msgEnd)
             {
@@ -521,18 +528,23 @@ namespace ImageGlass
         /// <param name="inpath">path to archive</param>
         /// <param name="filesToExtract">the files to extract from the archive</param>
         /// <param name="outbase">the path to the base folder we're extracting to</param>
-        private void ExtractZipFiles(string inpath, List<ArchiveFileInfo> filesToExtract, string outbase)
+        /// <param name="token">check this for cancellation</param>
+        private void ExtractZipFiles(string inpath, List<ArchiveFileInfo> filesToExtract, string outbase,
+                                    CancellationToken token)
         {
             using (var extr = new SevenZipExtractor(inpath))
             {
                 foreach (var entry in filesToExtract)
                 {
+                    if (token.IsCancellationRequested) // cancellation happened
+                        return;
+
                     var outpath = Path.Combine(outbase, entry.FileName);
-                    var outfold = Path.GetDirectoryName(outpath);
+                    var outfold = Path.GetDirectoryName(outpath); // file might be in a sub-folder
 
                     try
                     {
-                        Directory.CreateDirectory(outfold);
+                        Directory.CreateDirectory(outfold); // each file could possibly need a sub-folder
                         using (FileStream fs = File.OpenWrite(outpath))
                             extr.ExtractFile(entry.FileName, fs);
                     }
@@ -541,6 +553,7 @@ namespace ImageGlass
                         // TODO KBR should something happen here?
                         // Note no message: hoping we've successfully extracted one image
                     }
+
                 }
             }
         }
