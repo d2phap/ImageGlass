@@ -1463,7 +1463,10 @@ namespace ImageGlass
         {
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.IsImageError || 
+                    !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive // don't allow rename if archive
+                    )
                 {
                     return;
                 }
@@ -4090,7 +4093,8 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive) // disallow when image from archive
                 {
                     return;
                 }
@@ -4122,7 +4126,8 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive ) // Don't allow delete if from archive
                 {
                     return;
                 }
