@@ -65,6 +65,7 @@ namespace ImageGlass
             
             //Update form with new DPI
             OnDpiChanged();
+
         }
 
 
@@ -381,6 +382,7 @@ namespace ImageGlass
         // the archive extraction is complete.
         private CancellationTokenSource _unzipCancelSource;
 
+        private Task _unzipTask;
 
         /// <summary>
         /// Load all images from within an archive file.
@@ -498,7 +500,7 @@ namespace ImageGlass
             // The cancellation token allows the extract to be cancelled if interrupted by user
             // (e.g. dropping a different file onto IG).
             var token = _unzipCancelSource.Token;
-            Task.Run(() =>
+            _unzipTask = Task.Run(() =>
             {
                 var capturedToken = token;
                 ExtractZipFiles(zippath, filesToExtract, outpath, capturedToken);
@@ -545,6 +547,10 @@ namespace ImageGlass
                     try
                     {
                         Directory.CreateDirectory(outfold); // each file could possibly need a sub-folder
+
+                        if (token.IsCancellationRequested) // cancellation happened
+                            return;
+
                         using (FileStream fs = File.OpenWrite(outpath))
                             extr.ExtractFile(entry.FileName, fs);
                     }
@@ -565,19 +571,41 @@ namespace ImageGlass
         /// </summary>
         private void CancelAndCleanupArchiveExtract()
         {
+            // We're about to cancel the unpack: stop the watcher from seeing any more files
+            // kbr 20181108 - the Stop() isn't fast enough/sufficient to prevent the
+            // filewatcher from picking up any remnant files created by the archive
+            // unpacker.
+            this._fileWatcher.OnCreated -= FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted -= FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged -= FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed -= FileWatcher_OnRenamed;
+            _fileWatcher.Stop();
+
             // Cancel any existing archive extraction
-            if (LocalSetting.FilesFromArchive && _unzipCancelSource != null)
+            if (LocalSetting.FilesFromArchive)
             {
-                _unzipCancelSource.Cancel();
+                // checking for null as the archive might have been invalid, and
+                // not actually started the unarchive task
+                if (_unzipCancelSource != null) 
+                    _unzipCancelSource.Cancel();
+                if (_unzipTask != null)
+                    _unzipTask.Wait(); // wait for the unarchive background to stop
             }
 
+            Thread.Sleep(10);
+
             // Clean up any previously opened archive
-            Task.Run(() => DeleteUnzipFolder(_FolderToDelete)); // TODO KBR will this be a problem if re-opening the same archive?
+            Task.Run(() => DeleteUnzipFolder(_FolderToDelete));
 
             if (_unzipCancelSource != null)
             {
                 _unzipCancelSource.Dispose();
                 _unzipCancelSource = null;
+            }
+            if (_unzipTask != null)
+            {
+                _unzipTask.Dispose();
+                _unzipTask = null;
             }
         }
 
