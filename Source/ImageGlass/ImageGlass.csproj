@@ -176,6 +176,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMetadataView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMetadataView.Designer.cs">
+      <DependentUpon>frmMetadataView.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSetting.cs">
       <SubType>Form</SubType>
     </Compile>

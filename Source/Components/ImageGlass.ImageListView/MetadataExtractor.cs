@@ -50,11 +50,12 @@ namespace ImageGlass.ImageListView
         private const int TagEquipmentManufacturer = 0x010F;
         private const int TagFocalLength = 0x920A;
         private const int TagSoftware = 0x0131;
+        private const int TagImageTitle = 0x0320; // [IG_CHANGE]
         #endregion
 
 #if USEWIC
         #region WIC Metadata Paths
-        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
+        private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=270}", "/app1/ifd/{ushort=40095}", "/ifd/exif/{ushort=270}" }; // [IG_CHANGE]
         private static readonly string[] WICPathCopyright = new string[] { "/app1/ifd/{ushort=33432}", "/app13/irb/8bimiptc/iptc/copyright notice", "/xmp/<xmpalt>dc:rights", "/xmp/dc:rights" };
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
         private static readonly string[] WICPathSoftware = new string[] { "/app1/ifd/{ushort=305}", "/xmp/xmp:CreatorTool", "/xmp/xmp:creatortool", "/xmp/tiff:Software", "/xmp/tiff:software", "/app13/irb/8bimiptc/iptc/Originating Program" };
@@ -68,6 +69,9 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathFNumber = new string[] { "/app1/ifd/exif/{ushort=33437}", "/xmp/exif:FNumber" };
         private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
         private static readonly string[] WICPathFocalLength = new string[] { "/app1/ifd/exif/{ushort=37386}", "/xmp/exif:FocalLength" };
+        private static readonly string[] WICTags = new string[] { "/app13/irb/8bimiptc/iptc/keywords"};  // [IG_CHANGE]
+        private static readonly string[] WICHeadline = new string[] { "/app13/irb/8bimiptc/iptc/headline" }; // [IG_CHANGE]
+        private static readonly string[] WICTitle = new string[] { "/app13/irb/8bimiptc/iptc/title" }; // [IG_CHANGE]
         #endregion
 #endif
 
@@ -257,6 +261,11 @@ namespace ImageGlass.ImageListView
         /// Focal length.
         /// </summary>
         public double FocalLength = 0.0;
+
+        // [IG_CHANGE] attempting to fetch more metadata, with mixed results
+        public string Tags = null; // tags or keywords
+        public string Headline = null; // IPTC headline
+        public string Title = null; // IPTC Title
         #endregion
 
         #region Helper Methods
@@ -338,6 +347,8 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
+
         /// <summary>
         /// Read metadata using .NET 2.0 methods.
         /// </summary>
@@ -478,6 +489,13 @@ namespace ImageGlass.ImageListView
                                 }
                             }
                             break;
+                        case TagImageTitle: // [IG_CHANGE]
+                            str = ExifAscii(prop.Value).Trim();
+                            if (str != String.Empty)
+                            {
+                                Title = str;
+                            }
+                            break;
                     }
                 }
             }
@@ -593,9 +611,33 @@ namespace ImageGlass.ImageListView
             val = GetMetadataObject(data, WICPathFocalLength);
             if (val != null)
                 FocalLength = ExifDouble(BitConverter.GetBytes((ulong)val));
+
+			// [IG_CHANGE]
+            val = GetMetadataObject(data, WICTags);
+            if (val != null)
+            {
+                var val2 = val as string[];
+                foreach (var atag in val2)
+                    Tags += atag + ",";
+            }
+
+			// [IG_CHANGE]
+            val = GetMetadataObject(data, WICHeadline);
+            if (val != null)
+            {
+                Headline = val as string;
+            }
+			
+			// [IG_CHANGE]
+            val = GetMetadataObject(data, WICTitle);
+            if (val != null)
+            {
+                Title = val as string;
+            }
         }
+
         /// <summary>
-        /// [PHAP] Returns the metadata for the given query.
+        /// [IG_CHANGE] Returns the metadata for the given query.
         /// </summary>
         /// <param name="metadata">The image metadata.</param>
         /// <param name="query">A list of query strings.</param>

@@ -736,7 +736,22 @@ namespace ImageGlass.Library
 
             #endregion
 
-
+            #region frmMetadataView
+            Items.Add("frmMetadataView.DateTaken", "Date Taken: ");
+            Items.Add("frmMetadataView.CameraModel", "Camera Model: ");
+            Items.Add("frmMetadataView.CameraMaker", "Camera Maker: ");
+            Items.Add("frmMetadataView.Artist", "Artist: ");
+            Items.Add("frmMetadataView.Copyright", "Copyright: ");
+            Items.Add("frmMetadataView.Exposure", "Exposure: ");
+            Items.Add("frmMetadataView.FStop", "F-stop: ");
+            Items.Add("frmMetadataView.ISO", "ISO speed: ");
+            Items.Add("frmMetadataView.Comment", "Comment: ");
+            Items.Add("frmMetadataView.FocalLen", "Focal length: ");
+            Items.Add("frmMetadataView.Software", "Software: ");
+            Items.Add("frmMetadataView.Description", "Description: ");
+            Items.Add("frmMetadataView.Tags", "Tags: ");
+            Items.Add("frmMetadataView.Title", "Title: ");
+            #endregion
 
         }
 

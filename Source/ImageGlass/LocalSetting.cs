@@ -27,6 +27,7 @@ namespace ImageGlass
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
+        private static frmMetadataView _fMetadataView;
         private static Theme.Theme _theme;
         
 
@@ -74,6 +75,18 @@ namespace ImageGlass
         /// </summary>
         public static bool IsTempMemoryData { get; set; } = false;
 
+        /// <summary>
+        /// Check if Metadata Viewer is opening.
+        /// This is to toggle the Metadata Viewer menu in frmMain
+        /// </summary>
+        public static bool IsMetadataViewOpening { get; set; } = false;
+
+
+        /// <summary>
+        /// Check if Metadata Viewer is not closed by user (toggle the menu / press ESC on Metadata Viewer form). 
+        /// This is for auto open Metadata Viewer tool at startup
+        /// </summary>
+        public static bool IsShowMetadataViewOnStartup { get; set; } = false;
 
         /// <summary>
         /// The current "initial" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
@@ -110,6 +123,15 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
+        }
+
+        /// <summary>
+        /// Metadata Viewer
+        /// </summary>
+        public static frmMetadataView FMetadata
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fMetadataView); }
+            set { _fMetadataView = value; }
         }
 
 

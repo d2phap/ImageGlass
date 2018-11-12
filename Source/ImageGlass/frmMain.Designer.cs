@@ -128,6 +128,7 @@
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainMetadataView = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
@@ -1393,7 +1394,8 @@
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainColorPicker});
+            this.mnuMainColorPicker,
+            this.mnuMainMetadataView});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
@@ -1415,6 +1417,18 @@
             this.mnuMainColorPicker.Size = new System.Drawing.Size(300, 31);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
+            // 
+            // mnuMainMetadataView
+            // 
+            this.mnuMainMetadataView.CheckOnClick = true;
+            this.mnuMainMetadataView.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainMetadataView.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainMetadataView.Name = "mnuMainMetadataView";
+            this.mnuMainMetadataView.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainMetadataView.ShortcutKeyDisplayString = "";
+            this.mnuMainMetadataView.Size = new System.Drawing.Size(300, 31);
+            this.mnuMainMetadataView.Text = "Metadata Viewer";
+            this.mnuMainMetadataView.Click += new System.EventHandler(this.mnuMainMetadataView_Click);
             // 
             // mnuMainSettings
             // 
@@ -1719,6 +1733,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToFit;
         private System.Windows.Forms.ToolStripMenuItem mnuMainColorPicker;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainMetadataView;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.ToolStripButton btnDelete;

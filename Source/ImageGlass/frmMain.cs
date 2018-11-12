@@ -627,7 +627,7 @@ namespace ImageGlass
 
                 //Show image
                 picMain.Image = im;
-
+                LocalSetting.FMetadata.Image = thumbnailBar.Items[GlobalSetting.CurrentIndex];
 
                 //Reset the zoom mode if isKeepZoomRatio = FALSE
                 if (!isKeepZoomRatio)
@@ -1520,6 +1520,7 @@ namespace ImageGlass
             mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainColorPicker.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainMetadataView.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             #endregion
 
@@ -2107,6 +2108,14 @@ namespace ImageGlass
                         }
                     #endregion
 
+                    #region Metadata Viewer
+                    LocalSetting.IsShowMetadataViewOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowMetadataViewOnStartup", "False"));
+                    if (LocalSetting.IsShowMetadataViewOnStartup)
+                    {
+                        mnuMainMetadataView.PerformClick();
+                    }
+                    #endregion
+
                 });
 
             }
@@ -2173,6 +2182,8 @@ namespace ImageGlass
 
             //Save IsShowColorPickerOnStartup
             GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsShowColorPickerOnStartup.ToString());
+
+            GlobalSetting.SetConfig("IsShowMetadataViewOnStartup", LocalSetting.IsShowMetadataViewOnStartup.ToString());
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
@@ -2478,6 +2489,14 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.COLOR_PICKER_MENU) == MainFormForceUpdateAction.COLOR_PICKER_MENU)
             {
                 mnuMainColorPicker.Checked = LocalSetting.IsColorPickerToolOpening;
+            }
+            #endregion
+
+
+            #region METADATA_VIEW_MENU
+            if ((flags & MainFormForceUpdateAction.METADATA_VIEW_MENU) != 0)
+            {
+                mnuMainMetadataView.Checked = LocalSetting.IsMetadataViewOpening;
             }
             #endregion
 
@@ -4156,6 +4175,31 @@ namespace ImageGlass
                 GlobalSetting.IsWindowAlwaysOnTop = !GlobalSetting.IsWindowAlwaysOnTop;
         }
         
+
+        private void mnuMainMetadataView_Click(object sender, EventArgs e)
+        {
+            LocalSetting.IsShowMetadataViewOnStartup = LocalSetting.IsMetadataViewOpening = mnuMainMetadataView.Checked;
+
+            if (mnuMainMetadataView.Checked)
+            {
+                if (LocalSetting.FMetadata.IsDisposed)
+                {
+                    LocalSetting.FMetadata = new frmMetadataView();
+                }
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.METADATA_VIEW_MENU;
+                if (GlobalSetting.CurrentIndex != -1)
+                    LocalSetting.FMetadata.Image = thumbnailBar.Items[GlobalSetting.CurrentIndex];
+                LocalSetting.FMetadata.Show(this);
+                // Without the next statement, the form wouldn't appear in front of main window
+                // (but only if image already loaded, and only on first showing)
+                LocalSetting.FMetadata.Activate(); 
+                this.Activate();
+            }
+            else
+            {
+                LocalSetting.FMetadata.Close();
+            }
+        }
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {

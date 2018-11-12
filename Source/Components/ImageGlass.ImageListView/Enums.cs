@@ -209,6 +209,12 @@ namespace ImageGlass.ImageListView
         /// Focal length (Exif tag).
         /// </summary>
         FocalLength,
+
+        // [IG_CHANGE] attempting to fetch more metadata - with mixed results
+        EquipmentMaker,
+        Tags,
+        Title,
+        Headline,
     }
     /// <summary>
     /// Represents the order by which items are drawn.
