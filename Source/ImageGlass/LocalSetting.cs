@@ -87,6 +87,19 @@ namespace ImageGlass
         /// </summary>
         public static string InitialInputImageFilename { get; set; } = "";
 
+        public static bool LoadFromSubfolders { get; set; }
+
+
+        /// <summary>
+        /// Is the currently active image list from an archive file? (zip, cbr, etc)
+        /// </summary>
+        public static bool FilesFromArchive { get; set; }
+
+
+        /// <summary>
+        /// When extracting from an archive file, this is the path to the ORIGINAL archive file
+        /// </summary>
+        public static string ArchiveFilePath { get; set; }
 
         #endregion
 

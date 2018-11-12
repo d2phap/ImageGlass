@@ -39,7 +39,10 @@ using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
 using System.Reflection;
+using SevenZip;
+using System.Threading;
 
+using Timer = System.Windows.Forms.Timer;
 
 namespace ImageGlass
 {
@@ -62,6 +65,7 @@ namespace ImageGlass
             
             //Update form with new DPI
             OnDpiChanged();
+
 
             // KBR 20181009 - Fix observed bug. If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*.
             // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
@@ -90,7 +94,6 @@ namespace ImageGlass
 
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
-        
 
 
         /***********************************
@@ -179,13 +182,17 @@ namespace ImageGlass
 
         #region Preparing image
         /// <summary>
-        /// Open an image
+        /// Open an image or archive
         /// </summary>
         private void OpenFile()
         {
             OpenFileDialog o = new OpenFileDialog();
-            o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats;
+
+            o.Filter = string.Format("{0}|{1}|{2}|{3}",
+                GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"],
+                GlobalSetting.AllImageFormats,
+                GlobalSetting.LangPack.Items["frmMain._ArchiveFormats"],
+                GlobalSetting.AllArchiveFormats);
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
@@ -209,10 +216,21 @@ namespace ImageGlass
             string filePath = "";
             string dirPath = "";
 
+            // Reset search from subfolders
+            LocalSetting.LoadFromSubfolders = GlobalSetting.IsRecursiveLoading;
+
+            CancelAndCleanupArchiveExtract();
+
             //Check path is file or directory?
             if (File.Exists(path))
             {
-                if (Path.GetExtension(path).ToLower() == ".lnk")
+                var ext = Path.GetExtension(path).ToLower();
+                if (GlobalSetting.ArchiveFormatHashSet.Contains(ext))
+                {
+                    LoadFromArchive(path);
+                    return;
+                }
+                if (ext == ".lnk")
                     dirPath = Shortcuts.FolderFromShortcut(path);
                 else
                     dirPath = Path.GetDirectoryName(path);
@@ -224,7 +242,6 @@ namespace ImageGlass
                 dirPath = path;
             }
 
-
             // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
             // By ensuring a terminating slash, the problem disappears. By doing that *here*,
             // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
@@ -234,6 +251,12 @@ namespace ImageGlass
 
 
             LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
+            
+            
+            // Not loading from an archive
+            _FolderToDelete = null;
+            LocalSetting.FilesFromArchive = false;
+
 
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
@@ -311,9 +334,9 @@ namespace ImageGlass
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
                 FolderPath = dirPath,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                IncludeSubdirectories = LocalSetting.LoadFromSubfolders, // GlobalSetting.IsRecursiveLoading,
 
-                // auto Invoke the form if required, no need to invidiually invoke in each event
+                // auto Invoke the form if required, no need to individually invoke in each event
                 SynchronizingObject = this
             };
 
@@ -343,7 +366,14 @@ namespace ImageGlass
                 string dirPath = "";
                 if (File.Exists(apath))
                 {
-                    if (Path.GetExtension(apath).ToLower() == ".lnk")
+                    var ext = Path.GetExtension(apath).ToLower();
+                    // If first path is an archive, load that one, and only that one
+                    if (GlobalSetting.ArchiveFormatHashSet.Contains(ext) && firstPath)
+                    {
+                        LoadFromArchive(apath);
+                        return;
+                    }
+                    if (ext == ".lnk")
                         dirPath = Shortcuts.FolderFromShortcut(apath);
                     else
                         dirPath = Path.GetDirectoryName(apath);
@@ -377,6 +407,259 @@ namespace ImageGlass
 
             LoadImages(allFilesToLoad, "");
         }
+
+
+        #region Archive (ZIP) support
+
+        // Remember the path created to extract the archive into; cleanup on next open, app exit
+        private string _FolderToDelete;
+
+
+        // This provides the means to cancel the background archive extraction.
+        // Cancellation is necessary if the user opens/drops a new image before
+        // the archive extraction is complete.
+        private CancellationTokenSource _unzipCancelSource;
+
+        private Task _unzipTask;
+
+        /// <summary>
+        /// Load all images from within an archive file.
+        /// </summary>
+        /// <param name="zippath">path to an archive file</param>
+        private void LoadFromArchive(string zippath)
+        {
+
+            try
+            {
+                // Need to invoke 32 or 64 bit DLL as required for running OS (_not_ the build target!)
+                if (Environment.Is64BitOperatingSystem)
+                    SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-64.dll"));
+                else
+                    SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z-32.dll"));
+            }
+            catch
+            {
+                OnError("ArchiveSupportMissing");
+                return;
+            }
+
+            string outpath; // location to extract to
+            var filesToExtract = new List<ArchiveFileInfo>();
+
+            // 1. Open the archive [if fail, done]
+            using (SevenZipExtractor extr = new SevenZipExtractor(zippath))
+            {
+
+                IReadOnlyCollection<ArchiveFileInfo> zipentries;
+                // 2. Get the list of archive entries [if fail, done]
+                try
+                {
+                    zipentries = extr.ArchiveFileData;
+                    if (zipentries.Count == 0)
+                    {
+                        OnError("ArchiveEmptyBad");
+                        return;
+                    }
+                }
+                catch
+                {
+                    OnError("ArchiveEmptyBad"); // extractor throws on empty file
+                    return;
+                }
+
+                // 3. Scan for image files [if none, done]
+                foreach (var entry in zipentries)
+                {
+                    if (entry.IsDirectory)
+                        continue;
+                    var extension = Path.GetExtension(entry.FileName).ToLower();
+                    if (GlobalSetting.ImageFormatHashSet.Contains(extension))
+                        filesToExtract.Add(entry);
+                }
+
+                if (filesToExtract.Count < 1)
+                {
+                    OnError("ArchiveEmptyBad");
+                    return;
+                }
+
+                // 4. Create a folder in the user's temp directory [if fail, done]
+                outpath = Path.Combine(Path.GetTempPath(), "IG_" + Path.GetFileName(zippath));
+                try
+                {
+                    Directory.CreateDirectory(outpath);
+                }
+                catch
+                {
+                    OnError("ArchiveExtractFail");
+                    return;
+                }
+
+                // Remember the created path and cleanup on next open, app exit
+                _FolderToDelete = outpath;
+
+                // 5. Extract the first image file with path to the created folder. If fail, don't do further steps.
+                var file0 = filesToExtract[0].FileName;
+                var path0 = Path.Combine(outpath, file0);
+                var outfold = Path.GetDirectoryName(path0);
+                try
+                {
+                    Directory.CreateDirectory(outfold);
+                    using (FileStream fs = File.OpenWrite(path0))
+                        extr.ExtractFile(filesToExtract[0].Index, fs);
+                }
+                catch
+                {
+                    OnError("ArchiveExtractFail");
+                    return;
+                }
+
+            }
+
+            // NOTE: Done with original extractor now. The background extract needs its own.
+
+
+            // 6. Force "load from subfolders" for the image list
+            LocalSetting.LoadFromSubfolders = true;
+
+            // 7. Point FileWatcherEx at the created folder
+            WatchPath(outpath);
+
+            // 8. Initialize the image list
+            var filepath = Path.Combine(outpath, filesToExtract[0].FileName); // TODO remove the first entry to not extract it twice
+            LoadImages(new List<string> { filepath }, filepath);
+
+            LocalSetting.FilesFromArchive = true; // Prevent attempts to modify images from an archive
+            LocalSetting.ArchiveFilePath = zippath; // Display original archive path on title bar
+
+            _unzipCancelSource = new CancellationTokenSource(); // Need a new one for each extract
+
+            // 9. Extract image files (with paths) to the created folder ASYNCHRONOUSLY
+            // The cancellation token allows the extract to be cancelled if interrupted by user
+            // (e.g. dropping a different file onto IG).
+            var token = _unzipCancelSource.Token;
+            _unzipTask = Task.Run(() =>
+            {
+                var capturedToken = token;
+                ExtractZipFiles(zippath, filesToExtract, outpath, capturedToken);
+            }, token);
+
+            void OnError(string msgEnd)
+            {
+                GlobalSetting.ImageList.Dispose();  // possibly draconian but previous images must be wiped
+                LoadThumbnails();                   // clear thumbbar
+                GlobalSetting.IsImageError = true;
+                string msg = "frmMain.picMain." + msgEnd;
+                this.Text = $"ImageGlass - {Path.GetFileName(zippath)}";
+                picMain.Text = GlobalSetting.LangPack.Items[msg];
+                picMain.Image = null;
+            }
+        }
+
+
+        /// <summary>
+        /// Extract image files from an archive. This is intended to be executed as a background task
+        /// from the "load from archive" function.
+        /// 
+        /// By performing as a background task, the user can see the first image(s) from within the
+        /// archive without having to wait for the entire archive to be extracted. The FileWatch
+        /// mechanism is used to update the GUI when files have been extracted.
+        /// </summary>
+        /// <param name="inpath">path to archive</param>
+        /// <param name="filesToExtract">the files to extract from the archive</param>
+        /// <param name="outbase">the path to the base folder we're extracting to</param>
+        /// <param name="token">check this for cancellation</param>
+        private void ExtractZipFiles(string inpath, List<ArchiveFileInfo> filesToExtract, string outbase,
+                                    CancellationToken token)
+        {
+            using (var extr = new SevenZipExtractor(inpath))
+            {
+                foreach (var entry in filesToExtract)
+                {
+                    if (token.IsCancellationRequested) // cancellation happened
+                        return;
+
+                    var outpath = Path.Combine(outbase, entry.FileName);
+                    var outfold = Path.GetDirectoryName(outpath); // file might be in a sub-folder
+
+                    try
+                    {
+                        Directory.CreateDirectory(outfold); // each file could possibly need a sub-folder
+
+                        if (token.IsCancellationRequested) // cancellation happened
+                            return;
+
+                        using (FileStream fs = File.OpenWrite(outpath))
+                            extr.ExtractFile(entry.FileName, fs);
+                    }
+                    catch
+                    {
+                        // TODO KBR should something happen here?
+                        // Note no message: hoping we've successfully extracted one image
+                    }
+
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Archive extraction may still be going, and/or left a temp folder. Cancel and
+        /// cleanup when necessary.
+        /// </summary>
+        private void CancelAndCleanupArchiveExtract()
+        {
+            // We're about to cancel the unpack: stop the watcher from seeing any more files
+            // kbr 20181108 - the Stop() isn't fast enough/sufficient to prevent the
+            // filewatcher from picking up any remnant files created by the archive
+            // unpacker.
+            this._fileWatcher.OnCreated -= FileWatcher_OnCreated;
+            this._fileWatcher.OnDeleted -= FileWatcher_OnDeleted;
+            this._fileWatcher.OnChanged -= FileWatcher_OnChanged;
+            this._fileWatcher.OnRenamed -= FileWatcher_OnRenamed;
+            _fileWatcher.Stop();
+
+            // Cancel any existing archive extraction
+            if (LocalSetting.FilesFromArchive)
+            {
+                // checking for null as the archive might have been invalid, and
+                // not actually started the unarchive task
+                if (_unzipCancelSource != null) 
+                    _unzipCancelSource.Cancel();
+                if (_unzipTask != null)
+                    _unzipTask.Wait(); // wait for the unarchive background to stop
+            }
+
+            Thread.Sleep(10);
+
+            // Clean up any previously opened archive
+            Task.Run(() => DeleteUnzipFolder(_FolderToDelete));
+
+            if (_unzipCancelSource != null)
+            {
+                _unzipCancelSource.Dispose();
+                _unzipCancelSource = null;
+            }
+            if (_unzipTask != null)
+            {
+                _unzipTask.Dispose();
+                _unzipTask = null;
+            }
+        }
+
+
+        /// <summary>
+        /// Delete the folder and contents we created to extract an archive into.
+        /// </summary>
+        private void DeleteUnzipFolder(string folderToDelete)
+        {
+            if (folderToDelete != null && Directory.Exists(folderToDelete))
+            {
+                Directory.Delete(folderToDelete, true);
+            }
+        }
+
+        #endregion
 
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
@@ -416,7 +699,7 @@ namespace ImageGlass
 
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
-                GlobalSetting.IsRecursiveLoading,
+                LocalSetting.LoadFromSubfolders, //GlobalSetting.IsRecursiveLoading,
                 new Predicate<FileInfo>(delegate (FileInfo fi)
                 {
                     // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
@@ -552,8 +835,8 @@ namespace ImageGlass
                 picMain.StopAnimating();
             }
 
-            //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
+            // Save previous image if it was modified, except if from archive file
+            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating && !LocalSetting.FilesFromArchive)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SaveChanges"], 2000);
 
@@ -745,18 +1028,16 @@ namespace ImageGlass
                 }
                 else
                 {
-                    //auto ellipsis the filename
-                    //the minimum text to show is Drive letter + basename.
-                    //ex: C:\...\example.jpg
-                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-                    var basename = Path.GetFileName(filename);
-
-                    var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
-
-                    var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
-
-                    filename = Helper.ShortenPath(filename, maxLength);
+                    if (LocalSetting.FilesFromArchive)
+                    {
+                        filename = Ellipsis(LocalSetting.ArchiveFilePath);
+                        filename += " : " + Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    }
+                    else
+                    {
+                        filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                        filename = Ellipsis(filename);
+                    }
                 }
 
 
@@ -789,6 +1070,20 @@ namespace ImageGlass
                 }
             }
 
+            //auto ellipsis the filename
+            //the minimum text to show is Drive letter + basename.
+            //ex: C:\...\example.jpg
+            string Ellipsis(string fname)
+            {
+                var basename = Path.GetFileName(fname);
+
+                var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
+                var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
+
+                var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
+
+                return Helper.ShortenPath(fname, maxLength);
+            }
         }
         #endregion
 
@@ -1233,7 +1528,10 @@ namespace ImageGlass
         {
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.IsImageError || 
+                    !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive // don't allow rename if archive
+                    )
                 {
                     return;
                 }
@@ -1865,7 +2163,7 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Read suported image formats
+                #region Read supported image formats
                 var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                 //Load Default Image Formats
@@ -1886,6 +2184,10 @@ namespace ImageGlass
 
                 // build the hashset GlobalSetting.ImageFormatHashSet
                 GlobalSetting.BuildImageFormatHashSet();
+
+                // All the Archive File extensions settings
+                GlobalSetting.BuildArchiveExtensions();
+
                 #endregion
 
 
@@ -2315,6 +2617,8 @@ namespace ImageGlass
                     Directory.Delete(GlobalSetting.TempDir, true);
                 }
 
+                CancelAndCleanupArchiveExtract(); // deal with archive extract
+
                 SaveConfig();
             }
             catch { }
@@ -2719,8 +3023,6 @@ namespace ImageGlass
                 if (oldFilename == LocalSetting.InitialInputImageFilename)
                     LocalSetting.InitialInputImageFilename = newFilename;
             }
-
-
         }
 
 
@@ -2801,9 +3103,10 @@ namespace ImageGlass
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
 
-            UpdateStatusBar(); // File count has changed - update title bar
+
+            UpdateStatusBar(); // File count has changed: update the title bar
         }
-        
+
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
@@ -2864,10 +3167,15 @@ namespace ImageGlass
                     }
                 }
 
+
                 // If user deletes the initially loaded image, use the path instead, in case
                 // of list re-load.
                 if (filename == LocalSetting.InitialInputImageFilename)
                     LocalSetting.InitialInputImageFilename = Path.GetDirectoryName(filename);
+
+
+                UpdateStatusBar(); // File count has changed: update the title bar
+
             }
         }
 
@@ -3855,7 +4163,8 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive) // disallow when image from archive
                 {
                     return;
                 }
@@ -3887,7 +4196,8 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) ||
+                    LocalSetting.FilesFromArchive ) // Don't allow delete if from archive
                 {
                     return;
                 }
