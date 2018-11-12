@@ -88,6 +88,19 @@ namespace ImageGlass
         /// </summary>
         public static bool IsShowMetadataViewOnStartup { get; set; } = false;
 
+        /// <summary>
+        /// The current "initial" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
+        /// the image list, but otherwise we don't know what image/folder we started with.
+        /// 
+        /// Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the 
+        /// images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after 
+        /// a rescan of the image list, only the _sub_-folders images were re-loaded!
+        ///
+        /// But if we reload the list using the original image, then the original folder's images, and the sub-folders, are reloaded.
+        /// </summary>
+        public static string InitialInputImageFilename { get; set; } = "";
+
+
         #endregion
 
 

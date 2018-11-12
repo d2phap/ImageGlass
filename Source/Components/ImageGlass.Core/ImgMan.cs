@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ImageGlass.Core
 {
@@ -237,6 +238,13 @@ namespace ImageGlass.Core
         {
             // case sensitivity, esp. if filename passed on command line
             return lstImage.FindIndex(v => v.GetFileName().ToLower() == filename.ToLower());
+        }
+
+        public bool HasFolder(string filename)
+        {
+            var target = Path.GetDirectoryName(filename).ToLower();
+            int dex = lstImage.FindIndex(v => Path.GetDirectoryName(v.GetFileName()).ToLower() == target);
+            return dex != -1;
         }
 
 		public void Dispose()

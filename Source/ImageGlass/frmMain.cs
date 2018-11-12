@@ -55,13 +55,18 @@ namespace ImageGlass
             
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
-            
+
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
             
             //Update form with new DPI
             OnDpiChanged();
+
+            // KBR 20181009 - Fix observed bug. If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*.
+            // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
+            // is visible.
+            picMain.ShortcutsEnabled = false;
         }
 
 
@@ -192,8 +197,9 @@ namespace ImageGlass
         /// <summary>
         /// Prepare to load image
         /// </summary>
-        /// <param name="path">Path</param>
-        public void Prepare(string path)
+        /// <param name="path">Initial file/folder to load with</param>
+        /// <param name="targetImgFile">When re-loading the image list, this is the desired image to remain visible</param>
+        public void Prepare(string path, string targetImgFile = null)
         {
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
@@ -218,14 +224,25 @@ namespace ImageGlass
                 dirPath = path;
             }
 
+
+            // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+            // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+            // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+            if (!dirPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                dirPath += Path.DirectorySeparatorChar;
+
+
+            LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
+
             //Get supported image extensions from directory
             var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
 
-            LoadImages(_imageFilenameList, filePath);
-
+            LoadImages(_imageFilenameList, targetImgFile ?? filePath);
+            
             WatchPath(dirPath);
         }
-
+        
 
         /// <summary>
         /// Load the images.
@@ -246,6 +263,15 @@ namespace ImageGlass
             if (filePath.Length > 0)
             {
                 GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
+
+                // KBR 20181009 Changing "include subfolder" setting could lose the "current" image.
+                // Prefer not to report said image is "corrupt", merely reset the index in that case.
+                // 1. Setting: "include subfolders: ON". Open image in folder with images in subfolders.
+                // 2. Move to an image in a subfolder.
+                // 3. Change setting "include subfolders: OFF".
+                // Issue: the image in the subfolder is attempted to be shown, declared as corrupt/missing.
+                if (GlobalSetting.CurrentIndex == -1 && !GlobalSetting.ImageList.HasFolder(filePath))
+                    GlobalSetting.CurrentIndex = 0;
             }
             else
             {
@@ -306,6 +332,10 @@ namespace ImageGlass
         /// <param name="paths"></param>
         private void PrepareMulti(string[] paths)
         {
+            // TODO re-loading of the image list/folder currently does NOT invoke this code!
+            // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
+
+            HashSet<string> pathsLoaded = new HashSet<string>(); // track paths loaded to prevent duplicates
             List<string> allFilesToLoad = new List<string>();
             bool firstPath = true;
             foreach (var apath in paths)
@@ -333,6 +363,13 @@ namespace ImageGlass
                     firstPath = false;
                     WatchPath(dirPath);
                 }
+
+                // KBR 20181004 Fix observed bug: dropping multiple files from the same path
+                // would load ALL files in said path multiple times! Prevent loading the same
+                // path more than once.
+                if (pathsLoaded.Contains(dirPath))
+                    continue;
+                pathsLoaded.Add(dirPath);
 
                 var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
                 allFilesToLoad.AddRange(imageFilenameList);
@@ -650,7 +687,7 @@ namespace ImageGlass
         /// </summary>
         private void UpdateStatusBar()
         {
-            string appName = "ImageGlass";
+            string appName = Application.ProductName;
             string indexTotal = string.Empty;
             string filename = string.Empty;
             string zoom = string.Empty;
@@ -661,7 +698,7 @@ namespace ImageGlass
 
             if (LocalSetting.IsTempMemoryData)
             {
-                appName += $"  |  {GlobalSetting.LangPack.Items["frmMain._ImageData"]}";
+                var imgData = GlobalSetting.LangPack.Items["frmMain._ImageData"];
                 zoom = $"{picMain.Zoom.ToString()}%";
 
                 if (picMain.Image != null)
@@ -672,12 +709,12 @@ namespace ImageGlass
                     }
                     catch { }
 
-                    //ImageGlass (Image data)  |  {zoom}  |  {image size}
-                    this.Text = $"{appName}  |  {zoom}  |  {imgSize}";
+                    //(Image data)  |  {zoom}  |  {image size} - ImageGlass
+                    this.Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
                 }
                 else
                 {
-                    this.Text = $"{appName}  |  {zoom}";
+                    this.Text = $"{imgData}  |  {zoom}  - {appName}";
                 }
             }
             else
@@ -688,16 +725,17 @@ namespace ImageGlass
                     return;
                 }
 
-                string currFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                string currentFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
                 // when there is a problem with a file, don't try to show some info
-                bool moredata = File.Exists(currFilePath);
+                bool isShowMoreData = File.Exists(currentFilePath);
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.LangPack.Items["frmMain._Text"]}";
-                if (moredata)
+
+                if (isShowMoreData)
                 {
-                    fileSize = ImageInfo.GetFileSize(currFilePath);
-                    fileDate = File.GetCreationTime(currFilePath).ToString("yyyy/MM/dd HH:mm:ss");
+                    fileSize = ImageInfo.GetFileSize(currentFilePath);
+                    fileDate = File.GetCreationTime(currentFilePath).ToString("yyyy/MM/dd HH:mm:ss");
                 }
 
 
@@ -724,11 +762,10 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsImageError)
                 {
-                    //ImageGlass - {index/total} - {filename}  |  {file size}  |  {file date}
-                    if (!moredata) // size and date not available
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}";
+                    if (!isShowMoreData) // size and date not available
+                        this.Text = $"{filename}  |  {indexTotal}  - {appName}";
                     else
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {fileSize}  |  {fileDate}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {fileSize}  |  {fileDate}  - {appName}";
                 }
                 else
                 {
@@ -742,13 +779,12 @@ namespace ImageGlass
                         }
                         catch { }
 
-                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {image size}  |  {file size}  | {file date}
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}";
+
+                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                     else
                     {
-                        //ImageGlass - {index/total} - {filename}  |  {zoom}  |  {file size}  | {file date}
-                        this.Text = $"{appName} - {indexTotal}  |  {filename}  |  {zoom}  |  {fileSize}  |  {fileDate}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                 }
             }
@@ -1697,6 +1733,13 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load Toolbar button centering state
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                // NOTE: no action necessary to force update, is performed via Form OnSize
+                #endregion
+
+
+
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
                 {
@@ -2144,6 +2187,9 @@ namespace ImageGlass
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
+
+            // Save centering of toolbar buttons
+            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
         }
 
         #endregion
@@ -2249,6 +2295,12 @@ namespace ImageGlass
                         }
                         else if (Directory.Exists(filename))
                         {
+                            // Issue #415: If the folder name ends in ALT+255 (), DirectoryInfo strips it.
+                            // By ensuring a terminating slash, the problem disappears.
+                            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                            if (!filename.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                                filename += Path.DirectorySeparatorChar;
+
                             DirectoryInfo d = new DirectoryInfo(filename);
                             Prepare(d.FullName);
                         }
@@ -2376,6 +2428,7 @@ namespace ImageGlass
                 mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"];
                 mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainStartStopAnimating"];
                 mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsDesktop"];
+                mnuMainSetAsLockImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsLockImage"];
                 mnuMainImageLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageLocation"];
                 mnuMainImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageProperties"];
 
@@ -2509,6 +2562,7 @@ namespace ImageGlass
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
                 }
+                toolMain_SizeChanged(null, null); // For centered toolbar buttons
             }
             #endregion
 
@@ -2518,7 +2572,8 @@ namespace ImageGlass
             #region IMAGE_FOLDER
             if ((flags & MainFormForceUpdateAction.IMAGE_FOLDER) == MainFormForceUpdateAction.IMAGE_FOLDER)
             {
-                Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Prepare(LocalSetting.InitialInputImageFilename,
+                        GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             }
             #endregion
 
@@ -2528,15 +2583,28 @@ namespace ImageGlass
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
                     //reload image list
-                    // TODO: If IsRecursiveLoading == true,
-                    // The Prepare() function will only reload the viewing folder only (not all subfolders)
-                    Prepare(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
+                    // but keep the currently visible file in mind!
+                    Prepare(LocalSetting.InitialInputImageFilename,
+                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 }
             }
             #endregion
 
             #endregion
 
+
+            #region Windows 10 Specific Actions
+            bool enable = true;
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                enable = false; // Not running Windows 8 or later
+
+            mnuMainSetAsLockImage.Enabled = enable;
+            #endregion
 
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
@@ -2636,7 +2704,7 @@ namespace ImageGlass
                     // ![old] && [new]: add to image list
                     else if (GlobalSetting.ImageFormatHashSet.Contains(newExt))
                     {
-                        AddNewFileAction();
+                        FileWatcher_AddNewFileAction(newFilename);
                     }
                 }
             }
@@ -2648,7 +2716,6 @@ namespace ImageGlass
                     RenameAction();
                 }
             }
-
 
 
             void RenameAction()
@@ -2666,21 +2733,12 @@ namespace ImageGlass
                     thumbnailBar.Items[imgIndex].Tag = newFilename;
                 }
                 catch { }
+
+                // User renamed the initial file - update in case of list reload
+                if (oldFilename == LocalSetting.InitialInputImageFilename)
+                    LocalSetting.InitialInputImageFilename = newFilename;
             }
 
-
-            void AddNewFileAction()
-            {
-                //Add the new image to the list
-                GlobalSetting.ImageList.AddItem(newFilename);
-
-                //Add the new image to thumbnail bar
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
-                {
-                    Tag = newFilename
-                };
-                thumbnailBar.Items.Add(lvi);
-            }
 
         }
 
@@ -2761,10 +2819,10 @@ namespace ImageGlass
 
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
+
+            UpdateStatusBar(); // File count has changed - update title bar
         }
         
-
-
 
         /// <summary>
         /// The queue thread to check the files needed to be deleted.
@@ -2825,6 +2883,10 @@ namespace ImageGlass
                     }
                 }
 
+                // If user deletes the initially loaded image, use the path instead, in case
+                // of list re-load.
+                if (filename == LocalSetting.InitialInputImageFilename)
+                    LocalSetting.InitialInputImageFilename = Path.GetDirectoryName(filename);
             }
         }
 
@@ -2945,6 +3007,22 @@ namespace ImageGlass
             else
             {
                 btnMenu.Alignment = ToolStripItemAlignment.Right;
+
+                // Issue 425: option to center the toolbar buttons horizontally [useful for wide screen]
+                // I'm assuming the btnMenu stays to the right, in order to always be at a fixed location.
+                var firstbtn = toolMain.Items[0];
+                var marg = new Padding(2, firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
+                if (GlobalSetting.IsCenterToolbar)
+                {
+
+                    // NOTE: relies on the label control on the right of the menu button!
+                    // NOTE: assumes at least one control to the left of the menu button in the toolbar!
+                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; 
+
+                    int delta = btnMenu.Bounds.Right - lastbut1btn.Bounds.Right;
+                    marg.Left = delta / 2;
+                }
+                firstbtn.Margin = marg;
             }
         }
 
@@ -2961,54 +3039,33 @@ namespace ImageGlass
 
         #region Toolbar Buttons Events
 
-        private MethodInfo onMouseLeave = null;
-
-        private void clearTooltip(ToolStripButton btn)
-        {
-            // Issue #409: user requested the toolbar button tooltip should vanish when the button is clicked.
-            // MS doesn't give us the means to control tooltips very well, the implementation is internal to
-            // the ToolStrip control.
-            // HOWEVER by studing the ToolStripItem source code, I noticed tooltips are disabled on the mouse
-            // leave event on a ToolStripItem. By raising that event, the tooltip vanishes. As the OnMouseLeave
-            // event is not public, the following reflection convolution is required.
-            if (onMouseLeave == null)
-                onMouseLeave = btn.GetType().GetMethod("OnMouseLeave", BindingFlags.NonPublic | BindingFlags.Instance);
-            onMouseLeave.Invoke(btn, new object[] { new EventArgs() });
-        }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnNext);
             mnuMainViewNext_Click(null, e);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnBack);
             mnuMainViewPrevious_Click(null, e);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRefresh);
             mnuMainRefresh_Click(null, null);
         }
 
         private void btnRotateRight_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRotateRight);
             mnuMainRotateClockwise_Click(null, e);
         }
 
         private void btnRotateLeft_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnRotateLeft);
             mnuMainRotateCounterclockwise_Click(null, e);
         }
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFlipHorz);
             if (picMain.Image == null)
             {
                 return;
@@ -3033,7 +3090,6 @@ namespace ImageGlass
 
         private void btnFlipVert_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFlipVert);
             if (picMain.Image == null)
             {
                 return;
@@ -3057,103 +3113,86 @@ namespace ImageGlass
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnDelete);
             mnuMainMoveToRecycleBin_Click(null, e);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnOpen);
             mnuMainOpenFile_Click(null, e);
         }
 
         private void btnThumb_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnThumb);
             mnuMainThumbnailBar_Click(null, e);
         }
 
         private void btnActualSize_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnActualSize);
             mnuMainActualSize_Click(null, e);
         }
 
         private void btnAutoZoom_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnAutoZoom);
             mnuMainAutoZoom_Click(null, e);
         }
 
         private void btnScaletoWidth_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaletoWidth);
             mnuMainScaleToWidth_Click(null, e);
         }
 
         private void btnScaletoHeight_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaletoHeight);
             mnuMainScaleToHeight_Click(null, e);
         }
 
         private void btnWindowAutosize_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnWindowAutosize);
             mnuMainWindowAdaptImage_Click(null, e);
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnGoto);
             mnuMainGoto_Click(null, e);
         }
 
         private void btnCheckedBackground_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnCheckedBackground);
             mnuMainCheckBackground_Click(null, e);
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomIn);
             mnuMainZoomIn_Click(null, e);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomOut);
             mnuMainZoomOut_Click(null, e);
         }
 
         private void btnScaleToFit_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnScaleToFit);
             mnuMainScaleToFit_Click(null, e);
         }
 
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnZoomLock);
             mnuMainLockZoomRatio_Click(null, e);
         }
 
         private void btnSlideShow_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnSlideShow);
             mnuMainSlideShowStart_Click(null, null);
         }
 
         private void btnFullScreen_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnFullScreen);
             mnuMainFullScreen_Click(null, e);
         }
 
         private void btnPrintImage_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnPrintImage);
             mnuMainPrint_Click(null, e);
         }
 
@@ -3169,7 +3208,6 @@ namespace ImageGlass
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            clearTooltip(btnConvert);
             mnuMainSaveAs_Click(null, e);
         }
 
@@ -3380,7 +3418,7 @@ namespace ImageGlass
         private void mnuMainReloadImage_Click(object sender, EventArgs e)
         {
             //Reload the viewing image
-            NextPic(step: 0, isKeepZoomRatio: true, isSkipCache: true);
+            NextPic(step: 0, isKeepZoomRatio: false, isSkipCache: true);
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -3944,6 +3982,33 @@ namespace ImageGlass
                 p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
                 p.StartInfo.Arguments = args;
                 p.Start();
+            }
+            catch
+            { }
+        }
+
+        private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                return;
+
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                return; // Not running Windows 8 or later
+
+            // TODO consider adding privilege check and retry?
+            try
+            {
+                var args = string.Format("setlockimage \"{0}\"",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmdWin10.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                return;
             }
             catch
             { }

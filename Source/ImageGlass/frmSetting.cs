@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -257,16 +257,9 @@ namespace ImageGlass
             chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
             chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
-            lblHeadPortableMode.Text = lang["frmSetting.lblHeadPortableMode"];//
-            if (GlobalSetting.IsPortableMode)
-            {
-                chkPortableMode.Text = lang["frmSetting.chkPortableMode._Enabled"];
-            }
-            else
-            {
-                chkPortableMode.Text = string.Format(lang["frmSetting.chkPortableMode._Disabled"], GlobalSetting.StartUpDir);
-                chkPortableMode.CheckAlign = ContentAlignment.TopLeft;
-            }
+
+            lblHeadConfigDir.Text = lang["frmSetting.lblHeadConfigDir"];//
+            lnkConfigDir.Text = GlobalSetting.ConfigDir;
 
 
             lblHeadOthers.Text = lang["frmSetting.lblHeadOthers"];//
@@ -349,6 +342,7 @@ namespace ImageGlass
 
             #region TOOLBAR TAB
             lblToolbarPosition.Text = lang["frmSetting.lblToolbarPosition"];
+            chkHorzCenterToolbarBtns.Text = lang["frmSetting.chkHorzCenterToolbarBtns"];
 
             _separatorText = lang["frmSetting.txtSeparator"];
             lblUsedBtns.Text = lang["frmSetting.lblUsedBtns"];
@@ -518,8 +512,6 @@ namespace ImageGlass
             //Get value of chkShowToolBar
             chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
 
-            //Get Portable mode value -----------------------------------------------------------
-            chkPortableMode.Checked = GlobalSetting.IsPortableMode;
 
             //Get value of cmbAutoUpdate --------------------------------------------------------
             string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
@@ -549,6 +541,12 @@ namespace ImageGlass
 
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
+        }
+
+
+        private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe", GlobalSetting.ConfigDir);
         }
 
 
@@ -1118,7 +1116,8 @@ namespace ImageGlass
             }
             
             cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
-            
+
+            chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
 
             // Apply Windows System theme to listview
             RenderTheme th = new RenderTheme();
@@ -2155,6 +2154,19 @@ namespace ImageGlass
 
             #endregion
 
+            #region HorzCenterToolbarBtns: MainFormForceUpdateAction.TOOLBAR_POSITION
+
+            newBool = chkHorzCenterToolbarBtns.Checked;
+            if (GlobalSetting.IsCenterToolbar != newBool)
+            {
+                GlobalSetting.IsCenterToolbar = newBool;
+                GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+            }
+            #endregion
+
+
             ApplyToolbarChanges();
             #endregion
 
@@ -2174,10 +2186,11 @@ namespace ImageGlass
         }
 
 
-        
+
+
 
         #endregion
 
-
+        
     }
 }
