@@ -434,6 +434,7 @@ namespace ImageGlass.Library
             #region Start up
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
+            Items.Add("frmSetting.chkLastSeenImage", "Open last seen image"); //v6.0
             Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
 
             #endregion

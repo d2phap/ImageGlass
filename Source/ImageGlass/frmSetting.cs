@@ -254,6 +254,7 @@ namespace ImageGlass
             #region GENERAL TAB
             lblHeadStartup.Text = lang["frmSetting.lblHeadStartup"];//
             chkWelcomePicture.Text = lang["frmSetting.chkWelcomePicture"];
+            chkLastSeenImage.Text = lang["frmSetting.chkLastSeenImage"];
             chkShowToolBar.Text = lang["frmSetting.chkShowToolBar"];
             chkAllowMultiInstances.Text = lang["frmSetting.chkAllowMultiInstances"];
 
@@ -505,6 +506,11 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
+            //Get value of chkLastSeenImage ----------------------------------------------------
+            chkLastSeenImage.Checked = GlobalSetting.IsOpenLastSeenImage;
+            GlobalSetting.SetConfig("LastSeenImagePath", "");
+            GlobalSetting.SetConfig("IsOpenLastSeenImage", GlobalSetting.IsOpenLastSeenImage.ToString());
+
             //Get value of chkWelcomePicture ----------------------------------------------------
             chkWelcomePicture.Checked = GlobalSetting.IsShowWelcome;
 
@@ -566,6 +572,8 @@ namespace ImageGlass
         {
             picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
         }
+        
+
         #endregion
 
 
@@ -1913,6 +1921,10 @@ namespace ImageGlass
             GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
             GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
 
+            GlobalSetting.IsOpenLastSeenImage = chkLastSeenImage.Checked;
+            GlobalSetting.SetConfig("IsOpenLastSeenImage", GlobalSetting.IsOpenLastSeenImage.ToString());
+
+
             //IsShowToolBar
             GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
             GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
@@ -2173,6 +2185,8 @@ namespace ImageGlass
             #endregion
 
         }
+
+
 
 
 

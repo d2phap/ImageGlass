@@ -1,6 +1,6 @@
 /*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -178,18 +178,6 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets image error value
         /// </summary>
         public static bool IsImageError { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets, sets value indicating that Zoom Lock enabled
-        /// </summary>
-        //public static bool IsEnabledZoomLock { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
-        /// </summary>
-        //public static bool IsZoomToFit { get; set; } = false;
 
 
         /// <summary>
@@ -422,8 +410,10 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                var newFormat = new NumberFormatInfo();
-                newFormat.NegativeSign = "-";
+                var newFormat = new NumberFormatInfo
+                {
+                    NegativeSign = "-"
+                };
                 return newFormat;
             }
             set => _numFormat = value;
@@ -440,6 +430,13 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets toolbar position
         /// </summary>
         public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that to show last seen image on startup
+        /// </summary>
+        public static bool IsOpenLastSeenImage { get; set; } = false;
+        
 
 
         /// <summary>

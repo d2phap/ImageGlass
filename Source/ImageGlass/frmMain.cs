@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,6 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
-using System.Reflection;
 
 
 namespace ImageGlass
@@ -63,9 +62,11 @@ namespace ImageGlass
             //Update form with new DPI
             OnDpiChanged();
 
-            // KBR 20181009 - Fix observed bug. If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*.
-            // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
-            // is visible.
+            /* KBR 20181009 - Fix observed bug. 
+             * If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*. 
+             * This is disabled by turning off ImageBox shortcuts. 
+             * Done here rather than in designer so this bugfix is visible.
+             */
             picMain.ShortcutsEnabled = false;
         }
 
@@ -121,7 +122,6 @@ namespace ImageGlass
             {
                 e.Effect = DragDropEffects.Copy;
             }
-
         }
 
         private void picMain_DragDrop(object sender, DragEventArgs e)
@@ -1940,17 +1940,29 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Get welcome screen
+                #region Get Last Seen Image Path & Welcome Image
+                GlobalSetting.IsOpenLastSeenImage = bool.Parse(GlobalSetting.GetConfig("IsOpenLastSeenImage", "False"));
                 GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
-                if (GlobalSetting.IsShowWelcome)
+
+                var startUpImg = "";
+
+                if (GlobalSetting.IsOpenLastSeenImage)
                 {
-                    //Do not show welcome image if params exist.
-                    if (Environment.GetCommandLineArgs().Count() < 2)
-                    {
-                        Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.jpg"));
-                    }
+                    startUpImg = GlobalSetting.GetConfig("LastSeenImagePath");
+                }
+
+                if (!File.Exists(startUpImg) && GlobalSetting.IsShowWelcome)
+                {
+                    startUpImg = Path.Combine(GlobalSetting.StartUpDir, "default.jpg");
+                }
+
+                //Do not show welcome image if params exist.
+                if (Environment.GetCommandLineArgs().Count() < 2)
+                {
+                    Prepare(startUpImg);
                 }
                 #endregion
+
 
 
                 //load other configs in another thread
@@ -2166,6 +2178,9 @@ namespace ImageGlass
 
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
+
+            // Save last seen image path
+            GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
         }
 
         #endregion
