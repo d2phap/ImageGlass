@@ -1,3 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="width: 0px; height: 0px; position: absolute;" width="42" height="39"><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
 
-<g class="currentLayer" style=""><title>Layer 1</title><path d="M22 0l20 39H22V0zm3 12.5V36h11.5L25 12.5zM20 0v7.08l-1.799 3.53-2.6-2.031L20 0zm0 30h-3v-4h3v4zm-3-8.734l3-5.785V23h-3v-1.734zm-3.676-1.253l-2.561-2.001 3.066-5.978 2.459 1.922-2.964 6.057zm-4.53 9.258l-2.716-2.122 2.913-5.682 2.62 2.047-2.818 5.756zM20 39h-3v-6h3v6zM0 39l4.305-8.396 2.775 2.168L5.5 36H7v3H0zm14-3v3h-4v-3h4z" stroke="#ffffff" id="svg_1" class="selected" fill="#ffffff" fill-opacity="1" stroke-opacity="1"/></g></svg>
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_2"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_7">
+   <path stroke="#fff" id="svg_1" d="m11.732368,18.226338l0,-17.360655l7.667634,17.360655l-7.667634,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#fff" id="svg_4" d="m8.339956,18.226338l0,-17.360655l-7.739957,17.360655l7.739957,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  </g>
+ </g>
+</svg>
