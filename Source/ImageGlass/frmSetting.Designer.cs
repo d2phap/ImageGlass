@@ -63,6 +63,7 @@ namespace ImageGlass
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkLastSeenImage = new System.Windows.Forms.CheckBox();
             this.lnkConfigDir = new System.Windows.Forms.LinkLabel();
             this.chkDisplayBasename = new System.Windows.Forms.CheckBox();
             this.chkShowScrollbar = new System.Windows.Forms.CheckBox();
@@ -133,6 +134,7 @@ namespace ImageGlass
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.cmbToolbarPosition = new System.Windows.Forms.ComboBox();
             this.lblToolbarPosition = new System.Windows.Forms.Label();
+            this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
             this.tabColorPicker = new System.Windows.Forms.TabPage();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorCodeFormat = new System.Windows.Forms.Label();
@@ -165,7 +167,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkLastSeenImage = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -576,6 +577,18 @@ namespace ImageGlass
             this.tabGeneral.Size = new System.Drawing.Size(798, 557);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
+            // 
+            // chkLastSeenImage
+            // 
+            this.chkLastSeenImage.AutoSize = true;
+            this.chkLastSeenImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkLastSeenImage.Location = new System.Drawing.Point(45, 86);
+            this.chkLastSeenImage.Margin = new System.Windows.Forms.Padding(2);
+            this.chkLastSeenImage.Name = "chkLastSeenImage";
+            this.chkLastSeenImage.Size = new System.Drawing.Size(248, 30);
+            this.chkLastSeenImage.TabIndex = 49;
+            this.chkLastSeenImage.Text = "[Open the last seen image]";
+            this.chkLastSeenImage.UseVisualStyleBackColor = true;
             // 
             // lnkConfigDir
             // 
@@ -1039,7 +1052,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(663, 271);
+            this.lvImageEditing.Size = new System.Drawing.Size(637, 271);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 28;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1289,6 +1302,7 @@ namespace ImageGlass
             this.tabToolbar.Controls.Add(this.panel5);
             this.tabToolbar.Controls.Add(this.cmbToolbarPosition);
             this.tabToolbar.Controls.Add(this.lblToolbarPosition);
+            this.tabToolbar.Controls.Add(this.chkHorzCenterToolbarBtns);
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
@@ -1309,9 +1323,9 @@ namespace ImageGlass
             this.panel5.Controls.Add(this.lblUsedBtns);
             this.panel5.Controls.Add(this.lvUsedButtons);
             this.panel5.Controls.Add(this.btnMoveDown);
-            this.panel5.Location = new System.Drawing.Point(22, 113);
+            this.panel5.Location = new System.Drawing.Point(22, 139);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(760, 444);
+            this.panel5.Size = new System.Drawing.Size(760, 418);
             this.panel5.TabIndex = 48;
             // 
             // lblAvailBtns
@@ -1331,7 +1345,7 @@ namespace ImageGlass
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveRight.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveRight.Location = new System.Drawing.Point(321, 262);
+            this.btnMoveRight.Location = new System.Drawing.Point(321, 249);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(50, 50);
@@ -1345,7 +1359,7 @@ namespace ImageGlass
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveLeft.Location = new System.Drawing.Point(321, 193);
+            this.btnMoveLeft.Location = new System.Drawing.Point(321, 180);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(50, 50);
             this.btnMoveLeft.TabIndex = 39;
@@ -1358,7 +1372,7 @@ namespace ImageGlass
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveUp.Location = new System.Drawing.Point(697, 193);
+            this.btnMoveUp.Location = new System.Drawing.Point(697, 180);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 42;
@@ -1380,7 +1394,7 @@ namespace ImageGlass
             this.lvAvailButtons.Name = "lvAvailButtons";
             this.lvAvailButtons.ShowGroups = false;
             this.lvAvailButtons.ShowItemToolTips = true;
-            this.lvAvailButtons.Size = new System.Drawing.Size(300, 374);
+            this.lvAvailButtons.Size = new System.Drawing.Size(300, 348);
             this.lvAvailButtons.TabIndex = 38;
             this.lvAvailButtons.UseCompatibleStateImageBehavior = false;
             this.lvAvailButtons.SelectedIndexChanged += new System.EventHandler(this.lvAvailButtons_SelectedIndexChanged);
@@ -1411,7 +1425,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(300, 374);
+            this.lvUsedButtons.Size = new System.Drawing.Size(300, 348);
             this.lvUsedButtons.TabIndex = 41;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -1423,7 +1437,7 @@ namespace ImageGlass
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
-            this.btnMoveDown.Location = new System.Drawing.Point(697, 262);
+            this.btnMoveDown.Location = new System.Drawing.Point(697, 249);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 43;
@@ -1453,6 +1467,18 @@ namespace ImageGlass
             this.lblToolbarPosition.Size = new System.Drawing.Size(155, 25);
             this.lblToolbarPosition.TabIndex = 44;
             this.lblToolbarPosition.Text = "[Toolbar position:]";
+            // 
+            // chkHorzCenterToolbarBtns
+            // 
+            this.chkHorzCenterToolbarBtns.AutoSize = true;
+            this.chkHorzCenterToolbarBtns.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkHorzCenterToolbarBtns.Location = new System.Drawing.Point(29, 93);
+            this.chkHorzCenterToolbarBtns.Margin = new System.Windows.Forms.Padding(2);
+            this.chkHorzCenterToolbarBtns.Name = "chkHorzCenterToolbarBtns";
+            this.chkHorzCenterToolbarBtns.Size = new System.Drawing.Size(411, 30);
+            this.chkHorzCenterToolbarBtns.TabIndex = 46;
+            this.chkHorzCenterToolbarBtns.Text = "[Center toolbar buttons horizontally in window]";
+            this.chkHorzCenterToolbarBtns.UseVisualStyleBackColor = true;
             // 
             // tabColorPicker
             // 
@@ -1935,18 +1961,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // chkLastSeenImage
-            // 
-            this.chkLastSeenImage.AutoSize = true;
-            this.chkLastSeenImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkLastSeenImage.Location = new System.Drawing.Point(45, 86);
-            this.chkLastSeenImage.Margin = new System.Windows.Forms.Padding(2);
-            this.chkLastSeenImage.Name = "chkLastSeenImage";
-            this.chkLastSeenImage.Size = new System.Drawing.Size(248, 30);
-            this.chkLastSeenImage.TabIndex = 49;
-            this.chkLastSeenImage.Text = "[Open the last seen image]";
-            this.chkLastSeenImage.UseVisualStyleBackColor = true;
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2136,5 +2150,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkShowThumbnailScrollbar;
         private System.Windows.Forms.LinkLabel lnkConfigDir;
         private System.Windows.Forms.CheckBox chkLastSeenImage;
+        private System.Windows.Forms.CheckBox chkHorzCenterToolbarBtns;
+
     }
 }

@@ -107,6 +107,7 @@
             this.mnuMainExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainStartStopAnimating = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSetAsDesktop = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainSetAsLockImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImageLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImageProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainClipboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -926,6 +927,7 @@
             this.mnuMainExtractFrames,
             this.mnuMainStartStopAnimating,
             this.mnuMainSetAsDesktop,
+            this.mnuMainSetAsLockImage,
             this.mnuMainImageLocation,
             this.mnuMainImageProperties});
             this.mnuMainManipulation.ForeColor = System.Drawing.Color.Black;
@@ -1176,6 +1178,15 @@
             this.mnuMainSetAsDesktop.Size = new System.Drawing.Size(584, 31);
             this.mnuMainSetAsDesktop.Text = "&Set as desktop background";
             this.mnuMainSetAsDesktop.Click += new System.EventHandler(this.mnuMainSetAsDesktop_Click);
+            // 
+            // mnuMainSetAsLockImage
+            // 
+            this.mnuMainSetAsLockImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainSetAsLockImage.Name = "mnuMainSetAsDesktop";
+            this.mnuMainSetAsLockImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainSetAsLockImage.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainSetAsLockImage.Text = "&Set as Lock Screen image";
+            this.mnuMainSetAsLockImage.Click += new System.EventHandler(this.mnuMainSetAsLockImage_Click);
             // 
             // mnuMainImageLocation
             // 
@@ -1678,6 +1689,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem mnuMainExtractFrames;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsDesktop;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsLockImage;
         private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
