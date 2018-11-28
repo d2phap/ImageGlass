@@ -169,8 +169,9 @@ namespace igtasks
         /// Register file associations
         /// </summary>
         /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
-        public static void SetRegistryAssociations(string extensions)
+        public static void SetRegistryAssociations(string extensions, bool isNoUI = false)
         {
+            bool isError = false;
             DeleteRegistryAssociations(extensions);
 
             RegistryHelper reg = new RegistryHelper
@@ -184,7 +185,7 @@ namespace igtasks
 
             if (!reg.Write("ImageGlass", @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
                 return;
             }
 
@@ -192,19 +193,19 @@ namespace igtasks
             reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities";
             if (!reg.Write("ApplicationName", "ImageGlass"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
                 return;
             }
 
             if (!reg.Write("ApplicationIcon", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\", 0"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
                 return;
             }
 
             if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isError = true;
                 return;
             }
 
@@ -218,7 +219,7 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
                 if (!reg.Write(ext, keyname))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
                     return;
                 }
 
@@ -232,7 +233,7 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
                 if (!reg.Write("", $"\"{iconPath}\", 0"))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
                     return;
                 }
 
@@ -240,7 +241,7 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
                 if (!reg.Write("FriendlyAppName", "ImageGlass"))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
                     return;
                 }
 
@@ -248,13 +249,23 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
                 if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\""))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    isError = true;
                     return;
                 }
             }
 
 
-            MessageBox.Show("ImageGlass was set as default photo viewer app successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (!isNoUI)
+            {
+                if (isError)
+                {
+                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("ImageGlass was set as default photo viewer app successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
             
         }
 

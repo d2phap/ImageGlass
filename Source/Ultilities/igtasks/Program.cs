@@ -94,13 +94,14 @@ namespace adtasks
             #endregion
 
             //Register file associations
-            #region regassociations <string exts>
+            #region regassociations <string exts> [--no-ui]
             else if (topcmd == "regassociations")
             {
                 //get Extensions
                 string exts = args[1];
+                bool isNoUI = args.FirstOrDefault(i => i == "--no-ui") == null ? false : true;
 
-                Functions.SetRegistryAssociations(exts);
+                Functions.SetRegistryAssociations(exts, isNoUI);
 
                 Application.Exit();
             }
