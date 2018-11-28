@@ -1713,7 +1713,6 @@ namespace ImageGlass
 
 
                 #region Load state of Toolbar Below Image
-
                 var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
 
                 if (Enum.TryParse(vString, out ToolbarPosition toolbarPos))
@@ -1724,9 +1723,15 @@ namespace ImageGlass
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                     frmMain_Activated(null, EventArgs.Empty);
                 }
-
-
                 #endregion
+
+
+
+                #region Load Toolbar button centering state
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                // NOTE: no action necessary to force update, is performed via Form OnSize
+                #endregion
+
 
 
                 #region Load Thumbnail dimension
@@ -1738,11 +1743,8 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailDimension = 48;
                 }
-
                 #endregion
 
-                #region Load thumbnail bar width & position
-                #endregion
 
 
                 #region Load thumbnail bar width & position
@@ -2179,8 +2181,13 @@ namespace ImageGlass
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
 
+
             // Save last seen image path
             GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+
+            // Save centering of toolbar buttons
+            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
+
         }
 
         #endregion
@@ -2419,6 +2426,7 @@ namespace ImageGlass
                 mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"];
                 mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainStartStopAnimating"];
                 mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsDesktop"];
+                mnuMainSetAsLockImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSetAsLockImage"];
                 mnuMainImageLocation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageLocation"];
                 mnuMainImageProperties.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainImageProperties"];
 
@@ -2544,6 +2552,7 @@ namespace ImageGlass
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
                 }
+                toolMain_SizeChanged(null, null); // For centered toolbar buttons
             }
             #endregion
 
@@ -2574,6 +2583,18 @@ namespace ImageGlass
 
             #endregion
 
+
+            #region Windows 10 Specific Actions
+            bool enable = true;
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                enable = false; // Not running Windows 8 or later
+
+            mnuMainSetAsLockImage.Enabled = enable;
+            #endregion
 
 
             LocalSetting.ForceUpdateActions = MainFormForceUpdateAction.NONE;
@@ -2976,6 +2997,22 @@ namespace ImageGlass
             else
             {
                 btnMenu.Alignment = ToolStripItemAlignment.Right;
+
+                // Issue 425: option to center the toolbar buttons horizontally [useful for wide screen]
+                // I'm assuming the btnMenu stays to the right, in order to always be at a fixed location.
+                var firstbtn = toolMain.Items[0];
+                var marg = new Padding(2, firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
+                if (GlobalSetting.IsCenterToolbar)
+                {
+
+                    // NOTE: relies on the label control on the right of the menu button!
+                    // NOTE: assumes at least one control to the left of the menu button in the toolbar!
+                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; 
+
+                    int delta = btnMenu.Bounds.Right - lastbut1btn.Bounds.Right;
+                    marg.Left = delta / 2;
+                }
+                firstbtn.Margin = marg;
             }
         }
 
@@ -3940,6 +3977,33 @@ namespace ImageGlass
             { }
         }
 
+        private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                return;
+
+            var vers = Environment.OSVersion;
+            // Win7 == 6.1, Win Server 2008 == 6.1
+            // Win10 == 10.0 [if app.manifest properly configured]
+            if (vers.Version.Major < 6 ||
+                vers.Version.Major == 6 && vers.Version.Minor < 2)
+                return; // Not running Windows 8 or later
+
+            // TODO consider adding privilege check and retry?
+            try
+            {
+                var args = string.Format("setlockimage \"{0}\"",
+                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Process p = new Process();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmdWin10.exe";
+                p.StartInfo.Arguments = args;
+                p.Start();
+                return;
+            }
+            catch
+            { }
+        }
+
         private void mnuMainImageLocation_Click(object sender, EventArgs e)
         {
             if (GlobalSetting.ImageList.Length > 0)
@@ -4018,11 +4082,7 @@ namespace ImageGlass
         {
             GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
 
-#if THUMBS_TOP
-            sp1.Panel1Collapsed = !GlobalSetting.IsShowThumbnail;
-#else
             sp1.Panel2Collapsed = !GlobalSetting.IsShowThumbnail;
-#endif
             btnThumb.Checked = GlobalSetting.IsShowThumbnail;
 
             if (GlobalSetting.IsShowThumbnail)
@@ -4049,32 +4109,11 @@ namespace ImageGlass
 
                 if (GlobalSetting.IsThumbnailHorizontal)
                 {
-#if THUMBS_TOP
-                    sp1.SuspendLayout();
-                    sp1.Panel1.SuspendLayout();
-                    sp1.Panel2.SuspendLayout();
-#endif
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
                     sp1.SplitterDistance = splitterDistance;
                     thumbnailBar.View = ImageListView.View.Gallery;
-#if THUMBS_TOP
-                    sp1.SplitterDistance = minSize;
-
-                    // TODO turning off thumbnails needs to hide Panel1, not Panel2
-                    sp1.Panel1.Controls.Remove(picMain);
-                    sp1.Panel2.Controls.Remove(thumbnailBar);
-
-                    sp1.Panel1.Controls.Add(thumbnailBar);
-                    sp1.Panel2.Controls.Add(picMain);
-
-                    sp1.FixedPanel = FixedPanel.Panel1;
-
-                    sp1.Panel2.ResumeLayout();
-                    sp1.Panel1.ResumeLayout();
-                    sp1.ResumeLayout();
-#endif
                 }
                 else
                 {
