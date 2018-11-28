@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,6 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
-using System.Reflection;
 
 
 namespace ImageGlass
@@ -63,9 +62,11 @@ namespace ImageGlass
             //Update form with new DPI
             OnDpiChanged();
 
-            // KBR 20181009 - Fix observed bug. If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*.
-            // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
-            // is visible.
+            /* KBR 20181009 - Fix observed bug. 
+             * If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*. 
+             * This is disabled by turning off ImageBox shortcuts. 
+             * Done here rather than in designer so this bugfix is visible.
+             */
             picMain.ShortcutsEnabled = false;
         }
 
@@ -121,7 +122,6 @@ namespace ImageGlass
             {
                 e.Effect = DragDropEffects.Copy;
             }
-
         }
 
         private void picMain_DragDrop(object sender, DragEventArgs e)
@@ -1498,13 +1498,8 @@ namespace ImageGlass
             }
 
             //Update toolbar icon size
-            var themeConfigFile = GlobalSetting.GetConfig("Theme", "default");
-            if (!File.Exists(themeConfigFile))
-            {
-                themeConfigFile = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
-            }
-
-            Theme.Theme t = new Theme.Theme(themeConfigFile);
+            var themeName = GlobalSetting.GetConfig("Theme", "default");
+            Theme.Theme t = new Theme.Theme(Path.Combine(GlobalSetting.ConfigDir, "Themes", themeName));
             LoadToolbarIcons(t);
 
             #endregion
@@ -1566,16 +1561,15 @@ namespace ImageGlass
         /// <summary>
         /// Apply ImageGlass theme
         /// </summary>
-        /// <param name="themeConfigPath">config.xml path. By default, load default theme</param>
-        private Theme.Theme ApplyTheme(string @themeConfigPath = "default")
+        /// <param name="themeFolderName">The folder name of theme. By default, load default theme</param>
+        private Theme.Theme ApplyTheme(string themeFolderName = "default")
         {
-            if (File.Exists(themeConfigPath))
+            Theme.Theme th = new Theme.Theme(Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName));
+
+            if (th.IsThemeValid)
             {
-                GlobalSetting.SetConfig("Theme", themeConfigPath);
+                GlobalSetting.SetConfig("Theme", themeFolderName);
             }
-
-
-            Theme.Theme th = new Theme.Theme(themeConfigPath);
             LoadTheme(th);
 
             return th;
@@ -1606,6 +1600,7 @@ namespace ImageGlass
                 LoadToolbarIcons(t);
             }
         }
+
 
         /// <summary>
         /// Load toolbar icons
@@ -1678,8 +1673,10 @@ namespace ImageGlass
             {
 
                 #region Load theme
-                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme            
-                LocalSetting.Theme = ApplyTheme(GlobalSetting.GetConfig("Theme", "default"));
+                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
+                string themeFolderName = GlobalSetting.GetConfig("Theme", "default");
+                
+                LocalSetting.Theme = ApplyTheme(themeFolderName);
                 Application.DoEvents();
                 #endregion
 
@@ -1692,9 +1689,9 @@ namespace ImageGlass
 
 
                 #region Load background
-                var bgValue = GlobalSetting.GetConfig("BackgroundColor", LocalSetting.Theme.BackgroundColor.ToArgb().ToString(GlobalSetting.NumberFormat));
+                var bgValue = GlobalSetting.GetConfig("BackgroundColor", Theme.Theme.ConvertColorToHEX(LocalSetting.Theme.BackgroundColor));
 
-                GlobalSetting.BackgroundColor = Color.FromArgb(int.Parse(bgValue, GlobalSetting.NumberFormat));
+                GlobalSetting.BackgroundColor = Theme.Theme.ConvertHexStringToColor(bgValue, true);
                 picMain.BackColor = GlobalSetting.BackgroundColor;
                 #endregion
 
@@ -1716,7 +1713,6 @@ namespace ImageGlass
 
 
                 #region Load state of Toolbar Below Image
-
                 var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
 
                 if (Enum.TryParse(vString, out ToolbarPosition toolbarPos))
@@ -1727,9 +1723,8 @@ namespace ImageGlass
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                     frmMain_Activated(null, EventArgs.Empty);
                 }
-
-
                 #endregion
+
 
 
                 #region Load Toolbar button centering state
@@ -1748,9 +1743,9 @@ namespace ImageGlass
                 {
                     GlobalSetting.ThumbnailDimension = 48;
                 }
-
                 #endregion
-                
+
+
 
                 #region Load thumbnail bar width & position
                 if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
@@ -1854,10 +1849,7 @@ namespace ImageGlass
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
-                if (File.Exists(configValue))
-                {
-                    GlobalSetting.LangPack = new Language(configValue);
-                }
+                GlobalSetting.LangPack = new Language(configValue, Path.Combine(GlobalSetting.StartUpDir, "Languages"));
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
@@ -1950,17 +1942,29 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Get welcome screen
+                #region Get Last Seen Image Path & Welcome Image
+                GlobalSetting.IsOpenLastSeenImage = bool.Parse(GlobalSetting.GetConfig("IsOpenLastSeenImage", "False"));
                 GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
-                if (GlobalSetting.IsShowWelcome)
+
+                var startUpImg = "";
+
+                if (GlobalSetting.IsOpenLastSeenImage)
                 {
-                    //Do not show welcome image if params exist.
-                    if (Environment.GetCommandLineArgs().Count() < 2)
-                    {
-                        Prepare(Path.Combine(GlobalSetting.StartUpDir, "default.jpg"));
-                    }
+                    startUpImg = GlobalSetting.GetConfig("LastSeenImagePath");
+                }
+
+                if (!File.Exists(startUpImg) && GlobalSetting.IsShowWelcome)
+                {
+                    startUpImg = Path.Combine(GlobalSetting.StartUpDir, "default.jpg");
+                }
+
+                //Do not show welcome image if params exist.
+                if (Environment.GetCommandLineArgs().Count() < 2)
+                {
+                    Prepare(startUpImg);
                 }
                 #endregion
+
 
 
                 //load other configs in another thread
@@ -2177,8 +2181,13 @@ namespace ImageGlass
             //Save toolbar buttons
             GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
 
+
+            // Save last seen image path
+            GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+
             // Save centering of toolbar buttons
             GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
+
         }
 
         #endregion
@@ -2485,7 +2494,7 @@ namespace ImageGlass
             #region THEME
             if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
             {
-                ApplyTheme(LocalSetting.Theme.ThemeConfigFilePath);
+                ApplyTheme(LocalSetting.Theme.ThemeFolderName);
                 LocalSetting.FColorPicker.UpdateUI();
             }
             #endregion
