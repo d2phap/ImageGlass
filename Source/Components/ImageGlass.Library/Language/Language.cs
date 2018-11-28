@@ -570,7 +570,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
             Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
 
-            Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center Toolbar Buttons Horizontally in Window"); // V6.0
+            Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
             #endregion
 
 
