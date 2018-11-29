@@ -1534,6 +1534,7 @@ namespace ImageGlass
                         break;
                 }
             }
+
             return lstToolbarButtonNames;
         }
 
@@ -1550,12 +1551,16 @@ namespace ImageGlass
             List<string> lstToolbarButtons = LoadToolbarConfig();
             Type frmMainType = typeof(frmMain);
 
+            //Update size of toolbar
+            int newToolBarItemHeight = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
+
+            // get correct icon height
+            var hIcon = ThemeImage.GetCorrectIconHeight();
+
             foreach (var btn in lstToolbarButtons)
             {
                 if (btn == "_sep_")
                 {
-                    var hIcon = ThemeImage.GetCorrectIconHeight();
-
                     ToolStripSeparator sep = new ToolStripSeparator
                     {
                         AutoSize = false,
@@ -1570,9 +1575,13 @@ namespace ImageGlass
                     try
                     {
                         var info = frmMainType.GetField(btn, BindingFlags.Instance | BindingFlags.NonPublic);
-                        var val = info.GetValue(form);
+                        var toolbarBtn = info.GetValue(form) as ToolStripItem;
 
-                        toolMain.Items.Add(val as ToolStripItem);
+                        // update the item siE
+                        toolbarBtn.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+
+                        // add item to toolbar
+                        toolMain.Items.Add(toolbarBtn);
                     }
                     catch (Exception)
                     {
@@ -2170,9 +2179,10 @@ namespace ImageGlass
 
             #endregion
 
-            #region HorzCenterToolbarBtns: MainFormForceUpdateAction.TOOLBAR_POSITION
 
+            #region HorzCenterToolbarBtns: MainFormForceUpdateAction.TOOLBAR_POSITION
             newBool = chkHorzCenterToolbarBtns.Checked;
+
             if (GlobalSetting.IsCenterToolbar != newBool)
             {
                 GlobalSetting.IsCenterToolbar = newBool;

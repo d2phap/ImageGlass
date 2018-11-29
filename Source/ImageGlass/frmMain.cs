@@ -1323,6 +1323,9 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Timer Tick event: to display the message
+        /// </summary>
         private void tmsg_Tick(object sender, EventArgs e)
         {
             Timer tmsg = (Timer)sender;
@@ -1335,6 +1338,9 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Copy multiple files
+        /// </summary>
         private void CopyMultiFiles()
         {
             //get filename
@@ -1382,6 +1388,9 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Cut multiple files
+        /// </summary>
         private void CutMultiFiles()
         {
             //get filename
@@ -1491,10 +1500,14 @@ namespace ImageGlass
                 item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
             }
 
+            // get correct icon height
+            var hIcon = ThemeImage.GetCorrectIconHeight();
+
             //Tool bar separators
             foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
             {
-                item.Size = new Size(5, newToolBarItemHeight);
+                item.Size = new Size(5, (int)(hIcon * 1.2));
+                item.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
             }
 
             //Update toolbar icon size
@@ -1503,6 +1516,7 @@ namespace ImageGlass
             LoadToolbarIcons(t);
 
             #endregion
+
 
             #region change size of menu items
             int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
@@ -1550,6 +1564,59 @@ namespace ImageGlass
             picMain.Image.Save(filename, ImageFormat.Png);
 
             return filename;
+        }
+
+
+        /// <summary>
+        /// Update toolbar buttons alignment
+        /// </summary>
+        private void UpdateToolbarButtonsAlignment()
+        {
+            // Issue 425: option to center the toolbar buttons horizontally 
+            // [useful for wide screen]
+            // I'm assuming the btnMenu stays to the right, 
+            // in order to always be at a fixed location.
+
+            var firstBtn = toolMain.Items[0];
+            var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
+
+            if (GlobalSetting.IsCenterToolbar)
+            {
+                // get the correct content width
+                var toolbarContentWidth = btnMenu.Width;
+                foreach (ToolStripItem item in toolMain.Items)
+                {
+                    toolbarContentWidth += item.Width;
+                }
+
+
+                // if the content cannot fit the toolbar size
+                if (toolbarContentWidth > toolMain.Size.Width)
+                {
+                    // align left
+                    firstBtn.Margin = defaultMargin;
+                }
+                else
+                {
+                    // the default margin (left alignment)
+                    var margin = defaultMargin;
+
+
+                    // get the gap of content width and toolbar width
+                    int gap = Math.Abs(toolMain.Width - toolbarContentWidth);
+
+                    // update the left margin value
+                    margin.Left = gap / 2;
+
+                    // align the first item
+                    firstBtn.Margin = margin;
+                }
+            }
+            // if alignment is left
+            else
+            {
+                firstBtn.Margin = defaultMargin;
+            }
         }
 
         #endregion
@@ -1727,13 +1794,6 @@ namespace ImageGlass
 
 
 
-                #region Load Toolbar button centering state
-                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
-                // NOTE: no action necessary to force update, is performed via Form OnSize
-                #endregion
-
-
-
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
                 {
@@ -1772,9 +1832,7 @@ namespace ImageGlass
                 }
                 #endregion
                 
-
-
-
+                
                 
                 #region Load Thumbnail scrollbar visibility
                 if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
@@ -1823,6 +1881,11 @@ namespace ImageGlass
                 {
                     this.WindowState = FormWindowState.Maximized;
                 }
+                #endregion
+
+
+                #region Load Toolbar button centering state
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
                 #endregion
 
             }
@@ -2272,6 +2335,9 @@ namespace ImageGlass
             thDeleteWorker.Priority = System.Threading.ThreadPriority.BelowNormal;
             thDeleteWorker.IsBackground = true;
             thDeleteWorker.Start();
+
+            // update the alignment of toolbar buttons
+            UpdateToolbarButtonsAlignment();
         }
 
         public void LoadFromParams(string[] args)
@@ -2552,7 +2618,10 @@ namespace ImageGlass
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
                 }
-                toolMain_SizeChanged(null, null); // For centered toolbar buttons
+
+
+                // For centered toolbar buttons
+                UpdateToolbarButtonsAlignment();
             }
             #endregion
 
@@ -2620,6 +2689,7 @@ namespace ImageGlass
                 ApplyZoomMode(GlobalSetting.ZoomMode);
             }
 
+            UpdateToolbarButtonsAlignment();
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
@@ -2988,34 +3058,6 @@ namespace ImageGlass
             }
         }
 
-        private void toolMain_SizeChanged(object sender, EventArgs e)
-        {
-            if (toolMain.PreferredSize.Width > toolMain.Size.Width)
-            {
-                btnMenu.Alignment = ToolStripItemAlignment.Left;
-            }
-            else
-            {
-                btnMenu.Alignment = ToolStripItemAlignment.Right;
-
-                // Issue 425: option to center the toolbar buttons horizontally [useful for wide screen]
-                // I'm assuming the btnMenu stays to the right, in order to always be at a fixed location.
-                var firstbtn = toolMain.Items[0];
-                var marg = new Padding(2, firstbtn.Margin.Top, firstbtn.Margin.Right, firstbtn.Margin.Bottom);
-                if (GlobalSetting.IsCenterToolbar)
-                {
-
-                    // NOTE: relies on the label control on the right of the menu button!
-                    // NOTE: assumes at least one control to the left of the menu button in the toolbar!
-                    var lastbut1btn = toolMain.Items[toolMain.Items.Count - 3]; 
-
-                    int delta = btnMenu.Bounds.Right - lastbut1btn.Bounds.Right;
-                    marg.Left = delta / 2;
-                }
-                firstbtn.Margin = marg;
-            }
-        }
-
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -3186,25 +3228,10 @@ namespace ImageGlass
             mnuMainPrint_Click(null, e);
         }
 
-        //private void btnSetting_Click(object sender, EventArgs e)
-        //{
-        //    mnuMainSettings_Click(null, e);
-        //}
-
-        //private void btnHelp_Click(object sender, EventArgs e)
-        //{
-        //    mnuMainAbout_Click(null, e);
-        //}
-
         private void btnConvert_Click(object sender, EventArgs e)
         {
             mnuMainSaveAs_Click(null, e);
         }
-
-        //private void btnReport_Click(object sender, EventArgs e)
-        //{
-        //    mnuMainReportIssue_Click(null, e);
-        //}
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
