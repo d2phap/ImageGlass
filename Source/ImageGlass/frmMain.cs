@@ -67,8 +67,46 @@ namespace ImageGlass
             // This is disabled by turning off ImageBox shortcuts. Done here rather than in designer so this bugfix
             // is visible.
             picMain.ShortcutsEnabled = false;
-        }
 
+
+            // "Hack" implementation for Issue #448: Hover arrows on right/left of image to move to next/prev image.
+            // Inspired by AnotherDimension-Ex.
+            Button _btnNext = new Button();
+            _btnNext.FlatStyle = FlatStyle.Flat;
+            _btnNext.BackColor = Color.Transparent;
+            _btnNext.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            _btnNext.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            _btnNext.FlatAppearance.BorderSize = 0;
+            _btnNext.Parent = picMain;
+            _btnNext.Dock = DockStyle.Right;
+            _btnNext.BringToFront();
+
+            _btnNext.MouseEnter += (object sender, EventArgs e) => { _btnNext.Image = Properties.Resources.right_arrow; };
+            _btnNext.MouseLeave += (object sender, EventArgs e) => { _btnNext.Image = null; };
+
+            _btnNext.Click += (object sender, EventArgs e) => { NextPic(1); };
+            _btnNext.GotFocus += (object sender, EventArgs e) => { _btnNext.NotifyDefault(false); };
+
+            Button _btnPrev = new Button();
+            _btnPrev.FlatStyle = FlatStyle.Flat;
+            _btnPrev.BackColor = Color.Transparent;
+            _btnPrev.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            _btnPrev.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            _btnPrev.FlatAppearance.BorderSize = 0;
+            _btnPrev.Parent = picMain; // Without this, button background will not be the image
+            _btnPrev.Dock = DockStyle.Left;
+            _btnPrev.BringToFront(); // Without this, button will be behind image
+
+            // TODO consider a background "fade" image/spectrum, like Windows Photos?
+            // TODO the image needs to come from the theme, not resources (?)
+            _btnPrev.MouseEnter += (object sender, EventArgs e) => { _btnPrev.Image = Properties.Resources.left_arrow; };
+            // TODO consider a faded/"disabled" arrow? [see e.g. https://www.artstation.com/artwork/4lX0k]
+            _btnPrev.MouseLeave += (object sender, EventArgs e) => { _btnPrev.Image = null; };
+
+            _btnPrev.Click += (object sender, EventArgs e) => { NextPic(-1); };
+            // Thank you, "AnotherDimension-Ex": on lose focus, border outline would appear
+            _btnPrev.GotFocus += (object sender, EventArgs e) => { _btnPrev.NotifyDefault(false); };
+        }
 
 
         #region Local variables
