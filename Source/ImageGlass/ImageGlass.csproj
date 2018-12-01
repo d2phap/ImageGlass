@@ -337,6 +337,10 @@
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ultilities\igcmdWin10\igcmdWin10.csproj">
+      <Project>{e1b466b0-8ece-4d5c-807a-600aae97bec7}</Project>
+      <Name>igcmdWin10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
       <Project>{cc391e3e-9137-4857-85dc-c4cf6df37584}</Project>
       <Name>igcmd</Name>

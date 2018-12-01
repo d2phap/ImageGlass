@@ -72,14 +72,20 @@ namespace igcmd
         internal static int SetWallpaper(string[] args)
         {
             if (args.Length < 2)
-                return (int)DesktopWallapaper.Result.Success; // Failed to provide image path (but 'success')
+            {
+                // Failed to provide image path (but 'success')
+                return (int)DesktopWallapaper.Result.Success;
+            }
+
             string imgPath = args[1];
             DesktopWallapaper.Style style = DesktopWallapaper.Style.Centered;
+
             if (args.Length > 2)
             {
                 if (!Enum.TryParse(args[2], out style))
                     style = DesktopWallapaper.Style.Current;
             }
+
             var result = DesktopWallapaper.Set(imgPath, style);
 
             // TODO attempt to clear local policy settings

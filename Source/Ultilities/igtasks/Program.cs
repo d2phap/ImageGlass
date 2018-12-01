@@ -14,16 +14,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using igtasks;
-using ImageGlass.Library;
 using ImageGlass.Library.Image;
-using ImageGlass.Library.FileAssociations;
 using ImageGlass.Services.Configuration;
 
 namespace adtasks
@@ -42,7 +39,7 @@ namespace adtasks
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] argv)
+        private static int Main(string[] argv)
         {
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
@@ -55,7 +52,7 @@ namespace adtasks
 
             //Command
             string topcmd = args[0].ToLower().Trim();
-            
+
 
             //Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
@@ -63,6 +60,7 @@ namespace adtasks
             {
                 //Get image's path
                 string imgPath = args[1];
+                var result = 0;
 
                 if (args.Length > 2)
                 {
@@ -72,24 +70,24 @@ namespace adtasks
                     //Apply changes
                     if (style == "1")
                     {
-                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Stretched);
+                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Stretched);
                     }
                     else if (style == "2")
                     {
-                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Tiled);
+                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Tiled);
                     }
                     else //style == "0"
                     {
-                        DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Current);
+                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Current);
                     }
                 }
                 else
                 {
                     //Apply changes
-                    DesktopWallapaper.Set(new Uri(imgPath), DesktopWallapaper.Style.Centered);
+                    result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Centered);
                 }
 
-                Application.Exit();
+                return result;
             }
             #endregion
 
@@ -157,6 +155,8 @@ namespace adtasks
             #endregion
 
 
+
+            return 0;
         }
 
 

@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
@@ -1550,7 +1550,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Save current loaded image to file and print it
+        /// Save current loaded image to file
         /// </summary>
         private string SaveTemporaryMemoryData()
         {
@@ -2654,15 +2654,20 @@ namespace ImageGlass
 
 
             #region Windows 10 Specific Actions
-            bool enable = true;
-            var vers = Environment.OSVersion;
+            bool isWin81OrLater = true;
+            var winVersion = Environment.OSVersion;
+
             // Win7 == 6.1, Win Server 2008 == 6.1
             // Win10 == 10.0 [if app.manifest properly configured]
-            if (vers.Version.Major < 6 ||
-                vers.Version.Major == 6 && vers.Version.Minor < 2)
-                enable = false; // Not running Windows 8 or later
+            if (winVersion.Version.Major < 6 ||
+                winVersion.Version.Major == 6 && 
+                winVersion.Version.Minor < 2)
+            {
+                isWin81OrLater = false; // Not running Windows 8 or earlier
+            }
+                
 
-            mnuMainSetAsLockImage.Enabled = enable;
+            mnuMainSetAsLockImage.Enabled = isWin81OrLater;
             #endregion
 
 
@@ -3302,9 +3307,10 @@ namespace ImageGlass
             }
 
 
-            if (!isImageError && !LocalSetting.IsTempMemoryData)
+            if (LocalSetting.IsTempMemoryData || !isImageError)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
+                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
             }
 
 
@@ -3976,60 +3982,100 @@ namespace ImageGlass
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                return;
-
+            var isError = false;
+            
             try
             {
-                var args = string.Format("setwallpaper \"{0}\" {1}",
-                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
-                    (int)DesktopWallapaper.Style.Current);
+                // save the current image data to temp file
+                var imgFile = SaveTemporaryMemoryData();
 
-                // Issue #326: first attempt to set wallpaper w/o privs. If that
-                // fails _due_to_ privs error, re-attempt with admin privs.
-                Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
-                p.StartInfo.Arguments = args;
-                p.Start();
-                p.WaitForExit();
-                int result = p.ExitCode;
-                if (result != (int)DesktopWallapaper.Result.PrivsFail)
-                    return;
+                using (Process p = new Process())
+                {
+                    var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
 
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igtasks.exe";
-                p.StartInfo.Arguments = args;
-                p.Start();
+                    // Issue #326: first attempt to set wallpaper w/o privs. 
+                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                    p.StartInfo.Arguments = args;
+                    p.Start();
+
+                    p.WaitForExit();
+                    
+
+                    // If that fails due to privs error, re-attempt with admin privs.
+                    if (p.ExitCode == (int) DesktopWallapaper.Result.PrivsFail)
+                    {
+                        p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                        p.StartInfo.Arguments = args;
+                        p.Start();
+
+                        p.WaitForExit();
+
+                        // success or error
+                        isError = p.ExitCode != 0;
+                    }
+                    else
+                    {
+                        // success or error
+                        isError = p.ExitCode != 0;
+                    }
+                }
             }
-            catch
-            { }
+            catch { isError = true; }
+
+            // show result message
+            if (isError)
+            {
+                var msg = GlobalSetting.LangPack.Items["frmMain._SetBackground_Error"];
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                var msg = GlobalSetting.LangPack.Items["frmMain._SetBackground_Success"];
+                DisplayTextMessage(msg, 2000);
+            }
         }
+
 
         private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
         {
-            if (LocalSetting.IsTempMemoryData && !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
-                return;
+            var isError = false;
 
-            var vers = Environment.OSVersion;
-            // Win7 == 6.1, Win Server 2008 == 6.1
-            // Win10 == 10.0 [if app.manifest properly configured]
-            if (vers.Version.Major < 6 ||
-                vers.Version.Major == 6 && vers.Version.Minor < 2)
-                return; // Not running Windows 8 or later
-
-            // TODO consider adding privilege check and retry?
             try
             {
-                var args = string.Format("setlockimage \"{0}\"",
-                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-                Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmdWin10.exe";
-                p.StartInfo.Arguments = args;
-                p.Start();
-                return;
+                // save the current image data to temp file
+                var imgFile = SaveTemporaryMemoryData();
+
+                using (Process p = new Process())
+                {
+                    var args = string.Format("setlockimage \"{0}\"", imgFile);
+
+                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmdWin10.exe");
+                    p.StartInfo.Arguments = args;
+                    p.EnableRaisingEvents = true;
+                    p.Start();
+
+                    p.WaitForExit();
+
+                    // success or error
+                    isError = p.ExitCode != 0;
+                }
             }
-            catch
-            { }
+            catch { isError = true; }
+
+
+            // show result message
+            if (isError)
+            {
+                var msg = GlobalSetting.LangPack.Items["frmMain._SetLockImage_Error"];
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                var msg = GlobalSetting.LangPack.Items["frmMain._SetLockImage_Success"];
+                DisplayTextMessage(msg, 2000);
+            }
         }
+
 
         private void mnuMainImageLocation_Click(object sender, EventArgs e)
         {
@@ -4303,7 +4349,6 @@ namespace ImageGlass
                 {
                     mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate._NoUpdate"];
                 }
-
                 
 
                 mnuMainExtractFrames.Enabled = false;
@@ -4331,7 +4376,7 @@ namespace ImageGlass
                 UpdateEditingAssocAppInfoForMenu();
                 
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         private void mnuMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)

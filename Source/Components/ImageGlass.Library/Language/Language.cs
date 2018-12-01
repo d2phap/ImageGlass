@@ -332,8 +332,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
             Items.Add("frmMain.mnuMainExtractFrames", "Extract image frames ({0})"); //v3.0
             Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
-            Items.Add("frmMain.mnuMainSetAsDesktop", "Set as desktop background"); //v3.0
-            Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock Screen image"); // V6.0
+            Items.Add("frmMain.mnuMainSetAsDesktop", "Set as Desktop background"); //v3.0
+            Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
 
             Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
             Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
@@ -396,6 +396,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
             Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
             Items.Add("frmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); //Added V5.0; Modified V6.0
+            Items.Add("frmMain._SetLockImage_Error", "There was an error while setting lock screen image"); //v6.0
+            Items.Add("frmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
+            Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
+            Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
             #endregion
 
 
