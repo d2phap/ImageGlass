@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using ImageGlass.Services.Configuration;
@@ -26,13 +24,11 @@ using ImageGlass.Library;
 using System.IO;
 using ImageGlass.Library.FileAssociations;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace igtasks
 {
     public static class Functions
     {
-
         /// <summary>
         /// Install new language packs
         /// </summary>
@@ -58,6 +54,7 @@ namespace igtasks
                 }
             }
         }
+
 
         /// <summary>
         /// Create new language packs
@@ -87,6 +84,7 @@ namespace igtasks
             }
         }
 
+
         /// <summary>
         /// Edit language packs
         /// </summary>
@@ -105,6 +103,7 @@ namespace igtasks
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         /// <summary>
         /// Delete registry association of ImageGlass
@@ -139,6 +138,7 @@ namespace igtasks
                 if (!reg.DeleteSubKeyTree()) return;
             }
         }
+
 
         /// <summary>
         /// Register file associations
@@ -243,6 +243,7 @@ namespace igtasks
             }
             
         }
+
 
     }
 }

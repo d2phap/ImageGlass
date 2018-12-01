@@ -60,34 +60,16 @@ namespace adtasks
             {
                 //Get image's path
                 string imgPath = args[1];
-                var result = 0;
+                var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2)
                 {
                     //Get style
-                    string style = args[2];
-
-                    //Apply changes
-                    if (style == "1")
-                    {
-                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Stretched);
-                    }
-                    else if (style == "2")
-                    {
-                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Tiled);
-                    }
-                    else //style == "0"
-                    {
-                        result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Current);
-                    }
-                }
-                else
-                {
-                    //Apply changes
-                    result = (int)DesktopWallapaper.Set(imgPath, DesktopWallapaper.Style.Centered);
+                    Enum.TryParse(args[2], out style);
                 }
 
-                return result;
+                //Apply changes and return exit code
+                return (int)DesktopWallapaper.Set(imgPath, style);
             }
             #endregion
 
