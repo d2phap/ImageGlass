@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
 using System.Windows.Forms;
@@ -110,24 +110,28 @@ namespace igtasks
         /// </summary>
         /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
         /// <param name="deleteAllKeys">TRUE: delete all keys</param>
-        public static void DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
+        /// <returns>0 = SUCCESS; 1 = ERROR</returns>
+        public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
         {
-            RegistryHelper reg = new RegistryHelper();
-            reg.ShowError = true;
-            reg.BaseRegistryKey = Registry.LocalMachine;
+            RegistryHelper reg = new RegistryHelper
+            {
+                ShowError = true,
+                BaseRegistryKey = Registry.LocalMachine,
 
-            // delete current registry settings
-            reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
-            if (!reg.DeleteSubKeyTree()) return;
+                // delete current registry settings
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+
+            if (!reg.DeleteSubKeyTree()) return 1;
 
 
             if (deleteAllKeys)
             {
                 reg.SubKey = @"SOFTWARE\RegisteredApplications";
-                if (!reg.DeleteKey("ImageGlass")) return;
+                if (!reg.DeleteKey("ImageGlass")) return 1;
 
                 reg.SubKey = @"SOFTWARE\PhapSoftware";
-                if (!reg.DeleteSubKeyTree()) return;
+                if (!reg.DeleteSubKeyTree()) return 1;
             }
 
 
@@ -135,8 +139,10 @@ namespace igtasks
             foreach (var ext in extList)
             {
                 reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile" + ext.ToUpper();
-                if (!reg.DeleteSubKeyTree()) return;
+                if (!reg.DeleteSubKeyTree()) return 1;
             }
+
+            return 0;
         }
 
 
@@ -144,9 +150,9 @@ namespace igtasks
         /// Register file associations
         /// </summary>
         /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
-        public static void SetRegistryAssociations(string extensions, bool isNoUI = false)
+        /// <returns>0 = SUCCESS; 1 = ERROR</returns>
+        public static int SetRegistryAssociations(string extensions)
         {
-            bool isError = false;
             DeleteRegistryAssociations(extensions);
 
             RegistryHelper reg = new RegistryHelper
@@ -160,28 +166,24 @@ namespace igtasks
 
             if (!reg.Write("ImageGlass", @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities"))
             {
-                isError = true;
-                return;
+                return 1;
             }
 
             // Register Capabilities info
             reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities";
             if (!reg.Write("ApplicationName", "ImageGlass"))
             {
-                isError = true;
-                return;
+                return 1;
             }
 
             if (!reg.Write("ApplicationIcon", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\", 0"))
             {
-                isError = true;
-                return;
+                return 1;
             }
 
             if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer"))
             {
-                isError = true;
-                return;
+                return 1;
             }
 
             // Register File Associations
@@ -194,8 +196,7 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
                 if (!reg.Write(ext, keyname))
                 {
-                    isError = true;
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Icon
@@ -208,40 +209,25 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
                 if (!reg.Write("", $"\"{iconPath}\", 0"))
                 {
-                    isError = true;
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Friendly App Name
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
                 if (!reg.Write("FriendlyAppName", "ImageGlass"))
                 {
-                    isError = true;
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
                 if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\""))
                 {
-                    isError = true;
-                    return;
+                    return 1;
                 }
             }
 
-
-            if (!isNoUI)
-            {
-                if (isError)
-                {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("ImageGlass was set as default photo viewer app successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            
+            return 0;
         }
 
 

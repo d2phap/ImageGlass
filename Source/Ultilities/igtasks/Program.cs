@@ -75,16 +75,13 @@ namespace adtasks
 
 
             //Register file associations
-            #region regassociations <string exts> [--no-ui]
+            #region regassociations <string exts>
             else if (topcmd == "regassociations")
             {
                 //get Extensions
                 string exts = args[1];
-                bool isNoUI = args.FirstOrDefault(i => i == "--no-ui") == null ? false : true;
 
-                Functions.SetRegistryAssociations(exts, isNoUI);
-
-                Application.Exit();
+                return Functions.SetRegistryAssociations(exts);
             }
             #endregion
 
@@ -93,9 +90,8 @@ namespace adtasks
             #region delassociations
             else if (topcmd == "delassociations")
             {
-                Functions.DeleteRegistryAssociations(GlobalSetting.AllImageFormats, true);
-
-                Application.Exit();
+                return Functions.DeleteRegistryAssociations(GlobalSetting.AllImageFormats, true);
+                
             }
             #endregion
 
@@ -105,7 +101,6 @@ namespace adtasks
             else if (topcmd == "iginstalllang")
             {
                 Functions.InstallLanguagePacks();
-                Application.Exit();
             }
             #endregion
 
@@ -115,7 +110,6 @@ namespace adtasks
             else if (topcmd == "ignewlang")
             {
                 Functions.CreateNewLanguagePacks();
-                Application.Exit();
             }
             #endregion
 
@@ -128,7 +122,6 @@ namespace adtasks
                 string filename = args[1];
 
                 Functions.EditLanguagePacks(filename);
-                Application.Exit();
             }
             #endregion
             

@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
@@ -994,17 +994,26 @@ namespace ImageGlass
                 LoadExtensionList();
             }
 
-
-            // Update extensions to registry
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
-            p.StartInfo.Arguments = $"regassociations {extensions}";
-
-            try
+            using (Process p = new Process())
             {
+                var isError = true;
+
+                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                p.StartInfo.Arguments = $"regassociations {extensions}";
                 p.Start();
+
+                p.WaitForExit();
+                isError = p.ExitCode != 0;
+
+                if (isError)
+                {
+                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            catch { }
         }
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
