@@ -91,6 +91,7 @@ namespace adtasks
             }
             #endregion
 
+
             //Register file associations
             #region regassociations <string exts> [--no-ui]
             else if (topcmd == "regassociations")
@@ -105,6 +106,7 @@ namespace adtasks
             }
             #endregion
 
+
             //Delete all file associations
             #region delassociations
             else if (topcmd == "delassociations")
@@ -115,6 +117,7 @@ namespace adtasks
             }
             #endregion
 
+
             //Install new language packs
             #region iginstalllang
             else if (topcmd == "iginstalllang")
@@ -124,6 +127,7 @@ namespace adtasks
             }
             #endregion
 
+
             //Create new language packs
             #region ignewlang
             else if (topcmd == "ignewlang")
@@ -132,6 +136,7 @@ namespace adtasks
                 Application.Exit();
             }
             #endregion
+
 
             //Edit language packs
             #region igeditlang <string filename>
@@ -144,15 +149,7 @@ namespace adtasks
                 Application.Exit();
             }
             #endregion
-
-            //Install new extensions
-            #region iginstallext
-            else if (topcmd == "iginstallext")
-            {
-                Functions.InstallExtensions();
-                Application.Exit();
-            }
-            #endregion
+            
 
 
 

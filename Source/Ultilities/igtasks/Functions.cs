@@ -32,31 +32,6 @@ namespace igtasks
 {
     public static class Functions
     {
-        /// <summary>
-        /// Install new extensions
-        /// </summary>
-        public static void InstallExtensions()
-        {
-            OpenFileDialog o = new OpenFileDialog();
-            o.Filter = "ImageGlass plugins (*.dll)|*.dll";
-            o.Multiselect = true;
-
-            if (o.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string f in o.FileNames)
-                {
-                    try
-                    {
-                        File.Copy(f, Path.Combine(GlobalSetting.StartUpDir, "Plugins", Path.GetFileName(f)));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    
-                }
-            }
-        }
 
         /// <summary>
         /// Install new language packs
