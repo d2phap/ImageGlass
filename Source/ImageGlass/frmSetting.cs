@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -817,7 +817,7 @@ namespace ImageGlass
             try
             {
                 string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("http://www.imageglass.org/download/languagepacks?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_languagepack");
+                Process.Start("https://imageglass.org/languages?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_languagepack");
             }
             catch { }
         }
@@ -1834,7 +1834,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
+                string version = Application.ProductVersion.Replace(".", "_");
                 Process.Start("https://imageglass.org/themes?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_download_theme");
             }
             catch { }
