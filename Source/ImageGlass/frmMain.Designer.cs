@@ -631,7 +631,7 @@
             this.lblInfo.BackColor = System.Drawing.Color.Transparent;
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(0, 0);
+            this.lblInfo.Size = new System.Drawing.Size(0, 57);
             // 
             // mnuMain
             // 
@@ -664,7 +664,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 646);
+            this.mnuMain.Size = new System.Drawing.Size(409, 679);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -825,6 +825,7 @@
             // 
             // mnuMainFullScreen
             // 
+            this.mnuMainFullScreen.CheckOnClick = true;
             this.mnuMainFullScreen.ForeColor = System.Drawing.Color.Black;
             this.mnuMainFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";

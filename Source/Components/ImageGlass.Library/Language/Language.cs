@@ -381,7 +381,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
             Items.Add("frmMain._ExtractFrameText", "Extracting image frames. Please select output folder.");
-            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
+            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.");//v2.0 beta, v6.0
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0

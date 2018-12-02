@@ -924,7 +924,7 @@ namespace ImageGlass
             #region ALT + ENTER
             if (e.Alt && e.KeyCode == Keys.Enter && !e.Control && !e.Shift)//Alt + Enter
             {
-                btnFullScreen.PerformClick();
+                mnuMainFullScreen.PerformClick();
                 return;
             }
             #endregion
@@ -938,11 +938,6 @@ namespace ImageGlass
                 if (GlobalSetting.IsPlaySlideShow)
                 {
                     mnuMainSlideShowExit_Click(null, null);
-                }
-                //exit full screen
-                else if (GlobalSetting.IsFullScreen)
-                {
-                    btnFullScreen.PerformClick();
                 }
                 //Quit ImageGlass
                 else if (GlobalSetting.IsPressESCToQuit)
@@ -1884,6 +1879,7 @@ namespace ImageGlass
                 #endregion
 
 
+
                 #region Load Toolbar button centering state
                 GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
                 #endregion
@@ -1908,7 +1904,7 @@ namespace ImageGlass
                 }
                 this.Bounds = rc;
                 #endregion
-                
+
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
@@ -2136,6 +2132,7 @@ namespace ImageGlass
                     // Fetch PreserveModifiedDate
                     GlobalSetting.PreserveModifiedDate = bool.Parse(GlobalSetting.GetConfig("PreserveModifiedDate", "False"));
 
+
                     #region Get ImageEditingAssociationList
                     configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
                         string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -2176,6 +2173,16 @@ namespace ImageGlass
 
                 });
 
+
+                #region Load Full Screen mode
+                GlobalSetting.IsFullScreen = bool.Parse(GlobalSetting.GetConfig("IsFullScreen", "False"));
+                if (GlobalSetting.IsFullScreen)
+                {
+                    GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
+                    mnuMainFullScreen.PerformClick();
+                }
+                #endregion
+
             }
             #endregion
 
@@ -2189,8 +2196,12 @@ namespace ImageGlass
         {
             if (WindowState == FormWindowState.Normal)
             {
-                //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
+                // don't save Bound if in Full screen and SlideShow mode
+                if (!GlobalSetting.IsFullScreen && !GlobalSetting.IsPlaySlideShow)
+                {
+                    //Windows Bound--------------------------------------------------------------
+                    GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
+                }
             }
 
             //Windows State-------------------------------------------------------------------
@@ -2199,10 +2210,16 @@ namespace ImageGlass
             //Checked background
             GlobalSetting.SetConfig("IsShowCheckedBackground", GlobalSetting.IsShowCheckerBoard.ToString());
 
-            //Tool bar state
-            GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
-            //GlobalSetting.SetConfig("IsShowToolBarBottom", GlobalSetting.IsShowToolBarBottom.ToString());
+
+            #region  Toolbar state
+            if (!GlobalSetting.IsPlaySlideShow)
+            {
+                GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
+            }
+
             GlobalSetting.SetConfig("IsShowThumbnailScroll", GlobalSetting.IsShowThumbnailScrollbar.ToString());
+            #endregion
+
 
             //Window always on top
             GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
@@ -2213,9 +2230,15 @@ namespace ImageGlass
             //Lock zoom ratio
             GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.ZoomMode == ZoomMode.LockZoomRatio) ? GlobalSetting.ZoomLockValue.ToString(GlobalSetting.NumberFormat) : "-1");
 
-            //Thumbnail panel
-            GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
-            
+
+            #region Thumbnail panel
+            if (!GlobalSetting.IsPlaySlideShow)
+            {
+                GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
+            }
+            #endregion
+
+
             // Save thumbnail bar orientation state
             GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
 
@@ -2251,6 +2274,122 @@ namespace ImageGlass
             // Save centering of toolbar buttons
             GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
 
+            // Save fullscreen state
+            GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
+        }
+
+
+        /// <summary>
+        /// Enter or Exit Full screen mode
+        /// </summary>
+        /// <param name="enabled"></param>
+        /// <param name="changeWindowState"></param>
+        /// <param name="onlyShowViewer">Hide all layouts except main viewer</param>
+        private void FullScreenMode(bool enabled = true, bool changeWindowState = true, bool onlyShowViewer = false)
+        {
+            //full screen
+            if (enabled)
+            {
+                SaveConfig();
+
+                //save last state of toolbar
+                if (onlyShowViewer)
+                {
+                    _isShowToolbar = GlobalSetting.IsShowToolBar;
+                    _isShowThumbnail = GlobalSetting.IsShowThumbnail;
+                }
+
+                if (changeWindowState)
+                {
+                    this.FormBorderStyle = FormBorderStyle.None;
+                    this.WindowState = FormWindowState.Normal;
+                    this.Bounds = Screen.FromControl(this).Bounds;
+                }
+
+                //Hide toolbar
+                if (onlyShowViewer)
+                {
+                    toolMain.Visible = false;
+                    GlobalSetting.IsShowToolBar = false;
+                    mnuMainToolbar.Checked = false;
+
+                    //hide thumbnail
+                    GlobalSetting.IsShowThumbnail = true;
+                    mnuMainThumbnailBar_Click(null, null);
+                }
+
+                Application.DoEvents();
+
+
+                //realign image
+                if (!_isManuallyZoomed)
+                {
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                }
+
+            }
+
+            //exit full screen
+            else
+            {
+                //restore last state of toolbar
+                if (onlyShowViewer)
+                {
+                    GlobalSetting.IsShowToolBar = _isShowToolbar;
+                    GlobalSetting.IsShowThumbnail = _isShowThumbnail;
+                }
+
+                // restore background color in case of being overriden by SlideShow mode
+                picMain.BackColor = GlobalSetting.BackgroundColor;
+
+                if (changeWindowState)
+                {
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+
+                    //windows state
+                    string state_str = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
+                    if (state_str == "Normal")
+                    {
+                        this.WindowState = FormWindowState.Normal;
+                    }
+                    else if (state_str == "Maximized")
+                    {
+                        this.WindowState = FormWindowState.Maximized;
+                    }
+
+                    //Windows Bound (Position + Size)
+                    this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
+                }
+
+
+                if (onlyShowViewer)
+                {
+                    if (GlobalSetting.IsShowToolBar)
+                    {
+                        //Show toolbar
+                        toolMain.Visible = true;
+                        mnuMainToolbar.Checked = true;
+
+                        UpdateToolbarButtonsAlignment();
+                    }
+
+                    if (GlobalSetting.IsShowThumbnail)
+                    {
+                        //Show thumbnail
+                        GlobalSetting.IsShowThumbnail = false;
+                        mnuMainThumbnailBar_Click(null, null);
+                    }
+                }
+
+                Application.DoEvents();
+
+
+                //realign image
+                if (!_isManuallyZoomed)
+                {
+                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                }
+            }
         }
 
         #endregion
@@ -2338,6 +2477,7 @@ namespace ImageGlass
 
             // update the alignment of toolbar buttons
             UpdateToolbarButtonsAlignment();
+
         }
 
         public void LoadFromParams(string[] args)
@@ -3538,8 +3678,8 @@ namespace ImageGlass
         {
             int n = GlobalSetting.CurrentIndex;
             string s = "0";
-            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"],
-                                    "0", true, this.TopMost) == DialogResult.OK)
+
+            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
@@ -3570,35 +3710,14 @@ namespace ImageGlass
 
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
         {
-            //full screen
+            //enter full screen
             if (!GlobalSetting.IsFullScreen)
             {
-                SaveConfig();
+                mnuMainFullScreen.Checked = 
+                    btnFullScreen.Checked = 
+                    GlobalSetting.IsFullScreen = true;
 
-                //save last state of toolbar
-                _isShowToolbar = GlobalSetting.IsShowToolBar;
-                _isShowThumbnail = GlobalSetting.IsShowThumbnail;
-
-                FormBorderStyle = FormBorderStyle.None;
-                WindowState = FormWindowState.Normal;
-                GlobalSetting.IsFullScreen = true;
-                Application.DoEvents();
-                Bounds = Screen.FromControl(this).Bounds;
-
-                //Hide toolbar
-                toolMain.Visible = false;
-                GlobalSetting.IsShowToolBar = false;
-                mnuMainToolbar.Checked = false;
-
-                //hide thumbnail
-                GlobalSetting.IsShowThumbnail = true;
-                mnuMainThumbnailBar_Click(null, null);
-
-                //realign image
-                if (!_isManuallyZoomed)
-                {
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
-                }
+                FullScreenMode(enabled: true);
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._FullScreenMessage"]
                     , 2000);
@@ -3606,51 +3725,14 @@ namespace ImageGlass
             //exit full screen
             else
             {
-                //restore last state of toolbar
-                GlobalSetting.IsShowToolBar = _isShowToolbar;
-                GlobalSetting.IsShowThumbnail = _isShowThumbnail;
+                mnuMainFullScreen.Checked = 
+                    btnFullScreen.Checked = 
+                    GlobalSetting.IsFullScreen = false;
 
-                FormBorderStyle = FormBorderStyle.Sizable;
-
-                //windows state
-                string state_str = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
-                if (state_str == "Normal")
-                {
-                    WindowState = FormWindowState.Normal;
-                }
-                else if (state_str == "Maximized")
-                {
-                    WindowState = FormWindowState.Maximized;
-                }
-
-                //Windows Bound (Position + Size)
-                Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
-
-                GlobalSetting.IsFullScreen = false;
-                Application.DoEvents();
+                FullScreenMode(enabled: false);
                 
-                if (GlobalSetting.IsShowToolBar)
-                {
-                    //Show toolbar
-                    toolMain.Visible = true;
-                    mnuMainToolbar.Checked = true;
-                }
-
-                if (GlobalSetting.IsShowThumbnail)
-                {
-                    //Show thumbnail
-                    GlobalSetting.IsShowThumbnail = false;
-                    mnuMainThumbnailBar_Click(null, null);
-                }
-
-                //realign image
-                if (!_isManuallyZoomed)
-                {
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
-                }
             }
         }
-        
 
         private void mnuMainSlideShowStart_Click(object sender, EventArgs e)
         {
@@ -3662,22 +3744,24 @@ namespace ImageGlass
             //not performing
             if (!GlobalSetting.IsPlaySlideShow)
             {
-                //perform slideshow
                 picMain.BackColor = Color.Black;
-                btnFullScreen.PerformClick();
 
+                // enter full screen
+                FullScreenMode(enabled: true, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
+
+                //perform slideshow
                 timSlideShow.Start();
                 timSlideShow.Enabled = true;
 
                 GlobalSetting.IsPlaySlideShow = true;
+
+                DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"], 2000);
             }
             //performing
             else
             {
                 mnuMainSlideShowExit_Click(null, null);
             }
-
-            DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessage"], 2000);
         }
 
         private void mnuMainSlideShowPause_Click(object sender, EventArgs e)
@@ -3707,7 +3791,10 @@ namespace ImageGlass
             GlobalSetting.IsPlaySlideShow = false;
 
             picMain.BackColor = GlobalSetting.BackgroundColor;
-            btnFullScreen.PerformClick();
+
+            // exit full screen
+            FullScreenMode(enabled: false, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
+
         }
         
         private void mnuMainPrint_Click(object sender, EventArgs e)
