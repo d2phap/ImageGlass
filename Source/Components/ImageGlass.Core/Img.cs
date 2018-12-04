@@ -34,14 +34,15 @@ namespace ImageGlass.Core
 
         /// <summary>
         /// Load image from file
+        /// <param name="size">A custom size of image</param>
         /// </summary>
         /// <param name="root">Parent folder for instance path</param>
-        public void Load()
+        public void Load(Size size = new Size())
         {
             Image im = null;
             try
             {
-                im = Interpreter.Load(path);
+                im = Interpreter.Load(path, size.Width, size.Height);
             }
 #pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)

@@ -32,16 +32,11 @@ namespace ImageGlass.Core
     {
         private List<Img> lstImage; //image list
         private List<Img> lstQueue; //loading image queue
-        private bool isErrorImage = false;
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
         public event FinishLoadingImageHandler OnFinishLoadingImage;
 
-        public bool IsErrorImage
-        {
-            get { return isErrorImage; }
-            set { isErrorImage = value; }
-        }
+        public bool IsErrorImage { get; set; } = false;
 
         public ImgMan()
         {
@@ -81,11 +76,12 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="i">The image to return</param>
         /// <param name="isSkipCache">Option to skip the image cache</param>
+        /// <param name="size">A custom size of image (only applicable if isSkipCache = TRUE)</param>
         /// <returns>Image i</returns>
-        public Image GetImage(int i, bool isSkipCache = false)
+        public Image GetImage(int i, bool isSkipCache = false, Size size = new Size())
         {
             Image img = null;
-
+            
             if (!isSkipCache)
             {
                 // Start off with unloading excessive images
@@ -105,7 +101,7 @@ namespace ImageGlass.Core
             }
             else
             {
-                lstImage[i].Load();
+                lstImage[i].Load(size);
             }
 
             while (!lstImage[i].IsFinished)
@@ -115,12 +111,12 @@ namespace ImageGlass.Core
 
 			if (lstImage[i].IsFailed)
             {
-                isErrorImage = true;
+                IsErrorImage = true;
                 img = new Bitmap(1, 1);
             }
             else
             {
-                isErrorImage = false;
+                IsErrorImage = false;
                 img = lstImage[i].Get();
             }
 

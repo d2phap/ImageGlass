@@ -72,7 +72,6 @@ namespace ImageGlass.Core
                     settings.Height = height;
                 }
 
-
                 //using (var magicColl = new MagickImageCollection())
                 //{
                 //    magicColl.Read(new FileInfo(path), settings);
@@ -109,11 +108,19 @@ namespace ImageGlass.Core
                                 magicImg.Rotate(orientationDegree);
                             }
                         }
-
                     }
 
-                    //corect the image color
+                    // get the color profile of image
+                    var imgColorProfile = magicImg.GetColorProfile();
+
+                    if (imgColorProfile != null)
+                    {
+                        // corect the image color
+                        magicImg.ColorSpace = imgColorProfile.ColorSpace;
+                    }
+
                     magicImg.AddProfile(ColorProfile.SRGB);
+                    
 
                     //get bitmap
                     bmp = magicImg.ToBitmap();
