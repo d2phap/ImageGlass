@@ -439,7 +439,18 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that to show last seen image on startup
         /// </summary>
         public static bool IsOpenLastSeenImage { get; set; } = false;
-        
+
+
+        /// <summary>
+        /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
+        /// </summary>
+        public static string ColorProfile { get; set; } = "sRGB";
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
+        /// </summary>
+        public static bool IsApplyColorProfileForAll { get; set; } = false;
 
 
         /// <summary>

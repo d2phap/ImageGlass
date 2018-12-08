@@ -1,29 +1,26 @@
 ﻿/*
- * imaeg - generic image utility in C#
- * Copyright (C) 2010  ed <tripflag@gmail.com>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License v2
- * (version 2) as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, refer to the following URL:
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Threading;
-using System.Linq;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace ImageGlass.Core
@@ -37,6 +34,16 @@ namespace ImageGlass.Core
         public event FinishLoadingImageHandler OnFinishLoadingImage;
 
         public bool IsErrorImage { get; set; } = false;
+
+        /// <summary>
+        /// Name or Full path of color profile
+        /// </summary>
+        public string ColorProfileName { get; set; } = "sRGB";
+
+        /// <summary>
+        /// If FALSE, only the images with embedded profile will be applied
+        /// </summary>
+        public bool IsApplyColorProfileForAll { get; set; } = false;
 
         public ImgMan()
         {
@@ -101,7 +108,7 @@ namespace ImageGlass.Core
             }
             else
             {
-                lstImage[i].Load(size);
+                lstImage[i].Load(size: size, colorProfileName: ColorProfileName, isApplyColorProfileForAll: IsApplyColorProfileForAll);
             }
 
             while (!lstImage[i].IsFinished)
@@ -153,7 +160,7 @@ namespace ImageGlass.Core
 
                     if (!i.IsFinished)
                     {
-                        i.Load();
+                        i.Load(colorProfileName: ColorProfileName, isApplyColorProfileForAll: IsApplyColorProfileForAll);
                     }
                 }
                 else

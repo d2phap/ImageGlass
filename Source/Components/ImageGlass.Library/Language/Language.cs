@@ -427,7 +427,8 @@ namespace ImageGlass.Library
 
             #region Tab names
             Items.Add("frmSetting.lblGeneral", "General");
-            Items.Add("frmSetting.lblImage", "Image"); //v4.0            
+            Items.Add("frmSetting.lblImage", "Image"); //v4.0
+            Items.Add("frmSetting.lblEdit", "Edit"); //v6.0
             Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
             Items.Add("frmSetting.lblToolbar", "Toolbar"); //v5.0
             Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
@@ -488,6 +489,18 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbImageOrder._Random", "Random");
             #endregion
 
+
+            #region Color Management
+            Items.Add("frmSetting.lblColorManagement", "Color management"); //v6.0
+            Items.Add("frmSetting.chkApplyColorProfile", "Apply also for images without embedded color profile"); //v6.0
+            Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
+            Items.Add("frmSetting.lnkColorProfileBrowse", "Browse"); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom ICC/ICM profile file:"); //v6.0
+
+            #endregion
+
+
             #region Mouse wheel actions
             Items.Add("frmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
             Items.Add("frmSetting.lblMouseWheel", "Mouse wheel");
@@ -500,6 +513,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbMouseWheel._ScrollHorizontally", "Scroll horizontally");
             Items.Add("frmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
             #endregion
+
 
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
@@ -526,9 +540,13 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             #endregion
 
+            
 
-            #region Image editing
-            Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            #endregion
+
+
+            #region TAB Image
+            //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
             Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
@@ -541,9 +559,6 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
             Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
-
-            #endregion
-
             #endregion
 
 

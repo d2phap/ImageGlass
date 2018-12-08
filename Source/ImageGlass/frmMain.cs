@@ -256,6 +256,8 @@ namespace ImageGlass
 
             //Set filename to image list
             GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
+
+
             //Track image loading progress
             GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
@@ -620,8 +622,12 @@ namespace ImageGlass
 
             try
             {
+                // apply Color Management settings
+                GlobalSetting.ImageList.IsApplyColorProfileForAll = GlobalSetting.IsApplyColorProfileForAll;
+                GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
+
                 //Read image data
-                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache);
+                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
 
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
@@ -1998,6 +2004,15 @@ namespace ImageGlass
                 #region Load state of IsWindowAlwaysOnTop value 
                 GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
                 TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
+                #endregion
+
+
+                #region Load Color Management settings
+                GlobalSetting.IsApplyColorProfileForAll = bool.Parse(GlobalSetting.GetConfig("IsApplyColorProfileForAll", "False"));
+
+                // get color profile
+                GlobalSetting.ColorProfile = GlobalSetting.GetConfig("ColorProfile", GlobalSetting.ColorProfile);
+                GlobalSetting.ColorProfile = Interpreter.GetCorrectColorProfileName(GlobalSetting.ColorProfile);
                 #endregion
 
 
