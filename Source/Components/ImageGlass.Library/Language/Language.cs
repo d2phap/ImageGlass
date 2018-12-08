@@ -496,7 +496,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
             Items.Add("frmSetting.lnkColorProfileBrowse", "Browse"); //v6.0
             Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
-            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom ICC/ICM profile file:"); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom..."); //v6.0
 
             #endregion
 
