@@ -132,32 +132,31 @@ namespace ImageGlass.Core
                     }
 
 
-                    // always apply color profile
-                    if (isApplyColorProfileForAll)
+                    // get the color profile of image
+                    var imgColorProfile = magicImg.GetColorProfile();
+
+
+                    // if always apply color profile
+                    // or only apply color profile if there is an embedded profile
+                    if (isApplyColorProfileForAll || imgColorProfile != null)
                     {
+                        if (imgColorProfile != null)
+                        {
+                            // correct the image color space
+                            magicImg.ColorSpace = imgColorProfile.ColorSpace;
+                        }
+                        else
+                        {
+                            // set default color profile and color space
+                            magicImg.AddProfile(ColorProfile.SRGB);
+                            magicImg.ColorSpace = ColorProfile.SRGB.ColorSpace;
+                        }
+
                         var colorProfile = GetColorProfileFromString(colorProfileName);
                         if (colorProfile != null)
                         {
                             magicImg.AddProfile(colorProfile);
-                        }
-                    }
-                    // only apply color profile if there is an embedded profile
-                    else
-                    {
-                        // get the color profile of image
-                        var imgColorProfile = magicImg.GetColorProfile();
-
-                        if (imgColorProfile != null)
-                        {
-                            // corect the image color
-                            magicImg.ColorSpace = imgColorProfile.ColorSpace;
-
-
-                            var colorProfile = GetColorProfileFromString(colorProfileName);
-                            if (colorProfile != null)
-                            {
-                                magicImg.AddProfile(colorProfile);
-                            }
+                            magicImg.ColorSpace = colorProfile.ColorSpace;
                         }
                     }
                     
