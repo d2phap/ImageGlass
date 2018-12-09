@@ -14,9 +14,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -129,13 +130,18 @@ namespace ImageGlass.Library
         /// Set values of Language
         /// </summary>
         /// <param name="fileName">*.igLang path</param>
-        public Language(string fileName)
+        /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
+        public Language(string fileName, string dirPath = "")
         {
             _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
-            _fileName = fileName;
-            ReadLanguageFile();
+            _fileName = Path.Combine(dirPath, fileName);
+
+            if (File.Exists(_fileName))
+            {
+                ReadLanguageFile();
+            }
         }
 
 
@@ -326,8 +332,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
             Items.Add("frmMain.mnuMainExtractFrames", "Extract image frames ({0})"); //v3.0
             Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
-            Items.Add("frmMain.mnuMainSetAsDesktop", "Set as desktop background"); //v3.0
-            Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock Screen image"); // V6.0
+            Items.Add("frmMain.mnuMainSetAsDesktop", "Set as Desktop background"); //v3.0
+            Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
 
             Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
             Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
@@ -375,7 +381,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
             Items.Add("frmMain._ExtractFrameText", "Extracting image frames. Please select output folder.");
-            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.\nOr CTRL + F1 to show menu.");//v2.0 beta
+            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.");//v2.0 beta, v6.0
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
@@ -390,6 +396,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
             Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
             Items.Add("frmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); //Added V5.0; Modified V6.0
+            Items.Add("frmMain._SetLockImage_Error", "There was an error while setting lock screen image"); //v6.0
+            Items.Add("frmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
+            Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
+            Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
             #endregion
 
 
@@ -417,7 +427,8 @@ namespace ImageGlass.Library
 
             #region Tab names
             Items.Add("frmSetting.lblGeneral", "General");
-            Items.Add("frmSetting.lblImage", "Image"); //v4.0            
+            Items.Add("frmSetting.lblImage", "Image"); //v4.0
+            Items.Add("frmSetting.lblEdit", "Edit"); //v6.0
             Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
             Items.Add("frmSetting.lblToolbar", "Toolbar"); //v5.0
             Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
@@ -430,6 +441,7 @@ namespace ImageGlass.Library
             #region Start up
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
+            Items.Add("frmSetting.chkLastSeenImage", "Open last seen image"); //v6.0
             Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
 
             #endregion
@@ -477,6 +489,18 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbImageOrder._Random", "Random");
             #endregion
 
+
+            #region Color Management
+            Items.Add("frmSetting.lblColorManagement", "Color management"); //v6.0
+            Items.Add("frmSetting.chkApplyColorProfile", "Apply also for images without embedded color profile"); //v6.0
+            Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
+            Items.Add("frmSetting.lnkColorProfileBrowse", "Browse"); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom..."); //v6.0
+
+            #endregion
+
+
             #region Mouse wheel actions
             Items.Add("frmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
             Items.Add("frmSetting.lblMouseWheel", "Mouse wheel");
@@ -489,6 +513,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbMouseWheel._ScrollHorizontally", "Scroll horizontally");
             Items.Add("frmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
             #endregion
+
 
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
@@ -515,9 +540,13 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
             #endregion
 
+            
 
-            #region Image editing
-            Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0
+            #endregion
+
+
+            #region TAB Image
+            //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
             Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
@@ -530,9 +559,6 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
             Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
-
-            #endregion
-
             #endregion
 
 
@@ -545,6 +571,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer"); // 4.0, updated v5.0
             Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
+            Items.Add("frmSetting._RegisterAppExtensions_Error", "Unable to register file extensions for ImageGlass app"); // 6.0
+            Items.Add("frmSetting._RegisterAppExtensions_Success", "All file extensions are registered successfully! To set ImageGlass as Default photo viewer, please open Windows Settings > Default Apps, and manually select ImageGlass app under Photo Viewer section."); // 6.0
             #endregion
 
 
@@ -563,7 +591,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
             Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
 
-            Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center Toolbar Buttons Horizontally in Window"); // V6.0
+            Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
             #endregion
 
 

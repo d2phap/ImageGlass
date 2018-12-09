@@ -160,8 +160,8 @@ namespace ImageGlass.Library.Image
                             winStyle = (string)key.GetValue("WallpaperStyle");
                             break;
                     }
-                    key.SetValue("TileWallpaper", "0");
-                    key.SetValue("WallpaperStyle", "1");
+                    key.SetValue("TileWallpaper", tileVal);
+                    key.SetValue("WallpaperStyle", winStyle);
                     key.SetValue("Wallpaper", tempPath);
                 }
                 SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);

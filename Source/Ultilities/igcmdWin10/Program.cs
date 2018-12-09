@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Application to perform Windows 8/10 specific operations.
@@ -34,18 +35,20 @@ namespace igcmdWin10
             string topcmd = args[0].ToLower().Trim();
             if (topcmd == "setlockimage")
             {
-                return SetLockScreenImage(args);
+                var task = SetLockScreenImageAsync(args);
+                task.Wait();
+
+                return task.Result;
             }
 
             return 0;
         }
 
-        internal static int SetLockScreenImage(string[] args)
+        internal static async Task<int> SetLockScreenImageAsync(string[] args)
         {
             string imgPath = args[1];
-            var task = LockScreenImage.SetAsync(imgPath);
-            task.Wait();
-            var result = task.Result;
+            var result = await LockScreenImage.SetAsync(imgPath);
+            
             return result;
         }
 

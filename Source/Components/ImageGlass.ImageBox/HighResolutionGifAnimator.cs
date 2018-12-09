@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2017-2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -245,7 +245,9 @@ namespace ImageGlass {
                     // of Netscape Navigator to provide the default minimum of 10ms. On Windows 7, it
                     // appears necessary to enforce this same default minimum, with no negative impact
                     // on Windows 10.
-                    if (myFrameDelaysInCentiseconds[i] < 10)
+                    // KBR 20181127 10ms is only if the image has a delay of 0. Other delays should not
+                    // be modified (issue #458).
+                    if (myFrameDelaysInCentiseconds[i] < 1)
                         myFrameDelaysInCentiseconds[i] = 10;
                 }
             }

@@ -29,7 +29,7 @@
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
-            this.toolMain = new ToolStripToolTip();
+            this.toolMain = new ImageGlass.ToolStripToolTip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -215,9 +215,9 @@
             this.toolMain.Name = "toolMain";
             this.toolMain.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolMain.ShowItemToolTips = false;
             this.toolMain.Size = new System.Drawing.Size(920, 60);
             this.toolMain.TabIndex = 1;
-            this.toolMain.SizeChanged += new System.EventHandler(this.toolMain_SizeChanged);
             // 
             // btnBack
             // 
@@ -664,7 +664,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 646);
+            this.mnuMain.Size = new System.Drawing.Size(409, 679);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -825,6 +825,7 @@
             // 
             // mnuMainFullScreen
             // 
+            this.mnuMainFullScreen.CheckOnClick = true;
             this.mnuMainFullScreen.ForeColor = System.Drawing.Color.Black;
             this.mnuMainFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";
@@ -1181,7 +1182,7 @@
             // mnuMainSetAsLockImage
             // 
             this.mnuMainSetAsLockImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainSetAsLockImage.Name = "mnuMainSetAsDesktop";
+            this.mnuMainSetAsLockImage.Name = "mnuMainSetAsLockImage";
             this.mnuMainSetAsLockImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSetAsLockImage.Size = new System.Drawing.Size(584, 31);
             this.mnuMainSetAsLockImage.Text = "&Set as Lock Screen image";
@@ -1503,6 +1504,7 @@
             // 
             // sp1
             // 
+            this.sp1.AllowDrop = true;
             this.sp1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
@@ -1512,6 +1514,7 @@
             // 
             // sp1.Panel1
             // 
+            this.sp1.Panel1.AllowDrop = true;
             this.sp1.Panel1.Controls.Add(this.picMain);
             this.sp1.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 

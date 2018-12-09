@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -14,11 +14,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using ImageGlass.Services.Configuration;
@@ -26,38 +24,11 @@ using ImageGlass.Library;
 using System.IO;
 using ImageGlass.Library.FileAssociations;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace igtasks
 {
     public static class Functions
     {
-        /// <summary>
-        /// Install new extensions
-        /// </summary>
-        public static void InstallExtensions()
-        {
-            OpenFileDialog o = new OpenFileDialog();
-            o.Filter = "ImageGlass plugins (*.dll)|*.dll";
-            o.Multiselect = true;
-
-            if (o.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string f in o.FileNames)
-                {
-                    try
-                    {
-                        File.Copy(f, Path.Combine(GlobalSetting.StartUpDir, "Plugins", Path.GetFileName(f)));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    
-                }
-            }
-        }
-
         /// <summary>
         /// Install new language packs
         /// </summary>
@@ -83,6 +54,7 @@ namespace igtasks
                 }
             }
         }
+
 
         /// <summary>
         /// Create new language packs
@@ -112,6 +84,7 @@ namespace igtasks
             }
         }
 
+
         /// <summary>
         /// Edit language packs
         /// </summary>
@@ -131,29 +104,34 @@ namespace igtasks
             }
         }
 
+
         /// <summary>
         /// Delete registry association of ImageGlass
         /// </summary>
         /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
         /// <param name="deleteAllKeys">TRUE: delete all keys</param>
-        public static void DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
+        /// <returns>0 = SUCCESS; 1 = ERROR</returns>
+        public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
         {
-            RegistryHelper reg = new RegistryHelper();
-            reg.ShowError = true;
-            reg.BaseRegistryKey = Registry.LocalMachine;
+            RegistryHelper reg = new RegistryHelper
+            {
+                ShowError = true,
+                BaseRegistryKey = Registry.LocalMachine,
 
-            // delete current registry settings
-            reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
-            if (!reg.DeleteSubKeyTree()) return;
+                // delete current registry settings
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+
+            if (!reg.DeleteSubKeyTree()) return 1;
 
 
             if (deleteAllKeys)
             {
                 reg.SubKey = @"SOFTWARE\RegisteredApplications";
-                if (!reg.DeleteKey("ImageGlass")) return;
+                if (!reg.DeleteKey("ImageGlass")) return 1;
 
                 reg.SubKey = @"SOFTWARE\PhapSoftware";
-                if (!reg.DeleteSubKeyTree()) return;
+                if (!reg.DeleteSubKeyTree()) return 1;
             }
 
 
@@ -161,15 +139,19 @@ namespace igtasks
             foreach (var ext in extList)
             {
                 reg.SubKey = @"SOFTWARE\Classes\ImageGlass.AssocFile" + ext.ToUpper();
-                if (!reg.DeleteSubKeyTree()) return;
+                if (!reg.DeleteSubKeyTree()) return 1;
             }
+
+            return 0;
         }
+
 
         /// <summary>
         /// Register file associations
         /// </summary>
         /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
-        public static void SetRegistryAssociations(string extensions)
+        /// <returns>0 = SUCCESS; 1 = ERROR</returns>
+        public static int SetRegistryAssociations(string extensions)
         {
             DeleteRegistryAssociations(extensions);
 
@@ -184,28 +166,24 @@ namespace igtasks
 
             if (!reg.Write("ImageGlass", @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return 1;
             }
 
             // Register Capabilities info
             reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities";
             if (!reg.Write("ApplicationName", "ImageGlass"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return 1;
             }
 
             if (!reg.Write("ApplicationIcon", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\", 0"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return 1;
             }
 
             if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer"))
             {
-                MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return 1;
             }
 
             // Register File Associations
@@ -218,8 +196,7 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations";
                 if (!reg.Write(ext, keyname))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Icon
@@ -232,31 +209,27 @@ namespace igtasks
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
                 if (!reg.Write("", $"\"{iconPath}\", 0"))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Friendly App Name
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
                 if (!reg.Write("FriendlyAppName", "ImageGlass"))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
 
                 // Config the File Associations - Command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
                 if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\""))
                 {
-                    MessageBox.Show("Unable to set ImageGlass as default photo viewer app!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
             }
 
-
-            MessageBox.Show("ImageGlass was set as default photo viewer app successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+            return 0;
         }
+
 
     }
 }
