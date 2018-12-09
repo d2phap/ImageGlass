@@ -177,7 +177,7 @@ namespace ImageGlass
 
             //Load configs
             LoadTabGeneralConfig();
-            //LoadTabImageConfig();
+            LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
 
             //to prevent the setting: ToolbarPosition = -1, we load this onLoad event

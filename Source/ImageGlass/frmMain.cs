@@ -39,7 +39,6 @@ using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
 
-
 namespace ImageGlass
 {
     public partial class frmMain : Form
@@ -47,18 +46,18 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-            
+
             //Get DPI Scaling ratio
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
-            
+
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
 
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
-            
+
             //Update form with new DPI
             OnDpiChanged();
 
@@ -69,45 +68,8 @@ namespace ImageGlass
              */
             picMain.ShortcutsEnabled = false;
 
-
-            // "Hack" implementation for Issue #448: Hover arrows on right/left of image to move to next/prev image.
-            // Inspired by AnotherDimension-Ex.
-            Button _btnNext = new Button();
-            _btnNext.FlatStyle = FlatStyle.Flat;
-            _btnNext.BackColor = Color.Transparent;
-            _btnNext.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            _btnNext.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            _btnNext.FlatAppearance.BorderSize = 0;
-            _btnNext.Parent = picMain;
-            _btnNext.Dock = DockStyle.Right;
-            _btnNext.BringToFront();
-
-            _btnNext.MouseEnter += (object sender, EventArgs e) => { _btnNext.Image = Properties.Resources.right_arrow; };
-            _btnNext.MouseLeave += (object sender, EventArgs e) => { _btnNext.Image = null; };
-
-            _btnNext.Click += (object sender, EventArgs e) => { NextPic(1); };
-            _btnNext.GotFocus += (object sender, EventArgs e) => { _btnNext.NotifyDefault(false); };
-
-            Button _btnPrev = new Button();
-            _btnPrev.FlatStyle = FlatStyle.Flat;
-            _btnPrev.BackColor = Color.Transparent;
-            _btnPrev.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            _btnPrev.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            _btnPrev.FlatAppearance.BorderSize = 0;
-            _btnPrev.Parent = picMain; // Without this, button background will not be the image
-            _btnPrev.Dock = DockStyle.Left;
-            _btnPrev.BringToFront(); // Without this, button will be behind image
-
-            // TODO consider a background "fade" image/spectrum, like Windows Photos?
-            // TODO the image needs to come from the theme, not resources (?)
-            _btnPrev.MouseEnter += (object sender, EventArgs e) => { _btnPrev.Image = Properties.Resources.left_arrow; };
-            // TODO consider a faded/"disabled" arrow? [see e.g. https://www.artstation.com/artwork/4lX0k]
-            _btnPrev.MouseLeave += (object sender, EventArgs e) => { _btnPrev.Image = null; };
-
-            _btnPrev.Click += (object sender, EventArgs e) => { NextPic(-1); };
-            // Thank you, "AnotherDimension-Ex": on lose focus, border outline would appear
-            _btnPrev.GotFocus += (object sender, EventArgs e) => { _btnPrev.NotifyDefault(false); };
         }
+        
 
 
         #region Local variables
@@ -129,7 +91,11 @@ namespace ImageGlass
 
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
-        
+
+        // the Navigation Button on viewer
+        private Button _btnNavNext = new Button();
+        private Button _btnNavPrev = new Button();
+
 
 
         /***********************************
@@ -1082,6 +1048,113 @@ namespace ImageGlass
 
 
         #region Private functions
+
+        /// <summary>
+        /// Update Navigation Button Icons
+        /// </summary>
+        private void UpdateNavigationButtonsIcon()
+        {
+            // calculate icon height
+            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+
+
+            // build icon for Next button
+            _btnNavNext.Tag = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+            // build icon for Prev button
+            _btnNavPrev.Tag = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+        }
+
+
+        /// <summary>
+        /// Create the Navigation Button on Viewer
+        /// </summary>
+        private void CreateViewerNavigationButtons()
+        {
+            // calculate icon height
+            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+
+
+            // Function to build the Nav button
+            Button BuildNewNavButton()
+            {
+                var btn = new Button()
+                {
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.Transparent,
+                    Width = iconHeight + 20,
+
+                    // use Tag prop to store the icon of button
+                    Tag = new Bitmap(iconHeight, iconHeight),
+                };
+
+                btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
+                btn.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Parent = picMain;
+                btn.Dock = DockStyle.Left;
+                btn.BringToFront();
+                
+                
+                btn.MouseEnter += (sender, e) =>
+                {
+                    btn.Image = (Image)btn.Tag;
+                };
+
+                btn.MouseLeave += (sender, e) =>
+                {
+                    btn.Image = null;
+                };
+
+                btn.GotFocus += (sender, e) => {
+                    btn.NotifyDefault(false);
+                    btn.Image = (Image)btn.Tag;
+                };
+
+                btn.LostFocus += (sender, e) =>
+                {
+                    btn.Image = null;
+                };
+
+                return btn;
+            }
+
+
+            #region Next Button
+            // build icon for Next button
+            var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+            // create a Nav Button
+            _btnNavNext = BuildNewNavButton();
+            _btnNavNext.Dock = DockStyle.Right;
+            tip1.SetToolTip(_btnNavNext, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewNext"]);
+
+            _btnNavNext.Click += (sender, e) => {
+                mnuMainViewNext_Click(null, null);
+            };
+            #endregion
+
+
+            #region Previous Button
+            // build icon for Prev button
+            var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+            // create a Nav Button
+            _btnNavPrev = BuildNewNavButton();
+            _btnNavPrev.Dock = DockStyle.Left;
+            tip1.SetToolTip(_btnNavPrev, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewPrevious"]);
+            
+            _btnNavPrev.Click += (sender, e) => {
+                mnuMainViewPrevious_Click(null, null);
+            };
+            #endregion
+
+
+            // update the icon of buttons
+            UpdateNavigationButtonsIcon();
+        }
+
+
         /// <summary>
         /// Update editing association app info and icon for Edit Image menu
         /// </summary>
@@ -1785,6 +1858,9 @@ namespace ImageGlass
                 LocalSetting.Theme = ApplyTheme(themeFolderName);
                 Application.DoEvents();
                 #endregion
+
+                
+                CreateViewerNavigationButtons();
 
 
                 #region Show checkerboard
@@ -2604,15 +2680,14 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
             {
                 #region Update language strings
+
+                tip1.SetToolTip(_btnNavNext, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewNext"]);
+                tip1.SetToolTip(_btnNavPrev, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewPrevious"]);
+
+
                 //Toolbar
-
-                //btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
-                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"],
-                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
-
-                //btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
-                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"],
-                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
+                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
+                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
 
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
@@ -2755,6 +2830,9 @@ namespace ImageGlass
             {
                 ApplyTheme(LocalSetting.Theme.ThemeFolderName);
                 LocalSetting.FColorPicker.UpdateUI();
+
+                // update navigation buttons icon
+                UpdateNavigationButtonsIcon();
             }
             #endregion
 
