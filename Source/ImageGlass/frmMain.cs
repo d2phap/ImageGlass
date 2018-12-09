@@ -1860,7 +1860,7 @@ namespace ImageGlass
                 #endregion
 
                 
-                CreateViewerNavigationButtons();
+                //CreateViewerNavigationButtons();
 
 
                 #region Show checkerboard
@@ -4654,6 +4654,41 @@ namespace ImageGlass
 
 
         #endregion
+
+
+
+
+
+
+        private void picMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            // calculate icon height
+            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+
+            // get the hotpot area width
+            var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
+            
+            // left side
+            if (e.Location.X < hotpotWidth)
+            {
+                var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                picMain.Cursor = new Cursor(iconPrev.GetHicon());
+            }
+            // right side
+            else if (e.Location.X > picMain.Width - hotpotWidth)
+            {
+                var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                picMain.Cursor = new Cursor(iconNext.GetHicon());
+            }
+            // center
+            else
+            {
+                picMain.Cursor = Cursors.Default;
+            }
+        }
+
 
     }
 }
