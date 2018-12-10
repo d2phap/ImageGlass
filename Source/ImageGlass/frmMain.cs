@@ -646,6 +646,7 @@ namespace ImageGlass
                     ApplyZoomMode(GlobalSetting.ZoomMode);
                 }
 
+
                 //Run in another thread
                 Parallel.Invoke(() =>
                 {
@@ -1266,7 +1267,7 @@ namespace ImageGlass
             {
                 picMain.ScrollTo(0, 0, 0, 0);
             }
-            
+
 
             if (zoomMode == ZoomMode.ScaleToWidth)
             {
@@ -1302,6 +1303,7 @@ namespace ImageGlass
             {
                 picMain.ZoomAuto();
             }
+            
 
             //Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
@@ -3329,11 +3331,66 @@ namespace ImageGlass
                     mnuMainViewNext_Click(null, null);
                     break;
 
+                case MouseButtons.Left:
+                    if (!picMain.IsPanning)
+                    {
+                        // calculate icon height
+                        var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+
+                        // get the hotpot area width
+                        var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
+
+                        // left side
+                        if (e.Location.X < hotpotWidth)
+                        {
+                            mnuMainViewPrevious_Click(null, null);
+                        }
+                        // right side
+                        else if (e.Location.X > picMain.Width - hotpotWidth)
+                        {
+                            mnuMainViewNext_Click(null, null);
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
+
+            
         }
 
+        private void picMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!picMain.IsPanning)
+            {
+                // calculate icon height
+                var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+
+                // get the hotpot area width
+                var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
+
+                // left side
+                if (e.Location.X < hotpotWidth)
+                {
+                    var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                    picMain.Cursor = new Cursor(iconPrev.GetHicon());
+                }
+                // right side
+                else if (e.Location.X > picMain.Width - hotpotWidth)
+                {
+                    var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                    picMain.Cursor = new Cursor(iconNext.GetHicon());
+                }
+                // center
+                else
+                {
+                    picMain.Cursor = Cursors.Default;
+                }
+            }
+        }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -4660,35 +4717,8 @@ namespace ImageGlass
 
 
 
-        private void picMain_MouseMove(object sender, MouseEventArgs e)
-        {
-            // calculate icon height
-            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+        
 
-            // get the hotpot area width
-            var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
-            
-            // left side
-            if (e.Location.X < hotpotWidth)
-            {
-                var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-                picMain.Cursor = new Cursor(iconPrev.GetHicon());
-            }
-            // right side
-            else if (e.Location.X > picMain.Width - hotpotWidth)
-            {
-                var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-                picMain.Cursor = new Cursor(iconNext.GetHicon());
-            }
-            // center
-            else
-            {
-                picMain.Cursor = Cursors.Default;
-            }
-        }
-
-
+        
     }
 }
