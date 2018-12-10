@@ -186,9 +186,9 @@ namespace ImageGlass.Theme
         /// <param name="dir">path to folder containing theme files</param>
         /// <param name="n">XMLElement to pull theme filename attribute from</param>
         /// <param name="attribname">name of theme attribute</param>
-        /// <param name="iconHigh">optional target height/width</param>
+        /// <param name="iconHeight">optional target height/width</param>
         /// <returns></returns>
-        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHigh = 0)
+        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0)
         {
             try
             {
@@ -196,7 +196,7 @@ namespace ImageGlass.Theme
                 if (string.IsNullOrEmpty(attrib))  // KBR 20180827 avoid throwing exception
                     return new ThemeImage("");     // KBR 20180827 code in frmMain assumes not null
                 var imgFile = Path.Combine(dir, attrib);
-                return new ThemeImage(imgFile, iconHigh, iconHigh);
+                return new ThemeImage(imgFile, new Size(iconHeight, iconHeight));
             }
             catch (Exception ex)
             {

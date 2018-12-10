@@ -177,7 +177,7 @@ namespace ImageGlass
 
             //Load configs
             LoadTabGeneralConfig();
-            //LoadTabImageConfig();
+            LoadTabImageConfig();
             lnkRefresh_LinkClicked(null, null);
 
             //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
@@ -270,6 +270,7 @@ namespace ImageGlass
             chkConfirmationDelete.Text = lang[$"{Name}.chkConfirmationDelete"];
             chkShowScrollbar.Text = lang[$"{Name}.chkShowScrollbar"];
             chkDisplayBasename.Text = lang[$"{Name}.chkDisplayBasename"];
+            chkShowNavButtons.Text = lang[$"{Name}.chkShowNavButtons"];
             lblBackGroundColor.Text = lang[$"{Name}.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.lnkResetBackgroundColor"];
             #endregion
@@ -564,6 +565,9 @@ namespace ImageGlass
 
             //Get value of IsDisplayBasenameOfImage
             chkDisplayBasename.Checked = GlobalSetting.IsDisplayBasenameOfImage;
+
+            //Get value of IsShowNavigationButtons
+            chkShowNavButtons.Checked = GlobalSetting.IsShowNavigationButtons;
 
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
@@ -2092,6 +2096,10 @@ namespace ImageGlass
             //IsDisplayBasenameOfImage
             GlobalSetting.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
             GlobalSetting.SetConfig("IsDisplayBasenameOfImage", GlobalSetting.IsDisplayBasenameOfImage.ToString());
+
+            //IsShowNavigationButtons
+            GlobalSetting.IsShowNavigationButtons = chkShowNavButtons.Checked;
+            GlobalSetting.SetConfig("IsShowNavigationButtons", GlobalSetting.IsShowNavigationButtons.ToString());
 
 
             #region IsScrollbarsVisible: MainFormForceUpdateAction.OTHER_SETTINGS

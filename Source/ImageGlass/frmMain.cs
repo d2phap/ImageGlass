@@ -39,7 +39,6 @@ using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
 
-
 namespace ImageGlass
 {
     public partial class frmMain : Form
@@ -47,18 +46,18 @@ namespace ImageGlass
         public frmMain()
         {
             InitializeComponent();
-            
+
             //Get DPI Scaling ratio
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
-            
+
             //Remove white line under tool strip
             toolMain.Renderer = new Theme.ToolStripRenderer();
 
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
             Application.DoEvents();
-            
+
             //Update form with new DPI
             OnDpiChanged();
 
@@ -68,8 +67,9 @@ namespace ImageGlass
              * Done here rather than in designer so this bugfix is visible.
              */
             picMain.ShortcutsEnabled = false;
-        }
 
+        }
+        
 
 
         #region Local variables
@@ -91,7 +91,11 @@ namespace ImageGlass
 
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
-        
+
+        // the Navigation Button on viewer
+        private Button _btnNavNext = new Button();
+        private Button _btnNavPrev = new Button();
+
 
 
         /***********************************
@@ -642,6 +646,7 @@ namespace ImageGlass
                     ApplyZoomMode(GlobalSetting.ZoomMode);
                 }
 
+
                 //Run in another thread
                 Parallel.Invoke(() =>
                 {
@@ -888,7 +893,7 @@ namespace ImageGlass
 
             //Zoom + ------------------------------------------------------------------------
             #region Ctrl + = / = / + (numPad)
-            if (((e.KeyValue == 187 && e.Control) || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
+            if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
                 return;
@@ -898,7 +903,7 @@ namespace ImageGlass
 
             //Zoom - ------------------------------------------------------------------------
             #region Ctrl + - / - / - (numPad)
-            if (((e.KeyValue == 189 && e.Control) || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
+            if ((e.KeyValue == 189 || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
                 return;
@@ -1044,6 +1049,7 @@ namespace ImageGlass
 
 
         #region Private functions
+        
         /// <summary>
         /// Update editing association app info and icon for Edit Image menu
         /// </summary>
@@ -1155,7 +1161,7 @@ namespace ImageGlass
             {
                 picMain.ScrollTo(0, 0, 0, 0);
             }
-            
+
 
             if (zoomMode == ZoomMode.ScaleToWidth)
             {
@@ -1191,6 +1197,10 @@ namespace ImageGlass
             {
                 picMain.ZoomAuto();
             }
+
+
+            // auto center the image
+            picMain.CenterToImage();
 
             //Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
@@ -1746,6 +1756,11 @@ namespace ImageGlass
                 
                 LocalSetting.Theme = ApplyTheme(themeFolderName);
                 Application.DoEvents();
+                #endregion
+
+
+                #region Show NavigationButtons
+                GlobalSetting.IsShowNavigationButtons = bool.Parse(GlobalSetting.GetConfig("IsShowNavigationButtons", "False").ToString());
                 #endregion
 
 
@@ -2566,15 +2581,14 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
             {
                 #region Update language strings
+
+                tip1.SetToolTip(_btnNavNext, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewNext"]);
+                tip1.SetToolTip(_btnNavPrev, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewPrevious"]);
+
+
                 //Toolbar
-
-                //btnBack.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnBack"];
-                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"],
-                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
-
-                //btnNext.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnNext"];
-                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"],
-                                                                 GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
+                btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
+                btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);
 
                 btnRotateLeft.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateLeft"];
                 btnRotateRight.ToolTipText = GlobalSetting.LangPack.Items["frmMain.btnRotateRight"];
@@ -3213,11 +3227,76 @@ namespace ImageGlass
                     mnuMainViewNext_Click(null, null);
                     break;
 
+                case MouseButtons.Left:
+                    if (GlobalSetting.IsShowNavigationButtons && !picMain.IsPanning)
+                    {
+                        // calculate icon height
+                        var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+
+                        // get the hotpot area width
+                        var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
+
+                        // left side
+                        if (e.Location.X < hotpotWidth)
+                        {
+                            mnuMainViewPrevious_Click(null, null);
+                        }
+                        // right side
+                        else if (e.Location.X > picMain.Width - hotpotWidth)
+                        {
+                            mnuMainViewNext_Click(null, null);
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
+
+            
         }
 
+        private void picMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!picMain.IsPanning)
+            {
+                // set the Arrow cursor
+                if (GlobalSetting.IsShowNavigationButtons)
+                {
+                    // calculate icon height
+                    var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+
+                    // get the hotpot area width
+                    var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+
+                    // left side
+                    if (e.Location.X < hotpotWidth)
+                    {
+                        var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                        picMain.Cursor = new Cursor(iconPrev.GetHicon());
+                    }
+                    // right side
+                    else if (e.Location.X > picMain.Width - hotpotWidth)
+                    {
+                        var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                        picMain.Cursor = new Cursor(iconNext.GetHicon());
+                    }
+                    // center
+                    else
+                    {
+                        picMain.Cursor = Cursors.Default;
+                    }
+                }
+                
+                //reset the cursor
+                else
+                {
+                    picMain.Cursor = Cursors.Default;
+                }
+            }
+        }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -4539,5 +4618,8 @@ namespace ImageGlass
 
         #endregion
 
+
+
+        
     }
 }

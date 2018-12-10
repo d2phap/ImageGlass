@@ -454,6 +454,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value indicates that to show or hide the Navigation Buttons on viewer
+        /// </summary>
+        public static bool IsShowNavigationButtons { get; set; } = false;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +

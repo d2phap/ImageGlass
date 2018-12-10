@@ -138,6 +138,8 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
+            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuContext.SuspendLayout();
             this.toolMain.SuspendLayout();
             this.mnuMain.SuspendLayout();
@@ -664,7 +666,7 @@
             this.mnuMainReportIssue});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 679);
+            this.mnuMain.Size = new System.Drawing.Size(409, 646);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1553,6 +1555,7 @@
             this.picMain.DoubleClick += new System.EventHandler(this.picMain_DoubleClick);
             this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
+            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
             // 
             // thumbnailBar
             // 
@@ -1730,6 +1733,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAutoZoom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
+        private System.Windows.Forms.ToolTip tip1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
