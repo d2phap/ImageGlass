@@ -1303,7 +1303,10 @@ namespace ImageGlass
             {
                 picMain.ZoomAuto();
             }
-            
+
+
+            // auto center the image
+            picMain.CenterToImage();
 
             //Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
