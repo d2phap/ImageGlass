@@ -1049,113 +1049,7 @@ namespace ImageGlass
 
 
         #region Private functions
-
-        /// <summary>
-        /// Update Navigation Button Icons
-        /// </summary>
-        private void UpdateNavigationButtonsIcon()
-        {
-            // calculate icon height
-            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
-
-
-            // build icon for Next button
-            _btnNavNext.Tag = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-            // build icon for Prev button
-            _btnNavPrev.Tag = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
-        }
-
-
-        /// <summary>
-        /// Create the Navigation Button on Viewer
-        /// </summary>
-        private void CreateViewerNavigationButtons()
-        {
-            // calculate icon height
-            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
-
-
-            // Function to build the Nav button
-            Button BuildNewNavButton()
-            {
-                var btn = new Button()
-                {
-                    FlatStyle = FlatStyle.Flat,
-                    BackColor = Color.Transparent,
-                    Width = iconHeight + 20,
-
-                    // use Tag prop to store the icon of button
-                    Tag = new Bitmap(iconHeight, iconHeight),
-                };
-
-                btn.FlatAppearance.MouseDownBackColor = Color.Transparent;
-                btn.FlatAppearance.MouseOverBackColor = Color.Transparent;
-                btn.FlatAppearance.BorderSize = 0;
-                btn.Parent = picMain;
-                btn.Dock = DockStyle.Left;
-                btn.BringToFront();
-                
-                
-                btn.MouseEnter += (sender, e) =>
-                {
-                    btn.Image = (Image)btn.Tag;
-                };
-
-                btn.MouseLeave += (sender, e) =>
-                {
-                    btn.Image = null;
-                };
-
-                btn.GotFocus += (sender, e) => {
-                    btn.NotifyDefault(false);
-                    btn.Image = (Image)btn.Tag;
-                };
-
-                btn.LostFocus += (sender, e) =>
-                {
-                    btn.Image = null;
-                };
-
-                return btn;
-            }
-
-
-            #region Next Button
-            // build icon for Next button
-            var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-            // create a Nav Button
-            _btnNavNext = BuildNewNavButton();
-            _btnNavNext.Dock = DockStyle.Right;
-            tip1.SetToolTip(_btnNavNext, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewNext"]);
-
-            _btnNavNext.Click += (sender, e) => {
-                mnuMainViewNext_Click(null, null);
-            };
-            #endregion
-
-
-            #region Previous Button
-            // build icon for Prev button
-            var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-            // create a Nav Button
-            _btnNavPrev = BuildNewNavButton();
-            _btnNavPrev.Dock = DockStyle.Left;
-            tip1.SetToolTip(_btnNavPrev, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewPrevious"]);
-            
-            _btnNavPrev.Click += (sender, e) => {
-                mnuMainViewPrevious_Click(null, null);
-            };
-            #endregion
-
-
-            // update the icon of buttons
-            UpdateNavigationButtonsIcon();
-        }
-
-
+        
         /// <summary>
         /// Update editing association app info and icon for Edit Image menu
         /// </summary>
@@ -1864,8 +1758,10 @@ namespace ImageGlass
                 Application.DoEvents();
                 #endregion
 
-                
-                //CreateViewerNavigationButtons();
+
+                #region Show NavigationButtons
+                GlobalSetting.IsShowNavigationButtons = bool.Parse(GlobalSetting.GetConfig("IsShowNavigationButtons", "False").ToString());
+                #endregion
 
 
                 #region Show checkerboard
@@ -2835,9 +2731,6 @@ namespace ImageGlass
             {
                 ApplyTheme(LocalSetting.Theme.ThemeFolderName);
                 LocalSetting.FColorPicker.UpdateUI();
-
-                // update navigation buttons icon
-                UpdateNavigationButtonsIcon();
             }
             #endregion
 
@@ -3335,10 +3228,10 @@ namespace ImageGlass
                     break;
 
                 case MouseButtons.Left:
-                    if (!picMain.IsPanning)
+                    if (GlobalSetting.IsShowNavigationButtons && !picMain.IsPanning)
                     {
                         // calculate icon height
-                        var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
+                        var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
 
                         // get the hotpot area width
                         var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
@@ -3367,27 +3260,37 @@ namespace ImageGlass
         {
             if (!picMain.IsPanning)
             {
-                // calculate icon height
-                var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 2.5);
-
-                // get the hotpot area width
-                var hotpotWidth = Math.Max(iconHeight, picMain.Width / 8);
-
-                // left side
-                if (e.Location.X < hotpotWidth)
+                // set the Arrow cursor
+                if (GlobalSetting.IsShowNavigationButtons)
                 {
-                    var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+                    // calculate icon height
+                    var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
 
-                    picMain.Cursor = new Cursor(iconPrev.GetHicon());
-                }
-                // right side
-                else if (e.Location.X > picMain.Width - hotpotWidth)
-                {
-                    var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+                    // get the hotpot area width
+                    var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
 
-                    picMain.Cursor = new Cursor(iconNext.GetHicon());
+                    // left side
+                    if (e.Location.X < hotpotWidth)
+                    {
+                        var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                        picMain.Cursor = new Cursor(iconPrev.GetHicon());
+                    }
+                    // right side
+                    else if (e.Location.X > picMain.Width - hotpotWidth)
+                    {
+                        var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+
+                        picMain.Cursor = new Cursor(iconNext.GetHicon());
+                    }
+                    // center
+                    else
+                    {
+                        picMain.Cursor = Cursors.Default;
+                    }
                 }
-                // center
+                
+                //reset the cursor
                 else
                 {
                     picMain.Cursor = Cursors.Default;
@@ -4716,11 +4619,6 @@ namespace ImageGlass
         #endregion
 
 
-
-
-
-
-        
 
         
     }
