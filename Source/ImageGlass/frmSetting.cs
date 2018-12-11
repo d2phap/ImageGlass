@@ -47,7 +47,7 @@ namespace ImageGlass
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
         private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
-        private List<Language> dsLanguages = new List<Language>();
+        private List<Language> lstLanguages = new List<Language>();
 
         #region Toolbar
         private string _separatorText; // Text used in lists to represent separator bar
@@ -932,7 +932,7 @@ namespace ImageGlass
         #endregion
 
 
-        #region TAB LANGUAGE
+        #region TAB LANGUAGES
         private void lnkGetMoreLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
@@ -987,12 +987,12 @@ namespace ImageGlass
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
-            dsLanguages = new List<Library.Language>
+            lstLanguages = new List<Language>
             {
-                new Library.Language()
+                new Language()
             };
 
-            string langPath = Path.Combine(GlobalSetting.StartUpDir, "Languages");
+            string langPath = Path.Combine(GlobalSetting.ConfigDir, "Languages");
 
             if (!Directory.Exists(langPath))
             {
@@ -1005,7 +1005,7 @@ namespace ImageGlass
                     if (Path.GetExtension(f).ToLower() == ".iglang")
                     {
                         Language l = new Language(f);
-                        dsLanguages.Add(l);
+                        lstLanguages.Add(l);
 
                         int iLang = cmbLanguage.Items.Add(l.LangName);
                         string curLang = GlobalSetting.LangPack.FileName;
@@ -1031,7 +1031,7 @@ namespace ImageGlass
 
             //check compatibility
             var lang = new Language();
-            if (lang.MinVersion.CompareTo(dsLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
+            if (lang.MinVersion.CompareTo(lstLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
             {
                 lblLanguageWarning.Visible = true;
             }
@@ -2306,11 +2306,11 @@ namespace ImageGlass
 
             #region Language: MainFormForceUpdateAction.LANGUAGE
             //Language
-            newString = dsLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
+            newString = lstLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
 
             if (GlobalSetting.LangPack.FileName.ToLower().CompareTo(newString) != 0)
             {
-                GlobalSetting.LangPack = dsLanguages[cmbLanguage.SelectedIndex];
+                GlobalSetting.LangPack = lstLanguages[cmbLanguage.SelectedIndex];
                 GlobalSetting.SetConfig("Language", Path.GetFileName(GlobalSetting.LangPack.FileName));
 
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
