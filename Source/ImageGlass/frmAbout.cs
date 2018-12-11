@@ -114,7 +114,7 @@ namespace ImageGlass
 
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
-            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsPortableMode ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
+            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsStartUpDirWritable ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             //Load item component

@@ -63,7 +63,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets the value indicates that StartUpDir is writable
+        /// Gets, sets the value indicates that StartUpDir is writable. NOTE***: need to be manually update by calling GlobalSetting.CheckStartUpDirWritable()
         /// </summary>
         public static bool IsStartUpDirWritable { get; set; } = true;
 
@@ -98,29 +98,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
-
-        private static bool _isPortableMode = false;
-        /// <summary>
-        /// Gets, sets value indicating that ImageGlass will run in portable mode
-        /// All configurations will be written to XML file instead of registry
-        /// </summary>
-        public static bool IsPortableMode
-        {
-            get => _isPortableMode;
-            set
-            {
-                //check if we have write access to write config file for portable mode
-                if (value && GlobalSetting.IsStartUpDirWritable == false)
-                {
-                    //we dont have permission
-                    _isPortableMode = false;
-                }
-                else
-                {
-                    _isPortableMode = value;
-                }
-            }
-        }
+        
 
         #endregion
 
@@ -634,7 +612,7 @@ namespace ImageGlass.Services.Configuration
         public static string GetConfig(string configKey, string @defaultValue = "", bool forceGetConfigsFromRegistry = false)
         {
             // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode && !forceGetConfigsFromRegistry)
+            if (GlobalSetting.IsStartUpDirWritable && !forceGetConfigsFromRegistry)
             {
                 return _configFile.GetConfig(configKey, defaultValue);
             }
@@ -686,7 +664,7 @@ namespace ImageGlass.Services.Configuration
         public static void SetConfig(string configKey, string value, bool @forceWriteConfigsToRegistry = false)
         {
             // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode && !@forceWriteConfigsToRegistry)
+            if (GlobalSetting.IsStartUpDirWritable && !@forceWriteConfigsToRegistry)
             {
                 _configFile.SetConfig(configKey, value);
                 return;

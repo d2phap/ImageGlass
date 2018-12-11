@@ -48,10 +48,7 @@ namespace igcmd
 
             // Check if the start up directory writable
             GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
-
-            // Enable Portable mode as default if possible
-            GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
-
+            
 
             //Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]

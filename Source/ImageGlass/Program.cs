@@ -80,8 +80,6 @@ namespace ImageGlass
             // Check if the start up directory writable
             GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
             
-            // Enable Portable mode as default if possible
-            GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
             // Save App version
             GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());

@@ -49,6 +49,9 @@ namespace adtasks
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Check if the start up directory writable
+            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+
             //Command
             string topcmd = args[0].ToLower().Trim();
 
