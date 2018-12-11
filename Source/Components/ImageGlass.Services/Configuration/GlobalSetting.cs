@@ -504,8 +504,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Save ImageEditingAssociationList to Settings
         /// </summary>
-        /// <param name="forceWriteConfigsToRegistry"></param>
-        public static void SaveConfigOfImageEditingAssociationList(bool @forceWriteConfigsToRegistry = false)
+        public static void SaveConfigOfImageEditingAssociationList()
         {
             StringBuilder editingAssocString = new StringBuilder();
 
@@ -514,7 +513,7 @@ namespace ImageGlass.Services.Configuration
                 editingAssocString.Append($"[{assoc.ToString()}]");
             }
 
-            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
+            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString());
         }
 
 
@@ -606,52 +605,12 @@ namespace ImageGlass.Services.Configuration
         /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
         /// <param name="configKey">Configuration key</param>
-        /// <param name="defaultValue">Default value</param>
-        /// <param name="forceGetConfigsFromRegistry">True: always read configs from Registry</param>
+        /// <param name="defaultValue">Default value</param>=
         /// <returns></returns>
-        public static string GetConfig(string configKey, string @defaultValue = "", bool forceGetConfigsFromRegistry = false)
+        public static string GetConfig(string configKey, string @defaultValue = "")
         {
-            // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsStartUpDirWritable && !forceGetConfigsFromRegistry)
-            {
-                return _configFile.GetConfig(configKey, defaultValue);
-            }
-
-
-            // Read configs from Registry --------------------------------------------
-            try
-            {
-                RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass"); // Work path in the registry.
-                object configValue = null; // Value of the configuration obtained.
-
-                if (workKey != null)
-                {
-                    configValue = workKey.GetValue(configKey, defaultValue); // Get the config value.
-                }
-                else
-                {
-                    throw new Exception(); // Force catch.
-                }
-                return configValue.ToString();
-            }
-            catch (SecurityException)
-            {
-                return defaultValue;
-            }
-            catch (IOException)
-            {
-                return defaultValue;
-            }
-            catch (ArgumentException)
-            {
-                return defaultValue;
-            }
-            catch (Exception)
-            {
-                // Need a repair function.
-                return defaultValue;
-            }
-            
+            // Read configs from file
+            return _configFile.GetConfig(configKey, defaultValue);
         }
 
 
@@ -660,32 +619,10 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         /// <param name="configKey">Configuration key</param>
         /// <param name="value">Configuration value</param>
-        /// <param name="forceWriteConfigsToRegistry">True: always write configs to Registry</param>
-        public static void SetConfig(string configKey, string value, bool @forceWriteConfigsToRegistry = false)
+        public static void SetConfig(string configKey, string value)
         {
-            // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsStartUpDirWritable && !@forceWriteConfigsToRegistry)
-            {
-                _configFile.SetConfig(configKey, value);
-                return;
-            }
-
-
-            // Read configs from Registry --------------------------------------------
-            RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree); // Work path in the registry.
-
-            if (workKey == null)
-            {
-                workKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree);
-            }
-
-            try
-            {
-                workKey.SetValue(configKey, value);
-            }
-            #pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex) { }
-            #pragma warning restore CS0168 // Variable is declared but never used
+            // Write configs to file
+            _configFile.SetConfig(configKey, value);
         }
 
 

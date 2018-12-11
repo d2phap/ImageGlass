@@ -187,6 +187,7 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
+
         /// <summary>
         /// Write configuration item to igconfig.xml file
         /// </summary>
