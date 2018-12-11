@@ -66,9 +66,9 @@ namespace ImageGlass.Services.Configuration
         public void ReadConfigFile()
         {
             // write default configs if not exist
-            if(!System.IO.File.Exists(Filename))
+            if(!File.Exists(Filename))
             {
-                WriteConfigFile();
+                WriteConfigFile(writeEmptyConfigs: true);
             }
 
             XmlDocument doc = new XmlDocument();
@@ -110,7 +110,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Export all configuration strings to xml file
         /// </summary>
-        public void WriteConfigFile()
+        public void WriteConfigFile(bool writeEmptyConfigs = false)
         {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
@@ -122,12 +122,15 @@ namespace ImageGlass.Services.Configuration
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>
-            foreach (var item in this)
+            if (!writeEmptyConfigs)
             {
-                XmlElement n = doc.CreateElement("Item"); // <Item>
-                n.SetAttribute("key", item.Key);
-                n.SetAttribute("value", item.Value.ToString());
-                nContent.AppendChild(n);// <Item />
+                foreach (var item in this)
+                {
+                    XmlElement n = doc.CreateElement("Item"); // <Item>
+                    n.SetAttribute("key", item.Key);
+                    n.SetAttribute("value", item.Value.ToString());
+                    nContent.AppendChild(n);// <Item />
+                }
             }
             nType.AppendChild(nContent);
 
@@ -138,9 +141,7 @@ namespace ImageGlass.Services.Configuration
             {
                 doc.Save(Filename);
             }
-#pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex) { }
-#pragma warning restore CS0168 // Variable is declared but never used
+            catch (Exception) { }
 
             doc = null;
             root = null;
@@ -158,7 +159,7 @@ namespace ImageGlass.Services.Configuration
             // write default configs if not exist
             if (!File.Exists(Filename))
             {
-                WriteConfigFile();
+                WriteConfigFile(writeEmptyConfigs: true);
             }
 
             XmlDocument doc = new XmlDocument();
@@ -197,7 +198,7 @@ namespace ImageGlass.Services.Configuration
         {
             if (!File.Exists(Filename))
             {
-                WriteConfigFile();
+                WriteConfigFile(writeEmptyConfigs: true);
             }
 
 
