@@ -226,7 +226,7 @@
             this.btnBack.AutoSize = false;
             this.btnBack.BackColor = System.Drawing.Color.Transparent;
             this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBack.Image = global::ImageGlass.Properties.Resources.back;
+            this.btnBack.Image = global::ImageGlass.Properties.Resources.info;
             this.btnBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBack.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -240,7 +240,7 @@
             this.btnNext.AutoSize = false;
             this.btnNext.BackColor = System.Drawing.Color.Transparent;
             this.btnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNext.Image = global::ImageGlass.Properties.Resources.next;
+            this.btnNext.Image = global::ImageGlass.Properties.Resources.info;
             this.btnNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNext.Margin = new System.Windows.Forms.Padding(0);
@@ -261,7 +261,7 @@
             this.btnRotateLeft.AutoSize = false;
             this.btnRotateLeft.BackColor = System.Drawing.Color.Transparent;
             this.btnRotateLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRotateLeft.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnRotateLeft.Image = global::ImageGlass.Properties.Resources.info;
             this.btnRotateLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnRotateLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateLeft.Margin = new System.Windows.Forms.Padding(0);
@@ -275,7 +275,7 @@
             this.btnRotateRight.AutoSize = false;
             this.btnRotateRight.BackColor = System.Drawing.Color.Transparent;
             this.btnRotateRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRotateRight.Image = global::ImageGlass.Properties.Resources.rightrotate;
+            this.btnRotateRight.Image = global::ImageGlass.Properties.Resources.info;
             this.btnRotateRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnRotateRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRotateRight.Margin = new System.Windows.Forms.Padding(0);
@@ -290,7 +290,7 @@
             this.btnFlipHorz.AutoSize = false;
             this.btnFlipHorz.BackColor = System.Drawing.Color.Transparent;
             this.btnFlipHorz.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFlipHorz.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipHorz.Image = global::ImageGlass.Properties.Resources.info;
             this.btnFlipHorz.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnFlipHorz.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFlipHorz.Margin = new System.Windows.Forms.Padding(0);
@@ -304,7 +304,7 @@
             this.btnFlipVert.AutoSize = false;
             this.btnFlipVert.BackColor = System.Drawing.Color.Transparent;
             this.btnFlipVert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFlipVert.Image = global::ImageGlass.Properties.Resources.leftrotate;
+            this.btnFlipVert.Image = global::ImageGlass.Properties.Resources.info;
             this.btnFlipVert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnFlipVert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFlipVert.Margin = new System.Windows.Forms.Padding(0);
@@ -318,7 +318,7 @@
             this.btnZoomIn.AutoSize = false;
             this.btnZoomIn.BackColor = System.Drawing.Color.Transparent;
             this.btnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomIn.Image = global::ImageGlass.Properties.Resources.zoomin;
+            this.btnZoomIn.Image = global::ImageGlass.Properties.Resources.info;
             this.btnZoomIn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomIn.Margin = new System.Windows.Forms.Padding(0);
@@ -333,7 +333,7 @@
             this.btnZoomOut.AutoSize = false;
             this.btnZoomOut.BackColor = System.Drawing.Color.Transparent;
             this.btnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomOut.Image = global::ImageGlass.Properties.Resources.zoomout;
+            this.btnZoomOut.Image = global::ImageGlass.Properties.Resources.info;
             this.btnZoomOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomOut.Margin = new System.Windows.Forms.Padding(0);
@@ -347,7 +347,7 @@
             this.btnActualSize.AutoSize = false;
             this.btnActualSize.BackColor = System.Drawing.Color.Transparent;
             this.btnActualSize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnActualSize.Image = global::ImageGlass.Properties.Resources.scaletofit;
+            this.btnActualSize.Image = global::ImageGlass.Properties.Resources.info;
             this.btnActualSize.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnActualSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActualSize.Margin = new System.Windows.Forms.Padding(0);
@@ -361,7 +361,7 @@
             this.btnWindowAutosize.AutoSize = false;
             this.btnWindowAutosize.BackColor = System.Drawing.Color.Transparent;
             this.btnWindowAutosize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnWindowAutosize.Image = global::ImageGlass.Properties.Resources.autosizewindow;
+            this.btnWindowAutosize.Image = global::ImageGlass.Properties.Resources.info;
             this.btnWindowAutosize.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnWindowAutosize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnWindowAutosize.Margin = new System.Windows.Forms.Padding(0);
@@ -383,7 +383,7 @@
             this.btnAutoZoom.BackColor = System.Drawing.Color.Transparent;
             this.btnAutoZoom.CheckOnClick = true;
             this.btnAutoZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAutoZoom.Image = global::ImageGlass.Properties.Resources.about;
+            this.btnAutoZoom.Image = global::ImageGlass.Properties.Resources.info;
             this.btnAutoZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnAutoZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAutoZoom.Margin = new System.Windows.Forms.Padding(0);
@@ -398,7 +398,7 @@
             this.btnScaletoWidth.BackColor = System.Drawing.Color.Transparent;
             this.btnScaletoWidth.CheckOnClick = true;
             this.btnScaletoWidth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnScaletoWidth.Image = global::ImageGlass.Properties.Resources.scaletowidth;
+            this.btnScaletoWidth.Image = global::ImageGlass.Properties.Resources.info;
             this.btnScaletoWidth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnScaletoWidth.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoWidth.Margin = new System.Windows.Forms.Padding(0);
@@ -413,7 +413,7 @@
             this.btnScaletoHeight.BackColor = System.Drawing.Color.Transparent;
             this.btnScaletoHeight.CheckOnClick = true;
             this.btnScaletoHeight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnScaletoHeight.Image = global::ImageGlass.Properties.Resources.scaletoheight;
+            this.btnScaletoHeight.Image = global::ImageGlass.Properties.Resources.info;
             this.btnScaletoHeight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnScaletoHeight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaletoHeight.Margin = new System.Windows.Forms.Padding(0);
@@ -428,7 +428,7 @@
             this.btnScaleToFit.BackColor = System.Drawing.Color.Transparent;
             this.btnScaleToFit.CheckOnClick = true;
             this.btnScaleToFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnScaleToFit.Image = global::ImageGlass.Properties.Resources.zoomlock;
+            this.btnScaleToFit.Image = global::ImageGlass.Properties.Resources.info;
             this.btnScaleToFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnScaleToFit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnScaleToFit.Margin = new System.Windows.Forms.Padding(0);
@@ -444,7 +444,7 @@
             this.btnZoomLock.BackColor = System.Drawing.Color.Transparent;
             this.btnZoomLock.CheckOnClick = true;
             this.btnZoomLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomLock.Image = global::ImageGlass.Properties.Resources.zoomlock;
+            this.btnZoomLock.Image = global::ImageGlass.Properties.Resources.info;
             this.btnZoomLock.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnZoomLock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomLock.Margin = new System.Windows.Forms.Padding(0);
@@ -467,7 +467,7 @@
             this.btnOpen.BackColor = System.Drawing.Color.Transparent;
             this.btnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnOpen.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnOpen.Image = global::ImageGlass.Properties.Resources.open;
+            this.btnOpen.Image = global::ImageGlass.Properties.Resources.info;
             this.btnOpen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOpen.Margin = new System.Windows.Forms.Padding(0);
@@ -481,7 +481,7 @@
             this.btnRefresh.AutoSize = false;
             this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = global::ImageGlass.Properties.Resources.refresh;
+            this.btnRefresh.Image = global::ImageGlass.Properties.Resources.info;
             this.btnRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
@@ -495,7 +495,7 @@
             this.btnGoto.AutoSize = false;
             this.btnGoto.BackColor = System.Drawing.Color.Transparent;
             this.btnGoto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnGoto.Image = global::ImageGlass.Properties.Resources.gotoimage;
+            this.btnGoto.Image = global::ImageGlass.Properties.Resources.info;
             this.btnGoto.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnGoto.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGoto.Margin = new System.Windows.Forms.Padding(0);
@@ -517,7 +517,7 @@
             this.btnThumb.BackColor = System.Drawing.Color.Transparent;
             this.btnThumb.CheckOnClick = true;
             this.btnThumb.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnThumb.Image = global::ImageGlass.Properties.Resources.thumbnail;
+            this.btnThumb.Image = global::ImageGlass.Properties.Resources.info;
             this.btnThumb.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnThumb.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnThumb.Margin = new System.Windows.Forms.Padding(0);
@@ -532,7 +532,7 @@
             this.btnCheckedBackground.BackColor = System.Drawing.Color.Transparent;
             this.btnCheckedBackground.CheckOnClick = true;
             this.btnCheckedBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCheckedBackground.Image = global::ImageGlass.Properties.Resources.background;
+            this.btnCheckedBackground.Image = global::ImageGlass.Properties.Resources.info;
             this.btnCheckedBackground.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnCheckedBackground.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCheckedBackground.Margin = new System.Windows.Forms.Padding(0);
@@ -547,7 +547,7 @@
             this.btnFullScreen.BackColor = System.Drawing.Color.Transparent;
             this.btnFullScreen.CheckOnClick = true;
             this.btnFullScreen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFullScreen.Image = global::ImageGlass.Properties.Resources.fullscreen;
+            this.btnFullScreen.Image = global::ImageGlass.Properties.Resources.info;
             this.btnFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnFullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
@@ -561,7 +561,7 @@
             this.btnSlideShow.AutoSize = false;
             this.btnSlideShow.BackColor = System.Drawing.Color.Transparent;
             this.btnSlideShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSlideShow.Image = global::ImageGlass.Properties.Resources.slideshow;
+            this.btnSlideShow.Image = global::ImageGlass.Properties.Resources.info;
             this.btnSlideShow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnSlideShow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSlideShow.Margin = new System.Windows.Forms.Padding(0);
@@ -575,7 +575,7 @@
             this.btnConvert.AutoSize = false;
             this.btnConvert.BackColor = System.Drawing.Color.Transparent;
             this.btnConvert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnConvert.Image = global::ImageGlass.Properties.Resources.convert;
+            this.btnConvert.Image = global::ImageGlass.Properties.Resources.info;
             this.btnConvert.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnConvert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConvert.Margin = new System.Windows.Forms.Padding(0);
@@ -589,7 +589,7 @@
             this.btnPrintImage.AutoSize = false;
             this.btnPrintImage.BackColor = System.Drawing.Color.Transparent;
             this.btnPrintImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPrintImage.Image = global::ImageGlass.Properties.Resources.printer;
+            this.btnPrintImage.Image = global::ImageGlass.Properties.Resources.info;
             this.btnPrintImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnPrintImage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrintImage.Margin = new System.Windows.Forms.Padding(0);
@@ -603,7 +603,7 @@
             this.btnDelete.AutoSize = false;
             this.btnDelete.BackColor = System.Drawing.Color.Transparent;
             this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDelete.Image = global::ImageGlass.Properties.Resources.zoomout;
+            this.btnDelete.Image = global::ImageGlass.Properties.Resources.info;
             this.btnDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
@@ -618,7 +618,7 @@
             this.btnMenu.AutoSize = false;
             this.btnMenu.CheckOnClick = true;
             this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMenu.Image = global::ImageGlass.Properties.Resources.menu;
+            this.btnMenu.Image = global::ImageGlass.Properties.Resources.info;
             this.btnMenu.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);

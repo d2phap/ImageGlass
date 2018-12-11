@@ -92,10 +92,6 @@ namespace ImageGlass
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
 
-        // the Navigation Button on viewer
-        private Button _btnNavNext = new Button();
-        private Button _btnNavPrev = new Button();
-
 
 
         /***********************************
@@ -2614,11 +2610,7 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
             {
                 #region Update language strings
-
-                tip1.SetToolTip(_btnNavNext, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewNext"]);
-                tip1.SetToolTip(_btnNavPrev, GlobalSetting.LangPack.Items[$"{Name}.mnuMainViewPrevious"]);
-
-
+                
                 //Toolbar
                 btnBack.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewPrevious.Shortcut"]);
                 btnNext.ToolTipText = string.Format("{0} ({1})", GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext"], GlobalSetting.LangPack.Items["frmMain.mnuMainViewNext.Shortcut"]);

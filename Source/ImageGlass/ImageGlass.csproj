@@ -232,48 +232,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\info.png" />
     <None Include="resources.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\zoomout.png" />
-    <None Include="Resources\zoomlock.png" />
-    <None Include="Resources\zoomin.png" />
-    <None Include="Resources\uploadfb.png" />
-    <None Include="Resources\about.png" />
-    <None Include="Resources\autosizewindow.png" />
-    <None Include="Resources\back.png" />
-    <None Include="Resources\background.png" />
     <Content Include="iglogo.ico" />
-    <Content Include="Resources\bot3.png" />
-    <None Include="Resources\print.png" />
-    <None Include="Resources\convert.png" />
-    <None Include="Resources\extension.png" />
-    <None Include="Resources\fullscreen.png" />
-    <None Include="Resources\gotoimage.png" />
-    <None Include="Resources\leftrotate.png" />
-    <None Include="Resources\next.png" />
-    <None Include="Resources\open.png" />
-    <None Include="Resources\printer.png" />
-    <None Include="Resources\refresh.png" />
-    <None Include="Resources\rightrotate.png" />
-    <None Include="Resources\scaletofit.png" />
-    <None Include="Resources\settings.png" />
-    <None Include="Resources\slideshow.png" />
-    <None Include="Resources\thumbnail.png" />
-    <None Include="Resources\scaletoheight.png" />
-    <None Include="Resources\scaletowidth.png" />
-    <None Include="Resources\report.png" />
-    <None Include="Resources\menu.png" />
-    <Content Include="Resources\top3.png" />
-    <None Include="Resources\Hand_Down.png" />
-    <None Include="Resources\Hand_Move.png" />
-    <None Include="Resources\noimg.png" />
-    <None Include="Resources\imageerror.png" />
     <EmbeddedResource Include="frmSetting.resx">
       <DependentUpon>frmSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Resources\imagetoolarge.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -350,6 +317,7 @@
       <Name>igtasks</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
