@@ -508,7 +508,6 @@ namespace ImageGlass.Services.Configuration
 
         #endregion
 
-        
 
 
         #region Public Methods
@@ -588,16 +587,6 @@ namespace ImageGlass.Services.Configuration
             }
 
             return exts.ToString();
-        }
-
-
-        /// <summary>
-        /// Check if ImageGlass can write config file in the startup folder
-        /// </summary>
-        /// <returns></returns>
-        public static bool CheckStartUpDirWritable()
-        {
-            return _configFile.IsWritable();
         }
 
 
@@ -769,6 +758,29 @@ namespace ImageGlass.Services.Configuration
             {
                 string wildRemoved = aType.Trim(wildtrim);
                 GlobalSetting.ImageFormatHashSet.Add(wildRemoved);
+            }
+        }
+
+
+        /// <summary>
+        /// Check if startup folder is writable
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckStartUpDirWritable()
+        {
+            try
+            {
+                var filePath = Path.Combine(GlobalSetting.StartUpDir, "test_write_file.temp");
+
+                using (File.Create(filePath)) { }
+                File.Delete(filePath);
+
+                return true;
+            }
+            catch// (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                return false;
             }
         }
 

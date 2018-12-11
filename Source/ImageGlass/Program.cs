@@ -59,8 +59,8 @@ namespace ImageGlass
         {
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
-            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir);
-            ProfileOptimization.StartProfile("igstartup.profile");
+            //ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir);
+            //ProfileOptimization.StartProfile("igstartup.profile");
 
 #if ERRORMODE
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);

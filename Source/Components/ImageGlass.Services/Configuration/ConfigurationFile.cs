@@ -29,7 +29,7 @@ namespace ImageGlass.Services.Configuration
         private Dictionary<string, string> _dictionary;
         public string Description { get; set; }
         public string Version { get; set; }
-        public string Filename { get => Path.Combine(GlobalSetting.StartUpDir, "igconfig.xml"); }
+        public string Filename { get => Path.Combine(GlobalSetting.ConfigDir, "igconfig.xml"); }
 
         public ICollection<string> Keys => _dictionary.Keys;
         public ICollection<string> Values => _dictionary.Values;
@@ -58,29 +58,6 @@ namespace ImageGlass.Services.Configuration
 
             //Read all configs from file
             ReadConfigFile();
-        }
-
-
-        /// <summary>
-        /// Check if ImageGlass can write config file in the startup folder
-        /// </summary>
-        /// <returns></returns>
-        public bool IsWritable()
-        {
-            try
-            {
-                var filePath = Path.Combine(GlobalSetting.StartUpDir, "test_write_file.temp");
-
-                using (File.Create(filePath)) { }
-                File.Delete(filePath);                
-
-                return true;
-            }
-            catch// (Exception ex)
-            {
-                //System.Windows.Forms.MessageBox.Show(ex.Message);
-                return false;
-            }
         }
 
         /// <summary>
@@ -217,6 +194,12 @@ namespace ImageGlass.Services.Configuration
         /// <param name="value"></param>
         public void SetConfig(string key, object value)
         {
+            if (!File.Exists(Filename))
+            {
+                WriteConfigFile();
+            }
+
+
             // update memory config
             this[key] = value.ToString();
 
