@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -44,6 +44,12 @@ namespace igcmdWin10
             return 0;
         }
 
+
+        /// <summary>
+        /// Set lock screen image
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         internal static async Task<int> SetLockScreenImageAsync(string[] args)
         {
             string imgPath = args[1];

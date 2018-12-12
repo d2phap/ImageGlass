@@ -1468,7 +1468,7 @@ namespace ImageGlass
                 if (GlobalSetting.PreserveModifiedDate)
                     File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show(string.Format(GlobalSetting.LangPack.Items[$"{this.Name}._SaveImageError"], LocalSetting.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

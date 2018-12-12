@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,6 @@ using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Theme;
 using System.Text;
 
 namespace igcmd
@@ -35,13 +34,10 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
-
-            if (!Directory.Exists(GlobalSetting.TempDir))
-                Directory.CreateDirectory(GlobalSetting.TempDir);
         }
 
         Update up = new Update();
-        string updateInfoFile = Path.Combine(GlobalSetting.TempDir, "update.xml");
+        string updateInfoFile = Path.Combine(GlobalSetting.ConfigDir, "update.xml");
 
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -64,7 +60,7 @@ namespace igcmd
 
 
 
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir + "ImageGlass.exe");
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe"));
 
             txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
 
@@ -101,7 +97,7 @@ namespace igcmd
                     $"Size: {up.Info.Size}\r\n" +
                     $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
-                if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+                if (up.CheckForUpdate(Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")))
                 {
                     if (up.Info.VersionType.ToLower() == "stable")
                     {

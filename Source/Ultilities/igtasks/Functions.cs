@@ -34,9 +34,11 @@ namespace igtasks
         /// </summary>
         public static void InstallLanguagePacks()
         {
-            OpenFileDialog o = new OpenFileDialog();
-            o.Filter = "ImageGlass language pack (*.iglang)|*.iglang";
-            o.Multiselect = true;
+            OpenFileDialog o = new OpenFileDialog
+            {
+                Filter = "ImageGlass language pack (*.iglang)|*.iglang",
+                Multiselect = true
+            };
 
             if (o.ShowDialog() == DialogResult.OK)
             {
@@ -44,7 +46,7 @@ namespace igtasks
                 {
                     try
                     {
-                        File.Copy(f, Path.Combine(GlobalSetting.StartUpDir, "Languages", Path.GetFileName(f)));
+                        File.Copy(f, Path.Combine(GlobalSetting.ConfigDir, "Languages", Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {
@@ -61,8 +63,10 @@ namespace igtasks
         /// </summary>
         public static void CreateNewLanguagePacks()
         {
-            SaveFileDialog s = new SaveFileDialog();
-            s.Filter = "ImageGlass language pack (*.iglang)|*.iglang";
+            SaveFileDialog s = new SaveFileDialog
+            {
+                Filter = "ImageGlass language pack (*.iglang)|*.iglang"
+            };
 
             if (s.ShowDialog() == DialogResult.OK)
             {
