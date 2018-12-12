@@ -1636,26 +1636,45 @@ namespace ImageGlass
         /// <param name="onCursorRightAction">Action to run if Cursor Position is RIGHT</param>
         private void CheckCursorPositionOnViewer(Point location, Action onCursorLeftAction = null, Action onCursorCenterAction = null, Action onCursorRightAction = null)
         {
-            // calculate icon height
-            var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+            if (GlobalSetting.ImageList.Length > 1)
+            {
+                // calculate icon height
+                var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
 
-            // get the hotpot area width
-            var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+                // get the hotpot area width
+                var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
 
-            // left side
-            if (location.X < hotpotWidth)
-            {
-                onCursorLeftAction?.Invoke();
-            }
-            // right side
-            else if (location.X > picMain.Width - hotpotWidth)
-            {
-                onCursorRightAction?.Invoke();
-            }
-            // center
-            else
-            {
-                onCursorCenterAction?.Invoke();
+                // left side
+                if (location.X < hotpotWidth)
+                {
+                    // The first image in the list
+                    if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex == 0)
+                    {
+                        picMain.Cursor = Cursors.Default;
+                    }
+                    else
+                    {
+                        onCursorLeftAction?.Invoke();
+                    }
+                }
+                // right side
+                else if (location.X > picMain.Width - hotpotWidth)
+                {
+                    // The last image in the list
+                    if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
+                    {
+                        picMain.Cursor = Cursors.Default;
+                    }
+                    else
+                    {
+                        onCursorRightAction?.Invoke();
+                    }
+                }
+                // center
+                else
+                {
+                    onCursorCenterAction?.Invoke();
+                }
             }
         }
 
@@ -3295,30 +3314,31 @@ namespace ImageGlass
                 // set the Arrow cursor
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
-                    if (GlobalSetting.IsShowNavigationButtons && !picMain.IsPanning)
+                    // calculate icon height
+                    var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+
+                    // get the hotpot area width
+                    var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+
+
+                    CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                     {
-                        // calculate icon height
-                        var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+                        // get cursor icon
+                        var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                        // get the hotpot area width
-                        var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+                        picMain.Cursor = new Cursor(cursorIcon.GetHicon());
 
+                    }, onCursorRightAction: () =>
+                    {
+                        // get cursor icon
+                        var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
-                        {
-                            var iconPrev = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+                        picMain.Cursor = new Cursor(cursorIcon.GetHicon());
 
-                            picMain.Cursor = new Cursor(iconPrev.GetHicon());
-                        }, onCursorRightAction: () =>
-                        {
-                            var iconNext = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-                            picMain.Cursor = new Cursor(iconNext.GetHicon());
-                        }, onCursorCenterAction: () =>
-                        {
-                            picMain.Cursor = Cursors.Default;
-                        });
-                    }
+                    }, onCursorCenterAction: () =>
+                    {
+                        picMain.Cursor = Cursors.Default;
+                    });
                 }
 
                 //reset the cursor
