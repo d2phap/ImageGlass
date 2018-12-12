@@ -25,6 +25,7 @@ using System.Linq;
 using System.Drawing.IconLib;
 using System.Windows.Media.Imaging;
 using ImageMagick;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Core
 {
@@ -38,48 +39,52 @@ namespace ImageGlass.Core
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <returns></returns>
-        public static Bitmap Load(string path, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
+        public static async Task<Bitmap> Load(string path, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
             var ext = Path.GetExtension(path).ToLower();
-
             Bitmap bmp = null;
 
-            switch (ext)
+            await Task.Run(async () =>
             {
-                case ".gif":
-                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    {
-                        var ms = new MemoryStream();
-                        fs.CopyTo(ms);
-                        ms.Position = 0;
-
-                        bmp = new Bitmap(ms, true);
-                    }
-                    break;
-
-                case ".ico":
-                    bmp = ReadIconFile(path);
-                    break;
-
-                default:
-                    try
-                    {
-                        GetBitmapFromFile();
-
-                        if (bmp == null)
+                switch (ext)
+                {
+                    case ".gif":
+                        using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                         {
-                            GetBitmapFromWic();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        GetBitmapFromWic();
-                    }
-                    break;
-            }
+                            var ms = new MemoryStream();
+                            fs.CopyTo(ms);
+                            ms.Position = 0;
 
-            void GetBitmapFromFile()
+                            bmp = new Bitmap(ms, true);
+                        }
+                        break;
+
+                    case ".ico":
+                        bmp = ReadIconFile(path);
+                        break;
+
+                    default:
+                        try
+                        {
+                            bmp = await GetBitmapFromFile();
+
+                            if (bmp == null)
+                            {
+                                bmp = await GetBitmapFromWic();
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            bmp = await GetBitmapFromWic();
+                        }
+                        break;
+                }
+
+            }).ConfigureAwait(false);
+
+            async Task<Bitmap> GetBitmapFromFile()
             {
+                Bitmap bmpData = null;
                 var settings = new MagickReadSettings();
 
                 if (ext.CompareTo(".svg") == 0)
@@ -106,71 +111,82 @@ namespace ImageGlass.Core
                 //    }
                 //}
 
-
-                using (var magicImg = new MagickImage(path, settings))
+                await Task.Run(() =>
                 {
-                    magicImg.Quality = 100;
-
-                    //Get Exif information
-                    var profile = magicImg.GetExifProfile();
-                    if (profile != null)
+                    using (var magicImg = new MagickImage(path, settings))
                     {
-                        //Get Orieantation Flag
-                        var exifTag = profile.GetValue(ExifTag.Orientation);
+                        magicImg.Quality = 100;
 
-                        if (exifTag != null)
+                        //Get Exif information
+                        var profile = magicImg.GetExifProfile();
+                        if (profile != null)
                         {
-                            int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+                            //Get Orieantation Flag
+                            var exifTag = profile.GetValue(ExifTag.Orientation);
 
-                            var orientationDegree = GetOrientationDegree(orientationFlag);
-                            if (orientationDegree != 0)
+                            if (exifTag != null)
                             {
-                                //Rotate image accordingly
-                                magicImg.Rotate(orientationDegree);
+                                int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+
+                                var orientationDegree = GetOrientationDegree(orientationFlag);
+                                if (orientationDegree != 0)
+                                {
+                                    //Rotate image accordingly
+                                    magicImg.Rotate(orientationDegree);
+                                }
                             }
                         }
+
+
+                        // get the color profile of image
+                        var imgColorProfile = magicImg.GetColorProfile();
+
+
+                        // if always apply color profile
+                        // or only apply color profile if there is an embedded profile
+                        if (isApplyColorProfileForAll || imgColorProfile != null)
+                        {
+                            if (imgColorProfile != null)
+                            {
+                                // correct the image color space
+                                magicImg.ColorSpace = imgColorProfile.ColorSpace;
+                            }
+                            else
+                            {
+                                // set default color profile and color space
+                                magicImg.AddProfile(ColorProfile.SRGB);
+                                magicImg.ColorSpace = ColorProfile.SRGB.ColorSpace;
+                            }
+
+                            var colorProfile = GetColorProfileFromString(colorProfileName);
+                            if (colorProfile != null)
+                            {
+                                magicImg.AddProfile(colorProfile);
+                                magicImg.ColorSpace = colorProfile.ColorSpace;
+                            }
+                        }
+
+
+                        //get bitmap
+                        bmpData = magicImg.ToBitmap();
                     }
+                }).ConfigureAwait(false);
 
-
-                    // get the color profile of image
-                    var imgColorProfile = magicImg.GetColorProfile();
-
-
-                    // if always apply color profile
-                    // or only apply color profile if there is an embedded profile
-                    if (isApplyColorProfileForAll || imgColorProfile != null)
-                    {
-                        if (imgColorProfile != null)
-                        {
-                            // correct the image color space
-                            magicImg.ColorSpace = imgColorProfile.ColorSpace;
-                        }
-                        else
-                        {
-                            // set default color profile and color space
-                            magicImg.AddProfile(ColorProfile.SRGB);
-                            magicImg.ColorSpace = ColorProfile.SRGB.ColorSpace;
-                        }
-
-                        var colorProfile = GetColorProfileFromString(colorProfileName);
-                        if (colorProfile != null)
-                        {
-                            magicImg.AddProfile(colorProfile);
-                            magicImg.ColorSpace = colorProfile.ColorSpace;
-                        }
-                    }
-                    
-
-                    //get bitmap
-                    bmp = magicImg.ToBitmap();
-                }
-                
+                return bmpData;
             }
 
-            void GetBitmapFromWic()
+            async Task<Bitmap> GetBitmapFromWic()
             {
-                var src = LoadImage(path);
-                bmp = BitmapFromSource(src);
+                Bitmap bmpData = null;
+
+                await Task.Run(() =>
+                {
+                    var src = LoadImage(path);
+                    bmpData = BitmapFromSource(src);
+                }).ConfigureAwait(false);
+
+
+                return bmpData;
             }
 
             return bmp;
@@ -335,15 +351,18 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="pic">Image source</param>
         /// <param name="filename">New image file name</param>
-        public static void SaveImage(Image pic, string filename)
+        public static async void SaveImage(Image pic, string filename)
         {
-            string ext = Path.GetExtension(filename).Substring(1).ToLower();
-
-            using (var img = new MagickImage(new Bitmap(pic)))
+            await Task.Run(() =>
             {
-                img.Quality = 100;
-                img.Write(filename);
-            }
+                string ext = Path.GetExtension(filename).Substring(1).ToLower();
+
+                using (var img = new MagickImage(new Bitmap(pic)))
+                {
+                    img.Quality = 100;
+                    img.Write(filename);
+                }
+            }).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -40,12 +40,12 @@ namespace ImageGlass.Core
         /// <param name="size">A custom size of image</param>
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
-        public void Load(Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
+        public async void Load(Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
             Image im = null;
             try
             {
-                im = Interpreter.Load(path, size: size, colorProfileName: colorProfileName, isApplyColorProfileForAll: isApplyColorProfileForAll);
+                im = await Interpreter.Load(path, size: size, colorProfileName: colorProfileName, isApplyColorProfileForAll: isApplyColorProfileForAll);
             }
             catch (Exception)
             { }

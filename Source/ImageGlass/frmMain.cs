@@ -92,7 +92,8 @@ namespace ImageGlass
         // determine if user is dragging an image file
         private bool _isDraggingImage = false;
 
-
+        // gets, sets wheather the app is busy or not
+        private bool _isAppBusy = false;
 
         /***********************************
          * Variables for FileWatcherEx
@@ -199,44 +200,60 @@ namespace ImageGlass
         /// </summary>
         /// <param name="path">Initial file/folder to load with</param>
         /// <param name="targetImgFile">When re-loading the image list, this is the desired image to remain visible</param>
-        public void Prepare(string path, string targetImgFile = null)
+        public async void Prepare(string path, string targetImgFile = null)
         {
+            System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+
             if (File.Exists(path) == false && Directory.Exists(path) == false)
                 return;
+
+            //Stopwatch stopwatch = Stopwatch.StartNew();
 
             //Reset current index
             GlobalSetting.CurrentIndex = 0;
             string filePath = "";
             string dirPath = "";
+            var _imageFilenameList = new List<string>();
 
-            //Check path is file or directory?
-            if (File.Exists(path))
+            await Task.Run(() =>
             {
-                if (Path.GetExtension(path).ToLower() == ".lnk")
-                    dirPath = Shortcuts.FolderFromShortcut(path);
-                else
-                    dirPath = Path.GetDirectoryName(path);
 
-                filePath = path;
-            }
-            else if (Directory.Exists(path))
-            {
-                dirPath = path;
-            }
+                //Check path is file or directory?
+                if (File.Exists(path))
+                {
+                    if (Path.GetExtension(path).ToLower() == ".lnk")
+                        dirPath = Shortcuts.FolderFromShortcut(path);
+                    else
+                        dirPath = Path.GetDirectoryName(path);
 
-
-            // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
-            // By ensuring a terminating slash, the problem disappears. By doing that *here*,
-            // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
-            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
-            if (!dirPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
-                dirPath += Path.DirectorySeparatorChar;
+                    filePath = path;
+                }
+                else if (Directory.Exists(path))
+                {
+                    dirPath = path;
+                }
 
 
-            LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
+                // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+                // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+                // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+                // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                if (!dirPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                    dirPath += Path.DirectorySeparatorChar;
 
-            //Get supported image extensions from directory
-            var _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+
+                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
+
+                //Get supported image extensions from directory
+                _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+
+            });
+
+
+
+            //stopwatch.Stop();
+            //Console.WriteLine(">>>>>> Loading time of folder = " + stopwatch.ElapsedMilliseconds);
+
 
             LoadImages(_imageFilenameList, targetImgFile ?? filePath);
             
@@ -540,12 +557,11 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
         /// <param name="isSkipCache"></param>
-        private void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
+        private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action<int, bool, bool>(NextPic), step, isKeepZoomRatio, isSkipCache);
-
                 return;
             }
 
@@ -626,10 +642,15 @@ namespace ImageGlass
                 GlobalSetting.ImageList.IsApplyColorProfileForAll = GlobalSetting.IsApplyColorProfileForAll;
                 GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
 
+                _isAppBusy = true;
                 //Read image data
-                im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                await Task.Run(() =>
+                {
+                    im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                    GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
+                });
+                _isAppBusy = false;
 
-                GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
                 //Show image
                 picMain.Image = im;
@@ -644,7 +665,7 @@ namespace ImageGlass
 
 
                 //Run in another thread
-                Parallel.Invoke(() =>
+                await Task.Run(() =>
                 {
                     //Release unused images
                     if (GlobalSetting.CurrentIndex - 2 >= 0)
@@ -658,10 +679,13 @@ namespace ImageGlass
                 });
 
             }
-            catch
+            catch (Exception ex)
             {
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
+
+                DisplayTextMessage(ex.Message, 3000);
+                
 
                 Application.DoEvents();
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
@@ -1464,6 +1488,7 @@ namespace ImageGlass
             {
                 DateTime lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
                 Interpreter.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+
                 // Issue #307: option to preserve the modified date/time
                 if (GlobalSetting.PreserveModifiedDate)
                     File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
@@ -1650,7 +1675,7 @@ namespace ImageGlass
                     // The first image in the list
                     if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex == 0)
                     {
-                        picMain.Cursor = Cursors.Default;
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
                     else
                     {
@@ -1663,7 +1688,7 @@ namespace ImageGlass
                     // The last image in the list
                     if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
                     {
-                        picMain.Cursor = Cursors.Default;
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
                     else
                     {
@@ -3356,14 +3381,14 @@ namespace ImageGlass
 
                     }, onCursorCenterAction: () =>
                     {
-                        picMain.Cursor = Cursors.Default;
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     });
                 }
 
                 //reset the cursor
                 else
                 {
-                    picMain.Cursor = Cursors.Default;
+                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                 }
             }
         }
