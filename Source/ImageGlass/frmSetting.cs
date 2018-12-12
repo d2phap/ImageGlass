@@ -29,6 +29,8 @@ using System.Linq;
 using ImageGlass.Theme;
 using System.Text;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ImageGlass
 {
@@ -178,7 +180,6 @@ namespace ImageGlass
             //Load configs
             LoadTabGeneralConfig();
             LoadTabImageConfig();
-            lnkRefresh_LinkClicked(null, null);
 
             //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
@@ -983,14 +984,10 @@ namespace ImageGlass
             catch { }
         }
 
-        private void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
-            lstLanguages = new List<Language>
-            {
-                new Language()
-            };
 
             string langPath = Path.Combine(GlobalSetting.ConfigDir, "Languages");
 
@@ -1000,21 +997,33 @@ namespace ImageGlass
             }
             else
             {
-                foreach (string f in Directory.GetFiles(langPath))
+                await Task.Run(() =>
                 {
-                    if (Path.GetExtension(f).ToLower() == ".iglang")
+                    lstLanguages = new List<Language>
                     {
-                        Language l = new Language(f);
-                        lstLanguages.Add(l);
-
-                        int iLang = cmbLanguage.Items.Add(l.LangName);
-                        string curLang = GlobalSetting.LangPack.FileName;
-
-                        //using current language pack
-                        if (f.CompareTo(curLang) == 0)
+                        new Language()
+                    };
+                    foreach (string f in Directory.GetFiles(langPath))
+                    {
+                        if (Path.GetExtension(f).ToLower() == ".iglang")
                         {
-                            cmbLanguage.SelectedIndex = iLang;
+                            Language l = new Language(f);
+                            lstLanguages.Add(l);
                         }
+                    }
+                });
+
+
+                // start from 1, the first item is already hardcoded
+                for (int i = 1; i < lstLanguages.Count; i++)
+                {
+                    int iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
+                    string curLang = GlobalSetting.LangPack.FileName;
+
+                    //using current language pack
+                    if (lstLanguages[i].FileName.CompareTo(curLang) == 0)
+                    {
+                        cmbLanguage.SelectedIndex = iLang;
                     }
                 }
             }
@@ -1804,41 +1813,59 @@ namespace ImageGlass
             }
         }
 
-        private void RefreshThemeList()
+        private async void RefreshThemeList()
         {
             string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
 
             lvTheme.Items.Clear();
             lvTheme.Items.Add("2017 (Dark)").Tag = "default";
+            lvTheme.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+
+            SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
             if (Directory.Exists(themeFolder))
             {
-                foreach (string d in Directory.GetDirectories(themeFolder))
+                var lstThemes = new List<Theme.Theme>();
+
+                await Task.Run(() =>
                 {
-                    string configFile = Path.Combine(d, "config.xml");
-
-                    if (File.Exists(configFile))
+                    foreach (string d in Directory.GetDirectories(themeFolder))
                     {
-                        Theme.Theme th = new Theme.Theme(d);
+                        string configFile = Path.Combine(d, "config.xml");
 
-                        //invalid theme
-                        if (!th.IsThemeValid)
+                        if (File.Exists(configFile))
                         {
-                            continue;
+                            Theme.Theme th = new Theme.Theme(d);
+
+                            //invalid theme
+                            if (!th.IsThemeValid)
+                            {
+                                continue;
+                            }
+
+                            lstThemes.Add(th);
                         }
-
-                        var lvi = new ListViewItem(th.Name);
-                        lvi.Tag = Path.GetFileName(d); // folder name of the theme
-                        lvi.ImageKey = "_blank";
-
-                        if (LocalSetting.Theme.ThemeConfigFilePath == configFile)
-                        {
-                            lvi.Selected = true;
-                            lvi.Checked = true;
-                        }
-
-                        lvTheme.Items.Add(lvi);
                     }
+                });
+
+                // add themes to the listview
+                foreach (var th in lstThemes)
+                {
+                    var lvi = new ListViewItem(th.Name)
+                    {
+                        // folder name of the theme
+                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)), 
+                        ImageKey = "_blank"
+                    };
+
+                    if (LocalSetting.Theme.ThemeConfigFilePath == th.ThemeConfigFilePath)
+                    {
+                        lvi.Selected = true;
+                        lvi.Checked = true;
+                    }
+
+                    lvTheme.Items.Add(lvi);
                 }
 
                 //select the default theme
@@ -1852,6 +1879,8 @@ namespace ImageGlass
                 Directory.CreateDirectory(themeFolder);
             }
 
+            lvTheme.Enabled = true;
+            this.Cursor = Cursors.Default;
 
             lblInstalledThemes.Text = string.Format(GlobalSetting.LangPack.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
@@ -2306,14 +2335,17 @@ namespace ImageGlass
 
             #region Language: MainFormForceUpdateAction.LANGUAGE
             //Language
-            newString = lstLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
-
-            if (GlobalSetting.LangPack.FileName.ToLower().CompareTo(newString) != 0)
+            if (lstLanguages.Count > 0)
             {
-                GlobalSetting.LangPack = lstLanguages[cmbLanguage.SelectedIndex];
-                GlobalSetting.SetConfig("Language", Path.GetFileName(GlobalSetting.LangPack.FileName));
+                newString = lstLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
 
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                if (GlobalSetting.LangPack.FileName.ToLower().CompareTo(newString) != 0)
+                {
+                    GlobalSetting.LangPack = lstLanguages[cmbLanguage.SelectedIndex];
+                    GlobalSetting.SetConfig("Language", Path.GetFileName(GlobalSetting.LangPack.FileName));
+
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                }
             }
             #endregion
 
