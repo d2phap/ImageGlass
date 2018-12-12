@@ -3323,17 +3323,31 @@ namespace ImageGlass
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                     {
-                        // get cursor icon
-                        var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
+                        try
+                        {
+                            // get cursor icon
+                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                        picMain.Cursor = new Cursor(cursorIcon.GetHicon());
+                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
+                        }
+                        catch (Exception)
+                        {
+                            picMain.Cursor = Cursors.Default;
+                        }
 
                     }, onCursorRightAction: () =>
                     {
-                        // get cursor icon
-                        var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
+                        try
+                        {
+                            // get cursor icon
+                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                        picMain.Cursor = new Cursor(cursorIcon.GetHicon());
+                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
+                        }
+                        catch (Exception)
+                        {
+                            picMain.Cursor = Cursors.Default;
+                        }
 
                     }, onCursorCenterAction: () =>
                     {
