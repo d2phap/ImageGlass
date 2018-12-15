@@ -95,6 +95,11 @@ namespace ImageGlass
         // gets, sets wheather the app is busy or not
         private bool _isAppBusy = false;
 
+
+        // gets, sets the CancellationTokenSource of synchronious image loading task
+        private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
+
+
         /***********************************
          * Variables for FileWatcherEx
          ***********************************/
@@ -565,6 +570,12 @@ namespace ImageGlass
                 return;
             }
 
+            // cancel the previous loading task
+            _cancelToken.Cancel();
+            var token = new System.Threading.CancellationTokenSource();
+            _cancelToken = token;
+
+            // stop the animation
             if (picMain.IsAnimating)
             {
                 picMain.StopAnimating();
@@ -634,7 +645,7 @@ namespace ImageGlass
 
 
             //The image data will load
-            Image im = null;
+            Bitmap im = null;
 
             try
             {
@@ -643,40 +654,44 @@ namespace ImageGlass
                 GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
 
                 _isAppBusy = true;
+
                 //Read image data
                 await Task.Run(() =>
                 {
                     im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
                     GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
                 });
-                _isAppBusy = false;
 
-
-                //Show image
-                picMain.Image = im;
-
-
-                //Reset the zoom mode if isKeepZoomRatio = FALSE
-                if (!isKeepZoomRatio)
+                if (!token.Token.IsCancellationRequested)
                 {
-                    //reset zoom mode
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                    //Show image
+                    picMain.Image = im;
+                    im = null;
+
+                    //Reset the zoom mode if isKeepZoomRatio = FALSE
+                    if (!isKeepZoomRatio)
+                    {
+                        //reset zoom mode
+                        ApplyZoomMode(GlobalSetting.ZoomMode);
+                    }
+
+
+                    //Run in another thread
+                    await Task.Run(() =>
+                    {
+                        //Release unused images
+                        if (GlobalSetting.CurrentIndex - 2 >= 0)
+                        {
+                            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
+                        }
+                        if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
+                        {
+                            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
+                        }
+                    });
                 }
 
-
-                //Run in another thread
-                await Task.Run(() =>
-                {
-                    //Release unused images
-                    if (GlobalSetting.CurrentIndex - 2 >= 0)
-                    {
-                        GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
-                    }
-                    if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
-                    {
-                        GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
-                    }
-                });
+                _isAppBusy = false;
 
             }
             catch (Exception ex)
@@ -685,7 +700,7 @@ namespace ImageGlass
                 LocalSetting.ImageModifiedPath = "";
 
                 DisplayTextMessage(ex.Message, 3000);
-                
+
 
                 Application.DoEvents();
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
@@ -1487,7 +1502,7 @@ namespace ImageGlass
             try
             {
                 DateTime lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
-                Interpreter.SaveImage(picMain.Image, LocalSetting.ImageModifiedPath);
+                Interpreter.SaveImage(new Bitmap(picMain.Image), LocalSetting.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (GlobalSetting.PreserveModifiedDate)
@@ -2538,11 +2553,6 @@ namespace ImageGlass
                     if (!_isManuallyZoomed)
                     {
                         ApplyZoomMode(GlobalSetting.ZoomMode);
-                    }
-                    else
-                    {
-                        //reset picture position
-                        picMain.ScrollTo(0, 0, 0, 0);
                     }
                 }
                 // When user clicks on the RESTORE button on title bar
@@ -3740,7 +3750,7 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMainSaveAs_Click(object sender, EventArgs e)
+        private async void mnuMainSaveAs_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -3752,15 +3762,106 @@ namespace ImageGlass
             {
                 filename = "untitled.png";
             }
+            string ext = Path.GetExtension(filename).Substring(1);
 
 
-            var output = ImageInfo.ConvertImage(picMain.Image, filename);
-
-            //display successful msg
-            if (File.Exists(output))
+            SaveFileDialog s = new SaveFileDialog
             {
-                DisplayTextMessage(string.Format(GlobalSetting.LangPack.Items["frmMain._SaveImage"], output), 2000);
+                Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.txt)|*.txt",
+                FileName = Path.GetFileNameWithoutExtension(filename)
+            };
+
+            switch (ext.ToLower())
+            {
+                case "bmp":
+                    s.FilterIndex = 1;
+                    break;
+                case "emf":
+                    s.FilterIndex = 2;
+                    break;
+                case "exif":
+                    s.FilterIndex = 3;
+                    break;
+                case "gif":
+                    s.FilterIndex = 4;
+                    break;
+                case "ico":
+                    s.FilterIndex = 5;
+                    break;
+                case "jpg":
+                    s.FilterIndex = 6;
+                    break;
+                case "png":
+                    s.FilterIndex = 7;
+                    break;
+                case "tiff":
+                    s.FilterIndex = 8;
+                    break;
+                case "wmf":
+                    s.FilterIndex = 9;
+                    break;
             }
+
+
+            if (s.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap clonedPic = (Bitmap)picMain.Image;
+
+                switch (s.FilterIndex)
+                {
+                    case 1:
+                    case 4:
+                    case 6:
+                    case 7:
+                        Interpreter.SaveImage(clonedPic, s.FileName);
+                        break;
+                    case 2:
+                        clonedPic.Save(s.FileName, ImageFormat.Emf);
+                        break;
+                    case 3:
+                        clonedPic.Save(s.FileName, ImageFormat.Exif);
+                        break;
+                    case 5:
+                        clonedPic.Save(s.FileName, ImageFormat.Icon);
+                        break;
+                    case 8:
+                        clonedPic.Save(s.FileName, ImageFormat.Tiff);
+                        break;
+                    case 9:
+                        clonedPic.Save(s.FileName, ImageFormat.Wmf);
+                        break;
+                    case 10:
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            try
+                            {
+                                clonedPic.Save(ms, ImageFormat.Png);
+                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+
+                                using (StreamWriter fs = new StreamWriter(s.FileName))
+                                {
+                                    await fs.WriteAsync(base64string);
+                                    fs.Flush();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+
+                        break;
+                }
+
+                // release resources
+                clonedPic.Dispose();
+
+                //display successful msg
+                if (File.Exists(s.FileName)) {
+                    DisplayTextMessage(string.Format(GlobalSetting.LangPack.Items["frmMain._SaveImage"], s.FileName), 2000);
+                }
+            }
+            
         }
 
         private void mnuMainRefresh_Click(object sender, EventArgs e)
@@ -4313,29 +4414,32 @@ namespace ImageGlass
         }
 
 
-        private void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
+        private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
         {
             var isError = false;
 
             try
             {
-                // save the current image data to temp file
-                var imgFile = SaveTemporaryMemoryData();
-
-                using (Process p = new Process())
+                await Task.Run(() =>
                 {
-                    var args = string.Format("setlockimage \"{0}\"", imgFile);
+                    // save the current image data to temp file
+                    var imgFile = SaveTemporaryMemoryData();
 
-                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmdWin10.exe");
-                    p.StartInfo.Arguments = args;
-                    p.EnableRaisingEvents = true;
-                    p.Start();
+                    using (Process p = new Process())
+                    {
+                        var args = string.Format("setlockimage \"{0}\"", imgFile);
 
-                    p.WaitForExit();
+                        p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmdWin10.exe");
+                        p.StartInfo.Arguments = args;
+                        p.EnableRaisingEvents = true;
+                        p.Start();
 
-                    // success or error
-                    isError = p.ExitCode != 0;
-                }
+                        p.WaitForExit();
+
+                        // success or error
+                        isError = p.ExitCode != 0;
+                    }
+                });
             }
             catch { isError = true; }
 

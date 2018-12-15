@@ -24,7 +24,7 @@ namespace ImageGlass.Core
 {
     public class Img
     {
-        private Image bm;
+        private Bitmap bm;
         private string path;
         private bool _finished, _failed;
 
@@ -42,7 +42,7 @@ namespace ImageGlass.Core
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         public async void Load(Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
-            Image im = null;
+            Bitmap im = null;
             try
             {
                 im = await Interpreter.Load(path, size: size, colorProfileName: colorProfileName, isApplyColorProfileForAll: isApplyColorProfileForAll);
@@ -92,7 +92,7 @@ namespace ImageGlass.Core
         /// Return the image (or null)
         /// </summary>
         /// <returns>HURR</returns>
-        public Image Get()
+        public Bitmap Get()
         {
             return bm;
         }
@@ -101,7 +101,7 @@ namespace ImageGlass.Core
         /// Manually set new image
         /// </summary>
         /// <param name="im">DURR</param>
-        public void Set(Image im)
+        public void Set(Bitmap im)
         {
             Dispose();
             bm = im;

@@ -351,18 +351,15 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="pic">Image source</param>
         /// <param name="filename">New image file name</param>
-        public static async void SaveImage(Image pic, string filename)
+        public static void SaveImage(Bitmap pic, string filename)
         {
-            await Task.Run(() =>
-            {
-                string ext = Path.GetExtension(filename).Substring(1).ToLower();
+            string ext = Path.GetExtension(filename).Substring(1).ToLower();
 
-                using (var img = new MagickImage(new Bitmap(pic)))
-                {
-                    img.Quality = 100;
-                    img.Write(filename);
-                }
-            }).ConfigureAwait(false);
+            using (var img = new MagickImage(pic))
+            {
+                img.Quality = 100;
+                img.Write(filename);
+            }
         }
 
         /// <summary>

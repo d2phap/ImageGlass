@@ -85,9 +85,9 @@ namespace ImageGlass.Core
         /// <param name="isSkipCache">Option to skip the image cache</param>
         /// <param name="size">A custom size of image (only applicable if isSkipCache = TRUE)</param>
         /// <returns>Image i</returns>
-        public Image GetImage(int i, bool isSkipCache = false, Size size = new Size())
+        public Bitmap GetImage(int i, bool isSkipCache = false, Size size = new Size())
         {
-            Image img = null;
+            Bitmap img = null;
             
             if (!isSkipCache)
             {
