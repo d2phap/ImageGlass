@@ -2096,8 +2096,7 @@ namespace ImageGlass
                 timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
                 #endregion
 
-
-
+                
                 #region Load Zoom Mode
                 GlobalSetting.ZoomMode = (ZoomMode)Enum.Parse(typeof(ZoomMode), GlobalSetting.GetConfig("ZoomMode", "0"));
 
@@ -2595,9 +2594,11 @@ namespace ImageGlass
             LoadFromParams(Environment.GetCommandLineArgs());
 
             //Start thread to watching deleted files
-            System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles));
-            thDeleteWorker.Priority = System.Threading.ThreadPriority.BelowNormal;
-            thDeleteWorker.IsBackground = true;
+            System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
+            {
+                Priority = System.Threading.ThreadPriority.BelowNormal,
+                IsBackground = true
+            };
             thDeleteWorker.Start();
 
             // update the alignment of toolbar buttons
