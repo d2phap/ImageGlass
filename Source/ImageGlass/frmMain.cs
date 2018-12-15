@@ -1853,6 +1853,11 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load checkerboard display mode
+                GlobalSetting.IsShowCheckerboardOnlyImageRegion = bool.Parse(GlobalSetting.GetConfig("IsShowCheckerboardOnlyImageRegion", "False"));
+                #endregion
+
+
                 #region Show checkerboard
                 GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
                 GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
@@ -2114,15 +2119,6 @@ namespace ImageGlass
                 {
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                     picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                }
-                #endregion
-
-
-                #region Load checkerboard display mode
-                GlobalSetting.IsShowCheckerboardOnlyImageRegion = bool.Parse(GlobalSetting.GetConfig("IsShowCheckerboardOnlyImageRegion", "False"));
-                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
-                {
-                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
                 }
                 #endregion
 
