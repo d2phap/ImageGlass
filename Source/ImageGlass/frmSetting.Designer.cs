@@ -63,6 +63,7 @@ namespace ImageGlass
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkShowNavButtons = new System.Windows.Forms.CheckBox();
             this.chkLastSeenImage = new System.Windows.Forms.CheckBox();
             this.lnkConfigDir = new System.Windows.Forms.LinkLabel();
             this.chkDisplayBasename = new System.Windows.Forms.CheckBox();
@@ -174,7 +175,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkShowNavButtons = new System.Windows.Forms.CheckBox();
+            this.chkShowCheckerboardOnlyImage = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -270,7 +271,7 @@ namespace ImageGlass
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(45, 626);
+            this.picBackgroundColor.Location = new System.Drawing.Point(45, 659);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -569,6 +570,7 @@ namespace ImageGlass
             // 
             this.tabGeneral.AutoScroll = true;
             this.tabGeneral.BackColor = System.Drawing.Color.White;
+            this.tabGeneral.Controls.Add(this.chkShowCheckerboardOnlyImage);
             this.tabGeneral.Controls.Add(this.chkShowNavButtons);
             this.tabGeneral.Controls.Add(this.chkLastSeenImage);
             this.tabGeneral.Controls.Add(this.lnkConfigDir);
@@ -593,6 +595,18 @@ namespace ImageGlass
             this.tabGeneral.Size = new System.Drawing.Size(798, 557);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
+            // 
+            // chkShowNavButtons
+            // 
+            this.chkShowNavButtons.AutoSize = true;
+            this.chkShowNavButtons.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowNavButtons.Location = new System.Drawing.Point(45, 544);
+            this.chkShowNavButtons.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowNavButtons.Name = "chkShowNavButtons";
+            this.chkShowNavButtons.Size = new System.Drawing.Size(310, 30);
+            this.chkShowNavButtons.TabIndex = 50;
+            this.chkShowNavButtons.Text = "[Display navigation arrow buttons]";
+            this.chkShowNavButtons.UseVisualStyleBackColor = true;
             // 
             // chkLastSeenImage
             // 
@@ -651,7 +665,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 633);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 666);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
             this.lnkResetBackgroundColor.TabIndex = 13;
@@ -692,7 +706,7 @@ namespace ImageGlass
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(271, 713);
+            this.panel1.Location = new System.Drawing.Point(271, 746);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -749,7 +763,7 @@ namespace ImageGlass
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 599);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 632);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -2093,17 +2107,17 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // chkShowNavButtons
+            // chkShowCheckerBoardOnlyImage
             // 
-            this.chkShowNavButtons.AutoSize = true;
-            this.chkShowNavButtons.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowNavButtons.Location = new System.Drawing.Point(45, 544);
-            this.chkShowNavButtons.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowNavButtons.Name = "chkShowNavButtons";
-            this.chkShowNavButtons.Size = new System.Drawing.Size(310, 30);
-            this.chkShowNavButtons.TabIndex = 50;
-            this.chkShowNavButtons.Text = "[Display navigation arrow buttons]";
-            this.chkShowNavButtons.UseVisualStyleBackColor = true;
+            this.chkShowCheckerboardOnlyImage.AutoSize = true;
+            this.chkShowCheckerboardOnlyImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowCheckerboardOnlyImage.Location = new System.Drawing.Point(45, 578);
+            this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowCheckerboardOnlyImage.Name = "chkShowCheckerBoardOnlyImage";
+            this.chkShowCheckerboardOnlyImage.Size = new System.Drawing.Size(415, 30);
+            this.chkShowCheckerboardOnlyImage.TabIndex = 51;
+            this.chkShowCheckerboardOnlyImage.Text = "[Display checkerboard only in the image region]";
+            this.chkShowCheckerboardOnlyImage.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
@@ -2305,5 +2319,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblColorManagement;
         private System.Windows.Forms.LinkLabel lnkColorProfilePath;
         private System.Windows.Forms.CheckBox chkShowNavButtons;
+        private System.Windows.Forms.CheckBox chkShowCheckerboardOnlyImage;
     }
 }

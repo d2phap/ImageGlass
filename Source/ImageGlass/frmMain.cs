@@ -2118,12 +2118,20 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load checkerboard display mode
+                GlobalSetting.IsShowCheckerboardOnlyImageRegion = bool.Parse(GlobalSetting.GetConfig("IsShowCheckerboardOnlyImageRegion", "False"));
+                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                {
+                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
+                }
+                #endregion
+
+
                 #region Load state of IsWindowAlwaysOnTop value 
                 GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
                 this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
                 #endregion
-
-
+                
 
                 #region Get Last Seen Image Path & Welcome Image
                 GlobalSetting.IsOpenLastSeenImage = bool.Parse(GlobalSetting.GetConfig("IsOpenLastSeenImage", "False"));
@@ -2836,6 +2844,16 @@ namespace ImageGlass
                 {
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
                     picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                }
+
+                // update checkerboard display mode
+                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                {
+                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
+                }
+                else
+                {
+                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
                 }
 
                 //Update background---------------------
@@ -4607,7 +4625,14 @@ namespace ImageGlass
             if (btnCheckedBackground.Checked)
             {
                 //show
-                picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
+                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                {
+                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
+                }
+                else
+                {
+                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
+                }
             }
             else
             {

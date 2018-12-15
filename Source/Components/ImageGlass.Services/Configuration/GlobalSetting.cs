@@ -438,6 +438,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value indicates that to checkerboard in the image region only
+        /// </summary>
+        public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +

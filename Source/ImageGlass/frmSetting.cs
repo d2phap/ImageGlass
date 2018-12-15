@@ -272,6 +272,7 @@ namespace ImageGlass
             chkShowScrollbar.Text = lang[$"{Name}.chkShowScrollbar"];
             chkDisplayBasename.Text = lang[$"{Name}.chkDisplayBasename"];
             chkShowNavButtons.Text = lang[$"{Name}.chkShowNavButtons"];
+            chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.chkShowCheckerboardOnlyImage"];
             lblBackGroundColor.Text = lang[$"{Name}.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.lnkResetBackgroundColor"];
             #endregion
@@ -570,6 +571,9 @@ namespace ImageGlass
             //Get value of IsShowNavigationButtons
             chkShowNavButtons.Checked = GlobalSetting.IsShowNavigationButtons;
 
+            //Get value of IsShowNavigationButtons
+            chkShowCheckerboardOnlyImage.Checked = GlobalSetting.IsShowCheckerboardOnlyImageRegion;
+
             //Get background color
             picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
         }
@@ -593,6 +597,7 @@ namespace ImageGlass
                 picBackgroundColor.BackColor = c.Color;
             }
         }
+
 
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -2129,6 +2134,19 @@ namespace ImageGlass
             //IsShowNavigationButtons
             GlobalSetting.IsShowNavigationButtons = chkShowNavButtons.Checked;
             GlobalSetting.SetConfig("IsShowNavigationButtons", GlobalSetting.IsShowNavigationButtons.ToString());
+
+
+            #region IsShowCheckerboardOnlyImageRegion: MainFormForceUpdateAction.OTHER_SETTINGS
+            //IsShowCheckerboardOnlyImageRegion
+            newBool = chkShowCheckerboardOnlyImage.Checked;
+            if (GlobalSetting.IsShowCheckerboardOnlyImageRegion != newBool)
+            {
+                GlobalSetting.IsShowCheckerboardOnlyImageRegion = newBool;
+                GlobalSetting.SetConfig("IsShowCheckerboardOnlyImageRegion", GlobalSetting.IsShowCheckerboardOnlyImageRegion.ToString());
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
+            #endregion
 
 
             #region IsScrollbarsVisible: MainFormForceUpdateAction.OTHER_SETTINGS
