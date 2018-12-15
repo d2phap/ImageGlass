@@ -297,7 +297,6 @@ namespace ImageGlass
 
             if (_imgBox != null)
             {
-                _imgBox.Cursor = Cursors.Default;
                 _imgBox.MouseMove -= _imgBox_MouseMove;
                 _imgBox.Click -= _imgBox_Click;
             }
@@ -309,7 +308,6 @@ namespace ImageGlass
             {
                 return;
             }
-            _imgBox.Cursor = Cursors.Cross;
             _cursorPos = _imgBox.PointToImage(e.Location);
 
             //In case of opening a second image, 

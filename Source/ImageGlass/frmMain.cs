@@ -2153,6 +2153,22 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load Color picker configs 
+                //Get Color code format
+                GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
+                GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
+                GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
+
+
+                //Get IsShowColorPicker
+                LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+                if (LocalSetting.IsShowColorPickerOnStartup)
+                {
+                    mnuMainColorPicker.PerformClick();
+                }
+                #endregion
+
+
                 //load other configs in another thread
                 await Task.Run(() =>
                 {
@@ -2164,6 +2180,7 @@ namespace ImageGlass
 
                     //Load IsPressESCToQuit
                     GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
+
 
                     #region Zoom optimization method 
                     string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
@@ -2282,24 +2299,8 @@ namespace ImageGlass
                     //Get IsNewVersionAvailable
                     GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
 
-
-                    #region Load Color picker configs 
-                    //Get Color code format
-                    GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
-                    GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
-                    GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
-
-
-                    //Get IsShowColorPicker
-                    LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
-                    if (LocalSetting.IsShowColorPickerOnStartup)
-                    {
-                        mnuMainColorPicker.PerformClick();
-                    }
-                    #endregion
-
-                }).ConfigureAwait(false);
-
+                });
+                
 
                 #region Load Full Screen mode
                 GlobalSetting.IsFullScreen = bool.Parse(GlobalSetting.GetConfig("IsFullScreen", "False"));
@@ -3371,10 +3372,22 @@ namespace ImageGlass
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
                     // calculate icon height
-                    var iconHeight = (int)DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+                    var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
 
                     // get the hotpot area width
                     var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+
+                    void SetDefaultCursor()
+                    {
+                        if (LocalSetting.IsColorPickerToolOpening)
+                        {
+                            picMain.Cursor = Cursors.Cross;
+                        }
+                        else
+                        {
+                            picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                        }
+                    }
 
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
@@ -3388,7 +3401,7 @@ namespace ImageGlass
                         }
                         catch (Exception)
                         {
-                            picMain.Cursor = Cursors.Default;
+                            SetDefaultCursor();
                         }
 
                     }, onCursorRightAction: () =>
@@ -3402,13 +3415,17 @@ namespace ImageGlass
                         }
                         catch (Exception)
                         {
-                            picMain.Cursor = Cursors.Default;
+                            SetDefaultCursor();
                         }
 
                     }, onCursorCenterAction: () =>
                     {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                        SetDefaultCursor();
                     });
+
+
+
+                    
                 }
 
                 //reset the cursor
@@ -4649,6 +4666,11 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
+            /**
+             * NOTE ***
+             * Cross-thread exception here when IsShowColorPickerOnStartup = TRUE
+             */
+
             LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
 
             //open Color Picker tool
