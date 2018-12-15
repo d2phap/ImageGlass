@@ -4590,7 +4590,11 @@ namespace ImageGlass
             }
             mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
             SelectCurrentThumbnail();
-            ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when thumbbar turned off
+
+            if (!_isManuallyZoomed)
+            {
+                ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when thumbbar turned off
+            }
         }
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
