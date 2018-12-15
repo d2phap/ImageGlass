@@ -414,6 +414,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
+        /// </summary>
+        public static bool IsCenterToolbar { get; set; } = true;
+
+
+        /// <summary>
         /// Gets, sets the value indicates that to show last seen image on startup
         /// </summary>
         public static bool IsOpenLastSeenImage { get; set; } = false;
@@ -483,10 +489,7 @@ namespace ImageGlass.Services.Configuration
 
 
 
-        /// <summary>
-        /// Are toolbar buttons to be centered horizontally in the window? [useful for wide screens?]
-        /// </summary>
-        public static bool IsCenterToolbar { get; set; } = false;
+        
 
 
 
