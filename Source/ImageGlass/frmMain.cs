@@ -3369,6 +3369,18 @@ namespace ImageGlass
         {
             if (!picMain.IsPanning)
             {
+                void SetDefaultCursor()
+                {
+                    if (LocalSetting.IsColorPickerToolOpening)
+                    {
+                        picMain.Cursor = Cursors.Cross;
+                    }
+                    else
+                    {
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                    }
+                }
+
                 // set the Arrow cursor
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
@@ -3377,18 +3389,6 @@ namespace ImageGlass
 
                     // get the hotpot area width
                     var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
-
-                    void SetDefaultCursor()
-                    {
-                        if (LocalSetting.IsColorPickerToolOpening)
-                        {
-                            picMain.Cursor = Cursors.Cross;
-                        }
-                        else
-                        {
-                            picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                        }
-                    }
 
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
@@ -3432,7 +3432,7 @@ namespace ImageGlass
                 //reset the cursor
                 else
                 {
-                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                    SetDefaultCursor();
                 }
             }
         }
