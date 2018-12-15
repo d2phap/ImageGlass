@@ -643,6 +643,11 @@ namespace ImageGlass
             //Update current index
             GlobalSetting.CurrentIndex = tempIndex;
 
+            //Select thumbnail item
+            SelectCurrentThumbnail();
+
+            // Update the basic info
+            UpdateStatusBar();
 
             //The image data will load
             Bitmap im = null;
@@ -718,9 +723,6 @@ namespace ImageGlass
             }
 
             _isDraggingImage = false;
-
-            //Select thumbnail item
-            SelectCurrentThumbnail();
 
             //Collect system garbage
             GC.Collect();
@@ -1325,7 +1327,7 @@ namespace ImageGlass
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -3846,7 +3848,7 @@ namespace ImageGlass
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
 
@@ -4294,11 +4296,11 @@ namespace ImageGlass
                 string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
-                    ImageInfo.DeleteFile(filename, true);
+                    ImageInfo.DeleteFile(filename, isMoveToRecycleBin: true);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -4323,11 +4325,11 @@ namespace ImageGlass
                 string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
-                    ImageInfo.DeleteFile(filename);                    
+                    ImageInfo.DeleteFile(filename, isMoveToRecycleBin: false);                    
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
