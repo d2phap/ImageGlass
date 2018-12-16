@@ -310,7 +310,7 @@ namespace ImageGlass
             {
                 //Mark as Image Error
                 GlobalSetting.IsImageError = true;
-                this.Text = $"ImageGlass - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
+                this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
@@ -598,7 +598,7 @@ namespace ImageGlass
 
             if (GlobalSetting.ImageList.Length < 1)
             {
-                Text = $"ImageGlass";
+                Text = Application.ProductName;
 
                 GlobalSetting.IsImageError = true;
                 picMain.Image = null;
@@ -656,13 +656,19 @@ namespace ImageGlass
                 GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
 
                 _isAppBusy = true;
+                var loadingTimer = new Timer()
+                {
+                    Interval = 2000
+                };
+                loadingTimer.Tick += LoadingMessageTimer_Tick;
+                loadingTimer.Enabled = true;
+                loadingTimer.Start();
 
                 //Read image data
                 im = await Task.Run(() =>
                 {
                     return GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
                 });
-
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
 
@@ -682,7 +688,7 @@ namespace ImageGlass
 
 
                     //Run in another thread
-                    await Task.Run(() =>
+                    Parallel.Invoke(() =>
                     {
                         //Release unused images
                         if (GlobalSetting.CurrentIndex - 2 >= 0)
@@ -699,15 +705,11 @@ namespace ImageGlass
                 _isAppBusy = false;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
 
-                DisplayTextMessage(ex.Message, 3000);
-
-
-                Application.DoEvents();
                 if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 {
                     GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
@@ -839,6 +841,7 @@ namespace ImageGlass
             }
 
         }
+        
         #endregion
 
 
@@ -1334,6 +1337,27 @@ namespace ImageGlass
 
 
         /// <summary>
+        /// Check and display message if the image still being loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoadingMessageTimer_Tick(object sender, EventArgs e)
+        {
+            var timer = (Timer)sender;
+            timer.Enabled = false;
+            timer.Stop();
+            timer.Tick -= LoadingMessageTimer_Tick;
+
+            if (_isAppBusy)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._Loading"], 10000);
+            }
+
+            timer.Dispose();
+        }
+
+
+        /// <summary>
         /// Display a message on picture box
         /// </summary>
         /// <param name="msg">Message</param>
@@ -1355,8 +1379,10 @@ namespace ImageGlass
                 return;
             }
 
-            Timer tmsg = new Timer();
-            tmsg.Enabled = false;
+            Timer tmsg = new Timer
+            {
+                Enabled = false
+            };
             tmsg.Tick += tmsg_Tick;
             tmsg.Interval = duration; //display in xxx mili seconds
 
@@ -1368,7 +1394,6 @@ namespace ImageGlass
             //Start timer
             tmsg.Enabled = true;
             tmsg.Start();
-
         }
 
 
@@ -1379,6 +1404,8 @@ namespace ImageGlass
         {
             Timer tmsg = (Timer)sender;
             tmsg.Stop();
+            tmsg.Tick -= tmsg_Tick;
+            tmsg.Dispose();
 
             picMain.TextBackColor = Color.Transparent;
             picMain.Font = Font;
