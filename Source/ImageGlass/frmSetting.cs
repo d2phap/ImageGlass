@@ -152,7 +152,7 @@ namespace ImageGlass
 
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,900,700"));
+            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{this.Name}.WindowsBound", "280,125,900,700"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {
@@ -161,7 +161,7 @@ namespace ImageGlass
             Bounds = rc;
 
             //windows state--------------------------------------------------------------
-            string s = GlobalSetting.GetConfig(Name + ".WindowsState", "Normal");
+            string s = GlobalSetting.GetConfig($"{this.Name}.WindowsState", "Normal");
             if (s == "Normal")
             {
                 WindowState = FormWindowState.Normal;
@@ -180,6 +180,8 @@ namespace ImageGlass
             //Load configs
             LoadTabGeneralConfig();
             LoadTabImageConfig();
+            LoadTabEditConfig();
+            LoadTabColorPicker();
 
             //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
