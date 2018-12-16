@@ -261,7 +261,7 @@ namespace ImageGlass
 
 
             LoadImages(_imageFilenameList, targetImgFile ?? filePath);
-            
+
             WatchPath(dirPath);
         }
         
@@ -564,11 +564,8 @@ namespace ImageGlass
         /// <param name="isSkipCache"></param>
         private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action<int, bool, bool>(NextPic), step, isKeepZoomRatio, isSkipCache);
-                return;
-            }
+            System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+
 
             // cancel the previous loading task
             _cancelToken.Cancel();
@@ -595,8 +592,6 @@ namespace ImageGlass
                 //update thumbnail
                 thumbnailBar.Items[GlobalSetting.CurrentIndex].Update();
             }
-            
-            Application.DoEvents();
 
             picMain.Text = "";
             LocalSetting.IsTempMemoryData = false;
@@ -645,9 +640,11 @@ namespace ImageGlass
 
             //Select thumbnail item
             SelectCurrentThumbnail();
+            
 
             // Update the basic info
             UpdateStatusBar();
+            
 
             //The image data will load
             Bitmap im = null;
@@ -661,17 +658,20 @@ namespace ImageGlass
                 _isAppBusy = true;
 
                 //Read image data
-                await Task.Run(() =>
+                im = await Task.Run(() =>
                 {
-                    im = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
-                    GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
+                    return GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
                 });
+
+                GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
+
 
                 if (!token.Token.IsCancellationRequested)
                 {
                     //Show image
                     picMain.Image = im;
                     im = null;
+
 
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
@@ -727,6 +727,7 @@ namespace ImageGlass
             //Collect system garbage
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
 
@@ -1830,7 +1831,7 @@ namespace ImageGlass
         /// <summary>
         /// Load app configurations
         /// </summary>
-        private async void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true)
+        private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true)
         {
             //Stopwatch stopwatch = Stopwatch.StartNew();
             string configValue = string.Empty;
@@ -1902,8 +1903,7 @@ namespace ImageGlass
                 }
                 #endregion
 
-
-
+                
                 #region Load Thumbnail dimension
                 if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
                 {
@@ -1915,8 +1915,7 @@ namespace ImageGlass
                 }
                 #endregion
 
-
-
+                
                 #region Load thumbnail bar width & position
                 if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
                 {
@@ -1941,7 +1940,6 @@ namespace ImageGlass
                     }
                 }
                 #endregion
-                
                 
                 
                 #region Load Thumbnail scrollbar visibility
@@ -1977,8 +1975,7 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                 frmMain_Activated(null, EventArgs.Empty);
                 #endregion
-
-
+                
 
                 // Windows state must be loaded after Windows Bound!
                 #region Windows state
@@ -1993,8 +1990,7 @@ namespace ImageGlass
                 }
                 #endregion
 
-
-
+                
                 #region Load Toolbar button centering state
                 GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
                 #endregion
@@ -2030,8 +2026,7 @@ namespace ImageGlass
                 frmMain_Activated(null, null);
                 #endregion
 
-
-
+                
                 #region Read supported image formats
                 var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -2054,8 +2049,7 @@ namespace ImageGlass
                 // build the hashset GlobalSetting.ImageFormatHashSet
                 GlobalSetting.BuildImageFormatHashSet();
                 #endregion
-
-
+                
 
                 #region Recursive loading
                 GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
@@ -2169,7 +2163,7 @@ namespace ImageGlass
 
 
                 //load other configs in another thread
-                await Task.Run(() =>
+                Task.Run(() =>
                 {
                     //Load IsLoopBackViewer
                     GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
@@ -4667,11 +4661,6 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            /**
-             * NOTE ***
-             * Cross-thread exception here when IsShowColorPickerOnStartup = TRUE
-             */
-
             LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
 
             //open Color Picker tool
