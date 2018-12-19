@@ -139,6 +139,13 @@ namespace ImageGlass.Services.Configuration
 
             try
             {
+                var dir = Path.GetDirectoryName(Filename);
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
                 doc.Save(Filename);
             }
             catch (Exception) { }

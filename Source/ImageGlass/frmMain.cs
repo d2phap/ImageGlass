@@ -1876,11 +1876,6 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Show NavigationButtons
-                GlobalSetting.IsShowNavigationButtons = bool.Parse(GlobalSetting.GetConfig("IsShowNavigationButtons", "False").ToString());
-                #endregion
-
-
                 #region Load checkerboard display mode
                 GlobalSetting.IsShowCheckerboardOnlyImageRegion = bool.Parse(GlobalSetting.GetConfig("IsShowCheckerboardOnlyImageRegion", "False"));
                 #endregion
@@ -2018,10 +2013,6 @@ namespace ImageGlass
                 #endregion
 
                 
-                #region Load Toolbar button centering state
-                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
-                #endregion
-
             }
             #endregion
 
@@ -2042,8 +2033,18 @@ namespace ImageGlass
                 }
                 this.Bounds = rc;
                 #endregion
+                
+
+                #region Load Toolbar button centering state
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                #endregion
 
 
+                #region Show NavigationButtons
+                GlobalSetting.IsShowNavigationButtons = bool.Parse(GlobalSetting.GetConfig("IsShowNavigationButtons", "False").ToString());
+                #endregion
+
+                
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
                 GlobalSetting.LangPack = new Language(configValue, Path.Combine(GlobalSetting.ConfigDir, "Languages"));
@@ -2148,6 +2149,32 @@ namespace ImageGlass
                 this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
                 #endregion
                 
+                
+                #region Load Color picker configs 
+                //Get Color code format
+                GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
+                GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
+                GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
+
+
+                //Get IsShowColorPicker
+                LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+                if (LocalSetting.IsShowColorPickerOnStartup)
+                {
+                    mnuMainColorPicker.PerformClick();
+                }
+                #endregion
+
+
+                #region Load Full Screen mode
+                GlobalSetting.IsFullScreen = bool.Parse(GlobalSetting.GetConfig("IsFullScreen", "False"));
+                if (GlobalSetting.IsFullScreen)
+                {
+                    GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
+                    mnuMainFullScreen.PerformClick();
+                }
+                #endregion
+
 
                 #region Get Last Seen Image Path & Welcome Image
                 GlobalSetting.IsOpenLastSeenImage = bool.Parse(GlobalSetting.GetConfig("IsOpenLastSeenImage", "False"));
@@ -2172,23 +2199,7 @@ namespace ImageGlass
                 }
                 #endregion
 
-
-                #region Load Color picker configs 
-                //Get Color code format
-                GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
-                GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
-                GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
-
-
-                //Get IsShowColorPicker
-                LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
-                if (LocalSetting.IsShowColorPickerOnStartup)
-                {
-                    mnuMainColorPicker.PerformClick();
-                }
-                #endregion
-
-
+                
                 //load other configs in another thread
                 Task.Run(() =>
                 {
@@ -2321,15 +2332,6 @@ namespace ImageGlass
 
                 });
                 
-
-                #region Load Full Screen mode
-                GlobalSetting.IsFullScreen = bool.Parse(GlobalSetting.GetConfig("IsFullScreen", "False"));
-                if (GlobalSetting.IsFullScreen)
-                {
-                    GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
-                    mnuMainFullScreen.PerformClick();
-                }
-                #endregion
 
             }
             #endregion
