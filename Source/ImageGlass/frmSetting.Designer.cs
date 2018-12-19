@@ -63,6 +63,7 @@ namespace ImageGlass
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkShowCheckerboardOnlyImage = new System.Windows.Forms.CheckBox();
             this.chkShowNavButtons = new System.Windows.Forms.CheckBox();
             this.chkLastSeenImage = new System.Windows.Forms.CheckBox();
             this.lnkConfigDir = new System.Windows.Forms.LinkLabel();
@@ -175,7 +176,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkShowCheckerboardOnlyImage = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -512,9 +512,10 @@ namespace ImageGlass
             // 
             this.lnkOpenFileAssoc.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkOpenFileAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkOpenFileAssoc.BackColor = System.Drawing.Color.Transparent;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(390, 64);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(386, 60);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
             this.lnkOpenFileAssoc.Size = new System.Drawing.Size(391, 25);
             this.lnkOpenFileAssoc.TabIndex = 32;
@@ -559,7 +560,7 @@ namespace ImageGlass
             // lblSupportedExtension
             // 
             this.lblSupportedExtension.AutoSize = true;
-            this.lblSupportedExtension.Location = new System.Drawing.Point(22, 64);
+            this.lblSupportedExtension.Location = new System.Drawing.Point(22, 60);
             this.lblSupportedExtension.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSupportedExtension.Name = "lblSupportedExtension";
             this.lblSupportedExtension.Size = new System.Drawing.Size(189, 25);
@@ -595,6 +596,18 @@ namespace ImageGlass
             this.tabGeneral.Size = new System.Drawing.Size(798, 557);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
+            // 
+            // chkShowCheckerboardOnlyImage
+            // 
+            this.chkShowCheckerboardOnlyImage.AutoSize = true;
+            this.chkShowCheckerboardOnlyImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowCheckerboardOnlyImage.Location = new System.Drawing.Point(45, 578);
+            this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowCheckerboardOnlyImage.Name = "chkShowCheckerboardOnlyImage";
+            this.chkShowCheckerboardOnlyImage.Size = new System.Drawing.Size(415, 30);
+            this.chkShowCheckerboardOnlyImage.TabIndex = 51;
+            this.chkShowCheckerboardOnlyImage.Text = "[Display checkerboard only in the image region]";
+            this.chkShowCheckerboardOnlyImage.UseVisualStyleBackColor = true;
             // 
             // chkShowNavButtons
             // 
@@ -1467,13 +1480,13 @@ namespace ImageGlass
             // 
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnMoveRight.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveRight.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveRight.Location = new System.Drawing.Point(321, 249);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(50, 50);
             this.btnMoveRight.TabIndex = 40;
-            this.btnMoveRight.Text = "à";
+            this.btnMoveRight.Text = "►";
             this.btnMoveRight.UseVisualStyleBackColor = true;
             this.btnMoveRight.Click += new System.EventHandler(this.btnMoveRight_Click);
             // 
@@ -1481,12 +1494,12 @@ namespace ImageGlass
             // 
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnMoveLeft.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveLeft.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveLeft.Location = new System.Drawing.Point(321, 180);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(50, 50);
             this.btnMoveLeft.TabIndex = 39;
-            this.btnMoveLeft.Text = "ß";
+            this.btnMoveLeft.Text = "◄";
             this.btnMoveLeft.UseVisualStyleBackColor = true;
             this.btnMoveLeft.Click += new System.EventHandler(this.btnMoveLeft_Click);
             // 
@@ -1494,12 +1507,12 @@ namespace ImageGlass
             // 
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnMoveUp.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveUp.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveUp.Location = new System.Drawing.Point(697, 180);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(50, 50);
             this.btnMoveUp.TabIndex = 42;
-            this.btnMoveUp.Text = "á";
+            this.btnMoveUp.Text = "▲";
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
             // 
@@ -1559,12 +1572,12 @@ namespace ImageGlass
             // 
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnMoveDown.Font = new System.Drawing.Font("Wingdings", 9.75F);
+            this.btnMoveDown.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveDown.Location = new System.Drawing.Point(697, 249);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(50, 50);
             this.btnMoveDown.TabIndex = 43;
-            this.btnMoveDown.Text = "â";
+            this.btnMoveDown.Text = "▼";
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
@@ -2106,18 +2119,6 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
-            // 
-            // chkShowCheckerBoardOnlyImage
-            // 
-            this.chkShowCheckerboardOnlyImage.AutoSize = true;
-            this.chkShowCheckerboardOnlyImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowCheckerboardOnlyImage.Location = new System.Drawing.Point(45, 578);
-            this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowCheckerboardOnlyImage.Name = "chkShowCheckerBoardOnlyImage";
-            this.chkShowCheckerboardOnlyImage.Size = new System.Drawing.Size(415, 30);
-            this.chkShowCheckerboardOnlyImage.TabIndex = 51;
-            this.chkShowCheckerboardOnlyImage.Text = "[Display checkerboard only in the image region]";
-            this.chkShowCheckerboardOnlyImage.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
