@@ -42,6 +42,11 @@ namespace igtasks
 
             if (o.ShowDialog() == DialogResult.OK)
             {
+                // create directory if not exist
+                if (!Directory.Exists(GlobalSetting.StartUpDir(Dir.Languages))) {
+                    Directory.CreateDirectory(GlobalSetting.StartUpDir(Dir.Languages));
+                }
+
                 foreach (string f in o.FileNames)
                 {
                     try
