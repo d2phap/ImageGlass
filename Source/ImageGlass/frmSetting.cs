@@ -954,7 +954,7 @@ namespace ImageGlass
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
 
             try
@@ -968,7 +968,7 @@ namespace ImageGlass
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
 
             try
@@ -981,7 +981,7 @@ namespace ImageGlass
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
 
             try
