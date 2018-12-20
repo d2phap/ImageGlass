@@ -1589,7 +1589,7 @@ namespace ImageGlass
 
             //Update toolbar icon size
             var themeName = GlobalSetting.GetConfig("Theme", "default");
-            Theme.Theme t = new Theme.Theme(Path.Combine(GlobalSetting.ConfigDir, "Themes", themeName));
+            Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
             LoadToolbarIcons(t);
 
             #endregion
@@ -1631,12 +1631,13 @@ namespace ImageGlass
         /// </summary>
         private string SaveTemporaryMemoryData()
         {
-            if (!Directory.Exists(GlobalSetting.TempDir))
+            var tempDir = GlobalSetting.ConfigDir(Dir.Temporary);
+            if (!Directory.Exists(tempDir))
             {
-                Directory.CreateDirectory(GlobalSetting.TempDir);
+                Directory.CreateDirectory(tempDir);
             }
 
-            string filename = Path.Combine(GlobalSetting.TempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
+            string filename = Path.Combine(tempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
 
             picMain.Image.Save(filename, ImageFormat.Png);
 
@@ -1760,7 +1761,7 @@ namespace ImageGlass
         /// <param name="themeFolderName">The folder name of theme. By default, load default theme</param>
         private Theme.Theme ApplyTheme(string themeFolderName = "default")
         {
-            Theme.Theme th = new Theme.Theme(Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName));
+            Theme.Theme th = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeFolderName));
 
             if (th.IsThemeValid)
             {
@@ -2047,7 +2048,7 @@ namespace ImageGlass
                 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
-                GlobalSetting.LangPack = new Language(configValue, Path.Combine(GlobalSetting.ConfigDir, "Languages"));
+                GlobalSetting.LangPack = new Language(configValue, GlobalSetting.ConfigDir(Dir.Languages));
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
@@ -2189,7 +2190,7 @@ namespace ImageGlass
 
                 if (!File.Exists(startUpImg) && GlobalSetting.IsShowWelcome)
                 {
-                    startUpImg = Path.Combine(GlobalSetting.StartUpDir, "default.jpg");
+                    startUpImg = GlobalSetting.StartUpDir("default.jpg");
                 }
 
                 //Do not show welcome image if params exist.
@@ -2674,9 +2675,10 @@ namespace ImageGlass
                 this._fileWatcher.Dispose();
 
                 //clear temp files
-                if (Directory.Exists(GlobalSetting.TempDir))
+                var tempDir = GlobalSetting.ConfigDir(Dir.Temporary);
+                if (Directory.Exists(tempDir))
                 {
-                    Directory.Delete(GlobalSetting.TempDir, true);
+                    Directory.Delete(tempDir, true);
                 }
 
                 SaveConfig();
@@ -4429,7 +4431,7 @@ namespace ImageGlass
                     var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
 
                     // Issue #326: first attempt to set wallpaper w/o privs. 
-                    p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                    p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                     p.StartInfo.Arguments = args;
                     p.Start();
 
@@ -4439,7 +4441,7 @@ namespace ImageGlass
                     // If that fails due to privs error, re-attempt with admin privs.
                     if (p.ExitCode == (int) DesktopWallapaper.Result.PrivsFail)
                     {
-                        p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
                         p.StartInfo.Arguments = args;
                         p.Start();
 
@@ -4486,7 +4488,7 @@ namespace ImageGlass
                     {
                         var args = string.Format("setlockimage \"{0}\"", imgFile);
 
-                        p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmdWin10.exe");
+                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmdWin10.exe");
                         p.StartInfo.Arguments = args;
                         p.EnableRaisingEvents = true;
                         p.Start();
@@ -4742,7 +4744,7 @@ namespace ImageGlass
         private void mnuMainFirstLaunch_Click(object sender, EventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
             p.StartInfo.Arguments = "firstlaunch";
 
             try

@@ -255,32 +255,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-
-
-        /// <summary>
-        /// Gets temporary directory of ImageGlass, 
-        /// e.g. ${ConfigsDir}\Temp\
-        /// </summary>
-        public static string TempDir { get; } =  Path.Combine(GlobalSetting.ConfigDir, "Temp");
-
-
-        /// <summary>
-        /// Get the configuration folder of ImageGlass.
-        /// For portable mode, ConfigsDir = Installed Dir, else %appdata%\ImageGlass
-        /// </summary>
-        public static string ConfigDir
-        {
-            get
-            {
-                if (IsStartUpDirWritable)
-                {
-                    return GlobalSetting.StartUpDir;
-                }
-
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
-            }
-        }
-
+        
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -354,22 +329,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets start up directory of ImageGlass
-        /// </summary>
-        public static string StartUpDir
-        {
-            get
-            {
-                var path = Application.StartupPath;
-                if (!path.EndsWith("\\"))
-                    path += "\\";
-                return path;
-            }
-        }
-
+        
 
         /// <summary>
         /// Gets, sets zoom mode value
@@ -489,7 +449,7 @@ namespace ImageGlass.Services.Configuration
 
 
 
-        
+
 
 
 
@@ -498,6 +458,46 @@ namespace ImageGlass.Services.Configuration
 
 
         #region Public Methods
+
+        /// <summary>
+        /// Get the path based on the startup folder of ImageGlass.
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public static string StartUpDir(params string[] paths)
+        {
+            var path = Application.StartupPath;
+
+            var newPaths = paths.ToList();
+            newPaths.Insert(0, path);
+
+            return Path.Combine(newPaths.ToArray());
+        }
+
+
+        /// <summary>
+        /// Get the path based on the configuration folder of ImageGlass.
+        /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public static string ConfigDir(params string[] paths)
+        {
+            if (IsStartUpDirWritable)
+            {
+                return GlobalSetting.StartUpDir(paths);
+            }
+
+            var configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
+
+            var newPaths = paths.ToList();
+            newPaths.Insert(0, configDir);
+            configDir = Path.Combine(newPaths.ToArray());
+
+            return configDir;
+        }
+
+
         /// <summary>
         /// Load the default built-in image formats to the list
         /// </summary>
@@ -694,7 +694,7 @@ namespace ImageGlass.Services.Configuration
         {
             try
             {
-                var filePath = Path.Combine(GlobalSetting.StartUpDir, "test_write_file.temp");
+                var filePath = GlobalSetting.StartUpDir("test_write_file.temp");
 
                 using (File.Create(filePath)) { }
                 File.Delete(filePath);

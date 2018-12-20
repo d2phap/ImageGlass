@@ -307,9 +307,10 @@ namespace ImageGlass
             this.lblLanguageWarning.Location = new System.Drawing.Point(22, 88);
             this.lblLanguageWarning.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLanguageWarning.Name = "lblLanguageWarning";
-            this.lblLanguageWarning.Size = new System.Drawing.Size(556, 25);
+            this.lblLanguageWarning.Size = new System.Drawing.Size(566, 25);
             this.lblLanguageWarning.TabIndex = 25;
-            this.lblLanguageWarning.Text = "This language pack may be not compatible with ImageGlass 3.2.0.16.";
+            this.lblLanguageWarning.Text = "[This language pack may be not compatible with ImageGlass 3.2.0.16.]";
+            this.lblLanguageWarning.Visible = false;
             // 
             // lnkInstallLanguage
             // 

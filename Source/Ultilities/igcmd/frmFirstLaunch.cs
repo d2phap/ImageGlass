@@ -122,7 +122,7 @@ namespace igcmd
 
             // Update extensions to registry
             Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
 
             try
@@ -187,7 +187,7 @@ namespace igcmd
                 new Language()
             };
 
-            string langPath = Path.Combine(GlobalSetting.ConfigDir, "Languages");
+            string langPath = GlobalSetting.ConfigDir(Dir.Languages);
 
             if (!Directory.Exists(langPath))
             {
@@ -249,7 +249,7 @@ namespace igcmd
         /// </summary>
         private void LaunchImageGlass()
         {
-            var appExe = Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe");
+            var appExe = GlobalSetting.StartUpDir("ImageGlass.exe");
 
             Process p = new Process();
             p.StartInfo.FileName = Path.Combine(appExe);
@@ -263,14 +263,14 @@ namespace igcmd
         private void LoadThemeList()
         {
             //add default theme
-            var defaultTheme = new Theme(Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml"));
+            var defaultTheme = new Theme(GlobalSetting.StartUpDir(@"DefaultTheme\config.xml"));
             _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
             cmbTheme.Items.Add(defaultTheme.Name);
             cmbTheme.SelectedIndex = 0;
 
 
-            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
+            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
 
             //get the current theme
             var currentTheme = GlobalSetting.GetConfig("Theme", "default");
@@ -340,7 +340,7 @@ namespace igcmd
         /// </summary>
         private void InstallThemePacks()
         {
-            var themeFiles = Directory.GetFiles(Path.Combine(GlobalSetting.StartUpDir, "DefaultTheme"), "*.igtheme");
+            var themeFiles = Directory.GetFiles(GlobalSetting.StartUpDir("DefaultTheme"), "*.igtheme");
 
             foreach (var file in themeFiles)
             {

@@ -63,7 +63,7 @@ namespace ImageGlass
 
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
-            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir);
+            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir());
             ProfileOptimization.StartProfile("igstartup.profile");
 
 #if ERRORMODE
@@ -93,7 +93,7 @@ namespace ImageGlass
             if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
             {
                 Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = "firstlaunch";
 
                 try
@@ -133,7 +133,7 @@ namespace ImageGlass
             void RunCheckForUpdate()
             {
                 Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = "igautoupdate";
                 p.Start();
 

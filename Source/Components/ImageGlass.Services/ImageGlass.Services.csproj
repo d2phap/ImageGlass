@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationFile.cs" />
+    <Compile Include="Configuration\Dir.cs" />
     <Compile Include="Configuration\Enums.cs" />
     <Compile Include="Configuration\GlobalSetting.cs" />
     <Compile Include="Configuration\ImageEditingAssociation.cs" />

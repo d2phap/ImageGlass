@@ -46,7 +46,7 @@ namespace igtasks
                 {
                     try
                     {
-                        File.Copy(f, Path.Combine(GlobalSetting.ConfigDir, "Languages", Path.GetFileName(f)));
+                        File.Copy(f, GlobalSetting.ConfigDir(Dir.Languages, Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {
@@ -180,7 +180,7 @@ namespace igtasks
                 return 1;
             }
 
-            if (!reg.Write("ApplicationIcon", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\", 0"))
+            if (!reg.Write("ApplicationIcon", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\", 0"))
             {
                 return 1;
             }
@@ -204,10 +204,10 @@ namespace igtasks
                 }
 
                 // Config the File Associations - Icon
-                var iconPath = Path.Combine(GlobalSetting.StartUpDir, @"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
+                var iconPath = GlobalSetting.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
                 if (!File.Exists(iconPath))
                 {
-                    iconPath = Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe");
+                    iconPath = GlobalSetting.StartUpDir("ImageGlass.exe");
                 }
 
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
@@ -225,7 +225,7 @@ namespace igtasks
 
                 // Config the File Associations - Command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
-                if (!reg.Write("", $"\"{Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")}\" \"%1\""))
+                if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\" \"%1\""))
                 {
                     return 1;
                 }

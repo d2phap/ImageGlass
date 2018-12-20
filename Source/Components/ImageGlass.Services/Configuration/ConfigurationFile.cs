@@ -29,7 +29,7 @@ namespace ImageGlass.Services.Configuration
         private Dictionary<string, string> _dictionary;
         public string Description { get; set; }
         public string Version { get; set; }
-        public string Filename { get => Path.Combine(GlobalSetting.ConfigDir, "igconfig.xml"); }
+        public string Filename { get => GlobalSetting.ConfigDir("igconfig.xml"); }
 
         public ICollection<string> Keys => _dictionary.Keys;
         public ICollection<string> Values => _dictionary.Values;

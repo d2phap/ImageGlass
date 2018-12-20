@@ -264,7 +264,7 @@ namespace ImageGlass
 
 
             lblHeadConfigDir.Text = lang[$"{Name}.lblHeadConfigDir"];//
-            lnkConfigDir.Text = GlobalSetting.ConfigDir;
+            lnkConfigDir.Text = GlobalSetting.ConfigDir();
 
 
             lblHeadOthers.Text = lang[$"{Name}.lblHeadOthers"];//
@@ -583,7 +583,7 @@ namespace ImageGlass
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("explorer.exe", GlobalSetting.ConfigDir);
+            Process.Start("explorer.exe", GlobalSetting.ConfigDir());
         }
 
 
@@ -954,7 +954,7 @@ namespace ImageGlass
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
 
             try
@@ -968,7 +968,7 @@ namespace ImageGlass
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
 
             try
@@ -981,7 +981,7 @@ namespace ImageGlass
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.FileName = p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
 
             try
@@ -996,7 +996,7 @@ namespace ImageGlass
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
 
-            string langPath = Path.Combine(GlobalSetting.ConfigDir, "Languages");
+            string langPath = GlobalSetting.ConfigDir(Dir.Languages);
 
             if (!Directory.Exists(langPath))
             {
@@ -1135,7 +1135,7 @@ namespace ImageGlass
             {
                 var isError = true;
 
-                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
                 p.StartInfo.Arguments = $"regassociations {extensions}";
                 p.Start();
 
@@ -1822,7 +1822,7 @@ namespace ImageGlass
 
         private async void RefreshThemeList()
         {
-            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
+            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
 
             lvTheme.Items.Clear();
             lvTheme.Items.Add("2017 (Dark)").Tag = "default";
@@ -1916,7 +1916,7 @@ namespace ImageGlass
                 }
                 
 
-                Theme.Theme t = new Theme.Theme(Path.Combine(GlobalSetting.ConfigDir, "Themes", themeName));
+                Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
                 txtThemeInfo.Text = 
@@ -2008,11 +2008,11 @@ namespace ImageGlass
                 if (s.ShowDialog() == DialogResult.OK)
                 {
                     string themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    string configFilePath = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeName, "config.xml");
+                    string configFilePath = GlobalSetting.ConfigDir(Dir.Themes, themeName, "config.xml");
                     
                     if (!File.Exists(configFilePath))
                     {
-                        configFilePath = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
+                        configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
                     }
 
                     var themeDir = Path.GetDirectoryName(configFilePath);
@@ -2033,7 +2033,7 @@ namespace ImageGlass
 
         private void btnThemeFolderOpen_Click(object sender, EventArgs e)
         {
-            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
+            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
         
@@ -2043,7 +2043,7 @@ namespace ImageGlass
             if (lvTheme.SelectedItems.Count > 0)
             {
                 string themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
-                string themeFolderPath = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName);
+                string themeFolderPath = GlobalSetting.ConfigDir(Dir.Themes, themeFolderName);
 
                 var th = Theme.Theme.ApplyTheme(themeFolderPath);
 

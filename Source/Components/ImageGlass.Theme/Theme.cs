@@ -216,7 +216,7 @@ namespace ImageGlass.Theme
 
             if (!File.Exists(configFilePath))
             {
-                configFilePath = Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml");
+                configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
             }
 
             this._themeConfigFilePath = configFilePath;
@@ -607,7 +607,7 @@ namespace ImageGlass.Theme
                 return ThemeInstallingResult.ERROR;
             }
 
-            string themeFolder = Path.Combine(GlobalSetting.ConfigDir, "Themes");
+            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
             Directory.CreateDirectory(themeFolder);
 
             return ExtractTheme(themePath, themeFolder);
@@ -621,7 +621,7 @@ namespace ImageGlass.Theme
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
         {
-            string fullConfigPath = Path.Combine(GlobalSetting.ConfigDir, "Themes", themeFolderName, "config.xml");
+            string fullConfigPath = GlobalSetting.ConfigDir(Dir.Themes, themeFolderName, "config.xml");
 
             if (File.Exists(fullConfigPath))
             {

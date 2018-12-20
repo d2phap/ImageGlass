@@ -37,7 +37,7 @@ namespace igcmd
         }
 
         Update up = new Update();
-        string updateInfoFile = Path.Combine(GlobalSetting.ConfigDir, "update.xml");
+        string updateInfoFile = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
 
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -60,7 +60,7 @@ namespace igcmd
 
 
 
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe"));
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir("ImageGlass.exe"));
 
             txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
 
@@ -97,7 +97,7 @@ namespace igcmd
                     $"Size: {up.Info.Size}\r\n" +
                     $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
-                if (up.CheckForUpdate(Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe")))
+                if (up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")))
                 {
                     if (up.Info.VersionType.ToLower() == "stable")
                     {
