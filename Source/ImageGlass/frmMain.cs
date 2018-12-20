@@ -2048,7 +2048,7 @@ namespace ImageGlass
                 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
-                GlobalSetting.LangPack = new Language(configValue, GlobalSetting.ConfigDir(Dir.Languages));
+                GlobalSetting.LangPack = new Language(configValue, GlobalSetting.StartUpDir(Dir.Languages));
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;

@@ -46,7 +46,7 @@ namespace igtasks
                 {
                     try
                     {
-                        File.Copy(f, GlobalSetting.ConfigDir(Dir.Languages, Path.GetFileName(f)));
+                        File.Copy(f, GlobalSetting.StartUpDir(Dir.Languages, Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {

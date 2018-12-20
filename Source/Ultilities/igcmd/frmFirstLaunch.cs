@@ -187,13 +187,9 @@ namespace igcmd
                 new Language()
             };
 
-            string langPath = GlobalSetting.ConfigDir(Dir.Languages);
+            string langPath = GlobalSetting.StartUpDir(Dir.Languages);
 
-            if (!Directory.Exists(langPath))
-            {
-                Directory.CreateDirectory(langPath);
-            }
-            else
+            if (Directory.Exists(langPath))
             {
                 foreach (string f in Directory.GetFiles(langPath))
                 {

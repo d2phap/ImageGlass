@@ -995,21 +995,16 @@ namespace ImageGlass
         {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
+            lstLanguages = new List<Language> {
+                new Language()
+            };
 
-            string langPath = GlobalSetting.ConfigDir(Dir.Languages);
+            string langPath = GlobalSetting.StartUpDir(Dir.Languages);
 
-            if (!Directory.Exists(langPath))
-            {
-                Directory.CreateDirectory(langPath);
-            }
-            else
+            if (Directory.Exists(langPath))
             {
                 await Task.Run(() =>
                 {
-                    lstLanguages = new List<Language>
-                    {
-                        new Language()
-                    };
                     foreach (string f in Directory.GetFiles(langPath))
                     {
                         if (Path.GetExtension(f).ToLower() == ".iglang")
