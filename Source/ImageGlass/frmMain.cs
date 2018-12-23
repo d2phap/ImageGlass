@@ -920,7 +920,27 @@ namespace ImageGlass
                 return;
             }
             #endregion
-            
+
+
+            //Flip Horizontally-----------------------------------------------------------
+            #region Ctrl + ;
+            if (e.KeyValue == 186 && e.Control && !e.Shift && !e.Alt)//Ctrl + ;
+            {
+                mnuMainFlipHorz_Click(null, null);
+                return;
+            }
+            #endregion
+
+
+            //Flip Vertically-----------------------------------------------------------
+            #region Ctrl + '
+            if (e.KeyValue == 222 && e.Control && !e.Shift && !e.Alt)//Ctrl + '
+            {
+                mnuMainFlipVert_Click(null, null);
+                return;
+            }
+            #endregion
+
 
             //Clear clipboard----------------------------------------------------------------
             #region CTRL + `
@@ -3502,49 +3522,13 @@ namespace ImageGlass
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            if (picMain.CanAnimate)
-            {
-                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
-                return;
-            }
-
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
-
-            try
-            {
-                // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-            }
-            catch { }
+            mnuMainFlipVert_Click(null, null);
 
         }
 
         private void btnFlipVert_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            if (picMain.CanAnimate)
-            {
-                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
-                return;
-            }
-
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
-
-            try
-            {
-                // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
-            }
-            catch { }
+            mnuMainFlipVert_Click(null, null);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -4224,6 +4208,52 @@ namespace ImageGlass
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
+        private void mnuMainFlipHorz_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
+        }
+
+        private void mnuMainFlipVert_Click(object sender, EventArgs e)
+        {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
+            if (picMain.CanAnimate)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                return;
+            }
+
+            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+
+            try
+            {
+                // Save the image path for saving
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            }
+            catch { }
+        }
+
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
@@ -4882,6 +4912,8 @@ namespace ImageGlass
 
             mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
+
+
 
 
 
