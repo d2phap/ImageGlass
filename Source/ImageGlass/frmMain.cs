@@ -56,10 +56,10 @@ namespace ImageGlass
 
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
-            Application.DoEvents();
 
             //Update form with new DPI
             OnDpiChanged();
+            Application.DoEvents();
 
             /* KBR 20181009 - Fix observed bug. 
              * If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*. 
@@ -953,7 +953,7 @@ namespace ImageGlass
 
 
             //Zoom + ------------------------------------------------------------------------
-            #region Ctrl + = / = / + (numPad)
+            #region Ctrl + = or = or + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
@@ -963,7 +963,7 @@ namespace ImageGlass
 
 
             //Zoom - ------------------------------------------------------------------------
-            #region Ctrl + - / - / - (numPad)
+            #region Ctrl + - or - or - (numPad)
             if ((e.KeyValue == 189 || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
@@ -973,7 +973,7 @@ namespace ImageGlass
 
 
             //Zoom to fit--------------------------------------------------------------------
-            #region CTRL + `
+            #region CTRL + /
             if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
             {
                 mnuMainScaleToFit_Click(null, null);
@@ -2055,7 +2055,7 @@ namespace ImageGlass
                 
 
                 #region Load Toolbar button centering state
-                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()));
                 #endregion
 
 
