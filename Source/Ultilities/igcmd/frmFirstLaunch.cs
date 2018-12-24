@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ namespace igcmd
 
             // Update extensions to registry
             Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igtasks.exe");
+            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = $"regassociations {GlobalSetting.AllImageFormats}";
 
             try
@@ -187,13 +187,9 @@ namespace igcmd
                 new Language()
             };
 
-            string langPath = Path.Combine(GlobalSetting.StartUpDir, "Languages");
+            string langPath = GlobalSetting.StartUpDir(Dir.Languages);
 
-            if (!Directory.Exists(langPath))
-            {
-                Directory.CreateDirectory(langPath);
-            }
-            else
+            if (Directory.Exists(langPath))
             {
                 foreach (string f in Directory.GetFiles(langPath))
                 {
@@ -249,7 +245,7 @@ namespace igcmd
         /// </summary>
         private void LaunchImageGlass()
         {
-            var appExe = Path.Combine(GlobalSetting.StartUpDir, "ImageGlass.exe");
+            var appExe = GlobalSetting.StartUpDir("ImageGlass.exe");
 
             Process p = new Process();
             p.StartInfo.FileName = Path.Combine(appExe);
@@ -263,31 +259,31 @@ namespace igcmd
         private void LoadThemeList()
         {
             //add default theme
-            var defaultTheme = new Theme(Path.Combine(GlobalSetting.StartUpDir, @"DefaultTheme\config.xml"));
+            var defaultTheme = new Theme(GlobalSetting.StartUpDir(@"DefaultTheme\config.xml"));
             _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
             cmbTheme.Items.Add(defaultTheme.Name);
             cmbTheme.SelectedIndex = 0;
 
 
-            string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Themes\");
+            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
 
             //get the current theme
-            var currentTheme = GlobalSetting.GetConfig("Theme", "Default");
+            var currentTheme = GlobalSetting.GetConfig("Theme", "default");
 
 
-            if (Directory.Exists(dir))
+            if (Directory.Exists(themeFolder))
             {
-                foreach (string d in Directory.GetDirectories(dir))
+                foreach (string d in Directory.GetDirectories(themeFolder))
                 {
                     string configFile = Path.Combine(d, "config.xml");
 
                     if (File.Exists(configFile))
                     {
-                        Theme th = new Theme();
+                        Theme th = new Theme(d);
 
                         //invalid theme
-                        if (!th.LoadTheme(configFile))
+                        if (!th.IsThemeValid)
                         {
                             continue;
                         }
@@ -295,7 +291,7 @@ namespace igcmd
                         _themeList.Add(th);
                         cmbTheme.Items.Add(th.Name);
 
-                        if (currentTheme.ToLower().CompareTo(th.ThemeConfigFilePath.ToLower()) == 0)
+                        if (currentTheme.ToLower().CompareTo(th.ThemeFolderName.ToLower()) == 0)
                         {
                             cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                         }
@@ -304,7 +300,7 @@ namespace igcmd
             }
             else
             {
-                Directory.CreateDirectory(dir);
+                Directory.CreateDirectory(themeFolder);
             }
 
 
@@ -340,7 +336,7 @@ namespace igcmd
         /// </summary>
         private void InstallThemePacks()
         {
-            var themeFiles = Directory.GetFiles(Path.Combine(GlobalSetting.StartUpDir, "DefaultTheme"), "*.igtheme");
+            var themeFiles = Directory.GetFiles(GlobalSetting.StartUpDir("DefaultTheme"), "*.igtheme");
 
             foreach (var file in themeFiles)
             {
@@ -371,8 +367,8 @@ namespace igcmd
         /// </summary>
         private void ApplySettings()
         {
-            GlobalSetting.SetConfig("Language", _lang.FileName);
-            GlobalSetting.SetConfig("Theme", _theme.ThemeConfigFilePath);
+            GlobalSetting.SetConfig("Language", Path.GetFileName(_lang.FileName));
+            GlobalSetting.SetConfig("Theme", _theme.ThemeFolderName);
 
 
             if (_layout == LayoutMode.Designer)

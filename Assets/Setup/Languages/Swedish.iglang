@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Redigera bild {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Navigera" />
       <Item key="frmMain.mnuMainViewNext" value="Visa nästa bild" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Högerpil / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Visa föregående bild" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Vänsterpil / PageUp" />
       <Item key="frmMain.mnuMainGoto" value="Gå till..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Gå till första bilden" />
       <Item key="frmMain.mnuMainGotoLast" value="Gå till sista bilden" />

@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
@@ -113,7 +113,8 @@ namespace ImageGlass
             tab1.SizeMode = TabSizeMode.Fixed;
 
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
-            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsPortableMode ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
+            lblAppName.Text = Application.ProductName;
+            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsStartUpDirWritable ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             //Load item component
@@ -169,7 +170,7 @@ namespace ImageGlass
             try
             {
                 string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("http://www.imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
+                Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
             catch { }
         }
@@ -179,7 +180,7 @@ namespace ImageGlass
             try
             {
                 string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("http://www.imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
+                Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
             catch { }
         }
@@ -240,7 +241,7 @@ namespace ImageGlass
             try
             {
                 string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("http://www.imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
+                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }
         }

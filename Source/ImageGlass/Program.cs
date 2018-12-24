@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
@@ -24,6 +24,7 @@ using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
 using System.IO;
 using System.Globalization;
+using System.Runtime;
 
 namespace ImageGlass
 {
@@ -35,12 +36,40 @@ namespace ImageGlass
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
+#if ERRORMODE
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+
+        [Flags]
+        public enum ErrorModes : uint
+        {
+            SYSTEM_DEFAULT = 0x0,
+            SEM_FAILCRITICALERRORS = 0x0001,
+            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+            SEM_NOGPFAULTERRORBOX = 0x0002,
+            SEM_NOOPENFILEERRORBOX = 0x8000
+        }
+#endif
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main(string[] argv)
         {
+            // Check if the start up directory writable
+            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+
+
+            // Set up Startup Profile to improve launch performance
+            // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
+            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir());
+            ProfileOptimization.StartProfile("igstartup.profile");
+
+#if ERRORMODE
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+#endif
+
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
             {
@@ -51,12 +80,7 @@ namespace ImageGlass
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
             
-            // Enable Portable mode as default if possible
-            GlobalSetting.IsPortableMode = GlobalSetting.IsStartUpDirWritable;
 
             // Save App version
             GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
@@ -69,7 +93,7 @@ namespace ImageGlass
             if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
             {
                 Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(GlobalSetting.StartUpDir, "igcmd.exe");
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = "firstlaunch";
 
                 try
@@ -109,7 +133,7 @@ namespace ImageGlass
             void RunCheckForUpdate()
             {
                 Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir + "igcmd.exe";
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = "igautoupdate";
                 p.Start();
 
@@ -156,14 +180,23 @@ namespace ImageGlass
             if (formMain == null)
                 return;
 
-            Action<String[]> updateForm = arguments =>
+            Action<String[]> UpdateForm = arguments =>
             {
                 formMain.WindowState = FormWindowState.Normal;
                 formMain.LoadFromParams(arguments);
             };
 
+            // KBR 20181009 Attempt to run a 2d instance of IG when multi-instance turned off. Primary instance
+            // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
+            int realcount = 0;
+            foreach (var arg in e.Args)
+                if (arg != null)
+                    realcount++;
+            string[] realargs = new string[realcount];
+            Array.Copy(e.Args, realargs, realcount);
+
             //Execute our delegate on the forms thread!
-            formMain.Invoke(updateForm, (Object)e.Args); 
+            formMain.Invoke(UpdateForm, (Object)realargs); 
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);

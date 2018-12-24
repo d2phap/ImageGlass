@@ -1,20 +1,22 @@
 ﻿/*
- * imaeg - generic image utility in C#
- * Copyright (C) 2010  ed <tripflag@gmail.com>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License v2
- * (version 2) as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, refer to the following URL:
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using System;
 using System.Drawing;
 
@@ -22,7 +24,7 @@ namespace ImageGlass.Core
 {
     public class Img
     {
-        private Image bm;
+        private Bitmap bm;
         private string path;
         private bool _finished, _failed;
 
@@ -35,18 +37,19 @@ namespace ImageGlass.Core
         /// <summary>
         /// Load image from file
         /// </summary>
-        /// <param name="root">Parent folder for instance path</param>
-        public void Load()
+        /// <param name="size">A custom size of image</param>
+        /// <param name="colorProfileName">Name or Full path of color profile</param>
+        /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
+        public void Load(Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
-            Image im = null;
+            Bitmap im = null;
             try
             {
-                im = Interpreter.Load(path);
+                im = Interpreter.Load(path, size: size, colorProfileName: colorProfileName, isApplyColorProfileForAll: isApplyColorProfileForAll);
             }
-#pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex)
-#pragma warning restore CS0168 // Variable is declared but never used
+            catch (Exception)
             { }
+
             Set(im);
         }
 
@@ -89,7 +92,7 @@ namespace ImageGlass.Core
         /// Return the image (or null)
         /// </summary>
         /// <returns>HURR</returns>
-        public Image Get()
+        public Bitmap Get()
         {
             return bm;
         }
@@ -98,7 +101,7 @@ namespace ImageGlass.Core
         /// Manually set new image
         /// </summary>
         /// <param name="im">DURR</param>
-        public void Set(Image im)
+        public void Set(Bitmap im)
         {
             Dispose();
             bm = im;

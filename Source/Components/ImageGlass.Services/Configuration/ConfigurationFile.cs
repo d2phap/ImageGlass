@@ -29,7 +29,7 @@ namespace ImageGlass.Services.Configuration
         private Dictionary<string, string> _dictionary;
         public string Description { get; set; }
         public string Version { get; set; }
-        public string Filename { get => Path.Combine(GlobalSetting.StartUpDir, "igconfig.xml"); }
+        public string Filename { get => GlobalSetting.ConfigDir("igconfig.xml"); }
 
         public ICollection<string> Keys => _dictionary.Keys;
         public ICollection<string> Values => _dictionary.Values;
@@ -60,38 +60,15 @@ namespace ImageGlass.Services.Configuration
             ReadConfigFile();
         }
 
-
-        /// <summary>
-        /// Check if ImageGlass can write config file in the startup folder
-        /// </summary>
-        /// <returns></returns>
-        public bool IsWritable()
-        {
-            try
-            {
-                var filePath = Path.Combine(GlobalSetting.StartUpDir, "test_write_file.temp");
-
-                using (File.Create(filePath)) { }
-                File.Delete(filePath);                
-
-                return true;
-            }
-            catch// (Exception ex)
-            {
-                //System.Windows.Forms.MessageBox.Show(ex.Message);
-                return false;
-            }
-        }
-
         /// <summary>
         /// Read configuration strings from file
         /// </summary>
         public void ReadConfigFile()
         {
             // write default configs if not exist
-            if(!System.IO.File.Exists(Filename))
+            if(!File.Exists(Filename))
             {
-                WriteConfigFile();
+                WriteConfigFile(writeEmptyConfigs: true);
             }
 
             XmlDocument doc = new XmlDocument();
@@ -133,7 +110,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Export all configuration strings to xml file
         /// </summary>
-        public void WriteConfigFile()
+        public void WriteConfigFile(bool writeEmptyConfigs = false)
         {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
@@ -145,12 +122,15 @@ namespace ImageGlass.Services.Configuration
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>
-            foreach (var item in this)
+            if (!writeEmptyConfigs)
             {
-                XmlElement n = doc.CreateElement("Item"); // <Item>
-                n.SetAttribute("key", item.Key);
-                n.SetAttribute("value", item.Value.ToString());
-                nContent.AppendChild(n);// <Item />
+                foreach (var item in this)
+                {
+                    XmlElement n = doc.CreateElement("Item"); // <Item>
+                    n.SetAttribute("key", item.Key);
+                    n.SetAttribute("value", item.Value.ToString());
+                    nContent.AppendChild(n);// <Item />
+                }
             }
             nType.AppendChild(nContent);
 
@@ -159,11 +139,16 @@ namespace ImageGlass.Services.Configuration
 
             try
             {
+                var dir = Path.GetDirectoryName(Filename);
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
                 doc.Save(Filename);
             }
-#pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex) { }
-#pragma warning restore CS0168 // Variable is declared but never used
+            catch (Exception) { }
 
             doc = null;
             root = null;
@@ -181,7 +166,7 @@ namespace ImageGlass.Services.Configuration
             // write default configs if not exist
             if (!File.Exists(Filename))
             {
-                WriteConfigFile();
+                WriteConfigFile(writeEmptyConfigs: true);
             }
 
             XmlDocument doc = new XmlDocument();
@@ -210,6 +195,7 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
+
         /// <summary>
         /// Write configuration item to igconfig.xml file
         /// </summary>
@@ -217,6 +203,12 @@ namespace ImageGlass.Services.Configuration
         /// <param name="value"></param>
         public void SetConfig(string key, object value)
         {
+            if (!File.Exists(Filename))
+            {
+                WriteConfigFile(writeEmptyConfigs: true);
+            }
+
+
             // update memory config
             this[key] = value.ToString();
 

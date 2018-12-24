@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Theme;
 using System.Text;
 
 namespace igcmd
@@ -35,13 +34,10 @@ namespace igcmd
         public frmCheckForUpdate()
         {
             InitializeComponent();
-
-            if (!Directory.Exists(GlobalSetting.TempDir))
-                Directory.CreateDirectory(GlobalSetting.TempDir);
         }
 
         Update up = new Update();
-        string updateInfoFile = Path.Combine(GlobalSetting.TempDir, "update.xml");
+        string updateInfoFile = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
 
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -55,14 +51,16 @@ namespace igcmd
         private void frmMain_Load(object sender, EventArgs e)
         {
             picStatus.Image = igcmd.Properties.Resources.loading;
-            Thread t = new Thread(new ThreadStart(CheckForUpdate));
-            t.Priority = ThreadPriority.BelowNormal;
-            t.IsBackground = true;
+            Thread t = new Thread(new ThreadStart(CheckForUpdate))
+            {
+                Priority = ThreadPriority.BelowNormal,
+                IsBackground = true
+            };
             t.Start();
 
 
 
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir + "ImageGlass.exe");
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir("ImageGlass.exe"));
 
             txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
 
@@ -72,7 +70,7 @@ namespace igcmd
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("http://www.imageglass.org/checkforupdate"), updateInfoFile);
+            up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateInfoFile);
 
             if (File.Exists(updateInfoFile))
             {
@@ -83,7 +81,7 @@ namespace igcmd
 
             if (up.IsError)
             {
-                sb.Append("Please visit http://imageglass.org/download to check for updates.");
+                sb.Append("Please visit https://imageglass.org/download to check for updates.");
 
                 lblStatus.Text = "Unable to check for current version online.";
                 lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
@@ -99,7 +97,7 @@ namespace igcmd
                     $"Size: {up.Info.Size}\r\n" +
                     $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
-                if (up.CheckForUpdate(GlobalSetting.StartUpDir + "ImageGlass.exe"))
+                if (up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")))
                 {
                     if (up.Info.VersionType.ToLower() == "stable")
                     {

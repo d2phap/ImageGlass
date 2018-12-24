@@ -41,14 +41,13 @@ namespace ImageGlass.Theme
         /// Icon image
         /// </summary>
         /// <param name="filename">Filename</param>
-        /// <param name="width">Set width for Scalable Format</param>
-        /// <param name="height">Set height for Scalable Format</param>
-        public ThemeImage(string filename, int @width = 0, int @height = 0)
+        /// <param name="size">Set size of icon</param>
+        public ThemeImage(string filename, Size size = new Size())
         {
             Filename = filename;
             try
             {
-                Image = Interpreter.LoadIcon(filename, width, height);
+                Image = Interpreter.LoadIcon(filename, size.Width, size.Height);
             }
             catch { }
         }

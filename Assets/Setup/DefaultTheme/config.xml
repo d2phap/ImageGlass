@@ -30,7 +30,9 @@
         settings="Settings.svg"
         about="About.svg" 
         menu="Menu.svg"
-		    delete="delete.svg"		
+		    delete="delete.svg"
+        fliphorz="FlipHorz.svg" 
+        flipvert="FlipVert.svg"
 		/>
   </Theme>
 </ImageGlass>

@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Επεξεργασία εικόνας {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Πλοήγηση" />
       <Item key="frmMain.mnuMainViewNext" value="Επόμενη εικόνα" />
+	  <Item key="frmMain.mnuMainViewNext.Shortcut" value="→ / PageDown" />
       <Item key="frmMain.mnuMainViewPrevious" value="Προηγούμενη εικόνα" />
+	  <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="← / PageUp" />
       <Item key="frmMain.mnuMainGoto" value="Μετάβαση σε ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Πήγαινε στην πρώτη εικόνα" />
       <Item key="frmMain.mnuMainGotoLast" value="Πήγαινε στην τελευταία εικόνα" />

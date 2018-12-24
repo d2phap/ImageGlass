@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="Uredi sliko {0}" />
       <Item key="frmMain.mnuMainNavigation" value="Krmarjenje" />
       <Item key="frmMain.mnuMainViewNext" value="Ogled naslednje slike" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Desna puščica/Page Down" />
       <Item key="frmMain.mnuMainViewPrevious" value="Ogled prejšnje slike" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Leva puščica/Page Up" />
       <Item key="frmMain.mnuMainGoto" value="Pojdi na..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Pojdi na prvo sliko" />
       <Item key="frmMain.mnuMainGotoLast" value="Pojdi na zadnjo sliko" />

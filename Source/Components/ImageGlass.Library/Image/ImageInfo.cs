@@ -79,111 +79,6 @@ namespace ImageGlass.Library.Image
             ShellExecuteEx(ref shInfo);
         }
 
-        /// <summary>
-        /// Convert image to another format
-        /// </summary>
-        /// <param name="pic">Image source</param>
-        /// <param name="filename">Filename</param>
-        public static string ConvertImage(System.Drawing.Image pic, string filename)
-        {
-            SaveFileDialog s = new SaveFileDialog();
-            s.Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.txt)|*.txt";
-            s.FileName = Path.GetFileNameWithoutExtension(filename);
-            string ext = Path.GetExtension(filename).Substring(1);
-
-            switch (ext.ToLower())
-            {
-                case "bmp":
-                    s.FilterIndex = 1;
-                    break;
-                case "emf":
-                    s.FilterIndex = 2;
-                    break;
-                case "exif":
-                    s.FilterIndex = 3;
-                    break;
-                case "gif":
-                    s.FilterIndex = 4;
-                    break;
-                case "ico":
-                    s.FilterIndex = 5;
-                    break;
-                case "jpg":
-                    s.FilterIndex = 6;
-                    break;
-                case "png":
-                    s.FilterIndex = 7;
-                    break;
-                case "tiff":
-                    s.FilterIndex = 8;
-                    break;
-                case "wmf":
-                    s.FilterIndex = 9;
-                    break;
-            }
-            
-
-            if (s.ShowDialog() == DialogResult.OK)
-            {
-                // used to avoid the following consecutive exceptions:
-                // System.ObjectDisposedException
-                // System.Runtime.InteropServices.ExternalException
-                var clonedPic = new Bitmap(pic);
-
-                switch (s.FilterIndex)
-                {
-                    case 1:
-                    case 4:
-                    case 6:
-                    case 7:
-                        Interpreter.SaveImage(clonedPic, s.FileName);
-                        break;
-                    case 2:
-                        clonedPic.Save(s.FileName, ImageFormat.Emf);
-                        break;
-                    case 3:
-                        clonedPic.Save(s.FileName, ImageFormat.Exif);
-                        break;
-                    case 5:
-                        clonedPic.Save(s.FileName, ImageFormat.Icon);
-                        break;
-                    case 8:
-                        clonedPic.Save(s.FileName, ImageFormat.Tiff);
-                        break;
-                    case 9:
-                        clonedPic.Save(s.FileName, ImageFormat.Wmf);
-                        break;
-                    case 10:
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            try
-                            {
-                                clonedPic.Save(ms, ImageFormat.Png);
-                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
-
-                                using (StreamWriter fs = new StreamWriter(s.FileName))
-                                {
-                                    fs.Write(base64string);
-                                    fs.Flush();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                        
-                        break;
-                }
-
-                // free resources
-                clonedPic.Dispose();
-
-                return s.FileName;
-            }
-
-            return string.Empty;
-        }
 
         /// <summary>
         /// Get image type name
@@ -192,52 +87,7 @@ namespace ImageGlass.Library.Image
         /// <returns></returns>
         public static string GetImageFileType(string filename)
         {
-            string ext = System.IO.Path.GetExtension(filename).Replace(".", "").ToLower();
-
-            switch (ext)
-            {
-                case "bmp":
-                    return "Bitmap Image File";
-                case "dib":
-                    return "Device Independent Bitmap File";
-                case "jpg":
-                    return "JPEG Image File";
-                case "jpeg":
-                    return "Joint Photographic Experts Group";
-                case "jfif":
-                    return "JPEG File Interchange Format";
-                case "jpe":
-                    return "JPEG Image File";
-                case "png":
-                    return "Portable Network Graphics";
-                case "gif":
-                    return "Graphics Interchange Format File";
-                case "ico":
-                    return "Icon File";
-                case "emf":
-                    return "Enhanced Windows Metafile";
-                case "exif":
-                    return "Exchangeable Image Information File";
-                case "wmf":
-                    return "Windows Metafile";
-                case "tif":
-                    return "Tagged Image File";
-                case "tiff":
-                    return "Tagged Image File Format";
-                default:
-                    return ext.ToUpper() + " File";
-            }
-        }
-
-        /// <summary>
-        /// Get image file type
-        /// </summary>
-        /// <param name="extension">extension code</param>
-        /// <param name="extensionOnly">Always true</param>
-        /// <returns></returns>
-        public static string GetImageFileType(string extension, bool extensionOnly)
-        {
-            string ext = extension.Replace(".", "").ToLower();
+            string ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
             switch (ext)
             {
@@ -274,6 +124,7 @@ namespace ImageGlass.Library.Image
             }
         }
         
+        
         /// <summary>
         /// Get file size format
         /// </summary>
@@ -286,7 +137,7 @@ namespace ImageGlass.Library.Image
                 double mod = 1024;
                 string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
-                System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+                FileInfo fi = new FileInfo(filename);
                 double sized = fi.Length * 1.0f;
                 int i;
 
@@ -311,11 +162,13 @@ namespace ImageGlass.Library.Image
         {
             try
             {
-                if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
+                if (Path.GetExtension(filename).ToLower() != ".ico")
                 {
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
-                    //get Width x Height
-                    return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
+                    {
+                        //get Width x Height
+                        return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
+                    }
                 }
                 else
                 {
@@ -343,15 +196,17 @@ namespace ImageGlass.Library.Image
                 double h = 0;
                 double v = 0;
 
-                if (System.IO.Path.GetExtension(filename).ToLower() != ".ico")
+                if (Path.GetExtension(filename).ToLower() != ".ico")
                 {
-                    System.Drawing.Image img = System.Drawing.Image.FromFile(filename);
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
+                    {
 
-                    //get HorizontalResolution 
-                    h = Math.Round((double)img.HorizontalResolution, 2);
+                        //get HorizontalResolution 
+                        h = Math.Round((double)img.HorizontalResolution, 2);
 
-                    //get VerticalResolution
-                    v = Math.Round((double)img.VerticalResolution, 2);
+                        //get VerticalResolution
+                        v = Math.Round((double)img.VerticalResolution, 2);
+                    }
                 }
                 else
                 {
@@ -377,9 +232,9 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static System.DateTime GetCreateTime(string filename)
+        public static DateTime GetCreateTime(string filename)
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+            FileInfo fi = new FileInfo(filename);
 
             //get Create Time
             return fi.CreationTime;
@@ -390,9 +245,9 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static System.DateTime GetLastAccess(string filename)
+        public static DateTime GetLastAccess(string filename)
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+            FileInfo fi = new FileInfo(filename);
             //get Create Time
             return fi.LastAccessTime;
         }
@@ -402,9 +257,9 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static System.DateTime GetWriteTime(string filename)
+        public static DateTime GetWriteTime(string filename)
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+            FileInfo fi = new FileInfo(filename);
 
             return fi.LastWriteTime;
         }
@@ -428,18 +283,7 @@ namespace ImageGlass.Library.Image
                 File.Move(oldFileName, newFileName);
             }
         }
-
-
-        /// <summary>
-        /// Delete file
-        /// </summary>
-        /// <param name="fileName">file name</param>
-        /// <returns></returns>
-        public static void DeleteFile(string fileName)
-        {
-            FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);
-        }
-
+        
 
         /// <summary>
         /// Delete file
@@ -447,16 +291,11 @@ namespace ImageGlass.Library.Image
         /// <param name="fileName">file name</param>
         /// <param name="isMoveToRecycleBin">True: Move to Recycle bin | False: Delete permanently</param>
         /// <returns></returns>
-        public static void DeleteFile(string fileName, bool isMoveToRecycleBin)
+        public static void DeleteFile(string fileName, bool isMoveToRecycleBin = true)
         {
-            if (isMoveToRecycleBin)
-            {
-                FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-            }
-            else
-            {
-                DeleteFile(fileName);
-            }
+            var option = isMoveToRecycleBin ? RecycleOption.SendToRecycleBin : RecycleOption.DeletePermanently;
+
+            FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, option);
         }
 
 

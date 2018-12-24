@@ -46,7 +46,7 @@
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(206)))), ((int)(((byte)(219)))));
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOK.Location = new System.Drawing.Point(303, 21);
+            this.btnOK.Location = new System.Drawing.Point(470, 21);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 40);
             this.btnOK.TabIndex = 1;
@@ -60,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtValue.Location = new System.Drawing.Point(15, 68);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(388, 31);
+            this.txtValue.Size = new System.Drawing.Size(555, 31);
             this.txtValue.TabIndex = 0;
             this.txtValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtValue_KeyPress);
             // 
@@ -70,7 +70,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.Location = new System.Drawing.Point(12, 9);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(392, 52);
+            this.lblMessage.Size = new System.Drawing.Size(559, 52);
             this.lblMessage.TabIndex = 2;
             this.lblMessage.Text = "#";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -80,9 +80,9 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 138);
+            this.panel1.Location = new System.Drawing.Point(0, 132);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(426, 77);
+            this.panel1.Size = new System.Drawing.Size(593, 77);
             this.panel1.TabIndex = 8;
             // 
             // frmDialogBox
@@ -91,17 +91,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(426, 215);
+            this.ClientSize = new System.Drawing.Size(593, 209);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.lblMessage);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(500, 265);
             this.Name = "frmDialogBox";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.DialogBox_Load);

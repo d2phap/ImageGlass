@@ -36,7 +36,9 @@
       <Item key="frmMain.mnuMainEditImage" value="이미지 수정 {0}" />
       <Item key="frmMain.mnuMainNavigation" value="내비게이션" />
       <Item key="frmMain.mnuMainViewNext" value="다음 이미지 보기" />
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="PageDown / 오른쪽 화살표 키" />
       <Item key="frmMain.mnuMainViewPrevious" value="이전 이미지 보기" />
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="PageUp / 왼쪽 화살표 키" />
       <Item key="frmMain.mnuMainGoto" value="바로 이동 ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="처음 이미지로" />
       <Item key="frmMain.mnuMainGotoLast" value="마지막 이미지로" />

@@ -1,11 +1,26 @@
-﻿using ImageGlass.Core;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using ImageGlass.Core;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using ImageGlass.Theme;
 using System.Runtime.InteropServices;
@@ -52,7 +67,7 @@ namespace ImageGlass
         public const int HT_CAPTION = 0x2;
 
         [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, Int32 lParam);
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -282,7 +297,6 @@ namespace ImageGlass
 
             if (_imgBox != null)
             {
-                _imgBox.Cursor = Cursors.Default;
                 _imgBox.MouseMove -= _imgBox_MouseMove;
                 _imgBox.Click -= _imgBox_Click;
             }
@@ -294,7 +308,6 @@ namespace ImageGlass
             {
                 return;
             }
-            _imgBox.Cursor = Cursors.Cross;
             _cursorPos = _imgBox.PointToImage(e.Location);
 
             //In case of opening a second image, 

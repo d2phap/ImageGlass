@@ -1,7 +1,7 @@
 /*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,12 +37,15 @@ namespace ImageGlass.Services.Configuration
         // Configurations file: igconfig.xml
         private static ConfigurationFile _configFile = new ConfigurationFile();
 
+
+
         /// <summary>
         /// First launch version constant. 
         /// If the value read from config file is less than this value, 
         /// the First-Launch Configs screen will be launched.
         /// </summary>
         public const int FIRST_LAUNCH_VERSION = 5;
+
 
 
         #region Private Properties
@@ -60,7 +63,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets the value indicates that StartUpDir is writable
+        /// Gets, sets the value indicates that StartUpDir is writable. NOTE***: need to be manually update by calling GlobalSetting.CheckStartUpDirWritable()
         /// </summary>
         public static bool IsStartUpDirWritable { get; set; } = true;
 
@@ -95,29 +98,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
-
-        private static bool _isPortableMode = false;
-        /// <summary>
-        /// Gets, sets value indicating that ImageGlass will run in portable mode
-        /// All configurations will be written to XML file instead of registry
-        /// </summary>
-        public static bool IsPortableMode
-        {
-            get => _isPortableMode;
-            set
-            {
-                //check if we have write access to write config file for portable mode
-                if (value && GlobalSetting.IsStartUpDirWritable == false)
-                {
-                    //we dont have permission
-                    _isPortableMode = false;
-                }
-                else
-                {
-                    _isPortableMode = value;
-                }
-            }
-        }
+        
 
         #endregion
 
@@ -178,18 +159,6 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets image error value
         /// </summary>
         public static bool IsImageError { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets, sets value indicating that Zoom Lock enabled
-        /// </summary>
-        //public static bool IsEnabledZoomLock { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets, sets value indicating that 'Zoom to Fit' is enabled or not
-        /// </summary>
-        //public static bool IsZoomToFit { get; set; } = false;
 
 
         /// <summary>
@@ -286,13 +255,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-
-
-        /// <summary>
-        /// Gets temporary directory of ImageGlass, e.g. C:\Users\xxx\AppData\Roaming\ImageGlass\Temp\
-        /// </summary>
-        public static string TempDir { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass\Temp");
-
+        
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -366,19 +329,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets start up directory of ImageGlass
-        /// </summary>
-        public static string StartUpDir
-        {
-            get
-            {
-                return (Application.StartupPath + "\\").Replace("\\\\", "\\");
-            }
-        }
-
+        
 
         /// <summary>
         /// Gets, sets zoom mode value
@@ -400,8 +351,10 @@ namespace ImageGlass.Services.Configuration
         {
             get
             {
-                var newFormat = new NumberFormatInfo();
-                newFormat.NegativeSign = "-";
+                var newFormat = new NumberFormatInfo
+                {
+                    NegativeSign = "-"
+                };
                 return newFormat;
             }
             set => _numFormat = value;
@@ -421,6 +374,42 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
+        /// </summary>
+        public static bool IsCenterToolbar { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that to show last seen image on startup
+        /// </summary>
+        public static bool IsOpenLastSeenImage { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
+        /// </summary>
+        public static string ColorProfile { get; set; } = "sRGB";
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
+        /// </summary>
+        public static bool IsApplyColorProfileForAll { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that to show or hide the Navigation Buttons on viewer
+        /// </summary>
+        public static bool IsShowNavigationButtons { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that to checkerboard in the image region only
+        /// </summary>
+        public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
@@ -430,6 +419,8 @@ namespace ImageGlass.Services.Configuration
 
             $"{(int)Configuration.ToolbarButtons.btnRotateLeft}," +
             $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
+            $"{(int)Configuration.ToolbarButtons.btnFlipHorz}," +
+            $"{(int)Configuration.ToolbarButtons.btnFlipVert}," +
             $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
             $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
             $"{(int)Configuration.ToolbarButtons.btnActualSize}," +
@@ -455,15 +446,58 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnConvert}," +
             $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
             $"{(int)Configuration.ToolbarButtons.btnDelete},";
-        
-        
+
+
+
+
+
+
 
         #endregion
 
-        
 
 
         #region Public Methods
+
+        /// <summary>
+        /// Get the path based on the startup folder of ImageGlass.
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public static string StartUpDir(params string[] paths)
+        {
+            var path = Application.StartupPath;
+
+            var newPaths = paths.ToList();
+            newPaths.Insert(0, path);
+
+            return Path.Combine(newPaths.ToArray());
+        }
+
+
+        /// <summary>
+        /// Get the path based on the configuration folder of ImageGlass.
+        /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <returns></returns>
+        public static string ConfigDir(params string[] paths)
+        {
+            if (IsStartUpDirWritable)
+            {
+                return GlobalSetting.StartUpDir(paths);
+            }
+
+            var configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
+
+            var newPaths = paths.ToList();
+            newPaths.Insert(0, configDir);
+            configDir = Path.Combine(newPaths.ToArray());
+
+            return configDir;
+        }
+
+
         /// <summary>
         /// Load the default built-in image formats to the list
         /// </summary>
@@ -479,8 +513,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Save ImageEditingAssociationList to Settings
         /// </summary>
-        /// <param name="forceWriteConfigsToRegistry"></param>
-        public static void SaveConfigOfImageEditingAssociationList(bool @forceWriteConfigsToRegistry = false)
+        public static void SaveConfigOfImageEditingAssociationList()
         {
             StringBuilder editingAssocString = new StringBuilder();
 
@@ -489,7 +522,7 @@ namespace ImageGlass.Services.Configuration
                 editingAssocString.Append($"[{assoc.ToString()}]");
             }
 
-            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString(), forceWriteConfigsToRegistry);
+            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString());
         }
 
 
@@ -544,16 +577,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Check is ImageGlass can write config file in the startup folder
-        /// </summary>
-        /// <returns></returns>
-        public static bool CheckStartUpDirWritable()
-        {
-            return _configFile.IsWritable();
-        }
-
-
-        /// <summary>
         /// Load image order from configuration file
         /// </summary>
         public static ImageOrderBy LoadImageOrderConfig()
@@ -591,52 +614,12 @@ namespace ImageGlass.Services.Configuration
         /// Gets a specify config. Return @defaultValue if not found.
         /// </summary>
         /// <param name="configKey">Configuration key</param>
-        /// <param name="defaultValue">Default value</param>
-        /// <param name="forceGetConfigsFromRegistry">True: always read configs from Registry</param>
+        /// <param name="defaultValue">Default value</param>=
         /// <returns></returns>
-        public static string GetConfig(string configKey, string @defaultValue = "", bool forceGetConfigsFromRegistry = false)
+        public static string GetConfig(string configKey, string @defaultValue = "")
         {
-            // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode && !forceGetConfigsFromRegistry)
-            {
-                return _configFile.GetConfig(configKey, defaultValue);
-            }
-
-
-            // Read configs from Registry --------------------------------------------
-            try
-            {
-                RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass"); // Work path in the registry.
-                object configValue = null; // Value of the configuration obtained.
-
-                if (workKey != null)
-                {
-                    configValue = workKey.GetValue(configKey, defaultValue); // Get the config value.
-                }
-                else
-                {
-                    throw new Exception(); // Force catch.
-                }
-                return configValue.ToString();
-            }
-            catch (SecurityException)
-            {
-                return defaultValue;
-            }
-            catch (IOException)
-            {
-                return defaultValue;
-            }
-            catch (ArgumentException)
-            {
-                return defaultValue;
-            }
-            catch (Exception)
-            {
-                // Need a repair function.
-                return defaultValue;
-            }
-            
+            // Read configs from file
+            return _configFile.GetConfig(configKey, defaultValue);
         }
 
 
@@ -645,32 +628,10 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         /// <param name="configKey">Configuration key</param>
         /// <param name="value">Configuration value</param>
-        /// <param name="forceWriteConfigsToRegistry">True: always write configs to Registry</param>
-        public static void SetConfig(string configKey, string value, bool @forceWriteConfigsToRegistry = false)
+        public static void SetConfig(string configKey, string value)
         {
-            // Portable mode: retrieve config from file -----------------------------
-            if (GlobalSetting.IsPortableMode && !@forceWriteConfigsToRegistry)
-            {
-                _configFile.SetConfig(configKey, value);
-                return;
-            }
-
-
-            // Read configs from Registry --------------------------------------------
-            RegistryKey workKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree); // Work path in the registry.
-
-            if (workKey == null)
-            {
-                workKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\PhapSoftware\ImageGlass", RegistryKeyPermissionCheck.ReadWriteSubTree);
-            }
-
-            try
-            {
-                workKey.SetValue(configKey, value);
-            }
-            #pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex) { }
-            #pragma warning restore CS0168 // Variable is declared but never used
+            // Write configs to file
+            _configFile.SetConfig(configKey, value);
         }
 
 
@@ -721,6 +682,29 @@ namespace ImageGlass.Services.Configuration
             {
                 string wildRemoved = aType.Trim(wildtrim);
                 GlobalSetting.ImageFormatHashSet.Add(wildRemoved);
+            }
+        }
+
+
+        /// <summary>
+        /// Check if startup folder is writable
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckStartUpDirWritable()
+        {
+            try
+            {
+                var filePath = GlobalSetting.StartUpDir("test_write_file.temp");
+
+                using (File.Create(filePath)) { }
+                File.Delete(filePath);
+
+                return true;
+            }
+            catch// (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                return false;
             }
         }
 

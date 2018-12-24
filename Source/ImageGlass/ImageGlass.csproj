@@ -51,10 +51,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ERRORMODE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -131,8 +131,8 @@
     <Reference Include="DotNetZip, Version=1.11.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.11.0\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="FileWatcherEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FileWatcherEx.1.0.0\lib\net45\FileWatcherEx.dll</HintPath>
+    <Reference Include="FileWatcherEx, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FileWatcherEx.1.3.0\lib\net45\FileWatcherEx.dll</HintPath>
     </Reference>
     <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
@@ -185,6 +185,9 @@
     <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolStripToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -229,48 +232,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\info.png" />
     <None Include="resources.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\zoomout.png" />
-    <None Include="Resources\zoomlock.png" />
-    <None Include="Resources\zoomin.png" />
-    <None Include="Resources\uploadfb.png" />
-    <None Include="Resources\about.png" />
-    <None Include="Resources\autosizewindow.png" />
-    <None Include="Resources\back.png" />
-    <None Include="Resources\background.png" />
     <Content Include="iglogo.ico" />
-    <Content Include="Resources\bot3.png" />
-    <None Include="Resources\print.png" />
-    <None Include="Resources\convert.png" />
-    <None Include="Resources\extension.png" />
-    <None Include="Resources\fullscreen.png" />
-    <None Include="Resources\gotoimage.png" />
-    <None Include="Resources\leftrotate.png" />
-    <None Include="Resources\next.png" />
-    <None Include="Resources\open.png" />
-    <None Include="Resources\printer.png" />
-    <None Include="Resources\refresh.png" />
-    <None Include="Resources\rightrotate.png" />
-    <None Include="Resources\scaletofit.png" />
-    <None Include="Resources\settings.png" />
-    <None Include="Resources\slideshow.png" />
-    <None Include="Resources\thumbnail.png" />
-    <None Include="Resources\scaletoheight.png" />
-    <None Include="Resources\scaletowidth.png" />
-    <None Include="Resources\report.png" />
-    <None Include="Resources\menu.png" />
-    <Content Include="Resources\top3.png" />
-    <None Include="Resources\Hand_Down.png" />
-    <None Include="Resources\Hand_Move.png" />
-    <None Include="Resources\noimg.png" />
-    <None Include="Resources\imageerror.png" />
     <EmbeddedResource Include="frmSetting.resx">
       <DependentUpon>frmSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Resources\imagetoolarge.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -334,6 +304,10 @@
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ultilities\igcmdWin10\igcmdWin10.csproj">
+      <Project>{e1b466b0-8ece-4d5c-807a-600aae97bec7}</Project>
+      <Name>igcmdWin10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ultilities\igcmd\igcmd.csproj">
       <Project>{cc391e3e-9137-4857-85dc-c4cf6df37584}</Project>
       <Name>igcmd</Name>
@@ -343,6 +317,7 @@
       <Name>igtasks</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

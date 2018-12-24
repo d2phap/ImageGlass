@@ -1,4 +1,24 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -14,13 +34,13 @@ namespace ImageGlass.Core
         /// Load image from file
         /// </summary>
         /// <param name="path">Full path  of image file</param>
-        /// <param name="width">Width value of scalable image format</param>
-        /// <param name="height">Height value of scalable image format</param>
+        /// <param name="size">A custom size of image</param>
+        /// <param name="colorProfileName">Name or Full path of color profile</param>
+        /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <returns></returns>
-        public static Bitmap Load(string path, int @width = 0, int @height = 0)
+        public static Bitmap Load(string path, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
             var ext = Path.GetExtension(path).ToLower();
-
             Bitmap bmp = null;
 
             switch (ext)
@@ -43,22 +63,23 @@ namespace ImageGlass.Core
                 default:
                     try
                     {
-                        GetBitmapFromFile();
+                        bmp = GetBitmapFromFile();
 
                         if (bmp == null)
                         {
-                            GetBitmapFromWic();
+                            bmp = GetBitmapFromWic();
                         }
                     }
                     catch (Exception)
                     {
-                        GetBitmapFromWic();
+                        bmp = GetBitmapFromWic();
                     }
                     break;
             }
 
-            void GetBitmapFromFile()
+            Bitmap GetBitmapFromFile()
             {
+                Bitmap bmpData = null;
                 var settings = new MagickReadSettings();
 
                 if (ext.CompareTo(".svg") == 0)
@@ -66,12 +87,11 @@ namespace ImageGlass.Core
                     settings.BackgroundColor = MagickColors.Transparent;
                 }
 
-                if (width > 0 && height > 0)
+                if (size.Width > 0 && size.Height > 0)
                 {
-                    settings.Width = width;
-                    settings.Height = height;
+                    settings.Width = size.Width;
+                    settings.Height = size.Height;
                 }
-
 
                 //using (var magicColl = new MagickImageCollection())
                 //{
@@ -85,7 +105,6 @@ namespace ImageGlass.Core
                 //        bmp = BitmapBooster.BitmapFromSource(magicColl[0].ToBitmapSource());
                 //    }
                 //}
-
 
                 using (var magicImg = new MagickImage(path, settings))
                 {
@@ -109,22 +128,53 @@ namespace ImageGlass.Core
                                 magicImg.Rotate(orientationDegree);
                             }
                         }
-
                     }
 
-                    //corect the image color
-                    magicImg.AddProfile(ColorProfile.SRGB);
+
+                    // get the color profile of image
+                    var imgColorProfile = magicImg.GetColorProfile();
+
+
+                    // if always apply color profile
+                    // or only apply color profile if there is an embedded profile
+                    if (isApplyColorProfileForAll || imgColorProfile != null)
+                    {
+                        if (imgColorProfile != null)
+                        {
+                            // correct the image color space
+                            magicImg.ColorSpace = imgColorProfile.ColorSpace;
+                        }
+                        else
+                        {
+                            // set default color profile and color space
+                            magicImg.AddProfile(ColorProfile.SRGB);
+                            magicImg.ColorSpace = ColorProfile.SRGB.ColorSpace;
+                        }
+
+                        var colorProfile = GetColorProfileFromString(colorProfileName);
+                        if (colorProfile != null)
+                        {
+                            magicImg.AddProfile(colorProfile);
+                            magicImg.ColorSpace = colorProfile.ColorSpace;
+                        }
+                    }
+
 
                     //get bitmap
-                    bmp = magicImg.ToBitmap();
-                    
+                    bmpData = magicImg.ToBitmap();
                 }
+
+                return bmpData;
             }
 
-            void GetBitmapFromWic()
+            Bitmap GetBitmapFromWic()
             {
+                Bitmap bmpData = null;
+
                 var src = LoadImage(path);
-                bmp = BitmapFromSource(src);
+                bmpData = BitmapFromSource(src);
+
+                return bmpData;
             }
 
             return bmp;
@@ -225,6 +275,13 @@ namespace ImageGlass.Core
             return 0;
         }
 
+        /// <summary>
+        /// Get thumbnail
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="size"></param>
+        /// <param name="useEmbeddedThumbnails"></param>
+        /// <returns></returns>
         public static Image GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails)
         {
             var ext = Path.GetExtension(filename).ToLower();
@@ -282,11 +339,11 @@ namespace ImageGlass.Core
         /// </summary>
         /// <param name="pic">Image source</param>
         /// <param name="filename">New image file name</param>
-        public static void SaveImage(Image pic, string filename)
+        public static void SaveImage(Bitmap pic, string filename)
         {
             string ext = Path.GetExtension(filename).Substring(1).ToLower();
 
-            using (var img = new MagickImage(new Bitmap(pic)))
+            using (var img = new MagickImage(pic))
             {
                 img.Quality = 100;
                 img.Write(filename);
@@ -330,6 +387,105 @@ namespace ImageGlass.Core
                 img.Quality = 100;
                 return img.ToBitmap();
             }
+        }
+
+        public static Image Flip(Image input, bool horz)
+        {
+            var bmp = new Bitmap(input);
+            using (var img = new MagickImage(bmp))
+            {
+                if (horz)
+                    img.Flop();
+                else
+                    img.Flip();
+                img.Quality = 100;
+                return img.ToBitmap();
+            }
+
+        }
+
+
+        /// <summary>
+        /// Get built-in color profiles
+        /// </summary>
+        /// <returns></returns>
+        public static string[] GetBuiltInColorProfiles()
+        {
+            return new string[]
+            {
+                "AdobeRGB1998",
+                "AppleRGB",
+                "CoatedFOGRA39",
+                "ColorMatchRGB",
+                "sRGB",
+                "USWebCoatedSWOP",
+            };
+        }
+
+
+        /// <summary>
+        /// Get the correct color profile name
+        /// </summary>
+        /// <param name="name">Name or Full path of color profile</param>
+        /// <returns></returns>
+        public static string GetCorrectColorProfileName(string name)
+        {
+            var profileName = "";
+
+            if (File.Exists(name))
+            {
+                return name;
+            }
+            else
+            {
+                var builtInProfiles = GetBuiltInColorProfiles();
+                var result = builtInProfiles.FirstOrDefault(i => i.ToUpperInvariant() == name.ToUpperInvariant());
+
+                if (result != null)
+                {
+                    profileName = result;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+
+            return profileName;
+        }
+
+
+        /// <summary>
+        /// Get the ColorProfile
+        /// </summary>
+        /// <param name="name">Name or Full path of color profile</param>
+        /// <returns></returns>
+        private static ColorProfile GetColorProfileFromString(string name)
+        {
+            if (File.Exists(name))
+            {
+                return new ColorProfile(name);
+            }
+            else
+            {
+                // get all profile names in Magick.NET
+                var profiles = typeof(ColorProfile).GetProperties();
+                var result = profiles.FirstOrDefault(i => i.Name.ToUpperInvariant() == name.ToUpperInvariant());
+                
+                if (result != null)
+                {
+                    try
+                    {
+                        return (ColorProfile)result.GetValue(result);
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return null;
         }
 
     }

@@ -135,12 +135,37 @@ namespace ImageGlass.Services
         public bool CheckForUpdate(string exePath)
         {
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
+            Version currentVersion = new Version(fv.FileVersion);
 
-            //There is a new version
-            if (Info.NewVersion.ToString().CompareTo(fv.FileVersion) != 0)
+            // Version = [Major.Minor.Build.Revision]
+
+            // [6.1.12.3] > [5.1.12.3]
+            if (Info.NewVersion.Major > currentVersion.Major)
             {
                 return true;
             }
+            // [6.1.12.3] > [6.0.12.3]
+            else if (Info.NewVersion.Major == currentVersion.Major && 
+                Info.NewVersion.Minor > currentVersion.Minor)
+            {
+                return true;
+            }
+            // [6.1.12.3] > [6.1.10.3]
+            else if (Info.NewVersion.Major == currentVersion.Major &&
+                Info.NewVersion.Minor == currentVersion.Minor &&
+                Info.NewVersion.Build > currentVersion.Build)
+            {
+                return true;
+            }
+            // [6.1.12.3] > [6.1.12.0]
+            else if (Info.NewVersion.Major == currentVersion.Major &&
+                Info.NewVersion.Minor == currentVersion.Minor &&
+                Info.NewVersion.Build == currentVersion.Build &&
+                Info.NewVersion.Revision > currentVersion.Revision)
+            {
+                return true;
+            }
+
 
             //default don't need to update
             return false;
