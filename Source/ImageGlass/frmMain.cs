@@ -1032,24 +1032,6 @@ namespace ImageGlass
             }
             #endregion
 
-            
-        }
-        
-        private void frmMain_KeyUp(object sender, KeyEventArgs e)
-        {
-            //this.Text = e.KeyValue.ToString();
-
-            //Ctrl---------------------------------------------------------------------------
-            #region CTRL (for Zooming)
-            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
-            {
-                //Disable dragging viewing image to desktop feature--------------------------
-                _isDraggingImage = false;
-                
-                return;
-            }
-            #endregion
-            
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
@@ -1094,6 +1076,22 @@ namespace ImageGlass
             }
             #endregion
 
+        }
+
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            //this.Text = e.KeyValue.ToString();
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
+            {
+                //Disable dragging viewing image to desktop feature--------------------------
+                _isDraggingImage = false;
+                
+                return;
+            }
+            #endregion
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
