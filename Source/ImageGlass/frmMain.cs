@@ -1032,28 +1032,10 @@ namespace ImageGlass
             }
             #endregion
 
-            
-        }
-        
-        private void frmMain_KeyUp(object sender, KeyEventArgs e)
-        {
-            //this.Text = e.KeyValue.ToString();
-
-            //Ctrl---------------------------------------------------------------------------
-            #region CTRL (for Zooming)
-            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
-            {
-                //Disable dragging viewing image to desktop feature--------------------------
-                _isDraggingImage = false;
-                
-                return;
-            }
-            #endregion
-            
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if (!_isWindowsKeyPressed && (e.KeyValue == 33 || e.KeyValue == 37) &&
+            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 33 || e.KeyValue == 37) &&
                 !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
             {
                 NextPic(-1);
@@ -1064,7 +1046,7 @@ namespace ImageGlass
 
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if (!_isWindowsKeyPressed && (e.KeyValue == 34 || e.KeyValue == 39) &&
+            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 34 || e.KeyValue == 39) &&
                 !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
             {
                 NextPic(1);
@@ -1094,6 +1076,22 @@ namespace ImageGlass
             }
             #endregion
 
+        }
+
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            //this.Text = e.KeyValue.ToString();
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
+            {
+                //Disable dragging viewing image to desktop feature--------------------------
+                _isDraggingImage = false;
+                
+                return;
+            }
+            #endregion
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
