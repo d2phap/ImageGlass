@@ -12,12 +12,12 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 ## Download & Screen shots
 
-<a href="http://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="http://imageglass.org/upload/photo/release/5.0_1.png" alt="ImageGlass 5.1.5.20">
+<a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
+<img src="https://imageglass.org/upload/photo/release/5.5_1.jpg" alt="ImageGlass 5.5.7.26">
 </a><br/>
 
-<a href="http://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%205.1.5.20-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.1.5.20">
+<a href="https://www.imageglass.org/download" target="_blank" title="Download the latest version">
+<img src="https://img.shields.io/badge/Download-ImageGlass%205.5.7.26-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 5.5.7.26">
 </a>
 
 
@@ -34,14 +34,14 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 ## Documentation
 
-[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/features)
-[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/supported-formats)
-[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](http://www.imageglass.org/documentation/ui-shortcuts-reference)
+[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/docs/features)
+[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/documentation/supported-formats)
+[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/docs/ui-shortcuts-reference)
 
 
 For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
 
-For more information about ImageGlass, go to [Documentation](http://www.imageglass.org/documentation)
+For more information about ImageGlass, go to [Documentation](https://www.imageglass.org/docs)
 
 
 
