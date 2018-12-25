@@ -3520,8 +3520,7 @@ namespace ImageGlass
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
-            mnuMainFlipVert_Click(null, null);
-
+            mnuMainFlipHorz_Click(null, null);
         }
 
         private void btnFlipVert_Click(object sender, EventArgs e)
