@@ -2888,13 +2888,10 @@ namespace ImageGlass
                 }
 
                 // update checkerboard display mode
-                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                if (GlobalSetting.IsShowCheckerBoard)
                 {
-                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
-                }
-                else
-                {
-                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
+                    GlobalSetting.IsShowCheckerBoard = false;
+                    mnuMainCheckBackground_Click(null, null);
                 }
 
                 //Update background---------------------
