@@ -87,7 +87,7 @@ Source: "..\..\..\Assets\Setup\DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; F
 Source: "..\..\..\Assets\Setup\Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\..\..\Assets\Setup\Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\..\ImageGlass\bin\Release\igcmd.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversionSource: "..\..\ImageGlass\bin\Release\igcmdWin10.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\IconLib.dll"; DestDir: "{app}"; Flags: ignoreversion
