@@ -34,6 +34,8 @@ namespace igcmd
         /// </summary>
         public static void AutoUpdate()
         {
+            Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
+
             string updateXML = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
             Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
