@@ -3689,7 +3689,12 @@ namespace ImageGlass
             if (LocalSetting.IsTempMemoryData || !isImageError)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
+
+                // check if igcmdWin10.exe exists!
+                if (File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                {
+                    mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
+                }                
             }
 
 
@@ -4847,6 +4852,16 @@ namespace ImageGlass
                 {
                     mnuMainExtractFrames.Enabled = true;
                     mnuMainStartStopAnimating.Enabled = true;
+                }
+
+                // check if igcmdWin10.exe exists!
+                if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                {
+                    mnuMainSetAsLockImage.Enabled = false;
+                }
+                else
+                {
+                    mnuMainSetAsLockImage.Enabled = true;
                 }
 
                 // Get association App for editing
