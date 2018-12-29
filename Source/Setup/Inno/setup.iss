@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "6.0.12.27"
+#define MyAppVersion "6.0.12.29"
 #define MyAppPublisher "Duong Dieu Phap"
 #define MyAppURL "https://imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
@@ -89,6 +89,10 @@ Source: "..\..\..\Assets\Setup\Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: 
 Source: "..\..\ImageGlass\bin\Release\igcmd.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversionSource: "..\..\ImageGlass\bin\Release\igcmdWin10.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igcmd.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igtasks.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igcmdWin10.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\IconLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\ImageGlass\bin\Release\ImageGlass.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
