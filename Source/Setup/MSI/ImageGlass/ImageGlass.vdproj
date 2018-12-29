@@ -15,13 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_00F6B80A55A0408C84629CF5063ADA81"
+        "MsmKey" = "8:_00FA0E58A1444B0FAD5FC9491950E866"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0482E229B37D434FBD05D6C6156C926D"
+        "MsmKey" = "8:_02FE3D287BAD4E4AA7B3184C6ACB6027"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0478D5E5121344C68FE2A1429208627B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,25 +39,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_073EFFCA636C4FA199DA27EEB1D11A63"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_099A6354BF334651A0DB9826450225BB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0AAF7824769A43C2BCB06B2CC57A56C9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0ADE5FBBD4544351A7373AF39086E4B0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0B978534CAA7476E82FA140104EF8C0B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -59,12 +53,6 @@
         {
         "MsmKey" = "8:_0CECC385FD854D948B3C369BCC878374"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0D905FD7DBC9E0EB67208B000086F309"
-        "OwnerKey" = "8:_A4623053ECBD412397CE24C59202D2F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,6 +69,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_11E2E7D6CE70482F84A0953BD8C7B5AB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
+        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
         "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
         "MsmSig" = "8:_UNDEFINED"
@@ -88,7 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
-        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
+        "OwnerKey" = "8:_C3E8A3393560285D74EBA51B56EDBC58"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
+        "OwnerKey" = "8:_8AE54D11BCC4EBDEB3ADF534FD502015"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -111,7 +123,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1802BBC421924DFBA73CA1CDC1112923"
+        "MsmKey" = "8:_16C80CBC66A94E29BE8EA9AB7BC04DFC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_17A50FF7B85E4F01B52EFC691D09FAF9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -130,7 +148,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
-        "OwnerKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -141,7 +159,49 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
+        "OwnerKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
+        "OwnerKey" = "8:_9634506ED64F907BDC77A17FDC6B5CF8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2162A0C3C5C9473990AE4D5693AE5BB9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_229C56C6082248699893E5DD9BC4DE04"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_237C93BB6C6B49339CBE8B92EFBD7068"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_23D41D5461844DCCAFD8DCDAF14F6741"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_254204700C0843B2B0266C6A853CAF03"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_259B85810FE040D3B36CD494F4389939"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -153,7 +213,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2A1B0455A5514B2ABC26283AD4150D10"
+        "MsmKey" = "8:_29F77FAF087049D0863CD21CBA16803A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -171,7 +231,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2EEAF414A45142A5B9D76983B6560061"
+        "MsmKey" = "8:_30283314415644AD97B7C44B6AD40BA7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -184,7 +244,19 @@
         "Entry"
         {
         "MsmKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
         "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "OwnerKey" = "8:_8AE54D11BCC4EBDEB3ADF534FD502015"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -201,26 +273,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_36BC028474480B4B393CC9833EA9D478"
-        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_36BC028474480B4B393CC9833EA9D478"
-        "OwnerKey" = "8:_6B362F9948CF57A7BB86749CCC13EDA0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_36BC028474480B4B393CC9833EA9D478"
-        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_36BC028474480B4B393CC9833EA9D478"
-        "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
+        "MsmKey" = "8:_3500BD86E71C4D92A58856B1F4142920"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -231,43 +285,43 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_408547072D044A52B84CC68FFDBCFB9C"
+        "MsmKey" = "8:_41E4F107594249239FD631C2F95B6F3E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_45F9ECDE67DF4EEA9643F742E542F4BE"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_47E8E049CC074AEEB30943DDF08F8D57"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
+        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_49B2BBBD22924E93938810DAC43A5EA9"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
+        "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4B921E622E664991BD5CB62211C3AC8D"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
+        "OwnerKey" = "8:_6B362F9948CF57A7BB86749CCC13EDA0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
+        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4DEE33ADC60B4E47986DE5A09D62C1A3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_521BAB8220A34E77BAD06C3A98F527A5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -279,19 +333,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5359792D6E93462F9F4D42E9002D4B43"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_56C0C7704D43485887ED753678DBF6A6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5B50948889C8429087896F4C843D876C"
+        "MsmKey" = "8:_575F5A8B259245B7BA8DB4F67C7E17FE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,7 +345,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5E8C0CEB14664EA898771716536A776C"
+        "MsmKey" = "8:_5E42B3B123F046BDA329832297C6E93D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -311,6 +353,12 @@
         {
         "MsmKey" = "8:_5FE90FADE6A9494282366047E5E3C0E3"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_631C991809E45C8F0E11C3F0C98011C4"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -334,12 +382,6 @@
         "Entry"
         {
         "MsmKey" = "8:_68064FEE9FB943AF906D8061B97105E5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6AAFB624591D4630872629B771AC5DB1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -369,25 +411,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E8A839EBE094353A018E294AC60C87C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6FDCE999A65345B6BAAEF67EBA387843"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_70049F52E6BD42044D4F89C5016B3798"
-        "OwnerKey" = "8:_A4623053ECBD412397CE24C59202D2F2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_70B33E68AC1C4898B5AE2780927D4057"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -405,18 +429,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_763BA88097D042EDAD8342D552EB7053"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_769AD5362A7347A9BC56EB822E6003B9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7895A2BDA6D340FCAD961A6D8E35628C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -429,19 +441,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7BEDA1D1F62445D5B0FEAAF33DAEB96F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7BF0E51BD7B34C6D85661E993E4F15C7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D929C70EC6D4D6491B9DC68013D135A"
+        "MsmKey" = "8:_7DBE26C9C4EF46669947AD0AC0D8A5B8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -459,7 +465,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7F80FF5A72154C1EAC2AA4CF04E02650"
+        "MsmKey" = "8:_7E457D89DEDA1E559F84F059592EBD23"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7EAAB27ABE4E492C89E206654CA07FDB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -495,6 +507,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8A873CC8D7104C3C8860C5BF6A9CEC9B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8AE54D11BCC4EBDEB3ADF534FD502015"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8D04FC5DD1B64B16AB97A343F1849850"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -502,6 +526,12 @@
         "Entry"
         {
         "MsmKey" = "8:_8D68748BE3144D55A9B286004FC54C28"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F722F4237034F4A98A769A479DD10C4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -537,32 +567,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_93690EE3BF6B4458A98BA50DBF29AD8A"
+        "MsmKey" = "8:_9446F569187E4240B29072722300ECB3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_93DD4692D7234F9CB4F1285C2CE8CF1C"
+        "MsmKey" = "8:_9534274CE27044A2B7A72A8B511DB62D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_94D49F72A03143BFBB098143BBE27BF8"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_96A4973597704CF88660EE09C4C817D3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_98213604FBED40EB877A8DECA00C02EA"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_9634506ED64F907BDC77A17FDC6B5CF8"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -585,19 +603,43 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9BB55D7960BE4279BA5110EB6E341981"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9CAA220E4DE94E2B81EFF8BB3EAED53D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A4623053ECBD412397CE24C59202D2F2"
+        "MsmKey" = "8:_9CD3F3F0A64B4A5682F1C453CF63B66F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9D3934A9E9BC441A819C49163632CBBF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A31587286B5DE92AD85F028E69AF7E4D"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A31587286B5DE92AD85F028E69AF7E4D"
+        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A31587286B5DE92AD85F028E69AF7E4D"
+        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A32BA4EA92814991975AA8EB02562325"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -615,13 +657,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AAC6E00A2B200A382C85EAA8BB5F8704"
-        "OwnerKey" = "8:_A4623053ECBD412397CE24C59202D2F2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AAF57CA65650407E80A533502EF6B23C"
+        "MsmKey" = "8:_AAD4AE974D99419CAFAE733813A62662"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -657,19 +693,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B144D397DA7A4624A255524CAA78FE23"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B2D28433A63D407B9E03813E909E5997"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B577F2AFA6634BBB856ED6E4A2425966"
+        "MsmKey" = "8:_B653855B5CD9451DA720715654C72D42"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -682,13 +706,7 @@
         "Entry"
         {
         "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
-        "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
-        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -699,13 +717,31 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BCA68439AE9D48969310639D57A715FA"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BF821D9162DC429CBCACFB2ED6CF18DD"
+        "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "OwnerKey" = "8:_C3E8A3393560285D74EBA51B56EDBC58"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "OwnerKey" = "8:_8AE54D11BCC4EBDEB3ADF534FD502015"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BCA68439AE9D48969310639D57A715FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -717,7 +753,31 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C44E6CADCCEC402FBA7B833E56276C90"
+        "MsmKey" = "8:_C0D7DDDABFDB48FCBCA24EF93C528ADB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C2822A7DF53A4691A2134AF14F883E9D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C35AFF7175E2415AA2FC8199FDB859DA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C3E8A3393560285D74EBA51B56EDBC58"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C3F116F2F9CD4691B4EF85D2E2132CD8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -741,31 +801,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CE4110FE7F7548A7B1F810C70219CE2C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CF268C52C1B644B2888AFCA06084797F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D0C534C1FDB748A48AA530C7AEC8127A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D16F2E5FBE5B4784A6EF6D6421E37002"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D50556BC53BF48A1B67530CB843F8BAB"
+        "MsmKey" = "8:_D48678823E4245949E2943C6A8C99296"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -783,7 +819,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D73CEBB00871440F80C4315F1D60E7BC"
+        "MsmKey" = "8:_D6D6E9311A9D4AF9B25E4CED084B88DE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -795,13 +831,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D9D8824586BF40338734F307DA5E1C38"
+        "MsmKey" = "8:_D8D43E2360F04F8594DFD5479DB12F8D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_DD5AE4A6280A475FA3C507DB27897AB2"
+        "MsmKey" = "8:_D9D8824586BF40338734F307DA5E1C38"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -813,7 +849,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DF1193B1323A4AF08496EE61BAD572A6"
+        "MsmKey" = "8:_DFE0ADBCA7D9468AAA8756E7522D1923"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -837,14 +873,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E3D9D4FACB29D912A8B2BE78AD703AAB"
-        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E3D9D4FACB29D912A8B2BE78AD703AAB"
-        "OwnerKey" = "8:_78AC5C48ADA04E4B9922CF188BC92976"
+        "MsmKey" = "8:_E53B8E7ACEB242FBA8E8B430C9ACE475"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -855,7 +885,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E7ABE724107A4B59B774A2473D93FA3B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E7BE0331FFD24C969519B85C975E980D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EAD6BFB1A96A45FA9FD70B18EE41A788"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -873,38 +915,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EDB1E40FD5074A2ABC6825D72CF6FE52"
+        "MsmKey" = "8:_F1A8BCABFEE64678805C1BAA2FBDFCB0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EE394B5FFE6D4535A7A717E2CD2B6EE5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F082BDD4266D48D0AEAA797109CF9C02"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F1BC7F4383F347218219003D99694178"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F224AEFF13A0458EA4C7955BF763BB5C"
+        "MsmKey" = "8:_F89F2EFC7BE3434193840036853974BE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_FA33E1506EDEFA39E3492050FA153AB2"
-        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -915,7 +939,37 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_FA33E1506EDEFA39E3492050FA153AB2"
+        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FADD630862CF4533BB0B31A9025746FA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FB23997992254F22A10DC3DD2BCC61D9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FC302C4F7A7149EE93C54A94E7FA4D9A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FC6D72712C2B40C8BE24BC086AD53DAC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FFF05B9199504967B5D80112E31601A5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -923,24 +977,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6E5FDC82E0B04FC991DF86DFE47CD82F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -958,25 +994,61 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C3E8A3393560285D74EBA51B56EDBC58"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8AE54D11BCC4EBDEB3ADF534FD502015"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_327A8115FAF41330C2A3F01B81E04292"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA43FECB05799E7458F7D88443AAAAD4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_13402368CF133C928571F3A9F28F0FBF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AAC6E00A2B200A382C85EAA8BB5F8704"
+        "OwnerKey" = "8:_9634506ED64F907BDC77A17FDC6B5CF8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_70049F52E6BD42044D4F89C5016B3798"
+        "OwnerKey" = "8:_7E457D89DEDA1E559F84F059592EBD23"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0D905FD7DBC9E0EB67208B000086F309"
+        "OwnerKey" = "8:_1C76D271A08E6CFC29B6B12DE8FBDB44"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_31ED99AFC18B434AB9DAD36CA3CFDD47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_631C991809E45C8F0E11C3F0C98011C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -988,7 +1060,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E3D9D4FACB29D912A8B2BE78AD703AAB"
+        "OwnerKey" = "8:_A31587286B5DE92AD85F028E69AF7E4D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1000,7 +1072,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_36BC028474480B4B393CC9833EA9D478"
+        "OwnerKey" = "8:_47ED8E7D27B4707CED7433DC2892975D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -1043,7 +1115,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\ImageGlass_6.0.12.27_x64.msi"
+        "OutputFilename" = "8:..\\..\\..\\..\\Setup\\MSI\\x64\\ImageGlass_6.0.12.29_x64.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -1075,7 +1147,7 @@
         "DisplayName" = "8:Release_x86"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Release_x86\\ImageGlass_5.5.7.26_x86.msi"
+        "OutputFilename" = "8:..\\..\\..\\..\\Setup\\MSI\\x86\\ImageGlass_6.0.12.29_x86.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -1130,12 +1202,12 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_00F6B80A55A0408C84629CF5063ADA81"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_00FA0E58A1444B0FAD5FC9491950E866"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Turkish.iglang"
-            "TargetName" = "8:Turkish.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\AutoZoom.svg"
+            "TargetName" = "8:AutoZoom.svg"
             "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1150,10 +1222,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0482E229B37D434FBD05D6C6156C926D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_02FE3D287BAD4E4AA7B3184C6ACB6027"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\About.svg"
-            "TargetName" = "8:About.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\FlipVert.svg"
+            "TargetName" = "8:FlipVert.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0478D5E5121344C68FE2A1429208627B"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Plugins.svg"
+            "TargetName" = "8:Plugins.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -1190,72 +1282,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_073EFFCA636C4FA199DA27EEB1D11A63"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\RotateLeft.svg"
-            "TargetName" = "8:RotateLeft.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_099A6354BF334651A0DB9826450225BB"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\config.xml"
-            "TargetName" = "8:config.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0AAF7824769A43C2BCB06B2CC57A56C9"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Polish.iglang"
-            "TargetName" = "8:Polish.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0ADE5FBBD4544351A7373AF39086E4B0"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\RAW.ico"
             "TargetName" = "8:RAW.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B978534CAA7476E82FA140104EF8C0B"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\preview.png"
+            "TargetName" = "8:preview.png"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1288,37 +1340,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0D905FD7DBC9E0EB67208B000086F309"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.IO, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_0D905FD7DBC9E0EB67208B000086F309"
-                    {
-                    "Name" = "8:System.IO.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.IO.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D934CDA5DC144A586DDCDB4E0FE7623"
@@ -1361,11 +1382,31 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11E2E7D6CE70482F84A0953BD8C7B5AB"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\FlipHorz.svg"
+            "TargetName" = "8:FlipHorz.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_13402368CF133C928571F3A9F28F0FBF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ImageGlass.Library, Version=6.0.6932.20777, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.Library, Version=6.0.6937.19480, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_13402368CF133C928571F3A9F28F0FBF"
@@ -1432,12 +1473,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1802BBC421924DFBA73CA1CDC1112923"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_16C80CBC66A94E29BE8EA9AB7BC04DFC"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Menu.svg"
-            "TargetName" = "8:Menu.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ThumbnailBar.svg"
+            "TargetName" = "8:ThumbnailBar.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17A50FF7B85E4F01B52EFC691D09FAF9"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Slovenian.iglang"
+            "TargetName" = "8:Slovenian.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1496,7 +1557,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ImageGlass.Core, Version=6.0.6932.20776, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.Core, Version=6.0.6937.19480, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1C76D271A08E6CFC29B6B12DE8FBDB44"
@@ -1523,12 +1584,112 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2162A0C3C5C9473990AE4D5693AE5BB9"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\About.svg"
+            "TargetName" = "8:About.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_229C56C6082248699893E5DD9BC4DE04"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Checkerboard.svg"
+            "TargetName" = "8:Checkerboard.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_237C93BB6C6B49339CBE8B92EFBD7068"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomOut.svg"
+            "TargetName" = "8:ZoomOut.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23D41D5461844DCCAFD8DCDAF14F6741"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Korean.iglang"
+            "TargetName" = "8:Korean.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_254204700C0843B2B0266C6A853CAF03"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\DNG.ico"
             "TargetName" = "8:DNG.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_259B85810FE040D3B36CD494F4389939"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\French.iglang"
+            "TargetName" = "8:French.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1563,10 +1724,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2A1B0455A5514B2ABC26283AD4150D10"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_29F77FAF087049D0863CD21CBA16803A"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ThumbnailBar.svg"
-            "TargetName" = "8:ThumbnailBar.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomIn.svg"
+            "TargetName" = "8:ZoomIn.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -1623,10 +1784,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2EEAF414A45142A5B9D76983B6560061"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_30283314415644AD97B7C44B6AD40BA7"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Swedish.iglang"
-            "TargetName" = "8:Swedish.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Vietnamese.iglang"
+            "TargetName" = "8:Vietnamese.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
@@ -1647,7 +1808,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ImageGlass.Theme, Version=6.0.6932.20778, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.Theme, Version=6.0.6937.19482, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_327A8115FAF41330C2A3F01B81E04292"
@@ -1714,14 +1875,74 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_36BC028474480B4B393CC9833EA9D478"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3500BD86E71C4D92A58856B1F4142920"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ActualSize.svg"
+            "TargetName" = "8:ActualSize.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_40801DAECC124EF18A85AD618C134562"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\WMF.ico"
+            "TargetName" = "8:WMF.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_41E4F107594249239FD631C2F95B6F3E"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Malay.iglang"
+            "TargetName" = "8:Malay.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47ED8E7D27B4707CED7433DC2892975D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Magick.NET-Q16-AnyCPU, Version=7.9.2.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_36BC028474480B4B393CC9833EA9D478"
+                    "_47ED8E7D27B4707CED7433DC2892975D"
                     {
                     "Name" = "8:Magick.NET-Q16-AnyCPU.dll"
                     "Attributes" = "3:512"
@@ -1745,152 +1966,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_40801DAECC124EF18A85AD618C134562"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\WMF.ico"
-            "TargetName" = "8:WMF.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_408547072D044A52B84CC68FFDBCFB9C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Slovenian.iglang"
-            "TargetName" = "8:Slovenian.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_45F9ECDE67DF4EEA9643F742E542F4BE"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Portuguese.iglang"
-            "TargetName" = "8:Portuguese.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_47E8E049CC074AEEB30943DDF08F8D57"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ActualSize.svg"
-            "TargetName" = "8:ActualSize.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_49B2BBBD22924E93938810DAC43A5EA9"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Korean.iglang"
-            "TargetName" = "8:Korean.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B921E622E664991BD5CB62211C3AC8D"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\German.iglang"
-            "TargetName" = "8:German.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DEE33ADC60B4E47986DE5A09D62C1A3"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\IIQ.ico"
             "TargetName" = "8:IIQ.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_521BAB8220A34E77BAD06C3A98F527A5"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomIn.svg"
-            "TargetName" = "8:ZoomIn.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1925,50 +2006,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5359792D6E93462F9F4D42E9002D4B43"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_575F5A8B259245B7BA8DB4F67C7E17FE"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\preview.png"
-            "TargetName" = "8:preview.png"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56C0C7704D43485887ED753678DBF6A6"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\OpenFile.svg"
-            "TargetName" = "8:OpenFile.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B50948889C8429087896F4C843D876C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomToFit.svg"
-            "TargetName" = "8:ZoomToFit.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\FullScreen.svg"
+            "TargetName" = "8:FullScreen.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -2005,10 +2046,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5E8C0CEB14664EA898771716536A776C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5E42B3B123F046BDA329832297C6E93D"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\AutoZoom.svg"
-            "TargetName" = "8:AutoZoom.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Refresh.svg"
+            "TargetName" = "8:Refresh.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -2043,6 +2084,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_631C991809E45C8F0E11C3F0C98011C4"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:FileWatcherEx, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_631C991809E45C8F0E11C3F0C98011C4"
+                    {
+                    "Name" = "8:FileWatcherEx.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:FileWatcherEx.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_660A5FF58B284B108F5A9243DF7F2C24"
@@ -2125,31 +2197,11 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6AAFB624591D4630872629B771AC5DB1"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Print.svg"
-            "TargetName" = "8:Print.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6B362F9948CF57A7BB86749CCC13EDA0"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ImageGlass.Core, Version=6.0.6932.20776, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.Core, Version=6.0.6937.19480, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_6B362F9948CF57A7BB86749CCC13EDA0"
@@ -2196,83 +2248,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E8A839EBE094353A018E294AC60C87C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ScaleToWidth.svg"
-            "TargetName" = "8:ScaleToWidth.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FDCE999A65345B6BAAEF67EBA387843"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\GPR.ico"
             "TargetName" = "8:GPR.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_70049F52E6BD42044D4F89C5016B3798"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_70049F52E6BD42044D4F89C5016B3798"
-                    {
-                    "Name" = "8:System.Runtime.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70B33E68AC1C4898B5AE2780927D4057"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ViewNextImage.svg"
-            "TargetName" = "8:ViewNextImage.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2327,72 +2308,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_763BA88097D042EDAD8342D552EB7053"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Greek.iglang"
-            "TargetName" = "8:Greek.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_769AD5362A7347A9BC56EB822E6003B9"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomOut.svg"
-            "TargetName" = "8:ZoomOut.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7895A2BDA6D340FCAD961A6D8E35628C"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\EXIF.ico"
             "TargetName" = "8:EXIF.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BEDA1D1F62445D5B0FEAAF33DAEB96F"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Chinese Simplified.iglang"
-            "TargetName" = "8:Chinese Simplified.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2427,10 +2348,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7D929C70EC6D4D6491B9DC68013D135A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DBE26C9C4EF46669947AD0AC0D8A5B8"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Slideshow.svg"
-            "TargetName" = "8:Slideshow.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Sharing.svg"
+            "TargetName" = "8:Sharing.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -2487,10 +2408,41 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F80FF5A72154C1EAC2AA4CF04E02650"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E457D89DEDA1E559F84F059592EBD23"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Delete.svg"
-            "TargetName" = "8:Delete.svg"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.ImageBox, Version=6.0.6937.19480, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7E457D89DEDA1E559F84F059592EBD23"
+                    {
+                    "Name" = "8:ImageGlass.ImageBox.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ImageGlass.ImageBox.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7EAAB27ABE4E492C89E206654CA07FDB"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\2017_Light_Gray.igtheme"
+            "TargetName" = "8:2017_Light_Gray.igtheme"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -2607,6 +2559,57 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A873CC8D7104C3C8860C5BF6A9CEC9B"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\RotateLeft.svg"
+            "TargetName" = "8:RotateLeft.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AE54D11BCC4EBDEB3ADF534FD502015"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:igcmd, Version=6.0.6937.19482, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8AE54D11BCC4EBDEB3ADF534FD502015"
+                    {
+                    "Name" = "8:igcmd.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:igcmd.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8D04FC5DD1B64B16AB97A343F1849850"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\RWZ.ico"
@@ -2633,6 +2636,26 @@
             "TargetName" = "8:PTX.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8F722F4237034F4A98A769A479DD10C4"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ZoomToFit.svg"
+            "TargetName" = "8:ZoomToFit.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2738,30 +2761,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93690EE3BF6B4458A98BA50DBF29AD8A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9446F569187E4240B29072722300ECB3"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\French.iglang"
-            "TargetName" = "8:French.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93DD4692D7234F9CB4F1285C2CE8CF1C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Settings.svg"
-            "TargetName" = "8:Settings.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Delete.svg"
+            "TargetName" = "8:Delete.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -2778,30 +2781,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_94D49F72A03143BFBB098143BBE27BF8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9534274CE27044A2B7A72A8B511DB62D"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ViewPreviousImage.svg"
-            "TargetName" = "8:ViewPreviousImage.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_96A4973597704CF88660EE09C4C817D3"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Ukrainian.iglang"
-            "TargetName" = "8:Ukrainian.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Turkish.iglang"
+            "TargetName" = "8:Turkish.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
@@ -2816,6 +2799,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9634506ED64F907BDC77A17FDC6B5CF8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.ImageListView, Version=11.0.0.5, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9634506ED64F907BDC77A17FDC6B5CF8"
+                    {
+                    "Name" = "8:ImageGlass.ImageListView.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ImageGlass.ImageListView.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_994616A353944E348B71D8E07F00B045"
@@ -2878,26 +2892,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9BB55D7960BE4279BA5110EB6E341981"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Arabic, Egypt.iglang"
-            "TargetName" = "8:Arabic, Egypt.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9CAA220E4DE94E2B81EFF8BB3EAED53D"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\PSD.ico"
@@ -2918,23 +2912,83 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4623053ECBD412397CE24C59202D2F2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9CD3F3F0A64B4A5682F1C453CF63B66F"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Italian.iglang"
+            "TargetName" = "8:Italian.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9D3934A9E9BC441A819C49163632CBBF"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Russian.iglang"
+            "TargetName" = "8:Russian.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A31587286B5DE92AD85F028E69AF7E4D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            "AssemblyAsmDisplayName" = "8:DotNetZip, Version=1.13.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A4623053ECBD412397CE24C59202D2F2"
+                    "_A31587286B5DE92AD85F028E69AF7E4D"
                     {
-                    "Name" = "8:System.Runtime.WindowsRuntime.dll"
+                    "Name" = "8:DotNetZip.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\..\\..\\Libs\\.NET Core\\v4.5.1\\System.Runtime.WindowsRuntime.dll"
+            "SourcePath" = "8:DotNetZip.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A32BA4EA92814991975AA8EB02562325"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\GoToImage.svg"
+            "TargetName" = "8:GoToImage.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2989,41 +3043,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AAC6E00A2B200A382C85EAA8BB5F8704"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AAD4AE974D99419CAFAE733813A62662"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Threading.Tasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AAC6E00A2B200A382C85EAA8BB5F8704"
-                    {
-                    "Name" = "8:System.Threading.Tasks.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Threading.Tasks.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AAF57CA65650407E80A533502EF6B23C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Plugins.svg"
-            "TargetName" = "8:Plugins.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\LockRatio.svg"
+            "TargetName" = "8:LockRatio.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -3140,52 +3163,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B144D397DA7A4624A255524CAA78FE23"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B653855B5CD9451DA720715654C72D42"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Convert.svg"
-            "TargetName" = "8:Convert.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B2D28433A63D407B9E03813E909E5997"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Italian.iglang"
-            "TargetName" = "8:Italian.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Czech.iglang"
+            "TargetName" = "8:Czech.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B577F2AFA6634BBB856ED6E4A2425966"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\FullScreen.svg"
-            "TargetName" = "8:FullScreen.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3224,7 +3207,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ImageGlass.Services, Version=6.0.6932.20777, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ImageGlass.Services, Version=6.0.6937.19481, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_BA43FECB05799E7458F7D88443AAAAD4"
@@ -3271,26 +3254,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF821D9162DC429CBCACFB2ED6CF18DD"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Hungarian.iglang"
-            "TargetName" = "8:Hungarian.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BFCF6E96016D4E2782CF777B247F70F1"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\HDR.ico"
@@ -3311,10 +3274,101 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C44E6CADCCEC402FBA7B833E56276C90"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C0D7DDDABFDB48FCBCA24EF93C528ADB"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Indonesian.iglang"
-            "TargetName" = "8:Indonesian.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\OpenFile.svg"
+            "TargetName" = "8:OpenFile.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C2822A7DF53A4691A2134AF14F883E9D"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\RotateRight.svg"
+            "TargetName" = "8:RotateRight.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C35AFF7175E2415AA2FC8199FDB859DA"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Slideshow.svg"
+            "TargetName" = "8:Slideshow.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C3E8A3393560285D74EBA51B56EDBC58"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:igtasks, Version=6.0.6937.19481, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C3E8A3393560285D74EBA51B56EDBC58"
+                    {
+                    "Name" = "8:igtasks.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:igtasks.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C3F116F2F9CD4691B4EF85D2E2132CD8"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Chinese Traditional.iglang"
+            "TargetName" = "8:Chinese Traditional.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
@@ -3391,92 +3445,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CE4110FE7F7548A7B1F810C70219CE2C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D48678823E4245949E2943C6A8C99296"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\AdjustWindowSize.svg"
-            "TargetName" = "8:AdjustWindowSize.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Print.svg"
+            "TargetName" = "8:Print.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF268C52C1B644B2888AFCA06084797F"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Sharing.svg"
-            "TargetName" = "8:Sharing.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D0C534C1FDB748A48AA530C7AEC8127A"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\RotateRight.svg"
-            "TargetName" = "8:RotateRight.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D16F2E5FBE5B4784A6EF6D6421E37002"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Refresh.svg"
-            "TargetName" = "8:Refresh.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D50556BC53BF48A1B67530CB843F8BAB"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Spanish.iglang"
-            "TargetName" = "8:Spanish.iglang"
-            "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3531,10 +3505,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D73CEBB00871440F80C4315F1D60E7BC"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6D6E9311A9D4AF9B25E4CED084B88DE"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Russian.iglang"
-            "TargetName" = "8:Russian.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Portuguese, Brazilian.iglang"
+            "TargetName" = "8:Portuguese, Brazilian.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
             "Condition" = "8:"
@@ -3571,12 +3545,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9D8824586BF40338734F307DA5E1C38"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D8D43E2360F04F8594DFD5479DB12F8D"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\JPEG.ico"
-            "TargetName" = "8:JPEG.ico"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ViewPreviousImage.svg"
+            "TargetName" = "8:ViewPreviousImage.svg"
             "Tag" = "8:"
-            "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3591,12 +3565,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD5AE4A6280A475FA3C507DB27897AB2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9D8824586BF40338734F307DA5E1C38"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Chinese Traditional.iglang"
-            "TargetName" = "8:Chinese Traditional.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\JPEG.ico"
+            "TargetName" = "8:JPEG.ico"
             "Tag" = "8:"
-            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3631,10 +3605,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF1193B1323A4AF08496EE61BAD572A6"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DFE0ADBCA7D9468AAA8756E7522D1923"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\LockRatio.svg"
-            "TargetName" = "8:LockRatio.svg"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Settings.svg"
+            "TargetName" = "8:Settings.svg"
             "Tag" = "8:"
             "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
@@ -3711,23 +3685,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3D9D4FACB29D912A8B2BE78AD703AAB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E53B8E7ACEB242FBA8E8B430C9ACE475"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DotNetZip, Version=1.11.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E3D9D4FACB29D912A8B2BE78AD703AAB"
-                    {
-                    "Name" = "8:DotNetZip.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DotNetZip.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ViewNextImage.svg"
+            "TargetName" = "8:ViewNextImage.svg"
             "Tag" = "8:"
-            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3739,7 +3702,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E5A1BD822F624BBE991D60FF842465C0"
@@ -3762,12 +3725,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E7ABE724107A4B59B774A2473D93FA3B"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ScaleToWidth.svg"
+            "TargetName" = "8:ScaleToWidth.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E7BE0331FFD24C969519B85C975E980D"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\PXN.ico"
             "TargetName" = "8:PXN.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EAD6BFB1A96A45FA9FD70B18EE41A788"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\config.xml"
+            "TargetName" = "8:config.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3822,92 +3825,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EDB1E40FD5074A2ABC6825D72CF6FE52"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F1A8BCABFEE64678805C1BAA2FBDFCB0"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Vietnamese.iglang"
-            "TargetName" = "8:Vietnamese.iglang"
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\AdjustWindowSize.svg"
+            "TargetName" = "8:AdjustWindowSize.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F89F2EFC7BE3434193840036853974BE"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Portuguese.iglang"
+            "TargetName" = "8:Portuguese.iglang"
             "Tag" = "8:"
             "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE394B5FFE6D4535A7A717E2CD2B6EE5"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ScaleToHeight.svg"
-            "TargetName" = "8:ScaleToHeight.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F082BDD4266D48D0AEAA797109CF9C02"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\2017_Light_Gray.igtheme"
-            "TargetName" = "8:2017_Light_Gray.igtheme"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F1BC7F4383F347218219003D99694178"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\GoToImage.svg"
-            "TargetName" = "8:GoToImage.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F224AEFF13A0458EA4C7955BF763BB5C"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Checkerboard.svg"
-            "TargetName" = "8:Checkerboard.svg"
-            "Tag" = "8:"
-            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3953,12 +3896,92 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FADD630862CF4533BB0B31A9025746FA"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Convert.svg"
+            "TargetName" = "8:Convert.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB23997992254F22A10DC3DD2BCC61D9"
             {
             "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Ext-Icons\\RW2.ico"
             "TargetName" = "8:RW2.ico"
             "Tag" = "8:"
             "Folder" = "8:_8E10DF606C924A019DCEF7D898559B46"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC302C4F7A7149EE93C54A94E7FA4D9A"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\Languages\\Spanish.iglang"
+            "TargetName" = "8:Spanish.iglang"
+            "Tag" = "8:"
+            "Folder" = "8:_CEC8C225888E44889134292B987A7EF7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC6D72712C2B40C8BE24BC086AD53DAC"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\ScaleToHeight.svg"
+            "TargetName" = "8:ScaleToHeight.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FFF05B9199504967B5D80112E31601A5"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Assets\\Setup\\DefaultTheme\\Menu.svg"
+            "TargetName" = "8:Menu.svg"
+            "Tag" = "8:"
+            "Folder" = "8:_543E7F60A1E94064985A1112724B36AA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4074,11 +4097,11 @@
         "Name" = "8:ImageGlass"
         "ProductName" = "8:ImageGlass"
         "ProductCode" = "8:{03850D3B-B969-4657-9B86-5F8066BC2811}"
-        "PackageCode" = "8:{E322F2EF-FEDD-41D1-BCDC-FDC114A5FF0F}"
+        "PackageCode" = "8:{824B476A-EBB7-4AE7-8524-9202360C0875}"
         "UpgradeCode" = "8:{58E02284-D008-4088-A3B4-E96C31829640}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:6.0.12"
@@ -4686,34 +4709,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{CC391E3E-9137-4857-85DC-C4CF6DF37584}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_98213604FBED40EB877A8DECA00C02EA"
-            {
-            "SourcePath" = "8:..\\..\\..\\Ultilities\\igcmdWin10\\obj\\Release\\igcmdWin10.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_39C1961E02BE4AC39B3AB1B817933029"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
