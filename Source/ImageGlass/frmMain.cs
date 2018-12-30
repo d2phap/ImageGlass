@@ -3407,6 +3407,11 @@ namespace ImageGlass
             }
         }
 
+        // Need to clean up after creating an icon for the cursor
+        // TODO Suggestion: load the two cursors once at startup and re-use rather than re-create each time
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        extern static bool DestroyIcon(IntPtr handle);
+
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
             if (!picMain.IsPanning)
@@ -3435,31 +3440,13 @@ namespace ImageGlass
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                     {
-                        try
-                        {
-                            // get cursor icon
-                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
-                        }
-                        catch (Exception)
-                        {
-                            SetDefaultCursor();
-                        }
+                        SetCursor(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename);
 
                     }, onCursorRightAction: () =>
                     {
-                        try
-                        {
-                            // get cursor icon
-                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
 
-                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
-                        }
-                        catch (Exception)
-                        {
-                            SetDefaultCursor();
-                        }
+                        SetCursor(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename);
 
                     }, onCursorCenterAction: () =>
                     {
@@ -3467,8 +3454,25 @@ namespace ImageGlass
                     });
 
 
+                    void SetCursor(string which)
+                    {
+                        try
+                        {
+                            // get cursor icon - clean up after
+                            using (var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image)
+                            {
+                                IntPtr icon = cursorIcon.GetHicon();
+                                picMain.Cursor = new Cursor(icon);
+                                DestroyIcon(icon); // no resource leak
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            SetDefaultCursor();
+                        }
+                    }
 
-                    
+
                 }
 
                 //reset the cursor
