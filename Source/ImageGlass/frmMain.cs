@@ -294,7 +294,10 @@ namespace ImageGlass
                 // 2. Move to an image in a subfolder.
                 // 3. Change setting "include subfolders: OFF".
                 // Issue: the image in the subfolder is attempted to be shown, declared as corrupt/missing.
-                if (GlobalSetting.CurrentIndex == -1 && !GlobalSetting.ImageList.HasFolder(filePath))
+                // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to open single, hidden image with 'show hidden' OFF)
+                if (GlobalSetting.CurrentIndex == -1 && 
+                    GlobalSetting.ImageList.Length > 0 &&
+                    !GlobalSetting.ImageList.HasFolder(filePath))
                     GlobalSetting.CurrentIndex = 0;
             }
             else
