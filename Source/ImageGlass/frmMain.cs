@@ -38,6 +38,7 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
+using System.Runtime.InteropServices;
 
 namespace ImageGlass
 {
@@ -3412,7 +3413,7 @@ namespace ImageGlass
 
         // Need to clean up after creating an icon for the cursor
         // TODO Suggestion: load the two cursors once at startup and re-use rather than re-create each time
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         extern static bool DestroyIcon(IntPtr handle);
 
         private void picMain_MouseMove(object sender, MouseEventArgs e)
@@ -3462,7 +3463,7 @@ namespace ImageGlass
                         try
                         {
                             // get cursor icon - clean up after
-                            using (var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image)
+                            using (var cursorIcon = new ThemeImage(which, new Size(iconHeight, iconHeight)).Image)
                             {
                                 IntPtr icon = cursorIcon.GetHicon();
                                 picMain.Cursor = new Cursor(icon);
