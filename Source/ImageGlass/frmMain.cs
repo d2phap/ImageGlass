@@ -38,7 +38,6 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
-using System.Runtime.InteropServices;
 
 namespace ImageGlass
 {
@@ -3411,10 +3410,6 @@ namespace ImageGlass
             }
         }
 
-        // Need to clean up after creating an icon for the cursor
-        // TODO Suggestion: load the two cursors once at startup and re-use rather than re-create each time
-        [DllImport("user32.dll")]
-        extern static bool DestroyIcon(IntPtr handle);
 
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
@@ -3435,47 +3430,19 @@ namespace ImageGlass
                 // set the Arrow cursor
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
-                    // calculate icon height
-                    var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
-
-                    // get the hotpot area width
-                    var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
-
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                     {
-
-                        SetCursor(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename);
+                        picMain.Cursor = LocalSetting.Theme.PreviousArrowCursor ?? DefaultCursor;
 
                     }, onCursorRightAction: () =>
                     {
-
-                        SetCursor(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename);
+                        picMain.Cursor = LocalSetting.Theme.NextArrowCursor ?? DefaultCursor;
 
                     }, onCursorCenterAction: () =>
                     {
                         SetDefaultCursor();
                     });
-
-
-                    void SetCursor(string which)
-                    {
-                        try
-                        {
-                            // get cursor icon - clean up after
-                            using (var cursorIcon = new ThemeImage(which, new Size(iconHeight, iconHeight)).Image)
-                            {
-                                IntPtr icon = cursorIcon.GetHicon();
-                                picMain.Cursor = new Cursor(icon);
-                                DestroyIcon(icon); // no resource leak
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            SetDefaultCursor();
-                        }
-                    }
-
 
                 }
 
