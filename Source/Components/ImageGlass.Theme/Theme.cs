@@ -25,8 +25,8 @@ using System;
 using System.Threading;
 using Ionic.Zip;
 using System.Text;
-using System.Collections.Generic;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace ImageGlass.Theme
 {
@@ -163,9 +163,17 @@ namespace ImageGlass.Theme
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
         #endregion
 
+
+        #region Arrow Cursors
+        public Cursor PreviousArrowCursor { get; set; }
+
+        public Cursor NextArrowCursor { get; set; }
+
         #endregion
 
-       
+        #endregion
+
+
 
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
@@ -429,6 +437,19 @@ namespace ImageGlass.Theme
 
             #endregion
 
+            #region Arrow cursors (derived from toolbar)
+
+            var arrowHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+            var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
+            IntPtr icon = prevImage.Image.GetHicon();
+            PreviousArrowCursor = new Cursor(icon);
+
+            var nextImage = LoadThemeImage(dir, n, "next", arrowHeight);
+            icon = nextImage.Image.GetHicon();
+            NextArrowCursor = new Cursor(icon);
+
+
+            #endregion
 
             this._isThemeValid = true;
             return this.IsThemeValid;

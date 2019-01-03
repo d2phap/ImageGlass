@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -78,18 +76,19 @@ namespace ImageGlass.Theme
                 var lineY = tsBounds.Bottom - (tsBounds.Height / 2);
                 var lineLeft = tsBounds.Left;
                 var lineRight = tsBounds.Right;
-                var pen = new Pen(Color.Black);
-
-                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                using (var pen = new Pen(Color.Black)) // KBR 20181231 fix handle leak
                 {
-                    pen.Color = Color.FromArgb(35, 0, 0, 0);
-                }
-                else //dark background color
-                {
-                    pen.Color = Color.FromArgb(35, 255, 255, 255);
-                }
+                    if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                    {
+                        pen.Color = Color.FromArgb(35, 0, 0, 0);
+                    }
+                    else //dark background color
+                    {
+                        pen.Color = Color.FromArgb(35, 255, 255, 255);
+                    }
 
-                e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
+                    e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
+                }
                 base.OnRenderSeparator(e);
             }
         }
@@ -99,22 +98,24 @@ namespace ImageGlass.Theme
             if (e.ToolStrip is ToolStripDropDown dropdown)
             {
                 // draw background
-                e.Graphics.FillRectangle(new SolidBrush(this.ThemeBackgroundColor), e.AffectedBounds);
+                using (var brush = new SolidBrush(this.ThemeBackgroundColor)) // KBR 20181231 fix handle leak
+                    e.Graphics.FillRectangle(brush, e.AffectedBounds);
 
 
                 // draw border
-                var pen = new Pen(Color.Black);
-
-                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                using (var pen = new Pen(Color.Black)) // KBR 20181231 fix handle leak
                 {
-                    pen.Color = Color.FromArgb(35, 0, 0, 0);
-                }
-                else //dark background color
-                {
-                    pen.Color = Color.FromArgb(35, 255, 255, 255);
-                }
+                    if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                    {
+                        pen.Color = Color.FromArgb(35, 0, 0, 0);
+                    }
+                    else //dark background color
+                    {
+                        pen.Color = Color.FromArgb(35, 255, 255, 255);
+                    }
 
-                e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
+                    e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
+                }
             }
 
             base.OnRenderToolStripBackground(e);
@@ -122,36 +123,38 @@ namespace ImageGlass.Theme
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
-            Pen pen = new Pen(this.ThemeTextColor, 1);
+            using (Pen pen = new Pen(this.ThemeTextColor, 1)) // KBR 20181231 fix handle leak
+            {
+                e.Graphics.DrawLine(pen,
+                    e.Item.Width - (5 * e.Item.Height / 8),
+                    3 * e.Item.Height / 8,
+                    e.Item.Width - (4 * e.Item.Height / 8),
+                    e.Item.Height / 2);
 
-            e.Graphics.DrawLine(pen,
-                e.Item.Width - (5*e.Item.Height / 8),
-                3 * e.Item.Height / 8,
-                e.Item.Width - (4 * e.Item.Height / 8),
-                e.Item.Height / 2);
-
-            e.Graphics.DrawLine(pen,
-                e.Item.Width - (4 * e.Item.Height / 8),
-                e.Item.Height / 2,
-                e.Item.Width - (5*e.Item.Height / 8),
-                5 * e.Item.Height / 8);
+                e.Graphics.DrawLine(pen,
+                    e.Item.Width - (4 * e.Item.Height / 8),
+                    e.Item.Height / 2,
+                    e.Item.Width - (5 * e.Item.Height / 8),
+                    5 * e.Item.Height / 8);
+            }
         }
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
         {
-            Pen pen = new Pen(this.ThemeTextColor, 2);
+            using (Pen pen = new Pen(this.ThemeTextColor, 2)) // KBR 20181231 fix handle leak
+            {
+                e.Graphics.DrawLine(pen,
+                    2 * e.Item.Height / 10 + 1,
+                    e.Item.Height / 2,
+                    4 * e.Item.Height / 10 + 1,
+                    7 * e.Item.Height / 10);
 
-            e.Graphics.DrawLine(pen,
-                2* e.Item.Height / 10 + 1,
-                e.Item.Height / 2,
-                4 * e.Item.Height / 10 + 1,
-                7 * e.Item.Height / 10);
-
-            e.Graphics.DrawLine(pen,
-                4 * e.Item.Height / 10,
-                7 * e.Item.Height / 10,
-                8 * e.Item.Height / 10,
-                3 * e.Item.Height / 10);
+                e.Graphics.DrawLine(pen,
+                    4 * e.Item.Height / 10,
+                    7 * e.Item.Height / 10,
+                    8 * e.Item.Height / 10,
+                    3 * e.Item.Height / 10);
+            }
         }
         
     }

@@ -56,10 +56,10 @@ namespace ImageGlass
 
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
-            Application.DoEvents();
 
             //Update form with new DPI
             OnDpiChanged();
+            Application.DoEvents();
 
             /* KBR 20181009 - Fix observed bug. 
              * If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*. 
@@ -294,7 +294,10 @@ namespace ImageGlass
                 // 2. Move to an image in a subfolder.
                 // 3. Change setting "include subfolders: OFF".
                 // Issue: the image in the subfolder is attempted to be shown, declared as corrupt/missing.
-                if (GlobalSetting.CurrentIndex == -1 && !GlobalSetting.ImageList.HasFolder(filePath))
+                // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to open single, hidden image with 'show hidden' OFF)
+                if (GlobalSetting.CurrentIndex == -1 && 
+                    GlobalSetting.ImageList.Length > 0 &&
+                    !GlobalSetting.ImageList.HasFolder(filePath))
                     GlobalSetting.CurrentIndex = 0;
             }
             else
@@ -953,7 +956,7 @@ namespace ImageGlass
 
 
             //Zoom + ------------------------------------------------------------------------
-            #region Ctrl + = / = / + (numPad)
+            #region Ctrl + = or = or + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
@@ -963,7 +966,7 @@ namespace ImageGlass
 
 
             //Zoom - ------------------------------------------------------------------------
-            #region Ctrl + - / - / - (numPad)
+            #region Ctrl + - or - or - (numPad)
             if ((e.KeyValue == 189 || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
@@ -973,7 +976,7 @@ namespace ImageGlass
 
 
             //Zoom to fit--------------------------------------------------------------------
-            #region CTRL + `
+            #region CTRL + /
             if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
             {
                 mnuMainScaleToFit_Click(null, null);
@@ -1032,28 +1035,10 @@ namespace ImageGlass
             }
             #endregion
 
-            
-        }
-        
-        private void frmMain_KeyUp(object sender, KeyEventArgs e)
-        {
-            //this.Text = e.KeyValue.ToString();
-
-            //Ctrl---------------------------------------------------------------------------
-            #region CTRL (for Zooming)
-            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
-            {
-                //Disable dragging viewing image to desktop feature--------------------------
-                _isDraggingImage = false;
-                
-                return;
-            }
-            #endregion
-            
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if (!_isWindowsKeyPressed && (e.KeyValue == 33 || e.KeyValue == 37) &&
+            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 33 || e.KeyValue == 37) &&
                 !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
             {
                 NextPic(-1);
@@ -1064,7 +1049,7 @@ namespace ImageGlass
 
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if (!_isWindowsKeyPressed && (e.KeyValue == 34 || e.KeyValue == 39) &&
+            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 34 || e.KeyValue == 39) &&
                 !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
             {
                 NextPic(1);
@@ -1094,6 +1079,22 @@ namespace ImageGlass
             }
             #endregion
 
+        }
+
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            //this.Text = e.KeyValue.ToString();
+
+            //Ctrl---------------------------------------------------------------------------
+            #region CTRL (for Zooming)
+            if (e.KeyData == Keys.ControlKey && !e.Alt && !e.Shift)//Ctrl
+            {
+                //Disable dragging viewing image to desktop feature--------------------------
+                _isDraggingImage = false;
+                
+                return;
+            }
+            #endregion
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
@@ -2057,7 +2058,7 @@ namespace ImageGlass
                 
 
                 #region Load Toolbar button centering state
-                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", "False"));
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()));
                 #endregion
 
 
@@ -2783,6 +2784,8 @@ namespace ImageGlass
                 mnuMainManipulation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainManipulation"];
                 mnuMainRotateCounterclockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateCounterclockwise"];
                 mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRotateClockwise"];
+                mnuMainFlipHorz.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFlipHorz"];
+                mnuMainFlipVert.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFlipVert"];
                 mnuMainZoomIn.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomIn"];
                 mnuMainZoomOut.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainZoomOut"];
                 mnuMainScaleToFit.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainScaleToFit"];
@@ -2890,13 +2893,10 @@ namespace ImageGlass
                 }
 
                 // update checkerboard display mode
-                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                if (GlobalSetting.IsShowCheckerBoard)
                 {
-                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
-                }
-                else
-                {
-                    picMain.GridDisplayMode = ImageBoxGridDisplayMode.Client;
+                    GlobalSetting.IsShowCheckerBoard = false;
+                    mnuMainCheckBackground_Click(null, null);
                 }
 
                 //Update background---------------------
@@ -3410,6 +3410,7 @@ namespace ImageGlass
             }
         }
 
+
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
             if (!picMain.IsPanning)
@@ -3429,49 +3430,20 @@ namespace ImageGlass
                 // set the Arrow cursor
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
-                    // calculate icon height
-                    var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
-
-                    // get the hotpot area width
-                    var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
-
 
                     CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                     {
-                        try
-                        {
-                            // get cursor icon
-                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewPreviousImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
-                        }
-                        catch (Exception)
-                        {
-                            SetDefaultCursor();
-                        }
+                        picMain.Cursor = LocalSetting.Theme.PreviousArrowCursor ?? DefaultCursor;
 
                     }, onCursorRightAction: () =>
                     {
-                        try
-                        {
-                            // get cursor icon
-                            var cursorIcon = new ThemeImage(LocalSetting.Theme.ToolbarIcons.ViewNextImage.Filename, new Size(iconHeight, iconHeight)).Image;
-
-                            picMain.Cursor = new Cursor(cursorIcon.GetHicon());
-                        }
-                        catch (Exception)
-                        {
-                            SetDefaultCursor();
-                        }
+                        picMain.Cursor = LocalSetting.Theme.NextArrowCursor ?? DefaultCursor;
 
                     }, onCursorCenterAction: () =>
                     {
                         SetDefaultCursor();
                     });
 
-
-
-                    
                 }
 
                 //reset the cursor
@@ -3522,8 +3494,7 @@ namespace ImageGlass
 
         private void btnFlipHorz_Click(object sender, EventArgs e)
         {
-            mnuMainFlipVert_Click(null, null);
-
+            mnuMainFlipHorz_Click(null, null);
         }
 
         private void btnFlipVert_Click(object sender, EventArgs e)
@@ -3693,7 +3664,12 @@ namespace ImageGlass
             if (LocalSetting.IsTempMemoryData || !isImageError)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
+
+                // check if igcmdWin10.exe exists!
+                if (File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                {
+                    mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
+                }                
             }
 
 
@@ -4851,6 +4827,16 @@ namespace ImageGlass
                 {
                     mnuMainExtractFrames.Enabled = true;
                     mnuMainStartStopAnimating.Enabled = true;
+                }
+
+                // check if igcmdWin10.exe exists!
+                if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                {
+                    mnuMainSetAsLockImage.Enabled = false;
+                }
+                else
+                {
+                    mnuMainSetAsLockImage.Enabled = true;
                 }
 
                 // Get association App for editing

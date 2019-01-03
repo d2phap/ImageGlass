@@ -50,6 +50,8 @@ namespace igcmd
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
+
             picStatus.Image = igcmd.Properties.Resources.loading;
             Thread t = new Thread(new ThreadStart(CheckForUpdate))
             {
@@ -57,8 +59,6 @@ namespace igcmd
                 IsBackground = true
             };
             t.Start();
-
-
 
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir("ImageGlass.exe"));
 

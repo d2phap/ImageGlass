@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageGlass"
-#define MyAppVersion "5.5.7.26"
+#define MyAppVersion "6.0.12.29"
 #define MyAppPublisher "Duong Dieu Phap"
-#define MyAppURL "http://www.imageglass.org"
+#define MyAppURL "https://imageglass.org"
 #define MyAppExeName "ImageGlass.exe"
 
 [Setup]
@@ -28,8 +28,8 @@ OutputBaseFilename=ImageGlass_{#MyAppVersion}
 SetupIconFile=D:\DEV\ImageGlass\Assets\Setup Logo\setup_logo.ico
 Compression=lzma
 SolidCompression=yes
-WizardSmallImageFile=D:\DEV\ImageGlass\Setup\WizModernSmallImage.bmp
-AppCopyright=Copyright © 2010-2018 by {#MyAppPublisher}
+WizardSmallImageFile=D:\DEV\ImageGlass\Source\Setup\Inno\WizModernSmallImage.bmp
+AppCopyright=Copyright © 2010-2019 by {#MyAppPublisher}
 LanguageDetectionMethod=locale
 AppContact=d2phap@gmail.com
 AppReadmeFile=https://imageglass.org/
@@ -39,7 +39,7 @@ VersionInfoVersion={#MyAppVersion}
 VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription=A Iightweight, versatile image viewer
 VersionInfoTextVersion={#MyAppVersion}
-VersionInfoCopyright=Copyright © 2010-2018 by {#MyAppPublisher}
+VersionInfoCopyright=Copyright © 2010-2019 by {#MyAppPublisher}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoProductTextVersion={#MyAppVersion}
@@ -83,30 +83,36 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
-Source: "DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Source\ImageGlass\bin\Release\igcmd.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\IconLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.ImageBox.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.ImageListView.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Library.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Source\ImageGlass\bin\Release\FileWatcherEx.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Assets\default.jpg"; DestDir: "{app}"; Flags: ignoreversion
-Source: "igconfig.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\..\Assets\Setup\DefaultTheme\*"; DestDir: "{app}\DefaultTheme"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\..\Assets\Setup\Languages\*"; DestDir: "{app}\Languages"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\..\Assets\Setup\Ext-Icons\*"; DestDir: "{app}\Ext-Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\ImageGlass\bin\Release\igcmd.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igtasks.exe"; DestDir: "{app}"; Flags: ignoreversionSource: "..\..\ImageGlass\bin\Release\igcmdWin10.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igcmd.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igtasks.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igcmdWin10.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\DotNetZip.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\IconLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.ImageBox.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.ImageListView.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.Library.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.Services.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\ImageGlass.Theme.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\Magick.NET-Q16-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\FileWatcherEx.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\System.Runtime.WindowsRuntime.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\Windows.winmd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\ImageGlass\bin\Release\igstartup.profile"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\..\Assets\Setup\default.jpg"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
-
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\igtasks.exe"; Parameters: "regassociations *.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;*.exr;*.hdr;*.psd;*.tga;*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;"; Flags: nowait postinstall skipifsilent runascurrentuser; Description: "Register ImageGlass' supported extensions"
+Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"

@@ -1,15 +1,15 @@
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="5.5.7.26" isRightToLeftLayout="No" />
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="6.0.12.27" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="Định dạng chính" />
       <Item key="_.ImageFormatGroup.Optional" value="Định dạng phụ" />
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass không thể mở ảnh này vì các tập tin dường như bị hỏng hoặc định dạng không hỗ trợ." />
       <Item key="frmMain._ImageNotExist" value="Ảnh đang xem không tồn tại." />
-      <Item key="frmMain.btnBack" value="Xem ảnh trước đó (Mũi tên trái / PageUp)" />
-      <Item key="frmMain.btnNext" value="Xem ảnh tiếp theo (Mũi tên phải / PageDown)" />
       <Item key="frmMain.btnRotateLeft" value="Xoay ngược chiều kim đồng hồ (Ctrl +,)" />
       <Item key="frmMain.btnRotateRight" value="Xoay theo chiều kim đồng hồ (Ctrl +.)" />
+      <Item key="frmMain.btnFlipHorz" value="Lật theo chiều ngang" />
+      <Item key="frmMain.btnFlipVert" value="Lật theo chiều dọc" />
       <Item key="frmMain.btnZoomIn" value="Phóng to (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Thu nhỏ (Ctrl + -)" />
       <Item key="frmMain.btnAutoZoom" value="Thu phóng tự động (Ctrl + A)" />
@@ -51,9 +51,11 @@
       <Item key="frmMain.mnuMainManipulation" value="Thao tác" />
       <Item key="frmMain.mnuMainRotateCounterclockwise" value="Xoay ngược chiều kim đồng hồ" />
       <Item key="frmMain.mnuMainRotateClockwise" value="Xoay theo chiều kim đồng hồ" />
+      <Item key="frmMain.mnuMainFlipHorz" value="Lật theo chiều ngang" />
+      <Item key="frmMain.mnuMainFlipVert" value="Lật theo chiều dọc" />
       <Item key="frmMain.mnuMainZoomIn" value="Phóng to" />
       <Item key="frmMain.mnuMainZoomOut" value="Thu nhỏ" />
-      <Item key="frmMain.mnuMainScaleToFit" value="Co dãn hình ảnh vừa khít" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Tự động căn chỉnh tỉ lệ hình ảnh" />
       <Item key="frmMain.mnuMainActualSize" value="Kích thước thực tế" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Khoá tỉ lệ phóng to / thu nhỏ" />
       <Item key="frmMain.mnuMainAutoZoom" value="Thu phóng tự động" />
@@ -65,7 +67,8 @@
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Xóa khỏi đĩa cứng" />
       <Item key="frmMain.mnuMainExtractFrames" value="Trích xuất khung hình ảnh ({0})" />
       <Item key="frmMain.mnuMainStartStopAnimating" value="Bắt đầu / Dừng chuyển động hình ảnh" />
-      <Item key="frmMain.mnuMainSetAsDesktop" value="Đặt ảnh đang xem là hình nền" />
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Đặt ảnh đang xem làm hình nền" />
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Đặt ảnh đang xem làm màn hình khoá" />
       <Item key="frmMain.mnuMainImageLocation" value="Tìm vị trí hình ảnh" />
       <Item key="frmMain.mnuMainImageProperties" value="Thuộc tính hình ảnh" />
       <Item key="frmMain.mnuMainClipboard" value="Vùng nhớ đệm" />
@@ -97,7 +100,7 @@
       <Item key="frmMain._DeleteDialogText" value="Xóa tập tin '{0}'?" />
       <Item key="frmMain._DeleteDialogTitle" value="Xác nhận" />
       <Item key="frmMain._ExtractFrameText" value="Trích xuất hình ảnh. Vui lòng chọn thư mục lưu trữ!" />
-      <Item key="frmMain._FullScreenMessage" value="Nhấn ALT + ENTER để thoát chế độ toàn màn hình.&#xA; Hoặc nhấn CTRL + F1 để mở thanh công cụ." />
+      <Item key="frmMain._FullScreenMessage" value="Nhấn ALT + ENTER để thoát chế độ Toàn màn hình." />
       <Item key="frmMain._SlideshowMessage" value="Nhấn ESC để thoát trình diễn hình ảnh&#xA; Nhấn chuột phải để mở menu ngữ cảnh." />
       <Item key="frmMain._SlideshowMessagePause" value="Trình chiếu ảnh được tạm dừng" />
       <Item key="frmMain._SlideshowMessageResume" value="Trình chiếu ảnh được tiếp tục" />
@@ -112,6 +115,10 @@
       <Item key="frmMain._FirstItemOfList" value="Đã ở đầu danh sách" />
       <Item key="frmMain._LastItemOfList" value="Đã đến cuối danh sách" />
       <Item key="frmMain._CannotRotateAnimatedFile" value="Tính năng xoay ảnh cho định dạng hoạt hình không được hỗ trợ" />
+      <Item key="frmMain._SetLockImage_Error" value="Có lỗi phát sinh trong quá trình cài đặt màn hình khoá" />
+      <Item key="frmMain._SetLockImage_Success" value="Cài đặt màn hình khoá thành công" />
+      <Item key="frmMain._SetBackground_Error" value="Có lỗi phát sinh trong quá trình cài đặt ảnh nền" />
+      <Item key="frmMain._SetBackground_Success" value="Cài đặt ảnh nền thành công" />
       <Item key="frmAbout.lblSlogant" value="Phần mềm xem ảnh gọn nhẹ, tiện dụng" />
       <Item key="frmAbout.lblInfo" value="Thông tin" />
       <Item key="frmAbout.lblComponent" value="Các thành phần" />
@@ -128,6 +135,7 @@
       <Item key="frmSetting.btnApply" value="Áp dụng" />
       <Item key="frmSetting.lblGeneral" value="Cài đặt chung" />
       <Item key="frmSetting.lblImage" value="Hình ảnh" />
+      <Item key="frmSetting.lblEdit" value="Chỉnh sửa" />
       <Item key="frmSetting.lblFileAssociations" value="File Associations" />
       <Item key="frmSetting.lblToolbar" value="Thanh công cụ" />
       <Item key="frmSetting.lblColorPicker" value="Công cụ chọn màu" />
@@ -135,10 +143,9 @@
       <Item key="frmSetting.lblTheme" value="Chủ đề" />
       <Item key="frmSetting.lblHeadStartup" value="Khởi động" />
       <Item key="frmSetting.chkWelcomePicture" value="Hiển thị hình ảnh chào mừng" />
+      <Item key="frmSetting.chkLastSeenImage" value="Mở ảnh đã xem lần cuối" />
       <Item key="frmSetting.chkShowToolBar" value="Ẩn thanh công cụ khi khởi động" />
-      <Item key="frmSetting.lblHeadPortableMode" value="Chế độ Di động" />
-      <Item key="frmSetting.chkPortableMode._Enabled" value="Chế độ Di động đã được bật" />
-      <Item key="frmSetting.chkPortableMode._Disabled" value="Chế độ Di động không được hỗ trợ ở thư mục cài đặt hiện tại:&#xD;&#xA;{0}" />
+      <Item key="frmSetting.lblHeadConfigDir" value="Thư mục cấu hình" />
       <Item key="frmSetting.lblHeadOthers" value="Khác" />
       <Item key="frmSetting.chkAutoUpdate" value="Tự động kiểm tra phiên bản mới" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Cho phép nhiều cửa sổ chương trình mở cùng lúc" />
@@ -146,6 +153,8 @@
       <Item key="frmSetting.chkConfirmationDelete" value="Hiển thị hộp thoại xác nhận xóa bỏ" />
       <Item key="frmSetting.chkShowScrollbar" value="Hiển thị thanh cuộn hình ảnh" />
       <Item key="frmSetting.chkDisplayBasename" value="Hiển thị tên tập tin của ảnh đang xem trên thanh tiêu đề" />
+      <Item key="frmSetting.chkShowNavButtons" value="Hiển thị mũi tên điều hướng" />
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Chỉ hiển thị nền ca rô cho vùng ảnh" />
       <Item key="frmSetting.lblBackGroundColor" value="Màu nền" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Thiết lập lại" />
       <Item key="frmSetting.lblHeadImageLoading" value="Tải hình ảnh" />
@@ -161,6 +170,12 @@
       <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Lần chỉnh sửa cuối cùng" />
       <Item key="frmSetting.cmbImageOrder._Extension" value="Phần mở rộng" />
       <Item key="frmSetting.cmbImageOrder._Random" value="Ngẫu nhiên" />
+      <Item key="frmSetting.lblColorManagement" value="Quản lý màu sắc" />
+      <Item key="frmSetting.chkApplyColorProfile" value="Áp dụng luôn cho ảnh không chứa Color profile" />
+      <Item key="frmSetting.lblColorProfile" value="Color profile:" />
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Chọn" />
+      <Item key="frmSetting.cmbColorProfile._None" value="Không" />
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Tuỳ chọn..." />
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Các hành động cho Bánh xe chuột" />
       <Item key="frmSetting.lblMouseWheel" value="Bánh xe chuột" />
       <Item key="frmSetting.lblMouseWheelAlt" value="Bánh xe chuột + phím Alt" />
@@ -183,7 +198,6 @@
       <Item key="frmSetting.lblHeadSlideshow" value="Trình chiếu ảnh" />
       <Item key="frmSetting.chkLoopSlideshow" value="Lặp lại trình chiếu hình ảnh đầu tiên khi kết thúc danh sách" />
       <Item key="frmSetting.lblSlideshowInterval" value="Khoảng thời gian trình chiếu: {0} giây" />
-      <Item key="frmSetting.lblHeadImageEditing" value="Chỉnh sửa hình ảnh" />
       <Item key="frmSetting.chkSaveOnRotate" value="Tự động lưu sau khi xoay ảnh" />
       <Item key="frmSetting.lblSelectAppForEdit" value="Chọn ứng dụng chỉnh sửa hình ảnh" />
       <Item key="frmSetting.btnEditEditExt" value="Chỉnh sửa" />
@@ -202,6 +216,8 @@
       <Item key="frmSetting.btnRegisterExt" value="Thiết lập trình xem ảnh mặc định" />
       <Item key="frmSetting.btnDeleteExt" value="Xoá" />
       <Item key="frmSetting.btnResetExt" value="Đặt lại về mặc định" />
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Không thể đăng ký tập tin cho ứng dụng ImageGlass" />
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Đăng ký thành công các tập tin! Để cài đặt ImageGlass là trình xem ảnh mặc định, vui lòng vào Windows Settings &gt; Default Apps, và chọn ImageGlass trong menu Photo Viewer." />
       <Item key="frmSetting.lblToolbarPosition" value="Vị trí của thanh công cụ:" />
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Ở trên" />
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Ở dưới" />
@@ -213,6 +229,7 @@
       <Item key="frmSetting.btnMoveLeftTT" value="Xoá nút được chọn từ thanh công cụ" />
       <Item key="frmSetting.btnMoveRightTT" value="Thêm nút được chọn vào thanh công cụ" />
       <Item key="frmSetting.btnMoveUpTT" value="Di chuyển lên" />
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Canh giữa các nút trên thanh công cụ theo chiều ngang" />
       <Item key="frmSetting.lblColorCodeFormat" value="Định dạng mã màu sắc" />
       <Item key="frmSetting.chkColorUseRGBA" value="Sử dụng định dạng RGBA" />
       <Item key="frmSetting.chkColorUseHEXA" value="Sử dụng định dạng HEX với thuộc tính alpha" />
