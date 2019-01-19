@@ -659,13 +659,18 @@ namespace ImageGlass
                 GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
 
                 _isAppBusy = true;
-                var loadingTimer = new Timer()
+
+                //Display a "loading" message if set in the config
+                if (GlobalSetting.IsDisplayLoadMessage)
                 {
-                    Interval = 2000
-                };
-                loadingTimer.Tick += LoadingMessageTimer_Tick;
-                loadingTimer.Enabled = true;
-                loadingTimer.Start();
+                    var loadingTimer = new Timer()
+                    {
+                        Interval = 2000
+                    };
+                    loadingTimer.Tick += LoadingMessageTimer_Tick;
+                    loadingTimer.Enabled = true;
+                    loadingTimer.Start();
+                }
 
                 //Read image data
                 im = await Task.Run(() =>
@@ -2126,6 +2131,9 @@ namespace ImageGlass
 
                 //Load state of Image Booster
                 GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
+
+                //Load state of Image Booster
+                GlobalSetting.IsDisplayLoadMessage = bool.Parse(GlobalSetting.GetConfig("IsDisplayLoadMessage", "True"));
 
 
                 //Load IsDisplayBasenameOfImage value

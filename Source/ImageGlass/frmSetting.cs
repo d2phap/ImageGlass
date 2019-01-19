@@ -287,6 +287,7 @@ namespace ImageGlass
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
             chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
+            chkDisplayLoadMessage.Text = lang[$"{Name}.chkDisplayLoadMessage"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -641,6 +642,9 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
             #endregion
+
+            //Get value of chkDisplayLoadMessage
+            chkDisplayLoadMessage.Checked = GlobalSetting.IsDisplayLoadMessage;
 
 
             #region Color Management
@@ -2200,7 +2204,11 @@ namespace ImageGlass
             //IsImageBoosterBack
             GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
             GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
-            
+
+            //IsDisplayLoadMessage
+            GlobalSetting.IsDisplayLoadMessage = chkDisplayLoadMessage.Checked;
+            GlobalSetting.SetConfig("IsDisplayLoadMessage", GlobalSetting.IsDisplayLoadMessage.ToString());
+
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
@@ -2429,8 +2437,7 @@ namespace ImageGlass
 
 
 
-        #endregion
 
-        
+        #endregion
     }
 }

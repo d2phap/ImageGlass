@@ -408,6 +408,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets the value indicates that a message is displayed if the program is busy
+        /// </summary>
+        public static bool IsDisplayLoadMessage { get; set; } = true;
+
 
         /// <summary>
         /// The toolbar button configuration: contents and order.
