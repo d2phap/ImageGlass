@@ -550,12 +550,21 @@ namespace ImageGlass
             thumbnailBar.ResumeLayout();
         }
 
+
         /// <summary>
         /// Change image
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         private void NextPic(int step)
         {
+            // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
+            // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
+            // This below fixes that.
+            if (GlobalSetting.IsPlaySlideShow)
+            {
+                timSlideShow.Enabled = false;
+                timSlideShow.Enabled = true;
+            }
             NextPic(step, false);
         }
 
@@ -3021,8 +3030,8 @@ namespace ImageGlass
 
         private void timSlideShow_Tick(object sender, EventArgs e)
         {
-            NextPic(1);
-
+            // KBR 20190302 perform this check first: if user hits 'End' during slideshow,
+            // the slideshow would start over at beginning, even if IsLoopBackSlideShow was false
             //stop playing slideshow at last image
             if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
             {
@@ -3031,6 +3040,9 @@ namespace ImageGlass
                     mnuMainSlideShowPause_Click(null, null);
                 }
             }
+            else
+                NextPic(1);
+
         }
 
 
@@ -4063,7 +4075,6 @@ namespace ImageGlass
                 FullScreenMode(enabled: true, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
 
                 //perform slideshow
-                timSlideShow.Start();
                 timSlideShow.Enabled = true;
 
                 GlobalSetting.IsPlaySlideShow = true;
@@ -4083,14 +4094,12 @@ namespace ImageGlass
             if (timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
-                timSlideShow.Stop();
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessagePause"], 2000);
             }
             else
             {
                 timSlideShow.Enabled = true;
-                timSlideShow.Start();
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessageResume"], 2000);
             }
@@ -4099,7 +4108,6 @@ namespace ImageGlass
 
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
         {
-            timSlideShow.Stop();
             timSlideShow.Enabled = false;
             GlobalSetting.IsPlaySlideShow = false;
 
