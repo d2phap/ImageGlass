@@ -4666,6 +4666,14 @@ namespace ImageGlass
                     sp1.IsSplitterFixed = false; //Allow user to resize
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
+
+                    // KBR 20190302 Issue #483: reset splitter width if it gets out of whack somehow
+                    if ((sp1.Width - GlobalSetting.ThumbnailBarWidth) < 1)
+                    {
+                        GlobalSetting.ThumbnailBarWidth = Math.Min(128, sp1.Width);
+                        GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
+                    }
+
                     sp1.SplitterDistance = sp1.Width - GlobalSetting.ThumbnailBarWidth;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
