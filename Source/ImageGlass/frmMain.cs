@@ -3987,9 +3987,10 @@ namespace ImageGlass
         private void mnuMainGoto_Click(object sender, EventArgs e)
         {
             int n = GlobalSetting.CurrentIndex;
-            string s = "0";
+            // KBR 20190302 init to current index
+            string s = (n+1).ToString();
 
-            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
+            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], s, true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
@@ -3997,12 +3998,14 @@ namespace ImageGlass
             if (int.TryParse(s, out n))
             {
                 n--;
+                // KBR 20190302 have out-of-range values go to beginning/end as appropriate
+                if (n < 1)
+                    n = 0;
+                else if (n >= GlobalSetting.ImageList.Length)
+                    n = GlobalSetting.ImageList.Length - 1;
 
-                if (-1 < n && n < GlobalSetting.ImageList.Length)
-                {
-                    GlobalSetting.CurrentIndex = n;
-                    NextPic(0);
-                }
+                GlobalSetting.CurrentIndex = n;
+                NextPic(0);
             }
         }
 
