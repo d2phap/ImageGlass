@@ -3038,10 +3038,11 @@ namespace ImageGlass
                 if (!GlobalSetting.IsLoopBackSlideShow)
                 {
                     mnuMainSlideShowPause_Click(null, null);
+                    return;
                 }
             }
-            else
-                NextPic(1);
+
+            NextPic(1);
 
         }
 
