@@ -576,6 +576,8 @@ namespace ImageGlass
         /// <param name="isSkipCache"></param>
         private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
+            Timer _loadingTimer = null; // busy state timer
+
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
 
@@ -667,20 +669,18 @@ namespace ImageGlass
                 GlobalSetting.ImageList.IsApplyColorProfileForAll = GlobalSetting.IsApplyColorProfileForAll;
                 GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
 
-                _isAppBusy = true;
-                var loadingTimer = new Timer()
-                {
-                    Interval = 2000
-                };
-                loadingTimer.Tick += LoadingMessageTimer_Tick;
-                loadingTimer.Enabled = true;
-                loadingTimer.Start();
+                // put app in a 'busy' state around image load: allows us to prevent the user from 
+                // skipping past a slow-to-load image by processing too many arrow clicks
+                SetAppBusy(true); 
 
-                //Read image data
+                //Read image data outside the GUI loop
                 im = await Task.Run(() =>
                 {
                     return GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
                 });
+
+                SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
+
                 GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
 
 
@@ -714,11 +714,11 @@ namespace ImageGlass
                     });
                 }
 
-                _isAppBusy = false;
-
             }
             catch (Exception)
             {
+                SetAppBusy(false); // make sure busy state is off if exception during image load
+
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
 
@@ -742,6 +742,31 @@ namespace ImageGlass
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+
+            void SetAppBusy(bool isbusy)
+            {
+                _isAppBusy = isbusy;
+                picMain.Cursor = isbusy ? Cursors.WaitCursor : Cursors.Default;
+
+                // Part of Issue #485 fix: failure to disable timer after image load meant message 
+                // could appear after image already loaded
+                if (!isbusy && _loadingTimer != null)
+                {
+                    _loadingTimer.Enabled = false;
+                    _loadingTimer.Dispose();
+                    _loadingTimer = null;
+                }
+                if (isbusy)
+                {
+                    _loadingTimer = new Timer() // can't re-use timer, re-create each time
+                    {
+                        Interval = 2000
+                    };
+                    _loadingTimer.Tick += LoadingMessageTimer_Tick;
+                    _loadingTimer.Enabled = true;
+                }
+            }
+
         }
 
 
@@ -4652,6 +4677,14 @@ namespace ImageGlass
                     sp1.IsSplitterFixed = false; //Allow user to resize
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
+
+                    // KBR 20190302 Issue #483: reset splitter width if it gets out of whack somehow
+                    if ((sp1.Width - GlobalSetting.ThumbnailBarWidth) < 1)
+                    {
+                        GlobalSetting.ThumbnailBarWidth = Math.Min(128, sp1.Width);
+                        GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
+                    }
+
                     sp1.SplitterDistance = sp1.Width - GlobalSetting.ThumbnailBarWidth;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
