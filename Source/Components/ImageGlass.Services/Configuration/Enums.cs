@@ -175,12 +175,12 @@ namespace ImageGlass.Services.Configuration
     /// </summary>
     public enum AssignableActions
     {
-        DoNothing = -1,
-        PrevNextImage = 0,
-        PanLeftRight,
-        PanUpDown,
-        ZoomInOut,
-        PauseSlideshow,
+        DoNothing = -1,    // error case
+        PrevNextImage = 0, // previous/next image in list
+        PanLeftRight,      // pan current image left/right
+        PanUpDown,         // pan current image up/down
+        ZoomInOut,         // zoom current image in/out
+        PauseSlideshow,    // placeholder for V6 space key behavior
 
     }
 
@@ -189,9 +189,9 @@ namespace ImageGlass.Services.Configuration
     /// </summary>
     public enum KeyCombos
     {
-        LeftRight=0,  // left/right arrow keys
-        UpDown,     // up/down arrow keys
-        PageUpDown, // pageup/pagedown keys
-        SpaceBack,  // space, backspace keys
+        LeftRight=0, // left/right arrow keys
+        UpDown,      // up/down arrow keys
+        PageUpDown,  // pageup/pagedown keys
+        SpaceBack,   // space, backspace keys
     }
 }
