@@ -248,6 +248,7 @@ namespace ImageGlass
             lblToolbar.Text = lang[$"{Name}.lblToolbar"];
             lblColorPicker.Text = lang[$"{Name}.lblColorPicker"];
             lblTheme.Text = lang[$"{Name}.lblTheme"];
+            lblKeyboard.Text = lang[$"{Name}.lblKeyboard"];
 
             btnSave.Text = lang[$"{Name}.btnSave"];
             btnCancel.Text = lang[$"{Name}.btnCancel"];
@@ -393,6 +394,15 @@ namespace ImageGlass
 
             #endregion
 
+            #region KEYBOARD TAB
+            btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
+            lblKeysKeysHeader.Text = lang[$"{Name}.lblKeysKeysHeader"];
+            lblKeysActionsHeader.Text = lang[$"{Name}.lblKeysActionsHeader"];
+            lblKeysSpaceBack.Text = lang[$"{Name}.lblKeysSpaceBack"];
+            lblKeysPageUpDown.Text = lang[$"{Name}.lblKeysPageUpDown"];
+            lblKeysUpDown.Text = lang[$"{Name}.lblKeysUpDown"];
+            lblKeysLeftRight.Text = lang[$"{Name}.lblKeysLeftRight"];
+            #endregion
 
             extList = null;
         }
@@ -432,6 +442,9 @@ namespace ImageGlass
                 case "lblTheme":
                     tab1.SelectedTab = tabTheme;
                     break;
+                case "lblKeyboard":
+                    tab1.SelectedTab = tabKeyboard;
+                    break;
             }
         }
 
@@ -445,7 +458,8 @@ namespace ImageGlass
             lblLanguage.Tag =
             lblToolbar.Tag =
             lblColorPicker.Tag =
-            lblTheme.Tag = 0;
+            lblTheme.Tag =
+            lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
             lblImage.BackColor =
@@ -454,7 +468,8 @@ namespace ImageGlass
             lblLanguage.BackColor =
             lblToolbar.BackColor =
             lblColorPicker.BackColor =
-            lblTheme.BackColor = M_COLOR_MENU_NORMAL;
+            lblTheme.BackColor = 
+            lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -520,8 +535,15 @@ namespace ImageGlass
                 lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabTheme();
-                
             }
+            else if (tab1.SelectedTab == tabKeyboard)
+            {
+                lblKeyboard.Tag = 1;
+                lblKeyboard.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabKeyboard();
+            }
+
         }
 
 
@@ -2064,6 +2086,35 @@ namespace ImageGlass
 
         #endregion
 
+
+        #region TAB KEYBOARD
+        private void LoadTabKeyboard()
+        {
+            var lang = GlobalSetting.LangPack.Items;
+
+            cmbKeysLeftRight.Items.Clear();
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PanLeftRight"]);
+
+            cmbKeysUpDown.Items.Clear();
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._PanUpDown"]);
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysPgUpDown.Items.Clear();
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysSpaceBack.Items.Clear();
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PauseSlideshow"]);
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+
+            // TODO map setting value to/from current selection
+            cmbKeysLeftRight.SelectedIndex = 0;
+            cmbKeysUpDown.SelectedIndex = 0;
+            cmbKeysPgUpDown.SelectedIndex = 0;
+            cmbKeysSpaceBack.SelectedIndex = 0;
+        }
+        #endregion
 
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
