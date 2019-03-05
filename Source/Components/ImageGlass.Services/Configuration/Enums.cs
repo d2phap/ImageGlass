@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -168,5 +168,30 @@ namespace ImageGlass.Services.Configuration
     {
         Top = 0,
         Bottom = 1
+    }
+
+    /// <summary>
+    /// Actions the user can assign to keys and/or mouse
+    /// </summary>
+    public enum AssignableActions
+    {
+        DoNothing = -1,
+        PrevNextImage = 0,
+        PanLeftRight,
+        PanUpDown,
+        ZoomInOut,
+        PauseSlideshow,
+
+    }
+
+    /// <summary>
+    /// User customizable key pairs
+    /// </summary>
+    public enum KeyCombos
+    {
+        LeftRight=0,  // left/right arrow keys
+        UpDown,     // up/down arrow keys
+        PageUpDown, // pageup/pagedown keys
+        SpaceBack,  // space, backspace keys
     }
 }

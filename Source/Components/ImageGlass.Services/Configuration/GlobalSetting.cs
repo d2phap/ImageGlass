@@ -451,7 +451,15 @@ namespace ImageGlass.Services.Configuration
 
 
 
-
+        /// <summary>
+        /// User-selected action tied to key pairings.
+        /// E.g. Left/Right arrows: prev/next image
+        /// </summary>
+        public static string KeyAssignments { get; set; } = $"" +
+            $"{(int)KeyCombos.LeftRight},{(int)AssignableActions.PrevNextImage};" +
+            $"{(int)KeyCombos.UpDown},{(int)AssignableActions.PanUpDown};" +
+            $"{(int)KeyCombos.PageUpDown},{(int)AssignableActions.PrevNextImage};" +
+            $"{(int)KeyCombos.SpaceBack},{(int)AssignableActions.PauseSlideshow};";
 
         #endregion
 
@@ -708,7 +716,62 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
+        #endregion
 
+        #region Keyboard customization
+        // The user is permitted to choose what action to associate to a key-pairing.
+        // E.g. PageUp/PageDown to next/previous image.
+
+        // The KeyPair -> action lookup
+        private static Dictionary<KeyCombos, AssignableActions> KeyActionLookup;
+
+        /// <summary>
+        /// Load the KeyPair -> action values from the config file into the lookup
+        /// dictionary.
+        /// </summary>
+        public static void LoadKeyAssignments()
+        {
+            // Note: default value matches the IGV6 behavior
+            KeyAssignments = GetConfig("KeyboardActions", "0,0;1,2;2,0;3,4;");
+
+            var part_sep = new char[] { ',' };
+            var pairs = KeyAssignments.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            KeyActionLookup = new Dictionary<KeyCombos, AssignableActions>();
+            foreach (var pair in pairs)
+            {
+                var parts = pair.Split(part_sep);
+                int part1 = int.Parse(parts[0]);
+                int part2 = int.Parse(parts[1]);
+                KeyActionLookup.Add((KeyCombos)part1, (AssignableActions)part2);
+            }
+        }
+
+        /// <summary>
+        /// For a given key-pair, return the user-chosen action
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static AssignableActions GetKeyAction(KeyCombos key)
+        {
+            return KeyActionLookup[key];
+        }
+
+        /// <summary>
+        /// Write the key-pair customizations to the config file.
+        /// </summary>
+        public static void SaveKeyAssignments()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in KeyActionLookup.Keys)
+            {
+                sb.Append((int)key);
+                sb.Append(',');
+                sb.Append((int)KeyActionLookup[key]);
+                sb.Append(';');
+            }
+            KeyAssignments = sb.ToString();
+            SetConfig("KeyboardActions", KeyAssignments);
+        }
         #endregion
 
     }

@@ -1072,10 +1072,28 @@ namespace ImageGlass
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 33 || e.KeyValue == 37) &&
-                !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
+            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            bool ignore = _isAppBusy || _isWindowsKeyPressed;
+            if (!ignore && e.KeyValue == (int)Keys.Left && no_mods)
             {
-                NextPic(-1);
+                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                } 
+                return; // fall-through lets pan happen
+            }
+            if (!ignore && e.KeyValue == (int)Keys.PageUp && no_mods)
+            {
+                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                if (action == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                }
+                else if (action == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomIn_Click(null, null);
+                }
+
                 return;
             }
             #endregion
@@ -1083,11 +1101,51 @@ namespace ImageGlass
 
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 34 || e.KeyValue == 39) &&
-                !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
+            if (!ignore && e.KeyValue == (int)Keys.Right && no_mods)
             {
-                NextPic(1);
+                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
+                return; // fall-through lets pan happen
+            }
+            if (!ignore && e.KeyValue == (int)Keys.PageDown && no_mods)
+            {
+                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                if (action == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
+                else if (action == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomOut_Click(null, null);
+                }
+
                 return;
+            }
+            #endregion
+
+            #region UP ARROW
+            if (!ignore && e.KeyValue == (int)Keys.Up && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomIn_Click(null, null);
+                    e.Handled = true;
+                }
+                return; // fall-through lets pan happen
+            }
+            #endregion
+
+            #region DOWN ARROW
+            if (!ignore && e.KeyValue == (int)Keys.Down && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomOut_Click(null, null);
+                    e.Handled = true;
+                }
+                return; // fall-through lets pan happen
             }
             #endregion
 
@@ -1132,13 +1190,30 @@ namespace ImageGlass
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
-            if (GlobalSetting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
+            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            if (e.KeyCode == Keys.Space && no_mods)
             {
-                mnuMainSlideShowPause_Click(null, null);
+                if (GlobalSetting.IsPlaySlideShow) // Space always pauses slideshow if playing
+                {
+                    mnuMainSlideShowPause_Click(null, null);
+                }
+                else if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
                 return;
             }
             #endregion
-            
+            #region Backspace
+            if (e.KeyCode == Keys.Back && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                }
+                return;
+            }
+            #endregion
         }
         #endregion
 
@@ -1967,6 +2042,7 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+                GlobalSetting.LoadKeyAssignments();
 
                 #region Load state of Toolbar Below Image
                 var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
@@ -2484,6 +2560,8 @@ namespace ImageGlass
 
             // Save fullscreen state
             GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
+
+            GlobalSetting.SaveKeyAssignments();
         }
 
 
