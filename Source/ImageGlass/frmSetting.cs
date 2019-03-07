@@ -2196,6 +2196,21 @@ namespace ImageGlass
             Debug.Assert(false);
         }
 
+        /// <summary>
+        /// Reset all key actions to their "default" (IG V6.0) behavior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnKeyReset_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.SetKeyAction(KeyCombos.LeftRight,  (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.UpDown,     (int)AssignableActions.PanUpDown);
+            GlobalSetting.SetKeyAction(KeyCombos.PageUpDown, (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack,  (int)AssignableActions.PauseSlideshow);
+            GlobalSetting.SaveKeyAssignments();
+            LoadTabKeyboard();
+        }
+
         #endregion
 
         #region ACTION BUTTONS

@@ -2283,6 +2283,7 @@ namespace ImageGlass
             this.btnKeyReset.TabIndex = 10;
             this.btnKeyReset.Text = "button1";
             this.btnKeyReset.UseVisualStyleBackColor = true;
+            this.btnKeyReset.Click += new System.EventHandler(this.btnKeyReset_Click);
             // 
             // frmSetting
             // 
