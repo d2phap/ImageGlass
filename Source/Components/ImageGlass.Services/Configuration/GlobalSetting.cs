@@ -756,6 +756,11 @@ namespace ImageGlass.Services.Configuration
             return KeyActionLookup[key];
         }
 
+        public static void SetKeyAction(KeyCombos which, int newval)
+        {
+            KeyActionLookup[which] = (AssignableActions)newval;
+        }
+
         /// <summary>
         /// Write the key-pair customizations to the config file.
         /// </summary>
