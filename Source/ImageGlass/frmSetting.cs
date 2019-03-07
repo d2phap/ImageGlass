@@ -2090,6 +2090,7 @@ namespace ImageGlass
         #region TAB KEYBOARD
         private void LoadTabKeyboard()
         {
+            GlobalSetting.LoadKeyAssignments();
             var lang = GlobalSetting.LangPack.Items;
 
             cmbKeysLeftRight.Items.Clear();
@@ -2108,12 +2109,93 @@ namespace ImageGlass
             cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PauseSlideshow"]);
             cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
 
-            // TODO map setting value to/from current selection
-            cmbKeysLeftRight.SelectedIndex = 0;
-            cmbKeysUpDown.SelectedIndex = 0;
-            cmbKeysPgUpDown.SelectedIndex = 0;
-            cmbKeysSpaceBack.SelectedIndex = 0;
+            // brute-forcing this. need better solution?
+            mapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
+                lang[$"{Name}.KeyActions._PanUpDown"]);
+            mapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
+                lang[$"{Name}.KeyActions._PauseSlideshow"]);
         }
+
+        /// <summary>
+        /// Translates the config value for a key assignment to a selected
+        /// entry in a combobox.
+        /// 
+        /// If something wrong, sets the combobox to the provided default.
+        /// </summary>
+        /// <param name="which">the key action to match</param>
+        /// <param name="control">the combobox to set selection in</param>
+        /// <param name="defaultString">On misconfiguration, use this string</param>
+        /// <returns></returns>
+        private void mapKeyConfigToComboSelection(KeyCombos which, ComboBox control, string defaultString)
+        {
+            try
+            {
+                var lang = GlobalSetting.LangPack.Items;
+
+                // Fetch the string from language based on the action value
+                var act = GlobalSetting.GetKeyAction(which);
+                var actionList = Enum.GetNames(typeof(AssignableActions));
+                var lookup = $"{Name}.KeyActions._{actionList[(int)act]}";
+                string val = lang[lookup];
+
+                // select the appropriate entry in the combo. On misconfiguration,
+                // set to the provided default.
+                control.SelectedItem = val;
+                if (control.SelectedIndex == -1)
+                    control.SelectedItem = defaultString;
+            }
+            catch
+            {
+                // Some other situation (value out of range; not in strings; etc),
+                // use provided default
+                control.SelectedItem = defaultString;
+            }
+        }
+
+        /// <summary>
+        /// Save the keyboard configuration settings to the config file
+        /// </summary>
+        private void SaveKeyboardSettings()
+        {
+            // Brute-forcing this. Better solution?
+            saveKeyConfigFromCombo(KeyCombos.LeftRight, cmbKeysLeftRight);
+            saveKeyConfigFromCombo(KeyCombos.PageUpDown, cmbKeysPgUpDown);
+            saveKeyConfigFromCombo(KeyCombos.UpDown, cmbKeysUpDown);
+            saveKeyConfigFromCombo(KeyCombos.SpaceBack, cmbKeysSpaceBack);
+            GlobalSetting.SaveKeyAssignments();
+        }
+
+        /// <summary>
+        /// For a given combobox, update the key config value in GlobalSetting
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="control"></param>
+        private void saveKeyConfigFromCombo(KeyCombos which, ComboBox control)
+        {
+            var selected = control.SelectedItem;
+            var lang = GlobalSetting.LangPack.Items;
+
+            // match the text of the selected combobox item against
+            // the language string for the available actions
+            var actionList = Enum.GetNames(typeof(AssignableActions));
+            for (int i = 0; i < actionList.Length; i++)
+            {
+                var lookup = $"{Name}.KeyActions._{actionList[i]}";
+                string val = lang[lookup];
+
+                if ( val == selected.ToString())
+                {
+                    GlobalSetting.SetKeyAction(which, i);
+                    return;
+                }
+            }
+            Debug.Assert(false);
+        }
+
         #endregion
 
         #region ACTION BUTTONS
@@ -2469,6 +2551,7 @@ namespace ImageGlass
 
             #endregion
 
+            SaveKeyboardSettings();
         }
 
 
