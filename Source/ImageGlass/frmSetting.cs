@@ -2193,7 +2193,7 @@ namespace ImageGlass
                     return;
                 }
             }
-            Debug.Assert(false);
+
         }
 
         /// <summary>
