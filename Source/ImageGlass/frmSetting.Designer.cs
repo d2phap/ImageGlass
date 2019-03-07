@@ -2187,6 +2187,7 @@ namespace ImageGlass
             this.lblKeysKeysHeader.Size = new System.Drawing.Size(59, 25);
             this.lblKeysKeysHeader.TabIndex = 0;
             this.lblKeysKeysHeader.Text = "label1";
+            this.lblKeysKeysHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
             // lblKeysLeftRight
             // 
@@ -2232,9 +2233,12 @@ namespace ImageGlass
             this.lblKeysActionsHeader.Size = new System.Drawing.Size(59, 25);
             this.lblKeysActionsHeader.TabIndex = 5;
             this.lblKeysActionsHeader.Text = "label6";
+            this.lblKeysActionsHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
             // cmbKeysLeftRight
             // 
+            this.cmbKeysLeftRight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysLeftRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbKeysLeftRight.FormattingEnabled = true;
             this.cmbKeysLeftRight.Location = new System.Drawing.Point(283, 134);
             this.cmbKeysLeftRight.Name = "comboBox1";
@@ -2243,6 +2247,8 @@ namespace ImageGlass
             // 
             // cmbKeysUpDown
             // 
+            this.cmbKeysUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbKeysUpDown.FormattingEnabled = true;
             this.cmbKeysUpDown.Location = new System.Drawing.Point(283, 196);
             this.cmbKeysUpDown.Name = "comboBox2";
@@ -2251,6 +2257,8 @@ namespace ImageGlass
             // 
             // cmbKeysPgUpDown
             // 
+            this.cmbKeysPgUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysPgUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbKeysPgUpDown.FormattingEnabled = true;
             this.cmbKeysPgUpDown.Location = new System.Drawing.Point(283, 254);
             this.cmbKeysPgUpDown.Name = "comboBox3";
@@ -2259,6 +2267,8 @@ namespace ImageGlass
             // 
             // cmbKeysSpaceBack
             // 
+            this.cmbKeysSpaceBack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysSpaceBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbKeysSpaceBack.FormattingEnabled = true;
             this.cmbKeysSpaceBack.Location = new System.Drawing.Point(283, 312);
             this.cmbKeysSpaceBack.Name = "comboBox4";
