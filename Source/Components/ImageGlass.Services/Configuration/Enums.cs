@@ -171,7 +171,7 @@ namespace ImageGlass.Services.Configuration
     }
 
     /// <summary>
-    /// Actions the user can assign to keys and/or mouse
+    /// Actions the user can assign to keys
     /// </summary>
     public enum AssignableActions
     {
@@ -193,5 +193,39 @@ namespace ImageGlass.Services.Configuration
         UpDown,      // up/down arrow keys
         PageUpDown,  // pageup/pagedown keys
         SpaceBack,   // space, backspace keys
+    }
+
+    /// <summary>
+    /// Supported actions which can be assigned to mouse click
+    /// </summary>
+    public enum MouseAction
+    {
+        ToggleZoomFit = 0, // switch between 100% and fit-to-window
+        ZoomIn,            // zoom in by zoom step
+        ZoomOut,           // zoom out by zoom step
+        NextImage,         // next image in list
+        PrevImage,         // previous image in list
+        ToggleFullScreen,  // toggle full-screen mode
+        PopupMenu,         // bring up the popup menu
+        ColorPick,         // select color under mouse cursor
+        ZoomInToMouse,     // zoom in by zoom step, centered on mouse position
+        ZoomOutToAuto,     // zoom out to Auto-zoom level
+    }
+
+    /// <summary>
+    /// Supported customizable mouse click
+    /// </summary>
+    public enum MouseClick
+    {
+        Button1,    // Left single
+        Button1Dbl,
+        Button2,    // Right single
+        Button2Dbl,
+        Button3,    // Middle
+        Button3Dbl,
+        Button4,    // X1
+        Button4Dbl,
+        Button5,    // X2
+        Button5Dbl,
     }
 }
