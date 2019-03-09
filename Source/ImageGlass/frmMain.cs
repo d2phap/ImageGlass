@@ -2854,6 +2854,8 @@ namespace ImageGlass
 
                 mnuMainFirstLaunch.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstLaunch"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
+
+                mnuMainExitApplication.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainExitApplication"];
                 #endregion
 
                 //Update language layout ------------------
@@ -4933,16 +4935,11 @@ namespace ImageGlass
             mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
-
-
-
-
-
-
-
+        private void mnuMainExitApplication_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
         #endregion
-
-        
     }
 }

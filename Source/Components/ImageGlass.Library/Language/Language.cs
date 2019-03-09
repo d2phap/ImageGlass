@@ -368,6 +368,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
             //Items.Add("frmMain.mnuMainCheckForUpdate", "A new version is available"); //v4.5, removed 5.0
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
+            Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); 
             #endregion
 
 
