@@ -140,6 +140,8 @@
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMainExitApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -202,10 +204,12 @@
             this.toolStripMenuItem21,
             this.mnuMainFirstLaunch,
             this.mnuMainCheckForUpdate,
-            this.mnuMainReportIssue});
+            this.mnuMainReportIssue,
+            this.toolStripSeparator7,
+            this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(289, 486);
+            this.mnuMain.Size = new System.Drawing.Size(289, 536);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1586,6 +1590,18 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 0);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(285, 6);
+            // 
+            // mnuMainExitApplication
+            // 
+            this.mnuMainExitApplication.Name = "mnuMainExitApplication";
+            this.mnuMainExitApplication.Size = new System.Drawing.Size(288, 22);
+            this.mnuMainExitApplication.Text = "Exit ImageGlass";
+            this.mnuMainExitApplication.Click += new System.EventHandler(this.mnuMainExitApplication_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1744,6 +1760,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainExitApplication;
     }
 }
 
