@@ -1107,6 +1107,7 @@
             // 
             // thumbnailBar
             // 
+            this.thumbnailBar.AllowDrop = true;
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -1126,6 +1127,8 @@
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
+            this.thumbnailBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
+            this.thumbnailBar.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
             // 
             // toolMain
             // 

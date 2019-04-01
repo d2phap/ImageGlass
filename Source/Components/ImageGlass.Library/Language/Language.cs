@@ -435,6 +435,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
             Items.Add("frmSetting.lblLanguage", "Language");
             Items.Add("frmSetting.lblTheme", "Theme"); //v5.0
+            Items.Add("frmSetting.lblKeyboard", "Keyboard"); // v6.1
             #endregion
 
 
@@ -548,7 +549,7 @@ namespace ImageGlass.Library
             #endregion
 
 
-            #region TAB Image
+            #region TAB Edit
             //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
@@ -650,6 +651,24 @@ namespace ImageGlass.Library
 
             #endregion
 
+            #region TAB Keyboard
+            Items.Add("frmSetting.btnKeyReset", "Reset actions to default"); // v6.1
+            Items.Add("frmSetting.lblKeysKeysHeader", "Keys"); // v6.1
+            Items.Add("frmSetting.lblKeysActionsHeader", "Actions"); // v6.1
+            Items.Add("frmSetting.lblKeysSpaceBack", "Space / Backspace"); // v6.1
+            Items.Add("frmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v6.1
+            Items.Add("frmSetting.lblKeysUpDown", "Up / Down Arrows"); // v6.1
+            Items.Add("frmSetting.lblKeysLeftRight", "Left / Right Arrows"); // v6.1
+
+            #region Actions Combo Values
+            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image");  // v6.1
+            Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v6.1
+            Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v6.1
+            Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v6.1
+            Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // TODO consider using menu text?
+            #endregion
+
+            #endregion
 
             #endregion
 

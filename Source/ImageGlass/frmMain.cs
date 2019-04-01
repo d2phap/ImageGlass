@@ -557,6 +557,14 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         private void NextPic(int step)
         {
+            // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
+            // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
+            // This below fixes that.
+            if (GlobalSetting.IsPlaySlideShow)
+            {
+                timSlideShow.Enabled = false;
+                timSlideShow.Enabled = true;
+            }
             NextPic(step, false);
         }
 
@@ -1064,10 +1072,28 @@ namespace ImageGlass
 
             //Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 33 || e.KeyValue == 37) &&
-                !e.Control && !e.Shift && !e.Alt)//Left arrow / PageUp
+            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            bool ignore = _isAppBusy || _isWindowsKeyPressed;
+            if (!ignore && e.KeyValue == (int)Keys.Left && no_mods)
             {
-                NextPic(-1);
+                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                } 
+                return; // fall-through lets pan happen
+            }
+            if (!ignore && e.KeyValue == (int)Keys.PageUp && no_mods)
+            {
+                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                if (action == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                }
+                else if (action == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomIn_Click(null, null);
+                }
+
                 return;
             }
             #endregion
@@ -1075,11 +1101,51 @@ namespace ImageGlass
 
             //Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if (!_isWindowsKeyPressed && !_isAppBusy && (e.KeyValue == 34 || e.KeyValue == 39) &&
-                !e.Control && !e.Shift && !e.Alt)//Right arrow / Pagedown
+            if (!ignore && e.KeyValue == (int)Keys.Right && no_mods)
             {
-                NextPic(1);
+                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
+                return; // fall-through lets pan happen
+            }
+            if (!ignore && e.KeyValue == (int)Keys.PageDown && no_mods)
+            {
+                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                if (action == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
+                else if (action == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomOut_Click(null, null);
+                }
+
                 return;
+            }
+            #endregion
+
+            #region UP ARROW
+            if (!ignore && e.KeyValue == (int)Keys.Up && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomIn_Click(null, null);
+                    e.Handled = true;
+                }
+                return; // fall-through lets pan happen
+            }
+            #endregion
+
+            #region DOWN ARROW
+            if (!ignore && e.KeyValue == (int)Keys.Down && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                {
+                    mnuMainZoomOut_Click(null, null);
+                    e.Handled = true;
+                }
+                return; // fall-through lets pan happen
             }
             #endregion
 
@@ -1124,13 +1190,30 @@ namespace ImageGlass
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
-            if (GlobalSetting.IsPlaySlideShow && e.KeyCode == Keys.Space && !e.Control && !e.Shift && !e.Alt)//SPACE
+            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            if (e.KeyCode == Keys.Space && no_mods)
             {
-                mnuMainSlideShowPause_Click(null, null);
+                if (GlobalSetting.IsPlaySlideShow) // Space always pauses slideshow if playing
+                {
+                    mnuMainSlideShowPause_Click(null, null);
+                }
+                else if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(1);
+                }
                 return;
             }
             #endregion
-            
+            #region Backspace
+            if (e.KeyCode == Keys.Back && no_mods)
+            {
+                if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                {
+                    NextPic(-1);
+                }
+                return;
+            }
+            #endregion
         }
         #endregion
 
@@ -1959,6 +2042,7 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+                GlobalSetting.LoadKeyAssignments();
 
                 #region Load state of Toolbar Below Image
                 var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
@@ -2476,6 +2560,8 @@ namespace ImageGlass
 
             // Save fullscreen state
             GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
+
+            GlobalSetting.SaveKeyAssignments();
         }
 
 
@@ -3049,16 +3135,20 @@ namespace ImageGlass
 
         private void timSlideShow_Tick(object sender, EventArgs e)
         {
-            NextPic(1);
-
+            // KBR 20190302 perform this check first: if user hits 'End' during slideshow,
+            // the slideshow would start over at beginning, even if IsLoopBackSlideShow was false
             //stop playing slideshow at last image
             if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
             {
                 if (!GlobalSetting.IsLoopBackSlideShow)
                 {
                     mnuMainSlideShowPause_Click(null, null);
+                    return;
                 }
             }
+
+            NextPic(1);
+
         }
 
 
@@ -4015,7 +4105,8 @@ namespace ImageGlass
         private void mnuMainGoto_Click(object sender, EventArgs e)
         {
             int n = GlobalSetting.CurrentIndex;
-            string s = "0";
+            // KBR 20190302 init to current index
+            string s = (n+1).ToString();
 
             if (InputBox.ShowDiaLog("", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
             {
@@ -4025,12 +4116,14 @@ namespace ImageGlass
             if (int.TryParse(s, out n))
             {
                 n--;
+                // KBR 20190302 have out-of-range values go to beginning/end as appropriate
+                if (n < 1)
+                    n = 0;
+                else if (n >= GlobalSetting.ImageList.Length)
+                    n = GlobalSetting.ImageList.Length - 1;
 
-                if (-1 < n && n < GlobalSetting.ImageList.Length)
-                {
-                    GlobalSetting.CurrentIndex = n;
-                    NextPic(0);
-                }
+                GlobalSetting.CurrentIndex = n;
+                NextPic(0);
             }
         }
 
@@ -4088,7 +4181,6 @@ namespace ImageGlass
                 FullScreenMode(enabled: true, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
 
                 //perform slideshow
-                timSlideShow.Start();
                 timSlideShow.Enabled = true;
 
                 GlobalSetting.IsPlaySlideShow = true;
@@ -4108,14 +4200,12 @@ namespace ImageGlass
             if (timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
-                timSlideShow.Stop();
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessagePause"], 2000);
             }
             else
             {
                 timSlideShow.Enabled = true;
-                timSlideShow.Start();
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessageResume"], 2000);
             }
@@ -4124,7 +4214,6 @@ namespace ImageGlass
 
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
         {
-            timSlideShow.Stop();
             timSlideShow.Enabled = false;
             GlobalSetting.IsPlaySlideShow = false;
 

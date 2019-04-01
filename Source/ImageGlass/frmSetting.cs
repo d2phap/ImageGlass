@@ -248,6 +248,7 @@ namespace ImageGlass
             lblToolbar.Text = lang[$"{Name}.lblToolbar"];
             lblColorPicker.Text = lang[$"{Name}.lblColorPicker"];
             lblTheme.Text = lang[$"{Name}.lblTheme"];
+            lblKeyboard.Text = lang[$"{Name}.lblKeyboard"];
 
             btnSave.Text = lang[$"{Name}.btnSave"];
             btnCancel.Text = lang[$"{Name}.btnCancel"];
@@ -393,6 +394,15 @@ namespace ImageGlass
 
             #endregion
 
+            #region KEYBOARD TAB
+            btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
+            lblKeysKeysHeader.Text = lang[$"{Name}.lblKeysKeysHeader"];
+            lblKeysActionsHeader.Text = lang[$"{Name}.lblKeysActionsHeader"];
+            lblKeysSpaceBack.Text = lang[$"{Name}.lblKeysSpaceBack"];
+            lblKeysPageUpDown.Text = lang[$"{Name}.lblKeysPageUpDown"];
+            lblKeysUpDown.Text = lang[$"{Name}.lblKeysUpDown"];
+            lblKeysLeftRight.Text = lang[$"{Name}.lblKeysLeftRight"];
+            #endregion
 
             extList = null;
         }
@@ -432,6 +442,9 @@ namespace ImageGlass
                 case "lblTheme":
                     tab1.SelectedTab = tabTheme;
                     break;
+                case "lblKeyboard":
+                    tab1.SelectedTab = tabKeyboard;
+                    break;
             }
         }
 
@@ -445,7 +458,8 @@ namespace ImageGlass
             lblLanguage.Tag =
             lblToolbar.Tag =
             lblColorPicker.Tag =
-            lblTheme.Tag = 0;
+            lblTheme.Tag =
+            lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
             lblImage.BackColor =
@@ -454,7 +468,8 @@ namespace ImageGlass
             lblLanguage.BackColor =
             lblToolbar.BackColor =
             lblColorPicker.BackColor =
-            lblTheme.BackColor = M_COLOR_MENU_NORMAL;
+            lblTheme.BackColor = 
+            lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -520,8 +535,15 @@ namespace ImageGlass
                 lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabTheme();
-                
             }
+            else if (tab1.SelectedTab == tabKeyboard)
+            {
+                lblKeyboard.Tag = 1;
+                lblKeyboard.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabKeyboard();
+            }
+
         }
 
 
@@ -2065,6 +2087,132 @@ namespace ImageGlass
         #endregion
 
 
+        #region TAB KEYBOARD
+        private void LoadTabKeyboard()
+        {
+            GlobalSetting.LoadKeyAssignments();
+            var lang = GlobalSetting.LangPack.Items;
+
+            cmbKeysLeftRight.Items.Clear();
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PanLeftRight"]);
+
+            cmbKeysUpDown.Items.Clear();
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._PanUpDown"]);
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysPgUpDown.Items.Clear();
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysSpaceBack.Items.Clear();
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PauseSlideshow"]);
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+
+            // brute-forcing this. need better solution?
+            mapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
+                lang[$"{Name}.KeyActions._PanUpDown"]);
+            mapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
+                lang[$"{Name}.KeyActions._PauseSlideshow"]);
+        }
+
+        /// <summary>
+        /// Translates the config value for a key assignment to a selected
+        /// entry in a combobox.
+        /// 
+        /// If something wrong, sets the combobox to the provided default.
+        /// </summary>
+        /// <param name="which">the key action to match</param>
+        /// <param name="control">the combobox to set selection in</param>
+        /// <param name="defaultString">On misconfiguration, use this string</param>
+        /// <returns></returns>
+        private void mapKeyConfigToComboSelection(KeyCombos which, ComboBox control, string defaultString)
+        {
+            try
+            {
+                var lang = GlobalSetting.LangPack.Items;
+
+                // Fetch the string from language based on the action value
+                var act = GlobalSetting.GetKeyAction(which);
+                var actionList = Enum.GetNames(typeof(AssignableActions));
+                var lookup = $"{Name}.KeyActions._{actionList[(int)act]}";
+                string val = lang[lookup];
+
+                // select the appropriate entry in the combo. On misconfiguration,
+                // set to the provided default.
+                control.SelectedItem = val;
+                if (control.SelectedIndex == -1)
+                    control.SelectedItem = defaultString;
+            }
+            catch
+            {
+                // Some other situation (value out of range; not in strings; etc),
+                // use provided default
+                control.SelectedItem = defaultString;
+            }
+        }
+
+        /// <summary>
+        /// Save the keyboard configuration settings to the config file
+        /// </summary>
+        private void SaveKeyboardSettings()
+        {
+            // Brute-forcing this. Better solution?
+            saveKeyConfigFromCombo(KeyCombos.LeftRight, cmbKeysLeftRight);
+            saveKeyConfigFromCombo(KeyCombos.PageUpDown, cmbKeysPgUpDown);
+            saveKeyConfigFromCombo(KeyCombos.UpDown, cmbKeysUpDown);
+            saveKeyConfigFromCombo(KeyCombos.SpaceBack, cmbKeysSpaceBack);
+            GlobalSetting.SaveKeyAssignments();
+        }
+
+        /// <summary>
+        /// For a given combobox, update the key config value in GlobalSetting
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="control"></param>
+        private void saveKeyConfigFromCombo(KeyCombos which, ComboBox control)
+        {
+            var selected = control.SelectedItem;
+            var lang = GlobalSetting.LangPack.Items;
+
+            // match the text of the selected combobox item against
+            // the language string for the available actions
+            var actionList = Enum.GetNames(typeof(AssignableActions));
+            for (int i = 0; i < actionList.Length; i++)
+            {
+                var lookup = $"{Name}.KeyActions._{actionList[i]}";
+                string val = lang[lookup];
+
+                if ( val == selected.ToString())
+                {
+                    GlobalSetting.SetKeyAction(which, i);
+                    return;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Reset all key actions to their "default" (IG V6.0) behavior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnKeyReset_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.SetKeyAction(KeyCombos.LeftRight,  (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.UpDown,     (int)AssignableActions.PanUpDown);
+            GlobalSetting.SetKeyAction(KeyCombos.PageUpDown, (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack,  (int)AssignableActions.PauseSlideshow);
+            GlobalSetting.SaveKeyAssignments();
+            LoadTabKeyboard();
+        }
+
+        #endregion
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -2418,6 +2566,7 @@ namespace ImageGlass
 
             #endregion
 
+            SaveKeyboardSettings();
         }
 
 
