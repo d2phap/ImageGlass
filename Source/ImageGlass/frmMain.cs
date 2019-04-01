@@ -4017,7 +4017,7 @@ namespace ImageGlass
             int n = GlobalSetting.CurrentIndex;
             string s = "0";
 
-            if (InputBox.ShowDiaLog("Message", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
+            if (InputBox.ShowDiaLog("", GlobalSetting.LangPack.Items["frmMain._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
@@ -4813,6 +4813,11 @@ namespace ImageGlass
             catch { }
         }
 
+        private void mnuMainExitApplication_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
 
         private void mnuMainStartStopAnimating_Click(object sender, EventArgs e)
         {
@@ -4875,6 +4880,9 @@ namespace ImageGlass
                     mnuMainSetAsLockImage.Enabled = true;
                 }
 
+                // add hotkey to Exit menu
+                mnuMainExitApplication.ShortcutKeyDisplayString = GlobalSetting.IsPressESCToQuit ? "ESC" : "Alt+F4";
+
                 // Get association App for editing
                 UpdateEditingAssocAppInfoForMenu();
                 
@@ -4935,11 +4943,7 @@ namespace ImageGlass
             mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
-        private void mnuMainExitApplication_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        
         #endregion
     }
 }
