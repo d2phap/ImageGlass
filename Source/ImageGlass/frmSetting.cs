@@ -2177,6 +2177,9 @@ namespace ImageGlass
         private void saveKeyConfigFromCombo(KeyCombos which, ComboBox control)
         {
             var selected = control.SelectedItem;
+            if (selected == null)
+                return; // user hasn't visited keyboard page, no changes
+
             var lang = GlobalSetting.LangPack.Items;
 
             // match the text of the selected combobox item against
