@@ -3071,7 +3071,7 @@ namespace ImageGlass
             {
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
-                    //reload image list
+                    // reload image list
                     // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
                     // but keep the currently visible file in mind!
                     Prepare(LocalSetting.InitialInputImageFilename,
@@ -4010,6 +4010,15 @@ namespace ImageGlass
         {
             //Reload the viewing image
             NextPic(step: 0, isKeepZoomRatio: false, isSkipCache: true);
+        }
+
+        private void MnuMainReloadImageList_Click(object sender, EventArgs e)
+        {
+            // prepare the distinct dir list
+            var list = Helper.GetFilesByDistinctDirs(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+
+            // update image list
+            PrepareMulti(list.ToArray());
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -5032,7 +5041,9 @@ namespace ImageGlass
             mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
-        
+
         #endregion
+
+        
     }
 }

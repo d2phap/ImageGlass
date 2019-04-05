@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -62,6 +63,37 @@ namespace ImageGlass.Library
             StringBuilder sb = new StringBuilder(length);
             PathCompactPathEx(sb, path, length, 0);
             return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Get filenames by distinct directory
+        /// </summary>
+        /// <param name="fileList">Filename list</param>
+        /// <param name="currFile">Current filename</param>
+        /// <returns></returns>
+        public static string[] GetFilesByDistinctDirs(IEnumerable<string> fileList, string currFile)
+        {
+            var currDir = Path.GetDirectoryName(currFile);
+            var hashedList = new HashSet<string>()
+            {
+                currDir,
+            };
+            
+
+            foreach(var filename in fileList)
+            {
+                var dir = Path.GetDirectoryName(filename);
+                hashedList.Add(dir);
+            }
+
+            
+            var list = hashedList.ToArray();
+
+            // reassign the current file
+            list[0] = currFile;
+
+            return list;
         }
     }
 }
