@@ -144,7 +144,7 @@ namespace ImageGlass
             string filePath = filepaths[0];
 
             if (Path.GetExtension(filePath).ToLower() == ".lnk")
-                filePath = Shortcuts.FolderFromShortcut(filePath);
+                filePath = Shortcuts.GetTargetPathFromShortcut(filePath);
 
             int imageIndex = GlobalSetting.ImageList.IndexOf(filePath);
 
@@ -247,7 +247,7 @@ namespace ImageGlass
                     {
                         if (Path.GetExtension(apath).ToLower() == ".lnk")
                         {
-                            dirPath = Shortcuts.FolderFromShortcut(apath);
+                            dirPath = Shortcuts.GetTargetPathFromShortcut(apath);
                         }
                         else
                         {
