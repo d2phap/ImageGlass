@@ -134,23 +134,24 @@ namespace ImageGlass
         {
             // Drag file from DESKTOP to APP
             string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
+
             if (filepaths.Length > 1)
             {
-                PrepareMulti(filepaths);
+                PrepareLoading(filepaths, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
                 return;
             }
 
             string filePath = filepaths[0];
 
             if (Path.GetExtension(filePath).ToLower() == ".lnk")
-                filePath = Shortcuts.FolderFromShortcut(filePath);
+                filePath = Shortcuts.GetTargetPathFromShortcut(filePath);
 
             int imageIndex = GlobalSetting.ImageList.IndexOf(filePath);
 
             // The file is located another folder, load the entire folder
             if (imageIndex == -1)
             {
-                Prepare(filePath);
+                PrepareLoading(filePath);
             }
             // The file is in current folder AND it is the viewing image
             else if (GlobalSetting.CurrentIndex == imageIndex)
@@ -189,82 +190,114 @@ namespace ImageGlass
         /// </summary>
         private void OpenFile()
         {
-            OpenFileDialog o = new OpenFileDialog();
-            o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats;
-
-            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
+            using (var o = new OpenFileDialog()
             {
-                Prepare(o.FileName);
+                Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
+                        GlobalSetting.AllImageFormats,
+                CheckFileExists = true,
+            })
+            {
+                if (o.ShowDialog() == DialogResult.OK)
+                {
+                    PrepareLoading(o.FileNames);
+                }
             }
-            o.Dispose();
+        }
+
+
+        /// <summary>
+        /// Prepare to load images
+        /// </summary>
+        /// <param name="path">Path of image file or folder</param>
+        private void PrepareLoading(string path)
+        {
+            var currentFileName = File.Exists(path) ? path : "";
+
+            PrepareLoading(new string[] { path }, currentFileName);
         }
 
         /// <summary>
-        /// Prepare to load image
+        /// Prepare to load images
         /// </summary>
-        /// <param name="path">Initial file/folder to load with</param>
-        /// <param name="targetImgFile">When re-loading the image list, this is the desired image to remain visible</param>
-        public async void Prepare(string path, string targetImgFile = null)
+        /// <param name="paths">Paths of image files or folders</param>
+        /// <param name="currentFilename">Current viewing filename</param>
+        private async void PrepareLoading(IEnumerable<string> paths, string currentFilename = "")
         {
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+            if (paths.Count() == 0) return;
 
-            if (File.Exists(path) == false && Directory.Exists(path) == false)
-                return;
+            List<string> allFilesToLoad = new List<string>();
+            var currentFile = currentFilename;
 
-            //Stopwatch stopwatch = Stopwatch.StartNew();
+            // prepare the distinct dir list
+            var distinctList = Helper.GetFilesByDistinctDirs(paths);
 
-            //Reset current index
-            GlobalSetting.CurrentIndex = 0;
-            string filePath = "";
-            string dirPath = "";
-            var _imageFilenameList = new List<string>();
+
+            // track paths loaded to prevent duplicates
+            HashSet<string> pathsLoaded = new HashSet<string>();
+            bool firstPath = true;
+
 
             await Task.Run(() =>
             {
-
-                //Check path is file or directory?
-                if (File.Exists(path))
+                foreach (var apath in distinctList)
                 {
-                    if (Path.GetExtension(path).ToLower() == ".lnk")
-                        dirPath = Shortcuts.FolderFromShortcut(path);
+                    string dirPath = "";
+                    if (File.Exists(apath))
+                    {
+                        if (Path.GetExtension(apath).ToLower() == ".lnk")
+                        {
+                            dirPath = Shortcuts.GetTargetPathFromShortcut(apath);
+                        }
+                        else
+                        {
+                            dirPath = Path.GetDirectoryName(apath);
+                        }
+                    }
+                    else if (Directory.Exists(apath))
+                    {
+                            // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+                            // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+                            // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+                            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                            if (!apath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                        {
+                            dirPath = apath + Path.DirectorySeparatorChar;
+                        }
+                    }
                     else
-                        dirPath = Path.GetDirectoryName(path);
+                    {
+                        continue;
+                    }
 
-                    filePath = path;
+                        // TODO Currently only have the ability to watch a single path for changes!
+                        if (firstPath)
+                    {
+                        firstPath = false;
+                        WatchPath(dirPath);
+                    }
+
+                        // KBR 20181004 Fix observed bug: dropping multiple files from the same path
+                        // would load ALL files in said path multiple times! Prevent loading the same
+                        // path more than once.
+                        if (pathsLoaded.Contains(dirPath))
+                        continue;
+                    pathsLoaded.Add(dirPath);
+
+                    var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                    allFilesToLoad.AddRange(imageFilenameList);
                 }
-                else if (Directory.Exists(path))
-                {
-                    dirPath = path;
-                }
 
-
-                // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
-                // By ensuring a terminating slash, the problem disappears. By doing that *here*,
-                // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
-                // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
-                if (!dirPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
-                    dirPath += Path.DirectorySeparatorChar;
-
-
-                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
-
-                //Get supported image extensions from directory
-                _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
-
+                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? distinctList[0] : currentFile;
             });
 
+            // sort list
+            allFilesToLoad = SortImageList(allFilesToLoad);
 
-
-            //stopwatch.Stop();
-            //Console.WriteLine(">>>>>> Loading time of folder = " + stopwatch.ElapsedMilliseconds);
-
-
-            LoadImages(_imageFilenameList, targetImgFile ?? filePath);
-
-            WatchPath(dirPath);
+            LoadImages(allFilesToLoad, currentFile);
         }
-        
+
+
 
         /// <summary>
         /// Load the images.
@@ -353,59 +386,6 @@ namespace ImageGlass
         }
 
 
-        /// <summary>
-        /// Prepare to load images. User has dragged multiple files / paths onto IG.
-        /// </summary>
-        /// <param name="paths"></param>
-        private void PrepareMulti(string[] paths)
-        {
-            // TODO re-loading of the image list/folder currently does NOT invoke this code!
-            // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
-
-            HashSet<string> pathsLoaded = new HashSet<string>(); // track paths loaded to prevent duplicates
-            List<string> allFilesToLoad = new List<string>();
-            bool firstPath = true;
-            foreach (var apath in paths)
-            {
-                string dirPath = "";
-                if (File.Exists(apath))
-                {
-                    if (Path.GetExtension(apath).ToLower() == ".lnk")
-                        dirPath = Shortcuts.FolderFromShortcut(apath);
-                    else
-                        dirPath = Path.GetDirectoryName(apath);
-                }
-                else if (Directory.Exists(apath))
-                {
-                    dirPath = apath;
-                }
-                else
-                {
-                    continue; 
-                }
-
-                // TODO Currently only have the ability to watch a single path for changes!
-                if (firstPath)
-                {
-                    firstPath = false;
-                    WatchPath(dirPath);
-                }
-
-                // KBR 20181004 Fix observed bug: dropping multiple files from the same path
-                // would load ALL files in said path multiple times! Prevent loading the same
-                // path more than once.
-                if (pathsLoaded.Contains(dirPath))
-                    continue;
-                pathsLoaded.Add(dirPath);
-
-                var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
-                allFilesToLoad.AddRange(imageFilenameList);
-            }
-
-            LoadImages(allFilesToLoad, "");
-        }
-
-
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
             //clear text when finishing
@@ -436,11 +416,8 @@ namespace ImageGlass
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
-        private List<string> LoadImageFilesFromDirectory(string path)
+        private IEnumerable<string> LoadImageFilesFromDirectory(string path)
         {
-            //Load image order from config
-            GlobalSetting.LoadImageOrderConfig();
-
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursiveLoading,
@@ -476,16 +453,16 @@ namespace ImageGlass
                     return false;
                 }));
             
-
-            var list = SortImageList(fileList);
-
-            return list;
+            return fileList;
         }
 
 
-        private List<string> SortImageList(ConcurrentBag<string> fileList)
+        private List<string> SortImageList(IEnumerable<string> fileList)
         {
             var list = new List<string>();
+
+            //Load image order from config
+            GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
             //Sort image file
             if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
@@ -2231,7 +2208,7 @@ namespace ImageGlass
 
 
                 //Load image order config
-                GlobalSetting.ImageLoadingOrder = GlobalSetting.LoadImageOrderConfig();
+                GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
 
                 //Load state of Image Booster
@@ -2327,7 +2304,7 @@ namespace ImageGlass
                 //Do not show welcome image if params exist.
                 if (Environment.GetCommandLineArgs().Count() < 2)
                 {
-                    Prepare(startUpImg);
+                    PrepareLoading(startUpImg);
                 }
                 #endregion
 
@@ -2773,25 +2750,7 @@ namespace ImageGlass
                     //only read the path, exclude configs parameter which starts with "--"
                     if(!args[i].StartsWith("--"))
                     {
-                        string filename = args[i];
-
-                        if (File.Exists(filename))
-                        {
-                            FileInfo f = new FileInfo(filename);
-                            Prepare(f.FullName);
-                        }
-                        else if (Directory.Exists(filename))
-                        {
-                            // Issue #415: If the folder name ends in ALT+255 (), DirectoryInfo strips it.
-                            // By ensuring a terminating slash, the problem disappears.
-                            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
-                            if (!filename.EndsWith(Path.DirectorySeparatorChar.ToString()))
-                                filename += Path.DirectorySeparatorChar;
-
-                            DirectoryInfo d = new DirectoryInfo(filename);
-                            Prepare(d.FullName);
-                        }
-
+                        PrepareLoading(args[i]);
                         break;
                     }
                 }
@@ -2871,6 +2830,7 @@ namespace ImageGlass
                 mnuMainSaveAs.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSaveAs"];
                 mnuMainRefresh.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRefresh"];
                 mnuMainReloadImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImage"];
+                mnuMainReloadImageList.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImageList"];
                 mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
 
                 mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
@@ -3056,30 +3016,15 @@ namespace ImageGlass
             #endregion
 
 
-            #region IMAGE_FOLDER and IMAGE_LIST
-
-            #region IMAGE_FOLDER
-            if ((flags & MainFormForceUpdateAction.IMAGE_FOLDER) == MainFormForceUpdateAction.IMAGE_FOLDER)
-            {
-                Prepare(LocalSetting.InitialInputImageFilename,
-                        GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-            }
-            #endregion
-
             #region IMAGE_LIST
             else
             {
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
-                    //reload image list
-                    // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
-                    // but keep the currently visible file in mind!
-                    Prepare(LocalSetting.InitialInputImageFilename,
-                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    // update image list
+                    MnuMainReloadImageList_Click(null, null);
                 }
             }
-            #endregion
-
             #endregion
 
 
@@ -3844,12 +3789,9 @@ namespace ImageGlass
             if (Clipboard.ContainsFileDropList())
             {
                 string[] sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
-                int fileCount = 0;
-
-                fileCount = sFile.Length;
 
                 // load file
-                Prepare(sFile[0]);
+                PrepareLoading(sFile[0]);
             }
 
 
@@ -3866,7 +3808,7 @@ namespace ImageGlass
             {
                 if (File.Exists(Clipboard.GetText()) || Directory.Exists(Clipboard.GetText()))
                 {
-                    Prepare(Clipboard.GetText());
+                    PrepareLoading(Clipboard.GetText());
                 }
                 //get image from Base64string 
                 else
@@ -4010,6 +3952,12 @@ namespace ImageGlass
         {
             //Reload the viewing image
             NextPic(step: 0, isKeepZoomRatio: false, isSkipCache: true);
+        }
+
+        private void MnuMainReloadImageList_Click(object sender, EventArgs e)
+        {
+            // update image list
+            PrepareLoading(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -5032,7 +4980,9 @@ namespace ImageGlass
             mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
 
-        
+
         #endregion
+
+        
     }
 }

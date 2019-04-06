@@ -16,9 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Library.WinAPI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -62,6 +64,61 @@ namespace ImageGlass.Library
             StringBuilder sb = new StringBuilder(length);
             PathCompactPathEx(sb, path, length, 0);
             return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Get filenames by distinct directory
+        /// </summary>
+        /// <param name="pathList">Path list</param>
+        /// <returns></returns>
+        public static List<string> GetFilesByDistinctDirs(IEnumerable<string> pathList)
+        {
+            if (pathList.Count() == 0) return new List<string>();
+
+            var hashedList = new HashSet<string>();
+
+            foreach (var path in pathList)
+            {
+                if (File.Exists(path))
+                {
+                    string dir;
+                    if (Path.GetExtension(path).ToLower() == ".lnk")
+                    {
+                        var shortcutPath = Shortcuts.GetTargetPathFromShortcut(path);
+
+                        // get the DIR path of shortcut target
+                        if (File.Exists(shortcutPath))
+                        {
+                            dir = Path.GetDirectoryName(shortcutPath);
+                        }
+                        else if (Directory.Exists(shortcutPath))
+                        {
+                            dir = shortcutPath;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        dir = Path.GetDirectoryName(path);
+                    }
+
+                    hashedList.Add(dir);
+                }
+                else if (Directory.Exists(path))
+                {
+                    hashedList.Add(path);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return hashedList.ToList();
         }
     }
 }

@@ -1187,9 +1187,6 @@ namespace ImageGlass
             if (lvExtension.SelectedItems.Count == 0)
                 return;
 
-            var selectedDefaultExts = new StringBuilder();
-            var selectedOptionalExts = new StringBuilder();
-
             // Get checked extensions in the list then
             // remove extensions from settings
             foreach (ListViewItem li in lvExtension.SelectedItems)
@@ -1206,6 +1203,9 @@ namespace ImageGlass
 
             //RegisterFileAssociations(GlobalSetting.AllImageFormats);
             LoadExtensionList();
+
+            //Request frmMain to update
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -1234,6 +1234,9 @@ namespace ImageGlass
 
                 //RegisterFileAssociations(GlobalSetting.AllImageFormats);
                 LoadExtensionList();
+
+                //Request frmMain to update
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
 
             f.Dispose();
@@ -2323,11 +2326,11 @@ namespace ImageGlass
 
 
             #endregion
-            
+
 
             #region Image tab ----------------------------------------------
 
-            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_FOLDER
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST
             newBool = chkFindChildFolder.Checked;
             if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
             {
@@ -2335,7 +2338,7 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
 
                 //Request frmMain to update the thumbnail bar
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_FOLDER;
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
             #endregion
 

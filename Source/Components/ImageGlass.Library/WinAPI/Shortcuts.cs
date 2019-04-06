@@ -27,13 +27,18 @@ namespace ImageGlass.Library.WinAPI
 {
     public static class Shortcuts
     {
-        public static string FolderFromShortcut(string fileLink)
+        /// <summary>
+        /// Get the target path from shortcut (*.lnk)
+        /// </summary>
+        /// <param name="shortcutPath">Path of shortcut (*.lnk)</param>
+        /// <returns></returns>
+        public static string GetTargetPathFromShortcut(string shortcutPath)
         {
             IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
 
             try
             {
-                IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(fileLink);
+                IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
                 return shortcut.TargetPath;
             }
             catch //(COMException)
