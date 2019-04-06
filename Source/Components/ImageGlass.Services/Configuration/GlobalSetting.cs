@@ -587,6 +587,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Load image order from configuration file
         /// </summary>
+        /// <returns></returns>
         public static ImageOrderBy LoadImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");

@@ -249,8 +249,8 @@ namespace ImageGlass
 
                 LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(filePath) ? dirPath : filePath;
 
-                //Get supported image extensions from directory
-                _imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                // Get supported image extensions from directory
+                _imageFilenameList = SortImageList(LoadImageFilesFromDirectory(dirPath));
 
             });
 
@@ -359,21 +359,29 @@ namespace ImageGlass
         /// <param name="paths"></param>
         private void PrepareMulti(string[] paths)
         {
-            // TODO re-loading of the image list/folder currently does NOT invoke this code!
             // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
 
-            HashSet<string> pathsLoaded = new HashSet<string>(); // track paths loaded to prevent duplicates
+            // track paths loaded to prevent duplicates
+            HashSet<string> pathsLoaded = new HashSet<string>();
             List<string> allFilesToLoad = new List<string>();
+
             bool firstPath = true;
+            var currentFile = "";
+
             foreach (var apath in paths)
             {
                 string dirPath = "";
                 if (File.Exists(apath))
                 {
                     if (Path.GetExtension(apath).ToLower() == ".lnk")
+                    {
                         dirPath = Shortcuts.FolderFromShortcut(apath);
+                    }
                     else
+                    {
                         dirPath = Path.GetDirectoryName(apath);
+                        currentFile = apath;
+                    }
                 }
                 else if (Directory.Exists(apath))
                 {
@@ -402,7 +410,10 @@ namespace ImageGlass
                 allFilesToLoad.AddRange(imageFilenameList);
             }
 
-            LoadImages(allFilesToLoad, "");
+            // sort list
+            allFilesToLoad = SortImageList(allFilesToLoad);
+
+            LoadImages(allFilesToLoad, currentFile);
         }
 
 
@@ -436,11 +447,8 @@ namespace ImageGlass
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
-        private List<string> LoadImageFilesFromDirectory(string path)
+        private IEnumerable<string> LoadImageFilesFromDirectory(string path)
         {
-            //Load image order from config
-            GlobalSetting.LoadImageOrderConfig();
-
             //Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 GlobalSetting.IsRecursiveLoading,
@@ -476,16 +484,16 @@ namespace ImageGlass
                     return false;
                 }));
             
-
-            var list = SortImageList(fileList);
-
-            return list;
+            return fileList;
         }
 
 
-        private List<string> SortImageList(ConcurrentBag<string> fileList)
+        private List<string> SortImageList(IEnumerable<string> fileList)
         {
             var list = new List<string>();
+
+            //Load image order from config
+            GlobalSetting.ImageLoadingOrder = GlobalSetting.LoadImageOrderConfig();
 
             //Sort image file
             if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
@@ -2871,6 +2879,7 @@ namespace ImageGlass
                 mnuMainSaveAs.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSaveAs"];
                 mnuMainRefresh.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainRefresh"];
                 mnuMainReloadImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImage"];
+                mnuMainReloadImageList.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReloadImageList"];
                 mnuMainEditImage.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainEditImage"];
 
                 mnuMainNavigation.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainNavigation"];
@@ -3071,11 +3080,11 @@ namespace ImageGlass
             {
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
-                    // reload image list
-                    // KBR 20180903 Fix observed issue: rebuild the list using the initial file, not the current,
-                    // but keep the currently visible file in mind!
-                    Prepare(LocalSetting.InitialInputImageFilename,
-                            GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    // prepare the distinct dir list
+                    var list = Helper.GetFilesByDistinctDirs(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+
+                    // update image list
+                    PrepareMulti(list.ToArray());
                 }
             }
             #endregion
