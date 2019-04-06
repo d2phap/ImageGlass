@@ -91,7 +91,6 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR = 32,
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
-        IMAGE_FOLDER = 256,
         OTHER_SETTINGS = 512
     }
 

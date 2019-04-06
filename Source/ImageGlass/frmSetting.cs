@@ -2326,11 +2326,11 @@ namespace ImageGlass
 
 
             #endregion
-            
+
 
             #region Image tab ----------------------------------------------
 
-            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_FOLDER
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST
             newBool = chkFindChildFolder.Checked;
             if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
             {
@@ -2338,7 +2338,7 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
 
                 //Request frmMain to update the thumbnail bar
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_FOLDER;
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
             #endregion
 
