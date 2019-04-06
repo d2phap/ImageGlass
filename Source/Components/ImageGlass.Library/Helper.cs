@@ -69,31 +69,32 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get filenames by distinct directory
         /// </summary>
-        /// <param name="fileList">Filename list</param>
-        /// <param name="currFile">Current filename</param>
+        /// <param name="pathList">Path list</param>
         /// <returns></returns>
-        public static string[] GetFilesByDistinctDirs(IEnumerable<string> fileList, string currFile)
+        public static List<string> GetFilesByDistinctDirs(IEnumerable<string> pathList)
         {
-            var currDir = Path.GetDirectoryName(currFile);
-            var hashedList = new HashSet<string>()
-            {
-                currDir,
-            };
-            
+            if (pathList.Count() == 0) return new List<string>();
 
-            foreach(var filename in fileList)
+            var hashedList = new HashSet<string>();
+
+            foreach(var path in pathList)
             {
-                var dir = Path.GetDirectoryName(filename);
-                hashedList.Add(dir);
+                if (File.Exists(path))
+                {
+                    var dir = Path.GetDirectoryName(path);
+                    hashedList.Add(dir);
+                }
+                else if (Directory.Exists(path))
+                {
+                    hashedList.Add(path);
+                }
+                else
+                {
+                    continue;
+                }
             }
 
-            
-            var list = hashedList.ToArray();
-
-            // reassign the current file
-            list[0] = currFile;
-
-            return list;
+            return hashedList.ToList();
         }
     }
 }

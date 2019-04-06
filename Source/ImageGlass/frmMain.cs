@@ -189,15 +189,18 @@ namespace ImageGlass
         /// </summary>
         private void OpenFile()
         {
-            OpenFileDialog o = new OpenFileDialog();
-            o.Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats;
-
-            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
+            using (var o = new OpenFileDialog()
             {
-                Prepare(o.FileName);
+                Filter = GlobalSetting.LangPack.Items["frmMain._OpenFileDialog"] + "|" +
+                        GlobalSetting.AllImageFormats,
+                CheckFileExists = true,
+            })
+            {
+                if (o.ShowDialog() == DialogResult.OK)
+                {
+                    PrepareMulti(o.FileNames);
+                }
             }
-            o.Dispose();
         }
 
         /// <summary>
@@ -357,61 +360,82 @@ namespace ImageGlass
         /// Prepare to load images. User has dragged multiple files / paths onto IG.
         /// </summary>
         /// <param name="paths"></param>
-        private void PrepareMulti(string[] paths)
+        /// <param name="currentFilename"></param>
+        private async void PrepareMulti(IEnumerable<string> paths, string currentFilename = "")
         {
             // TODO don't have any 'memory' of initial paths; re-load of image list/folder will be confused
+
+            System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+            if (paths.Count() == 0) return;
+
+            // prepare the distinct dir list
+            var distinctList = Helper.GetFilesByDistinctDirs(paths);
+
 
             // track paths loaded to prevent duplicates
             HashSet<string> pathsLoaded = new HashSet<string>();
             List<string> allFilesToLoad = new List<string>();
 
             bool firstPath = true;
-            var currentFile = "";
+            var currentFile = currentFilename;
+            GlobalSetting.CurrentIndex = 0;
 
-            foreach (var apath in paths)
+            await Task.Run(() =>
             {
-                string dirPath = "";
-                if (File.Exists(apath))
+                foreach (var apath in distinctList)
                 {
-                    if (Path.GetExtension(apath).ToLower() == ".lnk")
+                    string dirPath = "";
+                    if (File.Exists(apath))
                     {
-                        dirPath = Shortcuts.FolderFromShortcut(apath);
+                        if (Path.GetExtension(apath).ToLower() == ".lnk")
+                        {
+                            dirPath = Shortcuts.FolderFromShortcut(apath);
+                        }
+                        else
+                        {
+                            dirPath = Path.GetDirectoryName(apath);
+                        }
+                    }
+                    else if (Directory.Exists(apath))
+                    {
+                        // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+                        // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+                        // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+                        // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                        if (!apath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                        {
+                            dirPath = apath + Path.DirectorySeparatorChar;
+                        }
                     }
                     else
                     {
-                        dirPath = Path.GetDirectoryName(apath);
-                        currentFile = apath;
+                        continue;
                     }
-                }
-                else if (Directory.Exists(apath))
-                {
-                    dirPath = apath;
-                }
-                else
-                {
-                    continue; 
+
+                    // TODO Currently only have the ability to watch a single path for changes!
+                    if (firstPath)
+                    {
+                        firstPath = false;
+                        WatchPath(dirPath);
+                    }
+
+                    // KBR 20181004 Fix observed bug: dropping multiple files from the same path
+                    // would load ALL files in said path multiple times! Prevent loading the same
+                    // path more than once.
+                    if (pathsLoaded.Contains(dirPath))
+                        continue;
+                    pathsLoaded.Add(dirPath);
+
+                    var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                    allFilesToLoad.AddRange(imageFilenameList);
                 }
 
-                // TODO Currently only have the ability to watch a single path for changes!
-                if (firstPath)
-                {
-                    firstPath = false;
-                    WatchPath(dirPath);
-                }
+                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? distinctList[0] : currentFile;
 
-                // KBR 20181004 Fix observed bug: dropping multiple files from the same path
-                // would load ALL files in said path multiple times! Prevent loading the same
-                // path more than once.
-                if (pathsLoaded.Contains(dirPath))
-                    continue;
-                pathsLoaded.Add(dirPath);
+                // sort list
+                allFilesToLoad = SortImageList(allFilesToLoad);
+            });
 
-                var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
-                allFilesToLoad.AddRange(imageFilenameList);
-            }
-
-            // sort list
-            allFilesToLoad = SortImageList(allFilesToLoad);
 
             LoadImages(allFilesToLoad, currentFile);
         }
@@ -3080,11 +3104,8 @@ namespace ImageGlass
             {
                 if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
                 {
-                    // prepare the distinct dir list
-                    var list = Helper.GetFilesByDistinctDirs(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-
                     // update image list
-                    PrepareMulti(list.ToArray());
+                    MnuMainReloadImageList_Click(null, null);
                 }
             }
             #endregion
@@ -4023,11 +4044,8 @@ namespace ImageGlass
 
         private void MnuMainReloadImageList_Click(object sender, EventArgs e)
         {
-            // prepare the distinct dir list
-            var list = Helper.GetFilesByDistinctDirs(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
-
             // update image list
-            PrepareMulti(list.ToArray());
+            PrepareMulti(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
