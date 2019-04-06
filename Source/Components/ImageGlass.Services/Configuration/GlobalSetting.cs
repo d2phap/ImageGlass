@@ -585,10 +585,10 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Load image order from configuration file
+        /// Get image order from configuration file
         /// </summary>
         /// <returns></returns>
-        public static ImageOrderBy LoadImageOrderConfig()
+        public static ImageOrderBy GetImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");
 
@@ -601,8 +601,6 @@ namespace ImageGlass.Services.Configuration
                     i = 0;
                 }
             }
-
-            //ImageLoadingOrder = (ImageOrderBy)i;
 
             return (ImageOrderBy)i;
         }

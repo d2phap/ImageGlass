@@ -493,7 +493,7 @@ namespace ImageGlass
             var list = new List<string>();
 
             //Load image order from config
-            GlobalSetting.ImageLoadingOrder = GlobalSetting.LoadImageOrderConfig();
+            GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
             //Sort image file
             if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
@@ -2239,7 +2239,7 @@ namespace ImageGlass
 
 
                 //Load image order config
-                GlobalSetting.ImageLoadingOrder = GlobalSetting.LoadImageOrderConfig();
+                GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
 
                 //Load state of Image Booster

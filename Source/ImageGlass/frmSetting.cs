@@ -1187,9 +1187,6 @@ namespace ImageGlass
             if (lvExtension.SelectedItems.Count == 0)
                 return;
 
-            var selectedDefaultExts = new StringBuilder();
-            var selectedOptionalExts = new StringBuilder();
-
             // Get checked extensions in the list then
             // remove extensions from settings
             foreach (ListViewItem li in lvExtension.SelectedItems)
@@ -1206,6 +1203,9 @@ namespace ImageGlass
 
             //RegisterFileAssociations(GlobalSetting.AllImageFormats);
             LoadExtensionList();
+
+            //Request frmMain to update
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -1234,6 +1234,9 @@ namespace ImageGlass
 
                 //RegisterFileAssociations(GlobalSetting.AllImageFormats);
                 LoadExtensionList();
+
+                //Request frmMain to update
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
 
             f.Dispose();

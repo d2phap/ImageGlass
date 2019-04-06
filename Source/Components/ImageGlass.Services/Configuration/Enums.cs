@@ -22,7 +22,7 @@ namespace ImageGlass.Services.Configuration
 {
     /// <summary>
     /// The loading order list.
-    /// **If we need to rename, have to update the language string too.
+    /// **If we need to rename, we MUST update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
     public enum ImageOrderBy
