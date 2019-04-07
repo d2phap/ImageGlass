@@ -163,6 +163,18 @@ namespace ImageGlass
             this.lnkThemeDownload = new System.Windows.Forms.LinkLabel();
             this.btnThemeEdit = new System.Windows.Forms.Button();
             this.lblInstalledThemes = new System.Windows.Forms.Label();
+            this.tabKeyboard = new System.Windows.Forms.TabPage();
+            this.btnKeyReset = new System.Windows.Forms.Button();
+            this.cmbKeysSpaceBack = new System.Windows.Forms.ComboBox();
+            this.cmbKeysPgUpDown = new System.Windows.Forms.ComboBox();
+            this.cmbKeysUpDown = new System.Windows.Forms.ComboBox();
+            this.cmbKeysLeftRight = new System.Windows.Forms.ComboBox();
+            this.lblKeysActionsHeader = new System.Windows.Forms.Label();
+            this.lblKeysSpaceBack = new System.Windows.Forms.Label();
+            this.lblKeysPageUpDown = new System.Windows.Forms.Label();
+            this.lblKeysUpDown = new System.Windows.Forms.Label();
+            this.lblKeysLeftRight = new System.Windows.Forms.Label();
+            this.lblKeysKeysHeader = new System.Windows.Forms.Label();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -171,24 +183,12 @@ namespace ImageGlass
             this.lblColorPicker = new System.Windows.Forms.Label();
             this.lblEdit = new System.Windows.Forms.Label();
             this.lblTheme = new System.Windows.Forms.Label();
+            this.lblKeyboard = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.tabKeyboard = new System.Windows.Forms.TabPage();
-            this.lblKeysKeysHeader = new System.Windows.Forms.Label();
-            this.lblKeysLeftRight = new System.Windows.Forms.Label();
-            this.lblKeysUpDown = new System.Windows.Forms.Label();
-            this.lblKeysPageUpDown = new System.Windows.Forms.Label();
-            this.lblKeysSpaceBack = new System.Windows.Forms.Label();
-            this.lblKeysActionsHeader = new System.Windows.Forms.Label();
-            this.cmbKeysLeftRight = new System.Windows.Forms.ComboBox();
-            this.cmbKeysUpDown = new System.Windows.Forms.ComboBox();
-            this.cmbKeysPgUpDown = new System.Windows.Forms.ComboBox();
-            this.cmbKeysSpaceBack = new System.Windows.Forms.ComboBox();
-            this.btnKeyReset = new System.Windows.Forms.Button();
-            this.lblKeyboard = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -204,6 +204,7 @@ namespace ImageGlass
             this.tabTheme.SuspendLayout();
             this.panelThemeActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
+            this.tabKeyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
@@ -211,7 +212,6 @@ namespace ImageGlass
             this.tableLayoutPanel1.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tabKeyboard.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -309,7 +309,7 @@ namespace ImageGlass
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(799, 585);
+            this.tabLanguage.Size = new System.Drawing.Size(799, 583);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             // 
@@ -442,7 +442,7 @@ namespace ImageGlass
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(799, 585);
+            this.tabFileAssociation.Size = new System.Drawing.Size(799, 583);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             // 
@@ -454,7 +454,7 @@ namespace ImageGlass
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 495);
+            this.panel2.Location = new System.Drawing.Point(0, 493);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(799, 90);
@@ -540,6 +540,7 @@ namespace ImageGlass
             listViewGroup1,
             listViewGroup2});
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvExtension.HideSelection = false;
             this.lvExtension.Location = new System.Drawing.Point(27, 92);
             this.lvExtension.Name = "lvExtension";
             this.lvExtension.Size = new System.Drawing.Size(751, 370);
@@ -887,7 +888,7 @@ namespace ImageGlass
             this.tabImage.Location = new System.Drawing.Point(4, 37);
             this.tabImage.Margin = new System.Windows.Forms.Padding(0);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Size = new System.Drawing.Size(799, 585);
+            this.tabImage.Size = new System.Drawing.Size(799, 583);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
@@ -1318,7 +1319,7 @@ namespace ImageGlass
             this.tabEdit.Location = new System.Drawing.Point(4, 37);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEdit.Size = new System.Drawing.Size(799, 585);
+            this.tabEdit.Size = new System.Drawing.Size(799, 583);
             this.tabEdit.TabIndex = 7;
             this.tabEdit.Text = "Edit";
             // 
@@ -1408,6 +1409,7 @@ namespace ImageGlass
             this.clnAppArguments});
             this.lvImageEditing.FullRowSelect = true;
             this.lvImageEditing.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvImageEditing.HideSelection = false;
             listViewItem1.StateImageIndex = 0;
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
@@ -1458,7 +1460,7 @@ namespace ImageGlass
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
-            this.tabToolbar.Size = new System.Drawing.Size(799, 585);
+            this.tabToolbar.Size = new System.Drawing.Size(799, 583);
             this.tabToolbar.TabIndex = 4;
             this.tabToolbar.Text = "toolbar";
             this.tabToolbar.UseVisualStyleBackColor = true;
@@ -1643,7 +1645,7 @@ namespace ImageGlass
             this.tabColorPicker.Location = new System.Drawing.Point(4, 37);
             this.tabColorPicker.Margin = new System.Windows.Forms.Padding(0);
             this.tabColorPicker.Name = "tabColorPicker";
-            this.tabColorPicker.Size = new System.Drawing.Size(799, 585);
+            this.tabColorPicker.Size = new System.Drawing.Size(799, 583);
             this.tabColorPicker.TabIndex = 5;
             this.tabColorPicker.Text = "color picker";
             // 
@@ -1834,6 +1836,7 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvTheme.FullRowSelect = true;
+            this.lvTheme.HideSelection = false;
             this.lvTheme.LargeImageList = this.imglGeneral;
             this.lvTheme.Location = new System.Drawing.Point(27, 48);
             this.lvTheme.MultiSelect = false;
@@ -1907,6 +1910,133 @@ namespace ImageGlass
             this.lblInstalledThemes.Size = new System.Drawing.Size(145, 25);
             this.lblInstalledThemes.TabIndex = 2;
             this.lblInstalledThemes.Text = "Installed themes:";
+            // 
+            // tabKeyboard
+            // 
+            this.tabKeyboard.BackColor = System.Drawing.Color.White;
+            this.tabKeyboard.Controls.Add(this.btnKeyReset);
+            this.tabKeyboard.Controls.Add(this.cmbKeysSpaceBack);
+            this.tabKeyboard.Controls.Add(this.cmbKeysPgUpDown);
+            this.tabKeyboard.Controls.Add(this.cmbKeysUpDown);
+            this.tabKeyboard.Controls.Add(this.cmbKeysLeftRight);
+            this.tabKeyboard.Controls.Add(this.lblKeysActionsHeader);
+            this.tabKeyboard.Controls.Add(this.lblKeysSpaceBack);
+            this.tabKeyboard.Controls.Add(this.lblKeysPageUpDown);
+            this.tabKeyboard.Controls.Add(this.lblKeysUpDown);
+            this.tabKeyboard.Controls.Add(this.lblKeysLeftRight);
+            this.tabKeyboard.Controls.Add(this.lblKeysKeysHeader);
+            this.tabKeyboard.Location = new System.Drawing.Point(4, 37);
+            this.tabKeyboard.Name = "tabKeyboard";
+            this.tabKeyboard.Padding = new System.Windows.Forms.Padding(3);
+            this.tabKeyboard.Size = new System.Drawing.Size(799, 583);
+            this.tabKeyboard.TabIndex = 8;
+            this.tabKeyboard.Text = "keyboard";
+            // 
+            // btnKeyReset
+            // 
+            this.btnKeyReset.Location = new System.Drawing.Point(297, 401);
+            this.btnKeyReset.Name = "btnKeyReset";
+            this.btnKeyReset.Size = new System.Drawing.Size(290, 37);
+            this.btnKeyReset.TabIndex = 10;
+            this.btnKeyReset.Text = "button1";
+            this.btnKeyReset.UseVisualStyleBackColor = true;
+            this.btnKeyReset.Click += new System.EventHandler(this.btnKeyReset_Click);
+            // 
+            // cmbKeysSpaceBack
+            // 
+            this.cmbKeysSpaceBack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysSpaceBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysSpaceBack.FormattingEnabled = true;
+            this.cmbKeysSpaceBack.Location = new System.Drawing.Point(283, 312);
+            this.cmbKeysSpaceBack.Name = "cmbKeysSpaceBack";
+            this.cmbKeysSpaceBack.Size = new System.Drawing.Size(362, 33);
+            this.cmbKeysSpaceBack.TabIndex = 9;
+            // 
+            // cmbKeysPgUpDown
+            // 
+            this.cmbKeysPgUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysPgUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysPgUpDown.FormattingEnabled = true;
+            this.cmbKeysPgUpDown.Location = new System.Drawing.Point(283, 254);
+            this.cmbKeysPgUpDown.Name = "cmbKeysPgUpDown";
+            this.cmbKeysPgUpDown.Size = new System.Drawing.Size(362, 33);
+            this.cmbKeysPgUpDown.TabIndex = 8;
+            // 
+            // cmbKeysUpDown
+            // 
+            this.cmbKeysUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysUpDown.FormattingEnabled = true;
+            this.cmbKeysUpDown.Location = new System.Drawing.Point(283, 196);
+            this.cmbKeysUpDown.Name = "cmbKeysUpDown";
+            this.cmbKeysUpDown.Size = new System.Drawing.Size(362, 33);
+            this.cmbKeysUpDown.TabIndex = 7;
+            // 
+            // cmbKeysLeftRight
+            // 
+            this.cmbKeysLeftRight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysLeftRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysLeftRight.FormattingEnabled = true;
+            this.cmbKeysLeftRight.Location = new System.Drawing.Point(283, 134);
+            this.cmbKeysLeftRight.Name = "cmbKeysLeftRight";
+            this.cmbKeysLeftRight.Size = new System.Drawing.Size(362, 33);
+            this.cmbKeysLeftRight.TabIndex = 6;
+            // 
+            // lblKeysActionsHeader
+            // 
+            this.lblKeysActionsHeader.AutoSize = true;
+            this.lblKeysActionsHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKeysActionsHeader.Location = new System.Drawing.Point(278, 63);
+            this.lblKeysActionsHeader.Name = "lblKeysActionsHeader";
+            this.lblKeysActionsHeader.Size = new System.Drawing.Size(63, 25);
+            this.lblKeysActionsHeader.TabIndex = 5;
+            this.lblKeysActionsHeader.Text = "label6";
+            // 
+            // lblKeysSpaceBack
+            // 
+            this.lblKeysSpaceBack.AutoSize = true;
+            this.lblKeysSpaceBack.Location = new System.Drawing.Point(66, 312);
+            this.lblKeysSpaceBack.Name = "lblKeysSpaceBack";
+            this.lblKeysSpaceBack.Size = new System.Drawing.Size(59, 25);
+            this.lblKeysSpaceBack.TabIndex = 4;
+            this.lblKeysSpaceBack.Text = "label5";
+            // 
+            // lblKeysPageUpDown
+            // 
+            this.lblKeysPageUpDown.AutoSize = true;
+            this.lblKeysPageUpDown.Location = new System.Drawing.Point(66, 254);
+            this.lblKeysPageUpDown.Name = "lblKeysPageUpDown";
+            this.lblKeysPageUpDown.Size = new System.Drawing.Size(59, 25);
+            this.lblKeysPageUpDown.TabIndex = 3;
+            this.lblKeysPageUpDown.Text = "label4";
+            // 
+            // lblKeysUpDown
+            // 
+            this.lblKeysUpDown.AutoSize = true;
+            this.lblKeysUpDown.Location = new System.Drawing.Point(66, 196);
+            this.lblKeysUpDown.Name = "lblKeysUpDown";
+            this.lblKeysUpDown.Size = new System.Drawing.Size(59, 25);
+            this.lblKeysUpDown.TabIndex = 2;
+            this.lblKeysUpDown.Text = "label3";
+            // 
+            // lblKeysLeftRight
+            // 
+            this.lblKeysLeftRight.AutoSize = true;
+            this.lblKeysLeftRight.Location = new System.Drawing.Point(66, 138);
+            this.lblKeysLeftRight.Name = "lblKeysLeftRight";
+            this.lblKeysLeftRight.Size = new System.Drawing.Size(59, 25);
+            this.lblKeysLeftRight.TabIndex = 1;
+            this.lblKeysLeftRight.Text = "label2";
+            // 
+            // lblKeysKeysHeader
+            // 
+            this.lblKeysKeysHeader.AutoSize = true;
+            this.lblKeysKeysHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKeysKeysHeader.Location = new System.Drawing.Point(61, 63);
+            this.lblKeysKeysHeader.Name = "lblKeysKeysHeader";
+            this.lblKeysKeysHeader.Size = new System.Drawing.Size(63, 25);
+            this.lblKeysKeysHeader.TabIndex = 0;
+            this.lblKeysKeysHeader.Text = "label1";
             // 
             // imglOpenWith
             // 
@@ -2066,6 +2196,26 @@ namespace ImageGlass
             this.lblTheme.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblTheme.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
+            // lblKeyboard
+            // 
+            this.lblKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKeyboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblKeyboard.Location = new System.Drawing.Point(0, 400);
+            this.lblKeyboard.Margin = new System.Windows.Forms.Padding(0);
+            this.lblKeyboard.Name = "lblKeyboard";
+            this.lblKeyboard.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblKeyboard.Size = new System.Drawing.Size(254, 50);
+            this.lblKeyboard.TabIndex = 9;
+            this.lblKeyboard.Tag = "0";
+            this.lblKeyboard.Text = "[Keyboard]";
+            this.lblKeyboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblKeyboard.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblKeyboard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblKeyboard.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblKeyboard.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblKeyboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2138,153 +2288,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // lblKeyboard
-            // 
-            this.lblKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblKeyboard.BackColor = System.Drawing.Color.Gainsboro;
-            this.lblKeyboard.Location = new System.Drawing.Point(0, 0);
-            this.lblKeyboard.Margin = new System.Windows.Forms.Padding(0);
-            this.lblKeyboard.Name = "lblKeyboard";
-            this.lblKeyboard.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblKeyboard.Size = new System.Drawing.Size(254, 50);
-            this.lblKeyboard.TabIndex = 9;
-            this.lblKeyboard.Tag = "9";
-            this.lblKeyboard.Text = "Keyboard";
-            this.lblKeyboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblKeyboard.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblKeyboard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblKeyboard.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblKeyboard.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblKeyboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // tabKeyboard
-            // 
-            this.tabKeyboard.BackColor = System.Drawing.Color.White;
-            this.tabKeyboard.Controls.Add(this.btnKeyReset);
-            this.tabKeyboard.Controls.Add(this.cmbKeysSpaceBack);
-            this.tabKeyboard.Controls.Add(this.cmbKeysPgUpDown);
-            this.tabKeyboard.Controls.Add(this.cmbKeysUpDown);
-            this.tabKeyboard.Controls.Add(this.cmbKeysLeftRight);
-            this.tabKeyboard.Controls.Add(this.lblKeysActionsHeader);
-            this.tabKeyboard.Controls.Add(this.lblKeysSpaceBack);
-            this.tabKeyboard.Controls.Add(this.lblKeysPageUpDown);
-            this.tabKeyboard.Controls.Add(this.lblKeysUpDown);
-            this.tabKeyboard.Controls.Add(this.lblKeysLeftRight);
-            this.tabKeyboard.Controls.Add(this.lblKeysKeysHeader);
-            this.tabKeyboard.Location = new System.Drawing.Point(4, 37);
-            this.tabKeyboard.Name = "tabKeyboard";
-            this.tabKeyboard.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKeyboard.Size = new System.Drawing.Size(799, 583);
-            this.tabKeyboard.TabIndex = 8;
-            this.tabKeyboard.Text = "keyboard";
-            // 
-            // label1
-            // 
-            this.lblKeysKeysHeader.AutoSize = true;
-            this.lblKeysKeysHeader.Location = new System.Drawing.Point(61, 63);
-            this.lblKeysKeysHeader.Name = "label1";
-            this.lblKeysKeysHeader.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysKeysHeader.TabIndex = 0;
-            this.lblKeysKeysHeader.Text = "label1";
-            this.lblKeysKeysHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            // 
-            // lblKeysLeftRight
-            // 
-            this.lblKeysLeftRight.AutoSize = true;
-            this.lblKeysLeftRight.Location = new System.Drawing.Point(66, 138);
-            this.lblKeysLeftRight.Name = "label2";
-            this.lblKeysLeftRight.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysLeftRight.TabIndex = 1;
-            this.lblKeysLeftRight.Text = "label2";
-            // 
-            // lblKeysUpDown
-            // 
-            this.lblKeysUpDown.AutoSize = true;
-            this.lblKeysUpDown.Location = new System.Drawing.Point(66, 196);
-            this.lblKeysUpDown.Name = "label3";
-            this.lblKeysUpDown.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysUpDown.TabIndex = 2;
-            this.lblKeysUpDown.Text = "label3";
-            // 
-            // lblKeysPageUpDown
-            // 
-            this.lblKeysPageUpDown.AutoSize = true;
-            this.lblKeysPageUpDown.Location = new System.Drawing.Point(66, 254);
-            this.lblKeysPageUpDown.Name = "label4";
-            this.lblKeysPageUpDown.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysPageUpDown.TabIndex = 3;
-            this.lblKeysPageUpDown.Text = "label4";
-            // 
-            // lblKeysSpaceBack
-            // 
-            this.lblKeysSpaceBack.AutoSize = true;
-            this.lblKeysSpaceBack.Location = new System.Drawing.Point(66, 312);
-            this.lblKeysSpaceBack.Name = "label5";
-            this.lblKeysSpaceBack.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysSpaceBack.TabIndex = 4;
-            this.lblKeysSpaceBack.Text = "label5";
-            // 
-            // label6
-            // 
-            this.lblKeysActionsHeader.AutoSize = true;
-            this.lblKeysActionsHeader.Location = new System.Drawing.Point(278, 63);
-            this.lblKeysActionsHeader.Name = "label6";
-            this.lblKeysActionsHeader.Size = new System.Drawing.Size(59, 25);
-            this.lblKeysActionsHeader.TabIndex = 5;
-            this.lblKeysActionsHeader.Text = "label6";
-            this.lblKeysActionsHeader.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            // 
-            // cmbKeysLeftRight
-            // 
-            this.cmbKeysLeftRight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKeysLeftRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmbKeysLeftRight.FormattingEnabled = true;
-            this.cmbKeysLeftRight.Location = new System.Drawing.Point(283, 134);
-            this.cmbKeysLeftRight.Name = "comboBox1";
-            this.cmbKeysLeftRight.Size = new System.Drawing.Size(362, 33);
-            this.cmbKeysLeftRight.TabIndex = 6;
-            // 
-            // cmbKeysUpDown
-            // 
-            this.cmbKeysUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKeysUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmbKeysUpDown.FormattingEnabled = true;
-            this.cmbKeysUpDown.Location = new System.Drawing.Point(283, 196);
-            this.cmbKeysUpDown.Name = "comboBox2";
-            this.cmbKeysUpDown.Size = new System.Drawing.Size(362, 33);
-            this.cmbKeysUpDown.TabIndex = 7;
-            // 
-            // cmbKeysPgUpDown
-            // 
-            this.cmbKeysPgUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKeysPgUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmbKeysPgUpDown.FormattingEnabled = true;
-            this.cmbKeysPgUpDown.Location = new System.Drawing.Point(283, 254);
-            this.cmbKeysPgUpDown.Name = "comboBox3";
-            this.cmbKeysPgUpDown.Size = new System.Drawing.Size(362, 33);
-            this.cmbKeysPgUpDown.TabIndex = 8;
-            // 
-            // cmbKeysSpaceBack
-            // 
-            this.cmbKeysSpaceBack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKeysSpaceBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmbKeysSpaceBack.FormattingEnabled = true;
-            this.cmbKeysSpaceBack.Location = new System.Drawing.Point(283, 312);
-            this.cmbKeysSpaceBack.Name = "comboBox4";
-            this.cmbKeysSpaceBack.Size = new System.Drawing.Size(362, 33);
-            this.cmbKeysSpaceBack.TabIndex = 9;
-            // 
-            // btnKeyReset
-            // 
-            this.btnKeyReset.Location = new System.Drawing.Point(297, 401);
-            this.btnKeyReset.Name = "button1";
-            this.btnKeyReset.Size = new System.Drawing.Size(290, 37);
-            this.btnKeyReset.TabIndex = 10;
-            this.btnKeyReset.Text = "button1";
-            this.btnKeyReset.UseVisualStyleBackColor = true;
-            this.btnKeyReset.Click += new System.EventHandler(this.btnKeyReset_Click);
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2330,6 +2333,8 @@ namespace ImageGlass
             this.panelThemeActions.ResumeLayout(false);
             this.panelThemeActions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
+            this.tabKeyboard.ResumeLayout(false);
+            this.tabKeyboard.PerformLayout();
             this.sp1.Panel1.ResumeLayout(false);
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
@@ -2338,8 +2343,6 @@ namespace ImageGlass
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.tabKeyboard.ResumeLayout(false);
-            this.tabKeyboard.PerformLayout();
             this.ResumeLayout(false);
 
         }

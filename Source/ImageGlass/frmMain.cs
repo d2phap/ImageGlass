@@ -1702,7 +1702,7 @@ namespace ImageGlass
             #region change size of menu items
             int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
 
-            mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainOpenFile.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
@@ -1710,6 +1710,7 @@ namespace ImageGlass
             mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             mnuMainColorPicker.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             #endregion
 
@@ -1771,9 +1772,9 @@ namespace ImageGlass
                     toolbarContentWidth += item.Width;
                 }
 
-
-                // if the content cannot fit the toolbar size
-                if (toolbarContentWidth > toolMain.Size.Width)
+                // if the content cannot fit the toolbar size:
+                // (toolbarContentWidth > toolMain.Size.Width)
+                if (toolMain.OverflowButton.Visible)
                 {
                     // align left
                     firstBtn.Margin = defaultMargin;
@@ -2899,10 +2900,10 @@ namespace ImageGlass
 
                 mnuMainTools.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainTools"];
                 mnuMainColorPicker.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainColorPicker"];
-
                 mnuMainSettings.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainSettings"];
-                mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
 
+                mnuMainHelp.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainHelp"];
+                mnuMainAbout.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainAbout"];
                 mnuMainFirstLaunch.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstLaunch"];
                 mnuMainReportIssue.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainReportIssue"];
 
@@ -4883,7 +4884,7 @@ namespace ImageGlass
                 if (GlobalSetting.IsNewVersionAvailable)
                 {
                     mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.LangPack.Items["frmMain.mnuMainCheckForUpdate._NewVersion"];
-                    mnuMainCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
+                    mnuMainHelp.BackColor = mnuMainCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
                 }
                 else
                 {
@@ -4950,7 +4951,6 @@ namespace ImageGlass
             var pos = new Point(mnuItem.GetCurrentParent().Left, mnuItem.GetCurrentParent().Top);
 
             // Current bounds of the current monitor
-            Rectangle bounds = Screen.GetWorkingArea(pos);
             Screen currentScreen = Screen.FromPoint(pos);
 
             // Find the width of sub-menu

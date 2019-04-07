@@ -35,8 +35,8 @@
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainEditImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainReloadImageList = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReloadImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainReloadImageList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainViewNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,12 +98,12 @@
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainFirstLaunch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckForUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReportIssue = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMainFirstLaunch = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainExitApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
@@ -202,16 +202,12 @@
             this.mnuMainLayout,
             this.mnuMainTools,
             this.mnuMainSettings,
-            this.mnuMainAbout,
+            this.mnuMainHelp,
             this.toolStripMenuItem21,
-            this.mnuMainFirstLaunch,
-            this.mnuMainCheckForUpdate,
-            this.mnuMainReportIssue,
-            this.toolStripSeparator7,
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 746);
+            this.mnuMain.Size = new System.Drawing.Size(409, 615);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -275,6 +271,18 @@
             this.mnuMainRefresh.Text = "[Refresh]";
             this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
             // 
+            // mnuMainReloadImage
+            // 
+            this.mnuMainReloadImage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainReloadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainReloadImage.Name = "mnuMainReloadImage";
+            this.mnuMainReloadImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainReloadImage.ShortcutKeyDisplayString = "";
+            this.mnuMainReloadImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
+            this.mnuMainReloadImage.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainReloadImage.Text = "[Reload image]";
+            this.mnuMainReloadImage.Click += new System.EventHandler(this.mnuMainReloadImage_Click);
+            // 
             // mnuMainReloadImageList
             // 
             this.mnuMainReloadImageList.ForeColor = System.Drawing.Color.Black;
@@ -287,18 +295,6 @@
             this.mnuMainReloadImageList.Size = new System.Drawing.Size(408, 31);
             this.mnuMainReloadImageList.Text = "[Reload image list]";
             this.mnuMainReloadImageList.Click += new System.EventHandler(this.MnuMainReloadImageList_Click);
-            // 
-            // mnuMainReloadImage
-            // 
-            this.mnuMainReloadImage.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainReloadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainReloadImage.Name = "mnuMainReloadImage";
-            this.mnuMainReloadImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainReloadImage.ShortcutKeyDisplayString = "";
-            this.mnuMainReloadImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
-            this.mnuMainReloadImage.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainReloadImage.Text = "[Reload image]";
-            this.mnuMainReloadImage.Click += new System.EventHandler(this.mnuMainReloadImage_Click);
             // 
             // toolStripSeparator6
             // 
@@ -992,6 +988,21 @@
             this.mnuMainSettings.Text = "S&ettings";
             this.mnuMainSettings.Click += new System.EventHandler(this.mnuMainSettings_Click);
             // 
+            // mnuMainHelp
+            // 
+            this.mnuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainAbout,
+            this.mnuMainCheckForUpdate,
+            this.mnuMainReportIssue,
+            this.mnuMainFirstLaunch});
+            this.mnuMainHelp.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainHelp.Name = "mnuMainHelp";
+            this.mnuMainHelp.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainHelp.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainHelp.Text = "[Help]";
+            this.mnuMainHelp.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            // 
             // mnuMainAbout
             // 
             this.mnuMainAbout.ForeColor = System.Drawing.Color.Black;
@@ -1000,29 +1011,14 @@
             this.mnuMainAbout.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAbout.ShortcutKeyDisplayString = "";
             this.mnuMainAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mnuMainAbout.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainAbout.Size = new System.Drawing.Size(316, 31);
             this.mnuMainAbout.Text = "&About";
             this.mnuMainAbout.Click += new System.EventHandler(this.mnuMainAbout_Click);
-            // 
-            // toolStripMenuItem21
-            // 
-            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(405, 6);
-            // 
-            // mnuMainFirstLaunch
-            // 
-            this.mnuMainFirstLaunch.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainFirstLaunch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
-            this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainFirstLaunch.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainFirstLaunch.Text = "[First-launch configurations]";
-            this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
             // 
             // mnuMainCheckForUpdate
             // 
             this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
-            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(408, 30);
+            this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(316, 30);
             this.mnuMainCheckForUpdate.Text = "A new version is available";
             this.mnuMainCheckForUpdate.Click += new System.EventHandler(this.mnuMainCheckForUpdate_Click);
             // 
@@ -1032,14 +1028,24 @@
             this.mnuMainReportIssue.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainReportIssue.Name = "mnuMainReportIssue";
             this.mnuMainReportIssue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainReportIssue.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainReportIssue.Size = new System.Drawing.Size(316, 31);
             this.mnuMainReportIssue.Text = "Report an iss&ue";
             this.mnuMainReportIssue.Click += new System.EventHandler(this.mnuMainReportIssue_Click);
             // 
-            // toolStripSeparator7
+            // mnuMainFirstLaunch
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(405, 6);
+            this.mnuMainFirstLaunch.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFirstLaunch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFirstLaunch.Name = "mnuMainFirstLaunch";
+            this.mnuMainFirstLaunch.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFirstLaunch.Size = new System.Drawing.Size(316, 31);
+            this.mnuMainFirstLaunch.Text = "[First-launch configurations]";
+            this.mnuMainFirstLaunch.Click += new System.EventHandler(this.mnuMainFirstLaunch_Click);
+            // 
+            // toolStripMenuItem21
+            // 
+            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(405, 6);
             // 
             // mnuMainExitApplication
             // 
@@ -1695,11 +1701,9 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainReloadImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem mnuMainManipulation;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mnuMainTools;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSettings;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateCounterclockwise;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRotateClockwise;
         private System.Windows.Forms.ToolStripMenuItem mnuMainFlipHorz;
@@ -1761,19 +1765,21 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToFit;
         private System.Windows.Forms.ToolStripMenuItem mnuMainColorPicker;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.ToolStripButton btnDelete;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainFirstLaunch;
         private System.Windows.Forms.ToolStripButton btnAutoZoom;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAutoZoom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRefresh;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem mnuMainExitApplication;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReloadImageList;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainHelp;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFirstLaunch;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
     }
 }
 
