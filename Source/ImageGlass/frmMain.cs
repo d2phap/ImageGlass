@@ -51,9 +51,6 @@ namespace ImageGlass
             //NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
-            //Remove white line under tool strip
-            toolMain.Renderer = new Theme.ToolStripRenderer();
-
             //Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
 
@@ -1880,6 +1877,9 @@ namespace ImageGlass
 
             void LoadTheme(Theme.Theme t)
             {
+                //Remove white line under tool strip
+                toolMain.Renderer = new Theme.ToolStripRenderer(t.BackgroundColor, t.TextInfoColor);
+
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
                 GlobalSetting.BackgroundColor = t.BackgroundColor;
@@ -1902,6 +1902,11 @@ namespace ImageGlass
 
                 // <toolbar_icon>
                 LoadToolbarIcons(t);
+
+                // Overflow button and Overflow dropdown
+                toolMain.OverflowButton.DropDown.BackColor = t.BackgroundColor;
+                toolMain.OverflowButton.AutoSize = false;
+                toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
             }
         }
 

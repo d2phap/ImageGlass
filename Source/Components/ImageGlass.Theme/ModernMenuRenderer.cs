@@ -31,14 +31,10 @@ namespace ImageGlass.Theme
         {
             this.ThemeBackgroundColor = backgroundColor;
             this.ThemeTextColor = textColor;
-
-            
         }
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
-
-
             if (e.Item.Enabled)
             {
                 e.TextColor = this.ThemeTextColor;
@@ -95,7 +91,7 @@ namespace ImageGlass.Theme
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
-            if (e.ToolStrip is ToolStripDropDown dropdown)
+            if (e.ToolStrip is ToolStripDropDown)
             {
                 // draw background
                 using (var brush = new SolidBrush(this.ThemeBackgroundColor)) // KBR 20181231 fix handle leak
@@ -163,7 +159,6 @@ namespace ImageGlass.Theme
 
     public class ModernColors : ProfessionalColorTable
     {
-
         public override Color MenuItemSelected
         {
             get
