@@ -1878,7 +1878,7 @@ namespace ImageGlass
             void LoadTheme(Theme.Theme t)
             {
                 //Remove white line under tool strip
-                toolMain.Renderer = new Theme.ToolStripRenderer(t.BackgroundColor, t.TextInfoColor);
+                toolMain.Renderer = new Theme.ToolStripRenderer(t.ToolbarBackgroundColor, t.TextInfoColor);
 
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
@@ -1904,7 +1904,7 @@ namespace ImageGlass
                 LoadToolbarIcons(t);
 
                 // Overflow button and Overflow dropdown
-                toolMain.OverflowButton.DropDown.BackColor = t.BackgroundColor;
+                toolMain.OverflowButton.DropDown.BackColor = t.ToolbarBackgroundColor;
                 toolMain.OverflowButton.AutoSize = false;
                 toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
             }
