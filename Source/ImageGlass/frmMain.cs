@@ -285,7 +285,7 @@ namespace ImageGlass
                     allFilesToLoad.AddRange(imageFilenameList);
                 }
 
-                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? distinctList[0] : currentFile;
+                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? (distinctList.Count > 0 ? distinctList[0] : "") : currentFile;
             });
 
             // sort list
