@@ -19,11 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using ImageMagick;
 
 namespace ImageGlass.Heart
 {
-    public class ImgFactory
+    public class Photo
     {
         /// <summary>
         /// Load image from file
@@ -33,7 +34,7 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <returns></returns>
-        public static MagickImageCollection Load(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
+        public static async Task<MagickImageCollection> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
         {
             var ext = Path.GetExtension(filename).ToUpperInvariant();
             var settings = new MagickReadSettings();
@@ -50,13 +51,17 @@ namespace ImageGlass.Heart
                 settings.Height = size.Height;
             }
 
-            imgCollection.Read(filename, settings);
-
-            // preprocess image data
-            for (int i = 0; i < imgCollection.Count; i++)
+            await Task.Run(() =>
             {
-                imgCollection[i] = Helpers.PreprocessMagickImage(imgCollection[i], colorProfileName, isApplyColorProfileForAll);
-            }
+                imgCollection.Read(filename, settings);
+
+                // preprocess image data
+                for (int i = 0; i < imgCollection.Count; i++)
+                {
+                    imgCollection[i] = Helpers.PreprocessMagickImage(imgCollection[i], colorProfileName, isApplyColorProfileForAll);
+                }
+            }).ConfigureAwait(false);
+
 
             return imgCollection;
         }
@@ -67,12 +72,12 @@ namespace ImageGlass.Heart
         /// Get thumbnail image
         /// </summary>
         /// <param name="filename">Full path of image file</param>
-        /// <param name="size">A custom size of image</param>
+        /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public static IMagickImage GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails = true)
+        public static async Task<IMagickImage> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            var imgCollections = Load(filename, size);
+            var imgCollections = await LoadAsync(filename, size);
             IMagickImage img = null;
 
             if (imgCollections.Count > 0)
