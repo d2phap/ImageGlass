@@ -31,9 +31,17 @@ namespace ImageGlass.Heart
 
         #region PRIVATE PROPERTIES
 
+        /// <summary>
+        /// The list of Imgs
+        /// </summary>
         private List<Img> ImgList { get; set; } = new List<Img>();
 
+
+        /// <summary>
+        /// The list of image index that waiting for loading
+        /// </summary>
         private List<int> QueuedList { get; set; } = new List<int>();
+
 
         private bool IsRunWorker { get; set; } = false;
 
@@ -207,14 +215,18 @@ namespace ImageGlass.Heart
 
 
             // release the resources
-            // TODO: 
-
+            foreach (var item in this.QueuedList)
+            {
+                if (!list.Contains(item))
+                {
+                    this.ImgList[item].Dispose();
+                }
+            }
 
 
             // update queue list
             this.QueuedList.Clear();
             this.QueuedList.AddRange(list);
-
         }
 
         #endregion
