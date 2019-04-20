@@ -22,6 +22,7 @@ using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart
@@ -99,9 +100,15 @@ namespace ImageGlass.Heart
         /// </summary>
         public int MaxQueue { get; set; } = 2;
 
+
+        public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
+        public event FinishLoadingImageHandler OnFinishLoadingImage;
+
         #endregion
 
 
+
+        public Factory() { }
 
 
         /// <summary>
@@ -125,38 +132,6 @@ namespace ImageGlass.Heart
 
 
         #region PRIVATE FUNCTIONS
-
-
-        /// <summary>
-        /// Start caching image files
-        /// </summary>
-        private async void StartCachingImageFileAsync()
-        {
-            while (this.IsRunWorker)
-            {
-                if (this.QueuedList.Count > 0)
-                {
-                    // pop out the first item
-                    var index = this.QueuedList[0];
-                    var img = this.ImgList[index];
-                    QueuedList.RemoveAt(0);
-
-
-                    if (!img.IsDone)
-                    {
-                        // start loading image file
-                        _ = img.LoadAsync(
-                            size: this.ImgSize,
-                            colorProfileName: this.ColorProfileName,
-                            isApplyColorProfileForAll: this.IsApplyColorProfileForAll
-                        );
-                    }
-                }
-
-                await Task.Delay(10);
-            }
-        }
-
 
         /// <summary>
         /// Add index of the image to queue list
@@ -236,6 +211,37 @@ namespace ImageGlass.Heart
         #region PUBLIC FUNCTIONS
 
         /// <summary>
+        /// Start caching image files
+        /// </summary>
+        public async void StartCachingImageFileAsync()
+        {
+            while (this.IsRunWorker)
+            {
+                if (this.QueuedList.Count > 0)
+                {
+                    // pop out the first item
+                    var index = this.QueuedList[0];
+                    var img = this.ImgList[index];
+                    QueuedList.RemoveAt(0);
+
+
+                    if (!img.IsDone)
+                    {
+                        // start loading image file
+                        _ = img.LoadAsync(
+                            size: this.ImgSize,
+                            colorProfileName: this.ColorProfileName,
+                            isApplyColorProfileForAll: this.IsApplyColorProfileForAll
+                        );
+                    }
+                }
+
+                await Task.Delay(10);
+            }
+        }
+
+
+        /// <summary>
         /// Releases all resources used by the Factory
         /// </summary>
         public void Dispose()
@@ -289,6 +295,9 @@ namespace ImageGlass.Heart
                 return this.ImgList[index].ImgCollection;
             }
 
+
+            // Trigger event OnFinishLoadingImage
+            OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             return null;
         }
@@ -373,6 +382,21 @@ namespace ImageGlass.Heart
 
             this.QueuedList.Clear();
             this.ImgList.Clear();
+        }
+
+
+        /// <summary>
+        /// Check if the folder path of input filename exists in the list
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public bool ContainsDirPathOf(string filename)
+        {
+            var target = Path.GetDirectoryName(filename).ToUpperInvariant();
+
+            var index = this.ImgList.FindIndex(item => Path.GetDirectoryName(item.Filename).ToUpperInvariant() == target);
+
+            return index != -1;
         }
 
         #endregion
