@@ -55,13 +55,14 @@ Thanks for your gratitude and finance help!
 <img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
-```
-https://www.paypal.me/d2phap
-```
+
+<a href="https://www.patreon.com/bePatron?u=6414896" target="_blank" title="Buy me a beer?">
+<img src="https://img.shields.io/badge/Patron-patron.com%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+</a>
 
 
 
-<img src="https://img.shields.io/badge/Bitcoin-Donate-009be1.svg?maxAge=3600" height="30" alt="Bitcoin">
+<img src="https://img.shields.io/badge/Bitcoin-Donate-f7931a.svg?maxAge=3600" height="30" alt="Bitcoin">
 
 ```
 3Hp7QLP9Fxpb1s4CAcZFYR7NUgN1bR93Hy
@@ -70,16 +71,14 @@ https://www.paypal.me/d2phap
 
 
 
-<img src="https://img.shields.io/badge/Ethereum-Donate-009be1.svg?maxAge=3600" height="30" alt="Ethereum">
+<img src="https://img.shields.io/badge/Ethereum-Donate-131313.svg?maxAge=3600" height="30" alt="Ethereum">
 
 ```
 0x6DDBd646586bebF7a97e022D615cbE789D39a965
 ```
 
 
-<a href="https://www.patreon.com/d2phap" target="_blank" title="Buy me a beer?">
-<img src="https://img.shields.io/badge/Patron-patron.com%2Fd2phap-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
-</a>
+
 
 
 
