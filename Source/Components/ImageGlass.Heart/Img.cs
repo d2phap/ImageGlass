@@ -67,7 +67,6 @@ namespace ImageGlass.Heart
             this._IsDone = false;
             this._Error = null;
 
-            this.Filename = string.Empty;
             this.ImgCollection.Dispose();
         }
 

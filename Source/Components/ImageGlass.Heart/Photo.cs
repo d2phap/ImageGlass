@@ -53,13 +53,21 @@ namespace ImageGlass.Heart
 
             await Task.Run(() =>
             {
-                imgCollection.Read(filename, settings);
-
-                // preprocess image data
-                for (int i = 0; i < imgCollection.Count; i++)
+                try
                 {
-                    imgCollection[i] = Helpers.PreprocessMagickImage(imgCollection[i], colorProfileName, isApplyColorProfileForAll);
+                    imgCollection.Read(filename, settings);
+
+                    // preprocess image data
+                    for (int i = 0; i < imgCollection.Count; i++)
+                    {
+                        imgCollection[i] = Helpers.PreprocessMagickImage(imgCollection[i], colorProfileName, isApplyColorProfileForAll);
+                    }
                 }
+                catch
+                {
+                    imgCollection.Dispose();
+                }
+                
             }).ConfigureAwait(false);
 
 

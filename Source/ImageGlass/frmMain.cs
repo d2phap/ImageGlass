@@ -38,6 +38,7 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using System.Collections.Concurrent;
 using FileWatcherEx;
+using ImageMagick;
 
 namespace ImageGlass
 {
@@ -307,7 +308,8 @@ namespace ImageGlass
             GlobalSetting.ImageList.Dispose();
 
             //Set filename to image list
-            GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
+            //GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
+            GlobalSetting.ImageList = new Heart.Factory(_imageFilenameList);
 
 
             //Track image loading progress
@@ -327,7 +329,7 @@ namespace ImageGlass
                 // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to open single, hidden image with 'show hidden' OFF)
                 if (GlobalSetting.CurrentIndex == -1 && 
                     GlobalSetting.ImageList.Length > 0 &&
-                    !GlobalSetting.ImageList.HasFolder(filePath))
+                    !GlobalSetting.ImageList.ContainsDirPathOf(filePath))
                     GlobalSetting.CurrentIndex = 0;
             }
             else
@@ -648,15 +650,19 @@ namespace ImageGlass
                 SetAppBusy(true); 
 
                 //Read image data outside the GUI loop
-                im = await Task.Run(() =>
-                {
-                    return GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
-                });
+                //im = await Task.Run(() =>
+                //{
+                    
+
+                //});
+
+                var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                im = imgData.ImgCollection[0].ToBitmap();
+
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
 
-                GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
-
+                GlobalSetting.IsImageError = imgData.Error != null;
 
                 if (!token.Token.IsCancellationRequested)
                 {
@@ -3259,7 +3265,7 @@ namespace ImageGlass
         private void FileWatcher_AddNewFileAction(string newFilename)
         {
             //Add the new image to the list
-            GlobalSetting.ImageList.AddItem(newFilename);
+            GlobalSetting.ImageList.Add(newFilename);
 
             //Add the new image to thumbnail bar
             ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
@@ -3670,7 +3676,7 @@ namespace ImageGlass
 
 
         #region Context Menu
-        private void mnuContext_Opening(object sender, CancelEventArgs e)
+        private async void mnuContext_Opening(object sender, CancelEventArgs e)
         {
             bool isImageError = false;
 
@@ -3709,9 +3715,12 @@ namespace ImageGlass
                 //check if image can animate (GIF)
                 try
                 {
-                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    int frameCount = img.GetFrameCount(dim);
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+
+
+                    //FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                    //int frameCount = img.GetFrameCount(dim);
+                    int frameCount = imgData.ImgCollection.Count;
 
                     if (frameCount > 1)
                     {
@@ -3963,7 +3972,7 @@ namespace ImageGlass
         private void MnuMainReloadImageList_Click(object sender, EventArgs e)
         {
             // update image list
-            PrepareLoading(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            PrepareLoading(GlobalSetting.ImageList.FileNames, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -4874,7 +4883,7 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMain_Opening(object sender, CancelEventArgs e)
+        private async void mnuMain_Opening(object sender, CancelEventArgs e)
         {
             btnMenu.Checked = true;
 
@@ -4899,9 +4908,12 @@ namespace ImageGlass
                 int frameCount = 0;
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
-                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    frameCount = img.GetFrameCount(dim);
+                    //Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
+                    //FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
+                    //frameCount = img.GetFrameCount(dim);
+
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    frameCount = imgData.ImgCollection.Count;
                 }
                 
 

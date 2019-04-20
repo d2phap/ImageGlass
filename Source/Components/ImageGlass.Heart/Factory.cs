@@ -44,6 +44,8 @@ namespace ImageGlass.Heart
         private List<int> QueuedList { get; set; } = new List<int>();
 
 
+        private List<int> FreeList { get; set; } = new List<int>();
+
         private bool IsRunWorker { get; set; } = false;
 
         #endregion
@@ -79,7 +81,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Get filenames list
         /// </summary>
-        public List<string> Filenames
+        public List<string> FileNames
         {
             get
             {
@@ -190,7 +192,7 @@ namespace ImageGlass.Heart
 
 
             // release the resources
-            foreach (var item in this.QueuedList)
+            foreach (var item in this.FreeList)
             {
                 if (!list.Contains(item))
                 {
@@ -198,6 +200,9 @@ namespace ImageGlass.Heart
                 }
             }
 
+            // update new index of free list
+            this.FreeList.Clear();
+            this.FreeList.AddRange(list);
 
             // update queue list
             this.QueuedList.Clear();
@@ -264,7 +269,7 @@ namespace ImageGlass.Heart
         }
 
 
-        public async Task<MagickImageCollection> GetImg(int index, bool isSkipCache = false)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -292,7 +297,7 @@ namespace ImageGlass.Heart
             // if there is no error
             if (this.ImgList[index].Error == null)
             {
-                return this.ImgList[index].ImgCollection;
+                return this.ImgList[index];
             }
 
 
@@ -324,7 +329,7 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index"></param>
         /// <param name="filename">Image filename</param>
-        public void SetFilename(int index, string filename)
+        public void SetFileName(int index, string filename)
         {
             if (this.ImgList[index] != null)
             {
