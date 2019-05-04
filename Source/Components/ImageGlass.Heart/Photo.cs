@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -33,12 +34,13 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of image</param>
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
+        /// <param name="quality">Image quality</param>
         /// <returns></returns>
-        public static async Task<MagickImageCollection> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
+        public static async Task<List<BitmapImg>> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
         {
             var ext = Path.GetExtension(filename).ToUpperInvariant();
             var settings = new MagickReadSettings();
-            var imgCollection = new MagickImageCollection();
+            var imgList = new List<BitmapImg>();
 
             if (ext == ".SVG")
             {
@@ -53,25 +55,18 @@ namespace ImageGlass.Heart
 
             await Task.Run(() =>
             {
-                try
+                using(var imgColl = new MagickImageCollection(filename, settings))
                 {
-                    imgCollection.Read(filename, settings);
-
                     // preprocess image data
-                    for (int i = 0; i < imgCollection.Count; i++)
+                    for (int i = 0; i < imgColl.Count; i++)
                     {
-                        imgCollection[i] = Helpers.PreprocessMagickImage(imgCollection[i], colorProfileName, isApplyColorProfileForAll);
+                        imgList.Add(Helpers.PreprocessMagickImage(imgColl[i], colorProfileName, isApplyColorProfileForAll, quality));
                     }
-                }
-                catch
-                {
-                    imgCollection.Dispose();
                 }
                 
             }).ConfigureAwait(false);
 
-
-            return imgCollection;
+            return imgList;
         }
 
 
@@ -83,30 +78,29 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public static async Task<IMagickImage> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
+        public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            var imgCollections = await LoadAsync(filename, size);
-            IMagickImage img = null;
+            var imgList = await LoadAsync(filename, size, quality: 75);
+            Bitmap img = null;
 
-            if (imgCollections.Count > 0)
+            if (imgList.Count > 0)
             {
-                var magicImg = imgCollections[0];
+                var bmp = imgList[0];
 
                 // Try to read the exif thumbnail
                 if (useEmbeddedThumbnails)
                 {
-                    var profile = magicImg.GetExifProfile();
-                    if (profile != null)
+                    if (bmp.ExifProfile != null)
                     {
                         // Fetch the embedded thumbnail
-                        img = profile.CreateThumbnail();
+                        img = bmp.ExifProfile.CreateThumbnail().ToBitmap();
                     }
                 }
 
                 // Revert to source image if an embedded thumbnail if required size was not found.
                 if (img == null)
                 {
-                    img = magicImg;
+                    img = bmp.Image;
                 }
             }
 

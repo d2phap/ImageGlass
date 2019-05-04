@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -55,7 +54,7 @@ namespace ImageGlass.Heart
         #region PUBLIC PROPERTIES
 
         /// <summary>
-        /// Get length of Img list
+        /// Gets length of Img list
         /// </summary>
         public int Length => this.ImgList.Count;
 
@@ -100,7 +99,7 @@ namespace ImageGlass.Heart
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
-        public int MaxQueue { get; set; } = 2;
+        public int MaxQueue { get; set; } = 1;
 
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
@@ -269,6 +268,12 @@ namespace ImageGlass.Heart
         }
 
 
+        /// <summary>
+        /// Get Img data
+        /// </summary>
+        /// <param name="index">image index</param>
+        /// <param name="isSkipCache"></param>
+        /// <returns></returns>
         public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
         {
             // reload fresh new image data

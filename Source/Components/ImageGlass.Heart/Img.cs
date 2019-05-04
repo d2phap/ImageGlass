@@ -1,34 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
-using ImageMagick;
 
 namespace ImageGlass.Heart
 {
     public class Img: IDisposable
     {
-
-        #region PRIVATE PROPERTIES
-
-        private Exception _Error = null;
-        private bool _IsDone = false;
-
-        #endregion
-
-
-
         #region PUBLIC PROPERTIES
 
         /// <summary>
         /// Gets the error details
         /// </summary>
-        public Exception Error => this._Error;
+        public Exception Error { get; private set; } = null;
 
 
         /// <summary>
         /// Gets the value indicates that image loading is done
         /// </summary>
-        public bool IsDone => this._IsDone;
+        public bool IsDone { get; private set; } = false;
 
 
         /// <summary>
@@ -40,7 +30,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Gets, sets MagickImageCollection data
         /// </summary>
-        public MagickImageCollection ImgCollection { get; set; } = new MagickImageCollection();
+        public List<BitmapImg> BitmapList { get; set; } = new List<BitmapImg>();
 
 
         #endregion
@@ -64,10 +54,15 @@ namespace ImageGlass.Heart
         /// </summary>
         public void Dispose()
         {
-            this._IsDone = false;
-            this._Error = null;
+            this.IsDone = false;
+            this.Error = null;
 
-            this.ImgCollection.Dispose();
+            foreach (var item in this.BitmapList)
+            {
+                item.Dispose();
+            }
+
+            this.BitmapList.Clear();
         }
 
 
@@ -80,16 +75,16 @@ namespace ImageGlass.Heart
         public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false)
         {
             // reset done status
-            this._IsDone = false;
+            this.IsDone = false;
 
             // reset error
-            this._Error = null;
+            this.Error = null;
 
 
             try
             {
                 // load image data
-                this.ImgCollection = await Photo.LoadAsync(
+                this.BitmapList = await Photo.LoadAsync(
                     filename: this.Filename,
                     size,
                     colorProfileName,
@@ -99,12 +94,12 @@ namespace ImageGlass.Heart
             catch (Exception ex)
             {
                 // save the error
-                this._Error = ex;
+                this.Error = ex;
             }
 
 
             // done loading
-            this._IsDone = true;
+            this.IsDone = true;
         }
 
 
@@ -114,7 +109,7 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public async Task<IMagickImage> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
+        public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
         {
             return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
         }

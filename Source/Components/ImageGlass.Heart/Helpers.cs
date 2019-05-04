@@ -33,10 +33,11 @@ namespace ImageGlass.Heart
         /// <param name="img">IMagickImage data</param>
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
+        /// <param name="quality">Image quality</param>
         /// <returns></returns>
-        public static IMagickImage PreprocessMagickImage(IMagickImage img, string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false)
+        public static BitmapImg PreprocessMagickImage(IMagickImage img, string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
         {
-            img.Quality = 100;
+            img.Quality = quality;
 
             //Get Exif information
             var profile = img.GetExifProfile();
@@ -87,7 +88,7 @@ namespace ImageGlass.Heart
                 }
             }
 
-            return img;
+            return new BitmapImg(img);
         }
 
 

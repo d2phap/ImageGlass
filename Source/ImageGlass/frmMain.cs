@@ -36,9 +36,7 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
-using System.Collections.Concurrent;
 using FileWatcherEx;
-using ImageMagick;
 
 namespace ImageGlass
 {
@@ -657,7 +655,7 @@ namespace ImageGlass
                 //});
 
                 var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
-                im = imgData.ImgCollection[0].ToBitmap();
+                im = imgData.BitmapList[0].Image;
 
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
@@ -3720,7 +3718,7 @@ namespace ImageGlass
 
                     //FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
                     //int frameCount = img.GetFrameCount(dim);
-                    int frameCount = imgData.ImgCollection.Count;
+                    int frameCount = imgData.BitmapList.Count;
 
                     if (frameCount > 1)
                     {
@@ -4913,7 +4911,7 @@ namespace ImageGlass
                     //frameCount = img.GetFrameCount(dim);
 
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
-                    frameCount = imgData.ImgCollection.Count;
+                    frameCount = imgData.BitmapList.Count;
                 }
                 
 
