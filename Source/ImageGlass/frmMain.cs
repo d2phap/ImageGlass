@@ -23,7 +23,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageGlass.Core;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.Comparer;
 using System.IO;
@@ -36,7 +35,6 @@ using System.Drawing.Imaging;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
-using System.Collections.Concurrent;
 using FileWatcherEx;
 
 namespace ImageGlass
@@ -307,7 +305,8 @@ namespace ImageGlass
             GlobalSetting.ImageList.Dispose();
 
             //Set filename to image list
-            GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
+            //GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
+            GlobalSetting.ImageList = new Heart.Factory(_imageFilenameList);
 
 
             //Track image loading progress
@@ -327,7 +326,7 @@ namespace ImageGlass
                 // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to open single, hidden image with 'show hidden' OFF)
                 if (GlobalSetting.CurrentIndex == -1 && 
                     GlobalSetting.ImageList.Length > 0 &&
-                    !GlobalSetting.ImageList.HasFolder(filePath))
+                    !GlobalSetting.ImageList.ContainsDirPathOf(filePath))
                     GlobalSetting.CurrentIndex = 0;
             }
             else
@@ -648,15 +647,19 @@ namespace ImageGlass
                 SetAppBusy(true); 
 
                 //Read image data outside the GUI loop
-                im = await Task.Run(() =>
-                {
-                    return GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
-                });
+                //im = await Task.Run(() =>
+                //{
+                    
+
+                //});
+
+                var bmpImg = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                im = bmpImg.Image;
+
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
 
-                GlobalSetting.IsImageError = GlobalSetting.ImageList.IsErrorImage;
-
+                GlobalSetting.IsImageError = bmpImg.Error != null;
 
                 if (!token.Token.IsCancellationRequested)
                 {
@@ -1631,16 +1634,26 @@ namespace ImageGlass
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private void ImageSaveChange()
+        private async void ImageSaveChange()
         {
             try
             {
-                DateTime lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
-                Interpreter.SaveImage(new Bitmap(picMain.Image), LocalSetting.ImageModifiedPath);
+                var lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
+                var newBitmap = new Bitmap(picMain.Image);
+
+                // override the current image file
+                Heart.Photo.SaveImage(newBitmap, LocalSetting.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (GlobalSetting.PreserveModifiedDate)
+                {
                     File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
+                }
+
+                // update cache of the modified item
+                var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                img.Image = newBitmap;
+
             }
             catch (Exception)
             {
@@ -2209,7 +2222,7 @@ namespace ImageGlass
 
                 // get color profile
                 GlobalSetting.ColorProfile = GlobalSetting.GetConfig("ColorProfile", GlobalSetting.ColorProfile);
-                GlobalSetting.ColorProfile = Interpreter.GetCorrectColorProfileName(GlobalSetting.ColorProfile);
+                GlobalSetting.ColorProfile = Heart.Helpers.GetCorrectColorProfileName(GlobalSetting.ColorProfile);
                 #endregion
 
 
@@ -3259,7 +3272,7 @@ namespace ImageGlass
         private void FileWatcher_AddNewFileAction(string newFilename)
         {
             //Add the new image to the list
-            GlobalSetting.ImageList.AddItem(newFilename);
+            GlobalSetting.ImageList.Add(newFilename);
 
             //Add the new image to thumbnail bar
             ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
@@ -3670,7 +3683,7 @@ namespace ImageGlass
 
 
         #region Context Menu
-        private void mnuContext_Opening(object sender, CancelEventArgs e)
+        private async void mnuContext_Opening(object sender, CancelEventArgs e)
         {
             bool isImageError = false;
 
@@ -3709,14 +3722,12 @@ namespace ImageGlass
                 //check if image can animate (GIF)
                 try
                 {
-                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    int frameCount = img.GetFrameCount(dim);
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
 
-                    if (frameCount > 1)
+                    if (imgData.FrameCount > 1)
                     {
                         var mi = Library.Menu.Clone(mnuMainExtractFrames);
-                        mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+                        mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], imgData.FrameCount);
                         mi.Enabled = true;
 
                         mnuContext.Items.Add(mi);
@@ -3898,7 +3909,7 @@ namespace ImageGlass
                     case 4:
                     case 6:
                     case 7:
-                        Interpreter.SaveImage(clonedPic, s.FileName);
+                        Heart.Photo.SaveImage(clonedPic, s.FileName);
                         break;
                     case 2:
                         clonedPic.Save(s.FileName, ImageFormat.Emf);
@@ -3963,7 +3974,7 @@ namespace ImageGlass
         private void MnuMainReloadImageList_Click(object sender, EventArgs e)
         {
             // update image list
-            PrepareLoading(GlobalSetting.ImageList.GetFileList(), GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            PrepareLoading(GlobalSetting.ImageList.FileNames, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
@@ -4163,7 +4174,6 @@ namespace ImageGlass
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessageResume"], 2000);
             }
-
         }
 
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
@@ -4187,9 +4197,8 @@ namespace ImageGlass
             }
 
             //save image to temp file
-            string temFile = "";
-            temFile = SaveTemporaryMemoryData();
-            
+            string temFile = SaveTemporaryMemoryData();
+
 
             Process p = new Process();
             p.StartInfo.FileName = temFile;
@@ -4202,12 +4211,10 @@ namespace ImageGlass
             {
                 p.Start();
             }
-            catch (Exception)
-            { }
-
+            catch (Exception) { }
         }
 
-        private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
+        private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4220,18 +4227,19 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.RotateImage(picMain.Image, 270);
 
-            try
+            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 270);
+
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
+
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
-        private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
+        private async void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4244,18 +4252,19 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.RotateImage(picMain.Image, 90);
 
-            try
+            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 90);
+
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
+
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
-        private void mnuMainFlipHorz_Click(object sender, EventArgs e)
+        private async void mnuMainFlipHorz_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4268,17 +4277,17 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
 
-            try
+            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: true);
+
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
         }
 
-        private void mnuMainFlipVert_Click(object sender, EventArgs e)
+        private async void mnuMainFlipVert_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4291,14 +4300,14 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
 
-            try
+            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: false);
+
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
@@ -4874,7 +4883,7 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMain_Opening(object sender, CancelEventArgs e)
+        private async void mnuMain_Opening(object sender, CancelEventArgs e)
         {
             btnMenu.Checked = true;
 
@@ -4899,9 +4908,8 @@ namespace ImageGlass
                 int frameCount = 0;
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
-                    Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                    FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    frameCount = img.GetFrameCount(dim);
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    frameCount = imgData.FrameCount;
                 }
                 
 

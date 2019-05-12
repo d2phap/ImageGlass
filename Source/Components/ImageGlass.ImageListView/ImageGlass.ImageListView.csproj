@@ -205,9 +205,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
-      <Name>ImageGlass.Core</Name>
+    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
+      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
+      <Name>ImageGlass.Heart</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -671,7 +671,7 @@ namespace ImageGlass
             // color profile list
             cmbColorProfile.Items.Clear();
             cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._None"]);
-            cmbColorProfile.Items.AddRange(Core.Interpreter.GetBuiltInColorProfiles());
+            cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
             cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
 

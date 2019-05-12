@@ -20,15 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using Microsoft.Win32;
-using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Security;
 using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Linq;
 using System.Globalization;
+using ImageGlass.Heart;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -53,7 +52,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        public static ImgMan ImageList { get; set; } = new ImgMan();
+        public static Factory ImageList { get; set; } = new Factory();
 
 
         /// <summary>

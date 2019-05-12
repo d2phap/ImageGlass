@@ -137,6 +137,9 @@
     <Reference Include="IconLib, Version=0.73.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IconLib.Unofficial.0.73.0\lib\net20\IconLib.dll</HintPath>
     </Reference>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.12.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.12.0\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -280,9 +283,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Components\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
-      <Name>ImageGlass.Core</Name>
+    <ProjectReference Include="..\Components\ImageGlass.Heart\ImageGlass.Heart.csproj">
+      <Project>{51493B09-7A0E-461F-BE18-A6CF629A8FAB}</Project>
+      <Name>ImageGlass.Heart</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.ImageBox\ImageGlass.ImageBox.csproj">
       <Project>{4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6}</Project>

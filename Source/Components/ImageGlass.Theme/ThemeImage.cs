@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Core;
+using ImageGlass.Heart;
 using ImageGlass.Services.Configuration;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Theme
 {
@@ -47,7 +48,7 @@ namespace ImageGlass.Theme
             Filename = filename;
             try
             {
-                Image = Interpreter.LoadIcon(filename, size.Width, size.Height);
+                Image = Photo.Load(filename, size);
             }
             catch { }
         }
