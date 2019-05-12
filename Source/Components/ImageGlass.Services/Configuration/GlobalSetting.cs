@@ -80,6 +80,11 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Whether image loading order is descending or not
+        /// </summary>
+        public static bool ImageLoadingDescending { get; set; } = false;  // Pre-V6.1 behavior: always ascending
+
+        /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;

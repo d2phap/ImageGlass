@@ -464,38 +464,80 @@ namespace ImageGlass
             if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = fileList.ToArray();
-                Array.Sort(arr, new WindowsNaturalSort());
+                var comparer = GlobalSetting.ImageLoadingDescending
+                                            ? (IComparer<string>)new ReverseWindowsNaturalSort()
+                                            : new WindowsNaturalSort();
+                Array.Sort(arr, comparer);
                 list.AddRange(arr);
-
-                //list.AddRange(FileLogicalComparer.Sort(dsFile.ToArray()));
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Length)
             {
-                list.AddRange(fileList
-                    .OrderBy(f => new FileInfo(f).Length));
+                if (GlobalSetting.ImageLoadingDescending)
+                {
+                    list.AddRange(fileList
+                        .OrderByDescending(f => new FileInfo(f).Length));
+                }
+                else
+                {
+                    list.AddRange(fileList
+                        .OrderBy(f => new FileInfo(f).Length));
+                }
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.CreationTime)
             {
-                list.AddRange(fileList
-                    .OrderBy(f => new FileInfo(f).CreationTimeUtc));
+                if (GlobalSetting.ImageLoadingDescending)
+                {
+                    list.AddRange(fileList
+                        .OrderByDescending(f => new FileInfo(f).CreationTimeUtc));
+                }
+                else
+                {
+                    list.AddRange(fileList
+                        .OrderBy(f => new FileInfo(f).CreationTimeUtc));
+                }
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Extension)
             {
-                list.AddRange(fileList
-                    .OrderBy(f => new FileInfo(f).Extension));
+                if (GlobalSetting.ImageLoadingDescending)
+                {
+                    list.AddRange(fileList
+                        .OrderByDescending(f => new FileInfo(f).Extension));
+                }
+                else
+                {
+                    list.AddRange(fileList
+                        .OrderBy(f => new FileInfo(f).Extension));
+                }
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
-                list.AddRange(fileList
-                    .OrderBy(f => new FileInfo(f).LastAccessTime));
+                if (GlobalSetting.ImageLoadingDescending)
+                {
+                    list.AddRange(fileList
+                        .OrderByDescending(f => new FileInfo(f).LastAccessTime));
+                }
+                else
+                {
+                    list.AddRange(fileList
+                        .OrderBy(f => new FileInfo(f).LastAccessTime));
+                }
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
-                list.AddRange(fileList
-                    .OrderBy(f => new FileInfo(f).LastWriteTime));
+                if (GlobalSetting.ImageLoadingDescending)
+                {
+                    list.AddRange(fileList
+                        .OrderByDescending(f => new FileInfo(f).LastWriteTime));
+                }
+                else
+                {
+                    list.AddRange(fileList
+                        .OrderBy(f => new FileInfo(f).LastWriteTime));
+                }
             }
             else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Random)
             {
+                // NOTE: ignoring the 'descending order' setting
                 list.AddRange(fileList
                     .OrderBy(f => Guid.NewGuid()));
             }
@@ -2228,6 +2270,9 @@ namespace ImageGlass
 
                 //Load image order config
                 GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
+
+                // Is image loading in descending order? [Default is 'Ascending' or false]
+                GlobalSetting.ImageLoadingDescending = bool.Parse(GlobalSetting.GetConfig("ImageLoadDescending", "False"));
 
 
                 //Load state of Image Booster
