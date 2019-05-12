@@ -3715,15 +3715,10 @@ namespace ImageGlass
                 {
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
 
-
-                    FrameDimension dim = new FrameDimension(imgData.Image.FrameDimensionsList[0]);
-                    int frameCount = imgData.Image.GetFrameCount(dim);
-                    //int frameCount = imgData.Image.FrameCount;
-
-                    if (frameCount > 1)
+                    if (imgData.FrameCount > 1)
                     {
                         var mi = Library.Menu.Clone(mnuMainExtractFrames);
-                        mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], frameCount);
+                        mi.Text = string.Format(GlobalSetting.LangPack.Items["frmMain.mnuMainExtractFrames"], imgData.FrameCount);
                         mi.Enabled = true;
 
                         mnuContext.Items.Add(mi);
@@ -4906,11 +4901,8 @@ namespace ImageGlass
                 int frameCount = 0;
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
-                    //Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
-                    FrameDimension dim = new FrameDimension(imgData.Image.FrameDimensionsList[0]);
-                    frameCount = imgData.Image.GetFrameCount(dim);
+                    frameCount = imgData.FrameCount;
                 }
                 
 

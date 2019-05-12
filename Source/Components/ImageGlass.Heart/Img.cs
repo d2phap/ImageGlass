@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart
 {
     public class Img: IDisposable
     {
+
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -33,12 +34,17 @@ namespace ImageGlass.Heart
         public Bitmap Image { get; set; } = null;
 
 
+        /// <summary>
+        /// Gets, sets number if image frames
+        /// </summary>
+        public int FrameCount { get; private set; } = 0;
+
         #endregion
 
 
 
         /// <summary>
-        /// The Img class contain ImageMagick data
+        /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
         public Img(string filename)
@@ -88,6 +94,10 @@ namespace ImageGlass.Heart
                     colorProfileName,
                     isApplyColorProfileForAll
                 );
+
+                // Get frame count
+                FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+                this.FrameCount = this.Image.GetFrameCount(dim);
             }
             catch (Exception ex)
             {

@@ -41,34 +41,15 @@ namespace ImageGlass.Heart
         /// <returns></returns>
         public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
         {
-            var ext = Path.GetExtension(filename).ToUpperInvariant();
-            Bitmap bmp = null;
-
+            Bitmap bitmap = null;
 
             await Task.Run(() =>
             {
-                switch (ext)
-                {
-                    case ".GIF":
-                        using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                        {
-                            var ms = new MemoryStream();
-                            fs.CopyTo(ms);
-                            ms.Position = 0;
-
-                            bmp = new Bitmap(ms, true);
-                        }
-                        break;
-
-                    // Read image file using Magick.NET
-                    default:
-                        bmp = ReadMagickImage(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false);
-                        break;
-                }
+                bitmap = ReadImageFile(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false);
             }).ConfigureAwait(false);
 
 
-            return bmp;
+            return bitmap;
         }
 
 
@@ -86,7 +67,7 @@ namespace ImageGlass.Heart
 
             await Task.Run(() =>
             {
-                bmp = ReadMagickImage(filename,
+                bmp = ReadImageFile(filename,
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
@@ -260,7 +241,7 @@ namespace ImageGlass.Heart
         /// <param name="quality">Image quality</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns>Bitmap</returns>
-        private static Bitmap ReadMagickImage(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, bool useEmbeddedThumbnails = false)
+        private static Bitmap ReadImageFile(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, bool useEmbeddedThumbnails = false)
         {
             Bitmap bitmap = null;
             var ext = Path.GetExtension(filename).ToUpperInvariant();
@@ -283,6 +264,18 @@ namespace ImageGlass.Heart
             #region Read image data
             switch (ext)
             {
+                case ".GIF":
+                    // Note: Using FileStream is much faster than using MagickImageCollection
+                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                    {
+                        var ms = new MemoryStream();
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
+
+                        bitmap = new Bitmap(ms, true);
+                    }
+                    break;
+
                 case ".ICO":
                     using (var imgColl = new MagickImageCollection(filename, settings))
                     {
@@ -294,11 +287,18 @@ namespace ImageGlass.Heart
                     }
                     break;
 
-                default:
-                    using (var img = new MagickImage(filename, settings))
+                case ".TIF":
+                    using (var imgColl = new MagickImageCollection(filename, settings))
                     {
-                        PreprocesMagickImage(img);
-                        bitmap = img.ToBitmap();
+                        bitmap = imgColl.ToBitmap();
+                    }
+                    break;
+
+                default:
+                    using (var imgM = new MagickImage(filename, settings))
+                    {
+                        PreprocesMagickImage(imgM);
+                        bitmap = imgM.ToBitmap();
                     }
                     break;
             }
