@@ -17,16 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
+using System.Linq;
 
 namespace ImageGlass.Heart
 {
     public class Photo
     {
+
+        #region Load image / thumbnail
+
         /// <summary>
         /// Load image from file
         /// </summary>
@@ -36,37 +39,36 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <returns></returns>
-        public static async Task<List<BitmapImg>> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
+        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
         {
             var ext = Path.GetExtension(filename).ToUpperInvariant();
-            var settings = new MagickReadSettings();
-            var imgList = new List<BitmapImg>();
+            Bitmap bmp = null;
 
-            if (ext == ".SVG")
-            {
-                settings.BackgroundColor = MagickColors.Transparent;
-            }
-
-            if (size.Width > 0 && size.Height > 0)
-            {
-                settings.Width = size.Width;
-                settings.Height = size.Height;
-            }
 
             await Task.Run(() =>
             {
-                using(var imgColl = new MagickImageCollection(filename, settings))
+                switch (ext)
                 {
-                    // preprocess image data
-                    for (int i = 0; i < imgColl.Count; i++)
-                    {
-                        imgList.Add(Helpers.PreprocessMagickImage(imgColl[i], colorProfileName, isApplyColorProfileForAll, quality));
-                    }
+                    case ".GIF":
+                        using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                        {
+                            var ms = new MemoryStream();
+                            fs.CopyTo(ms);
+                            ms.Position = 0;
+
+                            bmp = new Bitmap(ms, true);
+                        }
+                        break;
+
+                    // Read image file using Magick.NET
+                    default:
+                        bmp = ReadMagickImage(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false);
+                        break;
                 }
-                
             }).ConfigureAwait(false);
 
-            return imgList;
+
+            return bmp;
         }
 
 
@@ -80,84 +82,330 @@ namespace ImageGlass.Heart
         /// <returns></returns>
         public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            var imgList = await LoadAsync(filename, size, quality: 75);
-            Bitmap img = null;
+            Bitmap bmp = null;
 
-            if (imgList.Count > 0)
+            await Task.Run(() =>
             {
-                var bmp = imgList[0];
+                bmp = ReadMagickImage(filename,
+                    size: size,
+                    quality: 75,
+                    useEmbeddedThumbnails: useEmbeddedThumbnails);
 
-                // Try to read the exif thumbnail
-                if (useEmbeddedThumbnails)
-                {
-                    if (bmp.ExifProfile != null)
-                    {
-                        // Fetch the embedded thumbnail
-                        img = bmp.ExifProfile.CreateThumbnail().ToBitmap();
-                    }
-                }
+            }).ConfigureAwait(false);
 
-                // Revert to source image if an embedded thumbnail if required size was not found.
-                if (img == null)
-                {
-                    img = bmp.Image;
-                }
-            }
-
-            return img;
+            return bmp;
         }
 
+        #endregion
+
+
+        #region Save image as file
+
+        /// <summary>
+        /// Save as image file
+        /// </summary>
+        /// <param name="srcFileName">Source filename to save</param>
+        /// <param name="destFileName">Destination filename</param>
+        /// <param name="format">New image format</param>
+        /// <param name="quality">JPEG/MIFF/PNG compression level</param>
+        public static async Task SaveImageAsync(string srcFileName, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+        {
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcFileName))
+                {
+                    imgM.Quality = quality;
+                    imgM.Write(destFileName, format);
+                }
+            }).ConfigureAwait(false);
+        }
 
 
         /// <summary>
         /// Save as image file
         /// </summary>
-        /// <param name="magicImg">IMagickImage data</param>
-        /// <param name="filename">Full path of image file</param>
+        /// <param name="srcBitmap">Source bitmap to save</param>
+        /// <param name="destFileName">Destination filename</param>
+        /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static void SaveImage(IMagickImage magicImg, string filename, int quality = 100)
+        public static async Task SaveImageAsync(Bitmap srcBitmap, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
         {
-            magicImg.Quality = quality;
-            magicImg.Write(filename);
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcBitmap))
+                {
+                    imgM.Quality = quality;
+                    imgM.Write(destFileName, format);
+                }
+            }).ConfigureAwait(false);
         }
 
+        #endregion
+
+
+        #region Rotate image
 
         /// <summary>
-        /// Rotate IMagickImage
+        /// Rotate image
         /// </summary>
-        /// <param name="magicImg">IMagickImage data</param>
+        /// <param name="srcFileName">Source filename</param>
         /// <param name="degrees">Degrees to rotate</param>
         /// <returns></returns>
-        public static IMagickImage RotateImage(IMagickImage magicImg, int degrees)
+        public static async Task<Bitmap> RotateImage(string srcFileName, int degrees)
         {
-            magicImg.Rotate(degrees);
-            magicImg.Quality = 100;
+            Bitmap bitmap = null;
 
-            return magicImg;
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcFileName))
+                {
+                    imgM.Rotate(degrees);
+                    imgM.Quality = 100;
+
+                    bitmap = imgM.ToBitmap();
+                }
+            });
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// Rotate image
+        /// </summary>
+        /// <param name="srcBitmap">Source bitmap</param>
+        /// <param name="degrees">Degrees to rotate</param>
+        /// <returns></returns>
+        public static async Task<Bitmap> RotateImage(Bitmap srcBitmap, int degrees)
+        {
+            Bitmap bitmap = null;
+
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcBitmap))
+                {
+                    imgM.Rotate(degrees);
+                    imgM.Quality = 100;
+
+                    bitmap = imgM.ToBitmap();
+                }
+            });
+
+            return bitmap;
+        }
+
+        #endregion
+
+
+        #region Flip / flop
+
+        /// <summary>
+        /// Flip / flop an image
+        /// </summary>
+        /// <param name="srcFileName">Source filename</param>
+        /// <param name="isHorzontal">Reflect each scanline in the horizontal/vertical direction</param>
+        /// <returns></returns>
+        public static async Task<Bitmap> Flip(string srcFileName, bool isHorzontal)
+        {
+            Bitmap bitmap = null;
+
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcFileName))
+                {
+                    bitmap = Flip(imgM, isHorzontal);
+                }
+            });
+
+            return bitmap;
         }
 
 
         /// <summary>
-        /// Flip/flop IMagickImage
+        /// Flip / flop an image
         /// </summary>
-        /// <param name="magicImg">IMagickImage data</param>
+        /// <param name="srcBitmap">Source bitmap</param>
         /// <param name="isHorzontal">Reflect each scanline in the horizontal/vertical direction</param>
         /// <returns></returns>
-        public static IMagickImage Flip(IMagickImage magicImg, bool isHorzontal)
+        public static async Task<Bitmap> Flip(Bitmap srcBitmap, bool isHorzontal)
+        {
+            Bitmap bitmap = null;
+
+            await Task.Run(() =>
+            {
+                using (var imgM = new MagickImage(srcBitmap))
+                {
+                    bitmap = Flip(imgM, isHorzontal);
+                }
+            });
+
+            return bitmap;
+        }
+
+        #endregion
+
+
+
+
+
+
+        #region PRIVATE FUCTIONS
+
+        /// <summary>
+        /// Load image from file
+        /// </summary>
+        /// <param name="filename">Full path of image file</param>
+        /// <param name="size">A custom size of image</param>
+        /// <param name="colorProfileName">Name or Full path of color profile</param>
+        /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
+        /// <param name="quality">Image quality</param>
+        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <returns>Bitmap</returns>
+        private static Bitmap ReadMagickImage(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, bool useEmbeddedThumbnails = false)
+        {
+            Bitmap bitmap = null;
+            var ext = Path.GetExtension(filename).ToUpperInvariant();
+            var settings = new MagickReadSettings();
+
+            #region Settings
+            if (ext == ".SVG")
+            {
+                settings.BackgroundColor = MagickColors.Transparent;
+            }
+
+            if (size.Width > 0 && size.Height > 0)
+            {
+                settings.Width = size.Width;
+                settings.Height = size.Height;
+            }
+            #endregion
+
+
+            #region Read image data
+            switch (ext)
+            {
+                case ".ICO":
+                    using (var imgColl = new MagickImageCollection(filename, settings))
+                    {
+                        if (imgColl.Count > 0)
+                        {
+                            // Get the biggest image in the collection
+                            bitmap = imgColl.OrderByDescending(frame => frame.Width).ToList()[0].ToBitmap();
+                        }
+                    }
+                    break;
+
+                default:
+                    using (var img = new MagickImage(filename, settings))
+                    {
+                        PreprocesMagickImage(img);
+                        bitmap = img.ToBitmap();
+                    }
+                    break;
+            }
+            #endregion
+
+
+            #region Internal Functions 
+
+            // Preprocess magick image
+            void PreprocesMagickImage(MagickImage imgM)
+            {
+                imgM.Quality = quality;
+
+
+                //Get Exif information
+                var profile = imgM.GetExifProfile();
+
+                // Use embedded thumbnails if specified
+                if (profile != null && useEmbeddedThumbnails)
+                {
+                    // Fetch the embedded thumbnail
+                    bitmap = profile.CreateThumbnail().ToBitmap();
+                }
+
+
+                // Revert to source image if an embedded thumbnail with required size was not found.
+                if (bitmap == null)
+                {
+                    if (profile != null)
+                    {
+                        // Get Orieantation Flag
+                        var exifTag = profile.GetValue(ExifTag.Orientation);
+
+                        if (exifTag != null)
+                        {
+                            int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+
+                            var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
+                            if (orientationDegree != 0)
+                            {
+                                //Rotate image accordingly
+                                imgM.Rotate(orientationDegree);
+                            }
+                        }
+                    }
+
+
+                    // get the color profile of image
+                    var imgColorProfile = imgM.GetColorProfile();
+
+
+                    // if always apply color profile
+                    // or only apply color profile if there is an embedded profile
+                    if (isApplyColorProfileForAll || imgColorProfile != null)
+                    {
+                        if (imgColorProfile != null)
+                        {
+                            // correct the image color space
+                            imgM.ColorSpace = imgColorProfile.ColorSpace;
+                        }
+                        else
+                        {
+                            // set default color profile and color space
+                            imgM.AddProfile(ColorProfile.SRGB);
+                            imgM.ColorSpace = ColorProfile.SRGB.ColorSpace;
+                        }
+
+                        var colorProfile = Helpers.GetColorProfile(colorProfileName);
+                        if (colorProfile != null)
+                        {
+                            imgM.AddProfile(colorProfile);
+                            imgM.ColorSpace = colorProfile.ColorSpace;
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+
+            return bitmap;
+        }
+
+
+
+        /// <summary>
+        /// Flip / flop MagickImage
+        /// </summary>
+        /// <param name="imgM"></param>
+        /// <param name="isHorzontal"></param>
+        /// <returns></returns>
+        private static Bitmap Flip(MagickImage imgM, bool isHorzontal)
         {
             if (isHorzontal)
             {
-                magicImg.Flop();
+                imgM.Flop();
             }
             else
             {
-                magicImg.Flip();
+                imgM.Flip();
             }
-            magicImg.Quality = 100;
 
-            return magicImg;
+            imgM.Quality = 100;
+
+            return imgM.ToBitmap();
         }
 
-
+        #endregion
     }
 }

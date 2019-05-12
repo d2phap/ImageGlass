@@ -654,13 +654,13 @@ namespace ImageGlass
 
                 //});
 
-                var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
-                im = imgData.BitmapList[0].Image;
+                var bmpImg = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                im = bmpImg.Image;
 
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
 
-                GlobalSetting.IsImageError = imgData.Error != null;
+                GlobalSetting.IsImageError = bmpImg.Error != null;
 
                 if (!token.Token.IsCancellationRequested)
                 {
@@ -3716,9 +3716,9 @@ namespace ImageGlass
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
 
 
-                    //FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    //int frameCount = img.GetFrameCount(dim);
-                    int frameCount = imgData.BitmapList.Count;
+                    FrameDimension dim = new FrameDimension(imgData.Image.FrameDimensionsList[0]);
+                    int frameCount = imgData.Image.GetFrameCount(dim);
+                    //int frameCount = imgData.Image.FrameCount;
 
                     if (frameCount > 1)
                     {
@@ -4907,11 +4907,10 @@ namespace ImageGlass
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
                     //Image img = GlobalSetting.ImageList.GetImage(GlobalSetting.CurrentIndex);
-                    //FrameDimension dim = new FrameDimension(img.FrameDimensionsList[0]);
-                    //frameCount = img.GetFrameCount(dim);
 
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
-                    frameCount = imgData.BitmapList.Count;
+                    FrameDimension dim = new FrameDimension(imgData.Image.FrameDimensionsList[0]);
+                    frameCount = imgData.Image.GetFrameCount(dim);
                 }
                 
 

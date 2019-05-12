@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitmapImg.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Img.cs" />

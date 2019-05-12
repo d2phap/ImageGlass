@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageMagick;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -27,70 +28,6 @@ namespace ImageGlass.Heart
 {
     public class Helpers
     {
-        /// <summary>
-        /// Preprocess MagickImage data
-        /// </summary>
-        /// <param name="img">IMagickImage data</param>
-        /// <param name="colorProfileName">Name or Full path of color profile</param>
-        /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
-        /// <param name="quality">Image quality</param>
-        /// <returns></returns>
-        public static BitmapImg PreprocessMagickImage(IMagickImage img, string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
-        {
-            img.Quality = quality;
-
-            //Get Exif information
-            var profile = img.GetExifProfile();
-            if (profile != null)
-            {
-                //Get Orieantation Flag
-                var exifTag = profile.GetValue(ExifTag.Orientation);
-
-                if (exifTag != null)
-                {
-                    int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
-
-                    var orientationDegree = GetOrientationDegree(orientationFlag);
-                    if (orientationDegree != 0)
-                    {
-                        //Rotate image accordingly
-                        img.Rotate(orientationDegree);
-                    }
-                }
-            }
-
-
-            // get the color profile of image
-            var imgColorProfile = img.GetColorProfile();
-
-
-            // if always apply color profile
-            // or only apply color profile if there is an embedded profile
-            if (isApplyColorProfileForAll || imgColorProfile != null)
-            {
-                if (imgColorProfile != null)
-                {
-                    // correct the image color space
-                    img.ColorSpace = imgColorProfile.ColorSpace;
-                }
-                else
-                {
-                    // set default color profile and color space
-                    img.AddProfile(ColorProfile.SRGB);
-                    img.ColorSpace = ColorProfile.SRGB.ColorSpace;
-                }
-
-                var colorProfile = GetColorProfile(colorProfileName);
-                if (colorProfile != null)
-                {
-                    img.AddProfile(colorProfile);
-                    img.ColorSpace = colorProfile.ColorSpace;
-                }
-            }
-
-            return new BitmapImg(img);
-        }
-
 
         /// <summary>
         /// Get built-in color profiles
@@ -143,14 +80,12 @@ namespace ImageGlass.Heart
 
 
 
-        #region PRIVATE FUNCTIONS
-
         /// <summary>
         /// Get ColorProfile
         /// </summary>
         /// <param name="name">Name or Full path of color profile</param>
         /// <returns></returns>
-        private static ColorProfile GetColorProfile(string name)
+        public static ColorProfile GetColorProfile(string name)
         {
             if (File.Exists(name))
             {
@@ -187,7 +122,7 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="orientationFlag">Orientation Flag</param>
         /// <returns></returns>
-        private static double GetOrientationDegree(int orientationFlag)
+        public static double GetOrientationDegree(int orientationFlag)
         {
             if (orientationFlag == 1)
                 return 0;
@@ -209,7 +144,5 @@ namespace ImageGlass.Heart
             return 0;
         }
 
-
-        #endregion
     }
 }

@@ -28,9 +28,9 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Gets, sets MagickImageCollection data
+        /// Gets, sets Bitmap data
         /// </summary>
-        public List<BitmapImg> BitmapList { get; set; } = new List<BitmapImg>();
+        public Bitmap Image { get; set; } = null;
 
 
         #endregion
@@ -57,12 +57,10 @@ namespace ImageGlass.Heart
             this.IsDone = false;
             this.Error = null;
 
-            foreach (var item in this.BitmapList)
+            if (this.Image != null)
             {
-                item.Dispose();
+                this.Image.Dispose();
             }
-
-            this.BitmapList.Clear();
         }
 
 
@@ -84,7 +82,7 @@ namespace ImageGlass.Heart
             try
             {
                 // load image data
-                this.BitmapList = await Photo.LoadAsync(
+                this.Image = await Photo.LoadAsync(
                     filename: this.Filename,
                     size,
                     colorProfileName,

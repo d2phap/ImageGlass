@@ -43,6 +43,9 @@ namespace ImageGlass.Heart
         private List<int> QueuedList { get; set; } = new List<int>();
 
 
+        /// <summary>
+        /// The list of image index that waiting for releasing resource
+        /// </summary>
         private List<int> FreeList { get; set; } = new List<int>();
 
         private bool IsRunWorker { get; set; } = false;
@@ -113,7 +116,7 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// The Factory to process image files
+        /// The ImageBooster Factory
         /// </summary>
         /// <param name="filenames">List of filenames</param>
         public Factory(IList<string> filenames)
@@ -127,7 +130,7 @@ namespace ImageGlass.Heart
 
             // start background service worker
             this.IsRunWorker = true;
-            StartCachingImageFileAsync();
+            StartImageBooster();
         }
 
 
@@ -215,9 +218,9 @@ namespace ImageGlass.Heart
         #region PUBLIC FUNCTIONS
 
         /// <summary>
-        /// Start caching image files
+        /// Start ImageBooster thread
         /// </summary>
-        public async void StartCachingImageFileAsync()
+        public async void StartImageBooster()
         {
             while (this.IsRunWorker)
             {
@@ -246,7 +249,7 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Releases all resources used by the Factory
+        /// Releases all resources of the Factory and Stop ImageBooster thread
         /// </summary>
         public void Dispose()
         {
@@ -296,18 +299,17 @@ namespace ImageGlass.Heart
             // wait until the image loading is done
             while (!this.ImgList[index].IsDone)
             {
-                await Task.Delay(5);
+                await Task.Delay(1);
             }
+
+            // Trigger event OnFinishLoadingImage
+            OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
             if (this.ImgList[index].Error == null)
             {
                 return this.ImgList[index];
             }
-
-
-            // Trigger event OnFinishLoadingImage
-            OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             return null;
         }
@@ -380,7 +382,7 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Empty the list
+        /// Empty and release resource of the list
         /// </summary>
         public void Clear()
         {
