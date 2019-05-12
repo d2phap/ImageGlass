@@ -4174,7 +4174,6 @@ namespace ImageGlass
 
                 DisplayTextMessage(GlobalSetting.LangPack.Items["frmMain._SlideshowMessageResume"], 2000);
             }
-
         }
 
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
@@ -4198,9 +4197,8 @@ namespace ImageGlass
             }
 
             //save image to temp file
-            string temFile = "";
-            temFile = SaveTemporaryMemoryData();
-            
+            string temFile = SaveTemporaryMemoryData();
+
 
             Process p = new Process();
             p.StartInfo.FileName = temFile;
@@ -4213,9 +4211,7 @@ namespace ImageGlass
             {
                 p.Start();
             }
-            catch (Exception)
-            { }
-
+            catch (Exception) { }
         }
 
         private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
@@ -4231,15 +4227,15 @@ namespace ImageGlass
                 return;
             }
 
-            //picMain.Image = Interpreter.RotateImage(picMain.Image, 270);
+
             picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 270);
 
-            try
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
+
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
@@ -4256,15 +4252,15 @@ namespace ImageGlass
                 return;
             }
 
-            //picMain.Image = Interpreter.RotateImage(picMain.Image, 90);
+
             picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 90);
 
-            try
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
+
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
@@ -4281,15 +4277,14 @@ namespace ImageGlass
                 return;
             }
 
-            //picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+
             picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: true);
 
-            try
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
         }
 
         private async void mnuMainFlipVert_Click(object sender, EventArgs e)
@@ -4305,15 +4300,14 @@ namespace ImageGlass
                 return;
             }
 
-            //picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+
             picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: false);
 
-            try
+            if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
                 LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
             }
-            catch { }
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
