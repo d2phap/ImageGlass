@@ -52,7 +52,6 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        //public static ImgMan ImageList { get; set; } = new ImgMan();
         public static Factory ImageList { get; set; } = new Factory();
 
 

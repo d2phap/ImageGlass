@@ -78,12 +78,8 @@
     <Compile Include="InfoUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
-      <Name>ImageGlass.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
-      <Project>{51493B09-7A0E-461F-BE18-A6CF629A8FAB}</Project>
+      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
       <Name>ImageGlass.Heart</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
