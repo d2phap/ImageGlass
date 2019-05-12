@@ -32,6 +32,8 @@ using ImageGlass.Library;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using System.Text;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
@@ -129,6 +131,8 @@ namespace ImageGlass
         {
             // Drag file from DESKTOP to APP
             string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
+
+            UseExplorerSortOrder(filepaths[0]);
 
             if (filepaths.Length > 1)
             {
@@ -457,22 +461,23 @@ namespace ImageGlass
         {
             var list = new List<string>();
 
+            // TODO moved to UseExplorerSortOrder
             //Load image order from config
-            GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
+            //GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
             //Sort image file
-            if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Name)
+            if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = fileList.ToArray();
-                var comparer = GlobalSetting.ImageLoadingDescending
+                var comparer = LocalSetting.ImageLoadingDescending
                                             ? (IComparer<string>)new ReverseWindowsNaturalSort()
                                             : new WindowsNaturalSort();
                 Array.Sort(arr, comparer);
                 list.AddRange(arr);
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Length)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Length)
             {
-                if (GlobalSetting.ImageLoadingDescending)
+                if (LocalSetting.ImageLoadingDescending)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Length));
@@ -483,9 +488,9 @@ namespace ImageGlass
                         .OrderBy(f => new FileInfo(f).Length));
                 }
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.CreationTime)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.CreationTime)
             {
-                if (GlobalSetting.ImageLoadingDescending)
+                if (LocalSetting.ImageLoadingDescending)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).CreationTimeUtc));
@@ -496,9 +501,9 @@ namespace ImageGlass
                         .OrderBy(f => new FileInfo(f).CreationTimeUtc));
                 }
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Extension)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Extension)
             {
-                if (GlobalSetting.ImageLoadingDescending)
+                if (LocalSetting.ImageLoadingDescending)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Extension));
@@ -509,9 +514,9 @@ namespace ImageGlass
                         .OrderBy(f => new FileInfo(f).Extension));
                 }
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastAccessTime)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
-                if (GlobalSetting.ImageLoadingDescending)
+                if (LocalSetting.ImageLoadingDescending)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastAccessTime));
@@ -522,9 +527,9 @@ namespace ImageGlass
                         .OrderBy(f => new FileInfo(f).LastAccessTime));
                 }
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.LastWriteTime)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
-                if (GlobalSetting.ImageLoadingDescending)
+                if (LocalSetting.ImageLoadingDescending)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastWriteTime));
@@ -535,7 +540,7 @@ namespace ImageGlass
                         .OrderBy(f => new FileInfo(f).LastWriteTime));
                 }
             }
-            else if (GlobalSetting.ImageLoadingOrder == ImageOrderBy.Random)
+            else if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Random)
             {
                 // NOTE: ignoring the 'descending order' setting
                 list.AddRange(fileList
@@ -1906,6 +1911,88 @@ namespace ImageGlass
                 {
                     onCursorCenterAction?.Invoke();
                 }
+            }
+        }
+
+
+        [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
+        public static extern int GetExplorerSortOrder32(string path, ref StringBuilder str, int len, ref Int32 ascend);
+
+        // TODO need 64-bit version
+        //[DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
+        //public static extern int GetExplorerSortOrder64(string path, ref StringBuilder str, int len, ref Int32 ascend);
+
+
+        /// <summary>
+        /// </summary>
+        private void UseExplorerSortOrder(string fullpath)
+        {
+            GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
+
+            // Initialize to the user-configured sorting order. Fetching the Explorer sort
+            // order may fail, or may be on an unsupported column.
+            LocalSetting.ImageLoadingOrder = GlobalSetting.ImageLoadingOrder;
+            LocalSetting.ImageLoadingDescending = GlobalSetting.ImageLoadingDescending;
+
+            if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Random) // random always supercedes explorer
+                return;
+
+            try
+            {
+                string path = Path.GetDirectoryName(fullpath);
+
+                int ascend = -1;
+                StringBuilder sb = new StringBuilder(200);
+                if (IntPtr.Size == 8) // TODO 64 bit version
+                    return;
+
+                int res = GetExplorerSortOrder32(path, ref sb, sb.Capacity, ref ascend);
+                if (res == 0)
+                {
+                    string column = sb.ToString();
+                    //MessageBox.Show(column + (ascend > 0 ? " (ascending)" : " (descending)"));
+
+                    // Get the new sort direction, until we hit an unsupported column
+                    LocalSetting.ImageLoadingDescending = ascend <= 0;
+
+                    // TODO rework this as a dictionary!
+                    if (column == "System.DateModified" ||
+                        column == "System.ItemDate")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.LastWriteTime;
+                    }
+                    else if (column == "System.ItemTypeText" ||
+                             column == "System.FileExtension")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Extension;
+                    }
+                    else if (column == "System.FileName" ||
+                             column == "System.ItemNameDisplay")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Name;
+                    }
+                    else if (column == "System.Size")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Length;
+                    }
+                    else if (column == "System.DateCreated")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.CreationTime;
+                    }
+                    else if (column == "System.DateAccessed")
+                    {
+                        LocalSetting.ImageLoadingOrder = ImageOrderBy.LastAccessTime;
+                    }
+                    else
+                    {
+                        // A not-yet-supported sorting column.
+                        // return to user defined sort direction.
+                        LocalSetting.ImageLoadingDescending = GlobalSetting.ImageLoadingDescending;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
             }
         }
 
