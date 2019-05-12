@@ -322,9 +322,16 @@ namespace ImageGlass.Heart
         /// <returns>Returns filename or empty string</returns>
         public string GetFileName(int index)
         {
-            if (this.ImgList[index] != null)
+            try
             {
-                return this.ImgList[index].Filename;
+                if (this.ImgList[index] != null)
+                {
+                    return this.ImgList[index].Filename;
+                }
+            }
+            catch (ArgumentOutOfRangeException) // force reload of empty list
+            {
+                return string.Empty;
             }
 
             return string.Empty;
