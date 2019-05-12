@@ -61,6 +61,24 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
+        public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails = true)
+        {
+            Bitmap bmp = ReadImageFile(filename,
+                    size: size,
+                    quality: 75,
+                    useEmbeddedThumbnails: useEmbeddedThumbnails);
+
+            return bmp;
+        }
+
+
+        /// <summary>
+        /// Get thumbnail image
+        /// </summary>
+        /// <param name="filename">Full path of image file</param>
+        /// <param name="size">A custom size of thumbnail</param>
+        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <returns></returns>
         public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
             Bitmap bmp = null;
