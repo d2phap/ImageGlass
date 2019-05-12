@@ -127,16 +127,21 @@ namespace ImageGlass.Heart
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static async Task SaveImageAsync(Bitmap srcBitmap, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+        public static void SaveImage(Bitmap srcBitmap, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
         {
-            await Task.Run(() =>
+            using (var imgM = new MagickImage(srcBitmap))
             {
-                using (var imgM = new MagickImage(srcBitmap))
+                imgM.Quality = quality;
+
+                if (format != MagickFormat.Unknown)
                 {
-                    imgM.Quality = quality;
                     imgM.Write(destFileName, format);
                 }
-            }).ConfigureAwait(false);
+                else
+                {
+                    imgM.Write(destFileName);
+                }
+            }
         }
 
         #endregion

@@ -23,7 +23,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageGlass.Core;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.Comparer;
 using System.IO;
@@ -1635,16 +1634,26 @@ namespace ImageGlass
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private void ImageSaveChange()
+        private async void ImageSaveChange()
         {
             try
             {
-                DateTime lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
-                Interpreter.SaveImage(new Bitmap(picMain.Image), LocalSetting.ImageModifiedPath);
+                var lastWriteTime = File.GetLastWriteTime(LocalSetting.ImageModifiedPath);
+                var newBitmap = new Bitmap(picMain.Image);
+
+                // override the current image file
+                Heart.Photo.SaveImage(newBitmap, LocalSetting.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (GlobalSetting.PreserveModifiedDate)
+                {
                     File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
+                }
+
+                // update cache of the modified item
+                var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                img.Image = newBitmap;
+
             }
             catch (Exception)
             {
@@ -2213,7 +2222,7 @@ namespace ImageGlass
 
                 // get color profile
                 GlobalSetting.ColorProfile = GlobalSetting.GetConfig("ColorProfile", GlobalSetting.ColorProfile);
-                GlobalSetting.ColorProfile = Interpreter.GetCorrectColorProfileName(GlobalSetting.ColorProfile);
+                GlobalSetting.ColorProfile = Heart.Helpers.GetCorrectColorProfileName(GlobalSetting.ColorProfile);
                 #endregion
 
 
@@ -3900,7 +3909,7 @@ namespace ImageGlass
                     case 4:
                     case 6:
                     case 7:
-                        Interpreter.SaveImage(clonedPic, s.FileName);
+                        Heart.Photo.SaveImage(clonedPic, s.FileName);
                         break;
                     case 2:
                         clonedPic.Save(s.FileName, ImageFormat.Emf);
@@ -4209,7 +4218,7 @@ namespace ImageGlass
 
         }
 
-        private void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
+        private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4222,7 +4231,8 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.RotateImage(picMain.Image, 270);
+            //picMain.Image = Interpreter.RotateImage(picMain.Image, 270);
+            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 270);
 
             try
             {
@@ -4233,7 +4243,7 @@ namespace ImageGlass
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
-        private void mnuMainRotateClockwise_Click(object sender, EventArgs e)
+        private async void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4246,7 +4256,8 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.RotateImage(picMain.Image, 90);
+            //picMain.Image = Interpreter.RotateImage(picMain.Image, 90);
+            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 90);
 
             try
             {
@@ -4257,7 +4268,7 @@ namespace ImageGlass
             ApplyZoomMode(GlobalSetting.ZoomMode);
         }
 
-        private void mnuMainFlipHorz_Click(object sender, EventArgs e)
+        private async void mnuMainFlipHorz_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4270,7 +4281,8 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+            //picMain.Image = Interpreter.Flip(picMain.Image, horz: true);
+            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: true);
 
             try
             {
@@ -4280,7 +4292,7 @@ namespace ImageGlass
             catch { }
         }
 
-        private void mnuMainFlipVert_Click(object sender, EventArgs e)
+        private async void mnuMainFlipVert_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
             {
@@ -4293,7 +4305,8 @@ namespace ImageGlass
                 return;
             }
 
-            picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+            //picMain.Image = Interpreter.Flip(picMain.Image, horz: false);
+            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: false);
 
             try
             {
