@@ -32,8 +32,6 @@ using ImageGlass.Library;
 using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using System.Text;
 using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
@@ -206,12 +204,17 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Prepare to load images
+        /// Prepare to load images. This method invoked for initial file (i.e. via
+        /// command line or "open with").
         /// </summary>
         /// <param name="path">Path of image file or folder</param>
         private void PrepareLoading(string path)
         {
             var currentFileName = File.Exists(path) ? path : "";
+
+            // Seek for explorer sort order
+            if (currentFileName != "")
+                DetermineSortOrder(path);
 
             PrepareLoading(new string[] { path }, currentFileName);
         }
@@ -256,11 +259,11 @@ namespace ImageGlass
                     }
                     else if (Directory.Exists(apath))
                     {
-                            // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
-                            // By ensuring a terminating slash, the problem disappears. By doing that *here*,
-                            // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
-                            // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
-                            if (!apath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                        // Issue #415: If the folder name ends in ALT+255 (alternate space), DirectoryInfo strips it.
+                        // By ensuring a terminating slash, the problem disappears. By doing that *here*,
+                        // the uses of DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
+                        // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                        if (!apath.EndsWith(Path.DirectorySeparatorChar.ToString()))
                         {
                             dirPath = apath + Path.DirectorySeparatorChar;
                         }
@@ -270,18 +273,19 @@ namespace ImageGlass
                         continue;
                     }
 
-                        // TODO Currently only have the ability to watch a single path for changes!
-                        if (firstPath)
+                    // TODO Currently only have the ability to watch a single path for changes!
+                    if (firstPath)
                     {
                         firstPath = false;
                         WatchPath(dirPath);
                     }
 
-                        // KBR 20181004 Fix observed bug: dropping multiple files from the same path
-                        // would load ALL files in said path multiple times! Prevent loading the same
-                        // path more than once.
-                        if (pathsLoaded.Contains(dirPath))
+                    // KBR 20181004 Fix observed bug: dropping multiple files from the same path
+                    // would load ALL files in said path multiple times! Prevent loading the same
+                    // path more than once.
+                    if (pathsLoaded.Contains(dirPath))
                         continue;
+
                     pathsLoaded.Add(dirPath);
 
                     var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
