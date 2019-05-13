@@ -1918,9 +1918,8 @@ namespace ImageGlass
         [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
         public static extern int GetExplorerSortOrder32(string path, ref StringBuilder str, int len, ref Int32 ascend);
 
-        // TODO need 64-bit version
-        //[DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        //public static extern int GetExplorerSortOrder64(string path, ref StringBuilder str, int len, ref Int32 ascend);
+        [DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
+        public static extern int GetExplorerSortOrder64(string path, ref StringBuilder str, int len, ref Int32 ascend);
 
 
         /// <summary>
@@ -1943,10 +1942,12 @@ namespace ImageGlass
 
                 int ascend = -1;
                 StringBuilder sb = new StringBuilder(200);
-                if (IntPtr.Size == 8) // TODO 64 bit version
-                    return;
+                int res;
+                if (IntPtr.Size == 8)
+                    res = GetExplorerSortOrder64(path, ref sb, sb.Capacity, ref ascend);
+                else
+                    res = GetExplorerSortOrder32(path, ref sb, sb.Capacity, ref ascend);
 
-                int res = GetExplorerSortOrder32(path, ref sb, sb.Capacity, ref ascend);
                 if (res == 0)
                 {
                     string column = sb.ToString();
