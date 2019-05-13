@@ -38,6 +38,7 @@ using ImageGlass.Theme;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using FileWatcherEx;
+using ImageGlass.Services;
 
 namespace ImageGlass
 {
@@ -132,7 +133,7 @@ namespace ImageGlass
             // Drag file from DESKTOP to APP
             string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
 
-            UseExplorerSortOrder(filepaths[0]);
+            DetermineSortOrder(filepaths[0]);
 
             if (filepaths.Length > 1)
             {
@@ -459,11 +460,9 @@ namespace ImageGlass
 
         private List<string> SortImageList(IEnumerable<string> fileList)
         {
-            var list = new List<string>();
+            // NOTE: relies on LocalSetting.ImageLoadingOrder been updated first!
 
-            // TODO moved to UseExplorerSortOrder
-            //Load image order from config
-            //GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
+            var list = new List<string>();
 
             //Sort image file
             if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Name)
@@ -1915,16 +1914,15 @@ namespace ImageGlass
         }
 
 
-        [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder32(string path, ref StringBuilder str, int len, ref Int32 ascend);
-
-        [DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder64(string path, ref StringBuilder str, int len, ref Int32 ascend);
-
-
         /// <summary>
+        /// Determine the image sort order/direction based on user settings
+        /// or Windows Explorer sorting.
+        /// <param name="fullpath">full path to file/folder (i.e. as comes in from drag-and-drop)</param>
+        /// <side_effect>Updates GlobalSetting.ImageLoadingOrder</side_effect>
+        /// <side_effect>Updates LocalSetting.ImageLoadingOrder</side_effect>
+        /// <side_effect>Updates LocalSetting.ImageLoadingDescending</side_effect>
         /// </summary>
-        private void UseExplorerSortOrder(string fullpath)
+        private void DetermineSortOrder(string fullpath)
         {
             GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
@@ -1936,64 +1934,10 @@ namespace ImageGlass
             if (LocalSetting.ImageLoadingOrder == ImageOrderBy.Random) // random always supercedes explorer
                 return;
 
-            try
+            if (ExplorerSortOrder.GetExplorerSortOrder(fullpath, out var explorerOrder, out var @ascending))
             {
-                string path = Path.GetDirectoryName(fullpath);
-
-                int ascend = -1;
-                StringBuilder sb = new StringBuilder(200);
-                int res;
-                if (IntPtr.Size == 8)
-                    res = GetExplorerSortOrder64(path, ref sb, sb.Capacity, ref ascend);
-                else
-                    res = GetExplorerSortOrder32(path, ref sb, sb.Capacity, ref ascend);
-
-                if (res == 0)
-                {
-                    string column = sb.ToString();
-                    //MessageBox.Show(column + (ascend > 0 ? " (ascending)" : " (descending)"));
-
-                    // Get the new sort direction, until we hit an unsupported column
-                    LocalSetting.ImageLoadingDescending = ascend <= 0;
-
-                    // TODO rework this as a dictionary!
-                    if (column == "System.DateModified" ||
-                        column == "System.ItemDate")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.LastWriteTime;
-                    }
-                    else if (column == "System.ItemTypeText" ||
-                             column == "System.FileExtension")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Extension;
-                    }
-                    else if (column == "System.FileName" ||
-                             column == "System.ItemNameDisplay")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Name;
-                    }
-                    else if (column == "System.Size")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.Length;
-                    }
-                    else if (column == "System.DateCreated")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.CreationTime;
-                    }
-                    else if (column == "System.DateAccessed")
-                    {
-                        LocalSetting.ImageLoadingOrder = ImageOrderBy.LastAccessTime;
-                    }
-                    else
-                    {
-                        // A not-yet-supported sorting column.
-                        // return to user defined sort direction.
-                        LocalSetting.ImageLoadingDescending = GlobalSetting.ImageLoadingDescending;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
+                LocalSetting.ImageLoadingOrder = explorerOrder.Value;
+                LocalSetting.ImageLoadingDescending = !ascending.Value;
             }
         }
 
