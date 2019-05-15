@@ -194,7 +194,7 @@ namespace ImageGlass
             {
                 if (o.ShowDialog() == DialogResult.OK)
                 {
-                    PrepareLoading(o.FileNames);
+                    PrepareLoading(o.FileNames, o.FileNames[0]);
                 }
             }
         }
