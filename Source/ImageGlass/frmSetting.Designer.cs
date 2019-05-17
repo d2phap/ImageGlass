@@ -189,7 +189,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkSortDescending = new System.Windows.Forms.CheckBox();
+            this.chkIsImageSortDesc = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -883,7 +883,7 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
-            this.tabImage.Controls.Add(this.chkSortDescending);
+            this.tabImage.Controls.Add(this.chkIsImageSortDesc);
             this.tabImage.Controls.Add(this.barInterval);
             this.tabImage.Controls.Add(this.lblSlideshowInterval);
             this.tabImage.Controls.Add(this.chkFindChildFolder);
@@ -1272,17 +1272,17 @@ namespace ImageGlass
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 20;
             //
-            // chkSortDescending
+            // chkIsImageSortDesc
             //
-            this.chkSortDescending.AutoSize = true;
-            this.chkSortDescending.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkSortDescending.Location = new System.Drawing.Point(350,226);
-            this.chkSortDescending.Size = new System.Drawing.Size(200, 30);
-            this.chkSortDescending.Margin = new System.Windows.Forms.Padding(2);
-            this.chkSortDescending.Name = "chkSortDescending";
-            this.chkSortDescending.TabIndex = 21;
-            this.chkSortDescending.Text = "Descending";
-            this.chkSortDescending.UseVisualStyleBackColor = true;
+            this.chkIsImageSortDesc.AutoSize = true;
+            this.chkIsImageSortDesc.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkIsImageSortDesc.Location = new System.Drawing.Point(350,226);
+            this.chkIsImageSortDesc.Size = new System.Drawing.Size(200, 30);
+            this.chkIsImageSortDesc.Margin = new System.Windows.Forms.Padding(2);
+            this.chkIsImageSortDesc.Name = "chkIsImageSortDesc";
+            this.chkIsImageSortDesc.TabIndex = 21;
+            this.chkIsImageSortDesc.Text = "Descending";
+            this.chkIsImageSortDesc.UseVisualStyleBackColor = true;
             // 
             // barInterval
             // 
@@ -2518,6 +2518,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblKeysLeftRight;
         private System.Windows.Forms.Label lblKeysKeysHeader;
         private System.Windows.Forms.Label lblKeyboard;
-        private System.Windows.Forms.CheckBox chkSortDescending;
+        private System.Windows.Forms.CheckBox chkIsImageSortDesc;
     }
 }

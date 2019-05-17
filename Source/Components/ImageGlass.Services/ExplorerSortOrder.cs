@@ -29,7 +29,9 @@ namespace ImageGlass.Services
 {
     public static class ExplorerSortOrder
     {
-        // Convert the Explorer column name to our currently available sorting order
+        /// <summary>
+        /// Convert an Explorer column name to one of our currently available sorting orders.
+        /// </summary>
         private static readonly Dictionary<string, ImageOrderBy> SortTranslation = new Dictionary<string, ImageOrderBy>()
         {
             { "System.DateModified", ImageOrderBy.LastWriteTime },
@@ -44,10 +46,10 @@ namespace ImageGlass.Services
         };
 
         [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder32(string path, ref StringBuilder str, int len, ref Int32 ascend);
+        public static extern int GetExplorerSortOrder32(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref Int32 isAscending);
 
         [DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder64(string path, ref StringBuilder str, int len, ref Int32 ascend);
+        public static extern int GetExplorerSortOrder64(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref Int32 isAscending);
 
         /// <summary>
         /// Determines the sorting order of a Windows Explorer window which matches
@@ -55,41 +57,41 @@ namespace ImageGlass.Services
         ///
         /// "Failure" situations are:
         /// 1. unable to find an open Explorer window matching the file path
-        /// 2. the Explorer sort order doesn't match
+        /// 2. the Explorer sort order doesn't match one of our existing sort orders
         /// </summary>
-        /// <param name="fullpath">full path to file/folder in question</param>
-        /// <param name="LoadOrder">the resulting sort order or null</param>
-        /// <param name="ascending">the resulting sort direction or null</param>
+        /// <param name="fullPath">full path to file/folder in question</param>
+        /// <param name="loadOrder">the resulting sort order or null</param>
+        /// <param name="isAscending">the resulting sort direction or null</param>
         /// <returns>false on failure - out parameters will be null!</returns>
-        public static bool GetExplorerSortOrder(string fullpath, out ImageOrderBy? LoadOrder, out bool? ascending)
+        public static bool GetExplorerSortOrder(string fullPath, out ImageOrderBy? loadOrder, out bool? isAscending)
         {
             // assume failure
-            LoadOrder = null;
-            ascending = null;
+            loadOrder = null;
+            isAscending = null;
 
             try
             {
-                string path = Path.GetDirectoryName(fullpath);
+                string folderPath = Path.GetDirectoryName(fullPath);
 
-                StringBuilder sb = new StringBuilder(200);
-                int res;
+                StringBuilder sb = new StringBuilder(200); // arbitrary length should fit any
+                int explorerSortResult;
                 int ascend = -1;
-                if (IntPtr.Size == 8)
-                    res = GetExplorerSortOrder64(path, ref sb, sb.Capacity, ref ascend);
+                if (IntPtr.Size == 8) // 64 bit platform
+                    explorerSortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
                 else
-                    res = GetExplorerSortOrder32(path, ref sb, sb.Capacity, ref ascend);
+                    explorerSortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
 
-                if (res != 0) // failure
+                if (explorerSortResult != 0) // failure
                     return false;
 
                 // Success! Attempt to translate the Explorer column to our supported
                 // sort order values.
                 string column = sb.ToString();
                 if (SortTranslation.ContainsKey(column))
-                    LoadOrder = SortTranslation[column];
-                ascending = ascend > 0;
+                    loadOrder = SortTranslation[column];
+                isAscending = ascend > 0;
 
-                return LoadOrder != null; // false on not-yet-supported column
+                return loadOrder != null; // will be false on not-yet-supported column
             }
 #pragma warning disable 168
             catch (Exception e)

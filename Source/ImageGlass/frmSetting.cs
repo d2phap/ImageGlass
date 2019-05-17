@@ -288,7 +288,7 @@ namespace ImageGlass
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
             chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
-            chkSortDescending.Text = lang[$"{Name}.chkSortDescending"];
+            chkIsImageSortDesc.Text = lang[$"{Name}.chkIsImageSortDesc"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -664,7 +664,7 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
 
-            chkSortDescending.Checked = (bool) GlobalSetting.ImageLoadingDescending;
+            chkIsImageSortDesc.Checked = (bool) GlobalSetting.IsImageOrderDesc;
             #endregion
 
 
@@ -2374,11 +2374,11 @@ namespace ImageGlass
                 }
             }
 
-            bool sortDescending = chkSortDescending.Checked;
-            if (GlobalSetting.ImageLoadingDescending != sortDescending)
+            bool sortDescending = chkIsImageSortDesc.Checked;
+            if (GlobalSetting.IsImageOrderDesc != sortDescending)
             {
-                GlobalSetting.ImageLoadingDescending = sortDescending;
-                GlobalSetting.SetConfig("ImageLoadDescending", sortDescending.ToString());
+                GlobalSetting.IsImageOrderDesc = sortDescending;
+                GlobalSetting.SetConfig("IsImageOrderDesc", sortDescending.ToString());
 
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }

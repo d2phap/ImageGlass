@@ -87,12 +87,19 @@ namespace ImageGlass
         /// </summary>
         public static string InitialInputImageFilename { get; set; } = "";
 
+
         /// <summary>
-        /// The current image sorting order. This is a temporary override which takes place when respecting
-        /// the user's sorting order from Windows Explorer.
+        /// The 'current' image sorting order. A reconciliation between the user's Settings selection and
+        /// the sorting order from Windows Explorer, to be used to sort the active image list.
         /// </summary>
-        public static ImageOrderBy ImageLoadingOrder { get; set; }
-        public static bool ImageLoadingDescending { get; set; }
+        public static ImageOrderBy ActiveImageLoadingOrder { get; set; }
+
+
+        /// <summary>
+        /// The 'current' image sorting direction. A reconciliation between the user's Settings selection and
+        /// the sorting direction from Windows Explorer, to be used to sort the active image list.
+        /// </summary>
+        public static bool ActiveIsImageLoadDesc { get; set; }
 
         #endregion
 
