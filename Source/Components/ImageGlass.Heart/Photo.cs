@@ -94,11 +94,28 @@ namespace ImageGlass.Heart
                     break;
 
                 default:
-                    using (var imgM = new MagickImage(filename, settings))
+
+                    // Issue #530: ImageMagick falls over if the file path is longer than the (old)
+                    // windows limit of 260 characters. Workaround is to read the file bytes, but 
+                    // that requires using the "long path name" prefix to succeed.
+                    if (filename.Length > 255)
                     {
-                        PreprocesMagickImage(imgM);
-                        bitmap = imgM.ToBitmap();
+                        var allbytes = File.ReadAllBytes(@"\\?\" + filename);
+                        using (var imgM = new MagickImage(allbytes, settings))
+                        {
+                            PreprocesMagickImage(imgM);
+                            bitmap = imgM.ToBitmap();
+                        }
                     }
+                    else
+                    {
+                        using (var imgM = new MagickImage(filename, settings))
+                        {
+                            PreprocesMagickImage(imgM);
+                            bitmap = imgM.ToBitmap();
+                        }
+                    }
+
                     break;
             }
             #endregion
