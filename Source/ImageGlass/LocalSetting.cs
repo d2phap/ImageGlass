@@ -99,7 +99,7 @@ namespace ImageGlass
         /// The 'current' image sorting direction. A reconciliation between the user's Settings selection and
         /// the sorting direction from Windows Explorer, to be used to sort the active image list.
         /// </summary>
-        public static bool ActiveIsImageLoadDesc { get; set; }
+        public static bool IsActiveImageOrderDesc { get; set; }
 
         #endregion
 

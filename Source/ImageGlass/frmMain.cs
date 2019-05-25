@@ -472,7 +472,7 @@ namespace ImageGlass
             if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = fileList.ToArray();
-                var comparer = LocalSetting.ActiveIsImageLoadDesc
+                var comparer = LocalSetting.IsActiveImageOrderDesc
                                             ? (IComparer<string>)new ReverseWindowsNaturalSort()
                                             : new WindowsNaturalSort();
                 Array.Sort(arr, comparer);
@@ -480,7 +480,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Length)
             {
-                if (LocalSetting.ActiveIsImageLoadDesc)
+                if (LocalSetting.IsActiveImageOrderDesc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Length));
@@ -493,7 +493,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
             {
-                if (LocalSetting.ActiveIsImageLoadDesc)
+                if (LocalSetting.IsActiveImageOrderDesc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).CreationTimeUtc));
@@ -506,7 +506,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Extension)
             {
-                if (LocalSetting.ActiveIsImageLoadDesc)
+                if (LocalSetting.IsActiveImageOrderDesc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Extension));
@@ -519,7 +519,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
-                if (LocalSetting.ActiveIsImageLoadDesc)
+                if (LocalSetting.IsActiveImageOrderDesc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastAccessTime));
@@ -532,7 +532,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
-                if (LocalSetting.ActiveIsImageLoadDesc)
+                if (LocalSetting.IsActiveImageOrderDesc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastWriteTime));
@@ -1933,7 +1933,7 @@ namespace ImageGlass
             // Initialize to the user-configured sorting order. Fetching the Explorer sort
             // order may fail, or may be on an unsupported column.
             LocalSetting.ActiveImageLoadingOrder = GlobalSetting.ImageLoadingOrder;
-            LocalSetting.ActiveIsImageLoadDesc = GlobalSetting.IsImageOrderDesc;
+            LocalSetting.IsActiveImageOrderDesc = GlobalSetting.IsImageOrderDesc;
 
             if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Random) // 'random' setting always supercedes explorer setting
                 return;
@@ -1943,7 +1943,7 @@ namespace ImageGlass
                 if (explorerOrder != null) 
                     LocalSetting.ActiveImageLoadingOrder = explorerOrder.Value;
                 if (isAscending != null) 
-                    LocalSetting.ActiveIsImageLoadDesc = !isAscending.Value;
+                    LocalSetting.IsActiveImageOrderDesc = !isAscending.Value;
             }
         }
 

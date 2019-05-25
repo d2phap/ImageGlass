@@ -487,7 +487,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
-            Items.Add("frmSetting.chkIsImageSortDesc", "Descending order");  // V6.1
+            Items.Add("frmSetting.chkIsImageOrderDesc", "Order by descending");  // V6.1
             Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
             Items.Add("frmSetting.cmbImageOrder._Length", "Length");
             Items.Add("frmSetting.cmbImageOrder._CreationTime", "Creation time");

@@ -288,7 +288,7 @@ namespace ImageGlass
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
             chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
-            chkIsImageSortDesc.Text = lang[$"{Name}.chkIsImageSortDesc"];
+            chkIsImageOrderDesc.Text = lang[$"{Name}.chkIsImageOrderDesc"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -664,7 +664,7 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
 
-            chkIsImageSortDesc.Checked = (bool) GlobalSetting.IsImageOrderDesc;
+            chkIsImageOrderDesc.Checked = (bool) GlobalSetting.IsImageOrderDesc;
             #endregion
 
 
@@ -2374,7 +2374,7 @@ namespace ImageGlass
                 }
             }
 
-            bool sortDescending = chkIsImageSortDesc.Checked;
+            bool sortDescending = chkIsImageOrderDesc.Checked;
             if (GlobalSetting.IsImageOrderDesc != sortDescending)
             {
                 GlobalSetting.IsImageOrderDesc = sortDescending;
