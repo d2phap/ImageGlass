@@ -112,24 +112,39 @@ namespace ImageGlass
         #region Drag - drop
         private void picMain_DragOver(object sender, DragEventArgs e)
         {
-            string filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            try
+            {
+                if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+                    return;
+                var dataTest = e.Data.GetData(DataFormats.FileDrop, false);
+                if (dataTest == null) // observed: null w/ long path and long path support not enabled
+                    return;
 
-            // Drag file from DESKTOP to APP
-            if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
-            {
-                e.Effect = DragDropEffects.Move;
+                string filePath = ((string[])dataTest)[0];
+
+                // Drag file from DESKTOP to APP
+                if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
+                {
+                    e.Effect = DragDropEffects.Move;
+                }
+                // Drag file from APP to DESKTOP
+                else
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
             }
-            // Drag file from APP to DESKTOP
-            else
+            catch
             {
-                e.Effect = DragDropEffects.Copy;
+                // observed: exception with a long path and long path support enabled
             }
         }
 
         private void picMain_DragDrop(object sender, DragEventArgs e)
         {
             // Drag file from DESKTOP to APP
-            string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop));
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+                return;
+            string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop, false));
 
             DetermineSortOrder(filepaths[0]);
 

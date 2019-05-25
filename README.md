@@ -55,32 +55,35 @@ Thanks for your gratitude and finance help!
 <img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
+
+<a href="https://www.patreon.com/bePatron?u=6414896" target="_blank" title="Buy me a beer?">
+<img src="https://img.shields.io/badge/Patron-patron.com%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+</a>
+
+
+
+<img src="https://img.shields.io/badge/Bitcoin-Donate-f7931a.svg?maxAge=3600" height="30" alt="Bitcoin">
+
+```
+3Hp7QLP9Fxpb1s4CAcZFYR7NUgN1bR93Hy
+```
+
+
+
+
+<img src="https://img.shields.io/badge/Ethereum-Donate-131313.svg?maxAge=3600" height="30" alt="Ethereum">
+
+```
+0x6DDBd646586bebF7a97e022D615cbE789D39a965
+```
+
+
+
+
+
+
 ## Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
 <a href="graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
-
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/imageglass#backer)]
-
-<a href="https://opencollective.com/imageglass#backers" target="_blank"><img src="https://opencollective.com/imageglass/backers.svg?width=890"></a>
-
-
-## Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/imageglass#sponsor)]
-
-<a href="https://opencollective.com/imageglass/sponsor/0/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/1/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/2/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/3/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/4/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/5/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/6/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/7/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/8/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/imageglass/sponsor/9/website" target="_blank"><img src="https://opencollective.com/imageglass/sponsor/9/avatar.svg"></a>
-
 

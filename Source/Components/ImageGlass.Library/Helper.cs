@@ -80,7 +80,12 @@ namespace ImageGlass.Library
 
             foreach (var path in pathList)
             {
-                if (File.Exists(path))
+                // Issue #530: support long file paths by using the magic prefix. Otherwise, File.Exists() always fails.
+                var pathToTest = path;
+                if (pathToTest.Length > 255)
+                    pathToTest = @"\\?\" + path;
+
+                if (File.Exists(pathToTest))
                 {
                     string dir;
                     if (Path.GetExtension(path).ToLower() == ".lnk")
@@ -108,7 +113,7 @@ namespace ImageGlass.Library
 
                     hashedList.Add(dir);
                 }
-                else if (Directory.Exists(path))
+                else if (Directory.Exists(pathToTest))
                 {
                     hashedList.Add(path);
                 }
