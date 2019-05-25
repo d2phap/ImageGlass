@@ -80,9 +80,9 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Whether image loading order is descending or not
+        /// Gets, sets image loading order type
         /// </summary>
-        public static bool IsImageOrderDesc { get; set; } = false;  // Pre-V6.1 behavior: always ascending
+        public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
 
 
         /// <summary>
@@ -608,6 +608,28 @@ namespace ImageGlass.Services.Configuration
             }
 
             return (ImageOrderBy)i;
+        }
+
+
+        /// <summary>
+        /// Get image order type from configuration file
+        /// </summary>
+        /// <returns></returns>
+        public static ImageOrderType GetImageOrderTypeConfig()
+        {
+            string s = GetConfig("ImageLoadingOrderType", "0");
+
+            if (int.TryParse(s, out int i))
+            {
+                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderType)).Length) //<=== Number of items in enum
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+
+            return (ImageOrderType)i;
         }
 
 

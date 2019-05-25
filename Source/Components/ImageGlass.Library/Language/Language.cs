@@ -486,8 +486,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final
+
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
-            Items.Add("frmSetting.chkIsImageOrderDesc", "Order by descending");  // V6.1
             Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
             Items.Add("frmSetting.cmbImageOrder._Length", "Length");
             Items.Add("frmSetting.cmbImageOrder._CreationTime", "Creation time");
@@ -495,6 +495,9 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbImageOrder._LastWriteTime", "Last write time");
             Items.Add("frmSetting.cmbImageOrder._Extension", "Extension");
             Items.Add("frmSetting.cmbImageOrder._Random", "Random");
+
+            Items.Add("frmSetting.cmbImageOrderType._Asc", "Ascending");  // V6.1
+            Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V6.1
             #endregion
 
 

@@ -227,10 +227,6 @@ namespace ImageGlass
         {
             var currentFileName = File.Exists(path) ? path : "";
 
-            // Seek for explorer sort order
-            if (currentFileName != "")
-                DetermineSortOrder(path);
-
             PrepareLoading(new string[] { path }, currentFileName);
         }
 
@@ -238,17 +234,18 @@ namespace ImageGlass
         /// Prepare to load images
         /// </summary>
         /// <param name="paths">Paths of image files or folders</param>
-        /// <param name="currentFilename">Current viewing filename</param>
-        private async void PrepareLoading(IEnumerable<string> paths, string currentFilename = "")
+        /// <param name="currentFileName">Current viewing filename</param>
+        private async void PrepareLoading(IEnumerable<string> paths, string currentFileName = "")
         {
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
             if (paths.Count() == 0) return;
 
+
             List<string> allFilesToLoad = new List<string>();
-            var currentFile = currentFilename;
+            var currentFile = currentFileName;
 
             // prepare the distinct dir list
-            var distinctList = Helper.GetFilesByDistinctDirs(paths);
+            var distinctDirsList = Helper.GetDistinctDirsFromPaths(paths);
 
 
             // track paths loaded to prevent duplicates
@@ -258,7 +255,7 @@ namespace ImageGlass
 
             await Task.Run(() =>
             {
-                foreach (var apath in distinctList)
+                foreach (var apath in distinctDirsList)
                 {
                     string dirPath = "";
                     if (File.Exists(apath))
@@ -293,6 +290,9 @@ namespace ImageGlass
                     {
                         firstPath = false;
                         WatchPath(dirPath);
+
+                        // Seek for explorer sort order
+                        DetermineSortOrder(dirPath);
                     }
 
                     // KBR 20181004 Fix observed bug: dropping multiple files from the same path
@@ -307,7 +307,7 @@ namespace ImageGlass
                     allFilesToLoad.AddRange(imageFilenameList);
                 }
 
-                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? (distinctList.Count > 0 ? distinctList[0] : "") : currentFile;
+                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
             });
 
             // sort list
@@ -487,7 +487,7 @@ namespace ImageGlass
             if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = fileList.ToArray();
-                var comparer = LocalSetting.IsActiveImageOrderDesc
+                var comparer = LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc
                                             ? (IComparer<string>)new ReverseWindowsNaturalSort()
                                             : new WindowsNaturalSort();
                 Array.Sort(arr, comparer);
@@ -495,7 +495,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Length)
             {
-                if (LocalSetting.IsActiveImageOrderDesc)
+                if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Length));
@@ -508,7 +508,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
             {
-                if (LocalSetting.IsActiveImageOrderDesc)
+                if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).CreationTimeUtc));
@@ -521,7 +521,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Extension)
             {
-                if (LocalSetting.IsActiveImageOrderDesc)
+                if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).Extension));
@@ -534,7 +534,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
             {
-                if (LocalSetting.IsActiveImageOrderDesc)
+                if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastAccessTime));
@@ -547,7 +547,7 @@ namespace ImageGlass
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
             {
-                if (LocalSetting.IsActiveImageOrderDesc)
+                if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
                         .OrderByDescending(f => new FileInfo(f).LastWriteTime));
@@ -1939,7 +1939,7 @@ namespace ImageGlass
         /// <param name="fullPath">full path to file/folder (i.e. as comes in from drag-and-drop)</param>
         /// <side_effect>Updates GlobalSetting.ActiveImageLoadingOrder</side_effect>
         /// <side_effect>Updates LocalSetting.ActiveImageLoadingOrder</side_effect>
-        /// <side_effect>Updates LocalSetting.IsImageOrderDesc</side_effect>
+        /// <side_effect>Updates LocalSetting.ActiveImageLoadingOrderType</side_effect>
         /// </summary>
         private void DetermineSortOrder(string fullPath)
         {
@@ -1948,17 +1948,22 @@ namespace ImageGlass
             // Initialize to the user-configured sorting order. Fetching the Explorer sort
             // order may fail, or may be on an unsupported column.
             LocalSetting.ActiveImageLoadingOrder = GlobalSetting.ImageLoadingOrder;
-            LocalSetting.IsActiveImageOrderDesc = GlobalSetting.IsImageOrderDesc;
+            LocalSetting.ActiveImageLoadingOrderType = GlobalSetting.ImageLoadingOrderType;
 
             if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Random) // 'random' setting always supercedes explorer setting
                 return;
 
             if (ExplorerSortOrder.GetExplorerSortOrder(fullPath, out var explorerOrder, out var isAscending))
             {
-                if (explorerOrder != null) 
+                if (explorerOrder != null)
+                {
                     LocalSetting.ActiveImageLoadingOrder = explorerOrder.Value;
-                if (isAscending != null) 
-                    LocalSetting.IsActiveImageOrderDesc = !isAscending.Value;
+                }
+                    
+                if (isAscending != null)
+                {
+                    LocalSetting.ActiveImageLoadingOrderType = isAscending.Value ? ImageOrderType.Asc : ImageOrderType.Desc;
+                }
             }
         }
 
@@ -2325,8 +2330,8 @@ namespace ImageGlass
                 GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
 
-                // Is image loading in descending order? [Default is 'Ascending' or false]
-                GlobalSetting.IsImageOrderDesc = bool.Parse(GlobalSetting.GetConfig("IsImageOrderDesc", "False"));
+                //Load image order type config
+                GlobalSetting.ImageLoadingOrderType = GlobalSetting.GetImageOrderTypeConfig();
 
 
                 //Load state of Image Booster

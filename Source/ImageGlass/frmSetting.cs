@@ -288,7 +288,6 @@ namespace ImageGlass
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
             chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
-            chkIsImageOrderDesc.Text = lang[$"{Name}.chkIsImageOrderDesc"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -395,6 +394,7 @@ namespace ImageGlass
 
             #endregion
 
+
             #region KEYBOARD TAB
             btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
             lblKeysKeysHeader.Text = lang[$"{Name}.lblKeysKeysHeader"];
@@ -405,7 +405,7 @@ namespace ImageGlass
             lblKeysLeftRight.Text = lang[$"{Name}.lblKeysLeftRight"];
             #endregion
 
-            extList = null;
+
         }
 
 
@@ -656,6 +656,7 @@ namespace ImageGlass
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
             cmbImageOrder.Items.Clear();
+
             foreach (var item in loadingOrderList)
             {
                 cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrder._{item}"]);
@@ -663,8 +664,20 @@ namespace ImageGlass
 
             //Get value of cmbImageOrder
             cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
+            #endregion
 
-            chkIsImageOrderDesc.Checked = (bool) GlobalSetting.IsImageOrderDesc;
+
+            #region Load items of cmbImageOrderType
+            var orderTypesList = Enum.GetNames(typeof(ImageOrderType));
+            cmbImageOrderType.Items.Clear();
+
+            foreach (var item in orderTypesList)
+            {
+                cmbImageOrderType.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
+            }
+
+            //Get value of cmbImageOrder
+            cmbImageOrderType.SelectedIndex = (int)GlobalSetting.ImageLoadingOrderType;
             #endregion
 
 
@@ -2374,13 +2387,17 @@ namespace ImageGlass
                 }
             }
 
-            bool sortDescending = chkIsImageOrderDesc.Checked;
-            if (GlobalSetting.IsImageOrderDesc != sortDescending)
+            newInt = cmbImageOrderType.SelectedIndex;
+            if (Enum.TryParse(newInt.ToString(), out ImageOrderType newOrderType))
             {
-                GlobalSetting.IsImageOrderDesc = sortDescending;
-                GlobalSetting.SetConfig("IsImageOrderDesc", sortDescending.ToString());
+                if (GlobalSetting.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
+                {
+                    GlobalSetting.ImageLoadingOrderType = newOrderType;
+                    GlobalSetting.SetConfig("ImageLoadingOrderType", newInt.ToString());
 
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
             }
 
             #endregion

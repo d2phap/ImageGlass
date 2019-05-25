@@ -115,7 +115,6 @@ namespace ImageGlass
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
-            this.chkIsImageOrderDesc = new System.Windows.Forms.CheckBox();
             this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
@@ -190,6 +189,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.cmbImageOrderType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -851,6 +851,7 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.cmbImageOrderType);
             this.tabImage.Controls.Add(this.lnkColorProfilePath);
             this.tabImage.Controls.Add(this.lnkColorProfileBrowse);
             this.tabImage.Controls.Add(this.lblColorManagement);
@@ -883,7 +884,6 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
-            this.tabImage.Controls.Add(this.chkIsImageOrderDesc);
             this.tabImage.Controls.Add(this.barInterval);
             this.tabImage.Controls.Add(this.lblSlideshowInterval);
             this.tabImage.Controls.Add(this.chkFindChildFolder);
@@ -1271,18 +1271,6 @@ namespace ImageGlass
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 20;
-            // 
-            // chkIsImageOrderDesc
-            // 
-            this.chkIsImageOrderDesc.AutoSize = true;
-            this.chkIsImageOrderDesc.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkIsImageOrderDesc.Location = new System.Drawing.Point(350, 226);
-            this.chkIsImageOrderDesc.Margin = new System.Windows.Forms.Padding(2);
-            this.chkIsImageOrderDesc.Name = "chkIsImageOrderDesc";
-            this.chkIsImageOrderDesc.Size = new System.Drawing.Size(214, 30);
-            this.chkIsImageOrderDesc.TabIndex = 21;
-            this.chkIsImageOrderDesc.Text = "[Order by descending]";
-            this.chkIsImageOrderDesc.UseVisualStyleBackColor = true;
             // 
             // barInterval
             // 
@@ -2302,6 +2290,20 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
+            // cmbImageOrderType
+            // 
+            this.cmbImageOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageOrderType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbImageOrderType.FormattingEnabled = true;
+            this.cmbImageOrderType.Items.AddRange(new object[] {
+            "[Ascending]",
+            "[Descending]"});
+            this.cmbImageOrderType.Location = new System.Drawing.Point(333, 223);
+            this.cmbImageOrderType.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbImageOrderType.Name = "cmbImageOrderType";
+            this.cmbImageOrderType.Size = new System.Drawing.Size(278, 33);
+            this.cmbImageOrderType.TabIndex = 60;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2518,6 +2520,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblKeysLeftRight;
         private System.Windows.Forms.Label lblKeysKeysHeader;
         private System.Windows.Forms.Label lblKeyboard;
-        private System.Windows.Forms.CheckBox chkIsImageOrderDesc;
+        private System.Windows.Forms.ComboBox cmbImageOrderType;
     }
 }

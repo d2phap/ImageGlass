@@ -68,15 +68,15 @@ namespace ImageGlass.Library
 
 
         /// <summary>
-        /// Get filenames by distinct directory
+        /// Get distinct directories list from paths list
         /// </summary>
-        /// <param name="pathList">Path list</param>
+        /// <param name="pathList">Paths list</param>
         /// <returns></returns>
-        public static List<string> GetFilesByDistinctDirs(IEnumerable<string> pathList)
+        public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList)
         {
             if (pathList.Count() == 0) return new List<string>();
 
-            var hashedList = new HashSet<string>();
+            var hashedDirsList = new HashSet<string>();
 
             foreach (var path in pathList)
             {
@@ -111,11 +111,11 @@ namespace ImageGlass.Library
                         dir = Path.GetDirectoryName(path);
                     }
 
-                    hashedList.Add(dir);
+                    hashedDirsList.Add(dir);
                 }
                 else if (Directory.Exists(pathToTest))
                 {
-                    hashedList.Add(path);
+                    hashedDirsList.Add(path);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace ImageGlass.Library
                 }
             }
 
-            return hashedList.ToList();
+            return hashedDirsList.ToList();
         }
     }
 }
