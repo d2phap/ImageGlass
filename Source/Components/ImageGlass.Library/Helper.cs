@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Library.WinAPI;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -80,12 +79,7 @@ namespace ImageGlass.Library
 
             foreach (var path in pathList)
             {
-                // Issue #530: support long file paths by using the magic prefix. Otherwise, File.Exists() always fails.
-                var pathToTest = path;
-                if (pathToTest.Length > 255)
-                    pathToTest = @"\\?\" + path;
-
-                if (File.Exists(pathToTest))
+                if (File.Exists(path))
                 {
                     string dir;
                     if (Path.GetExtension(path).ToLower() == ".lnk")
@@ -113,7 +107,7 @@ namespace ImageGlass.Library
 
                     hashedList.Add(dir);
                 }
-                else if (Directory.Exists(pathToTest))
+                else if (Directory.Exists(path))
                 {
                     hashedList.Add(path);
                 }

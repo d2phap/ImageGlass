@@ -143,5 +143,31 @@ namespace ImageGlass.Heart
             return 0;
         }
 
+
+        private static string LONG_PATH_PREFIX = @"\\?\";
+
+        /// <summary>
+        /// Fallout from Issue #530. To handle a long path name (i.e. a file path
+        /// longer than MAX_PATH), a magic prefix is sometimes necessary.
+        /// </summary>
+        public static string PrefixLongPath(string path)
+        {
+            if (path.Length > 255 && !path.StartsWith(LONG_PATH_PREFIX))
+                return LONG_PATH_PREFIX + path;
+            return path;
+        }
+
+        /// <summary>
+        /// Fallout from Issue #530. Specific functions (currently FileWatch)
+        /// fail if provided a prefixed file path. In this case, strip the prefix
+        /// (see PrefixLongPath above).
+        /// </summary>
+        public static string DePrefixLongPath(string path)
+        {
+            if (path.StartsWith(LONG_PATH_PREFIX))
+                return path.Substring(LONG_PATH_PREFIX.Length);
+            return path;
+        }
+
     }
 }

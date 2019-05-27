@@ -3,8 +3,9 @@
   <assemblyIdentity version="1.0.0.0" name="ImageGlass.app" />
 
   <asmv3:application>
-    <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
+    <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings" xmlns:ws2="https://schemas.microsoft.com/SMI/2016/WindowsSettings">
       <dpiAware>True/PM</dpiAware>
+      <ws2:longPathAware>true</ws2:longPathAware>
     </asmv3:windowsSettings>
   </asmv3:application>
 
