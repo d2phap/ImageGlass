@@ -253,7 +253,7 @@ namespace ImageGlass
             {
                 foreach (var apath in distinctList)
                 {
-                    string dirPath = "";
+                    string dirPath = apath;
                     if (File.Exists(apath))
                     {
                         if (Path.GetExtension(apath).ToLower() == ".lnk")
