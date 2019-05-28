@@ -288,11 +288,6 @@ namespace ImageGlass
                         WatchPath(dirPath);
                     }
 
-                    // KBR 20181004 Fix observed bug: dropping multiple files from the same path
-                    // would load ALL files in said path multiple times! Prevent loading the same
-                    // path more than once.
-                    if (pathsLoaded.Contains(dirPath))
-                        continue;
                     pathsLoaded.Add(dirPath);
 
                     var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
@@ -307,7 +302,6 @@ namespace ImageGlass
 
             LoadImages(allFilesToLoad, currentFile);
         }
-
 
 
         /// <summary>
