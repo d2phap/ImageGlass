@@ -146,8 +146,6 @@ namespace ImageGlass
                 return;
             string[] filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop, false));
 
-            DetermineSortOrder(filepaths[0]);
-
             if (filepaths.Length > 1)
             {
                 PrepareLoading(filepaths, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
@@ -483,14 +481,19 @@ namespace ImageGlass
 
             var list = new List<string>();
 
+            // KBR 20190605 Fix observed limitation: to more closely match the Windows Explorer's sort
+            // order, we must sort by the target column, then by name.
+            var naturalSortComparer = LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc
+                                        ? (IComparer<string>)new ReverseWindowsNaturalSort()
+                                        : new WindowsNaturalSort();
+
+            // KBR 20190605 Fix observed discrepancy: using UTC for create, but not for write/access times
+
             //Sort image file
             if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Name)
             {
                 var arr = fileList.ToArray();
-                var comparer = LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc
-                                            ? (IComparer<string>)new ReverseWindowsNaturalSort()
-                                            : new WindowsNaturalSort();
-                Array.Sort(arr, comparer);
+                Array.Sort(arr, naturalSortComparer);
                 list.AddRange(arr);
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Length)
@@ -498,12 +501,14 @@ namespace ImageGlass
                 if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).Length));
+                        .OrderByDescending(f => new FileInfo(f).Length)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
                 else
                 {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).Length));
+                        .OrderBy(f => new FileInfo(f).Length)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
@@ -511,12 +516,14 @@ namespace ImageGlass
                 if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).CreationTimeUtc));
+                        .OrderByDescending(f => new FileInfo(f).CreationTimeUtc)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
                 else
                 {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).CreationTimeUtc));
+                        .OrderBy(f => new FileInfo(f).CreationTimeUtc)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Extension)
@@ -524,12 +531,14 @@ namespace ImageGlass
                 if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).Extension));
+                        .OrderByDescending(f => new FileInfo(f).Extension)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
                 else
                 {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).Extension));
+                        .OrderBy(f => new FileInfo(f).Extension)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
@@ -537,12 +546,14 @@ namespace ImageGlass
                 if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).LastAccessTime));
+                        .OrderByDescending(f => new FileInfo(f).LastAccessTimeUtc)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
                 else
                 {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).LastAccessTime));
+                        .OrderBy(f => new FileInfo(f).LastAccessTimeUtc)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
@@ -550,12 +561,14 @@ namespace ImageGlass
                 if (LocalSetting.ActiveImageLoadingOrderType == ImageOrderType.Desc)
                 {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).LastWriteTime));
+                        .OrderByDescending(f => new FileInfo(f).LastWriteTimeUtc)
+                        .ThenBy(f => f, naturalSortComparer));
                 }
                 else
                 {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).LastWriteTime));
+                        .OrderBy(f => new FileInfo(f).LastWriteTimeUtc)
+                        .ThenBy(f=> f, naturalSortComparer));
                 }
             }
             else if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Random)
