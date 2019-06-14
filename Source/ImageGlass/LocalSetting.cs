@@ -88,6 +88,14 @@ namespace ImageGlass
         public static string InitialInputImageFilename { get; set; } = "";
 
 
+        /// <summary>
+        /// Remember for this session the last-used "Save As" extension. When the user is iterating
+        /// through a set of images and using "Save As" to always save to the same file type, this
+        /// memory prevents them from having to manually re-select their desired extension.
+        /// </summary>
+        public static int SaveAsFilterIndex { get; set; } = 0;
+
+
         #endregion
 
 

@@ -3880,42 +3880,49 @@ namespace ImageGlass
                 FileName = Path.GetFileNameWithoutExtension(filename)
             };
 
-            switch (ext.ToLower())
-            {
-                case "bmp":
-                    s.FilterIndex = 1;
-                    break;
-                case "emf":
-                    s.FilterIndex = 2;
-                    break;
-                case "exif":
-                    s.FilterIndex = 3;
-                    break;
-                case "gif":
-                    s.FilterIndex = 4;
-                    break;
-                case "ico":
-                    s.FilterIndex = 5;
-                    break;
-                case "jpg":
-                    s.FilterIndex = 6;
-                    break;
-                case "png":
-                    s.FilterIndex = 7;
-                    break;
-                case "tiff":
-                    s.FilterIndex = 8;
-                    break;
-                case "wmf":
-                    s.FilterIndex = 9;
-                    break;
-            }
+            // Use the last-selected file extension, if available.
+            if (LocalSetting.SaveAsFilterIndex != 0)
+                s.FilterIndex = LocalSetting.SaveAsFilterIndex;
+            else
+                switch (ext.ToLower())
+                {
+                    case "bmp":
+                        s.FilterIndex = 1;
+                        break;
+                    case "emf":
+                        s.FilterIndex = 2;
+                        break;
+                    case "exif":
+                        s.FilterIndex = 3;
+                        break;
+                    case "gif":
+                        s.FilterIndex = 4;
+                        break;
+                    case "ico":
+                        s.FilterIndex = 5;
+                        break;
+                    case "jpg":
+                    case "jpeg":
+                    case "jpe":
+                        s.FilterIndex = 6;
+                        break;
+                    case "png":
+                        s.FilterIndex = 7;
+                        break;
+                    case "tiff":
+                        s.FilterIndex = 8;
+                        break;
+                    case "wmf":
+                        s.FilterIndex = 9;
+                        break;
+                }
 
 
             if (s.ShowDialog() == DialogResult.OK)
             {
                 Bitmap clonedPic = (Bitmap)picMain.Image;
 
+                LocalSetting.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
                 {
                     case 1:
