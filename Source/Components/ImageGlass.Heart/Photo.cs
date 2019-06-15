@@ -100,7 +100,8 @@ namespace ImageGlass.Heart
                     // that requires using the "long path name" prefix to succeed.
                     if (filename.Length > 255)
                     {
-                        var allbytes = File.ReadAllBytes(@"\\?\" + filename);
+                        filename = Helpers.PrefixLongPath(filename);
+                        var allbytes = File.ReadAllBytes(filename);
                         using (var imgM = new MagickImage(allbytes, settings))
                         {
                             PreprocesMagickImage(imgM);

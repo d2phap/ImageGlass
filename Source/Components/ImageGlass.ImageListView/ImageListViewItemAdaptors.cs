@@ -40,7 +40,9 @@ namespace ImageGlass.ImageListView
                 if (disposed)
                     return null;
 
-                string filename = (string)key;
+				// [IG_CHANGE]
+                // Issue #530: thumbnails not built if long file path
+                string filename = Heart.Helpers.PrefixLongPath((string)key);
                 if (File.Exists(filename))
                     return ThumbnailExtractor.FromFile(filename, size, useEmbeddedThumbnails, useExifOrientation, useWIC);
                 else

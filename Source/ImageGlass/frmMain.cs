@@ -217,8 +217,8 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Prepare to load images. This method invoked for initial file (i.e. via
-        /// command line or "open with").
+        /// Prepare to load images. This method invoked for image on the command line,
+        /// i.e. when double-clicking an image.
         /// </summary>
         /// <param name="path">Path of image file or folder</param>
         private void PrepareLoading(string path)
@@ -255,7 +255,7 @@ namespace ImageGlass
             {
                 foreach (var apath in distinctDirsList)
                 {
-                    string dirPath = "";
+                    string dirPath = apath;
                     if (File.Exists(apath))
                     {
                         if (Path.GetExtension(apath).ToLower() == ".lnk")
@@ -313,7 +313,6 @@ namespace ImageGlass
 
             LoadImages(allFilesToLoad, currentFile);
         }
-
 
 
         /// <summary>
@@ -384,11 +383,14 @@ namespace ImageGlass
         /// <param name="dirPath">The path to the folder to watch.</param>
         private void WatchPath(string dirPath)
         {
+            // From Issue #530: file watcher currently fails nastily if given a prefixed path
+            var pathToWatch = Heart.Helpers.DePrefixLongPath(dirPath);
+
             //Watch all changes of current path
             this._fileWatcher.Stop();
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
-                FolderPath = dirPath,
+                FolderPath = pathToWatch,
                 IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
 
                 // auto Invoke the form if required, no need to invidiually invoke in each event
@@ -3984,42 +3986,49 @@ namespace ImageGlass
                 FileName = Path.GetFileNameWithoutExtension(filename)
             };
 
-            switch (ext.ToLower())
-            {
-                case "bmp":
-                    s.FilterIndex = 1;
-                    break;
-                case "emf":
-                    s.FilterIndex = 2;
-                    break;
-                case "exif":
-                    s.FilterIndex = 3;
-                    break;
-                case "gif":
-                    s.FilterIndex = 4;
-                    break;
-                case "ico":
-                    s.FilterIndex = 5;
-                    break;
-                case "jpg":
-                    s.FilterIndex = 6;
-                    break;
-                case "png":
-                    s.FilterIndex = 7;
-                    break;
-                case "tiff":
-                    s.FilterIndex = 8;
-                    break;
-                case "wmf":
-                    s.FilterIndex = 9;
-                    break;
-            }
+            // Use the last-selected file extension, if available.
+            if (LocalSetting.SaveAsFilterIndex != 0)
+                s.FilterIndex = LocalSetting.SaveAsFilterIndex;
+            else
+                switch (ext.ToLower())
+                {
+                    case "bmp":
+                        s.FilterIndex = 1;
+                        break;
+                    case "emf":
+                        s.FilterIndex = 2;
+                        break;
+                    case "exif":
+                        s.FilterIndex = 3;
+                        break;
+                    case "gif":
+                        s.FilterIndex = 4;
+                        break;
+                    case "ico":
+                        s.FilterIndex = 5;
+                        break;
+                    case "jpg":
+                    case "jpeg":
+                    case "jpe":
+                        s.FilterIndex = 6;
+                        break;
+                    case "png":
+                        s.FilterIndex = 7;
+                        break;
+                    case "tiff":
+                        s.FilterIndex = 8;
+                        break;
+                    case "wmf":
+                        s.FilterIndex = 9;
+                        break;
+                }
 
 
             if (s.ShowDialog() == DialogResult.OK)
             {
                 Bitmap clonedPic = (Bitmap)picMain.Image;
 
+                LocalSetting.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
                 {
                     case 1:
