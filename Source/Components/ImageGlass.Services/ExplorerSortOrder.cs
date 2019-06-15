@@ -76,19 +76,29 @@ namespace ImageGlass.Services
                 StringBuilder sb = new StringBuilder(200); // arbitrary length should fit any
                 int explorerSortResult;
                 int ascend = -1;
+
                 if (IntPtr.Size == 8) // 64 bit platform
+                {
                     explorerSortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
+                }
                 else
+                {
                     explorerSortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
+                }
 
                 if (explorerSortResult != 0) // failure
+                {
                     return false;
+                }
 
                 // Success! Attempt to translate the Explorer column to our supported
                 // sort order values.
                 string column = sb.ToString();
                 if (SortTranslation.ContainsKey(column))
+                {
                     loadOrder = SortTranslation[column];
+                }
+                    
                 isAscending = ascend > 0;
 
                 return loadOrder != null; // will be false on not-yet-supported column
