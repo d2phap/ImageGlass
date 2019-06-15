@@ -239,7 +239,7 @@ namespace ImageGlass
             if (paths.Count() == 0) return;
 
 
-            List<string> allFilesToLoad = new List<string>();
+            var allFilesToLoad = new HashSet<string>();
             var currentFile = currentFileName;
 
             // prepare the distinct dir list
@@ -302,16 +302,16 @@ namespace ImageGlass
                     pathsLoaded.Add(dirPath);
 
                     var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
-                    allFilesToLoad.AddRange(imageFilenameList);
+                    allFilesToLoad.UnionWith(imageFilenameList);
                 }
 
                 LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
             });
 
             // sort list
-            allFilesToLoad = SortImageList(allFilesToLoad);
+            var sortedFilesList = SortImageList(allFilesToLoad);
 
-            LoadImages(allFilesToLoad, currentFile);
+            LoadImages(sortedFilesList, currentFile);
         }
 
 
