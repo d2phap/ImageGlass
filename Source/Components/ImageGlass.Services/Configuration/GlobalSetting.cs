@@ -109,11 +109,11 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
-        
+
 
         #endregion
 
-        
+
 
         #region Public Properties
 
@@ -259,7 +259,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-        
+
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -333,14 +333,14 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-        
+
 
         /// <summary>
         /// Gets, sets zoom mode value
         /// </summary>
         public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-        
+
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
@@ -529,7 +529,7 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder editingAssocString = new StringBuilder();
 
-            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+            foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
             {
                 editingAssocString.Append($"[{assoc.ToString()}]");
             }
@@ -559,7 +559,7 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            return null;            
+            return null;
         }
 
 
@@ -579,7 +579,7 @@ namespace ImageGlass.Services.Configuration
             };
             var extList = reg.GetValueNames();
 
-            foreach(var ext in extList)
+            foreach (var ext in extList)
             {
                 exts.Append($"*{ext};");
             }

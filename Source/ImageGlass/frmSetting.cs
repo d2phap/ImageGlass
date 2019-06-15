@@ -42,7 +42,7 @@ namespace ImageGlass
 
             imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
             imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
-            
+
         }
 
         #region PROPERTIES
@@ -293,7 +293,7 @@ namespace ImageGlass
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
             lblColorProfile.Text = lang[$"{Name}.lblColorProfile"];
             lnkColorProfileBrowse.Text = lang[$"{Name}.lnkColorProfileBrowse"];
-            
+
             lblHeadMouseWheelActions.Text = lang[$"{Name}.lblHeadMouseWheelActions"];
             lblMouseWheel.Text = lang[$"{Name}.lblMouseWheel"];
             lblMouseWheelAlt.Text = lang[$"{Name}.lblMouseWheelAlt"];
@@ -311,7 +311,7 @@ namespace ImageGlass
             lblHeadSlideshow.Text = lang[$"{Name}.lblHeadSlideshow"];//
             chkLoopSlideshow.Text = lang[$"{Name}.chkLoopSlideshow"];
             lblSlideshowInterval.Text = string.Format(lang[$"{Name}.lblSlideshowInterval"], barInterval.Value);
-            
+
             #endregion
 
 
@@ -464,12 +464,12 @@ namespace ImageGlass
 
             lblGeneral.BackColor =
             lblImage.BackColor =
-            lblEdit.BackColor = 
+            lblEdit.BackColor =
             lblFileAssociations.BackColor =
             lblLanguage.BackColor =
             lblToolbar.BackColor =
             lblColorPicker.BackColor =
-            lblTheme.BackColor = 
+            lblTheme.BackColor =
             lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
@@ -628,7 +628,7 @@ namespace ImageGlass
         {
             picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
         }
-        
+
 
         #endregion
 
@@ -683,7 +683,7 @@ namespace ImageGlass
 
             #region Color Management
             chkApplyColorProfile.Checked = GlobalSetting.IsApplyColorProfileForAll;
-            
+
             // color profile list
             cmbColorProfile.Items.Clear();
             cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._None"]);
@@ -718,7 +718,7 @@ namespace ImageGlass
                 lnkColorProfileBrowse.Visible = false;
                 lnkColorProfilePath.Visible = false;
             }
-            
+
             #endregion
 
 
@@ -790,7 +790,7 @@ namespace ImageGlass
             //Get value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
-            
+
         }
 
 
@@ -823,7 +823,7 @@ namespace ImageGlass
             {
                 Filter = "Supported files|*.icc;*.icm;|All files|*.*",
                 CheckFileExists = true,
-                
+
             };
 
             if (o.ShowDialog() == DialogResult.OK)
@@ -1304,7 +1304,7 @@ namespace ImageGlass
             {
                 cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
             }
-            
+
             cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
 
             chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
@@ -1898,7 +1898,7 @@ namespace ImageGlass
                     var lvi = new ListViewItem(th.Name)
                     {
                         // folder name of the theme
-                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)), 
+                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)),
                         ImageKey = "_blank"
                     };
 
@@ -1950,20 +1950,20 @@ namespace ImageGlass
                     //btnThemeSaveAs.Enabled = false;
                     btnThemeUninstall.Enabled = false;
                 }
-                
+
 
                 Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
-                txtThemeInfo.Text = 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" + 
+                txtThemeInfo.Text =
+                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" +
                     $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {t.Description}";
-                    
+
                 txtThemeInfo.Visible = true;
 
                 btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
@@ -2045,7 +2045,7 @@ namespace ImageGlass
                 {
                     string themeName = lvTheme.SelectedItems[0].Tag.ToString();
                     string configFilePath = GlobalSetting.ConfigDir(Dir.Themes, themeName, "config.xml");
-                    
+
                     if (!File.Exists(configFilePath))
                     {
                         configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
@@ -2072,7 +2072,7 @@ namespace ImageGlass
             string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
-        
+
 
         private void btnThemeApply_Click(object sender, EventArgs e)
         {
@@ -2209,7 +2209,7 @@ namespace ImageGlass
                 var lookup = $"{Name}.KeyActions._{actionList[i]}";
                 string val = lang[lookup];
 
-                if ( val == selected.ToString())
+                if (val == selected.ToString())
                 {
                     GlobalSetting.SetKeyAction(which, i);
                     return;
@@ -2225,10 +2225,10 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void btnKeyReset_Click(object sender, EventArgs e)
         {
-            GlobalSetting.SetKeyAction(KeyCombos.LeftRight,  (int)AssignableActions.PrevNextImage);
-            GlobalSetting.SetKeyAction(KeyCombos.UpDown,     (int)AssignableActions.PanUpDown);
+            GlobalSetting.SetKeyAction(KeyCombos.LeftRight, (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.UpDown, (int)AssignableActions.PanUpDown);
             GlobalSetting.SetKeyAction(KeyCombos.PageUpDown, (int)AssignableActions.PrevNextImage);
-            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack,  (int)AssignableActions.PauseSlideshow);
+            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack, (int)AssignableActions.PauseSlideshow);
             GlobalSetting.SaveKeyAssignments();
             LoadTabKeyboard();
         }
@@ -2257,7 +2257,7 @@ namespace ImageGlass
             string newString;
             Color newColor;
 
-            
+
             #region General tab --------------------------------------------
             // IsShowWelcome
             GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
@@ -2486,8 +2486,8 @@ namespace ImageGlass
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             //ThumbnailDimension
-            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); 
-            
+            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat);
+
             if (GlobalSetting.ThumbnailDimension != newInt) //Only change when the new value selected
             {
                 GlobalSetting.ThumbnailDimension = newInt;
@@ -2519,7 +2519,7 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
-            
+
 
             #endregion
 
@@ -2623,6 +2623,6 @@ namespace ImageGlass
 
         #endregion
 
-        
+
     }
 }

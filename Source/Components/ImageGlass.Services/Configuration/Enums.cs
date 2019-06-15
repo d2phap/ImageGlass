@@ -102,8 +102,8 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR = 32,
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
-        IMAGE_LIST_NO_RECURSIVE = 512,
-        OTHER_SETTINGS = 1024
+        IMAGE_LIST_NO_RECURSIVE = 256,
+        OTHER_SETTINGS = 512
     }
 
 
@@ -200,7 +200,7 @@ namespace ImageGlass.Services.Configuration
     /// </summary>
     public enum KeyCombos
     {
-        LeftRight=0, // left/right arrow keys
+        LeftRight = 0, // left/right arrow keys
         UpDown,      // up/down arrow keys
         PageUpDown,  // pageup/pagedown keys
         SpaceBack,   // space, backspace keys
