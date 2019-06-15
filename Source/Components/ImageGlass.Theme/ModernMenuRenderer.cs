@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,8 @@ namespace ImageGlass.Theme
             }
             else
             {
-                e.Item.Enabled = true;
+                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
+                //e.Item.Enabled = true;
 
                 if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
@@ -55,7 +56,9 @@ namespace ImageGlass.Theme
 
 
                 base.OnRenderItemText(e);
-                e.Item.Enabled = false;
+
+                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
+                //e.Item.Enabled = false;
             }
         }
 
