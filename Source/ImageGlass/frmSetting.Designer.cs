@@ -83,6 +83,7 @@ namespace ImageGlass
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.cmbImageOrderType = new System.Windows.Forms.ComboBox();
             this.lnkColorProfilePath = new System.Windows.Forms.LinkLabel();
             this.lnkColorProfileBrowse = new System.Windows.Forms.LinkLabel();
             this.lblColorManagement = new System.Windows.Forms.Label();
@@ -111,7 +112,7 @@ namespace ImageGlass
             this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
-            this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
+            this.chkUseFileExplorerSortOrder = new System.Windows.Forms.CheckBox();
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
@@ -850,6 +851,7 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.cmbImageOrderType);
             this.tabImage.Controls.Add(this.lnkColorProfilePath);
             this.tabImage.Controls.Add(this.lnkColorProfileBrowse);
             this.tabImage.Controls.Add(this.lblColorManagement);
@@ -878,7 +880,7 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.chkThumbnailVertical);
             this.tabImage.Controls.Add(this.lblGeneral_ThumbnailSize);
             this.tabImage.Controls.Add(this.cmbThumbnailDimension);
-            this.tabImage.Controls.Add(this.chkImageBoosterBack);
+            this.tabImage.Controls.Add(this.chkUseFileExplorerSortOrder);
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
@@ -891,6 +893,20 @@ namespace ImageGlass
             this.tabImage.Size = new System.Drawing.Size(799, 583);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // cmbImageOrderType
+            // 
+            this.cmbImageOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageOrderType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbImageOrderType.FormattingEnabled = true;
+            this.cmbImageOrderType.Items.AddRange(new object[] {
+            "[Ascending]",
+            "[Descending]"});
+            this.cmbImageOrderType.Location = new System.Drawing.Point(333, 191);
+            this.cmbImageOrderType.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbImageOrderType.Name = "cmbImageOrderType";
+            this.cmbImageOrderType.Size = new System.Drawing.Size(278, 33);
+            this.cmbImageOrderType.TabIndex = 60;
             // 
             // lnkColorProfilePath
             // 
@@ -1217,17 +1233,17 @@ namespace ImageGlass
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
             this.cmbThumbnailDimension.TabIndex = 32;
             // 
-            // chkImageBoosterBack
+            // chkUseFileExplorerSortOrder
             // 
-            this.chkImageBoosterBack.AutoSize = true;
-            this.chkImageBoosterBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkImageBoosterBack.Location = new System.Drawing.Point(45, 147);
-            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2);
-            this.chkImageBoosterBack.Name = "chkImageBoosterBack";
-            this.chkImageBoosterBack.Size = new System.Drawing.Size(577, 30);
-            this.chkImageBoosterBack.TabIndex = 19;
-            this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
-            this.chkImageBoosterBack.UseVisualStyleBackColor = true;
+            this.chkUseFileExplorerSortOrder.AutoSize = true;
+            this.chkUseFileExplorerSortOrder.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkUseFileExplorerSortOrder.Location = new System.Drawing.Point(45, 233);
+            this.chkUseFileExplorerSortOrder.Margin = new System.Windows.Forms.Padding(2);
+            this.chkUseFileExplorerSortOrder.Name = "chkUseFileExplorerSortOrder";
+            this.chkUseFileExplorerSortOrder.Size = new System.Drawing.Size(425, 30);
+            this.chkUseFileExplorerSortOrder.TabIndex = 19;
+            this.chkUseFileExplorerSortOrder.Text = "[Use Windows File Explorer sort order if possible]";
+            this.chkUseFileExplorerSortOrder.UseVisualStyleBackColor = true;
             // 
             // chkLoopSlideshow
             // 
@@ -1244,7 +1260,7 @@ namespace ImageGlass
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(40, 195);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(40, 163);
             this.lblImageLoadingOrder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(179, 25);
@@ -1264,7 +1280,7 @@ namespace ImageGlass
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(45, 224);
+            this.cmbImageOrder.Location = new System.Drawing.Point(45, 192);
             this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
@@ -2398,7 +2414,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkThumbnailVertical;
         private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
-        private System.Windows.Forms.CheckBox chkImageBoosterBack;
+        private System.Windows.Forms.CheckBox chkUseFileExplorerSortOrder;
         private System.Windows.Forms.CheckBox chkLoopSlideshow;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
@@ -2504,5 +2520,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblKeysLeftRight;
         private System.Windows.Forms.Label lblKeysKeysHeader;
         private System.Windows.Forms.Label lblKeyboard;
+        private System.Windows.Forms.ComboBox cmbImageOrderType;
     }
 }

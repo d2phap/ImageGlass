@@ -80,6 +80,18 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets image loading order type
+        /// </summary>
+        public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
+        /// </summary>
+        public static bool IsUseFileExplorerSortOrder { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;
@@ -97,11 +109,10 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
-        
+
 
         #endregion
 
-        
 
 
         #region Public Properties
@@ -227,12 +238,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets value that allow user speed up image loading when navigate back
-        /// </summary>
-        public static bool IsImageBoosterBack { get; set; } = true;
-
-
-        /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
         /// </summary>
         public static bool IsPressESCToQuit { get; set; } = true;
@@ -254,7 +259,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-        
+
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -328,14 +333,14 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-        
+
 
         /// <summary>
         /// Gets, sets zoom mode value
         /// </summary>
         public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-        
+
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
@@ -524,7 +529,7 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder editingAssocString = new StringBuilder();
 
-            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+            foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
             {
                 editingAssocString.Append($"[{assoc.ToString()}]");
             }
@@ -554,7 +559,7 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            return null;            
+            return null;
         }
 
 
@@ -574,7 +579,7 @@ namespace ImageGlass.Services.Configuration
             };
             var extList = reg.GetValueNames();
 
-            foreach(var ext in extList)
+            foreach (var ext in extList)
             {
                 exts.Append($"*{ext};");
             }
@@ -602,6 +607,28 @@ namespace ImageGlass.Services.Configuration
             }
 
             return (ImageOrderBy)i;
+        }
+
+
+        /// <summary>
+        /// Get image order type from configuration file
+        /// </summary>
+        /// <returns></returns>
+        public static ImageOrderType GetImageOrderTypeConfig()
+        {
+            string s = GetConfig("ImageLoadingOrderType", "0");
+
+            if (int.TryParse(s, out int i))
+            {
+                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderType)).Length) //<=== Number of items in enum
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+
+            return (ImageOrderType)i;
         }
 
 
@@ -715,6 +742,8 @@ namespace ImageGlass.Services.Configuration
         }
 
         #endregion
+
+
 
         #region Keyboard customization
         // The user is permitted to choose what action to associate to a key-pairing.
