@@ -1948,10 +1948,6 @@ namespace ImageGlass
             // Use File Explorer sort order if possible
             if (GlobalSetting.IsUseFileExplorerSortOrder)
             {
-                // 'random' setting always supersedes explorer setting
-                if (LocalSetting.ActiveImageLoadingOrder == ImageOrderBy.Random)
-                    return;
-
                 if (ExplorerSortOrder.GetExplorerSortOrder(fullPath, out var explorerOrder, out var isAscending))
                 {
                     if (explorerOrder != null)
