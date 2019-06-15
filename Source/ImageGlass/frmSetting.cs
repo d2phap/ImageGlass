@@ -2244,14 +2244,14 @@ namespace ImageGlass
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //Save and close
+            // Save and close
             btnApply_Click(sender, null);
             this.Close();
         }
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            //Variables for comparision
+            // Variables for comparision
             int newInt;
             bool newBool;
             string newString;
@@ -2346,24 +2346,31 @@ namespace ImageGlass
 
             #region Image tab ----------------------------------------------
 
-            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST or IMAGE_LIST_NO_RECURSIVE
             newBool = chkFindChildFolder.Checked;
-            if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
+            if (GlobalSetting.IsRecursiveLoading != newBool) // Only change when the new value selected  
             {
                 GlobalSetting.IsRecursiveLoading = newBool;
                 GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
 
-                //Request frmMain to update the thumbnail bar
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                // Request frmMain to update the thumbnail bar
+                if (GlobalSetting.IsRecursiveLoading)
+                {
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
+                else
+                {
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE;
+                }
             }
             #endregion
 
 
-            //IsShowingHiddenImages
+            // IsShowingHiddenImages
             GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;
             GlobalSetting.SetConfig("IsShowingHiddenImages", GlobalSetting.IsShowingHiddenImages.ToString());
 
-            //IsLoopBackViewer
+            // IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
             GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
 
@@ -2439,7 +2446,7 @@ namespace ImageGlass
             #endregion
 
 
-            //ZoomOptimization
+            // ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
             GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
 
@@ -2494,7 +2501,7 @@ namespace ImageGlass
             #endregion
 
 
-            //IsLoopBackSlideShow
+            // IsLoopBackSlideShow
             GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
             GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
 
@@ -2600,6 +2607,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
 
             #endregion
+
 
             SaveKeyboardSettings();
         }

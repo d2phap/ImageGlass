@@ -305,7 +305,7 @@ namespace ImageGlass
                     allFilesToLoad.UnionWith(imageFilenameList);
                 }
 
-                LocalSetting.InitialInputImageFilename = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
+                LocalSetting.InitialInputPath = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
             });
 
             // sort list
@@ -726,12 +726,6 @@ namespace ImageGlass
                 // skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true); 
 
-                //Read image data outside the GUI loop
-                //im = await Task.Run(() =>
-                //{
-                    
-
-                //});
 
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
                 im = bmpImg.Image;
@@ -3140,13 +3134,19 @@ namespace ImageGlass
 
 
             #region IMAGE_LIST
-            else
+            if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
             {
-                if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
-                {
-                    // update image list
-                    MnuMainReloadImageList_Click(null, null);
-                }
+                // update image list
+                MnuMainReloadImageList_Click(null, null);
+            }
+            #endregion
+
+
+            #region IMAGE_LIST_NO_RECURSIVE
+            if ((flags & MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE) == MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE)
+            {
+                // update image list with the initial input path
+                PrepareLoading(new string[] { LocalSetting.InitialInputPath }, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
             }
             #endregion
 
@@ -3302,8 +3302,8 @@ namespace ImageGlass
                 catch { }
 
                 // User renamed the initial file - update in case of list reload
-                if (oldFilename == LocalSetting.InitialInputImageFilename)
-                    LocalSetting.InitialInputImageFilename = newFilename;
+                if (oldFilename == LocalSetting.InitialInputPath)
+                    LocalSetting.InitialInputPath = newFilename;
             }
 
 
@@ -3452,8 +3452,8 @@ namespace ImageGlass
 
                 // If user deletes the initially loaded image, use the path instead, in case
                 // of list re-load.
-                if (filename == LocalSetting.InitialInputImageFilename)
-                    LocalSetting.InitialInputImageFilename = Path.GetDirectoryName(filename);
+                if (filename == LocalSetting.InitialInputPath)
+                    LocalSetting.InitialInputPath = Path.GetDirectoryName(filename);
             }
         }
 

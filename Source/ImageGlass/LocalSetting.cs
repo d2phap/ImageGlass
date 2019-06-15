@@ -76,7 +76,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// The current "initial" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
+        /// The current "initial" path (file or dir) we're viewing. Used when the user changes the sort settings: we need to rebuild
         /// the image list, but otherwise we don't know what image/folder we started with.
         /// 
         /// Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the 
@@ -85,7 +85,7 @@ namespace ImageGlass
         ///
         /// But if we reload the list using the original image, then the original folder's images, and the sub-folders, are reloaded.
         /// </summary>
-        public static string InitialInputImageFilename { get; set; } = "";
+        public static string InitialInputPath { get; set; } = "";
 
 
         /// <summary>
