@@ -286,8 +286,8 @@ namespace ImageGlass
             chkFindChildFolder.Text = lang[$"{Name}.chkFindChildFolder"];
             chkShowHiddenImages.Text = lang[$"{Name}.chkShowHiddenImages"];
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
-            chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
+            chkUseFileExplorerSortOrder.Text = lang[$"{Name}.chkUseFileExplorerSortOrder"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -640,17 +640,17 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabImageConfig()
         {
-            //Get value of chkFindChildFolder ---------------------------------------------
+            // Get value of chkFindChildFolder ---------------------------------------------
             chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
 
-            //Get value of chkShowHiddenImages
+            // Get value of chkShowHiddenImages
             chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
 
-            //Get value of chkLoopViewer
+            // Get value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
 
-            //Get value of chkImageBoosterBack
-            chkImageBoosterBack.Checked = GlobalSetting.IsImageBoosterBack;
+            // Get value of chkUseFileExplorerSortOrder
+            chkUseFileExplorerSortOrder.Checked = GlobalSetting.IsUseFileExplorerSortOrder;
 
 
             #region Load items of cmbImageOrder
@@ -2367,10 +2367,6 @@ namespace ImageGlass
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
             GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
 
-            //IsImageBoosterBack
-            GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
-            GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
-            
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
@@ -2399,6 +2395,10 @@ namespace ImageGlass
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
             }
+
+            //IsUseFileExplorerSortOrder
+            GlobalSetting.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
+            GlobalSetting.SetConfig("IsUseFileExplorerSortOrder", GlobalSetting.IsUseFileExplorerSortOrder.ToString());
 
             #endregion
 

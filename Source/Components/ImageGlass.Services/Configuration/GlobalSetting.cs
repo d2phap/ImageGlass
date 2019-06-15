@@ -86,6 +86,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
+        /// </summary>
+        public static bool IsUseFileExplorerSortOrder { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;
@@ -108,7 +114,6 @@ namespace ImageGlass.Services.Configuration
         #endregion
 
         
-
 
         #region Public Properties
 
@@ -230,12 +235,6 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
         /// </summary>
         public static bool IsLoopBackViewer { get; set; } = true;
-
-
-        /// <summary>
-        /// Gets, sets value that allow user speed up image loading when navigate back
-        /// </summary>
-        public static bool IsImageBoosterBack { get; set; } = true;
 
 
         /// <summary>
@@ -743,6 +742,8 @@ namespace ImageGlass.Services.Configuration
         }
 
         #endregion
+
+
 
         #region Keyboard customization
         // The user is permitted to choose what action to associate to a key-pairing.

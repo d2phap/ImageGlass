@@ -754,21 +754,6 @@ namespace ImageGlass
                         //reset zoom mode
                         ApplyZoomMode(GlobalSetting.ZoomMode);
                     }
-
-
-                    //Run in another thread
-                    Parallel.Invoke(() =>
-                    {
-                        //Release unused images
-                        if (GlobalSetting.CurrentIndex - 2 >= 0)
-                        {
-                            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 2);
-                        }
-                        if (!GlobalSetting.IsImageBoosterBack && GlobalSetting.CurrentIndex - 1 >= 0)
-                        {
-                            GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex - 1);
-                        }
-                    });
                 }
 
             }
@@ -2341,19 +2326,19 @@ namespace ImageGlass
                 #endregion
 
 
-                //Load image order config
+                // Load image order config
                 GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
 
 
-                //Load image order type config
+                // Load image order type config
                 GlobalSetting.ImageLoadingOrderType = GlobalSetting.GetImageOrderTypeConfig();
 
 
-                //Load state of Image Booster
-                GlobalSetting.IsImageBoosterBack = bool.Parse(GlobalSetting.GetConfig("IsImageBoosterBack", "True"));
+                // Load state of Image Booster
+                GlobalSetting.IsUseFileExplorerSortOrder = bool.Parse(GlobalSetting.GetConfig("IsUseFileExplorerSortOrder", "False"));
+                
 
-
-                //Load IsDisplayBasenameOfImage value
+                // Load IsDisplayBasenameOfImage value
                 GlobalSetting.IsDisplayBasenameOfImage = bool.Parse(GlobalSetting.GetConfig("IsDisplayBasenameOfImage", "False"));
 
 
