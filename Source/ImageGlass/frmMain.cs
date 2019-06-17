@@ -122,8 +122,10 @@ namespace ImageGlass
 
                 string filePath = ((string[])dataTest)[0];
 
+                // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because we set the
+                // drag effect to Move, which is _not_allowed_
                 // Drag file from DESKTOP to APP
-                if (GlobalSetting.ImageList.IndexOf(filePath) == -1)
+                if (GlobalSetting.ImageList.IndexOf(filePath) == -1 && e.AllowedEffect != DragDropEffects.Copy)
                 {
                     e.Effect = DragDropEffects.Move;
                 }
