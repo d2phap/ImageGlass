@@ -302,6 +302,7 @@ namespace ImageGlass
 
             lblHeadZooming.Text = lang[$"{Name}.lblHeadZooming"];//
             lblGeneral_ZoomOptimization.Text = lang[$"{Name}.lblGeneral_ZoomOptimization"];
+            lblZoomLevels.Text = lang[$"{Name}.lblZoomLevels"];
 
             lblHeadThumbnailBar.Text = lang[$"{Name}.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang[$"{Name}.chkThumbnailVertical"];
@@ -760,8 +761,9 @@ namespace ImageGlass
             #endregion
 
 
-            #region Load items of cmbZoomOptimization
+            #region Zooming
 
+            // Load items of cmbZoomOptimization
             var zoomOptimizationList = Enum.GetNames(typeof(ZoomOptimizationMethods));
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList)
@@ -769,8 +771,11 @@ namespace ImageGlass
                 cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
             }
 
-            //Get value of cmbZoomOptimization
+            // Get value of cmbZoomOptimization
             cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
+
+            // Load zoom levels text
+            txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
 
             #endregion
 
@@ -2403,7 +2408,7 @@ namespace ImageGlass
                 }
             }
 
-            //IsUseFileExplorerSortOrder
+            // IsUseFileExplorerSortOrder
             GlobalSetting.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
             GlobalSetting.SetConfig("IsUseFileExplorerSortOrder", GlobalSetting.IsUseFileExplorerSortOrder.ToString());
 
@@ -2449,6 +2454,31 @@ namespace ImageGlass
             // ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
             GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
+
+
+            #region ZoomLevels: MainFormForceUpdateAction.OTHER_SETTINGS;
+            newString = txtZoomLevels.Text.Trim();
+
+            if (string.IsNullOrEmpty(newString))
+            {
+                txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+            }
+            else if (GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels) != newString)
+            {
+                try
+                {
+                    GlobalSetting.ZoomLevels = GlobalSetting.StringToIntArray(newString, unsignedOnly: true);
+                    GlobalSetting.SetConfig("ZoomLevels", newString);
+
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                }
+                catch (Exception ex)
+                {
+                    txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+                    MessageBox.Show(string.Format($"{Name}.txtZoomLevels._Error", ex.Message), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            #endregion
 
 
             #region THUMBNAIL BAR

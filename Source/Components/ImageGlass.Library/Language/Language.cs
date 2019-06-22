@@ -534,6 +534,9 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
+
+            Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v6.1
+            Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v6.1
             #endregion
 
 

@@ -2089,8 +2089,8 @@ namespace ImageGlass
         /// </summary>
         private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true)
         {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
             string configValue = string.Empty;
+
 
             #region UI SETTINGS
             if (isLoadUI)
@@ -2365,6 +2365,16 @@ namespace ImageGlass
                 int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
                 GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
 
+
+                // Load ZoomLevels
+                var zoomLevelStr = GlobalSetting.GetConfig("ZoomLevels");
+                var zoomLevels = GlobalSetting.StringToIntArray(zoomLevelStr, unsignedOnly: true);
+                if (zoomLevels.Length > 0)
+                {
+                    GlobalSetting.ZoomLevels = zoomLevels;
+                }
+                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(GlobalSetting.ZoomLevels);
+
                 #endregion
 
 
@@ -2570,8 +2580,6 @@ namespace ImageGlass
             }
             #endregion
 
-            //stopwatch.Stop();
-            //Console.WriteLine(">>>>> Elapsed = " + stopwatch.ElapsedMilliseconds);
         }
 
 
@@ -3074,42 +3082,6 @@ namespace ImageGlass
             #endregion
 
 
-            #region OTHER_SETTINGS
-            if ((flags & MainFormForceUpdateAction.OTHER_SETTINGS) == MainFormForceUpdateAction.OTHER_SETTINGS)
-            {
-                #region Update Other Settings
-
-                //Update scrollbars visibility
-                if (GlobalSetting.IsScrollbarsVisible)
-                {
-                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                }
-                else
-                {
-                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
-                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
-                }
-
-                // update checkerboard display mode
-                if (GlobalSetting.IsShowCheckerBoard)
-                {
-                    GlobalSetting.IsShowCheckerBoard = false;
-                    mnuMainCheckBackground_Click(null, null);
-                }
-
-                //Update background---------------------
-                picMain.BackColor = GlobalSetting.BackgroundColor;
-
-                //Update slideshow interval value of timer
-                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
-
-                #endregion
-
-            }
-            #endregion
-
-
             #region TOOLBAR
             if ((flags & MainFormForceUpdateAction.TOOLBAR) == MainFormForceUpdateAction.TOOLBAR)
             {
@@ -3155,6 +3127,45 @@ namespace ImageGlass
             {
                 // update image list with the initial input path
                 PrepareLoading(new string[] { LocalSetting.InitialInputPath }, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            }
+            #endregion
+
+
+            #region OTHER_SETTINGS
+            if ((flags & MainFormForceUpdateAction.OTHER_SETTINGS) == MainFormForceUpdateAction.OTHER_SETTINGS)
+            {
+                #region Update Other Settings
+
+                //Update scrollbars visibility
+                if (GlobalSetting.IsScrollbarsVisible)
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                }
+                else
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+                }
+
+                // update checkerboard display mode
+                if (GlobalSetting.IsShowCheckerBoard)
+                {
+                    GlobalSetting.IsShowCheckerBoard = false;
+                    mnuMainCheckBackground_Click(null, null);
+                }
+
+                //Update background---------------------
+                picMain.BackColor = GlobalSetting.BackgroundColor;
+
+                //Update slideshow interval value of timer
+                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
+
+                // Update ZoomLevels
+                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(GlobalSetting.ZoomLevels);
+
+                #endregion
+
             }
             #endregion
 

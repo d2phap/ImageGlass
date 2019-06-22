@@ -178,6 +178,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets zoom levels of the viewer
+        /// </summary>
+        public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
+
+
+        /// <summary>
         /// Check if user wants to display RGBA color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerRGBA { get; set; } = true;
@@ -669,19 +675,56 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert String to Rectangle
+        /// Convert string to int array
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">Input string. E.g. "12, -40, 50"</param>
+        /// <returns></returns>
+        public static int[] StringToIntArray(string str, bool unsignedOnly = false)
+        {
+            var args = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var numbers = new List<int>();
+
+            foreach (var item in args)
+            {
+                var num = int.Parse(item, GlobalSetting.NumberFormat);
+                if (unsignedOnly && num < 0)
+                {
+                    continue;
+                }
+
+                numbers.Add(num);
+            }
+
+            return numbers.ToArray();
+        }
+
+
+        /// <summary>
+        /// Convert int array to string
+        /// </summary>
+        /// <param name="array">Input int array</param>
+        /// <returns></returns>
+        public static string IntArrayToString(int[] array)
+        {
+            return string.Join(",", array);
+        }
+
+
+        /// <summary>
+        /// Convert string to Rectangle
+        /// </summary>
+        /// <param name="str">Input string. E.g. "12, 40, 50"</param>
         /// <returns></returns>
         public static Rectangle StringToRect(string str)
         {
-            string[] args = str.Split(',');
-            int[] arg = new int[args.Length];
-            for (int a = 0; a < arg.Length; a++)
+            var args = GlobalSetting.StringToIntArray(str);
+
+            if (args.Count() == 4)
             {
-                arg[a] = Convert.ToInt32(args[a]);
+                return new Rectangle(args[0], args[1], args[2], args[3]);
             }
-            return new Rectangle(arg[0], arg[1], arg[2], arg[3]);
+
+            return new Rectangle();
         }
 
 
