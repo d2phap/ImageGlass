@@ -321,22 +321,24 @@ namespace ImageGlass
         /// <summary>
         /// Load the images.
         /// </summary>
-        /// <param name="_imageFilenameList"></param>
-        /// <param name="filePath"></param>
-        private void LoadImages(List<string> _imageFilenameList, string filePath)
+        /// <param name="imageFilenameList">The list of files to load</param>
+        /// <param name="filePath">The image file path to view first</param>
+        private void LoadImages(List<string> imageFilenameList, string filePath)
         {
-            //Dispose all garbage
+            // Dispose all garbage
             GlobalSetting.ImageList.Dispose();
 
-            //Set filename to image list
-            //GlobalSetting.ImageList = new ImgMan(_imageFilenameList.ToArray());
-            GlobalSetting.ImageList = new Heart.Factory(_imageFilenameList);
+            // Set filename to image list
+            GlobalSetting.ImageList = new Heart.Factory(imageFilenameList)
+            {
+                MaxQueue = GlobalSetting.ImageBoosterCachedCount,
+            };
 
 
-            //Track image loading progress
+            // Track image loading progress
             GlobalSetting.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
-            //Find the index of current image
+            // Find the index of current image
             if (filePath.Length > 0)
             {
                 GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
@@ -351,31 +353,33 @@ namespace ImageGlass
                 if (GlobalSetting.CurrentIndex == -1 &&
                     GlobalSetting.ImageList.Length > 0 &&
                     !GlobalSetting.ImageList.ContainsDirPathOf(filePath))
+                {
                     GlobalSetting.CurrentIndex = 0;
+                }
             }
             else
             {
                 GlobalSetting.CurrentIndex = 0;
             }
 
-            //Load thumnbnail
+            // Load thumnbnail
             LoadThumbnails();
 
-            //Cannot find the index
+            // Cannot find the index
             if (GlobalSetting.CurrentIndex == -1)
             {
-                //Mark as Image Error
+                // Mark as Image Error
                 GlobalSetting.IsImageError = true;
                 this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = GlobalSetting.LangPack.Items["frmMain.picMain._ErrorText"];
                 picMain.Image = null;
 
-                //Exit function
+                // Exit function
                 return;
             }
 
-            //Start loading image
+            // Start loading image
             NextPic(0);
         }
 
@@ -2338,6 +2342,10 @@ namespace ImageGlass
 
                 // Load state of Image Booster
                 GlobalSetting.IsUseFileExplorerSortOrder = bool.Parse(GlobalSetting.GetConfig("IsUseFileExplorerSortOrder", "False"));
+
+
+                // Load ImageBoosterCachedCount value
+                GlobalSetting.ImageBoosterCachedCount = int.Parse(GlobalSetting.GetConfig("ImageBoosterCachedCount", "1"));
 
 
                 // Load IsDisplayBasenameOfImage value

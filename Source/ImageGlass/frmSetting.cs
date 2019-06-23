@@ -288,6 +288,7 @@ namespace ImageGlass
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.chkUseFileExplorerSortOrder"];
+            lblImageBoosterCachedCount.Text = lang[$"{Name}.lblImageBoosterCachedCount"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
@@ -641,16 +642,16 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabImageConfig()
         {
-            // Get value of chkFindChildFolder ---------------------------------------------
+            // Set value of chkFindChildFolder ---------------------------------------------
             chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
 
-            // Get value of chkShowHiddenImages
+            // Set value of chkShowHiddenImages
             chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
 
-            // Get value of chkLoopViewer
+            // Set value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
 
-            // Get value of chkUseFileExplorerSortOrder
+            // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = GlobalSetting.IsUseFileExplorerSortOrder;
 
 
@@ -680,6 +681,10 @@ namespace ImageGlass
             //Get value of cmbImageOrder
             cmbImageOrderType.SelectedIndex = (int)GlobalSetting.ImageLoadingOrderType;
             #endregion
+
+
+            // Set value of cmbImageBoosterCachedCount
+            cmbImageBoosterCachedCount.SelectedIndex = GlobalSetting.ImageBoosterCachedCount;
 
 
             #region Color Management
@@ -780,19 +785,19 @@ namespace ImageGlass
             #endregion
 
 
-            //Thumbnail bar on right side ----------------------------------------------------
+            // Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
 
-            //Show thumbnail scrollbar
+            // Show thumbnail scrollbar
             chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
 
-            //load thumbnail dimension
+            // load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
 
-            //Get value of chkLoopSlideshow --------------------------------------------------
+            // Set value of chkLoopSlideshow --------------------------------------------------
             chkLoopSlideshow.Checked = GlobalSetting.IsLoopBackSlideShow;
 
-            //Get value of barInterval
+            // Set value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
 
@@ -2413,6 +2418,12 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsUseFileExplorerSortOrder", GlobalSetting.IsUseFileExplorerSortOrder.ToString());
 
             #endregion
+
+
+            // ImageBoosterCachedCount
+            GlobalSetting.ImageBoosterCachedCount = cmbImageBoosterCachedCount.SelectedIndex;
+            GlobalSetting.SetConfig("ImageBoosterCachedCount", GlobalSetting.ImageBoosterCachedCount.ToString());
+            GlobalSetting.ImageList.MaxQueue = GlobalSetting.ImageBoosterCachedCount;
 
 
             #region Color Management

@@ -420,6 +420,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the number of images cached by Image
+        /// </summary>
+        public static int ImageBoosterCachedCount { get; set; } = 1;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +

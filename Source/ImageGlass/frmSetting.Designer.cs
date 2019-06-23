@@ -83,6 +83,8 @@ namespace ImageGlass
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.txtZoomLevels = new System.Windows.Forms.TextBox();
+            this.lblZoomLevels = new System.Windows.Forms.Label();
             this.cmbImageOrderType = new System.Windows.Forms.ComboBox();
             this.lnkColorProfilePath = new System.Windows.Forms.LinkLabel();
             this.lnkColorProfileBrowse = new System.Windows.Forms.LinkLabel();
@@ -190,8 +192,8 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.lblZoomLevels = new System.Windows.Forms.Label();
-            this.txtZoomLevels = new System.Windows.Forms.TextBox();
+            this.lblImageBoosterCachedCount = new System.Windows.Forms.Label();
+            this.cmbImageBoosterCachedCount = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
@@ -853,6 +855,8 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.lblImageBoosterCachedCount);
+            this.tabImage.Controls.Add(this.cmbImageBoosterCachedCount);
             this.tabImage.Controls.Add(this.txtZoomLevels);
             this.tabImage.Controls.Add(this.lblZoomLevels);
             this.tabImage.Controls.Add(this.cmbImageOrderType);
@@ -898,6 +902,26 @@ namespace ImageGlass
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
+            // txtZoomLevels
+            // 
+            this.txtZoomLevels.Location = new System.Drawing.Point(45, 1192);
+            this.txtZoomLevels.Multiline = true;
+            this.txtZoomLevels.Name = "txtZoomLevels";
+            this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtZoomLevels.Size = new System.Drawing.Size(568, 72);
+            this.txtZoomLevels.TabIndex = 62;
+            // 
+            // lblZoomLevels
+            // 
+            this.lblZoomLevels.AutoSize = true;
+            this.lblZoomLevels.BackColor = System.Drawing.Color.Transparent;
+            this.lblZoomLevels.Location = new System.Drawing.Point(40, 1164);
+            this.lblZoomLevels.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblZoomLevels.Name = "lblZoomLevels";
+            this.lblZoomLevels.Size = new System.Drawing.Size(118, 25);
+            this.lblZoomLevels.TabIndex = 61;
+            this.lblZoomLevels.Text = "[Zoom levels]";
+            // 
             // cmbImageOrderType
             // 
             this.cmbImageOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -919,7 +943,7 @@ namespace ImageGlass
             this.lnkColorProfilePath.BackColor = System.Drawing.Color.Transparent;
             this.lnkColorProfilePath.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkColorProfilePath.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkColorProfilePath.Location = new System.Drawing.Point(40, 468);
+            this.lnkColorProfilePath.Location = new System.Drawing.Point(40, 563);
             this.lnkColorProfilePath.Name = "lnkColorProfilePath";
             this.lnkColorProfilePath.Size = new System.Drawing.Size(152, 25);
             this.lnkColorProfilePath.TabIndex = 24;
@@ -935,7 +959,7 @@ namespace ImageGlass
             this.lnkColorProfileBrowse.BackColor = System.Drawing.Color.Transparent;
             this.lnkColorProfileBrowse.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkColorProfileBrowse.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkColorProfileBrowse.Location = new System.Drawing.Point(328, 434);
+            this.lnkColorProfileBrowse.Location = new System.Drawing.Point(328, 529);
             this.lnkColorProfileBrowse.Name = "lnkColorProfileBrowse";
             this.lnkColorProfileBrowse.Size = new System.Drawing.Size(79, 25);
             this.lnkColorProfileBrowse.TabIndex = 23;
@@ -948,7 +972,7 @@ namespace ImageGlass
             // 
             this.lblColorManagement.AutoSize = true;
             this.lblColorManagement.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorManagement.Location = new System.Drawing.Point(22, 309);
+            this.lblColorManagement.Location = new System.Drawing.Point(22, 404);
             this.lblColorManagement.Name = "lblColorManagement";
             this.lblColorManagement.Size = new System.Drawing.Size(188, 25);
             this.lblColorManagement.TabIndex = 59;
@@ -958,7 +982,7 @@ namespace ImageGlass
             // 
             this.chkApplyColorProfile.AutoSize = true;
             this.chkApplyColorProfile.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkApplyColorProfile.Location = new System.Drawing.Point(45, 342);
+            this.chkApplyColorProfile.Location = new System.Drawing.Point(45, 437);
             this.chkApplyColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.chkApplyColorProfile.Name = "chkApplyColorProfile";
             this.chkApplyColorProfile.Size = new System.Drawing.Size(479, 30);
@@ -974,7 +998,7 @@ namespace ImageGlass
             this.cmbColorProfile.Items.AddRange(new object[] {
             "[None]",
             "[Custom ICC/ICM profile file:]"});
-            this.cmbColorProfile.Location = new System.Drawing.Point(45, 430);
+            this.cmbColorProfile.Location = new System.Drawing.Point(45, 525);
             this.cmbColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.cmbColorProfile.Name = "cmbColorProfile";
             this.cmbColorProfile.Size = new System.Drawing.Size(278, 33);
@@ -986,7 +1010,7 @@ namespace ImageGlass
             this.lblColorProfile.AutoSize = true;
             this.lblColorProfile.BackColor = System.Drawing.Color.Transparent;
             this.lblColorProfile.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorProfile.Location = new System.Drawing.Point(40, 398);
+            this.lblColorProfile.Location = new System.Drawing.Point(40, 493);
             this.lblColorProfile.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.lblColorProfile.Name = "lblColorProfile";
             this.lblColorProfile.Size = new System.Drawing.Size(125, 25);
@@ -997,7 +1021,7 @@ namespace ImageGlass
             // 
             this.chkShowThumbnailScrollbar.AutoSize = true;
             this.chkShowThumbnailScrollbar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowThumbnailScrollbar.Location = new System.Drawing.Point(45, 1274);
+            this.chkShowThumbnailScrollbar.Location = new System.Drawing.Point(45, 1369);
             this.chkShowThumbnailScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowThumbnailScrollbar.Name = "chkShowThumbnailScrollbar";
             this.chkShowThumbnailScrollbar.Size = new System.Drawing.Size(279, 30);
@@ -1010,7 +1034,7 @@ namespace ImageGlass
             this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelAlt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelAlt.FormattingEnabled = true;
-            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 856);
+            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 951);
             this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
             this.cmbMouseWheelAlt.Size = new System.Drawing.Size(278, 33);
@@ -1021,7 +1045,7 @@ namespace ImageGlass
             this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelShift.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelShift.FormattingEnabled = true;
-            this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 770);
+            this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 865);
             this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
             this.cmbMouseWheelShift.Size = new System.Drawing.Size(278, 33);
@@ -1032,7 +1056,7 @@ namespace ImageGlass
             this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelCtrl.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelCtrl.FormattingEnabled = true;
-            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 682);
+            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 777);
             this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
             this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(278, 33);
@@ -1043,7 +1067,7 @@ namespace ImageGlass
             this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheel.FormattingEnabled = true;
-            this.cmbMouseWheel.Location = new System.Drawing.Point(45, 597);
+            this.cmbMouseWheel.Location = new System.Drawing.Point(45, 692);
             this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
             this.cmbMouseWheel.Size = new System.Drawing.Size(278, 33);
@@ -1052,7 +1076,7 @@ namespace ImageGlass
             // lblMouseWheelAlt
             // 
             this.lblMouseWheelAlt.AutoSize = true;
-            this.lblMouseWheelAlt.Location = new System.Drawing.Point(40, 828);
+            this.lblMouseWheelAlt.Location = new System.Drawing.Point(40, 923);
             this.lblMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelAlt.Name = "lblMouseWheelAlt";
             this.lblMouseWheelAlt.Size = new System.Drawing.Size(160, 25);
@@ -1062,7 +1086,7 @@ namespace ImageGlass
             // lblMouseWheelShift
             // 
             this.lblMouseWheelShift.AutoSize = true;
-            this.lblMouseWheelShift.Location = new System.Drawing.Point(40, 741);
+            this.lblMouseWheelShift.Location = new System.Drawing.Point(40, 836);
             this.lblMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelShift.Name = "lblMouseWheelShift";
             this.lblMouseWheelShift.Size = new System.Drawing.Size(174, 25);
@@ -1072,7 +1096,7 @@ namespace ImageGlass
             // lblMouseWheelCtrl
             // 
             this.lblMouseWheelCtrl.AutoSize = true;
-            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(40, 652);
+            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(40, 747);
             this.lblMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelCtrl.Name = "lblMouseWheelCtrl";
             this.lblMouseWheelCtrl.Size = new System.Drawing.Size(165, 25);
@@ -1082,7 +1106,7 @@ namespace ImageGlass
             // lblMouseWheel
             // 
             this.lblMouseWheel.AutoSize = true;
-            this.lblMouseWheel.Location = new System.Drawing.Point(40, 568);
+            this.lblMouseWheel.Location = new System.Drawing.Point(40, 663);
             this.lblMouseWheel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheel.Name = "lblMouseWheel";
             this.lblMouseWheel.Size = new System.Drawing.Size(116, 25);
@@ -1093,7 +1117,7 @@ namespace ImageGlass
             // 
             this.lblHeadMouseWheelActions.AutoSize = true;
             this.lblHeadMouseWheelActions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(22, 532);
+            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(22, 627);
             this.lblHeadMouseWheelActions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeadMouseWheelActions.Name = "lblHeadMouseWheelActions";
             this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(190, 25);
@@ -1114,7 +1138,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1628);
+            this.panel3.Location = new System.Drawing.Point(27, 1723);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -1124,7 +1148,7 @@ namespace ImageGlass
             // 
             this.lblHeadZooming.AutoSize = true;
             this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(22, 946);
+            this.lblHeadZooming.Location = new System.Drawing.Point(22, 1041);
             this.lblHeadZooming.Name = "lblHeadZooming";
             this.lblHeadZooming.Size = new System.Drawing.Size(88, 25);
             this.lblHeadZooming.TabIndex = 43;
@@ -1134,7 +1158,7 @@ namespace ImageGlass
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1443);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1538);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
             this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
             this.lblHeadSlideshow.TabIndex = 42;
@@ -1144,7 +1168,7 @@ namespace ImageGlass
             // 
             this.lblHeadThumbnailBar.AutoSize = true;
             this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 1207);
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 1302);
             this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
             this.lblHeadThumbnailBar.Size = new System.Drawing.Size(136, 25);
             this.lblHeadThumbnailBar.TabIndex = 41;
@@ -1176,7 +1200,7 @@ namespace ImageGlass
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
             this.lblGeneral_ZoomOptimization.BackColor = System.Drawing.Color.Transparent;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(40, 982);
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(40, 1077);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(165, 25);
@@ -1190,7 +1214,7 @@ namespace ImageGlass
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 1010);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 1105);
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
@@ -1200,7 +1224,7 @@ namespace ImageGlass
             // 
             this.chkThumbnailVertical.AutoSize = true;
             this.chkThumbnailVertical.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 1239);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 1334);
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(256, 30);
@@ -1211,7 +1235,7 @@ namespace ImageGlass
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1333);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1428);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(257, 25);
@@ -1232,7 +1256,7 @@ namespace ImageGlass
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1363);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1458);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
@@ -1254,7 +1278,7 @@ namespace ImageGlass
             // 
             this.chkLoopSlideshow.AutoSize = true;
             this.chkLoopSlideshow.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1477);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1572);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(607, 30);
@@ -1294,7 +1318,7 @@ namespace ImageGlass
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(46, 1561);
+            this.barInterval.Location = new System.Drawing.Point(46, 1656);
             this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
@@ -1308,7 +1332,7 @@ namespace ImageGlass
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1526);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1621);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
@@ -2309,25 +2333,38 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // lblZoomLevels
+            // lblImageBoosterCachedCount
             // 
-            this.lblZoomLevels.AutoSize = true;
-            this.lblZoomLevels.BackColor = System.Drawing.Color.Transparent;
-            this.lblZoomLevels.Location = new System.Drawing.Point(40, 1069);
-            this.lblZoomLevels.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblZoomLevels.Name = "lblZoomLevels";
-            this.lblZoomLevels.Size = new System.Drawing.Size(118, 25);
-            this.lblZoomLevels.TabIndex = 61;
-            this.lblZoomLevels.Text = "[Zoom levels]";
+            this.lblImageBoosterCachedCount.AutoSize = true;
+            this.lblImageBoosterCachedCount.Location = new System.Drawing.Point(40, 288);
+            this.lblImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblImageBoosterCachedCount.Name = "lblImageBoosterCachedCount";
+            this.lblImageBoosterCachedCount.Size = new System.Drawing.Size(491, 25);
+            this.lblImageBoosterCachedCount.TabIndex = 64;
+            this.lblImageBoosterCachedCount.Text = "[Number of images cached by ImageBooster (one direction)]";
             // 
-            // txtZoomLevels
+            // cmbImageBoosterCachedCount
             // 
-            this.txtZoomLevels.Location = new System.Drawing.Point(45, 1097);
-            this.txtZoomLevels.Multiline = true;
-            this.txtZoomLevels.Name = "txtZoomLevels";
-            this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtZoomLevels.Size = new System.Drawing.Size(568, 72);
-            this.txtZoomLevels.TabIndex = 62;
+            this.cmbImageBoosterCachedCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageBoosterCachedCount.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbImageBoosterCachedCount.FormattingEnabled = true;
+            this.cmbImageBoosterCachedCount.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
+            this.cmbImageBoosterCachedCount.Location = new System.Drawing.Point(45, 317);
+            this.cmbImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbImageBoosterCachedCount.Name = "cmbImageBoosterCachedCount";
+            this.cmbImageBoosterCachedCount.Size = new System.Drawing.Size(278, 33);
+            this.cmbImageBoosterCachedCount.TabIndex = 63;
             // 
             // frmSetting
             // 
@@ -2548,5 +2585,7 @@ namespace ImageGlass
         private System.Windows.Forms.ComboBox cmbImageOrderType;
         private System.Windows.Forms.TextBox txtZoomLevels;
         private System.Windows.Forms.Label lblZoomLevels;
+        private System.Windows.Forms.Label lblImageBoosterCachedCount;
+        private System.Windows.Forms.ComboBox cmbImageBoosterCachedCount;
     }
 }
