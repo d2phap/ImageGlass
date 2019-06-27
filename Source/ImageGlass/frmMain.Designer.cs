@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,6 +143,12 @@
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuChannelRed = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelGreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelBlue = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelDefault = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -460,6 +466,8 @@
             // mnuMainManipulation
             // 
             this.mnuMainManipulation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainChannels,
+            this.toolStripSeparator7,
             this.mnuMainRotateCounterclockwise,
             this.mnuMainRotateClockwise,
             this.mnuMainFlipHorz,
@@ -1113,7 +1121,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1141,6 +1149,7 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1619,6 +1628,74 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 57);
             // 
+            // mnuMainChannels
+            // 
+            this.mnuMainChannels.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuChannelDefault,
+            this.mnuChannelRed,
+            this.mnuChannelGreen,
+            this.mnuChannelBlue});
+            this.mnuMainChannels.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainChannels.Name = "mnuMainChannels";
+            this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainChannels.ShortcutKeyDisplayString = "";
+            this.mnuMainChannels.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainChannels.Text = "[Channels]";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(581, 6);
+            // 
+            // mnuChannelRed
+            // 
+            this.mnuChannelRed.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelRed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelRed.Name = "mnuChannelRed";
+            this.mnuChannelRed.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelRed.ShortcutKeyDisplayString = "";
+            this.mnuChannelRed.Size = new System.Drawing.Size(252, 31);
+            this.mnuChannelRed.Tag = "1";
+            this.mnuChannelRed.Text = "[Red]";
+            this.mnuChannelRed.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelGreen
+            // 
+            this.mnuChannelGreen.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelGreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelGreen.Name = "mnuChannelGreen";
+            this.mnuChannelGreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelGreen.ShortcutKeyDisplayString = "";
+            this.mnuChannelGreen.Size = new System.Drawing.Size(252, 31);
+            this.mnuChannelGreen.Tag = "2";
+            this.mnuChannelGreen.Text = "[Green]";
+            this.mnuChannelGreen.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelBlue
+            // 
+            this.mnuChannelBlue.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelBlue.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelBlue.Name = "mnuChannelBlue";
+            this.mnuChannelBlue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelBlue.ShortcutKeyDisplayString = "";
+            this.mnuChannelBlue.Size = new System.Drawing.Size(252, 31);
+            this.mnuChannelBlue.Tag = "4";
+            this.mnuChannelBlue.Text = "[Blue]";
+            this.mnuChannelBlue.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelDefault
+            // 
+            this.mnuChannelDefault.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelDefault.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelDefault.Name = "mnuChannelDefault";
+            this.mnuChannelDefault.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelDefault.ShortcutKeyDisplayString = "";
+            this.mnuChannelDefault.Size = new System.Drawing.Size(252, 31);
+            this.mnuChannelDefault.Tag = "134217727";
+            this.mnuChannelDefault.Text = "[Default]";
+            this.mnuChannelDefault.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1779,6 +1856,12 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainChannels;
+        private System.Windows.Forms.ToolStripMenuItem mnuChannelRed;
+        private System.Windows.Forms.ToolStripMenuItem mnuChannelGreen;
+        private System.Windows.Forms.ToolStripMenuItem mnuChannelBlue;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem mnuChannelDefault;
     }
 }
 

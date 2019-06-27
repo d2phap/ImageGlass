@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageMagick;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
@@ -76,7 +77,7 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of image</param>
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false)
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, Channels channel = Channels.Default)
         {
             // reset done status
             this.IsDone = false;
@@ -92,7 +93,8 @@ namespace ImageGlass.Heart
                     filename: this.Filename,
                     size,
                     colorProfileName,
-                    isApplyColorProfileForAll
+                    isApplyColorProfileForAll,
+                    channel: channel
                 );
 
                 // Get frame count

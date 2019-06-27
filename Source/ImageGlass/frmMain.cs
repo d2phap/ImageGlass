@@ -37,6 +37,7 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using FileWatcherEx;
 using ImageGlass.Services;
+using ImageMagick;
 
 namespace ImageGlass
 {
@@ -634,7 +635,7 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
         /// <param name="isSkipCache"></param>
-        private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
+        private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false, Channels channel = Channels.Default)
         {
             Timer _loadingTimer = null; // busy state timer
 
@@ -734,7 +735,11 @@ namespace ImageGlass
                 SetAppBusy(true);
 
 
-                var bmpImg = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex, isSkipCache: isSkipCache);
+                var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
+                    GlobalSetting.CurrentIndex,
+                    isSkipCache: isSkipCache,
+                    channel: channel
+                   );
                 im = bmpImg.Image;
 
 
@@ -5133,8 +5138,15 @@ namespace ImageGlass
         }
 
 
+
         #endregion
 
+        private void MnuChannel_Clicked(object sender, EventArgs e)
+        {
+            var mnu = (ToolStripMenuItem) sender;
+            var channel = (ImageMagick.Channels)Enum.Parse(typeof(ImageMagick.Channels), mnu.Tag.ToString());
 
+            NextPic(0, true, true, channel: channel);
+        }
     }
 }

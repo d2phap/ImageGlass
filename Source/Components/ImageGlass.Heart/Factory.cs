@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -277,7 +278,7 @@ namespace ImageGlass.Heart
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, Channels channel = Channels.Default)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -285,7 +286,8 @@ namespace ImageGlass.Heart
                 await this.ImgList[index].LoadAsync(
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
-                    isApplyColorProfileForAll: this.IsApplyColorProfileForAll
+                    isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
+                    channel: channel
                 );
             }
             // get image data from cache
