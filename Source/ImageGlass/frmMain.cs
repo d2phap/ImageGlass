@@ -616,7 +616,7 @@ namespace ImageGlass
         /// Change image
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
-        private void NextPic(int step)
+        public void NextPic(int step)
         {
             // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
             // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
@@ -635,7 +635,7 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
         /// <param name="isSkipCache"></param>
-        private async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false, Channels channel = Channels.Default)
+        public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false, Channels channel = Channels.Default)
         {
             Timer _loadingTimer = null; // busy state timer
 
@@ -4928,6 +4928,19 @@ namespace ImageGlass
         }
 
 
+        private void MnuMainViewChannels_Click(object sender, EventArgs e)
+        {
+            if (LocalSetting.FChannels.IsDisposed)
+            {
+                LocalSetting.FChannels = new FrmChannels();
+            }
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
+            LocalSetting.FChannels.Show(this);
+
+            this.Activate();
+        }
+
+
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
             LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
@@ -4954,8 +4967,6 @@ namespace ImageGlass
                     LocalSetting.FColorPicker.Close();
                 }
             }
-
-
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e)
@@ -5148,5 +5159,7 @@ namespace ImageGlass
 
             NextPic(0, true, true, channel: channel);
         }
+
+        
     }
 }

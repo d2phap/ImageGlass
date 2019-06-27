@@ -53,6 +53,12 @@
             this.mnuMainPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainManipulation = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelRed = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelGreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuChannelBlue = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRotateCounterclockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFlipHorz = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,12 +149,7 @@
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuChannelRed = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuChannelGreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuChannelBlue = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuChannelDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainViewChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -213,7 +214,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 615);
+            this.mnuMain.Size = new System.Drawing.Size(409, 648);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -501,6 +502,74 @@
             this.mnuMainManipulation.Size = new System.Drawing.Size(408, 31);
             this.mnuMainManipulation.Text = "&Manipulation";
             this.mnuMainManipulation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            // 
+            // mnuMainChannels
+            // 
+            this.mnuMainChannels.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuChannelDefault,
+            this.mnuChannelRed,
+            this.mnuChannelGreen,
+            this.mnuChannelBlue});
+            this.mnuMainChannels.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainChannels.Name = "mnuMainChannels";
+            this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainChannels.ShortcutKeyDisplayString = "";
+            this.mnuMainChannels.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainChannels.Text = "[Channels]";
+            // 
+            // mnuChannelDefault
+            // 
+            this.mnuChannelDefault.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelDefault.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelDefault.Name = "mnuChannelDefault";
+            this.mnuChannelDefault.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelDefault.ShortcutKeyDisplayString = "";
+            this.mnuChannelDefault.Size = new System.Drawing.Size(163, 31);
+            this.mnuChannelDefault.Tag = "134217727";
+            this.mnuChannelDefault.Text = "[Default]";
+            this.mnuChannelDefault.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelRed
+            // 
+            this.mnuChannelRed.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelRed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelRed.Name = "mnuChannelRed";
+            this.mnuChannelRed.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelRed.ShortcutKeyDisplayString = "";
+            this.mnuChannelRed.Size = new System.Drawing.Size(163, 31);
+            this.mnuChannelRed.Tag = "1";
+            this.mnuChannelRed.Text = "[Red]";
+            this.mnuChannelRed.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelGreen
+            // 
+            this.mnuChannelGreen.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelGreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelGreen.Name = "mnuChannelGreen";
+            this.mnuChannelGreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelGreen.ShortcutKeyDisplayString = "";
+            this.mnuChannelGreen.Size = new System.Drawing.Size(163, 31);
+            this.mnuChannelGreen.Tag = "2";
+            this.mnuChannelGreen.Text = "[Green]";
+            this.mnuChannelGreen.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // mnuChannelBlue
+            // 
+            this.mnuChannelBlue.ForeColor = System.Drawing.Color.Black;
+            this.mnuChannelBlue.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuChannelBlue.Name = "mnuChannelBlue";
+            this.mnuChannelBlue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuChannelBlue.ShortcutKeyDisplayString = "";
+            this.mnuChannelBlue.Size = new System.Drawing.Size(163, 31);
+            this.mnuChannelBlue.Tag = "4";
+            this.mnuChannelBlue.Text = "[Blue]";
+            this.mnuChannelBlue.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(581, 6);
             // 
             // mnuMainRotateCounterclockwise
             // 
@@ -960,6 +1029,7 @@
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainViewChannels,
             this.mnuMainColorPicker});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -979,7 +1049,7 @@
             this.mnuMainColorPicker.ShortcutKeyDisplayString = "";
             this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.K)));
-            this.mnuMainColorPicker.Size = new System.Drawing.Size(300, 31);
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(331, 31);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
@@ -1628,73 +1698,19 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 57);
             // 
-            // mnuMainChannels
+            // mnuMainViewChannels
             // 
-            this.mnuMainChannels.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuChannelDefault,
-            this.mnuChannelRed,
-            this.mnuChannelGreen,
-            this.mnuChannelBlue});
-            this.mnuMainChannels.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainChannels.Name = "mnuMainChannels";
-            this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainChannels.ShortcutKeyDisplayString = "";
-            this.mnuMainChannels.Size = new System.Drawing.Size(584, 31);
-            this.mnuMainChannels.Text = "[Channels]";
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(581, 6);
-            // 
-            // mnuChannelRed
-            // 
-            this.mnuChannelRed.ForeColor = System.Drawing.Color.Black;
-            this.mnuChannelRed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuChannelRed.Name = "mnuChannelRed";
-            this.mnuChannelRed.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuChannelRed.ShortcutKeyDisplayString = "";
-            this.mnuChannelRed.Size = new System.Drawing.Size(252, 31);
-            this.mnuChannelRed.Tag = "1";
-            this.mnuChannelRed.Text = "[Red]";
-            this.mnuChannelRed.Click += new System.EventHandler(this.MnuChannel_Clicked);
-            // 
-            // mnuChannelGreen
-            // 
-            this.mnuChannelGreen.ForeColor = System.Drawing.Color.Black;
-            this.mnuChannelGreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuChannelGreen.Name = "mnuChannelGreen";
-            this.mnuChannelGreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuChannelGreen.ShortcutKeyDisplayString = "";
-            this.mnuChannelGreen.Size = new System.Drawing.Size(252, 31);
-            this.mnuChannelGreen.Tag = "2";
-            this.mnuChannelGreen.Text = "[Green]";
-            this.mnuChannelGreen.Click += new System.EventHandler(this.MnuChannel_Clicked);
-            // 
-            // mnuChannelBlue
-            // 
-            this.mnuChannelBlue.ForeColor = System.Drawing.Color.Black;
-            this.mnuChannelBlue.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuChannelBlue.Name = "mnuChannelBlue";
-            this.mnuChannelBlue.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuChannelBlue.ShortcutKeyDisplayString = "";
-            this.mnuChannelBlue.Size = new System.Drawing.Size(252, 31);
-            this.mnuChannelBlue.Tag = "4";
-            this.mnuChannelBlue.Text = "[Blue]";
-            this.mnuChannelBlue.Click += new System.EventHandler(this.MnuChannel_Clicked);
-            // 
-            // mnuChannelDefault
-            // 
-            this.mnuChannelDefault.ForeColor = System.Drawing.Color.Black;
-            this.mnuChannelDefault.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuChannelDefault.Name = "mnuChannelDefault";
-            this.mnuChannelDefault.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuChannelDefault.ShortcutKeyDisplayString = "";
-            this.mnuChannelDefault.Size = new System.Drawing.Size(252, 31);
-            this.mnuChannelDefault.Tag = "134217727";
-            this.mnuChannelDefault.Text = "[Default]";
-            this.mnuChannelDefault.Click += new System.EventHandler(this.MnuChannel_Clicked);
+            this.mnuMainViewChannels.CheckOnClick = true;
+            this.mnuMainViewChannels.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainViewChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainViewChannels.Name = "mnuMainViewChannels";
+            this.mnuMainViewChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainViewChannels.ShortcutKeyDisplayString = "";
+            this.mnuMainViewChannels.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.M)));
+            this.mnuMainViewChannels.Size = new System.Drawing.Size(331, 31);
+            this.mnuMainViewChannels.Text = "[View channels]";
+            this.mnuMainViewChannels.Click += new System.EventHandler(this.MnuMainViewChannels_Click);
             // 
             // frmMain
             // 
@@ -1862,6 +1878,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuChannelBlue;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem mnuChannelDefault;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainViewChannels;
     }
 }
 

@@ -27,6 +27,7 @@ namespace ImageGlass
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
+        private static FrmChannels _fChannels;
         private static Theme.Theme _theme;
 
 
@@ -110,7 +111,6 @@ namespace ImageGlass
 
 
         #region LazyInitializer Properties
-
         /// <summary>
         /// Form frmSetting
         /// </summary>
@@ -127,6 +127,15 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
+        }
+
+        /// <summary>
+        /// Form FrmChannels
+        /// </summary>
+        public static FrmChannels FChannels
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fChannels); }
+            set { _fChannels = value; }
         }
 
 

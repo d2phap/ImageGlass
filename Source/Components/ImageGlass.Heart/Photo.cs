@@ -229,10 +229,14 @@ namespace ImageGlass.Heart
                 {
                     var channelImgM = (MagickImage)imgM.Separate(channel).First();
 
-                    using (var alpha = imgM.Separate(Channels.Alpha).First())
+                    if(imgM.HasAlpha)
                     {
-                        channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
+                        using (var alpha = imgM.Separate(Channels.Alpha).First())
+                        {
+                            channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
+                        }
                     }
+                    
 
                     return channelImgM;
                 }
