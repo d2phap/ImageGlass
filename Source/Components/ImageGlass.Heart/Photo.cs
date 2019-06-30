@@ -344,15 +344,15 @@ namespace ImageGlass.Heart
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static void SaveImage(Bitmap srcBitmap, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+        public static void SaveImage(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100)
         {
             using (var imgM = new MagickImage(srcBitmap))
             {
                 imgM.Quality = quality;
 
-                if (format != MagickFormat.Unknown)
+                if (format != (int)MagickFormat.Unknown)
                 {
-                    imgM.Write(destFileName, format);
+                    imgM.Write(destFileName, (MagickFormat)format);
                 }
                 else
                 {
