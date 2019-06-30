@@ -232,7 +232,8 @@ namespace ImageGlass {
                 {
                     myCurrentFrame = 0;
                     currentLoopCount++;
-                    if (currentLoopCount >= maxLoopCount)
+
+                    if (maxLoopCount > 0 && currentLoopCount >= maxLoopCount)
                     {
                         myIsThreadDead = 1;
                         return;
