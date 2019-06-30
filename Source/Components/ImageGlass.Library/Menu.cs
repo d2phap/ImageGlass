@@ -57,6 +57,7 @@ namespace ImageGlass.Library
             m.DisplayStyle = mnu.DisplayStyle;
             m.Dock = mnu.Dock;
             m.DoubleClickEnabled = mnu.DoubleClickEnabled;
+            m.DropDown = mnu.DropDown;
             m.Enabled = mnu.Enabled;
             m.Font = mnu.Font;
             m.ForeColor = mnu.ForeColor;

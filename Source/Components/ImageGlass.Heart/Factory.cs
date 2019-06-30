@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart
@@ -78,6 +79,12 @@ namespace ImageGlass.Heart
         /// Gets, sets the value indicates if the ColorProfileName should apply to all image files
         /// </summary>
         public bool IsApplyColorProfileForAll { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets the value of ImageMagick.Channels to apply to the entire image list
+        /// </summary>
+        public int Channels { get; set; } = -1;
 
 
         /// <summary>
@@ -238,7 +245,8 @@ namespace ImageGlass.Heart
                         _ = img.LoadAsync(
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
-                            isApplyColorProfileForAll: this.IsApplyColorProfileForAll
+                            isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
+                            channel: this.Channels
                         );
                     }
                 }
@@ -276,9 +284,8 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
-        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int channel = -1)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -287,7 +294,7 @@ namespace ImageGlass.Heart
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
                     isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                    channel: channel
+                    channel: this.Channels
                 );
             }
             // get image data from cache
@@ -396,13 +403,48 @@ namespace ImageGlass.Heart
         public void Clear()
         {
             // release the resources of the img list
+            this.ClearCache();
+            this.ImgList.Clear();
+        }
+
+
+        /// <summary>
+        /// Clear all cached images and release resource of the list
+        /// </summary>
+        public void ClearCache()
+        {
+            // release the resources of the img list
             foreach (var item in this.ImgList)
             {
                 item.Dispose();
             }
 
             this.QueuedList.Clear();
-            this.ImgList.Clear();
+        }
+
+
+        /// <summary>
+        /// Update cached images
+        /// </summary>
+        public void UpdateCache()
+        {
+            // clear current queue list
+            this.QueuedList.Clear();
+
+            var cachedIndexList = this.ImgList
+                .Select((item, index) => new { ImgItem = item, Index = index })
+                .Where(item => item.ImgItem.IsDone)
+                .Select(item => item.Index)
+                .ToList();
+
+            // release the cachced images
+            foreach (var index in cachedIndexList)
+            {
+                this.ImgList[index].Dispose();
+            }
+
+            // add to queue list
+            this.QueuedList.AddRange(cachedIndexList);
         }
 
 

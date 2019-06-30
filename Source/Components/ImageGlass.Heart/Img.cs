@@ -62,6 +62,7 @@ namespace ImageGlass.Heart
         {
             this.IsDone = false;
             this.Error = null;
+            this.FrameCount = 0;
 
             if (this.Image != null)
             {
@@ -84,7 +85,6 @@ namespace ImageGlass.Heart
 
             // reset error
             this.Error = null;
-
 
             try
             {

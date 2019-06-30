@@ -332,6 +332,7 @@ namespace ImageGlass
             GlobalSetting.ImageList = new Heart.Factory(imageFilenameList)
             {
                 MaxQueue = GlobalSetting.ImageBoosterCachedCount,
+                Channels = (int)GlobalSetting.Channels
             };
 
 
@@ -736,8 +737,7 @@ namespace ImageGlass
 
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
                     GlobalSetting.CurrentIndex,
-                    isSkipCache: isSkipCache,
-                    channel: (int)GlobalSetting.Channels
+                    isSkipCache: isSkipCache
                    );
                 im = bmpImg.Image;
 
@@ -1647,7 +1647,7 @@ namespace ImageGlass
         private void CutMultiFiles()
         {
             //get filename
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            var filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
             try
             {
@@ -1680,14 +1680,14 @@ namespace ImageGlass
             }
 
 
-            byte[] moveEffect = new byte[] { 2, 0, 0, 0 };
-            MemoryStream dropEffect = new MemoryStream();
+            var moveEffect = new byte[] { 2, 0, 0, 0 };
+            var dropEffect = new MemoryStream();
             dropEffect.Write(moveEffect, 0, moveEffect.Length);
 
             var fileDropList = new StringCollection();
             fileDropList.AddRange(LocalSetting.StringClipboard.ToArray());
 
-            DataObject data = new DataObject();
+            var data = new DataObject();
             data.SetFileDropList(fileDropList);
             data.SetData("Preferred DropEffect", dropEffect);
 
@@ -1795,6 +1795,11 @@ namespace ImageGlass
                 mnuMainColorPicker.Image = 
                 mnuMainAbout.Image = 
                 new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            if (mnuMainChannels.DropDownItems.Count > 0)
+            {
+                mnuMainChannels.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            }
 
             #endregion
 
@@ -1984,6 +1989,8 @@ namespace ImageGlass
             // clear items
             mnuMainChannels.DropDown.Items.Clear();
 
+            var newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
+
             // add new items
             var channelArr = Enum.GetValues(typeof(ColorChannels));
             foreach (var channel in channelArr)
@@ -1991,11 +1998,12 @@ namespace ImageGlass
                 var channelName = Enum.GetName(typeof(ColorChannels), channel);
                 var mnu = new ToolStripMenuItem()
                 {
-                    // todo: translate
                     Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
-                    Checked = (int)channel == (int)ColorChannels.All
+                    Checked = (int)channel == (int)GlobalSetting.Channels,
+                    ImageScaling = ToolStripItemImageScaling.None,
+                    Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
                 };
 
                 mnu.Click += this.MnuViewChannelsItem_Click;
@@ -2020,9 +2028,13 @@ namespace ImageGlass
             if (selectedChannel != GlobalSetting.Channels)
             {
                 GlobalSetting.Channels = selectedChannel;
+                GlobalSetting.ImageList.Channels = (int)selectedChannel;
 
                 // update the viewing image
                 NextPic(0, true, true);
+
+                // update cached images
+                GlobalSetting.ImageList.UpdateCache();
             }
         }
 
@@ -2264,8 +2276,18 @@ namespace ImageGlass
                 #endregion
 
 
+                #region Load Color Channels
+                configValue = GlobalSetting.GetConfig("Channels", "-1");
+                if (Enum.TryParse(configValue, out ColorChannels channel))
+                {
+                    GlobalSetting.Channels = channel;
+                }
+
                 // Load View Channels menu items
                 LoadViewChannelsMenuItems();
+                #endregion
+
+
 
 
                 // NOTE: ***
@@ -2485,15 +2507,6 @@ namespace ImageGlass
                 {
                     GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
                     mnuMainFullScreen.PerformClick();
-                }
-                #endregion
-
-
-                #region Load Color Channels
-                configValue = GlobalSetting.GetConfig("Channels", "");
-                if (Enum.TryParse(configValue, out ColorChannels channel))
-                {
-                    GlobalSetting.Channels = channel;
                 }
                 #endregion
 
@@ -2748,6 +2761,9 @@ namespace ImageGlass
 
             // Save fullscreen state
             GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
+
+            // Save Channels value
+            GlobalSetting.SetConfig("Channels", ((int)GlobalSetting.Channels).ToString(GlobalSetting.NumberFormat));
 
             GlobalSetting.SaveKeyAssignments();
         }
@@ -3917,6 +3933,12 @@ namespace ImageGlass
             //Get Editing Assoc App info
             if (!isImageError)
             {
+                if (!LocalSetting.IsTempMemoryData)
+                {
+                    mnuContext.Items.Add(new ToolStripSeparator());//---------------
+                    mnuContext.Items.Add(Library.Menu.Clone(mnuMainChannels));
+                }
+
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
 
                 UpdateEditingAssocAppInfoForMenu();
@@ -3929,22 +3951,22 @@ namespace ImageGlass
 
                     if (imgData.FrameCount > 1)
                     {
-                        var mi = Library.Menu.Clone(mnuMainExtractFrames);
-                        mi.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], imgData.FrameCount);
-                        mi.Enabled = true;
+                        var mnu1 = Library.Menu.Clone(mnuMainExtractFrames);
+                        mnu1.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], imgData.FrameCount);
+                        mnu1.Enabled = true;
 
-                        mnuContext.Items.Add(mi);
-                        var mi2 = Library.Menu.Clone(mnuMainStartStopAnimating);
-                        mi2.Enabled = true;
-                        mnuContext.Items.Add(mi2);
+                        var mnu2 = Library.Menu.Clone(mnuMainStartStopAnimating);
+                        mnu2.Enabled = true;
+
+                        mnuContext.Items.Add(mnu1);
+                        mnuContext.Items.Add(mnu2);
                     }
 
                 }
                 catch { }
             }
 
-
-            if (LocalSetting.IsTempMemoryData || !isImageError)
+            if (!isImageError || LocalSetting.IsTempMemoryData)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
@@ -3983,7 +4005,6 @@ namespace ImageGlass
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainRename));
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainDeleteFromHardDisk));
 
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
