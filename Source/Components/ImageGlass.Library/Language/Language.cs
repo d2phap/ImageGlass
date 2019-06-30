@@ -286,6 +286,8 @@ namespace ImageGlass.Library
             #region Main menu
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
+            Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v6.1
+            Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v6.1
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
@@ -310,7 +312,7 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
 
-            Items.Add("frmMain.mnuMainManipulation", "Manipulation"); //v3.0
+            Items.Add("frmMain.mnuMainImage", "Image"); //v6.1
             Items.Add("frmMain.mnuMainChannels", "View channels"); //v6.1
             Items.Add("frmMain.mnuMainChannels._All", "All"); //v6.1
             Items.Add("frmMain.mnuMainChannels._Red", "Red"); //v6.1

@@ -52,7 +52,7 @@
             this.mnuMainSlideShowExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainManipulation = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRotateCounterclockwise = new System.Windows.Forms.ToolStripMenuItem();
@@ -145,6 +145,7 @@
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.mnuMainNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -186,6 +187,7 @@
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainOpenFile,
             this.mnuMainOpenImageData,
+            this.mnuMainNewWindow,
             this.mnuMainSaveAs,
             this.mnuMainEditImage,
             this.mnuMainRefresh,
@@ -197,7 +199,7 @@
             this.mnuMainSlideShow,
             this.mnuMainPrint,
             this.toolStripSeparator5,
-            this.mnuMainManipulation,
+            this.mnuMainImage,
             this.mnuMainClipboard,
             this.mnuMainShare,
             this.toolStripSeparator9,
@@ -209,7 +211,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 648);
+            this.mnuMain.Size = new System.Drawing.Size(409, 679);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -459,9 +461,9 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(405, 6);
             // 
-            // mnuMainManipulation
+            // mnuMainImage
             // 
-            this.mnuMainManipulation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainChannels,
             this.toolStripSeparator7,
             this.mnuMainRotateCounterclockwise,
@@ -490,13 +492,13 @@
             this.mnuMainSetAsLockImage,
             this.mnuMainImageLocation,
             this.mnuMainImageProperties});
-            this.mnuMainManipulation.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainManipulation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainManipulation.Name = "mnuMainManipulation";
-            this.mnuMainManipulation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainManipulation.Size = new System.Drawing.Size(408, 31);
-            this.mnuMainManipulation.Text = "&Manipulation";
-            this.mnuMainManipulation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            this.mnuMainImage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainImage.Name = "mnuMainImage";
+            this.mnuMainImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainImage.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainImage.Text = "&Manipulation";
+            this.mnuMainImage.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // mnuMainChannels
             // 
@@ -1639,6 +1641,18 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 57);
             // 
+            // mnuMainNewWindow
+            // 
+            this.mnuMainNewWindow.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainNewWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainNewWindow.Name = "mnuMainNewWindow";
+            this.mnuMainNewWindow.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainNewWindow.ShortcutKeyDisplayString = "";
+            this.mnuMainNewWindow.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.mnuMainNewWindow.Size = new System.Drawing.Size(408, 31);
+            this.mnuMainNewWindow.Text = "[Open new window]";
+            this.mnuMainNewWindow.Click += new System.EventHandler(this.MnuMainNewWindow_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1719,7 +1733,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainSaveAs;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReloadImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainManipulation;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mnuMainTools;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSettings;
@@ -1801,6 +1815,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
         private System.Windows.Forms.ToolStripMenuItem mnuMainChannels;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainNewWindow;
     }
 }
 

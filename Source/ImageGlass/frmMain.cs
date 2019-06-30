@@ -3054,6 +3054,7 @@ namespace ImageGlass
                 //Main menu
                 mnuMainOpenFile.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainOpenFile"];
                 mnuMainOpenImageData.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainOpenImageData"];
+                mnuMainNewWindow.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainNewWindow"];
                 mnuMainSaveAs.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainSaveAs"];
                 mnuMainRefresh.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainRefresh"];
                 mnuMainReloadImage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainReloadImage"];
@@ -3080,7 +3081,7 @@ namespace ImageGlass
 
                 mnuMainPrint.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainPrint"];
 
-                mnuMainManipulation.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainManipulation"];
+                mnuMainImage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainImage"];
                 mnuMainRotateCounterclockwise.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainRotateCounterclockwise"];
                 mnuMainRotateClockwise.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainRotateClockwise"];
                 mnuMainFlipHorz.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainFlipHorz"];
@@ -4022,6 +4023,28 @@ namespace ImageGlass
         private void mnuMainOpenFile_Click(object sender, EventArgs e)
         {
             OpenFile();
+        }
+
+        private void MnuMainNewWindow_Click(object sender, EventArgs e)
+        {
+            if (!GlobalSetting.IsAllowMultiInstances)
+            {
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
+
+                return;
+            }
+
+            try
+            {
+                var filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = Application.ExecutablePath,
+                    Arguments = filename,
+                });
+            }
+            catch { }
         }
 
         private void mnuMainOpenImageData_Click(object sender, EventArgs e)
@@ -5228,5 +5251,6 @@ namespace ImageGlass
 
         #endregion
 
+        
     }
 }
