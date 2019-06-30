@@ -426,6 +426,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets color channel of image
+        /// </summary>
+        public static ColorChannels Channels { get; set; } = ColorChannels.All;
+
+
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
@@ -437,10 +443,6 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
             $"{(int)Configuration.ToolbarButtons.btnFlipHorz}," +
             $"{(int)Configuration.ToolbarButtons.btnFlipVert}," +
-            $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
-            $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
-            $"{(int)Configuration.ToolbarButtons.btnActualSize}," +
-            $"{(int)Configuration.ToolbarButtons.btnWindowAutosize}," +
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
             $"{(int)Configuration.ToolbarButtons.btnAutoZoom}," +
@@ -459,10 +461,7 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
             $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
             $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Configuration.ToolbarButtons.btnConvert}," +
-            $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
             $"{(int)Configuration.ToolbarButtons.btnDelete},";
-
 
 
 

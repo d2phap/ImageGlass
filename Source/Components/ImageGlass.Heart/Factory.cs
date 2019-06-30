@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -277,8 +276,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
+        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, Channels channel = Channels.Default)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int channel = -1)
         {
             // reload fresh new image data
             if (isSkipCache)

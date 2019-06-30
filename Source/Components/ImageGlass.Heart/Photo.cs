@@ -22,6 +22,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 using System.Linq;
+using System;
 
 namespace ImageGlass.Heart
 {
@@ -39,6 +40,7 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns>Bitmap</returns>
         public static Bitmap Load(
             string filename,
@@ -47,7 +49,7 @@ namespace ImageGlass.Heart
             bool isApplyColorProfileForAll = false,
             int quality = 100,
             bool useEmbeddedThumbnails = false,
-            Channels channel = Channels.Default
+            int channel = -1
         )
         {
             Bitmap bitmap = null;
@@ -212,12 +214,6 @@ namespace ImageGlass.Heart
                     }
                 }
 
-
-                // separate color channel
-                if (channel != Channels.Default)
-                {
-                    imgM = (MagickImage)imgM.Separate(channel).First();
-                }
             }
 
 
@@ -225,11 +221,11 @@ namespace ImageGlass.Heart
             MagickImage ApplyColorChannel(MagickImage imgM)
             {
                 // separate color channel
-                if (channel != Channels.Default)
+                if (channel != -1)
                 {
-                    var channelImgM = (MagickImage)imgM.Separate(channel).First();
+                    var channelImgM = (MagickImage)imgM.Separate((Channels)channel).First();
 
-                    if(imgM.HasAlpha)
+                    if (imgM.HasAlpha)
                     {
                         using (var alpha = imgM.Separate(Channels.Alpha).First())
                         {
@@ -258,8 +254,9 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
+        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, Channels channel = Channels.Default)
+        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1)
         {
             Bitmap bitmap = null;
 

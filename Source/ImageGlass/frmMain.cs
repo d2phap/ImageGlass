@@ -37,7 +37,6 @@ using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using FileWatcherEx;
 using ImageGlass.Services;
-using ImageMagick;
 
 namespace ImageGlass
 {
@@ -635,7 +634,7 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="configs">Configuration for the next load</param>
         /// <param name="isSkipCache"></param>
-        public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false, Channels channel = Channels.Default)
+        public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
             Timer _loadingTimer = null; // busy state timer
 
@@ -738,7 +737,7 @@ namespace ImageGlass
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
                     GlobalSetting.CurrentIndex,
                     isSkipCache: isSkipCache,
-                    channel: channel
+                    channel: (int)GlobalSetting.Channels
                    );
                 im = bmpImg.Image;
 
@@ -1786,15 +1785,16 @@ namespace ImageGlass
             #region change size of menu items
             int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
 
-            mnuMainOpenFile.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainViewNext.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainSlideShowStart.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainRotateCounterclockwise.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            mnuMainOpenFile.Image = 
+                mnuMainViewNext.Image = 
+                mnuMainSlideShowStart.Image = 
+                mnuMainRotateCounterclockwise.Image = 
 
-            mnuMainClearClipboard.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainToolbar.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainColorPicker.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            mnuMainAbout.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+                mnuMainClearClipboard.Image = 
+                mnuMainToolbar.Image = 
+                mnuMainColorPicker.Image = 
+                mnuMainAbout.Image = 
+                new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             #endregion
 
@@ -1975,6 +1975,56 @@ namespace ImageGlass
             }
         }
 
+
+        /// <summary>
+        /// Load View Channels menu items
+        /// </summary>
+        private void LoadViewChannelsMenuItems()
+        {
+            // clear items
+            mnuMainChannels.DropDown.Items.Clear();
+
+            // add new items
+            var channelArr = Enum.GetValues(typeof(ColorChannels));
+            foreach (var channel in channelArr)
+            {
+                var mnu = new ToolStripMenuItem()
+                {
+                    // todo: translate
+                    Text = Enum.GetName(typeof(ColorChannels), channel),
+                    Tag = channel,
+                    CheckOnClick = true,
+                    Checked = (int)channel == (int)ColorChannels.All
+                };
+
+                mnu.Click += this.MnuViewChannelsItem_Click;
+                mnuMainChannels.DropDown.Items.Add(mnu);
+            }
+        }
+
+        private void MnuViewChannelsItem_Click(object sender, EventArgs e)
+        {
+            var mnu = (ToolStripMenuItem)sender;
+            var selectedChannel = (ColorChannels)(int)mnu.Tag;
+
+            // uncheck all menu items
+            foreach (ToolStripMenuItem item in mnuMainChannels.DropDown.Items)
+            {
+                item.Checked = false;
+            }
+
+            // select the clicked menu
+            mnu.Checked = true;
+
+            if (selectedChannel != GlobalSetting.Channels)
+            {
+                GlobalSetting.Channels = selectedChannel;
+
+                // update the viewing image
+                NextPic(0, true, true);
+            }
+        }
+
         #endregion
 
 
@@ -2149,7 +2199,9 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
                 #endregion
 
+
                 GlobalSetting.LoadKeyAssignments();
+
 
                 #region Load state of Toolbar Below Image
                 var vString = GlobalSetting.GetConfig("ToolbarPosition", ((int)GlobalSetting.ToolbarPosition).ToString());
@@ -2210,6 +2262,9 @@ namespace ImageGlass
                 }
                 #endregion
 
+
+                // Load View Channels menu items
+                LoadViewChannelsMenuItems();
 
 
                 // NOTE: ***
@@ -2429,6 +2484,15 @@ namespace ImageGlass
                 {
                     GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
                     mnuMainFullScreen.PerformClick();
+                }
+                #endregion
+
+
+                #region Load Color Channels
+                configValue = GlobalSetting.GetConfig("Channels", "");
+                if (Enum.TryParse(configValue, out ColorChannels channel))
+                {
+                    GlobalSetting.Channels = channel;
                 }
                 #endregion
 
@@ -4358,6 +4422,7 @@ namespace ImageGlass
             catch (Exception) { }
         }
 
+
         private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
             if (picMain.Image == null)
@@ -4928,19 +4993,6 @@ namespace ImageGlass
         }
 
 
-        private void MnuMainViewChannels_Click(object sender, EventArgs e)
-        {
-            if (LocalSetting.FChannels.IsDisposed)
-            {
-                LocalSetting.FChannels = new FrmChannels();
-            }
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
-            LocalSetting.FChannels.Show(this);
-
-            this.Activate();
-        }
-
-
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
             LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
@@ -5152,14 +5204,5 @@ namespace ImageGlass
 
         #endregion
 
-        private void MnuChannel_Clicked(object sender, EventArgs e)
-        {
-            var mnu = (ToolStripMenuItem) sender;
-            var channel = (ImageMagick.Channels)Enum.Parse(typeof(ImageMagick.Channels), mnu.Tag.ToString());
-
-            NextPic(0, true, true, channel: channel);
-        }
-
-        
     }
 }
