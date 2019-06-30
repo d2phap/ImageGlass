@@ -22,6 +22,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 using System.Linq;
+using System;
 
 namespace ImageGlass.Heart
 {
@@ -39,8 +40,17 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Load(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, bool useEmbeddedThumbnails = false)
+        public static Bitmap Load(
+            string filename,
+            Size size = new Size(),
+            string colorProfileName = "sRGB",
+            bool isApplyColorProfileForAll = false,
+            int quality = 100,
+            bool useEmbeddedThumbnails = false,
+            int channel = -1
+        )
         {
             Bitmap bitmap = null;
             var ext = Path.GetExtension(filename).ToUpperInvariant();
@@ -81,7 +91,13 @@ namespace ImageGlass.Heart
                         if (imgColl.Count > 0)
                         {
                             // Get the biggest image in the collection
-                            bitmap = imgColl.OrderByDescending(frame => frame.Width).ToList()[0].ToBitmap();
+                            using (var imgM = imgColl.OrderByDescending(frame => frame.Width).First())
+                            {
+                                using (var channelImgM = ApplyColorChannel((MagickImage)imgM))
+                                {
+                                    bitmap = channelImgM.ToBitmap();
+                                }
+                            }
                         }
                     }
                     break;
@@ -105,7 +121,10 @@ namespace ImageGlass.Heart
                         using (var imgM = new MagickImage(allbytes, settings))
                         {
                             PreprocesMagickImage(imgM);
-                            bitmap = imgM.ToBitmap();
+                            using (var channelImgM = ApplyColorChannel(imgM))
+                            {
+                                bitmap = channelImgM.ToBitmap();
+                            }
                         }
                     }
                     else
@@ -113,7 +132,10 @@ namespace ImageGlass.Heart
                         using (var imgM = new MagickImage(filename, settings))
                         {
                             PreprocesMagickImage(imgM);
-                            bitmap = imgM.ToBitmap();
+                            using (var channelImgM = ApplyColorChannel(imgM))
+                            {
+                                bitmap = channelImgM.ToBitmap();
+                            }
                         }
                     }
 
@@ -191,8 +213,32 @@ namespace ImageGlass.Heart
                         }
                     }
                 }
+
             }
 
+
+            // Separate color channel
+            MagickImage ApplyColorChannel(MagickImage imgM)
+            {
+                // separate color channel
+                if (channel != -1)
+                {
+                    var channelImgM = (MagickImage)imgM.Separate((Channels)channel).First();
+
+                    if (imgM.HasAlpha)
+                    {
+                        using (var alpha = imgM.Separate(Channels.Alpha).First())
+                        {
+                            channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
+                        }
+                    }
+                    
+
+                    return channelImgM;
+                }
+
+                return imgM;
+            }
             #endregion
 
 
@@ -208,14 +254,15 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
+        /// <param name="channel">MagickImage.Channel value</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100)
+        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1)
         {
             Bitmap bitmap = null;
 
             await Task.Run(() =>
             {
-                bitmap = Load(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false);
+                bitmap = Load(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false, channel: channel);
             }).ConfigureAwait(false);
 
 
@@ -297,15 +344,15 @@ namespace ImageGlass.Heart
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static void SaveImage(Bitmap srcBitmap, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+        public static void SaveImage(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100)
         {
             using (var imgM = new MagickImage(srcBitmap))
             {
                 imgM.Quality = quality;
 
-                if (format != MagickFormat.Unknown)
+                if (format != (int)MagickFormat.Unknown)
                 {
-                    imgM.Write(destFileName, format);
+                    imgM.Write(destFileName, (MagickFormat)format);
                 }
                 else
                 {

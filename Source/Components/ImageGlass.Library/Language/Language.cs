@@ -244,7 +244,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");//4.5
 
 
-            #region Tool bar
+            #region Toolbar
 
             //Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)"); // removed V6.0
             //Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)"); // removed V6.0
@@ -293,13 +293,10 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
-
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
             Items.Add("frmMain.mnuMainViewNext.Shortcut", "Right Arrow / PageDown"); //v6.0
-
             Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v3.0
             Items.Add("frmMain.mnuMainViewPrevious.Shortcut", "Left Arrow / PageUp"); // V6.0
-
             Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v3.0
             Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
             Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
@@ -314,6 +311,11 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
 
             Items.Add("frmMain.mnuMainManipulation", "Manipulation"); //v3.0
+            Items.Add("frmMain.mnuMainChannels", "View channels"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._All", "All"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._Red", "Red"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._Green", "Green"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v6.1
             Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0

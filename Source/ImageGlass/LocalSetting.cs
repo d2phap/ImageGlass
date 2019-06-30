@@ -110,7 +110,6 @@ namespace ImageGlass
 
 
         #region LazyInitializer Properties
-
         /// <summary>
         /// Form frmSetting
         /// </summary>

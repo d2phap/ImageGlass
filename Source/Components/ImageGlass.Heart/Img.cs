@@ -62,6 +62,7 @@ namespace ImageGlass.Heart
         {
             this.IsDone = false;
             this.Error = null;
+            this.FrameCount = 0;
 
             if (this.Image != null)
             {
@@ -76,14 +77,14 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of image</param>
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false)
+        /// <param name="channel">MagickImage.Channel value</param>
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1)
         {
             // reset done status
             this.IsDone = false;
 
             // reset error
             this.Error = null;
-
 
             try
             {
@@ -92,7 +93,8 @@ namespace ImageGlass.Heart
                     filename: this.Filename,
                     size,
                     colorProfileName,
-                    isApplyColorProfileForAll
+                    isApplyColorProfileForAll,
+                    channel: channel
                 );
 
                 // Get frame count

@@ -181,6 +181,20 @@ namespace ImageGlass.Services.Configuration
         Bottom = 1
     }
 
+
+    /// <summary>
+    /// Color channels of image, the value should be same as MagickImage.Channels enum
+    /// </summary>
+    public enum ColorChannels
+    {
+        All = -1, // not applicable
+
+        Red = 1,
+        Green = 2,
+        Blue = 4,
+    }
+
+
     /// <summary>
     /// Actions the user can assign to keys
     /// </summary>

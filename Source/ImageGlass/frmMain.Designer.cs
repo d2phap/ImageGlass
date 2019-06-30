@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +53,8 @@
             this.mnuMainPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainManipulation = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRotateCounterclockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateClockwise = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFlipHorz = new System.Windows.Forms.ToolStripMenuItem();
@@ -207,7 +209,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(409, 615);
+            this.mnuMain.Size = new System.Drawing.Size(409, 648);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -460,6 +462,8 @@
             // mnuMainManipulation
             // 
             this.mnuMainManipulation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMainChannels,
+            this.toolStripSeparator7,
             this.mnuMainRotateCounterclockwise,
             this.mnuMainRotateClockwise,
             this.mnuMainFlipHorz,
@@ -493,6 +497,22 @@
             this.mnuMainManipulation.Size = new System.Drawing.Size(408, 31);
             this.mnuMainManipulation.Text = "&Manipulation";
             this.mnuMainManipulation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            // 
+            // mnuMainChannels
+            // 
+            this.mnuMainChannels.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainChannels.Name = "mnuMainChannels";
+            this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainChannels.ShortcutKeyDisplayString = "";
+            this.mnuMainChannels.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainChannels.Text = "[Channels]";
+            this.mnuMainChannels.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(581, 6);
             // 
             // mnuMainRotateCounterclockwise
             // 
@@ -1113,7 +1133,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1779,6 +1799,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainReportIssue;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCheckForUpdate;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainChannels;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 
