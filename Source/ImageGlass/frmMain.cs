@@ -1417,8 +1417,12 @@ namespace ImageGlass
             }
 
 
-            // auto center the image
-            picMain.CenterToImage();
+            if (GlobalSetting.IsCenterImage)
+            {
+                // auto center the image
+                picMain.CenterToImage();
+            }
+            
 
             //Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
@@ -2433,6 +2437,10 @@ namespace ImageGlass
 
                 // Load IsDisplayBasenameOfImage value
                 GlobalSetting.IsDisplayBasenameOfImage = bool.Parse(GlobalSetting.GetConfig("IsDisplayBasenameOfImage", "False"));
+
+
+                // Load IsCenterImage value
+                GlobalSetting.IsCenterImage = bool.Parse(GlobalSetting.GetConfig("IsCenterImage", "True"));
 
 
                 #region Slideshow Interval
@@ -4594,7 +4602,15 @@ namespace ImageGlass
             }
 
             picMain.ActualSize();
-            picMain.CenterToImage();
+
+            if (GlobalSetting.IsCenterImage)
+            {
+                picMain.CenterToImage();
+            }
+            else
+            {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
         }
 
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)

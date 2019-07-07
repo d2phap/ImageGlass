@@ -184,6 +184,12 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
+        /// </summary>
+        public static bool IsCenterImage { get; set; } = false;
+
+
+        /// <summary>
         /// Check if user wants to display RGBA color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerRGBA { get; set; } = true;

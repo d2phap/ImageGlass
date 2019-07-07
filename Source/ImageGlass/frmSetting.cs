@@ -286,6 +286,7 @@ namespace ImageGlass
             chkFindChildFolder.Text = lang[$"{Name}.chkFindChildFolder"];
             chkShowHiddenImages.Text = lang[$"{Name}.chkShowHiddenImages"];
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
+            chkIsCenterImage.Text = lang[$"{Name}.chkIsCenterImage"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.chkUseFileExplorerSortOrder"];
             lblImageBoosterCachedCount.Text = lang[$"{Name}.lblImageBoosterCachedCount"];
@@ -650,6 +651,9 @@ namespace ImageGlass
 
             // Set value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
+
+            // Set value of chkIsCenterImage
+            chkIsCenterImage.Checked = GlobalSetting.IsCenterImage;
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = GlobalSetting.IsUseFileExplorerSortOrder;
@@ -2383,6 +2387,11 @@ namespace ImageGlass
             // IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
             GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
+
+
+            // IsCenterImage
+            GlobalSetting.IsCenterImage = chkIsCenterImage.Checked;
+            GlobalSetting.SetConfig("IsCenterImage", GlobalSetting.IsCenterImage.ToString());
 
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
