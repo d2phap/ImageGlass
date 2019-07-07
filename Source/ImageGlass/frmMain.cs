@@ -4041,7 +4041,7 @@ namespace ImageGlass
                 Process.Start(new ProcessStartInfo()
                 {
                     FileName = Application.ExecutablePath,
-                    Arguments = filename,
+                    Arguments = $"\"{filename}\"",
                 });
             }
             catch { }
