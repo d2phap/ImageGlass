@@ -192,6 +192,8 @@ namespace ImageGlass.Services.Configuration
         Red = 1,
         Green = 2,
         Blue = 4,
+        Black = 8,
+        Alpha = 16,
     }
 
 

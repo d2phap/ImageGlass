@@ -318,6 +318,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainChannels._Red", "Red"); //v6.1
             Items.Add("frmMain.mnuMainChannels._Green", "Green"); //v6.1
             Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._Black", "Black"); //v6.1
+            Items.Add("frmMain.mnuMainChannels._Alpha", "Alpha"); //v6.1
             Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0

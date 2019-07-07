@@ -223,9 +223,10 @@ namespace ImageGlass.Heart
                 // separate color channel
                 if (channel != -1)
                 {
-                    var channelImgM = (MagickImage)imgM.Separate((Channels)channel).First();
+                    var magickChannel = (Channels)channel;
+                    var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
 
-                    if (imgM.HasAlpha)
+                    if (imgM.HasAlpha && magickChannel != Channels.Alpha)
                     {
                         using (var alpha = imgM.Separate(Channels.Alpha).First())
                         {
