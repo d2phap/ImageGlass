@@ -52,11 +52,11 @@ namespace adtasks
             // Check if the start up directory writable
             GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
 
-            //Command
+            // Command
             string topcmd = args[0].ToLower().Trim();
 
 
-            //Set desktop wallpaper
+            // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper")
             {
@@ -76,7 +76,7 @@ namespace adtasks
             #endregion
 
 
-            //Register file associations
+            // Register file associations
             #region regassociations <string exts>
             else if (topcmd == "regassociations")
             {
@@ -88,7 +88,7 @@ namespace adtasks
             #endregion
 
 
-            //Delete all file associations
+            // Delete all file associations
             #region delassociations
             else if (topcmd == "delassociations")
             {
@@ -98,7 +98,7 @@ namespace adtasks
             #endregion
 
 
-            //Install new language packs
+            // Install new language packs
             #region iginstalllang
             else if (topcmd == "iginstalllang")
             {
@@ -107,7 +107,7 @@ namespace adtasks
             #endregion
 
 
-            //Create new language packs
+            // Create new language packs
             #region ignewlang
             else if (topcmd == "ignewlang")
             {
@@ -116,7 +116,7 @@ namespace adtasks
             #endregion
 
 
-            //Edit language packs
+            // Edit language packs
             #region igeditlang <string filename>
             else if (topcmd == "igeditlang")
             {
@@ -126,8 +126,24 @@ namespace adtasks
                 Functions.EditLanguagePacks(filename);
             }
             #endregion
-            
 
+
+            // Register URI Scheme for Web-to-App linking
+            #region reg-uri-scheme
+            else if (topcmd == "reg-uri-scheme")
+            {
+                return Functions.SetURIScheme();
+            }
+            #endregion
+
+
+            // Delete URI Scheme registry
+            #region del-uri-scheme
+            else if (topcmd == "del-uri-scheme")
+            {
+                return Functions.DeleteURIScheme();
+            }
+            #endregion
 
 
             return 0;
