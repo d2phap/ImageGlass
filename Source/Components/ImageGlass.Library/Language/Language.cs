@@ -284,6 +284,7 @@ namespace ImageGlass.Library
 
 
             #region Main menu
+            Items.Add("frmMain.mnuMainFile", "File"); //v7.0
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v6.1
@@ -293,6 +294,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainReloadImageList", "Reload image list"); //v6.1
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
+            Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
+
 
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
@@ -303,14 +306,19 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
             Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
 
-            Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
 
-            Items.Add("frmMain.mnuMainSlideShow", "Slideshow"); //v3.0
-            Items.Add("frmMain.mnuMainSlideShowStart", "Start slideshow"); //v3.0
-            Items.Add("frmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v3.0
-            Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
+            Items.Add("frmMain.mnuMainZoom", "Zoom"); //v7.0
+            Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
+            Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
+            //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
+            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
+            Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
+            Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
+            Items.Add("frmMain.mnuMainAutoZoom", "Auto Zoom"); //v5.5
+            Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
+            Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
+            Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
 
-            Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
 
             Items.Add("frmMain.mnuMainImage", "Image"); //v6.1
             Items.Add("frmMain.mnuMainChannels", "View channels"); //v6.1
@@ -324,16 +332,6 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
             Items.Add("frmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
-            Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
-            Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            //Items.Add("frmMain.mnuMainZoomToFit", "Zoom to fit"); //v3.5, removed v5.5
-            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
-            Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
-            Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
-            Items.Add("frmMain.mnuMainAutoZoom", "Auto Zoom"); //v5.5
-            Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
-            Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
-            Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
             Items.Add("frmMain.mnuMainRename", "Rename image"); //v3.0
             Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
@@ -341,9 +339,9 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
             Items.Add("frmMain.mnuMainSetAsDesktop", "Set as Desktop background"); //v3.0
             Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
-
             Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
             Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
+
 
             Items.Add("frmMain.mnuMainClipboard", "Clipboard"); //v3.0
             Items.Add("frmMain.mnuMainCopy", "Copy"); //v3.0
@@ -354,6 +352,16 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainCopyImagePath", "Copy image path"); //v3.0
             Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
 
+
+            Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
+
+
+            Items.Add("frmMain.mnuMainSlideShow", "Slideshow"); //v3.0
+            Items.Add("frmMain.mnuMainSlideShowStart", "Start slideshow"); //v3.0
+            Items.Add("frmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v3.0
+            Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
+
+
             Items.Add("frmMain.mnuMainShare", "Share ..."); //v3.0
             //Items.Add("frmMain.mnuMainShareFacebook", "Upload to Facebook"); //v3.0, removed v5.0
 
@@ -363,11 +371,14 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
 
+
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             //Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0, removed v5.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
 
+
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
+
 
             Items.Add("frmMain.mnuMainHelp", "Help"); //v6.1
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
@@ -376,6 +387,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
             //Items.Add("frmMain.mnuMainCheckForUpdate", "A new version is available"); //v4.5, removed 5.0
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
+
 
             Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v6.1
             #endregion
@@ -670,21 +682,20 @@ namespace ImageGlass.Library
 
             #endregion
 
+
             #region TAB Keyboard
-            Items.Add("frmSetting.btnKeyReset", "Reset actions to default"); // v6.1
-            Items.Add("frmSetting.lblKeysKeysHeader", "Keys"); // v6.1
-            Items.Add("frmSetting.lblKeysActionsHeader", "Actions"); // v6.1
+            Items.Add("frmSetting.btnKeyReset", "Reset to default"); // v6.1
             Items.Add("frmSetting.lblKeysSpaceBack", "Space / Backspace"); // v6.1
             Items.Add("frmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v6.1
-            Items.Add("frmSetting.lblKeysUpDown", "Up / Down Arrows"); // v6.1
-            Items.Add("frmSetting.lblKeysLeftRight", "Left / Right Arrows"); // v6.1
+            Items.Add("frmSetting.lblKeysUpDown", "Up / Down arrows"); // v6.1
+            Items.Add("frmSetting.lblKeysLeftRight", "Left / Right arrows"); // v6.1
 
             #region Actions Combo Values
-            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image");  // v6.1
+            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image"); // v6.1
             Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v6.1
             Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v6.1
             Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v6.1
-            Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // TODO consider using menu text?
+            Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v6.1
             #endregion
 
             #endregion

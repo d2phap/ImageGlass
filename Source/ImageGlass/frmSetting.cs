@@ -400,8 +400,6 @@ namespace ImageGlass
 
             #region KEYBOARD TAB
             btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
-            lblKeysKeysHeader.Text = lang[$"{Name}.lblKeysKeysHeader"];
-            lblKeysActionsHeader.Text = lang[$"{Name}.lblKeysActionsHeader"];
             lblKeysSpaceBack.Text = lang[$"{Name}.lblKeysSpaceBack"];
             lblKeysPageUpDown.Text = lang[$"{Name}.lblKeysPageUpDown"];
             lblKeysUpDown.Text = lang[$"{Name}.lblKeysUpDown"];
@@ -2179,7 +2177,9 @@ namespace ImageGlass
                 // set to the provided default.
                 control.SelectedItem = val;
                 if (control.SelectedIndex == -1)
+                {
                     control.SelectedItem = defaultString;
+                }
             }
             catch
             {

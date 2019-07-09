@@ -46,6 +46,11 @@ namespace ImageGlass.Services.Configuration
         public const int FIRST_LAUNCH_VERSION = 5;
 
 
+        /// <summary>
+        /// The URI Scheme to register web-to-app linking
+        /// </summary>
+        public const string URI_SCHEME = "imageglass";
+
 
         #region Private Properties
 
@@ -793,6 +798,30 @@ namespace ImageGlass.Services.Configuration
                 //System.Windows.Forms.MessageBox.Show(ex.Message);
                 return false;
             }
+        }
+
+
+        /// <summary>
+        /// Parse string to absolute path
+        /// </summary>
+        /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
+        /// <returns></returns>
+        public static string ToAbsolutePath(string inputPath)
+        {
+            var path = inputPath;
+            var protocol = GlobalSetting.URI_SCHEME + ":";
+
+            // If inputPath is URI Scheme
+            if (path.StartsWith(protocol))
+            {
+                // Retrieve the real path
+                path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
+            }
+
+            // Parse environment vars to absolute path
+            path = Environment.ExpandEnvironmentVariables(path);
+
+            return path;
         }
 
         #endregion
