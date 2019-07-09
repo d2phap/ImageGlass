@@ -1189,7 +1189,7 @@ namespace ImageGlass
 
                 if (isError)
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -1273,6 +1273,24 @@ namespace ImageGlass
         private void btnRegisterExt_Click(object sender, EventArgs e)
         {
             RegisterFileAssociations(GlobalSetting.AllImageFormats);
+
+            // Register Web-to-App linking
+            using (Process p = new Process())
+            {
+                var isError = true;
+
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = $"reg-uri-scheme";
+                p.Start();
+
+                p.WaitForExit();
+                isError = p.ExitCode != 0;
+
+                if (isError)
+                {
+                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterWebToApp_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
