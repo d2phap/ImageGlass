@@ -229,7 +229,7 @@ namespace ImageGlass
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblLanguage.Location = new System.Drawing.Point(0, 300);
+            this.lblLanguage.Location = new System.Drawing.Point(0, 400);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
@@ -910,7 +910,7 @@ namespace ImageGlass
             this.chkIsCenterImage.Margin = new System.Windows.Forms.Padding(2);
             this.chkIsCenterImage.Name = "chkIsCenterImage";
             this.chkIsCenterImage.Size = new System.Drawing.Size(233, 30);
-            this.chkIsCenterImage.TabIndex = 65;
+            this.chkIsCenterImage.TabIndex = 19;
             this.chkIsCenterImage.Text = "[Center image on viewer]";
             this.chkIsCenterImage.UseVisualStyleBackColor = true;
             // 
@@ -945,7 +945,7 @@ namespace ImageGlass
             this.cmbImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageBoosterCachedCount.Name = "cmbImageBoosterCachedCount";
             this.cmbImageBoosterCachedCount.Size = new System.Drawing.Size(278, 33);
-            this.cmbImageBoosterCachedCount.TabIndex = 63;
+            this.cmbImageBoosterCachedCount.TabIndex = 23;
             // 
             // txtZoomLevels
             // 
@@ -954,7 +954,7 @@ namespace ImageGlass
             this.txtZoomLevels.Name = "txtZoomLevels";
             this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtZoomLevels.Size = new System.Drawing.Size(568, 72);
-            this.txtZoomLevels.TabIndex = 62;
+            this.txtZoomLevels.TabIndex = 33;
             // 
             // lblZoomLevels
             // 
@@ -979,7 +979,7 @@ namespace ImageGlass
             this.cmbImageOrderType.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrderType.Name = "cmbImageOrderType";
             this.cmbImageOrderType.Size = new System.Drawing.Size(278, 33);
-            this.cmbImageOrderType.TabIndex = 60;
+            this.cmbImageOrderType.TabIndex = 21;
             // 
             // lnkColorProfilePath
             // 
@@ -991,7 +991,7 @@ namespace ImageGlass
             this.lnkColorProfilePath.Location = new System.Drawing.Point(40, 608);
             this.lnkColorProfilePath.Name = "lnkColorProfilePath";
             this.lnkColorProfilePath.Size = new System.Drawing.Size(152, 25);
-            this.lnkColorProfilePath.TabIndex = 24;
+            this.lnkColorProfilePath.TabIndex = 27;
             this.lnkColorProfilePath.TabStop = true;
             this.lnkColorProfilePath.Text = "C:\\abc\\custom.icc";
             this.lnkColorProfilePath.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
@@ -1007,7 +1007,7 @@ namespace ImageGlass
             this.lnkColorProfileBrowse.Location = new System.Drawing.Point(328, 574);
             this.lnkColorProfileBrowse.Name = "lnkColorProfileBrowse";
             this.lnkColorProfileBrowse.Size = new System.Drawing.Size(79, 25);
-            this.lnkColorProfileBrowse.TabIndex = 23;
+            this.lnkColorProfileBrowse.TabIndex = 26;
             this.lnkColorProfileBrowse.TabStop = true;
             this.lnkColorProfileBrowse.Text = "[Browse]";
             this.lnkColorProfileBrowse.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
@@ -1031,7 +1031,7 @@ namespace ImageGlass
             this.chkApplyColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.chkApplyColorProfile.Name = "chkApplyColorProfile";
             this.chkApplyColorProfile.Size = new System.Drawing.Size(479, 30);
-            this.chkApplyColorProfile.TabIndex = 21;
+            this.chkApplyColorProfile.TabIndex = 24;
             this.chkApplyColorProfile.Text = "[Apply also for images without embedded color profile]";
             this.chkApplyColorProfile.UseVisualStyleBackColor = true;
             // 
@@ -1047,7 +1047,7 @@ namespace ImageGlass
             this.cmbColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.cmbColorProfile.Name = "cmbColorProfile";
             this.cmbColorProfile.Size = new System.Drawing.Size(278, 33);
-            this.cmbColorProfile.TabIndex = 22;
+            this.cmbColorProfile.TabIndex = 25;
             this.cmbColorProfile.SelectedIndexChanged += new System.EventHandler(this.cmbColorProfile_SelectedIndexChanged);
             // 
             // lblColorProfile
@@ -1070,7 +1070,7 @@ namespace ImageGlass
             this.chkShowThumbnailScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowThumbnailScrollbar.Name = "chkShowThumbnailScrollbar";
             this.chkShowThumbnailScrollbar.Size = new System.Drawing.Size(279, 30);
-            this.chkShowThumbnailScrollbar.TabIndex = 31;
+            this.chkShowThumbnailScrollbar.TabIndex = 35;
             this.chkShowThumbnailScrollbar.Text = "[Show thumbnail bar scrollbar]";
             this.chkShowThumbnailScrollbar.UseVisualStyleBackColor = true;
             // 
@@ -1083,7 +1083,7 @@ namespace ImageGlass
             this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
             this.cmbMouseWheelAlt.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelAlt.TabIndex = 28;
+            this.cmbMouseWheelAlt.TabIndex = 31;
             // 
             // cmbMouseWheelShift
             // 
@@ -1094,7 +1094,7 @@ namespace ImageGlass
             this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
             this.cmbMouseWheelShift.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelShift.TabIndex = 27;
+            this.cmbMouseWheelShift.TabIndex = 30;
             // 
             // cmbMouseWheelCtrl
             // 
@@ -1105,7 +1105,7 @@ namespace ImageGlass
             this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
             this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelCtrl.TabIndex = 26;
+            this.cmbMouseWheelCtrl.TabIndex = 29;
             // 
             // cmbMouseWheel
             // 
@@ -1116,7 +1116,7 @@ namespace ImageGlass
             this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
             this.cmbMouseWheel.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheel.TabIndex = 25;
+            this.cmbMouseWheel.TabIndex = 28;
             // 
             // lblMouseWheelAlt
             // 
@@ -1263,7 +1263,7 @@ namespace ImageGlass
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
-            this.cmbZoomOptimization.TabIndex = 29;
+            this.cmbZoomOptimization.TabIndex = 32;
             // 
             // chkThumbnailVertical
             // 
@@ -1273,7 +1273,7 @@ namespace ImageGlass
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(256, 30);
-            this.chkThumbnailVertical.TabIndex = 30;
+            this.chkThumbnailVertical.TabIndex = 34;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
             // 
@@ -1305,7 +1305,7 @@ namespace ImageGlass
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
-            this.cmbThumbnailDimension.TabIndex = 32;
+            this.cmbThumbnailDimension.TabIndex = 36;
             // 
             // chkUseFileExplorerSortOrder
             // 
@@ -1315,7 +1315,7 @@ namespace ImageGlass
             this.chkUseFileExplorerSortOrder.Margin = new System.Windows.Forms.Padding(2);
             this.chkUseFileExplorerSortOrder.Name = "chkUseFileExplorerSortOrder";
             this.chkUseFileExplorerSortOrder.Size = new System.Drawing.Size(425, 30);
-            this.chkUseFileExplorerSortOrder.TabIndex = 19;
+            this.chkUseFileExplorerSortOrder.TabIndex = 22;
             this.chkUseFileExplorerSortOrder.Text = "[Use Windows File Explorer sort order if possible]";
             this.chkUseFileExplorerSortOrder.UseVisualStyleBackColor = true;
             // 
@@ -1326,9 +1326,9 @@ namespace ImageGlass
             this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1617);
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
-            this.chkLoopSlideshow.Size = new System.Drawing.Size(607, 30);
+            this.chkLoopSlideshow.Size = new System.Drawing.Size(57, 30);
             this.chkLoopSlideshow.TabIndex = 33;
-            this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
+            this.chkLoopSlideshow.Text = "37";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             // 
             // lblImageLoadingOrder
@@ -1371,7 +1371,7 @@ namespace ImageGlass
             this.barInterval.Size = new System.Drawing.Size(292, 69);
             this.barInterval.TabIndex = 34;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.barInterval.Value = 5;
+            this.barInterval.Value = 38;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
             // 
             // lblSlideshowInterval
@@ -1874,7 +1874,7 @@ namespace ImageGlass
             this.txtThemeInfo.ReadOnly = true;
             this.txtThemeInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtThemeInfo.Size = new System.Drawing.Size(248, 60);
-            this.txtThemeInfo.TabIndex = 59;
+            this.txtThemeInfo.TabIndex = 70;
             // 
             // btnThemeRefresh
             // 
@@ -1954,7 +1954,7 @@ namespace ImageGlass
             this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeApply.Name = "btnThemeApply";
             this.btnThemeApply.Size = new System.Drawing.Size(250, 44);
-            this.btnThemeApply.TabIndex = 70;
+            this.btnThemeApply.TabIndex = 71;
             this.btnThemeApply.Text = "Apply Theme";
             this.btnThemeApply.UseVisualStyleBackColor = true;
             this.btnThemeApply.Click += new System.EventHandler(this.btnThemeApply_Click);
@@ -1970,7 +1970,7 @@ namespace ImageGlass
             this.lnkThemeDownload.Location = new System.Drawing.Point(22, 500);
             this.lnkThemeDownload.Name = "lnkThemeDownload";
             this.lnkThemeDownload.Size = new System.Drawing.Size(167, 25);
-            this.lnkThemeDownload.TabIndex = 71;
+            this.lnkThemeDownload.TabIndex = 72;
             this.lnkThemeDownload.TabStop = true;
             this.lnkThemeDownload.Text = "[Download themes]";
             this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2026,7 +2026,7 @@ namespace ImageGlass
             this.btnKeyReset.Location = new System.Drawing.Point(521, 516);
             this.btnKeyReset.Name = "btnKeyReset";
             this.btnKeyReset.Size = new System.Drawing.Size(256, 45);
-            this.btnKeyReset.TabIndex = 10;
+            this.btnKeyReset.TabIndex = 77;
             this.btnKeyReset.Text = "[Reset to default]";
             this.btnKeyReset.UseVisualStyleBackColor = true;
             this.btnKeyReset.Click += new System.EventHandler(this.btnKeyReset_Click);
@@ -2039,7 +2039,7 @@ namespace ImageGlass
             this.cmbKeysSpaceBack.Location = new System.Drawing.Point(27, 300);
             this.cmbKeysSpaceBack.Name = "cmbKeysSpaceBack";
             this.cmbKeysSpaceBack.Size = new System.Drawing.Size(278, 33);
-            this.cmbKeysSpaceBack.TabIndex = 9;
+            this.cmbKeysSpaceBack.TabIndex = 76;
             // 
             // cmbKeysPgUpDown
             // 
@@ -2049,7 +2049,7 @@ namespace ImageGlass
             this.cmbKeysPgUpDown.Location = new System.Drawing.Point(27, 216);
             this.cmbKeysPgUpDown.Name = "cmbKeysPgUpDown";
             this.cmbKeysPgUpDown.Size = new System.Drawing.Size(278, 33);
-            this.cmbKeysPgUpDown.TabIndex = 8;
+            this.cmbKeysPgUpDown.TabIndex = 75;
             // 
             // cmbKeysUpDown
             // 
@@ -2059,7 +2059,7 @@ namespace ImageGlass
             this.cmbKeysUpDown.Location = new System.Drawing.Point(27, 132);
             this.cmbKeysUpDown.Name = "cmbKeysUpDown";
             this.cmbKeysUpDown.Size = new System.Drawing.Size(278, 33);
-            this.cmbKeysUpDown.TabIndex = 7;
+            this.cmbKeysUpDown.TabIndex = 74;
             // 
             // cmbKeysLeftRight
             // 
@@ -2069,7 +2069,7 @@ namespace ImageGlass
             this.cmbKeysLeftRight.Location = new System.Drawing.Point(27, 48);
             this.cmbKeysLeftRight.Name = "cmbKeysLeftRight";
             this.cmbKeysLeftRight.Size = new System.Drawing.Size(278, 33);
-            this.cmbKeysLeftRight.TabIndex = 6;
+            this.cmbKeysLeftRight.TabIndex = 73;
             // 
             // lblKeysSpaceBack
             // 
@@ -2148,9 +2148,9 @@ namespace ImageGlass
             this.tableLayoutPanel1.Controls.Add(this.lblColorPicker, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblEdit, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.lblKeyboard, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.lblTheme, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.lblKeyboard, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -2274,7 +2274,7 @@ namespace ImageGlass
             this.lblKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblKeyboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblKeyboard.Location = new System.Drawing.Point(0, 400);
+            this.lblKeyboard.Location = new System.Drawing.Point(0, 300);
             this.lblKeyboard.Margin = new System.Windows.Forms.Padding(0);
             this.lblKeyboard.Name = "lblKeyboard";
             this.lblKeyboard.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);

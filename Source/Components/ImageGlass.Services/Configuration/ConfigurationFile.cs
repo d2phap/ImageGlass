@@ -177,7 +177,9 @@ namespace ImageGlass.Services.Configuration
 
             // Don't throw unnecessary NullReferenceExceptions
             if (nItem == null)
+            {
                 return defaultValue != null ? defaultValue : null;
+            }
 
             //Get all config items
             try
@@ -203,40 +205,39 @@ namespace ImageGlass.Services.Configuration
         /// <param name="value"></param>
         public void SetConfig(string key, object value)
         {
-            if (!File.Exists(Filename))
-            {
-                WriteConfigFile(writeEmptyConfigs: true);
-            }
-
-
             // update memory config
             this[key] = value.ToString();
 
-            // update file config
-            XmlDocument doc = new XmlDocument();
-            doc.Load(Filename);
-            XmlElement root = doc.DocumentElement;// <ImageGlass>
-            XmlElement nItem = (XmlElement)root.SelectNodes("//Configuration/Content/Item[@key = \"" + key + "\"]")[0]; //<Item />
 
-            if (nItem != null)
+            try
             {
-                nItem.SetAttribute("value", value.ToString());
+                // update file config
+                XmlDocument doc = new XmlDocument();
+
+                doc.Load(Filename);
+
+                var root = doc.DocumentElement;// <ImageGlass>
+                var nItem = (XmlElement)root.SelectNodes("//Configuration/Content/Item[@key = \"" + key + "\"]")[0]; //<Item />
+
+                if (nItem != null)
+                {
+                    nItem.SetAttribute("value", value.ToString());
+                }
+                else
+                {
+                    nItem = (XmlElement)root.SelectNodes("//Configuration/Content")[0]; //<Content>
+                    XmlElement node = doc.CreateElement("Item");
+                    node.SetAttribute("key", key);
+                    node.SetAttribute("value", value.ToString());
+                    nItem.AppendChild(node);
+                }
+
+                doc.Save(Filename);
             }
-            else
+            catch (Exception)
             {
-                nItem = (XmlElement)root.SelectNodes("//Configuration/Content")[0]; //<Content>
-                XmlElement node = doc.CreateElement("Item");
-                node.SetAttribute("key", key);
-                node.SetAttribute("value", value.ToString());
-                nItem.AppendChild(node);
+                WriteConfigFile(writeEmptyConfigs: true);
             }
-
-            doc.Save(Filename);
-
-            doc = null;
-            root = null;
-            nItem = null;
-            
         }
 
         
