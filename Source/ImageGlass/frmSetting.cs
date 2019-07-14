@@ -1162,7 +1162,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Register file associations
+        /// Register file associations and Web-to-App linking
         /// </summary>
         /// <param name="extensions">Extensions to be registered, ex: *.png;*.bmp;</param>
         private void RegisterFileAssociations(string extensions, bool @isBuiltinExtension = false)
@@ -1273,24 +1273,6 @@ namespace ImageGlass
         private void btnRegisterExt_Click(object sender, EventArgs e)
         {
             RegisterFileAssociations(GlobalSetting.AllImageFormats);
-
-            // Register Web-to-App linking
-            using (Process p = new Process())
-            {
-                var isError = true;
-
-                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"reg-uri-scheme";
-                p.Start();
-
-                p.WaitForExit();
-                isError = p.ExitCode != 0;
-
-                if (isError)
-                {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterWebToApp_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)

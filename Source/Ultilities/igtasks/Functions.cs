@@ -236,7 +236,9 @@ namespace igtasks
                 }
             }
 
-            return 0;
+
+            // Register Web-to-App linking
+            return SetURIScheme();
         }
 
 
