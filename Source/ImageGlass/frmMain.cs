@@ -5003,6 +5003,13 @@ namespace ImageGlass
                 toolMain.Visible = false;
             }
             mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
+
+            // Issue #554 
+            if (!_isManuallyZoomed)
+            {
+                ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when toolbar turned off
+            }
+
         }
 
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
