@@ -4778,12 +4778,15 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = MessageBox.Show(string.Format(GlobalSetting.LangPack.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.LangPack.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult msg = DialogResult.Yes;
+
+            if (GlobalSetting.IsConfirmationDelete)
+            {
+                msg = MessageBox.Show(string.Format(GlobalSetting.LangPack.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.LangPack.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
 
             if (msg == DialogResult.Yes)
             {
-
-
                 string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
                 try
                 {
