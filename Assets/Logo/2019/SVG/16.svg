@@ -1,5 +1,5 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1.5" y="1.5" width="15" height="15" rx="4.5" fill="url(#paint0_linear)" stroke="url(#paint1_linear)"/>
+<svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1.125" y="1.125" width="15.75" height="15.75" rx="2.875" fill="url(#paint0_linear)" stroke="url(#paint1_linear)" stroke-width="0.25"/>
 <g filter="url(#filter0_d)">
 <path d="M6.09592 4.79663C5.79092 4.79663 5.5437 5.04389 5.5437 5.34885C5.5437 5.6538 5.79096 5.90106 6.09592 5.90106C6.40087 5.90106 6.64813 5.6538 6.64813 5.34885C6.64813 5.04389 6.40094 4.79663 6.09592 4.79663Z" fill="white"/>
 <path d="M6.48098 10.8708H5.70792C5.61643 10.8708 5.54224 10.7966 5.54224 10.7051V6.34269C5.54224 6.25119 5.61639 6.177 5.70792 6.177H6.48105C6.57254 6.177 6.64674 6.25116 6.64674 6.34269V10.7051C6.64667 10.7966 6.57251 10.8708 6.48098 10.8708Z" fill="white"/>

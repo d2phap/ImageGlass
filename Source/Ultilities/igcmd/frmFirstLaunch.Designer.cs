@@ -140,7 +140,7 @@
             this.tabLanguage.Controls.Add(this.lblLanguage);
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabLanguage.Padding = new System.Windows.Forms.Padding(3);
             this.tabLanguage.Size = new System.Drawing.Size(554, 173);
             this.tabLanguage.TabIndex = 7;
             this.tabLanguage.Text = "Language";
@@ -178,7 +178,7 @@
             this.tabTheme.Controls.Add(this.lblTheme);
             this.tabTheme.Location = new System.Drawing.Point(4, 37);
             this.tabTheme.Name = "tabTheme";
-            this.tabTheme.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabTheme.Padding = new System.Windows.Forms.Padding(3);
             this.tabTheme.Size = new System.Drawing.Size(554, 173);
             this.tabTheme.TabIndex = 9;
             this.tabTheme.Text = "Theme";
@@ -217,7 +217,7 @@
             this.tabLayoutMode.Controls.Add(this.lblLayout);
             this.tabLayoutMode.Location = new System.Drawing.Point(4, 37);
             this.tabLayoutMode.Name = "tabLayoutMode";
-            this.tabLayoutMode.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabLayoutMode.Padding = new System.Windows.Forms.Padding(3);
             this.tabLayoutMode.Size = new System.Drawing.Size(554, 173);
             this.tabLayoutMode.TabIndex = 8;
             this.tabLayoutMode.Text = "Quick layout mode";
@@ -256,7 +256,7 @@
             this.tabFileAssociation.Controls.Add(this.lblDefaultApp);
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabFileAssociation.Padding = new System.Windows.Forms.Padding(3);
             this.tabFileAssociation.Size = new System.Drawing.Size(554, 173);
             this.tabFileAssociation.TabIndex = 10;
             this.tabFileAssociation.Text = "File Association";

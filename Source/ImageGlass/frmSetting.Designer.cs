@@ -186,8 +186,8 @@ namespace ImageGlass
             this.lblToolbar = new System.Windows.Forms.Label();
             this.lblColorPicker = new System.Windows.Forms.Label();
             this.lblEdit = new System.Windows.Forms.Label();
-            this.lblTheme = new System.Windows.Forms.Label();
             this.lblKeyboard = new System.Windows.Forms.Label();
+            this.lblTheme = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
@@ -2249,26 +2249,6 @@ namespace ImageGlass
             this.lblEdit.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblEdit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblTheme
-            // 
-            this.lblTheme.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblTheme.Location = new System.Drawing.Point(0, 350);
-            this.lblTheme.Margin = new System.Windows.Forms.Padding(0);
-            this.lblTheme.Name = "lblTheme";
-            this.lblTheme.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblTheme.Size = new System.Drawing.Size(254, 50);
-            this.lblTheme.TabIndex = 8;
-            this.lblTheme.Tag = "0";
-            this.lblTheme.Text = "Theme";
-            this.lblTheme.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTheme.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblTheme.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblTheme.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblTheme.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblTheme.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
             // lblKeyboard
             // 
             this.lblKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -2288,6 +2268,26 @@ namespace ImageGlass
             this.lblKeyboard.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblKeyboard.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblKeyboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            // 
+            // lblTheme
+            // 
+            this.lblTheme.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblTheme.Location = new System.Drawing.Point(0, 350);
+            this.lblTheme.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTheme.Name = "lblTheme";
+            this.lblTheme.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblTheme.Size = new System.Drawing.Size(254, 50);
+            this.lblTheme.TabIndex = 8;
+            this.lblTheme.Tag = "0";
+            this.lblTheme.Text = "Theme";
+            this.lblTheme.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTheme.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblTheme.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblTheme.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblTheme.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblTheme.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // btnSave
             // 

@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,6 +104,7 @@
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,7 +151,6 @@
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -1056,6 +1056,11 @@
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(254, 6);
+            // 
             // mnuMainSettings
             // 
             this.mnuMainSettings.ForeColor = System.Drawing.Color.Black;
@@ -1194,7 +1199,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1222,7 +1227,6 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1700,11 +1704,6 @@
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 57);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(254, 6);
             // 
             // frmMain
             // 

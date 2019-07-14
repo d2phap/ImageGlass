@@ -769,7 +769,7 @@ namespace ImageGlass
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 SetAppBusy(false); // make sure busy state is off if exception during image load
 

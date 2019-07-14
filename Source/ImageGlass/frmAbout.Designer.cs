@@ -568,11 +568,11 @@
             this.btnDonation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDonation.Cursor = System.Windows.Forms.Cursors.Help;
             this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
-            this.btnDonation.Location = new System.Drawing.Point(918, 34);
+            this.btnDonation.Location = new System.Drawing.Point(893, 33);
             this.btnDonation.Margin = new System.Windows.Forms.Padding(4);
             this.btnDonation.Name = "btnDonation";
-            this.btnDonation.Size = new System.Drawing.Size(24, 26);
-            this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.btnDonation.Size = new System.Drawing.Size(60, 60);
+            this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnDonation.TabIndex = 20;
             this.btnDonation.TabStop = false;
             this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);

@@ -133,7 +133,7 @@ namespace ImageGlass.Services
                 _info.Decription = n.GetAttribute("decription");
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 // access error; corrupted file
                 return false;
