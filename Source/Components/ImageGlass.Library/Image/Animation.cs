@@ -87,7 +87,7 @@ namespace ImageGlass.Library.Image
             //Draw the next frame in the animation.
             _img.Save(Path.Combine(_desFolder,
                     Path.GetFileNameWithoutExtension(_filename) + " - " +
-                    _i.ToString() + ".png"),
+                    _i.ToString("D3") + ".png"),
                     System.Drawing.Imaging.ImageFormat.Png);
 
             //go to next frame
