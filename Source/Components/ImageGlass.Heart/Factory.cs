@@ -201,11 +201,11 @@ namespace ImageGlass.Heart
 
 
             // release the resources
-            foreach (var item in this.FreeList)
+            foreach (var indexItem in this.FreeList)
             {
-                if (!list.Contains(item))
+                if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < this.ImgList.Count)
                 {
-                    this.ImgList[item].Dispose();
+                    this.ImgList[indexItem].Dispose();
                 }
             }
 
