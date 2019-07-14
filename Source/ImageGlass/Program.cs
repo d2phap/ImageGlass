@@ -22,7 +22,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
-using System.IO;
 using System.Globalization;
 using System.Runtime;
 
@@ -82,6 +81,7 @@ namespace ImageGlass
 
             // Save App version
             GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
+
 
             #region Check First-launch Configs
             var firstLaunchVersion = 0;

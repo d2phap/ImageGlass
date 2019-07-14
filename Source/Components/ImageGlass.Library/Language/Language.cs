@@ -287,12 +287,12 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainFile", "File"); //v7.0
             Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
-            Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v6.1
-            Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v6.1
+            Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v7.0
+            Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
             Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
-            Items.Add("frmMain.mnuMainReloadImageList", "Reload image list"); //v6.1
+            Items.Add("frmMain.mnuMainReloadImageList", "Reload image list"); //v7.0
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
             Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
 
@@ -320,14 +320,14 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
 
 
-            Items.Add("frmMain.mnuMainImage", "Image"); //v6.1
-            Items.Add("frmMain.mnuMainChannels", "View channels"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._All", "All"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._Red", "Red"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._Green", "Green"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._Black", "Black"); //v6.1
-            Items.Add("frmMain.mnuMainChannels._Alpha", "Alpha"); //v6.1
+            Items.Add("frmMain.mnuMainImage", "Image"); //v7.0
+            Items.Add("frmMain.mnuMainChannels", "View channels"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._All", "All"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._Red", "Red"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._Green", "Green"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._Black", "Black"); //v7.0
+            Items.Add("frmMain.mnuMainChannels._Alpha", "Alpha"); //v7.0
             Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
             Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
@@ -380,7 +380,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
 
 
-            Items.Add("frmMain.mnuMainHelp", "Help"); //v6.1
+            Items.Add("frmMain.mnuMainHelp", "Help"); //v7.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
             Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations"); //v5.0
             Items.Add("frmMain.mnuMainCheckForUpdate._NoUpdate", "Check for update"); //v5.0
@@ -389,7 +389,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
 
 
-            Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v6.1
+            Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
             #endregion
 
 
@@ -456,7 +456,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
             Items.Add("frmSetting.lblLanguage", "Language");
             Items.Add("frmSetting.lblTheme", "Theme"); //v5.0
-            Items.Add("frmSetting.lblKeyboard", "Keyboard"); // v6.1
+            Items.Add("frmSetting.lblKeyboard", "Keyboard"); // v7.0
             #endregion
 
 
@@ -503,8 +503,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
-            Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v6.1
-            // Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final // removed 6.1
+            Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
+            // Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final // removed 7.0
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
@@ -515,10 +515,10 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbImageOrder._Extension", "Extension");
             Items.Add("frmSetting.cmbImageOrder._Random", "Random");
 
-            Items.Add("frmSetting.cmbImageOrderType._Asc", "Ascending");  // V6.1
-            Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V6.1
-            Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v6.1
-            Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v6.1
+            Items.Add("frmSetting.cmbImageOrderType._Asc", "Ascending");  // V7.0
+            Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V7.0
+            Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
+            Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
             #endregion
 
 
@@ -555,8 +555,8 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
             Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
 
-            Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v6.1
-            Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v6.1
+            Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v7.0
+            Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v7.0
             #endregion
 
 
@@ -685,18 +685,18 @@ namespace ImageGlass.Library
 
 
             #region TAB Keyboard
-            Items.Add("frmSetting.btnKeyReset", "Reset to default"); // v6.1
-            Items.Add("frmSetting.lblKeysSpaceBack", "Space / Backspace"); // v6.1
-            Items.Add("frmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v6.1
-            Items.Add("frmSetting.lblKeysUpDown", "Up / Down arrows"); // v6.1
-            Items.Add("frmSetting.lblKeysLeftRight", "Left / Right arrows"); // v6.1
+            Items.Add("frmSetting.btnKeyReset", "Reset to default"); // v7.0
+            Items.Add("frmSetting.lblKeysSpaceBack", "Space / Backspace"); // v7.0
+            Items.Add("frmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v7.0
+            Items.Add("frmSetting.lblKeysUpDown", "Up / Down arrows"); // v7.0
+            Items.Add("frmSetting.lblKeysLeftRight", "Left / Right arrows"); // v7.0
 
             #region Actions Combo Values
-            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image"); // v6.1
-            Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v6.1
-            Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v6.1
-            Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v6.1
-            Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v6.1
+            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image"); // v7.0
+            Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v7.0
+            Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
+            Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
+            Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v7.0
             #endregion
 
             #endregion

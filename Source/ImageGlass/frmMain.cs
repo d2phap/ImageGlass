@@ -4801,7 +4801,8 @@ namespace ImageGlass
 
         private void mnuMainExtractFrames_Click(object sender, EventArgs e)
         {
-            if (!(sender as ToolStripMenuItem).Enabled) // Shortcut keys still work even when menu is disabled!
+            // Shortcut keys still work even when menu is disabled!
+            if (!(sender as ToolStripMenuItem).Enabled)
                 return;
 
             if (!GlobalSetting.IsImageError)
