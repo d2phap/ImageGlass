@@ -939,6 +939,21 @@ namespace ImageGlass
 
         #region Key event
 
+        //Full screen--------------------------------------------------------------------
+        // Alt+Enter is a system shortcut. If we attempt to handle it as a "normal" key,
+        // Windows 10 issues an obnoxious sound. Issue #555.
+        protected override bool ProcessCmdKey(ref Message message, Keys keys)
+        {
+            if (keys == (Keys.Enter | Keys.Alt))
+            {
+                mnuMainFullScreen_Click(null, null);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref message, keys);
+        }
+
+
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             //this.Text = e.KeyValue.ToString();
@@ -1078,16 +1093,6 @@ namespace ImageGlass
             if (!e.Shift && !e.Alt && (e.KeyValue == 48 || e.KeyValue == 96)) // 0 || Num0 || Ctrl + 0 || Ctrl + Num0
             {
                 btnActualSize_Click(null, null);
-                return;
-            }
-            #endregion
-
-
-            //Full screen--------------------------------------------------------------------
-            #region ALT + ENTER
-            if (e.Alt && e.KeyCode == Keys.Enter && !e.Control && !e.Shift)//Alt + Enter
-            {
-                mnuMainFullScreen.PerformClick();
                 return;
             }
             #endregion
