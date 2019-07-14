@@ -48,6 +48,12 @@ namespace ImageGlass
 
         private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
         {
+            // Issue #543 Prevent usage of characters which cause problems for settings
+            txtFileExtension.KeyPress += textBox_KeyPress;
+            txtAppName.KeyPress += textBox_KeyPress;
+            txtAppPath.KeyPress += textBox_KeyPress;
+            txtAppArguments.KeyPress += textBox_KeyPress;
+
             txtFileExtension.Text = this.FileExtension;
             txtAppName.Text = this.AppName;
             txtAppPath.Text = this.AppPath;
@@ -165,5 +171,11 @@ namespace ImageGlass
             UpdateCommandPreview();
         }
 
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Issue #543: use of square brackets breaks settings, don't let the user enter them
+            if (e.KeyChar == '[' || e.KeyChar == ']' || e.KeyChar == '|')
+                e.Handled = true;
+        }
     }
 }
