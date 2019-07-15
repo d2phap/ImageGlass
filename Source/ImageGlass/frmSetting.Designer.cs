@@ -836,9 +836,9 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Controls.Add(this.tabToolbar);
             this.tab1.Controls.Add(this.tabColorPicker);
-            this.tab1.Controls.Add(this.tabLanguage);
-            this.tab1.Controls.Add(this.tabTheme);
             this.tab1.Controls.Add(this.tabKeyboard);
+            this.tab1.Controls.Add(this.tabTheme);
+            this.tab1.Controls.Add(this.tabLanguage);
             this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab1.Location = new System.Drawing.Point(0, 0);
             this.tab1.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
