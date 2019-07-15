@@ -339,7 +339,7 @@ namespace ImageGlass
             GlobalSetting.ImageList = new Heart.Factory(imageFilenameList)
             {
                 MaxQueue = GlobalSetting.ImageBoosterCachedCount,
-                Channels = (int)GlobalSetting.Channels
+                Channels = (int)LocalSetting.Channels
             };
 
 
@@ -2020,7 +2020,7 @@ namespace ImageGlass
                     Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
-                    Checked = (int)channel == (int)GlobalSetting.Channels,
+                    Checked = (int)channel == (int)LocalSetting.Channels,
                     ImageScaling = ToolStripItemImageScaling.None,
                     Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
                 };
@@ -2044,9 +2044,9 @@ namespace ImageGlass
             // select the clicked menu
             mnu.Checked = true;
 
-            if (selectedChannel != GlobalSetting.Channels)
+            if (selectedChannel != LocalSetting.Channels)
             {
-                GlobalSetting.Channels = selectedChannel;
+                LocalSetting.Channels = selectedChannel;
                 GlobalSetting.ImageList.Channels = (int)selectedChannel;
 
                 // update the viewing image
@@ -2295,17 +2295,8 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load Color Channels
-                configValue = GlobalSetting.GetConfig("Channels", "-1");
-                if (Enum.TryParse(configValue, out ColorChannels channel))
-                {
-                    GlobalSetting.Channels = channel;
-                }
-
                 // Load View Channels menu items
                 LoadViewChannelsMenuItems();
-                #endregion
-
 
 
 
@@ -2785,8 +2776,6 @@ namespace ImageGlass
             // Save fullscreen state
             GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
 
-            // Save Channels value
-            GlobalSetting.SetConfig("Channels", ((int)GlobalSetting.Channels).ToString(GlobalSetting.NumberFormat));
 
             GlobalSetting.SaveKeyAssignments();
         }

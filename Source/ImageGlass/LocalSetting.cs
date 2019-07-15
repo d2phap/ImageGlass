@@ -105,6 +105,11 @@ namespace ImageGlass
         public static int SaveAsFilterIndex { get; set; } = 0;
 
 
+        /// <summary>
+        /// Gets, sets color channel of image
+        /// </summary>
+        public static ColorChannels Channels { get; set; } = ColorChannels.All;
+
         #endregion
 
 

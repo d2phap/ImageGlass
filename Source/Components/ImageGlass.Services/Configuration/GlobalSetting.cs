@@ -436,12 +436,7 @@ namespace ImageGlass.Services.Configuration
         public static int ImageBoosterCachedCount { get; set; } = 1;
 
 
-        /// <summary>
-        /// Gets, sets color channel of image
-        /// </summary>
-        public static ColorChannels Channels { get; set; } = ColorChannels.All;
-
-
+        
         /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
