@@ -4801,21 +4801,20 @@ namespace ImageGlass
 
             if (!GlobalSetting.IsImageError)
             {
-                FolderBrowserDialog f = new FolderBrowserDialog
+                using (FolderBrowserDialog f = new FolderBrowserDialog()
                 {
                     Description = GlobalSetting.LangPack.Items[$"{Name}._ExtractFrameText"],
                     ShowNewFolderButton = true
-                };
-
-                DialogResult res = f.ShowDialog();
-
-                if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
+                })
                 {
-                    Animation ani = new Animation();
-                    ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath);
-                }
+                    DialogResult res = f.ShowDialog();
 
-                f = null;
+                    if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
+                    {
+                        Animation ani = new Animation();
+                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath);
+                    }
+                }
             }
         }
 
