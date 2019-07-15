@@ -173,7 +173,7 @@ namespace ImageGlass.Heart
 
                         if (exifTag != null)
                         {
-                            int orientationFlag = int.Parse(profile.GetValue(ExifTag.Orientation).Value.ToString());
+                            int orientationFlag = int.Parse(exifTag.Value.ToString());
 
                             var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
                             if (orientationDegree != 0)

@@ -115,6 +115,8 @@
             this.mnuMainExitApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
+            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
             this.toolMain = new ImageGlass.ToolStripToolTip();
@@ -149,8 +151,6 @@
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
-            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -210,7 +210,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 436);
+            this.mnuMain.Size = new System.Drawing.Size(258, 469);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -233,7 +233,6 @@
             this.mnuMainFile.Name = "mnuMainFile";
             this.mnuMainFile.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainFile.ShortcutKeyDisplayString = "";
-            this.mnuMainFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.mnuMainFile.Size = new System.Drawing.Size(257, 31);
             this.mnuMainFile.Text = "[File]";
             this.mnuMainFile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -353,8 +352,7 @@
             this.mnuMainReloadImageList.Name = "mnuMainReloadImageList";
             this.mnuMainReloadImageList.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainReloadImageList.ShortcutKeyDisplayString = "";
-            this.mnuMainReloadImageList.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.F5)));
+            this.mnuMainReloadImageList.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.mnuMainReloadImageList.Size = new System.Drawing.Size(420, 31);
             this.mnuMainReloadImageList.Text = "[Reload image list]";
             this.mnuMainReloadImageList.Click += new System.EventHandler(this.MnuMainReloadImageList_Click);
