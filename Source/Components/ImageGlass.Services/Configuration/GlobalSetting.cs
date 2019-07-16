@@ -835,6 +835,8 @@ namespace ImageGlass.Services.Configuration
         // The KeyPair -> action lookup
         private static Dictionary<KeyCombos, AssignableActions> KeyActionLookup;
 
+        private static string DEFAULT_KEY_ASSIGNMENTS = "0,0;1,2;2,0;3,4;";
+
         /// <summary>
         /// Load the KeyPair -> action values from the config file into the lookup
         /// dictionary.
@@ -842,8 +844,18 @@ namespace ImageGlass.Services.Configuration
         public static void LoadKeyAssignments()
         {
             // Note: default value matches the IGV6 behavior
-            KeyAssignments = GetConfig("KeyboardActions", "0,0;1,2;2,0;3,4;");
+            KeyAssignments = GetConfig("KeyboardActions", DEFAULT_KEY_ASSIGNMENTS);
+            SetKeyAssignments(KeyAssignments);
+        }
 
+        private static void ResetKeyActionsToDefault()
+        {
+            KeyAssignments = DEFAULT_KEY_ASSIGNMENTS;
+            SetKeyAssignments(DEFAULT_KEY_ASSIGNMENTS);
+        }
+
+        private static void SetKeyAssignments(string keyAssignments)
+        {
             var part_sep = new char[] { ',' };
             var pairs = KeyAssignments.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             KeyActionLookup = new Dictionary<KeyCombos, AssignableActions>();
@@ -863,7 +875,18 @@ namespace ImageGlass.Services.Configuration
         /// <returns></returns>
         public static AssignableActions GetKeyAction(KeyCombos key)
         {
-            return KeyActionLookup[key];
+            try
+            {
+                return KeyActionLookup[key];
+            }
+            catch
+            {
+                // KBR 20170716 not quite sure how we might get here, but
+                // don't blow up nastily if something went wrong loading 
+                // the key assignments from the config file
+                ResetKeyActionsToDefault();
+                return KeyActionLookup[key];
+            }
         }
 
         public static void SetKeyAction(KeyCombos which, int newval)
