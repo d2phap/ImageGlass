@@ -2666,7 +2666,7 @@ namespace ImageGlass
             GlobalSetting.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHEXA", GlobalSetting.IsColorPickerHEXA.ToString());
 
-            GlobalSetting.IsColorPickerHSLA = chkColorUseHEXA.Checked;
+            GlobalSetting.IsColorPickerHSLA = chkColorUseHSLA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
 
             #endregion
