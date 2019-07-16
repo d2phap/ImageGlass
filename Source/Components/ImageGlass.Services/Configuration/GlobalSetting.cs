@@ -835,6 +835,7 @@ namespace ImageGlass.Services.Configuration
         // The KeyPair -> action lookup
         private static Dictionary<KeyCombos, AssignableActions> KeyActionLookup;
 
+        // Note: default value matches the IGV6 behavior
         private static string DEFAULT_KEY_ASSIGNMENTS = "0,0;1,2;2,0;3,4;";
 
         /// <summary>
@@ -843,20 +844,26 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static void LoadKeyAssignments()
         {
-            // Note: default value matches the IGV6 behavior
-            KeyAssignments = GetConfig("KeyboardActions", DEFAULT_KEY_ASSIGNMENTS);
-            SetKeyAssignments(KeyAssignments);
+            try
+            {
+                KeyAssignments = GetConfig("KeyboardActions", DEFAULT_KEY_ASSIGNMENTS);
+                SetKeyAssignments();
+            }
+            catch (Exception e)
+            {
+                ResetKeyActionsToDefault();
+            }
         }
 
         private static void ResetKeyActionsToDefault()
         {
             KeyAssignments = DEFAULT_KEY_ASSIGNMENTS;
-            SetKeyAssignments(DEFAULT_KEY_ASSIGNMENTS);
+            SetKeyAssignments();
         }
 
-        private static void SetKeyAssignments(string keyAssignments)
+        private static void SetKeyAssignments()
         {
-            var part_sep = new char[] { ',' };
+            var part_sep = new [] { ',' };
             var pairs = KeyAssignments.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             KeyActionLookup = new Dictionary<KeyCombos, AssignableActions>();
             foreach (var pair in pairs)
