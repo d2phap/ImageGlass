@@ -690,7 +690,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         /// <param name="str">Input string. E.g. "12, -40, 50"</param>
         /// <returns></returns>
-        public static int[] StringToIntArray(string str, bool unsignedOnly = false)
+        public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
         {
             var args = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
@@ -704,6 +704,11 @@ namespace ImageGlass.Services.Configuration
                 }
 
                 numbers.Add(num);
+            }
+
+            if (distinct)
+            {
+                numbers = numbers.Distinct().ToList();
             }
 
             return numbers.ToArray();

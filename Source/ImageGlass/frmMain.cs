@@ -2473,7 +2473,7 @@ namespace ImageGlass
 
                 // Load ZoomLevels
                 var zoomLevelStr = GlobalSetting.GetConfig("ZoomLevels");
-                var zoomLevels = GlobalSetting.StringToIntArray(zoomLevelStr, unsignedOnly: true);
+                var zoomLevels = GlobalSetting.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
                 if (zoomLevels.Length > 0)
                 {
                     GlobalSetting.ZoomLevels = zoomLevels;

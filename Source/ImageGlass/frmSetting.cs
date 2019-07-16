@@ -2249,6 +2249,7 @@ namespace ImageGlass
 
         #endregion
 
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -2259,13 +2260,22 @@ namespace ImageGlass
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Save and close
-            btnApply_Click(sender, null);
-            this.Close();
+            if (ApplySettings())
+            {
+                this.Close();
+            }
         }
 
         private void btnApply_Click(object sender, EventArgs e)
         {
+            ApplySettings();
+        }
+
+
+        private bool ApplySettings()
+        {
             // Variables for comparision
+            var isSuccessful = true;
             int newInt;
             bool newBool;
             string newString;
@@ -2487,15 +2497,18 @@ namespace ImageGlass
             {
                 try
                 {
-                    GlobalSetting.ZoomLevels = GlobalSetting.StringToIntArray(newString, unsignedOnly: true);
+                    GlobalSetting.ZoomLevels = GlobalSetting.StringToIntArray(newString, unsignedOnly: true, distinct: true);
                     GlobalSetting.SetConfig("ZoomLevels", newString);
 
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
                 }
                 catch (Exception ex)
                 {
+                    isSuccessful = false;
                     txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
-                    MessageBox.Show(string.Format($"{Name}.txtZoomLevels._Error", ex.Message), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var msg = string.Format(GlobalSetting.LangPack.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
+
+                    MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             #endregion
@@ -2660,13 +2673,10 @@ namespace ImageGlass
 
 
             SaveKeyboardSettings();
+
+
+            return isSuccessful;
         }
-
-
-
-
-
-
 
 
 
