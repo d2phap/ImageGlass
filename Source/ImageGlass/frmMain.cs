@@ -2438,7 +2438,12 @@ namespace ImageGlass
 
 
                 // Load ImageBoosterCachedCount value
-                GlobalSetting.ImageBoosterCachedCount = int.Parse(GlobalSetting.GetConfig("ImageBoosterCachedCount", "1"));
+                {
+                    // KBR 20190716 sanity check and range check the value. Prevents exception here or in settings dialog.
+                    if (!int.TryParse(GlobalSetting.GetConfig("ImageBoosterCachedCount", "1"), out var boostValue))
+                        boostValue = 1;
+                    GlobalSetting.ImageBoosterCachedCount = Math.Max(0, Math.Min(boostValue, 10));
+                }
 
 
                 // Load IsDisplayBasenameOfImage value
