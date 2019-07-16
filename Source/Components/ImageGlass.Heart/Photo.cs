@@ -173,14 +173,16 @@ namespace ImageGlass.Heart
 
                         if (exifTag != null)
                         {
-                            int orientationFlag = int.Parse(exifTag.Value.ToString());
-
-                            var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
-                            if (orientationDegree != 0)
+                            if (int.TryParse(exifTag.Value.ToString(), out var orientationFlag))
                             {
-                                //Rotate image accordingly
-                                imgM.Rotate(orientationDegree);
+                                var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
+                                if (orientationDegree != 0)
+                                {
+                                    //Rotate image accordingly
+                                    imgM.Rotate(orientationDegree);
+                                }
                             }
+
                         }
                     }
 

@@ -121,7 +121,7 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="orientationFlag">Orientation Flag</param>
         /// <returns></returns>
-        public static double GetOrientationDegree(int orientationFlag)
+        public static int GetOrientationDegree(int orientationFlag)
         {
             if (orientationFlag == 1)
                 return 0;
