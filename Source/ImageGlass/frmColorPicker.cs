@@ -474,15 +474,18 @@ namespace ImageGlass
         {
             //apply current theme ------------------------------------------------------
             this.BackColor =
+                lblLocation.BackColor =
                 txtLocation.BackColor =
                 txtRGB.BackColor =
                 txtHEX.BackColor =
                 txtCMYK.BackColor =
                 txtHSL.BackColor =
-                btnClose.FlatAppearance.BorderColor =
-                LocalSetting.Theme.BackgroundColor;
+                btnClose.FlatAppearance.BorderColor = 
+                btnClose.BackColor =
+                    LocalSetting.Theme.BackgroundColor;
 
             lblPixel.ForeColor =
+                lblLocation.ForeColor =
                 txtLocation.ForeColor =
                 lblRGB.ForeColor =
                 lblHEX.ForeColor =
