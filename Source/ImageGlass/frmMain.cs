@@ -2558,13 +2558,13 @@ namespace ImageGlass
                 Task.Run(() =>
                 {
                     //Load IsLoopBackViewer
-                    GlobalSetting.IsLoopBackViewer = bool.Parse(GlobalSetting.GetConfig("IsLoopBackViewer", "True"));
+                    GlobalSetting.IsLoopBackViewer = ValidatedBooleanSetting("IsLoopBackViewer", true);
 
                     //Load IsLoopBackSlideShow
-                    GlobalSetting.IsLoopBackSlideShow = bool.Parse(GlobalSetting.GetConfig("IsLoopBackSlideShow", "True"));
+                    GlobalSetting.IsLoopBackSlideShow = ValidatedBooleanSetting("IsLoopBackSlideShow", true);
 
                     //Load IsPressESCToQuit
-                    GlobalSetting.IsPressESCToQuit = bool.Parse(GlobalSetting.GetConfig("IsPressESCToQuit", "True"));
+                    GlobalSetting.IsPressESCToQuit = ValidatedBooleanSetting("IsPressESCToQuit", true);
 
 
                     #region Zoom optimization method 
@@ -2585,8 +2585,7 @@ namespace ImageGlass
                     #region Get mouse wheel settings 
                     configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
 
-                    int mouseWheel;
-                    if (int.TryParse(configValue2, out mouseWheel))
+                    if (int.TryParse(configValue2, out var mouseWheel))
                     {
                         if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
                         { }
@@ -2652,14 +2651,14 @@ namespace ImageGlass
 
 
                     //Get IsConfirmationDelete value
-                    GlobalSetting.IsConfirmationDelete = bool.Parse(GlobalSetting.GetConfig("IsConfirmationDelete", "False"));
+                    GlobalSetting.IsConfirmationDelete = ValidatedBooleanSetting("IsConfirmationDelete", false);
 
 
                     //Get IsSaveAfterRotating value
-                    GlobalSetting.IsSaveAfterRotating = bool.Parse(GlobalSetting.GetConfig("IsSaveAfterRotating", "False"));
+                    GlobalSetting.IsSaveAfterRotating = ValidatedBooleanSetting("IsSaveAfterRotating", false);
 
                     // Fetch PreserveModifiedDate
-                    GlobalSetting.PreserveModifiedDate = bool.Parse(GlobalSetting.GetConfig("PreserveModifiedDate", "False"));
+                    GlobalSetting.PreserveModifiedDate = ValidatedBooleanSetting("PreserveModifiedDate", false);
 
 
                     #region Get ImageEditingAssociationList
@@ -2682,7 +2681,21 @@ namespace ImageGlass
 
 
                     //Get IsNewVersionAvailable
-                    GlobalSetting.IsNewVersionAvailable = bool.Parse(GlobalSetting.GetConfig("IsNewVersionAvailable", "False"));
+                    GlobalSetting.IsNewVersionAvailable = ValidatedBooleanSetting("IsNewVersionAvailable", false);
+
+
+                    bool ValidatedBooleanSetting(string configSetting, bool defaultValue)
+                    {
+                        // KBR 20190716 handle possibly gibberish values in the config file.
+                        // If we don't use TryParse, an exception would happen and other settings
+                        // would not be read.
+
+                        string boolConfigValue = GlobalSetting.GetConfig(configSetting, defaultValue.ToString());
+                        if (!bool.TryParse(boolConfigValue, out var value))
+                            value = defaultValue;
+                        return value;
+                    }
+
 
                 });
 
