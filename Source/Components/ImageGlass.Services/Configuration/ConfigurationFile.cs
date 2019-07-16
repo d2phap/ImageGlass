@@ -178,13 +178,18 @@ namespace ImageGlass.Services.Configuration
             // Don't throw unnecessary NullReferenceExceptions
             if (nItem == null)
             {
-                return defaultValue != null ? defaultValue : null;
+                return defaultValue;
             }
 
             //Get all config items
             try
             {
-                return nItem.GetAttribute("value").Replace("\\n", "\n");
+                string value = nItem.GetAttribute("value").Replace("\\n", "\n");
+
+                // KBR 20190716 if the value in xml exists but is empty, use the default
+                if (string.IsNullOrWhiteSpace(value))
+                    value = defaultValue;
+                return value;
             }
             catch
             {
