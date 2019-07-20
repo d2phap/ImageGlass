@@ -1870,6 +1870,10 @@ namespace ImageGlass
 
             var firstBtn = toolMain.Items[0];
             var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
+            
+
+            // reset the alignment to left
+            firstBtn.Margin = defaultMargin;
 
             if (GlobalSetting.IsCenterToolbar)
             {
@@ -1902,11 +1906,6 @@ namespace ImageGlass
                     // align the first item
                     firstBtn.Margin = margin;
                 }
-            }
-            // if alignment is left
-            else
-            {
-                firstBtn.Margin = defaultMargin;
             }
         }
 
