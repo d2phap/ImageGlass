@@ -1,8 +1,8 @@
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="6.0.12.27" isRightToLeftLayout="No" />
+    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="7.0.7.26" isRightToLeftLayout="No" />
     <Content>
-      <Item key="_.ImageFormatGroup.Default" value="Формат по умолчанию" />
+      <Item key="_.ImageFormatGroup.Default" value="Форматы по умолчанию" />
       <Item key="_.ImageFormatGroup.Optional" value="Дополнительные форматы" />
       <Item key="frmMain.picMain._ErrorText" value="Программа не может открыть это изображение, так как файл поврежден или не поддерживается формат" />
       <Item key="frmMain._ImageNotExist" value="Программа не может найти изображение" />
@@ -13,27 +13,32 @@
       <Item key="frmMain.btnZoomIn" value="Увеличить (Ctrl + =)" />
       <Item key="frmMain.btnZoomOut" value="Уменьшить (Ctrl + -)" />
       <Item key="frmMain.btnAutoZoom" value="Автоматическое масштабирование (Ctrl + A)" />
-      <Item key="frmMain.btnScaleToFit" value="Масштаб по размеру (Ctrl + /)" />
+      <Item key="frmMain.btnScaleToFit" value="Изображение по размеру окна (Ctrl + /)" />
       <Item key="frmMain.btnActualSize" value="Масштаб 100% (Ctrl + 0)" />
       <Item key="frmMain.btnZoomLock" value="Зафиксировать масштаб (Ctrl + L)" />
       <Item key="frmMain.btnScaletoWidth" value="Масштаб по ширине (Ctrl + W)" />
       <Item key="frmMain.btnScaletoHeight" value="Масштаб по высоте (Ctrl + H)" />
-      <Item key="frmMain.btnWindowAutosize" value="Окно под размер изображения (Ctrl + M)" />
+      <Item key="frmMain.btnWindowAutosize" value="Окно по размеру изображения (Ctrl + M)" />
       <Item key="frmMain.btnOpen" value="Открыть файл (Ctrl + O)" />
       <Item key="frmMain.btnRefresh" value="Обновить (F5)" />
       <Item key="frmMain.btnGoto" value="Перейти к ... (Ctrl + G)" />
-      <Item key="frmMain.btnThumb" value="Показать эскизы изображений (Ctrl + T)" />
-      <Item key="frmMain.btnFullScreen" value="Во весь экран (Alt + Enter)" />
+      <Item key="frmMain.btnThumb" value="Показывать эскизы изображений (Ctrl + T)" />
+      <Item key="frmMain.btnFullScreen" value="Полноэкранный режим (Alt + Enter)" />
       <Item key="frmMain.btnSlideShow" value="Презентация ('F11' или 'ESC' — выход)" />
       <Item key="frmMain.btnConvert" value="Конвертировать в другой формат (Ctrl + S)" />
       <Item key="frmMain.btnPrintImage" value="Печать (Ctrl + P)" />
-      <Item key="frmMain.btnMenu" value="Меню (клавиша 'ё')" />
+      <Item key="frmMain.btnMenu" value="Меню (клавиша 'Ё')" />
+      <Item key="frmMain.mnuMainFile" value="Файл" />
       <Item key="frmMain.mnuMainOpenFile" value="Открыть файл" />
       <Item key="frmMain.mnuMainOpenImageData" value="Открыть изображение из буфера обмена" />
+      <Item key="frmMain.mnuMainNewWindow" value="Открыть новое окно" />
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Невозможно открыть новое окно, потому что разрешён только один экземпляр" />
       <Item key="frmMain.mnuMainSaveAs" value="Сохранить как ..." />
       <Item key="frmMain.mnuMainRefresh" value="Обновить" />
       <Item key="frmMain.mnuMainReloadImage" value="Обновить изображение" />
+      <Item key="frmMain.mnuMainReloadImageList" value="Перезагрузить список изображений" />
       <Item key="frmMain.mnuMainEditImage" value="Редактировать изображение {0}" />
+      <Item key="frmMain.mnuMainPrint" value="Печать" />
       <Item key="frmMain.mnuMainNavigation" value="Навигация" />
       <Item key="frmMain.mnuMainViewNext" value="Следующее изображение" />
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="Стрелка вправо / PageDown" />
@@ -42,31 +47,33 @@
       <Item key="frmMain.mnuMainGoto" value="Перейти к ..." />
       <Item key="frmMain.mnuMainGotoFirst" value="Перейти к первому изображению" />
       <Item key="frmMain.mnuMainGotoLast" value="Перейти к последнему изображению" />
-      <Item key="frmMain.mnuMainFullScreen" value="Полноэкранный режим" />
-      <Item key="frmMain.mnuMainSlideShow" value="Презентация" />
-      <Item key="frmMain.mnuMainSlideShowStart" value="Начать презентацию" />
-      <Item key="frmMain.mnuMainSlideShowPause" value="Остановить/возобновить презентацию" />
-      <Item key="frmMain.mnuMainSlideShowExit" value="Выход из режима презентации" />
-      <Item key="frmMain.mnuMainPrint" value="Печать" />
-      <Item key="frmMain.mnuMainManipulation" value="Манипуляции с изображением" />
-      <Item key="frmMain.mnuMainRotateCounterclockwise" value="Повернуть ПРОТИВ ЧАСОВОЙ стрелки" />
-      <Item key="frmMain.mnuMainRotateClockwise" value="Повернуть ПО ЧАСОВОЙ стрелке" />
-      <Item key="frmMain.mnuMainFlipHorz" value="Отразить по горизонтали" />
-      <Item key="frmMain.mnuMainFlipVert" value="Отразить по вертикали" />
+      <Item key="frmMain.mnuMainZoom" value="Масштабирование" />
       <Item key="frmMain.mnuMainZoomIn" value="Увеличить" />
       <Item key="frmMain.mnuMainZoomOut" value="Уменьшить" />
-      <Item key="frmMain.mnuMainScaleToFit" value="По размеру окна" />
+      <Item key="frmMain.mnuMainScaleToFit" value="Изображение по размеру окна" />
       <Item key="frmMain.mnuMainActualSize" value="Масштаб 100%" />
       <Item key="frmMain.mnuMainLockZoomRatio" value="Зафиксировать масштаб" />
       <Item key="frmMain.mnuMainAutoZoom" value="Автоматическое масштабирование" />
       <Item key="frmMain.mnuMainScaleToWidth" value="Масштаб по ширине" />
       <Item key="frmMain.mnuMainScaleToHeight" value="Масштаб по высоте" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="Окно по размеру изображения" />
+      <Item key="frmMain.mnuMainImage" value="Изображение" />
+      <Item key="frmMain.mnuMainChannels" value="Просмотр каналов" />
+      <Item key="frmMain.mnuMainChannels._All" value="Все" />
+      <Item key="frmMain.mnuMainChannels._Red" value="Красный" />
+      <Item key="frmMain.mnuMainChannels._Green" value="Зелёный" />
+      <Item key="frmMain.mnuMainChannels._Blue" value="Синий" />
+      <Item key="frmMain.mnuMainChannels._Black" value="Чёрный" />
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Альфа (прозрачность)" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="Повернуть ПРОТИВ ЧАСОВОЙ стрелки" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="Повернуть ПО ЧАСОВОЙ стрелке" />
+      <Item key="frmMain.mnuMainFlipHorz" value="Отразить по горизонтали" />
+      <Item key="frmMain.mnuMainFlipVert" value="Отразить по вертикали" />
       <Item key="frmMain.mnuMainRename" value="Переименовать" />
-      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Удалить в КОРЗИНУ" />
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Удалить В КОРЗИНУ" />
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Удалить НАВСЕГДА" />
       <Item key="frmMain.mnuMainExtractFrames" value="Извлечь кадры из изображения ({0})" />
-      <Item key="frmMain.mnuMainStartStopAnimating" value="Начать/остановить анимацию изображения" />
+      <Item key="frmMain.mnuMainStartStopAnimating" value="НАЧАТЬ / ОСТАНОВИТЬ анимацию изображения" />
       <Item key="frmMain.mnuMainSetAsDesktop" value="Сделать фоновым изображением рабочего стола" />
       <Item key="frmMain.mnuMainSetAsLockImage" value="Сделать фоновым изображением экрана блокировки" />
       <Item key="frmMain.mnuMainImageLocation" value="Открыть место хранения файла" />
@@ -77,51 +84,58 @@
       <Item key="frmMain.mnuMainCut" value="Вырезать" />
       <Item key="frmMain.mnuMainCopyImagePath" value="Копировать путь" />
       <Item key="frmMain.mnuMainClearClipboard" value="Очистить буфер обмена" />
+      <Item key="frmMain.mnuMainFullScreen" value="Полноэкранный режим" />
+      <Item key="frmMain.mnuMainSlideShow" value="Презентация" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="НАЧАТЬ презентацию" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="ОСТАНОВИТЬ / ВОЗОБНОВИТЬ презентацию" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="ВЫХОД из режима презентации" />
       <Item key="frmMain.mnuMainShare" value="Поделиться ..." />
       <Item key="frmMain.mnuMainLayout" value="Элементы управления" />
       <Item key="frmMain.mnuMainToolbar" value="Панель инструментов" />
       <Item key="frmMain.mnuMainThumbnailBar" value="Панель эскизов" />
-      <Item key="frmMain.mnuMainCheckBackground" value="Прозрачный/сплошной фон" />
+      <Item key="frmMain.mnuMainCheckBackground" value="Фон (сплошной / прозрачный)" />
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Закрепить поверх всех окон" />
       <Item key="frmMain.mnuMainTools" value="Инструменты" />
       <Item key="frmMain.mnuMainColorPicker" value="Панель подбора цвета (пипетка)" />
       <Item key="frmMain.mnuMainSettings" value="Настройки программы" />
+      <Item key="frmMain.mnuMainHelp" value="Помощь" />
       <Item key="frmMain.mnuMainAbout" value="О программе" />
       <Item key="frmMain.mnuMainFirstLaunch" value="Конфигуратор первичных настроек" />
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Проверить обновления" />
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Доступна новая версия!" />
       <Item key="frmMain.mnuMainReportIssue" value="Сообщить о проблеме" />
+      <Item key="frmMain.mnuMainExitApplication" value="Выйти из ImageGlass" />
       <Item key="frmMain._OpenFileDialog" value="Все поддерживаемые форматы" />
-      <Item key="frmMain._Text" value="Файл(ы)" />
+      <Item key="frmMain._Text" value="файлов" />
       <Item key="frmMain._ImageData" value="Данные изображения" />
       <Item key="frmMain._RenameDialogText" value="Переименовать" />
-      <Item key="frmMain._RenameDialog" value="Введите новое имя файла" />
-      <Item key="frmMain._GotoDialogText" value="Введите индекс изображения, чтобы просмотреть его, и нажмите 'ENTER'" />
+      <Item key="frmMain._RenameDialog" value="Введите новое имя файла:" />
+      <Item key="frmMain._GotoDialogText" value="Введите индекс изображения, чтобы просмотреть его,&#xA;и нажмите 'ENTER'" />
       <Item key="frmMain._DeleteDialogText" value="Удалить файл '{0}' ?" />
       <Item key="frmMain._DeleteDialogTitle" value="Подтвердить" />
-      <Item key="frmMain._ExtractFrameText" value="Извлечение кадров изображения. Пожалуйста, выберите папку для извлечения" />
+      <Item key="frmMain._ExtractFrameText" value="Извлечение кадров изображения. Пожалуйста, выберите папку для извлечения:" />
       <Item key="frmMain._FullScreenMessage" value="Нажмите 'Alt + Enter' для выхода из полноэкранного режима." />
-      <Item key="frmMain._SlideshowMessage" value="Нажмите ESC чтобы выйти из Cлайд-шоу.&#xA; Правая кнопка мыши, чтобы открыть контекстное меню." />
-      <Item key="frmMain._SlideshowMessagePause" value="Приостановить слайд-шоу" />
-      <Item key="frmMain._SlideshowMessageResume" value="Возобновление слайд-шоу" />
+      <Item key="frmMain._SlideshowMessage" value="Нажмите 'ESC' чтобы выйти из режима презентации.&#xA;Правая кнопка мыши, чтобы открыть контекстное меню." />
+      <Item key="frmMain._SlideshowMessagePause" value="Приостановить показ" />
+      <Item key="frmMain._SlideshowMessageResume" value="Возобновить показ" />
       <Item key="frmMain._CopyFileText" value="Файлов скопировано {0} в буфер обмена" />
       <Item key="frmMain._CutFileText" value="Файлов вырезано {0} в буфер обмена" />
       <Item key="frmMain._CopyImageData" value="Изображение скопировано в буфер обмена" />
       <Item key="frmMain._ClearClipboard" value="Буфер обмена был очищен" />
-      <Item key="frmMain._SaveChanges" value="Сохранение изменений..." />
-      <Item key="frmMain._SaveImage" value="Файл был успешно сохранён в &#xD; &#xA;{0}" />
-      <Item key="frmMain._SaveImageError" value="Ошибка сохранения файла в &#xD; &#xA;{0}." />
-      <Item key="frmMain._Loading" value="Загрузка..." />
+      <Item key="frmMain._SaveChanges" value="Сохранение изменений ..." />
+      <Item key="frmMain._SaveImage" value="Файл был успешно сохранён в:&#xD; &#xA;{0}" />
+      <Item key="frmMain._SaveImageError" value="Ошибка сохранения файла в:&#xD; &#xA;{0}" />
+      <Item key="frmMain._Loading" value="Загрузка ..." />
       <Item key="frmMain._FirstItemOfList" value="Перейти к первому изображению" />
       <Item key="frmMain._LastItemOfList" value="Перейти к последнему изображению" />
-      <Item key="frmMain._CannotRotateAnimatedFile" value="Вращение анимированных изображений не поддерживается программой ImageGlass" />
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Поворот анимированных изображений не поддерживается программой ImageGlass" />
       <Item key="frmMain._SetLockImage_Error" value="Произошла ошибка при настройке изображения для экрана блокировки" />
       <Item key="frmMain._SetLockImage_Success" value="Изображение для экрана блокировки было успешно установлено" />
       <Item key="frmMain._SetBackground_Error" value="Произошла ошибка при настройке фона рабочего стола" />
       <Item key="frmMain._SetBackground_Success" value="Фон рабочего стола был успешно установлен" />
-      <Item key="frmAbout.lblSlogant" value="Легкий, универсальный просмотрщик изображений" />
+      <Item key="frmAbout.lblSlogant" value="Лёгкое, универсальное средство просмотра изображений" />
       <Item key="frmAbout.lblInfo" value="Информация" />
-      <Item key="frmAbout.lblComponent" value="Компонент" />
+      <Item key="frmAbout.lblComponent" value="Компоненты" />
       <Item key="frmAbout.lblReferences" value="Дополнительные материалы" />
       <Item key="frmAbout.lblVersion" value="Версия: {0}" />
       <Item key="frmAbout.lblInfoContact" value="Контакты" />
@@ -135,33 +149,34 @@
       <Item key="frmSetting.btnApply" value="Применить" />
       <Item key="frmSetting.lblGeneral" value="Главные настройки" />
       <Item key="frmSetting.lblImage" value="Изображение" />
-      <Item key="frmSetting.lblEdit" value="Редактировать" />
+      <Item key="frmSetting.lblEdit" value="Редактирование" />
       <Item key="frmSetting.lblFileAssociations" value="Ассоциации файлов" />
       <Item key="frmSetting.lblToolbar" value="Панель инструментов" />
-      <Item key="frmSetting.lblColorPicker" value="Подбор цвета" />
-      <Item key="frmSetting.lblLanguage" value="Язык интерфейса" />
+      <Item key="frmSetting.lblColorPicker" value="Подбор цвета (пипетка)" />
+      <Item key="frmSetting.lblLanguage" value="Язык управления" />
       <Item key="frmSetting.lblTheme" value="Темы оформления" />
+      <Item key="frmSetting.lblKeyboard" value="Клавиатура" />
       <Item key="frmSetting.lblHeadStartup" value="Настройки запуска" />
-      <Item key="frmSetting.chkWelcomePicture" value="Показать картинку приветствия" />
+      <Item key="frmSetting.chkWelcomePicture" value="Показывать изображение приветствия" />
       <Item key="frmSetting.chkLastSeenImage" value="Открыть последнее увиденное изображение" />
-      <Item key="frmSetting.chkShowToolBar" value="Показывать панель инструментов при запуске" />
+      <Item key="frmSetting.chkShowToolBar" value="Показывать панель инструментов" />
       <Item key="frmSetting.lblHeadConfigDir" value="Папка текущей конфигурации" />
       <Item key="frmSetting.lblHeadOthers" value="Другие настройки" />
-      <Item key="frmSetting.chkAutoUpdate" value="Проверка обновлений автоматически" />
+      <Item key="frmSetting.chkAutoUpdate" value="Проверять обновления автоматически" />
       <Item key="frmSetting.chkAllowMultiInstances" value="Разрешить несколько экземпляров программы" />
-      <Item key="frmSetting.chkESCToQuit" value="Разрешить нажатие ESC для выхода из приложения" />
+      <Item key="frmSetting.chkESCToQuit" value="Разрешить нажатие 'ESC' для выхода из приложения" />
       <Item key="frmSetting.chkConfirmationDelete" value="Отображать диалоговое окно подтверждения удаления" />
-      <Item key="frmSetting.chkShowScrollbar" value="Отображать списки прокрутки" />
-      <Item key="frmSetting.chkDisplayBasename" value="Показывать в строке заголовка только имя файла" />
-      <Item key="frmSetting.chkShowNavButtons" value="Отображать кнопки со стрелками навигации" />
-      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Отображать шахматную доску только в области изображения" />
-      <Item key="frmSetting.lblBackGroundColor" value="Цвет фона" />
+      <Item key="frmSetting.chkShowScrollbar" value="Отображать полосы прокрутки" />
+      <Item key="frmSetting.chkDisplayBasename" value="Не показывать в строке заголовка путь к файлу" />
+      <Item key="frmSetting.chkShowNavButtons" value="Отображать вторые стрелки навигации влево / вправо" />
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Отображать фон прозрачности (альфа-канал) только в области изображения" />
+      <Item key="frmSetting.lblBackGroundColor" value="Цвет фона  в области изображения" />
       <Item key="frmSetting.lnkResetBackgroundColor" value="Сброс" />
       <Item key="frmSetting.lblHeadImageLoading" value="Загрузка изображения" />
       <Item key="frmSetting.chkFindChildFolder" value="Искать изображения во вложенных папках" />
       <Item key="frmSetting.chkShowHiddenImages" value="Показывать скрытые изображения" />
-      <Item key="frmSetting.chkLoopViewer" value="Повторять слайд-шоу с первого изображения при достижении конца" />
-      <Item key="frmSetting.chkImageBoosterBack" value="Ускоренная загрузка изображений в навигации (требуется на ~20% больше ОЗУ)" />
+      <Item key="frmSetting.chkLoopViewer" value="Повторять презентацию с первого изображения при достижении конца" />
+      <Item key="frmSetting.chkIsCenterImage" value="Центрировать изображение в средстве просмотра" />
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок загрузки изображений" />
       <Item key="frmSetting.cmbImageOrder._Name" value="Имя файла (по умолчанию)" />
       <Item key="frmSetting.cmbImageOrder._Length" value="Размер файла" />
@@ -170,6 +185,10 @@
       <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Время последней записи" />
       <Item key="frmSetting.cmbImageOrder._Extension" value="Расширение" />
       <Item key="frmSetting.cmbImageOrder._Random" value="Случайный" />
+      <Item key="frmSetting.cmbImageOrderType._Asc" value="По возрастанию" />
+      <Item key="frmSetting.cmbImageOrderType._Desc" value="По убыванию" />
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Использовать порядок сортировки такой же, как и в проводнике, если это возможно" />
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Количество изображений, кэшированных ImageBooster (в одной директории)" />
       <Item key="frmSetting.lblColorManagement" value="Управление цветом" />
       <Item key="frmSetting.chkApplyColorProfile" value="Применить также для изображений без внедрённого цветового профиля" />
       <Item key="frmSetting.lblColorProfile" value="Цветовой профиль:" />
@@ -185,39 +204,42 @@
       <Item key="frmSetting.cmbMouseWheel._Zoom" value="Масштабирование" />
       <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Вертикальная прокрутка" />
       <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Горизонтальная прокрутка" />
-      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предыдущее/следующее изображение" />
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предыдущее / следующее изображение" />
       <Item key="frmSetting.lblHeadZooming" value="Масштабирование" />
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимизация масштаба" />
       <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматически" />
       <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Пиксели с размытыми краями" />
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Пиксели с четкими краями" />
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Пиксели с чёткими краями" />
+      <Item key="frmSetting.lblZoomLevels" value="Уровни масштабирования" />
+      <Item key="frmSetting.txtZoomLevels._Error" value="Произошла ошибка при обновлении уровней масштабирования. Сообщение об ошибке:&#xD;&#xA;&#xA;{0}" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="Панель эскизов" />
-      <Item key="frmSetting.chkThumbnailVertical" value="Панель эскизов с право" />
+      <Item key="frmSetting.chkThumbnailVertical" value="Панель эскизов справа" />
       <Item key="frmSetting.chkShowThumbnailScrollbar" value="Показывать полосу прокрутки панели эскизов" />
-      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Размер эскиза (пиксель)" />
-      <Item key="frmSetting.lblHeadSlideshow" value="Слайд-шоу" />
-      <Item key="frmSetting.chkLoopSlideshow" value="Повторять слайд-шоу с первого изображения при достижении конца" />
-      <Item key="frmSetting.lblSlideshowInterval" value="Слайд-шоу Интервал: {0} секунд" />
-      <Item key="frmSetting.chkSaveOnRotate" value="Сохранить изображение после поворота" />
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Размер эскиза (в пикселях):" />
+      <Item key="frmSetting.lblHeadSlideshow" value="Презентация" />
+      <Item key="frmSetting.chkLoopSlideshow" value="Возврат показа к первому изображению при достижении конца списка" />
+      <Item key="frmSetting.lblSlideshowInterval" value="Интервал показа изображений (в секундах): {0}" />
+      <Item key="frmSetting.chkSaveOnRotate" value="Пересохранить изображение после редактирования" />
       <Item key="frmSetting.lblSelectAppForEdit" value="Выберите приложение для редактирования изображений" />
-      <Item key="frmSetting.btnEditEditExt" value="Редактировать" />
-      <Item key="frmSetting.btnEditResetExt" value="Восстановить по умолчанию" />
-      <Item key="frmSetting.btnEditEditAllExt" value="Редактировать все расширения" />
+      <Item key="frmSetting.btnEditEditExt" value="Изменить" />
+      <Item key="frmSetting.btnEditResetExt" value="Вернуть настройки" />
+      <Item key="frmSetting.btnEditEditAllExt" value="Редактировать всё" />
       <Item key="frmSetting._allExtensions" value="Все расширения" />
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Расширение файла" />
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Имя приложения" />
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путь к приложению" />
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Аргументы приложения" />
-      <Item key="frmSetting.chkSaveModifyDate" value="Изменить дату при сохранении файла" />
+      <Item key="frmSetting.chkSaveModifyDate" value="Зафиксировать дату изменения изображения при сохранении" />
       <Item key="frmSetting.lblExtensionsGroupDescription" value="* дополнительные форматы не загружаются в память автоматически." />
       <Item key="frmSetting.lblSupportedExtension" value="Поддерживаемые форматы: {0}" />
       <Item key="frmSetting.lnkOpenFileAssoc" value="Программы по умолчанию" />
       <Item key="frmSetting.btnAddNewExt" value="Добавить" />
       <Item key="frmSetting.btnRegisterExt" value="Использовать по умолчанию" />
       <Item key="frmSetting.btnDeleteExt" value="Удалить" />
-      <Item key="frmSetting.btnResetExt" value="Восстановить по умолчанию" />
-      <Item key="frmSetting._RegisterAppExtensions_Error" value="Не удается зарегистрировать расширения файлов для приложения ImageGlass" />
-      <Item key="frmSetting._RegisterAppExtensions_Success" value="Все расширения файлов успешно зарегистрированы! Чтобы установить ImageGlass в качестве программы просмотра фотографий по умолчанию, пожалуйста откройте &quot;Параметры Windows &gt; Приложения по умолчанию&quot;, и вручную выберите приложение ImageGlass в разделе &quot;Просмотр фотографий&quot;." />
+      <Item key="frmSetting.btnResetExt" value="Вернуть настройки" />
+      <Item key="frmSetting._RegisterWebToApp_Error" value="При регистрации функции привязки к веб-приложению произошла ошибка." />
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Не удалось зарегистрировать расширения файлов для приложения ImageGlass" />
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Все расширения файлов успешно зарегистрированы! &#xA;&#xA;Чтобы установить ImageGlass в качестве программы просмотра фотографий по умолчанию, пожалуйста откройте &quot;Параметры Windows → Приложения по умолчанию&quot;, и вручную выберите приложение ImageGlass в разделе &quot;Просмотр фотографий&quot;." />
       <Item key="frmSetting.lblToolbarPosition" value="Положение панели инструментов:" />
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Вверху" />
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Внизу" />
@@ -226,11 +248,11 @@
       <Item key="frmSetting.lblUsedBtns" value="Текущие кнопки:" />
       <Item key="frmSetting.lblAvailBtns" value="Доступные кнопки:" />
       <Item key="frmSetting.btnMoveDownTT" value="Переместить вниз" />
-      <Item key="frmSetting.btnMoveLeftTT" value="Удалить из панели инструментов" />
-      <Item key="frmSetting.btnMoveRightTT" value="Добавить в панель инструментов" />
+      <Item key="frmSetting.btnMoveLeftTT" value="Удалить выбранные кнопки с панели инструментов" />
+      <Item key="frmSetting.btnMoveRightTT" value="Добавить выбранные кнопки на панель инструментов" />
       <Item key="frmSetting.btnMoveUpTT" value="Переместить вверх" />
-      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Горизонтально центрировать кнопки панели инструментов в окне" />
-      <Item key="frmSetting.lblColorCodeFormat" value="Формат кода цвета" />
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Горизонтально центрировать панель инструментов относительно окна" />
+      <Item key="frmSetting.lblColorCodeFormat" value="Формат цветового кода" />
       <Item key="frmSetting.chkColorUseRGBA" value="RGBA формат" />
       <Item key="frmSetting.chkColorUseHEXA" value="HEX + альфа-канал" />
       <Item key="frmSetting.chkColorUseHSLA" value="HSLA формат" />
@@ -255,7 +277,7 @@
       <Item key="frmSetting.txtThemeInfo._Name" value="Название" />
       <Item key="frmSetting.txtThemeInfo._Version" value="Версия" />
       <Item key="frmSetting.txtThemeInfo._Author" value="Автор" />
-      <Item key="frmSetting.txtThemeInfo._Email" value="Электронная почта" />
+      <Item key="frmSetting.txtThemeInfo._Email" value="Email" />
       <Item key="frmSetting.txtThemeInfo._Website" value="Сайт" />
       <Item key="frmSetting.txtThemeInfo._Compatibility" value="Совместимость" />
       <Item key="frmSetting.txtThemeInfo._Description" value="Описание" />
@@ -266,16 +288,26 @@
       <Item key="frmSetting.btnThemeSaveAs._Error" value="Не удалось сохранить тему." />
       <Item key="frmSetting.btnThemeApply._Success" value="Тема успешно применена!" />
       <Item key="frmSetting.btnThemeApply._Error" value="Не удалось применить выбранную тему." />
+      <Item key="frmSetting.btnKeyReset" value="Вернуть настройки" />
+      <Item key="frmSetting.lblKeysSpaceBack" value="Пробел / Backspace" />
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown" />
+      <Item key="frmSetting.lblKeysUpDown" value="Стрелки вверх / вниз" />
+      <Item key="frmSetting.lblKeysLeftRight" value="Стрелки влево / вправо" />
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Предыдущее / следующее изображение" />
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Панорамирование влево / вправо" />
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Панорамирование вверх / вниз" />
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Увеличить / уменьшить" />
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Приостановить показ" />
       <Item key="frmAddNewFormat.lblFileExtension" value="Расширение файла" />
       <Item key="frmAddNewFormat.lblFormatGroup" value="Группа форматов" />
-      <Item key="frmAddNewFormat.btnOK" value="OK" />
+      <Item key="frmAddNewFormat.btnOK" value="Ok" />
       <Item key="frmAddNewFormat.btnClose" value="Закрыть" />
       <Item key="frmEditEditingAssocisation.lblFileExtension" value="Расширение файла" />
       <Item key="frmEditEditingAssocisation.lblAppName" value="Имя приложения" />
       <Item key="frmEditEditingAssocisation.lblAppPath" value="Путь к приложению" />
-      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Аргументы приложения" />
+      <Item key="frmEditEditingAssocisation.lblAppArguments" value="Параметры приложения" />
       <Item key="frmEditEditingAssocisation.btnReset" value="Сброс" />
-      <Item key="frmEditEditingAssocisation.btnOK" value="OK" />
+      <Item key="frmEditEditingAssocisation.btnOK" value="Ok" />
       <Item key="frmEditEditingAssocisation.btnClose" value="Закрыть" />
       <Item key="frmEditEditingAssocisation.lblPreviewLabel" value="Предварительный просмотр" />
       <Item key="frmFirstLaunch._Text" value="Конфигуратор первичных настроек" />
@@ -283,11 +315,11 @@
       <Item key="frmFirstLaunch.btnNextStep" value="Далее" />
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Готово!" />
       <Item key="frmFirstLaunch.lnkSkip" value="Пропустить и начать использовать ImageGlass" />
-      <Item key="frmFirstLaunch.lblLanguage" value="Выберите язык" />
-      <Item key="frmFirstLaunch.lblLayout" value="Выберите макет" />
+      <Item key="frmFirstLaunch.lblLanguage" value="Выберите язык:" />
+      <Item key="frmFirstLaunch.lblLayout" value="Выберите макет:" />
       <Item key="frmFirstLaunch.cmbLayout._Standard" value="Пользователь" />
       <Item key="frmFirstLaunch.cmbLayout._Designer" value="Разработчик" />
-      <Item key="frmFirstLaunch.lblTheme" value="Выберите тему оформления" />
+      <Item key="frmFirstLaunch.lblTheme" value="Выберите тему оформления:" />
       <Item key="frmFirstLaunch.lblDefaultApp" value="Открывать всё в ImageGlass?" />
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Да" />
     </Content>
