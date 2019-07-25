@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -31,14 +31,10 @@ namespace ImageGlass.Theme
         {
             this.ThemeBackgroundColor = backgroundColor;
             this.ThemeTextColor = textColor;
-
-            
         }
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
-
-
             if (e.Item.Enabled)
             {
                 e.TextColor = this.ThemeTextColor;
@@ -46,7 +42,8 @@ namespace ImageGlass.Theme
             }
             else
             {
-                e.Item.Enabled = true;
+                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
+                //e.Item.Enabled = true;
 
                 if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
@@ -59,7 +56,9 @@ namespace ImageGlass.Theme
 
 
                 base.OnRenderItemText(e);
-                e.Item.Enabled = false;
+
+                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
+                //e.Item.Enabled = false;
             }
         }
 
@@ -95,7 +94,7 @@ namespace ImageGlass.Theme
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
-            if (e.ToolStrip is ToolStripDropDown dropdown)
+            if (e.ToolStrip is ToolStripDropDown)
             {
                 // draw background
                 using (var brush = new SolidBrush(this.ThemeBackgroundColor)) // KBR 20181231 fix handle leak
@@ -163,7 +162,6 @@ namespace ImageGlass.Theme
 
     public class ModernColors : ProfessionalColorTable
     {
-
         public override Color MenuItemSelected
         {
             get

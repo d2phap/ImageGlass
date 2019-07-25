@@ -28,8 +28,7 @@ namespace ImageGlass.Services.InstanceManagement
         /// <summary>
         /// Indicates whether this is the first instance of this application.
         /// </summary>
-        public Boolean IsFirstInstance
-        { get { return ownsMutex; } }
+        public Boolean IsFirstInstance { get { return ownsMutex; } }
 
         /// <summary>
         /// Passes the given arguments to the first running instance of the application.
@@ -53,10 +52,8 @@ namespace ImageGlass.Services.InstanceManagement
                 }
                 return true;
             }
-            catch (TimeoutException)
-            { } //Couldn't connect to server
-            catch (IOException)
-            { } //Pipe was broken
+            catch (TimeoutException) { } //Couldn't connect to server
+            catch (IOException) { } //Pipe was broken
 
             return false;
         }
@@ -91,13 +88,13 @@ namespace ImageGlass.Services.InstanceManagement
                     ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
                 }
             }
-            catch (IOException)
-            { } //Pipe was broken
+            catch (IOException) { } //Pipe was broken
             finally
             {
                 ListenForArguments(null);
             }
         }
+
 
         /// <summary>
         /// Calls the OnArgumentsReceived method casting the state Object to String[].
@@ -107,10 +104,14 @@ namespace ImageGlass.Services.InstanceManagement
         {
             OnArgumentsReceived((String[])state);
         }
+
+
         /// <summary>
         /// Event raised when arguments are received from successive instances.
         /// </summary>
         public event EventHandler<ArgumentsReceivedEventArgs> ArgumentsReceived;
+
+
         /// <summary>
         /// Fires the ArgumentsReceived event.
         /// </summary>
@@ -120,6 +121,7 @@ namespace ImageGlass.Services.InstanceManagement
             if (ArgumentsReceived != null)
                 ArgumentsReceived(this, new ArgumentsReceivedEventArgs() { Args = arguments });
         }
+
 
         #region IDisposable
         private Boolean disposed = false;

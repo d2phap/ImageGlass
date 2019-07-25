@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Core;
+using ImageGlass.Heart;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -318,7 +318,7 @@ namespace ImageGlass
                 if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width
                     && _cursorPos.Y < _imgBox.Image.Height)
                 {
-                    lblPixel.Text = string.Format("({0}, {1})", _cursorPos.X, _cursorPos.Y);
+                    lblPixel.Text = string.Format("{0}, {1}", _cursorPos.X, _cursorPos.Y);
                 }
             }
             catch { }
@@ -365,6 +365,7 @@ namespace ImageGlass
 
         private void _DisplayColor(Color color)
         {
+            txtLocation.Text = lblPixel.Text;
             panelColor.BackColor = color;
 
             //RGBA color -----------------------------------------------
@@ -407,8 +408,6 @@ namespace ImageGlass
                 lblHSL.Text = "HSL:";
                 txtHSL.Text = string.Format("{0}, {1}%, {2}%", hsla[0], hsla[1], hsla[2]);
             }
-
-                
             
 
             lblPixel.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(color);
@@ -417,6 +416,7 @@ namespace ImageGlass
         private void _ResetColor()
         {
             lblPixel.Text = string.Empty;
+            txtLocation.Text = string.Empty;
             txtRGB.Text = string.Empty;
             txtHEX.Text = string.Empty;
         }
@@ -432,8 +432,12 @@ namespace ImageGlass
             this.Activate();
         }
 
-        
 
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            LocalSetting.IsShowColorPickerOnStartup = false;
+            this.Close();
+        }
 
         #endregion
 
@@ -470,13 +474,19 @@ namespace ImageGlass
         {
             //apply current theme ------------------------------------------------------
             this.BackColor =
+                lblLocation.BackColor =
+                txtLocation.BackColor =
                 txtRGB.BackColor =
                 txtHEX.BackColor =
                 txtCMYK.BackColor =
                 txtHSL.BackColor =
-                LocalSetting.Theme.BackgroundColor;
+                btnClose.FlatAppearance.BorderColor = 
+                btnClose.BackColor =
+                    LocalSetting.Theme.BackgroundColor;
 
             lblPixel.ForeColor =
+                lblLocation.ForeColor =
+                txtLocation.ForeColor =
                 lblRGB.ForeColor =
                 lblHEX.ForeColor =
                 lblCMYK.ForeColor =
@@ -532,8 +542,9 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-
+        
     }
 }

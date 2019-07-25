@@ -1,6 +1,6 @@
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="6.0.12.27" isRightToLeftLayout="No" />
+    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="7.0.7.26" isRightToLeftLayout="No" />
     <Content>
       <Item key="_.ImageFormatGroup.Default" value="預設格式" />
       <Item key="_.ImageFormatGroup.Optional" value="可選格式" />
@@ -28,12 +28,17 @@
       <Item key="frmMain.btnConvert" value="轉換圖片 (Ctrl + S)" />
       <Item key="frmMain.btnPrintImage" value="列印圖片 (Ctrl + P)" />
       <Item key="frmMain.btnMenu" value="選單 (快捷鍵：`)" />
+      <Item key="frmMain.mnuMainFile" value="檔案" />
       <Item key="frmMain.mnuMainOpenFile" value="開啟檔案" />
       <Item key="frmMain.mnuMainOpenImageData" value="從剪貼簿開啟圖片資料" />
+      <Item key="frmMain.mnuMainNewWindow" value="開啟新視窗" />
+      <Item key="frmMain.mnuMainNewWindow._Error" value="因為僅允許一個實體，所以無法開啟新視窗" />
       <Item key="frmMain.mnuMainSaveAs" value="另存圖片為 ..." />
       <Item key="frmMain.mnuMainRefresh" value="重新整理" />
       <Item key="frmMain.mnuMainReloadImage" value="重新載入圖像" />
+      <Item key="frmMain.mnuMainReloadImageList" value="重新載入圖片清單" />
       <Item key="frmMain.mnuMainEditImage" value="編輯圖片 {0}" />
+      <Item key="frmMain.mnuMainPrint" value="列印" />
       <Item key="frmMain.mnuMainNavigation" value="導航" />
       <Item key="frmMain.mnuMainViewNext" value="檢視下一張圖片" />
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="右方向鍵／PageDown" />
@@ -42,17 +47,7 @@
       <Item key="frmMain.mnuMainGoto" value="前往..." />
       <Item key="frmMain.mnuMainGotoFirst" value="前往第一張圖片" />
       <Item key="frmMain.mnuMainGotoLast" value="前往最後一張圖片" />
-      <Item key="frmMain.mnuMainFullScreen" value="全螢幕" />
-      <Item key="frmMain.mnuMainSlideShow" value="幻燈片" />
-      <Item key="frmMain.mnuMainSlideShowStart" value="開始幻燈片放映" />
-      <Item key="frmMain.mnuMainSlideShowPause" value="暫停／繼續放映幻燈片" />
-      <Item key="frmMain.mnuMainSlideShowExit" value="結束幻燈片放映" />
-      <Item key="frmMain.mnuMainPrint" value="列印" />
-      <Item key="frmMain.mnuMainManipulation" value="操控" />
-      <Item key="frmMain.mnuMainRotateCounterclockwise" value="逆時針旋轉" />
-      <Item key="frmMain.mnuMainRotateClockwise" value="順時針旋轉" />
-      <Item key="frmMain.mnuMainFlipHorz" value="水平翻轉" />
-      <Item key="frmMain.mnuMainFlipVert" value="垂直翻轉" />
+      <Item key="frmMain.mnuMainZoom" value="縮放" />
       <Item key="frmMain.mnuMainZoomIn" value="放大" />
       <Item key="frmMain.mnuMainZoomOut" value="縮小" />
       <Item key="frmMain.mnuMainScaleToFit" value="縮放到適合的大小" />
@@ -62,6 +57,18 @@
       <Item key="frmMain.mnuMainScaleToWidth" value="縮放至與寬度相符" />
       <Item key="frmMain.mnuMainScaleToHeight" value="縮放至與高度相符" />
       <Item key="frmMain.mnuMainWindowAdaptImage" value="調整視窗至實際圖片尺寸" />
+      <Item key="frmMain.mnuMainImage" value="圖片" />
+      <Item key="frmMain.mnuMainChannels" value="檢視頻道" />
+      <Item key="frmMain.mnuMainChannels._All" value="全部" />
+      <Item key="frmMain.mnuMainChannels._Red" value="紅" />
+      <Item key="frmMain.mnuMainChannels._Green" value="綠" />
+      <Item key="frmMain.mnuMainChannels._Blue" value="藍" />
+      <Item key="frmMain.mnuMainChannels._Black" value="黑" />
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alpha" />
+      <Item key="frmMain.mnuMainRotateCounterclockwise" value="逆時針旋轉" />
+      <Item key="frmMain.mnuMainRotateClockwise" value="順時針旋轉" />
+      <Item key="frmMain.mnuMainFlipHorz" value="水平翻轉" />
+      <Item key="frmMain.mnuMainFlipVert" value="垂直翻轉" />
       <Item key="frmMain.mnuMainRename" value="重新命名圖片" />
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="移動到資源回收筒" />
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="從硬碟中刪除" />
@@ -77,6 +84,11 @@
       <Item key="frmMain.mnuMainCut" value="剪下" />
       <Item key="frmMain.mnuMainCopyImagePath" value="複製圖片路徑" />
       <Item key="frmMain.mnuMainClearClipboard" value="清除剪貼簿" />
+      <Item key="frmMain.mnuMainFullScreen" value="全螢幕" />
+      <Item key="frmMain.mnuMainSlideShow" value="幻燈片" />
+      <Item key="frmMain.mnuMainSlideShowStart" value="開始幻燈片放映" />
+      <Item key="frmMain.mnuMainSlideShowPause" value="暫停／繼續放映幻燈片" />
+      <Item key="frmMain.mnuMainSlideShowExit" value="結束幻燈片放映" />
       <Item key="frmMain.mnuMainShare" value="分享..." />
       <Item key="frmMain.mnuMainLayout" value="佈局" />
       <Item key="frmMain.mnuMainToolbar" value="工具列" />
@@ -86,11 +98,13 @@
       <Item key="frmMain.mnuMainTools" value="工具" />
       <Item key="frmMain.mnuMainColorPicker" value="顏色選擇器" />
       <Item key="frmMain.mnuMainSettings" value="設定" />
+      <Item key="frmMain.mnuMainHelp" value="說明" />
       <Item key="frmMain.mnuMainAbout" value="關於" />
       <Item key="frmMain.mnuMainFirstLaunch" value="首次啟動設定" />
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="檢查更新" />
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="有可用的新版本!" />
       <Item key="frmMain.mnuMainReportIssue" value="回報問題" />
+      <Item key="frmMain.mnuMainExitApplication" value="離開 ImageGlass" />
       <Item key="frmMain._OpenFileDialog" value="所有支援的檔案" />
       <Item key="frmMain._Text" value="檔案" />
       <Item key="frmMain._ImageData" value="圖片資料" />
@@ -141,6 +155,7 @@
       <Item key="frmSetting.lblColorPicker" value="顏色選擇器" />
       <Item key="frmSetting.lblLanguage" value="語言" />
       <Item key="frmSetting.lblTheme" value="佈景主題" />
+      <Item key="frmSetting.lblKeyboard" value="鍵盤" />
       <Item key="frmSetting.lblHeadStartup" value="啟動" />
       <Item key="frmSetting.chkWelcomePicture" value="顯示歡迎圖片" />
       <Item key="frmSetting.chkLastSeenImage" value="開啟最後一次檢視的圖片" />
@@ -161,7 +176,7 @@
       <Item key="frmSetting.chkFindChildFolder" value="在子資料夾中搜尋圖片" />
       <Item key="frmSetting.chkShowHiddenImages" value="顯示隱藏圖像" />
       <Item key="frmSetting.chkLoopViewer" value="當到達清單結尾時，再回到第一張圖片繼續檢視" />
-      <Item key="frmSetting.chkImageBoosterBack" value="當往回看時開啟圖片加速器（需要多 ~20% RAM）" />
+      <Item key="frmSetting.chkIsCenterImage" value="將圖片置於檢視器中間" />
       <Item key="frmSetting.lblImageLoadingOrder" value="圖片載入順序" />
       <Item key="frmSetting.cmbImageOrder._Name" value="名稱（預設）" />
       <Item key="frmSetting.cmbImageOrder._Length" value="長度" />
@@ -170,6 +185,10 @@
       <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="最後寫入時間" />
       <Item key="frmSetting.cmbImageOrder._Extension" value="副檔名" />
       <Item key="frmSetting.cmbImageOrder._Random" value="隨機" />
+      <Item key="frmSetting.cmbImageOrderType._Asc" value="昇冪排序" />
+      <Item key="frmSetting.cmbImageOrderType._Desc" value="降冪排序" />
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="如果可以的話，使用 Windows 檔案總管排序" />
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="由 ImageBooster 快取的圖片數量（單向）" />
       <Item key="frmSetting.lblColorManagement" value="色彩管理" />
       <Item key="frmSetting.chkApplyColorProfile" value="也會套用至沒有內嵌色彩描述檔的圖片" />
       <Item key="frmSetting.lblColorProfile" value="色彩描述檔：" />
@@ -191,6 +210,8 @@
       <Item key="frmSetting.cmbZoomOptimization._Auto" value="自動" />
       <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="平滑像素" />
       <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="清晰像素" />
+      <Item key="frmSetting.lblZoomLevels" value="縮放等級" />
+      <Item key="frmSetting.txtZoomLevels._Error" value="更新縮放等級時發生錯誤。錯誤訊息：&#xD;&#xA;&#xA;{0}" />
       <Item key="frmSetting.lblHeadThumbnailBar" value="縮圖列" />
       <Item key="frmSetting.chkThumbnailVertical" value="在右側顯示縮圖" />
       <Item key="frmSetting.chkShowThumbnailScrollbar" value="顯示縮略圖捲軸" />
@@ -216,6 +237,7 @@
       <Item key="frmSetting.btnRegisterExt" value="設定為預設圖片檢視器" />
       <Item key="frmSetting.btnDeleteExt" value="刪除" />
       <Item key="frmSetting.btnResetExt" value="重設為預設值" />
+      <Item key="frmSetting._RegisterWebToApp_Error" value="無法註冊網路到應用程式連結" />
       <Item key="frmSetting._RegisterAppExtensions_Error" value="無法為 ImageGlass 應用程式註冊副檔名" />
       <Item key="frmSetting._RegisterAppExtensions_Success" value="所有副檔名都已註冊成功！ 要將 ImageGlass 設定為預設的圖片檢視器，請開啟 Windows 設定中的預設應用程式，然後在圖片檢視器下手動選取 ImageGlass。" />
       <Item key="frmSetting.lblToolbarPosition" value="工具列的方位：" />
@@ -266,6 +288,16 @@
       <Item key="frmSetting.btnThemeSaveAs._Error" value="無法儲存您選定的佈景主題。" />
       <Item key="frmSetting.btnThemeApply._Success" value="選定的佈景主題已成功套用！" />
       <Item key="frmSetting.btnThemeApply._Error" value="無法套用選定的佈景主圖。" />
+      <Item key="frmSetting.btnKeyReset" value="重設為預設值" />
+      <Item key="frmSetting.lblKeysSpaceBack" value="空白鍵／退格鍵" />
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown" />
+      <Item key="frmSetting.lblKeysUpDown" value="上／下方向鍵" />
+      <Item key="frmSetting.lblKeysLeftRight" value="左／右方向鍵" />
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="上一張／下一張圖片" />
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="向左／向右平移" />
+      <Item key="frmSetting.KeyActions._PanUpDown" value="向上／向下平移" />
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="放大／縮小" />
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="暫停幻燈片" />
       <Item key="frmAddNewFormat.lblFileExtension" value="副檔名" />
       <Item key="frmAddNewFormat.lblFormatGroup" value="格式群組" />
       <Item key="frmAddNewFormat.btnOK" value="確定" />

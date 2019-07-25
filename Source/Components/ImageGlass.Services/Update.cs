@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -91,8 +91,9 @@ namespace ImageGlass.Services
             //return FALSE if config file is not exist
             if (!File.Exists(savedPath)) { return false; }
 
-            //Init
-            LoadUpdateConfig(savedPath);
+            //Init - checking for access error
+            if (!LoadUpdateConfig(savedPath))
+                return false;
 
             //error on downloading
             if (_info.NewVersion.ToString() == "1.0.0.0")
@@ -106,23 +107,37 @@ namespace ImageGlass.Services
         /// <summary>
         /// Load update data from XML file
         /// </summary>
-        /// <param name="filename"></param>
-        public void LoadUpdateConfig(string filename)
+        /// <param name="xmlFilename"></param>
+        /// <returns>false on load failure</returns>
+        public bool LoadUpdateConfig(string xmlFilename)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filename);
-            XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
-            XmlElement nType = (XmlElement)root.SelectNodes("Update")[0]; //<Update>
-            XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                // Issue #520: the xml document was locked somehow. Open it read-only to prevent lock issues
+                using (Stream s = File.OpenRead(xmlFilename))
+                {
+                    xmlDoc.Load(s);
+                }
+                XmlElement root = xmlDoc.DocumentElement;// <ImageGlass>
+                XmlElement nType = (XmlElement)root.SelectNodes("Update")[0]; //<Update>
+                XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
-            //Get <Info> Attributes
-            _info.NewVersion = new Version(n.GetAttribute("newVersion"));
-            _info.VersionType = n.GetAttribute("versionType");
-            _info.Level = n.GetAttribute("level");
-            _info.Link = new Uri(n.GetAttribute("link"));
-            _info.Size = n.GetAttribute("size");
-            _info.PublishDate = DateTime.Parse(n.GetAttribute("pubDate"));
-            _info.Decription = n.GetAttribute("decription");
+                //Get <Info> Attributes
+                _info.NewVersion = new Version(n.GetAttribute("newVersion"));
+                _info.VersionType = n.GetAttribute("versionType");
+                _info.Level = n.GetAttribute("level");
+                _info.Link = new Uri(n.GetAttribute("link"));
+                _info.Size = n.GetAttribute("size");
+                _info.PublishDate = DateTime.Parse(n.GetAttribute("pubDate"));
+                _info.Decription = n.GetAttribute("decription");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // access error; corrupted file
+                return false;
+            }
         }
 
 

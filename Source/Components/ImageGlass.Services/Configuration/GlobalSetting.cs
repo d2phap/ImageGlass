@@ -20,15 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using Microsoft.Win32;
-using ImageGlass.Core;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Security;
 using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Linq;
 using System.Globalization;
+using ImageGlass.Heart;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -47,13 +46,18 @@ namespace ImageGlass.Services.Configuration
         public const int FIRST_LAUNCH_VERSION = 5;
 
 
+        /// <summary>
+        /// The URI Scheme to register web-to-app linking
+        /// </summary>
+        public const string URI_SCHEME = "imageglass";
+
 
         #region Private Properties
 
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        public static ImgMan ImageList { get; set; } = new ImgMan();
+        public static Factory ImageList { get; set; } = new Factory();
 
 
         /// <summary>
@@ -81,6 +85,18 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets image loading order type
+        /// </summary>
+        public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
+
+
+        /// <summary>
+        /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
+        /// </summary>
+        public static bool IsUseFileExplorerSortOrder { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;
@@ -98,11 +114,10 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
 
-        
+
 
         #endregion
 
-        
 
 
         #region Public Properties
@@ -168,6 +183,18 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets zoom levels of the viewer
+        /// </summary>
+        public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
+
+
+        /// <summary>
+        /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
+        /// </summary>
+        public static bool IsCenterImage { get; set; } = false;
+
+
+        /// <summary>
         /// Check if user wants to display RGBA color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerRGBA { get; set; } = true;
@@ -228,12 +255,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets value that allow user speed up image loading when navigate back
-        /// </summary>
-        public static bool IsImageBoosterBack { get; set; } = true;
-
-
-        /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
         /// </summary>
         public static bool IsPressESCToQuit { get; set; } = true;
@@ -255,7 +276,7 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-        
+
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
@@ -329,14 +350,14 @@ namespace ImageGlass.Services.Configuration
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-        
+
 
         /// <summary>
         /// Gets, sets zoom mode value
         /// </summary>
         public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-        
+
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
@@ -410,6 +431,13 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
+        /// Gets, sets the number of images cached by Image
+        /// </summary>
+        public static int ImageBoosterCachedCount { get; set; } = 1;
+
+
+        
+        /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
@@ -421,10 +449,6 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
             $"{(int)Configuration.ToolbarButtons.btnFlipHorz}," +
             $"{(int)Configuration.ToolbarButtons.btnFlipVert}," +
-            $"{(int)Configuration.ToolbarButtons.btnZoomIn}," +
-            $"{(int)Configuration.ToolbarButtons.btnZoomOut}," +
-            $"{(int)Configuration.ToolbarButtons.btnActualSize}," +
-            $"{(int)Configuration.ToolbarButtons.btnWindowAutosize}," +
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
             $"{(int)Configuration.ToolbarButtons.btnAutoZoom}," +
@@ -443,15 +467,20 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
             $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
             $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Configuration.ToolbarButtons.btnConvert}," +
-            $"{(int)Configuration.ToolbarButtons.btnPrintImage}," +
             $"{(int)Configuration.ToolbarButtons.btnDelete},";
 
 
 
 
-
-
+        /// <summary>
+        /// User-selected action tied to key pairings.
+        /// E.g. Left/Right arrows: prev/next image
+        /// </summary>
+        public static string KeyAssignments { get; set; } = $"" +
+            $"{(int)KeyCombos.LeftRight},{(int)AssignableActions.PrevNextImage};" +
+            $"{(int)KeyCombos.UpDown},{(int)AssignableActions.PanUpDown};" +
+            $"{(int)KeyCombos.PageUpDown},{(int)AssignableActions.PrevNextImage};" +
+            $"{(int)KeyCombos.SpaceBack},{(int)AssignableActions.PauseSlideshow};";
 
         #endregion
 
@@ -517,7 +546,7 @@ namespace ImageGlass.Services.Configuration
         {
             StringBuilder editingAssocString = new StringBuilder();
 
-            foreach(var assoc in GlobalSetting.ImageEditingAssociationList)
+            foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
             {
                 editingAssocString.Append($"[{assoc.ToString()}]");
             }
@@ -547,7 +576,7 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            return null;            
+            return null;
         }
 
 
@@ -567,7 +596,7 @@ namespace ImageGlass.Services.Configuration
             };
             var extList = reg.GetValueNames();
 
-            foreach(var ext in extList)
+            foreach (var ext in extList)
             {
                 exts.Append($"*{ext};");
             }
@@ -577,9 +606,10 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Load image order from configuration file
+        /// Get image order from configuration file
         /// </summary>
-        public static ImageOrderBy LoadImageOrderConfig()
+        /// <returns></returns>
+        public static ImageOrderBy GetImageOrderConfig()
         {
             string s = GetConfig("ImageLoadingOrder", "0");
 
@@ -593,9 +623,29 @@ namespace ImageGlass.Services.Configuration
                 }
             }
 
-            //ImageLoadingOrder = (ImageOrderBy)i;
-
             return (ImageOrderBy)i;
+        }
+
+
+        /// <summary>
+        /// Get image order type from configuration file
+        /// </summary>
+        /// <returns></returns>
+        public static ImageOrderType GetImageOrderTypeConfig()
+        {
+            string s = GetConfig("ImageLoadingOrderType", "0");
+
+            if (int.TryParse(s, out int i))
+            {
+                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderType)).Length) //<=== Number of items in enum
+                { }
+                else
+                {
+                    i = 0;
+                }
+            }
+
+            return (ImageOrderType)i;
         }
 
 
@@ -636,19 +686,61 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert String to Rectangle
+        /// Convert string to int array
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">Input string. E.g. "12, -40, 50"</param>
+        /// <returns></returns>
+        public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
+        {
+            var args = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var numbers = new List<int>();
+
+            foreach (var item in args)
+            {
+                var num = int.Parse(item, GlobalSetting.NumberFormat);
+                if (unsignedOnly && num < 0)
+                {
+                    continue;
+                }
+
+                numbers.Add(num);
+            }
+
+            if (distinct)
+            {
+                numbers = numbers.Distinct().ToList();
+            }
+
+            return numbers.ToArray();
+        }
+
+
+        /// <summary>
+        /// Convert int array to string
+        /// </summary>
+        /// <param name="array">Input int array</param>
+        /// <returns></returns>
+        public static string IntArrayToString(int[] array)
+        {
+            return string.Join(",", array);
+        }
+
+
+        /// <summary>
+        /// Convert string to Rectangle
+        /// </summary>
+        /// <param name="str">Input string. E.g. "12, 40, 50"</param>
         /// <returns></returns>
         public static Rectangle StringToRect(string str)
         {
-            string[] args = str.Split(',');
-            int[] arg = new int[args.Length];
-            for (int a = 0; a < arg.Length; a++)
+            var args = GlobalSetting.StringToIntArray(str);
+
+            if (args.Count() == 4)
             {
-                arg[a] = Convert.ToInt32(args[a]);
+                return new Rectangle(args[0], args[1], args[2], args[3]);
             }
-            return new Rectangle(arg[0], arg[1], arg[2], arg[3]);
+
+            return new Rectangle();
         }
 
 
@@ -709,6 +801,122 @@ namespace ImageGlass.Services.Configuration
         }
 
 
+        /// <summary>
+        /// Parse string to absolute path
+        /// </summary>
+        /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
+        /// <returns></returns>
+        public static string ToAbsolutePath(string inputPath)
+        {
+            var path = inputPath;
+            var protocol = GlobalSetting.URI_SCHEME + ":";
+
+            // If inputPath is URI Scheme
+            if (path.StartsWith(protocol))
+            {
+                // Retrieve the real path
+                path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
+            }
+
+            // Parse environment vars to absolute path
+            path = Environment.ExpandEnvironmentVariables(path);
+
+            return path;
+        }
+
+        #endregion
+
+
+
+        #region Keyboard customization
+        // The user is permitted to choose what action to associate to a key-pairing.
+        // E.g. PageUp/PageDown to next/previous image.
+
+        // The KeyPair -> action lookup
+        private static Dictionary<KeyCombos, AssignableActions> KeyActionLookup;
+
+        // Note: default value matches the IGV6 behavior
+        private static string DEFAULT_KEY_ASSIGNMENTS = "0,0;1,2;2,0;3,4;";
+
+        /// <summary>
+        /// Load the KeyPair -> action values from the config file into the lookup
+        /// dictionary.
+        /// </summary>
+        public static void LoadKeyAssignments()
+        {
+            try
+            {
+                KeyAssignments = GetConfig("KeyboardActions", DEFAULT_KEY_ASSIGNMENTS);
+                SetKeyAssignments();
+            }
+            catch (Exception e)
+            {
+                ResetKeyActionsToDefault();
+            }
+        }
+
+        private static void ResetKeyActionsToDefault()
+        {
+            KeyAssignments = DEFAULT_KEY_ASSIGNMENTS;
+            SetKeyAssignments();
+        }
+
+        private static void SetKeyAssignments()
+        {
+            var part_sep = new [] { ',' };
+            var pairs = KeyAssignments.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            KeyActionLookup = new Dictionary<KeyCombos, AssignableActions>();
+            foreach (var pair in pairs)
+            {
+                var parts = pair.Split(part_sep);
+                int part1 = int.Parse(parts[0]);
+                int part2 = int.Parse(parts[1]);
+                KeyActionLookup.Add((KeyCombos)part1, (AssignableActions)part2);
+            }
+        }
+
+        /// <summary>
+        /// For a given key-pair, return the user-chosen action
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static AssignableActions GetKeyAction(KeyCombos key)
+        {
+            try
+            {
+                return KeyActionLookup[key];
+            }
+            catch
+            {
+                // KBR 20170716 not quite sure how we might get here, but
+                // don't blow up nastily if something went wrong loading 
+                // the key assignments from the config file
+                ResetKeyActionsToDefault();
+                return KeyActionLookup[key];
+            }
+        }
+
+        public static void SetKeyAction(KeyCombos which, int newval)
+        {
+            KeyActionLookup[which] = (AssignableActions)newval;
+        }
+
+        /// <summary>
+        /// Write the key-pair customizations to the config file.
+        /// </summary>
+        public static void SaveKeyAssignments()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in KeyActionLookup.Keys)
+            {
+                sb.Append((int)key);
+                sb.Append(',');
+                sb.Append((int)KeyActionLookup[key]);
+                sb.Append(';');
+            }
+            KeyAssignments = sb.ToString();
+            SetConfig("KeyboardActions", KeyAssignments);
+        }
         #endregion
 
     }

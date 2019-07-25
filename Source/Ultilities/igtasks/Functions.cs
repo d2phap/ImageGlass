@@ -236,9 +236,79 @@ namespace igtasks
                 }
             }
 
+
+            // Register Web-to-App linking
+            return SetURIScheme();
+        }
+
+
+        /// <summary>
+        /// Delete URI Scheme registry
+        /// </summary>
+        /// <returns></returns>
+        public static int DeleteURIScheme()
+        {
+            string baseKey = $@"SOFTWARE\Classes\{GlobalSetting.URI_SCHEME}";
+
+            RegistryHelper reg = new RegistryHelper
+            {
+                ShowError = true,
+                BaseRegistryKey = Registry.CurrentUser,
+                SubKey = baseKey
+            };
+
+            if (!reg.DeleteSubKeyTree()) return 1;
+
+
             return 0;
         }
 
 
+
+        /// <summary>
+        /// Register URI Scheme for Web-to-App linking
+        /// </summary>
+        /// <returns></returns>
+        public static int SetURIScheme()
+        {
+            DeleteURIScheme();
+
+
+            string baseKey = $@"SOFTWARE\Classes\{GlobalSetting.URI_SCHEME}";
+            RegistryHelper reg = new RegistryHelper
+            {
+                ShowError = true,
+                BaseRegistryKey = Registry.CurrentUser,
+                SubKey = baseKey
+            };
+
+            if (!reg.Write("", "URL: ImageGlass Protocol"))
+            {
+                return 1;
+            }
+
+            if (!reg.Write("URL Protocol", ""))
+            {
+                return 1;
+            }
+
+
+            // DefaultIcon
+            reg.SubKey = $@"{baseKey}\DefaultIcon";
+            if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\", 0"))
+            {
+                return 1;
+            }
+
+
+            // shell\open\command
+            reg.SubKey = $@"{baseKey}\shell\open\command";
+            if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\" \"%1\""))
+            {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 }

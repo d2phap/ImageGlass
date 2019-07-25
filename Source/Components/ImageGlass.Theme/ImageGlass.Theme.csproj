@@ -54,8 +54,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetZip, Version=1.13.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DotNetZip.1.13.0\lib\net40\DotNetZip.dll</HintPath>
+    <Reference Include="DotNetZip, Version=1.13.3.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DotNetZip.1.13.3\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -88,9 +88,9 @@
     <Compile Include="ToolStripRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
-      <Name>ImageGlass.Core</Name>
+    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
+      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
+      <Name>ImageGlass.Heart</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>

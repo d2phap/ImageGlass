@@ -70,6 +70,7 @@
     <Compile Include="Configuration\GlobalSetting.cs" />
     <Compile Include="Configuration\ImageEditingAssociation.cs" />
     <Compile Include="Configuration\ThumbnailItemInfo.cs" />
+    <Compile Include="ExplorerSortOrder.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
     <Compile Include="InstanceManagement\SingleInstance.cs" />
@@ -78,14 +79,22 @@
     <Compile Include="InfoUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Core\ImageGlass.Core.csproj">
-      <Project>{8540d406-e362-4ecc-9761-f978996354df}</Project>
-      <Name>ImageGlass.Core</Name>
+    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
+      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
+      <Name>ImageGlass.Heart</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
       <Name>ImageGlass.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExplorerSortOrder32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExplorerSortOrder64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

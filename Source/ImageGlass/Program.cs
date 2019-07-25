@@ -22,7 +22,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
-using System.IO;
 using System.Globalization;
 using System.Runtime;
 
@@ -36,7 +35,7 @@ namespace ImageGlass
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
-#if ERRORMODE
+        // Issue #360: IG periodically searching for dismounted device
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
@@ -49,7 +48,6 @@ namespace ImageGlass
             SEM_NOGPFAULTERRORBOX = 0x0002,
             SEM_NOOPENFILEERRORBOX = 0x8000
         }
-#endif
 
         /// <summary>
         /// The main entry point for the application.
@@ -66,9 +64,8 @@ namespace ImageGlass
             ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir());
             ProfileOptimization.StartProfile("igstartup.profile");
 
-#if ERRORMODE
+            // Issue #360: IG periodically searching for dismounted device
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
-#endif
 
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
@@ -84,6 +81,7 @@ namespace ImageGlass
 
             // Save App version
             GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
+
 
             #region Check First-launch Configs
             var firstLaunchVersion = 0;

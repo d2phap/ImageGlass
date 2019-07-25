@@ -42,7 +42,7 @@ namespace ImageGlass
 
             imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
             imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
-            
+
         }
 
         #region PROPERTIES
@@ -248,6 +248,7 @@ namespace ImageGlass
             lblToolbar.Text = lang[$"{Name}.lblToolbar"];
             lblColorPicker.Text = lang[$"{Name}.lblColorPicker"];
             lblTheme.Text = lang[$"{Name}.lblTheme"];
+            lblKeyboard.Text = lang[$"{Name}.lblKeyboard"];
 
             btnSave.Text = lang[$"{Name}.btnSave"];
             btnCancel.Text = lang[$"{Name}.btnCancel"];
@@ -285,14 +286,16 @@ namespace ImageGlass
             chkFindChildFolder.Text = lang[$"{Name}.chkFindChildFolder"];
             chkShowHiddenImages.Text = lang[$"{Name}.chkShowHiddenImages"];
             chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
-            chkImageBoosterBack.Text = lang[$"{Name}.chkImageBoosterBack"];
+            chkIsCenterImage.Text = lang[$"{Name}.chkIsCenterImage"];
             lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
+            chkUseFileExplorerSortOrder.Text = lang[$"{Name}.chkUseFileExplorerSortOrder"];
+            lblImageBoosterCachedCount.Text = lang[$"{Name}.lblImageBoosterCachedCount"];
 
             lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
             chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
             lblColorProfile.Text = lang[$"{Name}.lblColorProfile"];
             lnkColorProfileBrowse.Text = lang[$"{Name}.lnkColorProfileBrowse"];
-            
+
             lblHeadMouseWheelActions.Text = lang[$"{Name}.lblHeadMouseWheelActions"];
             lblMouseWheel.Text = lang[$"{Name}.lblMouseWheel"];
             lblMouseWheelAlt.Text = lang[$"{Name}.lblMouseWheelAlt"];
@@ -301,6 +304,7 @@ namespace ImageGlass
 
             lblHeadZooming.Text = lang[$"{Name}.lblHeadZooming"];//
             lblGeneral_ZoomOptimization.Text = lang[$"{Name}.lblGeneral_ZoomOptimization"];
+            lblZoomLevels.Text = lang[$"{Name}.lblZoomLevels"];
 
             lblHeadThumbnailBar.Text = lang[$"{Name}.lblHeadThumbnailBar"];//
             chkThumbnailVertical.Text = lang[$"{Name}.chkThumbnailVertical"];
@@ -310,7 +314,7 @@ namespace ImageGlass
             lblHeadSlideshow.Text = lang[$"{Name}.lblHeadSlideshow"];//
             chkLoopSlideshow.Text = lang[$"{Name}.chkLoopSlideshow"];
             lblSlideshowInterval.Text = string.Format(lang[$"{Name}.lblSlideshowInterval"], barInterval.Value);
-            
+
             #endregion
 
 
@@ -394,7 +398,15 @@ namespace ImageGlass
             #endregion
 
 
-            extList = null;
+            #region KEYBOARD TAB
+            btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
+            lblKeysSpaceBack.Text = lang[$"{Name}.lblKeysSpaceBack"];
+            lblKeysPageUpDown.Text = lang[$"{Name}.lblKeysPageUpDown"];
+            lblKeysUpDown.Text = lang[$"{Name}.lblKeysUpDown"];
+            lblKeysLeftRight.Text = lang[$"{Name}.lblKeysLeftRight"];
+            #endregion
+
+
         }
 
 
@@ -432,6 +444,9 @@ namespace ImageGlass
                 case "lblTheme":
                     tab1.SelectedTab = tabTheme;
                     break;
+                case "lblKeyboard":
+                    tab1.SelectedTab = tabKeyboard;
+                    break;
             }
         }
 
@@ -445,16 +460,18 @@ namespace ImageGlass
             lblLanguage.Tag =
             lblToolbar.Tag =
             lblColorPicker.Tag =
-            lblTheme.Tag = 0;
+            lblTheme.Tag =
+            lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
             lblImage.BackColor =
-            lblEdit.BackColor = 
+            lblEdit.BackColor =
             lblFileAssociations.BackColor =
             lblLanguage.BackColor =
             lblToolbar.BackColor =
             lblColorPicker.BackColor =
-            lblTheme.BackColor = M_COLOR_MENU_NORMAL;
+            lblTheme.BackColor =
+            lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral)
             {
@@ -520,8 +537,15 @@ namespace ImageGlass
                 lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabTheme();
-                
             }
+            else if (tab1.SelectedTab == tabKeyboard)
+            {
+                lblKeyboard.Tag = 1;
+                lblKeyboard.BackColor = M_COLOR_MENU_ACTIVE;
+
+                LoadTabKeyboard();
+            }
+
         }
 
 
@@ -605,7 +629,7 @@ namespace ImageGlass
         {
             picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
         }
-        
+
 
         #endregion
 
@@ -617,22 +641,26 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabImageConfig()
         {
-            //Get value of chkFindChildFolder ---------------------------------------------
+            // Set value of chkFindChildFolder ---------------------------------------------
             chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
 
-            //Get value of chkShowHiddenImages
+            // Set value of chkShowHiddenImages
             chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
 
-            //Get value of chkLoopViewer
+            // Set value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
 
-            //Get value of chkImageBoosterBack
-            chkImageBoosterBack.Checked = GlobalSetting.IsImageBoosterBack;
+            // Set value of chkIsCenterImage
+            chkIsCenterImage.Checked = GlobalSetting.IsCenterImage;
+
+            // Set value of chkUseFileExplorerSortOrder
+            chkUseFileExplorerSortOrder.Checked = GlobalSetting.IsUseFileExplorerSortOrder;
 
 
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
             cmbImageOrder.Items.Clear();
+
             foreach (var item in loadingOrderList)
             {
                 cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrder._{item}"]);
@@ -643,13 +671,31 @@ namespace ImageGlass
             #endregion
 
 
+            #region Load items of cmbImageOrderType
+            var orderTypesList = Enum.GetNames(typeof(ImageOrderType));
+            cmbImageOrderType.Items.Clear();
+
+            foreach (var item in orderTypesList)
+            {
+                cmbImageOrderType.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
+            }
+
+            //Get value of cmbImageOrder
+            cmbImageOrderType.SelectedIndex = (int)GlobalSetting.ImageLoadingOrderType;
+            #endregion
+
+
+            // Set value of cmbImageBoosterCachedCount
+            cmbImageBoosterCachedCount.SelectedIndex = GlobalSetting.ImageBoosterCachedCount;
+
+
             #region Color Management
             chkApplyColorProfile.Checked = GlobalSetting.IsApplyColorProfileForAll;
-            
+
             // color profile list
             cmbColorProfile.Items.Clear();
             cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._None"]);
-            cmbColorProfile.Items.AddRange(Core.Interpreter.GetBuiltInColorProfiles());
+            cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
             cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
 
@@ -680,7 +726,7 @@ namespace ImageGlass
                 lnkColorProfileBrowse.Visible = false;
                 lnkColorProfilePath.Visible = false;
             }
-            
+
             #endregion
 
 
@@ -722,8 +768,9 @@ namespace ImageGlass
             #endregion
 
 
-            #region Load items of cmbZoomOptimization
+            #region Zooming
 
+            // Load items of cmbZoomOptimization
             var zoomOptimizationList = Enum.GetNames(typeof(ZoomOptimizationMethods));
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList)
@@ -731,28 +778,31 @@ namespace ImageGlass
                 cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
             }
 
-            //Get value of cmbZoomOptimization
+            // Get value of cmbZoomOptimization
             cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
+
+            // Load zoom levels text
+            txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
 
             #endregion
 
 
-            //Thumbnail bar on right side ----------------------------------------------------
+            // Thumbnail bar on right side ----------------------------------------------------
             chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
 
-            //Show thumbnail scrollbar
+            // Show thumbnail scrollbar
             chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
 
-            //load thumbnail dimension
+            // load thumbnail dimension
             cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
 
-            //Get value of chkLoopSlideshow --------------------------------------------------
+            // Set value of chkLoopSlideshow --------------------------------------------------
             chkLoopSlideshow.Checked = GlobalSetting.IsLoopBackSlideShow;
 
-            //Get value of barInterval
+            // Set value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
-            
+
         }
 
 
@@ -785,7 +835,7 @@ namespace ImageGlass
             {
                 Filter = "Supported files|*.icc;*.icm;|All files|*.*",
                 CheckFileExists = true,
-                
+
             };
 
             if (o.ShowDialog() == DialogResult.OK)
@@ -1112,7 +1162,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Register file associations
+        /// Register file associations and Web-to-App linking
         /// </summary>
         /// <param name="extensions">Extensions to be registered, ex: *.png;*.bmp;</param>
         private void RegisterFileAssociations(string extensions, bool @isBuiltinExtension = false)
@@ -1139,7 +1189,7 @@ namespace ImageGlass
 
                 if (isError)
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -1165,9 +1215,6 @@ namespace ImageGlass
             if (lvExtension.SelectedItems.Count == 0)
                 return;
 
-            var selectedDefaultExts = new StringBuilder();
-            var selectedOptionalExts = new StringBuilder();
-
             // Get checked extensions in the list then
             // remove extensions from settings
             foreach (ListViewItem li in lvExtension.SelectedItems)
@@ -1184,6 +1231,9 @@ namespace ImageGlass
 
             //RegisterFileAssociations(GlobalSetting.AllImageFormats);
             LoadExtensionList();
+
+            //Request frmMain to update
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -1212,6 +1262,9 @@ namespace ImageGlass
 
                 //RegisterFileAssociations(GlobalSetting.AllImageFormats);
                 LoadExtensionList();
+
+                //Request frmMain to update
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
 
             f.Dispose();
@@ -1263,7 +1316,7 @@ namespace ImageGlass
             {
                 cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
             }
-            
+
             cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
 
             chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
@@ -1857,7 +1910,7 @@ namespace ImageGlass
                     var lvi = new ListViewItem(th.Name)
                     {
                         // folder name of the theme
-                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)), 
+                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)),
                         ImageKey = "_blank"
                     };
 
@@ -1909,20 +1962,20 @@ namespace ImageGlass
                     //btnThemeSaveAs.Enabled = false;
                     btnThemeUninstall.Enabled = false;
                 }
-                
+
 
                 Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
-                txtThemeInfo.Text = 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" + 
-                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" + 
+                txtThemeInfo.Text =
+                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" +
                     $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {t.Description}";
-                    
+
                 txtThemeInfo.Visible = true;
 
                 btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
@@ -2004,7 +2057,7 @@ namespace ImageGlass
                 {
                     string themeName = lvTheme.SelectedItems[0].Tag.ToString();
                     string configFilePath = GlobalSetting.ConfigDir(Dir.Themes, themeName, "config.xml");
-                    
+
                     if (!File.Exists(configFilePath))
                     {
                         configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
@@ -2031,7 +2084,7 @@ namespace ImageGlass
             string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
-        
+
 
         private void btnThemeApply_Click(object sender, EventArgs e)
         {
@@ -2065,6 +2118,138 @@ namespace ImageGlass
         #endregion
 
 
+        #region TAB KEYBOARD
+        private void LoadTabKeyboard()
+        {
+            GlobalSetting.LoadKeyAssignments();
+            var lang = GlobalSetting.LangPack.Items;
+
+            cmbKeysLeftRight.Items.Clear();
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PanLeftRight"]);
+
+            cmbKeysUpDown.Items.Clear();
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._PanUpDown"]);
+            cmbKeysUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysPgUpDown.Items.Clear();
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+            cmbKeysPgUpDown.Items.Add(lang[$"{Name}.KeyActions._ZoomInOut"]);
+
+            cmbKeysSpaceBack.Items.Clear();
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PauseSlideshow"]);
+            cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
+
+            // brute-forcing this. need better solution?
+            mapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
+                lang[$"{Name}.KeyActions._PrevNextImage"]);
+            mapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
+                lang[$"{Name}.KeyActions._PanUpDown"]);
+            mapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
+                lang[$"{Name}.KeyActions._PauseSlideshow"]);
+        }
+
+        /// <summary>
+        /// Translates the config value for a key assignment to a selected
+        /// entry in a combobox.
+        /// 
+        /// If something wrong, sets the combobox to the provided default.
+        /// </summary>
+        /// <param name="which">the key action to match</param>
+        /// <param name="control">the combobox to set selection in</param>
+        /// <param name="defaultString">On misconfiguration, use this string</param>
+        /// <returns></returns>
+        private void mapKeyConfigToComboSelection(KeyCombos which, ComboBox control, string defaultString)
+        {
+            try
+            {
+                var lang = GlobalSetting.LangPack.Items;
+
+                // Fetch the string from language based on the action value
+                var act = GlobalSetting.GetKeyAction(which);
+                var actionList = Enum.GetNames(typeof(AssignableActions));
+                var lookup = $"{Name}.KeyActions._{actionList[(int)act]}";
+                string val = lang[lookup];
+
+                // select the appropriate entry in the combo. On misconfiguration,
+                // set to the provided default.
+                control.SelectedItem = val;
+                if (control.SelectedIndex == -1)
+                {
+                    control.SelectedItem = defaultString;
+                }
+            }
+            catch
+            {
+                // Some other situation (value out of range; not in strings; etc),
+                // use provided default
+                control.SelectedItem = defaultString;
+            }
+        }
+
+        /// <summary>
+        /// Save the keyboard configuration settings to the config file
+        /// </summary>
+        private void SaveKeyboardSettings()
+        {
+            // Brute-forcing this. Better solution?
+            saveKeyConfigFromCombo(KeyCombos.LeftRight, cmbKeysLeftRight);
+            saveKeyConfigFromCombo(KeyCombos.PageUpDown, cmbKeysPgUpDown);
+            saveKeyConfigFromCombo(KeyCombos.UpDown, cmbKeysUpDown);
+            saveKeyConfigFromCombo(KeyCombos.SpaceBack, cmbKeysSpaceBack);
+            GlobalSetting.SaveKeyAssignments();
+        }
+
+        /// <summary>
+        /// For a given combobox, update the key config value in GlobalSetting
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="control"></param>
+        private void saveKeyConfigFromCombo(KeyCombos which, ComboBox control)
+        {
+            var selected = control.SelectedItem;
+            if (selected == null)
+                return; // user hasn't visited keyboard page, no changes
+
+            var lang = GlobalSetting.LangPack.Items;
+
+            // match the text of the selected combobox item against
+            // the language string for the available actions
+            var actionList = Enum.GetNames(typeof(AssignableActions));
+            for (int i = 0; i < actionList.Length; i++)
+            {
+                var lookup = $"{Name}.KeyActions._{actionList[i]}";
+                string val = lang[lookup];
+
+                if (val == selected.ToString())
+                {
+                    GlobalSetting.SetKeyAction(which, i);
+                    return;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Reset all key actions to their "default" (IG V6.0) behavior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnKeyReset_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.SetKeyAction(KeyCombos.LeftRight, (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.UpDown, (int)AssignableActions.PanUpDown);
+            GlobalSetting.SetKeyAction(KeyCombos.PageUpDown, (int)AssignableActions.PrevNextImage);
+            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack, (int)AssignableActions.PauseSlideshow);
+            GlobalSetting.SaveKeyAssignments();
+            LoadTabKeyboard();
+        }
+
+        #endregion
+
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -2074,20 +2259,29 @@ namespace ImageGlass
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //Save and close
-            btnApply_Click(sender, null);
-            this.Close();
+            // Save and close
+            if (ApplySettings())
+            {
+                this.Close();
+            }
         }
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            //Variables for comparision
+            ApplySettings();
+        }
+
+
+        private bool ApplySettings()
+        {
+            // Variables for comparision
+            var isSuccessful = true;
             int newInt;
             bool newBool;
             string newString;
             Color newColor;
 
-            
+
             #region General tab --------------------------------------------
             // IsShowWelcome
             GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
@@ -2172,35 +2366,43 @@ namespace ImageGlass
 
 
             #endregion
-            
+
 
             #region Image tab ----------------------------------------------
 
-            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_FOLDER
+            #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST or IMAGE_LIST_NO_RECURSIVE
             newBool = chkFindChildFolder.Checked;
-            if (GlobalSetting.IsRecursiveLoading != newBool) //Only change when the new value selected  
+            if (GlobalSetting.IsRecursiveLoading != newBool) // Only change when the new value selected  
             {
                 GlobalSetting.IsRecursiveLoading = newBool;
                 GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
 
-                //Request frmMain to update the thumbnail bar
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_FOLDER;
+                // Request frmMain to update the thumbnail bar
+                if (GlobalSetting.IsRecursiveLoading)
+                {
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
+                else
+                {
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE;
+                }
             }
             #endregion
 
 
-            //IsShowingHiddenImages
+            // IsShowingHiddenImages
             GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;
             GlobalSetting.SetConfig("IsShowingHiddenImages", GlobalSetting.IsShowingHiddenImages.ToString());
 
-            //IsLoopBackViewer
+            // IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
             GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
 
-            //IsImageBoosterBack
-            GlobalSetting.IsImageBoosterBack = chkImageBoosterBack.Checked;
-            GlobalSetting.SetConfig("IsImageBoosterBack", GlobalSetting.IsImageBoosterBack.ToString());
-            
+
+            // IsCenterImage
+            GlobalSetting.IsCenterImage = chkIsCenterImage.Checked;
+            GlobalSetting.SetConfig("IsCenterImage", GlobalSetting.IsCenterImage.ToString());
+
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
@@ -2217,7 +2419,30 @@ namespace ImageGlass
                 }
             }
 
+            newInt = cmbImageOrderType.SelectedIndex;
+            if (Enum.TryParse(newInt.ToString(), out ImageOrderType newOrderType))
+            {
+                if (GlobalSetting.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
+                {
+                    GlobalSetting.ImageLoadingOrderType = newOrderType;
+                    GlobalSetting.SetConfig("ImageLoadingOrderType", newInt.ToString());
+
+                    //Request frmMain to update
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
+            }
+
+            // IsUseFileExplorerSortOrder
+            GlobalSetting.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
+            GlobalSetting.SetConfig("IsUseFileExplorerSortOrder", GlobalSetting.IsUseFileExplorerSortOrder.ToString());
+
             #endregion
+
+
+            // ImageBoosterCachedCount
+            GlobalSetting.ImageBoosterCachedCount = cmbImageBoosterCachedCount.SelectedIndex;
+            GlobalSetting.SetConfig("ImageBoosterCachedCount", GlobalSetting.ImageBoosterCachedCount.ToString());
+            GlobalSetting.ImageList.MaxQueue = GlobalSetting.ImageBoosterCachedCount;
 
 
             #region Color Management
@@ -2256,9 +2481,37 @@ namespace ImageGlass
             #endregion
 
 
-            //ZoomOptimization
+            // ZoomOptimization
             GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
             GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
+
+
+            #region ZoomLevels: MainFormForceUpdateAction.OTHER_SETTINGS;
+            newString = txtZoomLevels.Text.Trim();
+
+            if (string.IsNullOrEmpty(newString))
+            {
+                txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+            }
+            else if (GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels) != newString)
+            {
+                try
+                {
+                    GlobalSetting.ZoomLevels = GlobalSetting.StringToIntArray(newString, unsignedOnly: true, distinct: true);
+                    GlobalSetting.SetConfig("ZoomLevels", newString);
+
+                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                }
+                catch (Exception ex)
+                {
+                    isSuccessful = false;
+                    txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+                    var msg = string.Format(GlobalSetting.LangPack.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
+
+                    MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            #endregion
 
 
             #region THUMBNAIL BAR
@@ -2296,8 +2549,8 @@ namespace ImageGlass
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             //ThumbnailDimension
-            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat); 
-            
+            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat);
+
             if (GlobalSetting.ThumbnailDimension != newInt) //Only change when the new value selected
             {
                 GlobalSetting.ThumbnailDimension = newInt;
@@ -2311,7 +2564,7 @@ namespace ImageGlass
             #endregion
 
 
-            //IsLoopBackSlideShow
+            // IsLoopBackSlideShow
             GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
             GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
 
@@ -2329,7 +2582,7 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
-            
+
 
             #endregion
 
@@ -2413,24 +2666,23 @@ namespace ImageGlass
             GlobalSetting.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHEXA", GlobalSetting.IsColorPickerHEXA.ToString());
 
-            GlobalSetting.IsColorPickerHSLA = chkColorUseHEXA.Checked;
+            GlobalSetting.IsColorPickerHSLA = chkColorUseHSLA.Checked;
             GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
 
             #endregion
 
+
+            SaveKeyboardSettings();
+
+
+            return isSuccessful;
         }
-
-
-
-
-
-
 
 
 
 
         #endregion
 
-        
+
     }
 }

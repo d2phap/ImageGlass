@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -123,14 +123,20 @@ namespace ImageGlass.Theme
         {
             if (IsNumberOnly)
             {
-                if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)8 || e.KeyChar == (char)9 ||
-                    e.KeyChar == (char)46 || e.KeyChar == (char)37 || e.KeyChar == (char)39)
+                if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)
+                    return;
+                e.Handled = true;
+                /* KBR 20190302 With the exception of backspace, all these others are handled by the dialog at a higher level.
+                 * As a result, percent (%), single quote (') and period (.) would all pass the filter.
+                if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Tab ||
+                    e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)Keys.Left || e.KeyChar == (char)Keys.Right)
                 { }
                 else
                 {
                     //Prevent input char
                     e.Handled = true;
                 }
+                */
             }
         }
 

@@ -83,6 +83,12 @@ namespace ImageGlass
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.chkIsCenterImage = new System.Windows.Forms.CheckBox();
+            this.lblImageBoosterCachedCount = new System.Windows.Forms.Label();
+            this.cmbImageBoosterCachedCount = new System.Windows.Forms.ComboBox();
+            this.txtZoomLevels = new System.Windows.Forms.TextBox();
+            this.lblZoomLevels = new System.Windows.Forms.Label();
+            this.cmbImageOrderType = new System.Windows.Forms.ComboBox();
             this.lnkColorProfilePath = new System.Windows.Forms.LinkLabel();
             this.lnkColorProfileBrowse = new System.Windows.Forms.LinkLabel();
             this.lblColorManagement = new System.Windows.Forms.Label();
@@ -111,7 +117,7 @@ namespace ImageGlass
             this.chkThumbnailVertical = new System.Windows.Forms.CheckBox();
             this.lblGeneral_ThumbnailSize = new System.Windows.Forms.Label();
             this.cmbThumbnailDimension = new System.Windows.Forms.ComboBox();
-            this.chkImageBoosterBack = new System.Windows.Forms.CheckBox();
+            this.chkUseFileExplorerSortOrder = new System.Windows.Forms.CheckBox();
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
@@ -163,6 +169,16 @@ namespace ImageGlass
             this.lnkThemeDownload = new System.Windows.Forms.LinkLabel();
             this.btnThemeEdit = new System.Windows.Forms.Button();
             this.lblInstalledThemes = new System.Windows.Forms.Label();
+            this.tabKeyboard = new System.Windows.Forms.TabPage();
+            this.btnKeyReset = new System.Windows.Forms.Button();
+            this.cmbKeysSpaceBack = new System.Windows.Forms.ComboBox();
+            this.cmbKeysPgUpDown = new System.Windows.Forms.ComboBox();
+            this.cmbKeysUpDown = new System.Windows.Forms.ComboBox();
+            this.cmbKeysLeftRight = new System.Windows.Forms.ComboBox();
+            this.lblKeysSpaceBack = new System.Windows.Forms.Label();
+            this.lblKeysPageUpDown = new System.Windows.Forms.Label();
+            this.lblKeysUpDown = new System.Windows.Forms.Label();
+            this.lblKeysLeftRight = new System.Windows.Forms.Label();
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -170,6 +186,7 @@ namespace ImageGlass
             this.lblToolbar = new System.Windows.Forms.Label();
             this.lblColorPicker = new System.Windows.Forms.Label();
             this.lblEdit = new System.Windows.Forms.Label();
+            this.lblKeyboard = new System.Windows.Forms.Label();
             this.lblTheme = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -191,6 +208,7 @@ namespace ImageGlass
             this.tabTheme.SuspendLayout();
             this.panelThemeActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
+            this.tabKeyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
@@ -211,7 +229,7 @@ namespace ImageGlass
             this.lblLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblLanguage.Location = new System.Drawing.Point(0, 300);
+            this.lblLanguage.Location = new System.Drawing.Point(0, 400);
             this.lblLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
@@ -272,7 +290,7 @@ namespace ImageGlass
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picBackgroundColor.Location = new System.Drawing.Point(45, 658);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
             this.picBackgroundColor.TabIndex = 12;
@@ -295,7 +313,7 @@ namespace ImageGlass
             this.tabLanguage.Location = new System.Drawing.Point(4, 37);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(799, 585);
+            this.tabLanguage.Size = new System.Drawing.Size(799, 583);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "language";
             // 
@@ -401,7 +419,7 @@ namespace ImageGlass
             "English (default)",
             "Vietnamese"});
             this.cmbLanguage.Location = new System.Drawing.Point(27, 46);
-            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2);
             this.cmbLanguage.Name = "cmbLanguage";
             this.cmbLanguage.Size = new System.Drawing.Size(254, 33);
             this.cmbLanguage.TabIndex = 58;
@@ -428,7 +446,7 @@ namespace ImageGlass
             this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
             this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(799, 585);
+            this.tabFileAssociation.Size = new System.Drawing.Size(799, 583);
             this.tabFileAssociation.TabIndex = 1;
             this.tabFileAssociation.Text = "file association";
             // 
@@ -440,7 +458,7 @@ namespace ImageGlass
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 495);
+            this.panel2.Location = new System.Drawing.Point(0, 493);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(799, 90);
@@ -526,6 +544,7 @@ namespace ImageGlass
             listViewGroup1,
             listViewGroup2});
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvExtension.HideSelection = false;
             this.lvExtension.Location = new System.Drawing.Point(27, 92);
             this.lvExtension.Name = "lvExtension";
             this.lvExtension.Size = new System.Drawing.Size(751, 370);
@@ -603,7 +622,7 @@ namespace ImageGlass
             this.chkShowCheckerboardOnlyImage.AutoSize = true;
             this.chkShowCheckerboardOnlyImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowCheckerboardOnlyImage.Location = new System.Drawing.Point(45, 578);
-            this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowCheckerboardOnlyImage.Name = "chkShowCheckerboardOnlyImage";
             this.chkShowCheckerboardOnlyImage.Size = new System.Drawing.Size(415, 30);
             this.chkShowCheckerboardOnlyImage.TabIndex = 14;
@@ -615,7 +634,7 @@ namespace ImageGlass
             this.chkShowNavButtons.AutoSize = true;
             this.chkShowNavButtons.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowNavButtons.Location = new System.Drawing.Point(45, 544);
-            this.chkShowNavButtons.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowNavButtons.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowNavButtons.Name = "chkShowNavButtons";
             this.chkShowNavButtons.Size = new System.Drawing.Size(310, 30);
             this.chkShowNavButtons.TabIndex = 13;
@@ -627,7 +646,7 @@ namespace ImageGlass
             this.chkLastSeenImage.AutoSize = true;
             this.chkLastSeenImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkLastSeenImage.Location = new System.Drawing.Point(45, 86);
-            this.chkLastSeenImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkLastSeenImage.Margin = new System.Windows.Forms.Padding(2);
             this.chkLastSeenImage.Name = "chkLastSeenImage";
             this.chkLastSeenImage.Size = new System.Drawing.Size(248, 30);
             this.chkLastSeenImage.TabIndex = 4;
@@ -654,7 +673,7 @@ namespace ImageGlass
             this.chkDisplayBasename.AutoSize = true;
             this.chkDisplayBasename.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkDisplayBasename.Location = new System.Drawing.Point(45, 510);
-            this.chkDisplayBasename.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkDisplayBasename.Margin = new System.Windows.Forms.Padding(2);
             this.chkDisplayBasename.Name = "chkDisplayBasename";
             this.chkDisplayBasename.Size = new System.Drawing.Size(458, 30);
             this.chkDisplayBasename.TabIndex = 12;
@@ -666,7 +685,7 @@ namespace ImageGlass
             this.chkShowScrollbar.AutoSize = true;
             this.chkShowScrollbar.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowScrollbar.Location = new System.Drawing.Point(45, 476);
-            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowScrollbar.Name = "chkShowScrollbar";
             this.chkShowScrollbar.Size = new System.Drawing.Size(230, 30);
             this.chkShowScrollbar.TabIndex = 11;
@@ -721,7 +740,7 @@ namespace ImageGlass
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(272, 746);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
             this.panel1.TabIndex = 24;
@@ -731,7 +750,7 @@ namespace ImageGlass
             this.chkConfirmationDelete.AutoSize = true;
             this.chkConfirmationDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 442);
-            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(316, 30);
             this.chkConfirmationDelete.TabIndex = 10;
@@ -743,7 +762,7 @@ namespace ImageGlass
             this.chkAllowMultiInstances.AutoSize = true;
             this.chkAllowMultiInstances.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 375);
-            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(354, 30);
             this.chkAllowMultiInstances.TabIndex = 8;
@@ -755,7 +774,7 @@ namespace ImageGlass
             this.chkESCToQuit.AutoSize = true;
             this.chkESCToQuit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkESCToQuit.Location = new System.Drawing.Point(45, 410);
-            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(335, 30);
             this.chkESCToQuit.TabIndex = 9;
@@ -767,7 +786,7 @@ namespace ImageGlass
             this.chkShowToolBar.AutoSize = true;
             this.chkShowToolBar.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowToolBar.Location = new System.Drawing.Point(45, 120);
-            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToolBar.Name = "chkShowToolBar";
             this.chkShowToolBar.Size = new System.Drawing.Size(282, 30);
             this.chkShowToolBar.TabIndex = 5;
@@ -789,7 +808,7 @@ namespace ImageGlass
             this.chkWelcomePicture.AutoSize = true;
             this.chkWelcomePicture.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkWelcomePicture.Location = new System.Drawing.Point(45, 52);
-            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(2);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(215, 30);
             this.chkWelcomePicture.TabIndex = 3;
@@ -801,7 +820,7 @@ namespace ImageGlass
             this.chkAutoUpdate.AutoSize = true;
             this.chkAutoUpdate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkAutoUpdate.Location = new System.Drawing.Point(45, 342);
-            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(283, 30);
             this.chkAutoUpdate.TabIndex = 7;
@@ -817,8 +836,9 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Controls.Add(this.tabToolbar);
             this.tab1.Controls.Add(this.tabColorPicker);
-            this.tab1.Controls.Add(this.tabLanguage);
+            this.tab1.Controls.Add(this.tabKeyboard);
             this.tab1.Controls.Add(this.tabTheme);
+            this.tab1.Controls.Add(this.tabLanguage);
             this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab1.Location = new System.Drawing.Point(0, 0);
             this.tab1.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -834,6 +854,12 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.chkIsCenterImage);
+            this.tabImage.Controls.Add(this.lblImageBoosterCachedCount);
+            this.tabImage.Controls.Add(this.cmbImageBoosterCachedCount);
+            this.tabImage.Controls.Add(this.txtZoomLevels);
+            this.tabImage.Controls.Add(this.lblZoomLevels);
+            this.tabImage.Controls.Add(this.cmbImageOrderType);
             this.tabImage.Controls.Add(this.lnkColorProfilePath);
             this.tabImage.Controls.Add(this.lnkColorProfileBrowse);
             this.tabImage.Controls.Add(this.lblColorManagement);
@@ -862,7 +888,7 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.chkThumbnailVertical);
             this.tabImage.Controls.Add(this.lblGeneral_ThumbnailSize);
             this.tabImage.Controls.Add(this.cmbThumbnailDimension);
-            this.tabImage.Controls.Add(this.chkImageBoosterBack);
+            this.tabImage.Controls.Add(this.chkUseFileExplorerSortOrder);
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
@@ -872,9 +898,88 @@ namespace ImageGlass
             this.tabImage.Location = new System.Drawing.Point(4, 37);
             this.tabImage.Margin = new System.Windows.Forms.Padding(0);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Size = new System.Drawing.Size(799, 585);
+            this.tabImage.Size = new System.Drawing.Size(799, 583);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // chkIsCenterImage
+            // 
+            this.chkIsCenterImage.AutoSize = true;
+            this.chkIsCenterImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkIsCenterImage.Location = new System.Drawing.Point(45, 147);
+            this.chkIsCenterImage.Margin = new System.Windows.Forms.Padding(2);
+            this.chkIsCenterImage.Name = "chkIsCenterImage";
+            this.chkIsCenterImage.Size = new System.Drawing.Size(233, 30);
+            this.chkIsCenterImage.TabIndex = 19;
+            this.chkIsCenterImage.Text = "[Center image on viewer]";
+            this.chkIsCenterImage.UseVisualStyleBackColor = true;
+            // 
+            // lblImageBoosterCachedCount
+            // 
+            this.lblImageBoosterCachedCount.AutoSize = true;
+            this.lblImageBoosterCachedCount.Location = new System.Drawing.Point(40, 333);
+            this.lblImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblImageBoosterCachedCount.Name = "lblImageBoosterCachedCount";
+            this.lblImageBoosterCachedCount.Size = new System.Drawing.Size(491, 25);
+            this.lblImageBoosterCachedCount.TabIndex = 64;
+            this.lblImageBoosterCachedCount.Text = "[Number of images cached by ImageBooster (one direction)]";
+            // 
+            // cmbImageBoosterCachedCount
+            // 
+            this.cmbImageBoosterCachedCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageBoosterCachedCount.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbImageBoosterCachedCount.FormattingEnabled = true;
+            this.cmbImageBoosterCachedCount.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
+            this.cmbImageBoosterCachedCount.Location = new System.Drawing.Point(45, 362);
+            this.cmbImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbImageBoosterCachedCount.Name = "cmbImageBoosterCachedCount";
+            this.cmbImageBoosterCachedCount.Size = new System.Drawing.Size(278, 33);
+            this.cmbImageBoosterCachedCount.TabIndex = 23;
+            // 
+            // txtZoomLevels
+            // 
+            this.txtZoomLevels.Location = new System.Drawing.Point(45, 1237);
+            this.txtZoomLevels.Multiline = true;
+            this.txtZoomLevels.Name = "txtZoomLevels";
+            this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtZoomLevels.Size = new System.Drawing.Size(568, 72);
+            this.txtZoomLevels.TabIndex = 33;
+            // 
+            // lblZoomLevels
+            // 
+            this.lblZoomLevels.AutoSize = true;
+            this.lblZoomLevels.BackColor = System.Drawing.Color.Transparent;
+            this.lblZoomLevels.Location = new System.Drawing.Point(40, 1209);
+            this.lblZoomLevels.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblZoomLevels.Name = "lblZoomLevels";
+            this.lblZoomLevels.Size = new System.Drawing.Size(118, 25);
+            this.lblZoomLevels.TabIndex = 61;
+            this.lblZoomLevels.Text = "[Zoom levels]";
+            // 
+            // cmbImageOrderType
+            // 
+            this.cmbImageOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbImageOrderType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbImageOrderType.FormattingEnabled = true;
+            this.cmbImageOrderType.Items.AddRange(new object[] {
+            "[Ascending]",
+            "[Descending]"});
+            this.cmbImageOrderType.Location = new System.Drawing.Point(333, 236);
+            this.cmbImageOrderType.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbImageOrderType.Name = "cmbImageOrderType";
+            this.cmbImageOrderType.Size = new System.Drawing.Size(278, 33);
+            this.cmbImageOrderType.TabIndex = 21;
             // 
             // lnkColorProfilePath
             // 
@@ -883,10 +988,10 @@ namespace ImageGlass
             this.lnkColorProfilePath.BackColor = System.Drawing.Color.Transparent;
             this.lnkColorProfilePath.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkColorProfilePath.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkColorProfilePath.Location = new System.Drawing.Point(40, 468);
+            this.lnkColorProfilePath.Location = new System.Drawing.Point(40, 608);
             this.lnkColorProfilePath.Name = "lnkColorProfilePath";
             this.lnkColorProfilePath.Size = new System.Drawing.Size(152, 25);
-            this.lnkColorProfilePath.TabIndex = 24;
+            this.lnkColorProfilePath.TabIndex = 27;
             this.lnkColorProfilePath.TabStop = true;
             this.lnkColorProfilePath.Text = "C:\\abc\\custom.icc";
             this.lnkColorProfilePath.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
@@ -899,10 +1004,10 @@ namespace ImageGlass
             this.lnkColorProfileBrowse.BackColor = System.Drawing.Color.Transparent;
             this.lnkColorProfileBrowse.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkColorProfileBrowse.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkColorProfileBrowse.Location = new System.Drawing.Point(328, 434);
+            this.lnkColorProfileBrowse.Location = new System.Drawing.Point(328, 574);
             this.lnkColorProfileBrowse.Name = "lnkColorProfileBrowse";
             this.lnkColorProfileBrowse.Size = new System.Drawing.Size(79, 25);
-            this.lnkColorProfileBrowse.TabIndex = 23;
+            this.lnkColorProfileBrowse.TabIndex = 26;
             this.lnkColorProfileBrowse.TabStop = true;
             this.lnkColorProfileBrowse.Text = "[Browse]";
             this.lnkColorProfileBrowse.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
@@ -912,7 +1017,7 @@ namespace ImageGlass
             // 
             this.lblColorManagement.AutoSize = true;
             this.lblColorManagement.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorManagement.Location = new System.Drawing.Point(22, 309);
+            this.lblColorManagement.Location = new System.Drawing.Point(22, 449);
             this.lblColorManagement.Name = "lblColorManagement";
             this.lblColorManagement.Size = new System.Drawing.Size(188, 25);
             this.lblColorManagement.TabIndex = 59;
@@ -922,11 +1027,11 @@ namespace ImageGlass
             // 
             this.chkApplyColorProfile.AutoSize = true;
             this.chkApplyColorProfile.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkApplyColorProfile.Location = new System.Drawing.Point(45, 342);
-            this.chkApplyColorProfile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkApplyColorProfile.Location = new System.Drawing.Point(45, 482);
+            this.chkApplyColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.chkApplyColorProfile.Name = "chkApplyColorProfile";
             this.chkApplyColorProfile.Size = new System.Drawing.Size(479, 30);
-            this.chkApplyColorProfile.TabIndex = 21;
+            this.chkApplyColorProfile.TabIndex = 24;
             this.chkApplyColorProfile.Text = "[Apply also for images without embedded color profile]";
             this.chkApplyColorProfile.UseVisualStyleBackColor = true;
             // 
@@ -938,11 +1043,11 @@ namespace ImageGlass
             this.cmbColorProfile.Items.AddRange(new object[] {
             "[None]",
             "[Custom ICC/ICM profile file:]"});
-            this.cmbColorProfile.Location = new System.Drawing.Point(45, 430);
-            this.cmbColorProfile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbColorProfile.Location = new System.Drawing.Point(45, 570);
+            this.cmbColorProfile.Margin = new System.Windows.Forms.Padding(2);
             this.cmbColorProfile.Name = "cmbColorProfile";
             this.cmbColorProfile.Size = new System.Drawing.Size(278, 33);
-            this.cmbColorProfile.TabIndex = 22;
+            this.cmbColorProfile.TabIndex = 25;
             this.cmbColorProfile.SelectedIndexChanged += new System.EventHandler(this.cmbColorProfile_SelectedIndexChanged);
             // 
             // lblColorProfile
@@ -950,7 +1055,7 @@ namespace ImageGlass
             this.lblColorProfile.AutoSize = true;
             this.lblColorProfile.BackColor = System.Drawing.Color.Transparent;
             this.lblColorProfile.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorProfile.Location = new System.Drawing.Point(40, 398);
+            this.lblColorProfile.Location = new System.Drawing.Point(40, 538);
             this.lblColorProfile.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.lblColorProfile.Name = "lblColorProfile";
             this.lblColorProfile.Size = new System.Drawing.Size(125, 25);
@@ -961,11 +1066,11 @@ namespace ImageGlass
             // 
             this.chkShowThumbnailScrollbar.AutoSize = true;
             this.chkShowThumbnailScrollbar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowThumbnailScrollbar.Location = new System.Drawing.Point(45, 1161);
-            this.chkShowThumbnailScrollbar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowThumbnailScrollbar.Location = new System.Drawing.Point(45, 1414);
+            this.chkShowThumbnailScrollbar.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowThumbnailScrollbar.Name = "chkShowThumbnailScrollbar";
             this.chkShowThumbnailScrollbar.Size = new System.Drawing.Size(279, 30);
-            this.chkShowThumbnailScrollbar.TabIndex = 31;
+            this.chkShowThumbnailScrollbar.TabIndex = 35;
             this.chkShowThumbnailScrollbar.Text = "[Show thumbnail bar scrollbar]";
             this.chkShowThumbnailScrollbar.UseVisualStyleBackColor = true;
             // 
@@ -974,49 +1079,49 @@ namespace ImageGlass
             this.cmbMouseWheelAlt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelAlt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelAlt.FormattingEnabled = true;
-            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 856);
-            this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelAlt.Location = new System.Drawing.Point(45, 996);
+            this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
             this.cmbMouseWheelAlt.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelAlt.TabIndex = 28;
+            this.cmbMouseWheelAlt.TabIndex = 31;
             // 
             // cmbMouseWheelShift
             // 
             this.cmbMouseWheelShift.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelShift.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelShift.FormattingEnabled = true;
-            this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 770);
-            this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelShift.Location = new System.Drawing.Point(45, 910);
+            this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
             this.cmbMouseWheelShift.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelShift.TabIndex = 27;
+            this.cmbMouseWheelShift.TabIndex = 30;
             // 
             // cmbMouseWheelCtrl
             // 
             this.cmbMouseWheelCtrl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheelCtrl.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheelCtrl.FormattingEnabled = true;
-            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 682);
-            this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheelCtrl.Location = new System.Drawing.Point(45, 822);
+            this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
             this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheelCtrl.TabIndex = 26;
+            this.cmbMouseWheelCtrl.TabIndex = 29;
             // 
             // cmbMouseWheel
             // 
             this.cmbMouseWheel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMouseWheel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbMouseWheel.FormattingEnabled = true;
-            this.cmbMouseWheel.Location = new System.Drawing.Point(45, 597);
-            this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbMouseWheel.Location = new System.Drawing.Point(45, 737);
+            this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
             this.cmbMouseWheel.Size = new System.Drawing.Size(278, 33);
-            this.cmbMouseWheel.TabIndex = 25;
+            this.cmbMouseWheel.TabIndex = 28;
             // 
             // lblMouseWheelAlt
             // 
             this.lblMouseWheelAlt.AutoSize = true;
-            this.lblMouseWheelAlt.Location = new System.Drawing.Point(40, 828);
+            this.lblMouseWheelAlt.Location = new System.Drawing.Point(40, 968);
             this.lblMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelAlt.Name = "lblMouseWheelAlt";
             this.lblMouseWheelAlt.Size = new System.Drawing.Size(160, 25);
@@ -1026,7 +1131,7 @@ namespace ImageGlass
             // lblMouseWheelShift
             // 
             this.lblMouseWheelShift.AutoSize = true;
-            this.lblMouseWheelShift.Location = new System.Drawing.Point(40, 741);
+            this.lblMouseWheelShift.Location = new System.Drawing.Point(40, 881);
             this.lblMouseWheelShift.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelShift.Name = "lblMouseWheelShift";
             this.lblMouseWheelShift.Size = new System.Drawing.Size(174, 25);
@@ -1036,7 +1141,7 @@ namespace ImageGlass
             // lblMouseWheelCtrl
             // 
             this.lblMouseWheelCtrl.AutoSize = true;
-            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(40, 652);
+            this.lblMouseWheelCtrl.Location = new System.Drawing.Point(40, 792);
             this.lblMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheelCtrl.Name = "lblMouseWheelCtrl";
             this.lblMouseWheelCtrl.Size = new System.Drawing.Size(165, 25);
@@ -1046,7 +1151,7 @@ namespace ImageGlass
             // lblMouseWheel
             // 
             this.lblMouseWheel.AutoSize = true;
-            this.lblMouseWheel.Location = new System.Drawing.Point(40, 568);
+            this.lblMouseWheel.Location = new System.Drawing.Point(40, 708);
             this.lblMouseWheel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMouseWheel.Name = "lblMouseWheel";
             this.lblMouseWheel.Size = new System.Drawing.Size(116, 25);
@@ -1057,7 +1162,7 @@ namespace ImageGlass
             // 
             this.lblHeadMouseWheelActions.AutoSize = true;
             this.lblHeadMouseWheelActions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(22, 532);
+            this.lblHeadMouseWheelActions.Location = new System.Drawing.Point(22, 672);
             this.lblHeadMouseWheelActions.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeadMouseWheelActions.Name = "lblHeadMouseWheelActions";
             this.lblHeadMouseWheelActions.Size = new System.Drawing.Size(190, 25);
@@ -1069,7 +1174,7 @@ namespace ImageGlass
             this.chkShowHiddenImages.AutoSize = true;
             this.chkShowHiddenImages.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkShowHiddenImages.Location = new System.Drawing.Point(45, 82);
-            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkShowHiddenImages.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowHiddenImages.Name = "chkShowHiddenImages";
             this.chkShowHiddenImages.Size = new System.Drawing.Size(203, 30);
             this.chkShowHiddenImages.TabIndex = 17;
@@ -1078,8 +1183,8 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1515);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Location = new System.Drawing.Point(27, 1768);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
             this.panel3.TabIndex = 46;
@@ -1088,7 +1193,7 @@ namespace ImageGlass
             // 
             this.lblHeadZooming.AutoSize = true;
             this.lblHeadZooming.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadZooming.Location = new System.Drawing.Point(22, 946);
+            this.lblHeadZooming.Location = new System.Drawing.Point(22, 1086);
             this.lblHeadZooming.Name = "lblHeadZooming";
             this.lblHeadZooming.Size = new System.Drawing.Size(88, 25);
             this.lblHeadZooming.TabIndex = 43;
@@ -1098,7 +1203,7 @@ namespace ImageGlass
             // 
             this.lblHeadSlideshow.AutoSize = true;
             this.lblHeadSlideshow.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1330);
+            this.lblHeadSlideshow.Location = new System.Drawing.Point(22, 1583);
             this.lblHeadSlideshow.Name = "lblHeadSlideshow";
             this.lblHeadSlideshow.Size = new System.Drawing.Size(97, 25);
             this.lblHeadSlideshow.TabIndex = 42;
@@ -1108,7 +1213,7 @@ namespace ImageGlass
             // 
             this.lblHeadThumbnailBar.AutoSize = true;
             this.lblHeadThumbnailBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 1094);
+            this.lblHeadThumbnailBar.Location = new System.Drawing.Point(22, 1347);
             this.lblHeadThumbnailBar.Name = "lblHeadThumbnailBar";
             this.lblHeadThumbnailBar.Size = new System.Drawing.Size(136, 25);
             this.lblHeadThumbnailBar.TabIndex = 41;
@@ -1129,7 +1234,7 @@ namespace ImageGlass
             this.chkLoopViewer.AutoSize = true;
             this.chkLoopViewer.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkLoopViewer.Location = new System.Drawing.Point(45, 114);
-            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkLoopViewer.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopViewer.Name = "chkLoopViewer";
             this.chkLoopViewer.Size = new System.Drawing.Size(579, 30);
             this.chkLoopViewer.TabIndex = 18;
@@ -1139,7 +1244,8 @@ namespace ImageGlass
             // lblGeneral_ZoomOptimization
             // 
             this.lblGeneral_ZoomOptimization.AutoSize = true;
-            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(40, 982);
+            this.lblGeneral_ZoomOptimization.BackColor = System.Drawing.Color.Transparent;
+            this.lblGeneral_ZoomOptimization.Location = new System.Drawing.Point(40, 1122);
             this.lblGeneral_ZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ZoomOptimization.Name = "lblGeneral_ZoomOptimization";
             this.lblGeneral_ZoomOptimization.Size = new System.Drawing.Size(165, 25);
@@ -1153,28 +1259,28 @@ namespace ImageGlass
             this.cmbZoomOptimization.FormattingEnabled = true;
             this.cmbZoomOptimization.Items.AddRange(new object[] {
             "(loaded from code)"});
-            this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 1010);
-            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbZoomOptimization.Location = new System.Drawing.Point(45, 1150);
+            this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(2);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(278, 33);
-            this.cmbZoomOptimization.TabIndex = 29;
+            this.cmbZoomOptimization.TabIndex = 32;
             // 
             // chkThumbnailVertical
             // 
             this.chkThumbnailVertical.AutoSize = true;
             this.chkThumbnailVertical.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 1126);
-            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkThumbnailVertical.Location = new System.Drawing.Point(45, 1379);
+            this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(2);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(256, 30);
-            this.chkThumbnailVertical.TabIndex = 30;
+            this.chkThumbnailVertical.TabIndex = 34;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
             // 
             // lblGeneral_ThumbnailSize
             // 
             this.lblGeneral_ThumbnailSize.AutoSize = true;
-            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1220);
+            this.lblGeneral_ThumbnailSize.Location = new System.Drawing.Point(40, 1473);
             this.lblGeneral_ThumbnailSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblGeneral_ThumbnailSize.Name = "lblGeneral_ThumbnailSize";
             this.lblGeneral_ThumbnailSize.Size = new System.Drawing.Size(257, 25);
@@ -1195,40 +1301,40 @@ namespace ImageGlass
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1250);
-            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1503);
+            this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
-            this.cmbThumbnailDimension.TabIndex = 32;
+            this.cmbThumbnailDimension.TabIndex = 36;
             // 
-            // chkImageBoosterBack
+            // chkUseFileExplorerSortOrder
             // 
-            this.chkImageBoosterBack.AutoSize = true;
-            this.chkImageBoosterBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkImageBoosterBack.Location = new System.Drawing.Point(45, 147);
-            this.chkImageBoosterBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.chkImageBoosterBack.Name = "chkImageBoosterBack";
-            this.chkImageBoosterBack.Size = new System.Drawing.Size(577, 30);
-            this.chkImageBoosterBack.TabIndex = 19;
-            this.chkImageBoosterBack.Text = "Turn on Image Booster when navigate back (need more ~20% RAM)";
-            this.chkImageBoosterBack.UseVisualStyleBackColor = true;
+            this.chkUseFileExplorerSortOrder.AutoSize = true;
+            this.chkUseFileExplorerSortOrder.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkUseFileExplorerSortOrder.Location = new System.Drawing.Point(45, 278);
+            this.chkUseFileExplorerSortOrder.Margin = new System.Windows.Forms.Padding(2);
+            this.chkUseFileExplorerSortOrder.Name = "chkUseFileExplorerSortOrder";
+            this.chkUseFileExplorerSortOrder.Size = new System.Drawing.Size(425, 30);
+            this.chkUseFileExplorerSortOrder.TabIndex = 22;
+            this.chkUseFileExplorerSortOrder.Text = "[Use Windows File Explorer sort order if possible]";
+            this.chkUseFileExplorerSortOrder.UseVisualStyleBackColor = true;
             // 
             // chkLoopSlideshow
             // 
             this.chkLoopSlideshow.AutoSize = true;
             this.chkLoopSlideshow.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1364);
-            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkLoopSlideshow.Location = new System.Drawing.Point(45, 1617);
+            this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
-            this.chkLoopSlideshow.Size = new System.Drawing.Size(607, 30);
+            this.chkLoopSlideshow.Size = new System.Drawing.Size(57, 30);
             this.chkLoopSlideshow.TabIndex = 33;
-            this.chkLoopSlideshow.Text = "Loop back slideshow to the first image when reaching the end of the list";
+            this.chkLoopSlideshow.Text = "37";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             // 
             // lblImageLoadingOrder
             // 
             this.lblImageLoadingOrder.AutoSize = true;
-            this.lblImageLoadingOrder.Location = new System.Drawing.Point(40, 195);
+            this.lblImageLoadingOrder.Location = new System.Drawing.Point(40, 208);
             this.lblImageLoadingOrder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblImageLoadingOrder.Name = "lblImageLoadingOrder";
             this.lblImageLoadingOrder.Size = new System.Drawing.Size(179, 25);
@@ -1248,8 +1354,8 @@ namespace ImageGlass
             "Last write time",
             "Extension",
             "Random"});
-            this.cmbImageOrder.Location = new System.Drawing.Point(45, 224);
-            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbImageOrder.Location = new System.Drawing.Point(45, 237);
+            this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(2);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 20;
@@ -1257,21 +1363,21 @@ namespace ImageGlass
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(46, 1448);
-            this.barInterval.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barInterval.Location = new System.Drawing.Point(46, 1701);
+            this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 60;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(292, 69);
             this.barInterval.TabIndex = 34;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.barInterval.Value = 5;
+            this.barInterval.Value = 38;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
             // 
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1413);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1666);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
@@ -1283,7 +1389,7 @@ namespace ImageGlass
             this.chkFindChildFolder.AutoSize = true;
             this.chkFindChildFolder.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkFindChildFolder.Location = new System.Drawing.Point(45, 50);
-            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkFindChildFolder.Margin = new System.Windows.Forms.Padding(2);
             this.chkFindChildFolder.Name = "chkFindChildFolder";
             this.chkFindChildFolder.Size = new System.Drawing.Size(246, 30);
             this.chkFindChildFolder.TabIndex = 16;
@@ -1302,8 +1408,8 @@ namespace ImageGlass
             this.tabEdit.Controls.Add(this.lvImageEditing);
             this.tabEdit.Location = new System.Drawing.Point(4, 37);
             this.tabEdit.Name = "tabEdit";
-            this.tabEdit.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabEdit.Size = new System.Drawing.Size(799, 585);
+            this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
+            this.tabEdit.Size = new System.Drawing.Size(799, 583);
             this.tabEdit.TabIndex = 7;
             this.tabEdit.Text = "Edit";
             // 
@@ -1322,7 +1428,7 @@ namespace ImageGlass
             this.chkSaveOnRotate.AutoSize = true;
             this.chkSaveOnRotate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkSaveOnRotate.Location = new System.Drawing.Point(22, 20);
-            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(332, 30);
             this.chkSaveOnRotate.TabIndex = 35;
@@ -1334,7 +1440,7 @@ namespace ImageGlass
             this.chkSaveModifyDate.AutoSize = true;
             this.chkSaveModifyDate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkSaveModifyDate.Location = new System.Drawing.Point(22, 58);
-            this.chkSaveModifyDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkSaveModifyDate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveModifyDate.Name = "chkSaveModifyDate";
             this.chkSaveModifyDate.Size = new System.Drawing.Size(344, 30);
             this.chkSaveModifyDate.TabIndex = 36;
@@ -1393,6 +1499,7 @@ namespace ImageGlass
             this.clnAppArguments});
             this.lvImageEditing.FullRowSelect = true;
             this.lvImageEditing.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvImageEditing.HideSelection = false;
             listViewItem1.StateImageIndex = 0;
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
@@ -1443,7 +1550,7 @@ namespace ImageGlass
             this.tabToolbar.Location = new System.Drawing.Point(4, 37);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
-            this.tabToolbar.Size = new System.Drawing.Size(799, 585);
+            this.tabToolbar.Size = new System.Drawing.Size(799, 583);
             this.tabToolbar.TabIndex = 4;
             this.tabToolbar.Text = "toolbar";
             this.tabToolbar.UseVisualStyleBackColor = true;
@@ -1483,7 +1590,7 @@ namespace ImageGlass
             this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveRight.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveRight.Location = new System.Drawing.Point(321, 248);
-            this.btnMoveRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnMoveRight.Margin = new System.Windows.Forms.Padding(4);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(50, 50);
             this.btnMoveRight.TabIndex = 52;
@@ -1588,7 +1695,7 @@ namespace ImageGlass
             this.cmbToolbarPosition.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbToolbarPosition.FormattingEnabled = true;
             this.cmbToolbarPosition.Location = new System.Drawing.Point(27, 52);
-            this.cmbToolbarPosition.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbToolbarPosition.Margin = new System.Windows.Forms.Padding(2);
             this.cmbToolbarPosition.Name = "cmbToolbarPosition";
             this.cmbToolbarPosition.Size = new System.Drawing.Size(278, 33);
             this.cmbToolbarPosition.TabIndex = 47;
@@ -1610,7 +1717,7 @@ namespace ImageGlass
             this.chkHorzCenterToolbarBtns.AutoSize = true;
             this.chkHorzCenterToolbarBtns.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkHorzCenterToolbarBtns.Location = new System.Drawing.Point(28, 93);
-            this.chkHorzCenterToolbarBtns.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkHorzCenterToolbarBtns.Margin = new System.Windows.Forms.Padding(2);
             this.chkHorzCenterToolbarBtns.Name = "chkHorzCenterToolbarBtns";
             this.chkHorzCenterToolbarBtns.Size = new System.Drawing.Size(411, 30);
             this.chkHorzCenterToolbarBtns.TabIndex = 48;
@@ -1628,7 +1735,7 @@ namespace ImageGlass
             this.tabColorPicker.Location = new System.Drawing.Point(4, 37);
             this.tabColorPicker.Margin = new System.Windows.Forms.Padding(0);
             this.tabColorPicker.Name = "tabColorPicker";
-            this.tabColorPicker.Size = new System.Drawing.Size(799, 585);
+            this.tabColorPicker.Size = new System.Drawing.Size(799, 583);
             this.tabColorPicker.TabIndex = 5;
             this.tabColorPicker.Text = "color picker";
             // 
@@ -1637,7 +1744,7 @@ namespace ImageGlass
             this.chkColorUseHSLA.AutoSize = true;
             this.chkColorUseHSLA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseHSLA.Location = new System.Drawing.Point(45, 120);
-            this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseHSLA.Name = "chkColorUseHSLA";
             this.chkColorUseHSLA.Size = new System.Drawing.Size(174, 30);
             this.chkColorUseHSLA.TabIndex = 57;
@@ -1659,7 +1766,7 @@ namespace ImageGlass
             this.chkColorUseHEXA.AutoSize = true;
             this.chkColorUseHEXA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseHEXA.Location = new System.Drawing.Point(45, 86);
-            this.chkColorUseHEXA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkColorUseHEXA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseHEXA.Name = "chkColorUseHEXA";
             this.chkColorUseHEXA.Size = new System.Drawing.Size(249, 30);
             this.chkColorUseHEXA.TabIndex = 56;
@@ -1671,7 +1778,7 @@ namespace ImageGlass
             this.chkColorUseRGBA.AutoSize = true;
             this.chkColorUseRGBA.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chkColorUseRGBA.Location = new System.Drawing.Point(45, 52);
-            this.chkColorUseRGBA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkColorUseRGBA.Margin = new System.Windows.Forms.Padding(2);
             this.chkColorUseRGBA.Name = "chkColorUseRGBA";
             this.chkColorUseRGBA.Size = new System.Drawing.Size(175, 30);
             this.chkColorUseRGBA.TabIndex = 55;
@@ -1767,7 +1874,7 @@ namespace ImageGlass
             this.txtThemeInfo.ReadOnly = true;
             this.txtThemeInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtThemeInfo.Size = new System.Drawing.Size(248, 60);
-            this.txtThemeInfo.TabIndex = 59;
+            this.txtThemeInfo.TabIndex = 70;
             // 
             // btnThemeRefresh
             // 
@@ -1819,6 +1926,7 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvTheme.FullRowSelect = true;
+            this.lvTheme.HideSelection = false;
             this.lvTheme.LargeImageList = this.imglGeneral;
             this.lvTheme.Location = new System.Drawing.Point(27, 48);
             this.lvTheme.MultiSelect = false;
@@ -1846,7 +1954,7 @@ namespace ImageGlass
             this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnThemeApply.Name = "btnThemeApply";
             this.btnThemeApply.Size = new System.Drawing.Size(250, 44);
-            this.btnThemeApply.TabIndex = 70;
+            this.btnThemeApply.TabIndex = 71;
             this.btnThemeApply.Text = "Apply Theme";
             this.btnThemeApply.UseVisualStyleBackColor = true;
             this.btnThemeApply.Click += new System.EventHandler(this.btnThemeApply_Click);
@@ -1862,7 +1970,7 @@ namespace ImageGlass
             this.lnkThemeDownload.Location = new System.Drawing.Point(22, 500);
             this.lnkThemeDownload.Name = "lnkThemeDownload";
             this.lnkThemeDownload.Size = new System.Drawing.Size(167, 25);
-            this.lnkThemeDownload.TabIndex = 71;
+            this.lnkThemeDownload.TabIndex = 72;
             this.lnkThemeDownload.TabStop = true;
             this.lnkThemeDownload.Text = "[Download themes]";
             this.lnkThemeDownload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1893,6 +2001,116 @@ namespace ImageGlass
             this.lblInstalledThemes.TabIndex = 2;
             this.lblInstalledThemes.Text = "Installed themes:";
             // 
+            // tabKeyboard
+            // 
+            this.tabKeyboard.BackColor = System.Drawing.Color.White;
+            this.tabKeyboard.Controls.Add(this.btnKeyReset);
+            this.tabKeyboard.Controls.Add(this.cmbKeysSpaceBack);
+            this.tabKeyboard.Controls.Add(this.cmbKeysPgUpDown);
+            this.tabKeyboard.Controls.Add(this.cmbKeysUpDown);
+            this.tabKeyboard.Controls.Add(this.cmbKeysLeftRight);
+            this.tabKeyboard.Controls.Add(this.lblKeysSpaceBack);
+            this.tabKeyboard.Controls.Add(this.lblKeysPageUpDown);
+            this.tabKeyboard.Controls.Add(this.lblKeysUpDown);
+            this.tabKeyboard.Controls.Add(this.lblKeysLeftRight);
+            this.tabKeyboard.Location = new System.Drawing.Point(4, 37);
+            this.tabKeyboard.Name = "tabKeyboard";
+            this.tabKeyboard.Padding = new System.Windows.Forms.Padding(3);
+            this.tabKeyboard.Size = new System.Drawing.Size(799, 583);
+            this.tabKeyboard.TabIndex = 8;
+            this.tabKeyboard.Text = "keyboard";
+            // 
+            // btnKeyReset
+            // 
+            this.btnKeyReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnKeyReset.Location = new System.Drawing.Point(521, 516);
+            this.btnKeyReset.Name = "btnKeyReset";
+            this.btnKeyReset.Size = new System.Drawing.Size(256, 45);
+            this.btnKeyReset.TabIndex = 77;
+            this.btnKeyReset.Text = "[Reset to default]";
+            this.btnKeyReset.UseVisualStyleBackColor = true;
+            this.btnKeyReset.Click += new System.EventHandler(this.btnKeyReset_Click);
+            // 
+            // cmbKeysSpaceBack
+            // 
+            this.cmbKeysSpaceBack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysSpaceBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysSpaceBack.FormattingEnabled = true;
+            this.cmbKeysSpaceBack.Location = new System.Drawing.Point(27, 300);
+            this.cmbKeysSpaceBack.Name = "cmbKeysSpaceBack";
+            this.cmbKeysSpaceBack.Size = new System.Drawing.Size(278, 33);
+            this.cmbKeysSpaceBack.TabIndex = 76;
+            // 
+            // cmbKeysPgUpDown
+            // 
+            this.cmbKeysPgUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysPgUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysPgUpDown.FormattingEnabled = true;
+            this.cmbKeysPgUpDown.Location = new System.Drawing.Point(27, 216);
+            this.cmbKeysPgUpDown.Name = "cmbKeysPgUpDown";
+            this.cmbKeysPgUpDown.Size = new System.Drawing.Size(278, 33);
+            this.cmbKeysPgUpDown.TabIndex = 75;
+            // 
+            // cmbKeysUpDown
+            // 
+            this.cmbKeysUpDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysUpDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysUpDown.FormattingEnabled = true;
+            this.cmbKeysUpDown.Location = new System.Drawing.Point(27, 132);
+            this.cmbKeysUpDown.Name = "cmbKeysUpDown";
+            this.cmbKeysUpDown.Size = new System.Drawing.Size(278, 33);
+            this.cmbKeysUpDown.TabIndex = 74;
+            // 
+            // cmbKeysLeftRight
+            // 
+            this.cmbKeysLeftRight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeysLeftRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbKeysLeftRight.FormattingEnabled = true;
+            this.cmbKeysLeftRight.Location = new System.Drawing.Point(27, 48);
+            this.cmbKeysLeftRight.Name = "cmbKeysLeftRight";
+            this.cmbKeysLeftRight.Size = new System.Drawing.Size(278, 33);
+            this.cmbKeysLeftRight.TabIndex = 73;
+            // 
+            // lblKeysSpaceBack
+            // 
+            this.lblKeysSpaceBack.AutoSize = true;
+            this.lblKeysSpaceBack.Location = new System.Drawing.Point(22, 272);
+            this.lblKeysSpaceBack.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblKeysSpaceBack.Name = "lblKeysSpaceBack";
+            this.lblKeysSpaceBack.Size = new System.Drawing.Size(167, 25);
+            this.lblKeysSpaceBack.TabIndex = 4;
+            this.lblKeysSpaceBack.Text = "[Space / Backspace]";
+            // 
+            // lblKeysPageUpDown
+            // 
+            this.lblKeysPageUpDown.AutoSize = true;
+            this.lblKeysPageUpDown.Location = new System.Drawing.Point(22, 188);
+            this.lblKeysPageUpDown.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblKeysPageUpDown.Name = "lblKeysPageUpDown";
+            this.lblKeysPageUpDown.Size = new System.Drawing.Size(185, 25);
+            this.lblKeysPageUpDown.TabIndex = 3;
+            this.lblKeysPageUpDown.Text = "[PageUp / PageDown]";
+            // 
+            // lblKeysUpDown
+            // 
+            this.lblKeysUpDown.AutoSize = true;
+            this.lblKeysUpDown.Location = new System.Drawing.Point(22, 104);
+            this.lblKeysUpDown.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblKeysUpDown.Name = "lblKeysUpDown";
+            this.lblKeysUpDown.Size = new System.Drawing.Size(167, 25);
+            this.lblKeysUpDown.TabIndex = 2;
+            this.lblKeysUpDown.Text = "[Up / Down arrows]";
+            // 
+            // lblKeysLeftRight
+            // 
+            this.lblKeysLeftRight.AutoSize = true;
+            this.lblKeysLeftRight.Location = new System.Drawing.Point(22, 20);
+            this.lblKeysLeftRight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblKeysLeftRight.Name = "lblKeysLeftRight";
+            this.lblKeysLeftRight.Size = new System.Drawing.Size(168, 25);
+            this.lblKeysLeftRight.TabIndex = 1;
+            this.lblKeysLeftRight.Text = "[Left / Right arrows]";
+            // 
             // imglOpenWith
             // 
             this.imglOpenWith.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -1903,7 +2121,7 @@ namespace ImageGlass
             // 
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.Location = new System.Drawing.Point(2, 2);
-            this.sp1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sp1.Margin = new System.Windows.Forms.Padding(2);
             this.sp1.Name = "sp1";
             // 
             // sp1.Panel1
@@ -1930,13 +2148,15 @@ namespace ImageGlass
             this.tableLayoutPanel1.Controls.Add(this.lblColorPicker, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblEdit, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.lblKeyboard, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.lblTheme, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -2029,6 +2249,26 @@ namespace ImageGlass
             this.lblEdit.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblEdit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
+            // lblKeyboard
+            // 
+            this.lblKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKeyboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblKeyboard.Location = new System.Drawing.Point(0, 300);
+            this.lblKeyboard.Margin = new System.Windows.Forms.Padding(0);
+            this.lblKeyboard.Name = "lblKeyboard";
+            this.lblKeyboard.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblKeyboard.Size = new System.Drawing.Size(254, 50);
+            this.lblKeyboard.TabIndex = 9;
+            this.lblKeyboard.Tag = "0";
+            this.lblKeyboard.Text = "[Keyboard]";
+            this.lblKeyboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblKeyboard.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblKeyboard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblKeyboard.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblKeyboard.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblKeyboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            // 
             // lblTheme
             // 
             this.lblTheme.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -2055,7 +2295,7 @@ namespace ImageGlass
             this.btnSave.AutoSize = true;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSave.Location = new System.Drawing.Point(651, 14);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(124, 45);
             this.btnSave.TabIndex = 0;
@@ -2069,7 +2309,7 @@ namespace ImageGlass
             this.btnCancel.AutoSize = true;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Location = new System.Drawing.Point(784, 14);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(124, 45);
             this.btnCancel.TabIndex = 1;
@@ -2083,7 +2323,7 @@ namespace ImageGlass
             this.btnApply.AutoSize = true;
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnApply.Location = new System.Drawing.Point(916, 14);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(124, 45);
             this.btnApply.TabIndex = 2;
@@ -2131,7 +2371,7 @@ namespace ImageGlass
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(691, 515);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
@@ -2166,6 +2406,8 @@ namespace ImageGlass
             this.panelThemeActions.ResumeLayout(false);
             this.panelThemeActions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
+            this.tabKeyboard.ResumeLayout(false);
+            this.tabKeyboard.PerformLayout();
             this.sp1.Panel1.ResumeLayout(false);
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
@@ -2229,7 +2471,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkThumbnailVertical;
         private System.Windows.Forms.Label lblGeneral_ThumbnailSize;
         private System.Windows.Forms.ComboBox cmbThumbnailDimension;
-        private System.Windows.Forms.CheckBox chkImageBoosterBack;
+        private System.Windows.Forms.CheckBox chkUseFileExplorerSortOrder;
         private System.Windows.Forms.CheckBox chkLoopSlideshow;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
@@ -2322,5 +2564,22 @@ namespace ImageGlass
         private System.Windows.Forms.LinkLabel lnkColorProfilePath;
         private System.Windows.Forms.CheckBox chkShowNavButtons;
         private System.Windows.Forms.CheckBox chkShowCheckerboardOnlyImage;
+        private System.Windows.Forms.TabPage tabKeyboard;
+        private System.Windows.Forms.Button btnKeyReset;
+        private System.Windows.Forms.ComboBox cmbKeysSpaceBack;
+        private System.Windows.Forms.ComboBox cmbKeysPgUpDown;
+        private System.Windows.Forms.ComboBox cmbKeysUpDown;
+        private System.Windows.Forms.ComboBox cmbKeysLeftRight;
+        private System.Windows.Forms.Label lblKeysSpaceBack;
+        private System.Windows.Forms.Label lblKeysPageUpDown;
+        private System.Windows.Forms.Label lblKeysUpDown;
+        private System.Windows.Forms.Label lblKeysLeftRight;
+        private System.Windows.Forms.Label lblKeyboard;
+        private System.Windows.Forms.ComboBox cmbImageOrderType;
+        private System.Windows.Forms.TextBox txtZoomLevels;
+        private System.Windows.Forms.Label lblZoomLevels;
+        private System.Windows.Forms.Label lblImageBoosterCachedCount;
+        private System.Windows.Forms.ComboBox cmbImageBoosterCachedCount;
+        private System.Windows.Forms.CheckBox chkIsCenterImage;
     }
 }

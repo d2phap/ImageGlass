@@ -34,22 +34,29 @@ namespace igcmd
         /// </summary>
         public static void AutoUpdate()
         {
-            Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
-
-            string updateXML = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
-            Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
-
-            if (File.Exists(updateXML))
+            // Issue #520: intercept any possible exception and fail quietly
+            try
             {
-                File.Delete(updateXML);
+                Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
+
+                string updateXML = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
+                Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
+
+                if (File.Exists(updateXML))
+                {
+                    File.Delete(updateXML);
+                }
+
+                if (!up.IsError &&
+                    up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")) &&
+                    up.Info.VersionType.ToLower() == "stable")
+                {
+                    frmCheckForUpdate f = new frmCheckForUpdate();
+                    f.ShowDialog();
+                }
             }
-
-            if (!up.IsError &&
-                up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")) &&
-                up.Info.VersionType.ToLower() == "stable")
+            catch (Exception e)
             {
-                frmCheckForUpdate f = new frmCheckForUpdate();
-                f.ShowDialog();
             }
 
             Application.Exit();

@@ -184,6 +184,7 @@ namespace ImageGlass {
 
         private class GifImageData {
             private static readonly int FrameDelayTag = 0x5100;
+            private static readonly int LoopCountTag = 20737;
 
             // image is used for identification in map
             //
@@ -196,9 +197,14 @@ namespace ImageGlass {
             public bool myIsDirty;
             private int myCurrentFrame;
 
+            // KBR 20190614 respect the GIF loop count value
+            private int maxLoopCount;
+            private int currentLoopCount;
+
             // image should be locked by caller
             //
-            public GifImageData(Image image, EventHandler onFrameChangedHandler) {
+            public GifImageData(Image image, EventHandler onFrameChangedHandler)
+            {
                 myIsThreadDead = 0;
                 myImage = image;
                 // We should only be called if we already know we can be animated. Therefore this
@@ -210,14 +216,29 @@ namespace ImageGlass {
                 myCurrentFrame = 0;
                 myIsDirty = false;
                 myOnFrameChangedHandler = onFrameChangedHandler;
+                maxLoopCount = BitConverter.ToInt16(image.GetPropertyItem(LoopCountTag).Value, 0);
+                currentLoopCount = 0;
             }
 
             public bool ThreadIsNotDead() {
                 return myIsThreadDead == 0;
             }
 
-            public void HandleUpdateTick() {
-                myCurrentFrame = (myCurrentFrame + 1) % myNumFrames;
+            public void HandleUpdateTick()
+            {
+                // KBR 20190614 Loop through frames, respecting the max loop count
+                myCurrentFrame++;
+                if (myCurrentFrame >= myNumFrames)
+                {
+                    myCurrentFrame = 0;
+                    currentLoopCount++;
+
+                    if (maxLoopCount > 0 && currentLoopCount >= maxLoopCount)
+                    {
+                        myIsThreadDead = 1;
+                        return;
+                    }
+                }
                 myIsDirty = true;
                 myOnFrameChangedHandler(myImage, EventArgs.Empty);
             }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2013 DUONG DIEU PHAP
+Copyright (C) 2013 - 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Library.Image
 {
@@ -29,6 +32,7 @@ namespace ImageGlass.Library.Image
         private int _i;
         private string _filename;
         private string _desFolder;
+
 
         /// <summary>
         /// Extract all frames of animation
@@ -43,11 +47,14 @@ namespace ImageGlass.Library.Image
             _filename = animationFile;
             _desFolder = destinationFolder;
 
-            _img = new Bitmap(animationFile);
-            _i = 1;
+            Task.Run(() =>
+            {
+                _img = new Bitmap(animationFile);
+                _i = 1;
 
-            //begin extract
-            AnimateImage();
+                //begin extract
+                AnimateImage();
+            });
         }
 
         /// <summary>
@@ -58,7 +65,7 @@ namespace ImageGlass.Library.Image
             if (!_isAnimating)
             {
                 //Begin the animation only once.
-                ImageAnimator.Animate(_img, new System.EventHandler(SaveFrames));
+                ImageAnimator.Animate(_img, new EventHandler(SaveFrames));
                 _isAnimating = true;
             }
 
@@ -69,12 +76,19 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveFrames(object sender, System.EventArgs e)
+        private void SaveFrames(object sender, EventArgs e)
         {
-            //kiểm tra đã hết frame chưa
-            if (_i > System.Drawing.Image.FromFile(_filename).GetFrameCount(System.Drawing.Imaging.FrameDimension.Time))
+            if (!_isAnimating) return;
+
+            var frameCount = System.Drawing.Image.FromFile(_filename).GetFrameCount(FrameDimension.Time);
+            var numberIndex = frameCount.ToString().Length;
+
+            // Check current frame
+            if (_i > frameCount)
             {
                 _isAnimating = false;
+                ImageAnimator.StopAnimate(_img, null);
+                
                 return;
             }
 
@@ -85,13 +99,17 @@ namespace ImageGlass.Library.Image
             ImageAnimator.UpdateFrames();
 
             //Draw the next frame in the animation.
-            _img.Save(Path.Combine(_desFolder,
+            _img.Save(
+                Path.Combine(
+                    _desFolder,
                     Path.GetFileNameWithoutExtension(_filename) + " - " +
-                    _i.ToString() + ".png"),
-                    System.Drawing.Imaging.ImageFormat.Png);
+                    _i.ToString($"D{numberIndex}") + ".png"
+                    ),
+                ImageFormat.Png
+            );
 
             //go to next frame
-            _i = _i + 1;
+            _i += 1;
 
         }
 

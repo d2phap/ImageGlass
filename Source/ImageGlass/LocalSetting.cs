@@ -28,7 +28,7 @@ namespace ImageGlass
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static Theme.Theme _theme;
-        
+
 
         #region Auto Properties
         /// <summary>
@@ -49,7 +49,7 @@ namespace ImageGlass
         /// Gets, sets value if image data was modified
         /// </summary>
         public static string ImageModifiedPath { get; set; } = "";
-        
+
 
         /// <summary>
         /// Gets, sets the 0-based index of the last view of Settings dialog tab.
@@ -76,24 +76,45 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// The current "initial" file path we're viewing. Used when the user changes the sort settings: we need to rebuild
-        /// the image list, but otherwise we don't know what image/folder we started with.
+        /// The current "initial" path (file or dir) we're viewing. Used when the user changes the sort settings: we need to rebuild the image list, but otherwise we don't know what image/folder we started with.
         /// 
-        /// Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the 
-        /// images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after 
-        /// a rescan of the image list, only the _sub_-folders images were re-loaded!
+        /// Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after a rescan of the image list, only the _sub_-folders images were re-loaded!
         ///
         /// But if we reload the list using the original image, then the original folder's images, and the sub-folders, are reloaded.
         /// </summary>
-        public static string InitialInputImageFilename { get; set; } = "";
+        public static string InitialInputPath { get; set; } = "";
 
+
+        /// <summary>
+        /// The 'current' image sorting order. A reconciliation between the user's Settings selection and the sorting order from Windows Explorer, to be used to sort the active image list.
+        /// </summary>
+        public static ImageOrderBy ActiveImageLoadingOrder { get; set; }
+
+
+        /// <summary>
+        /// The 'current' image sorting direction. A reconciliation between the user's Settings selection and the sorting direction from Windows Explorer, to be used to sort the active image list.
+        /// </summary>
+        public static ImageOrderType ActiveImageLoadingOrderType { get; set; }
+
+
+        /// <summary>
+        /// Remember for this session the last-used "Save As" extension. When the user is iterating
+        /// through a set of images and using "Save As" to always save to the same file type, this
+        /// memory prevents them from having to manually re-select their desired extension.
+        /// </summary>
+        public static int SaveAsFilterIndex { get; set; } = 0;
+
+
+        /// <summary>
+        /// Gets, sets color channel of image
+        /// </summary>
+        public static ColorChannels Channels { get; set; } = ColorChannels.All;
 
         #endregion
 
 
 
         #region LazyInitializer Properties
-
         /// <summary>
         /// Form frmSetting
         /// </summary>

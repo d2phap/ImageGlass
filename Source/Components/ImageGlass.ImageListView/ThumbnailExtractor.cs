@@ -218,7 +218,7 @@ namespace ImageGlass.ImageListView
             return thumb;
         }
         /// <summary>
-        /// [Phap] Creates a thumbnail from the given image file.
+        /// [IGChange] Creates a thumbnail from the given image file.
         /// </summary>
         /// <param name="filename">The filename pointing to an image.</param>
         /// <param name="size">Requested image size.</param>
@@ -230,7 +230,7 @@ namespace ImageGlass.ImageListView
             if (size.Width <= 0 || size.Height <= 0)
                 throw new ArgumentException();
 
-            Image source = new Core.Img(filename).GetThumbnail(size, useEmbeddedThumbnails != UseEmbeddedThumbnails.Never);
+            var source = Heart.Photo.GetThumbnail(filename, size, useEmbeddedThumbnails != UseEmbeddedThumbnails.Never);
 
             // If all failed, return null.
             if (source == null)
@@ -246,7 +246,6 @@ namespace ImageGlass.ImageListView
             {
                 if (source != null)
                     source.Dispose();
-                source = null;
             }
 
             return thumb;

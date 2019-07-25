@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ namespace ImageGlass.Services.Configuration
 {
     /// <summary>
     /// The loading order list.
-    /// **If we need to rename, have to update the language string too.
+    /// **If we need to rename, we MUST update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
     public enum ImageOrderBy
@@ -34,6 +34,17 @@ namespace ImageGlass.Services.Configuration
         LastAccessTime = 4,
         LastWriteTime = 5,
         Random = 6
+    }
+
+    /// <summary>
+    /// The loading order types list
+    /// **If we need to rename, we MUST update the language string too.
+    /// Because the name is also language keyword!
+    /// </summary>
+    public enum ImageOrderType
+    {
+        Asc = 0,
+        Desc = 1
     }
 
     /// <summary>
@@ -91,7 +102,7 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR = 32,
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
-        IMAGE_FOLDER = 256,
+        IMAGE_LIST_NO_RECURSIVE = 256,
         OTHER_SETTINGS = 512
     }
 
@@ -168,5 +179,80 @@ namespace ImageGlass.Services.Configuration
     {
         Top = 0,
         Bottom = 1
+    }
+
+
+    /// <summary>
+    /// Color channels of image, the value should be same as MagickImage.Channels enum
+    /// </summary>
+    public enum ColorChannels
+    {
+        All = -1, // not applicable
+
+        Red = 1,
+        Green = 2,
+        Blue = 4,
+        Black = 8,
+        Alpha = 16,
+    }
+
+
+    /// <summary>
+    /// Actions the user can assign to keys
+    /// </summary>
+    public enum AssignableActions
+    {
+        DoNothing = -1,    // error case
+        PrevNextImage = 0, // previous/next image in list
+        PanLeftRight,      // pan current image left/right
+        PanUpDown,         // pan current image up/down
+        ZoomInOut,         // zoom current image in/out
+        PauseSlideshow,    // placeholder for V6 space key behavior
+
+    }
+
+    /// <summary>
+    /// User customizable key pairs
+    /// </summary>
+    public enum KeyCombos
+    {
+        LeftRight = 0, // left/right arrow keys
+        UpDown,      // up/down arrow keys
+        PageUpDown,  // pageup/pagedown keys
+        SpaceBack,   // space, backspace keys
+    }
+
+    /// <summary>
+    /// Supported actions which can be assigned to mouse click
+    /// </summary>
+    public enum MouseAction
+    {
+        ToggleZoomFit = 0, // switch between 100% and fit-to-window
+        ZoomIn,            // zoom in by zoom step
+        ZoomOut,           // zoom out by zoom step
+        NextImage,         // next image in list
+        PrevImage,         // previous image in list
+        ToggleFullScreen,  // toggle full-screen mode
+        PopupMenu,         // bring up the popup menu
+        ColorPick,         // select color under mouse cursor
+        ZoomInToMouse,     // zoom in by zoom step, centered on mouse position
+        ZoomOutToAuto,     // zoom out to Auto-zoom level
+    }
+
+    /// <summary>
+    /// Supported customizable mouse click
+    /// </summary>
+    public enum MouseClick
+    {
+        Button1,    // Left single
+        Button1Dbl,
+        Button2,    // Right single
+        Button2Dbl,
+        Button3,    // Middle
+        Button3Dbl,
+        Button4,    // X1
+        Button4Dbl,
+        Button5,    // X2
+        Button5Dbl,
     }
 }
