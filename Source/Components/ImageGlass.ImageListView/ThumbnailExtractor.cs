@@ -23,6 +23,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 #if USEWIC
+using System.Runtime.ExceptionServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 #endif
@@ -132,6 +133,11 @@ namespace ImageGlass.ImageListView
         /// <param name="useExifOrientation">true to automatically rotate images based on Exif orientation; otherwise false.</param>
         /// <param name="useWIC">true to use Windows Imaging Component; otherwise false.</param>
         /// <returns>The thumbnail image from the given file or null if an error occurs.</returns>
+#if USEWIC        
+        // KBR 20190729 BitmapFrame.Create will throw an AccessViolation exception which is treated
+        // as a corrupted state (and IG shutdown) _unless_ this decorator is added
+        [HandleProcessCorruptedStateExceptions] 
+#endif
         public static Image FromFile(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation, bool useWIC)
         {
             if (string.IsNullOrEmpty(filename))
