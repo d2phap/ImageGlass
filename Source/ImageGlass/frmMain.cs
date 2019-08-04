@@ -674,6 +674,15 @@ namespace ImageGlass
                 //update thumbnail
                 thumbnailBar.Items[GlobalSetting.CurrentIndex].Update();
             }
+            else
+            {
+                // KBR 20190804 Fix obscure issue: 
+                // 1. Rotate/flip image with "IsSaveAfterRotating" is OFF
+                // 2. Move through images
+                // 3. Turn "IsSaveAfterRotating" ON
+                // 4. On navigate to another image, the change made at step 1 will be saved.
+                LocalSetting.ImageModifiedPath = "";
+            }
 
             picMain.Text = "";
             LocalSetting.IsTempMemoryData = false;
