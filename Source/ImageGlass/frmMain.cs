@@ -1,4 +1,4 @@
-﻿/*
+/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -3757,6 +3757,19 @@ namespace ImageGlass
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            //workaround that makes it so side mouse buttons will not zoom the image
+            if (e.Button == MouseButtons.XButton1)
+            {
+                mnuMainViewPrevious_Click(null, null);
+                return;
+            }
+
+            if (e.Button == MouseButtons.XButton2)
+            {
+                mnuMainViewNext_Click(null, null);
+                return;
+            }
+        
             void ToggleActualSize()
             {
                 if (picMain.Zoom < 100)
