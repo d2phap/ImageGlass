@@ -168,8 +168,17 @@ namespace ImageGlass.Heart
                 {
                     if (profile != null)
                     {
-                        // Get Orieantation Flag
-                        var exifTag = profile.GetValue(ExifTag.Orientation);
+                        IExifValue exifTag = null;
+                        try
+                        {
+                            // Get Orientation Flag
+                            exifTag = profile.GetValue(ExifTag.Orientation);
+                        }
+                        catch
+                        {
+                            // Issue #603: Magick.NET threw exception with specific image
+                            // Temporary workaround pending a Magick.NET fix.
+                        }
 
                         if (exifTag != null)
                         {
