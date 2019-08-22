@@ -375,6 +375,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             //Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0, removed v5.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
+            Items.Add("frmMain.mnuMainPageNav", "Page Navigation"); // V8
 
 
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0

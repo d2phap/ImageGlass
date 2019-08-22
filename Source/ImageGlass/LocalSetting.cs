@@ -27,6 +27,7 @@ namespace ImageGlass
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
+        private static frmPageNav _fPageNav;
         private static Theme.Theme _theme;
 
 
@@ -110,6 +111,13 @@ namespace ImageGlass
         /// </summary>
         public static ColorChannels Channels { get; set; } = ColorChannels.All;
 
+
+        /// <summary>
+        /// Check if frmPageNav is opening.
+        /// This is for toggle Page Navigation menu in frmMain
+        /// </summary>
+        public static bool IsPageNavToolOpen { get; set; } = false;
+
         #endregion
 
 
@@ -123,6 +131,17 @@ namespace ImageGlass
             get { return LazyInitializer.EnsureInitialized(ref _fSetting); }
             set { _fSetting = value; }
         }
+
+
+        /// <summary>
+        /// The Page Navigation form
+        /// </summary>
+        public static frmPageNav FPageNav
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fPageNav); }
+            set { _fPageNav = value; }
+        }
+
 
         /// <summary>
         /// Form frmColorPicker

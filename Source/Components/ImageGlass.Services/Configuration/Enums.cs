@@ -103,7 +103,8 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
         IMAGE_LIST_NO_RECURSIVE = 256,
-        OTHER_SETTINGS = 512
+        OTHER_SETTINGS = 512,
+        PAGE_NAV_MENU = 1024
     }
 
 

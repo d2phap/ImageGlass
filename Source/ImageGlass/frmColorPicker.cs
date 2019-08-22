@@ -207,7 +207,6 @@ namespace ImageGlass
             frmOwner.Move += Owner_Move;
             frmOwner.SizeChanged += Owner_Move;
             frmOwner.VisibleChanged += Owner_Move;
-            frmOwner.Deactivate += FrmOwner_Deactivate;
             frmOwner.LocationChanged += FrmOwner_LocationChanged;
         }
 
@@ -224,15 +223,9 @@ namespace ImageGlass
             frmOwner.Move -= Owner_Move;
             frmOwner.SizeChanged -= Owner_Move;
             frmOwner.VisibleChanged -= Owner_Move;
-            frmOwner.Deactivate -= FrmOwner_Deactivate;
             frmOwner.LocationChanged -= FrmOwner_LocationChanged;
         }
 
-
-        private void FrmOwner_Deactivate(object sender, EventArgs e)
-        {
-            this.TopMost = false;
-        }
 
         private void Owner_Move(object sender, EventArgs e)
         {

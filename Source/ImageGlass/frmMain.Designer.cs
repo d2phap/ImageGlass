@@ -104,6 +104,7 @@
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainPageNav = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -1032,7 +1033,7 @@
             // mnuMainTools
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainColorPicker});
+            this.mnuMainColorPicker, this.mnuMainPageNav});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
@@ -1054,6 +1055,18 @@
             this.mnuMainColorPicker.Size = new System.Drawing.Size(300, 31);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
+            // 
+            // mnuMainPageNav
+            // 
+            this.mnuMainPageNav.CheckOnClick = true;
+            this.mnuMainPageNav.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainPageNav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainPageNav.Name = "mnuMainPageNav";
+            this.mnuMainPageNav.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainPageNav.ShortcutKeyDisplayString = "";
+            this.mnuMainPageNav.Size = new System.Drawing.Size(300, 31);
+            this.mnuMainPageNav.Text = "Page Navigation";
+            this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
             // 
             // toolStripSeparator12
             // 
@@ -1834,6 +1847,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAlwaysOnTop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainColorPicker;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainPageNav;
         private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.ToolStripButton btnDelete;
         private System.Windows.Forms.ToolStripButton btnAutoZoom;

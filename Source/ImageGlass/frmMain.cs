@@ -1818,7 +1818,8 @@ namespace ImageGlass
 
                 mnuMainClearClipboard.Image = 
                 mnuMainToolbar.Image = 
-                mnuMainColorPicker.Image = 
+                mnuMainColorPicker.Image =
+                mnuMainPageNav.Image = 
                 mnuMainAbout.Image = 
                 mnuMainSettings.Image =
 
@@ -3241,11 +3242,20 @@ namespace ImageGlass
             #endregion
 
 
+            #region PAGE_NAV_MENU
+            if ((flags & MainFormForceUpdateAction.PAGE_NAV_MENU) != 0)
+            {
+                mnuMainPageNav.Checked = LocalSetting.IsPageNavToolOpen;
+            }
+            #endregion
+
+
             #region THEME
             if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
             {
                 ApplyTheme(LocalSetting.Theme.ThemeFolderName);
                 LocalSetting.FColorPicker.UpdateUI();
+                LocalSetting.FPageNav.UpdateUI();
             }
             #endregion
 
@@ -5174,6 +5184,36 @@ namespace ImageGlass
             }
         }
 
+
+        /// <summary>
+        /// Manage the Page Navigation Tool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuMainPageNav_Click(object sender, EventArgs e)
+        {
+            LocalSetting.IsPageNavToolOpen = mnuMainPageNav.Checked;
+
+            if (mnuMainPageNav.Checked)
+            {
+                // Open the page navigation tool
+                if (LocalSetting.FPageNav == null || LocalSetting.FPageNav.IsDisposed)
+                    LocalSetting.FPageNav = new frmPageNav();
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+                LocalSetting.FPageNav.Owner = this;
+                LocalSetting.FPageNav.Show(this);
+                this.Activate();
+
+                // TODO register page event handler(s)
+            }
+            else
+            {
+                // Close the page navigation tool
+                LocalSetting.FPageNav?.Close();
+            }
+        }
+
+
         private void mnuMainSettings_Click(object sender, EventArgs e)
         {
             if (LocalSetting.FSetting.IsDisposed)
@@ -5269,7 +5309,7 @@ namespace ImageGlass
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
-                    frameCount = imgData.FrameCount;
+                    frameCount = imgData?.FrameCount ?? 0;
                 }
 
 

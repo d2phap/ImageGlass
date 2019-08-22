@@ -176,6 +176,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPageNav.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPageNav.Designer.cs">
+      <DependentUpon>frmPageNav.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     <Compile Include="LocalSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ToolStripToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -204,6 +213,9 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPageNav.resx">
+      <DependentUpon>frmPageNav.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
