@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using ImageGlass.Heart;
 using ImageGlass.Services.Configuration;
 using System.Drawing;
@@ -46,6 +47,8 @@ namespace ImageGlass.Theme
         public ThemeImage(string filename, Size size = new Size())
         {
             Filename = filename;
+            if (string.IsNullOrWhiteSpace(filename))
+                return;
             try
             {
                 Image = Photo.Load(filename, size);
