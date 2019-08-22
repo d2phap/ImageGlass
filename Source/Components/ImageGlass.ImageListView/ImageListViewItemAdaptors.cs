@@ -16,6 +16,9 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public class FileSystemAdaptor : ImageListView.ImageListViewItemAdaptor
         {
+		    // [IG_CHANGE] use a cache for commonly repeated strings
+            private static StringCache _stringCache = new StringCache();
+
             private bool disposed;
 
             /// <summary>
@@ -83,7 +86,8 @@ namespace ImageGlass.ImageListView
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateAccessed, string.Empty, info.LastAccessTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateModified, string.Empty, info.LastWriteTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FileSize, string.Empty, info.Length));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, info.DirectoryName ?? ""));
+					// [IG_CHANGE] use string cache
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
 
                     // Get metadata
                     MetadataExtractor metadata = MetadataExtractor.FromFile(filename, useWIC);

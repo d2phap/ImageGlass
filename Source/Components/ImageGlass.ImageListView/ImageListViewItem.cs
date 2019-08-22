@@ -22,6 +22,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Drawing.Design;
 
+// ReSharper disable InconsistentNaming
+
 namespace ImageGlass.ImageListView
 {
     /// <summary>
@@ -30,6 +32,9 @@ namespace ImageGlass.ImageListView
     [TypeConverter(typeof(ImageListViewItemTypeConverter))]
     public class ImageListViewItem : ICloneable
     {
+	    // [IG_CHANGE] Cache often repeated strings, e.g. extensions, directory path
+        private static readonly StringCache _stringCache = new StringCache();
+
         #region Member Variables
         // Property backing fields
         internal int mIndex;
@@ -66,7 +71,7 @@ namespace ImageGlass.ImageListView
         private string mSoftware;
         private float mFocalLength;
         // Adaptor
-        internal object mVirtualItemKey;
+        private object mVirtualItemKey;
         internal ImageListView.ImageListViewItemAdaptor mAdaptor;
         // Used for custom columns
         private Dictionary<Guid, string> subItems;
@@ -102,7 +107,7 @@ namespace ImageGlass.ImageListView
         {
             get
             {
-                if (owner == null || owner.FocusedItem == null) return false;
+                if (owner?.FocusedItem == null) return false;
                 return (this == owner.FocusedItem);
             }
             set
@@ -149,7 +154,7 @@ namespace ImageGlass.ImageListView
         /// Returns null if the item is not a virtual item.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets the virtual item key associated with this item.")]
-        public object VirtualItemKey { get { return mVirtualItemKey; } }
+        public object VirtualItemKey { get { return mVirtualItemKey ?? mFileName; } } // [IG_CHANGE]
         /// <summary>
         /// Gets the ImageListView owning this item.
         /// </summary>
@@ -218,7 +223,7 @@ namespace ImageGlass.ImageListView
         {
             get
             {
-                return mText;
+                return mText ?? Path.GetFileName(mFileName); // [IG_CHANGE]
             }
             set
             {
@@ -246,11 +251,13 @@ namespace ImageGlass.ImageListView
                 if (mFileName != value)
                 {
                     mFileName = value;
-                    mVirtualItemKey = mFileName;
+                    mVirtualItemKey = null; //mFileName; [IG_CHANGE] don't duplicate the filename
 
-                    if (string.IsNullOrEmpty(mText))
-                        mText = Path.GetFileName(mFileName);
-                    extension = Path.GetExtension(mFileName);
+                    // [IG_CHANGE]
+                    //if (string.IsNullOrEmpty(mText))
+                    //    mText = Path.GetFileName(mFileName);
+					// [IG_CHANGE] use string cache
+                    extension = _stringCache.GetFromCache(Path.GetExtension(mFileName));
 
                     isDirty = true;
                     if (mImageListView != null)
@@ -280,7 +287,7 @@ namespace ImageGlass.ImageListView
 
                 if (ThumbnailCacheState != CacheState.Cached)
                 {
-                    mImageListView.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, mImageListView.ThumbnailSize,
+                    mImageListView.thumbnailCache.Add(Guid, mAdaptor, VirtualItemKey, mImageListView.ThumbnailSize,
                         mImageListView.UseEmbeddedThumbnails, mImageListView.AutoRotateThumbnails,
                         (mImageListView.UseWIC == UseWIC.Auto || mImageListView.UseWIC == UseWIC.ThumbnailsOnly));
                 }
@@ -497,7 +504,8 @@ namespace ImageGlass.ImageListView
 
             Tag = null;
 
-            subItems = new Dictionary<Guid, string>();
+            //[IG_CHANGE] we don't use sub-items, don't alloc memory for 'em
+            //subItems = new Dictionary<Guid, string>();
 
             groupOrder = 0;
             group = string.Empty;
@@ -511,11 +519,12 @@ namespace ImageGlass.ImageListView
             : this()
         {
             mFileName = filename;
-            extension = Path.GetExtension(filename);
-            if (string.IsNullOrEmpty(text))
-                text = Path.GetFileName(filename);
-            mText = text;
-            mVirtualItemKey = mFileName;
+			// [IG_CHANGE] use string cache
+            extension = _stringCache.GetFromCache(Path.GetExtension(filename));
+            if (!string.IsNullOrEmpty(text))
+                // [IG_CHANGE] don't duplicate filename text = Path.GetFileName(filename);
+                mText = text;
+            mVirtualItemKey = null; //mFileName; [IG_CHANGE] don't duplicate filename
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
@@ -556,7 +565,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public void BeginEdit()
         {
-            if (editing == true)
+            if (editing)
                 throw new InvalidOperationException("Already editing this item.");
 
             if (mImageListView == null)
@@ -602,7 +611,7 @@ namespace ImageGlass.ImageListView
             {
                 mImageListView.thumbnailCache.Remove(mGuid, true);
                 mImageListView.metadataCache.Remove(mGuid);
-                mImageListView.metadataCache.Add(mGuid, mAdaptor, mVirtualItemKey,
+                    mImageListView.metadataCache.Add(mGuid, mAdaptor, VirtualItemKey,
                     (mImageListView.UseWIC == UseWIC.Auto || mImageListView.UseWIC == UseWIC.DetailsOnly));
                 mImageListView.Refresh();
             }
@@ -786,16 +795,15 @@ namespace ImageGlass.ImageListView
         {
             if (!string.IsNullOrEmpty(mText))
                 return mText;
-            else if (!string.IsNullOrEmpty(mFileName))
+            if (!string.IsNullOrEmpty(mFileName))
                 return Path.GetFileName(mFileName);
-            else
-                return string.Format("Item {0}", mIndex);
+            return $"Item {mIndex}";
         }
         #endregion
 
         #region Helper Methods
         /// <summary>
-        /// Gets the simpel rating (0-5)
+        /// Gets the simple rating (0-5)
         /// </summary>
         /// <returns></returns>
         internal ushort GetSimpleRating()
@@ -887,7 +895,7 @@ namespace ImageGlass.ImageListView
                 if (state == CacheState.Cached)
                     return img;
 
-                mImageListView.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, mImageListView.ThumbnailSize,
+                mImageListView.thumbnailCache.Add(Guid, mAdaptor, VirtualItemKey, mImageListView.ThumbnailSize,
                     mImageListView.UseEmbeddedThumbnails, mImageListView.AutoRotateThumbnails,
                     (mImageListView.UseWIC == UseWIC.Auto || mImageListView.UseWIC == UseWIC.ThumbnailsOnly));
 
@@ -958,7 +966,7 @@ namespace ImageGlass.ImageListView
 
             if (mImageListView != null)
             {
-                UpdateDetailsInternal(Adaptor.GetDetails(mVirtualItemKey,
+                UpdateDetailsInternal(Adaptor.GetDetails(VirtualItemKey,
                     (mImageListView.UseWIC == UseWIC.Auto || mImageListView.UseWIC == UseWIC.DetailsOnly)));
             }
         }
@@ -1073,7 +1081,7 @@ namespace ImageGlass.ImageListView
                 return;
             }
 
-            Utility.Tuple<int, string> groupInfo = new Utility.Tuple<int, string>(0, string.Empty);
+            Utility.Tuple<int, string> groupInfo;
 
             switch (column.Type)
             {
