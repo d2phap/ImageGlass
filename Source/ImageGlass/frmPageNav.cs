@@ -105,7 +105,8 @@ namespace ImageGlass
             button1.ForeColor =
             button2.ForeColor =
             button3.ForeColor =
-            button4.ForeColor =
+            button4.ForeColor = 
+            btnClose.ForeColor =
                 Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
         }
 

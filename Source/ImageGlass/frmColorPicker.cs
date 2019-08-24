@@ -488,6 +488,7 @@ namespace ImageGlass
                 txtHEX.ForeColor =
                 txtCMYK.ForeColor =
                 txtHSL.ForeColor =
+                btnClose.ForeColor =
                 Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
         }
 
