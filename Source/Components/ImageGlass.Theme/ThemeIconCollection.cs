@@ -51,6 +51,8 @@ namespace ImageGlass.Theme
         public ThemeImage ZoomOut { get; set; }
         public ThemeImage ScaleToFit { get; set; }
         public ThemeImage AutoZoom { get; set; }
+        public ThemeImage First { get; set; } = new ThemeImage();
+        public ThemeImage Last { get; set; } = new ThemeImage();
 
         /// <summary>
         /// Icon collection for the theme

@@ -30,16 +30,11 @@ namespace ImageGlass
         // default location offset on the parent form
         private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), 
                                                                (int)(300 * DPIScaling.GetDPIScaleFactor()));
+
+        
         public frmPageNav()
         {
             InitializeComponent();
-
-            // TODO compartmentalize / move to UpdateUI
-            var themeName = GlobalSetting.GetConfig("Theme", "default");
-            Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
-            button2.Image = t.ToolbarIcons.ViewPreviousImage.Image;
-            button3.Image = t.ToolbarIcons.ViewNextImage.Image;
-
 
             _locationOffset = DefaultLocationOffset; // TODO simplify and move logic to ToolForm
             MouseDown += ToolForm_MouseDown;
@@ -89,6 +84,13 @@ namespace ImageGlass
         internal void UpdateUI()
         {
             //apply current theme ------------------------------------------------------
+            var themeName = GlobalSetting.GetConfig("Theme", "default");
+            Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
+            button1.Image = t.ToolbarIcons.First.Image;
+            button2.Image = t.ToolbarIcons.ViewPreviousImage.Image;
+            button3.Image = t.ToolbarIcons.ViewNextImage.Image;
+            button4.Image = t.ToolbarIcons.Last.Image;
+
             BackColor =
                 button1.BackColor =
                 button2.BackColor =
