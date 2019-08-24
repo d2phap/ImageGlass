@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnClose = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnClose
@@ -58,7 +60,7 @@
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Image = global::ImageGlass.Properties.Resources.info;
-            this.button1.Location = new System.Drawing.Point(13, 54);
+            this.button1.Location = new System.Drawing.Point(13, 36);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(32, 32);
             this.button1.TabIndex = 7;
@@ -68,7 +70,7 @@
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Image = global::ImageGlass.Properties.Resources.info;
-            this.button2.Location = new System.Drawing.Point(50, 54);
+            this.button2.Location = new System.Drawing.Point(50, 36);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(32, 32);
             this.button2.TabIndex = 7;
@@ -78,7 +80,7 @@
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Image = global::ImageGlass.Properties.Resources.info;
-            this.button3.Location = new System.Drawing.Point(87, 54);
+            this.button3.Location = new System.Drawing.Point(87, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(32, 32);
             this.button3.TabIndex = 7;
@@ -88,18 +90,22 @@
             // 
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Image = global::ImageGlass.Properties.Resources.info;
-            this.button4.Location = new System.Drawing.Point(124, 54);
+            this.button4.Location = new System.Drawing.Point(124, 36);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(32, 32);
             this.button4.TabIndex = 7;
             this.button4.UseVisualStyleBackColor = true;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ShowAlways = true;
             // 
             // frmPageNav
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(174, 98);
+            this.ClientSize = new System.Drawing.Size(174, 77);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -130,5 +136,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

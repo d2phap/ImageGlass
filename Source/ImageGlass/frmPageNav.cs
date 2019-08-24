@@ -108,6 +108,11 @@ namespace ImageGlass
             button4.ForeColor = 
             btnClose.ForeColor =
                 Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
+
+            toolTip1.SetToolTip(button1, GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"]);
+            toolTip1.SetToolTip(button2, GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"]);
+            toolTip1.SetToolTip(button3, GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"]);
+            toolTip1.SetToolTip(button4, GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"]);
         }
 
         private void frmPageNav_Load(object sender, EventArgs e)
