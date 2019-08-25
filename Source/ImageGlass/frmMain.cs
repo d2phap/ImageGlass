@@ -751,6 +751,9 @@ namespace ImageGlass
                 SetAppBusy(true);
 
 
+                // TODO TIF Somewhere in here, invoke mnuMainPageNav_Click for a multi-page image
+
+
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
                     GlobalSetting.CurrentIndex,
                     isSkipCache: isSkipCache
@@ -2064,6 +2067,31 @@ namespace ImageGlass
                 // update cached images
                 GlobalSetting.ImageList.UpdateCache();
             }
+        }
+
+        private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
+        {
+            // Receives page navigation events 
+
+            // TODO TIF user has clicked on a page navigation button: move to requested page
+
+            switch (navEvent)
+            {
+                case frmPageNav.NavEvent.PageFirst:
+                    break;
+                case frmPageNav.NavEvent.PageNext:
+                    break;
+                case frmPageNav.NavEvent.PagePrevious:
+                    break;
+                case frmPageNav.NavEvent.PageLast:
+                    break;
+            }
+
+            // TODO TIF update the page navigation form when user reaches first or last page
+
+            LocalSetting.FPageNav.AtFirstPage = false;
+            LocalSetting.FPageNav.AtLastPage = false;
+
         }
 
         #endregion
@@ -5192,24 +5220,35 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
+            // TODO TIF disable the menu if the current image is not multi-page
+
             LocalSetting.IsPageNavToolOpen = mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
             {
                 // Open the page navigation tool
                 if (LocalSetting.FPageNav == null || LocalSetting.FPageNav.IsDisposed)
+                {
                     LocalSetting.FPageNav = new frmPageNav();
+                }
+
+                LocalSetting.FPageNav.NavEventHandler = PageNavigationEvent; // register page event handler
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
                 LocalSetting.FPageNav.Owner = this;
+                LocalSetting.FPageNav.AtFirstPage = true;
+                LocalSetting.FPageNav.AtLastPage = false; // TODO TIF set to true if a one-page file
+
                 LocalSetting.FPageNav.Show(this);
                 this.Activate();
-
-                // TODO register page event handler(s)
             }
             else
             {
-                // Close the page navigation tool
-                LocalSetting.FPageNav?.Close();
+                if (LocalSetting.FPageNav != null)
+                {
+                    // Close the page navigation tool
+                    LocalSetting.FPageNav.Close();
+                    LocalSetting.FPageNav.NavEventHandler = null;
+                }
             }
         }
 
