@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnClose = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnFirstPage = new System.Windows.Forms.Button();
+            this.btnPrevPage = new System.Windows.Forms.Button();
+            this.btnNextPage = new System.Windows.Forms.Button();
+            this.btnLastPage = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
@@ -56,45 +56,45 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
-            // button1
+            // btnFirstPage
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::ImageGlass.Properties.Resources.info;
-            this.button1.Location = new System.Drawing.Point(13, 36);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(32, 32);
-            this.button1.TabIndex = 7;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnFirstPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFirstPage.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnFirstPage.Location = new System.Drawing.Point(13, 36);
+            this.btnFirstPage.Name = "btnFirstPage";
+            this.btnFirstPage.Size = new System.Drawing.Size(32, 32);
+            this.btnFirstPage.TabIndex = 7;
+            this.btnFirstPage.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnPrevPage
             // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = global::ImageGlass.Properties.Resources.info;
-            this.button2.Location = new System.Drawing.Point(50, 36);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(32, 32);
-            this.button2.TabIndex = 7;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnPrevPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrevPage.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnPrevPage.Location = new System.Drawing.Point(50, 36);
+            this.btnPrevPage.Name = "btnPrevPage";
+            this.btnPrevPage.Size = new System.Drawing.Size(32, 32);
+            this.btnPrevPage.TabIndex = 7;
+            this.btnPrevPage.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnNextPage
             // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Image = global::ImageGlass.Properties.Resources.info;
-            this.button3.Location = new System.Drawing.Point(87, 36);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(32, 32);
-            this.button3.TabIndex = 7;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnNextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNextPage.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnNextPage.Location = new System.Drawing.Point(87, 36);
+            this.btnNextPage.Name = "btnNextPage";
+            this.btnNextPage.Size = new System.Drawing.Size(32, 32);
+            this.btnNextPage.TabIndex = 7;
+            this.btnNextPage.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnLastPage
             // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Image = global::ImageGlass.Properties.Resources.info;
-            this.button4.Location = new System.Drawing.Point(124, 36);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(32, 32);
-            this.button4.TabIndex = 7;
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnLastPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLastPage.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnLastPage.Location = new System.Drawing.Point(124, 36);
+            this.btnLastPage.Name = "btnLastPage";
+            this.btnLastPage.Size = new System.Drawing.Size(32, 32);
+            this.btnLastPage.TabIndex = 7;
+            this.btnLastPage.UseVisualStyleBackColor = true;
             // 
             // toolTip1
             // 
@@ -106,10 +106,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(174, 77);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLastPage);
+            this.Controls.Add(this.btnNextPage);
+            this.Controls.Add(this.btnPrevPage);
+            this.Controls.Add(this.btnFirstPage);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -132,10 +132,10 @@
 
         #endregion
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnFirstPage;
+        private System.Windows.Forms.Button btnPrevPage;
+        private System.Windows.Forms.Button btnNextPage;
+        private System.Windows.Forms.Button btnLastPage;
         private System.Windows.Forms.ToolTip toolTip1;
     }
 }
