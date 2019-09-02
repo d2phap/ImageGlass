@@ -640,7 +640,7 @@ namespace ImageGlass
         /// Change image
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
-        /// <param name="configs">Configuration for the next load</param>
+        /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
         public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
@@ -809,7 +809,12 @@ namespace ImageGlass
             void SetAppBusy(bool isbusy)
             {
                 _isAppBusy = isbusy;
-                picMain.Cursor = isbusy ? Cursors.WaitCursor : Cursors.Default;
+                // fire-eggs 20190902 fix observed issue: cursor switched to
+                // arrow when it maybe should be cross or nav-arrow
+                if (isbusy)
+                    picMain.Cursor = Cursors.WaitCursor;
+                else
+                    ShowActiveCursor(); 
 
                 // Part of Issue #485 fix: failure to disable timer after image load meant message 
                 // could appear after image already loaded
@@ -3801,9 +3806,18 @@ namespace ImageGlass
             }
         }
 
-
-        private void picMain_MouseMove(object sender, MouseEventArgs e)
+        /// <summary>
+        /// When IG is not 'busy', show the appropriate mouse cursor.
+        /// The appropriate cursor depends on whether the color picker
+        /// is active; the navigation arrows are active; or neither.
+        /// </summary>
+        /// <param name="location">the location of the mouse relative to picMain</param>
+        private void ShowActiveCursor(Point? location = null)
         {
+            // For non-mouse events, need to determine the mouse location
+            if (location == null)
+                location = picMain.PointToClient(Control.MousePosition);
+
             if (!picMain.IsPanning)
             {
                 void SetDefaultCursor()
@@ -3822,7 +3836,7 @@ namespace ImageGlass
                 if (GlobalSetting.IsShowNavigationButtons)
                 {
 
-                    CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
+                    CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () =>
                     {
                         picMain.Cursor = LocalSetting.Theme.PreviousArrowCursor ?? DefaultCursor;
 
@@ -3843,6 +3857,12 @@ namespace ImageGlass
                     SetDefaultCursor();
                 }
             }
+
+        }
+
+        private void picMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            ShowActiveCursor(e.Location);
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
