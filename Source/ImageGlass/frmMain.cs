@@ -1968,6 +1968,11 @@ namespace ImageGlass
                     onCursorCenterAction?.Invoke();
                 }
             }
+
+            // fire-eggs 20190902 Fix observed glitch: color picker cursor doesn't appear if image count is 1
+            if (GlobalSetting.ImageList.Length == 1)
+                onCursorCenterAction?.Invoke();
+
         }
 
 
