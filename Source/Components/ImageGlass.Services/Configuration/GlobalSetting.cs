@@ -364,9 +364,8 @@ namespace ImageGlass.Services.Configuration
         public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
 
 
-        private static NumberFormatInfo _numFormat = new NumberFormatInfo();
         /// <summary>
-        /// Default number format for ImageGlass
+        /// Number format to use for save/restore ImageGlass settings
         /// </summary>
         public static NumberFormatInfo NumberFormat
         {
@@ -378,7 +377,6 @@ namespace ImageGlass.Services.Configuration
                 };
                 return newFormat;
             }
-            set => _numFormat = value;
         }
 
 
