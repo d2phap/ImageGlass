@@ -105,6 +105,7 @@ namespace ImageGlass
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
+        private ToolFormManager _toolManager = new ToolFormManager();
         #endregion
 
 
@@ -640,7 +641,7 @@ namespace ImageGlass
         /// Change image
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
-        /// <param name="configs">Configuration for the next load</param>
+        /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
         public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
         {
@@ -5195,8 +5196,9 @@ namespace ImageGlass
                 {
                     LocalSetting.FColorPicker = new frmColorPicker();
                 }
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
 
+                LocalSetting.FColorPicker.SetToolFormManager(_toolManager);
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
                 LocalSetting.FColorPicker.SetImageBox(picMain);
                 LocalSetting.FColorPicker.Show(this);
 
@@ -5232,6 +5234,7 @@ namespace ImageGlass
                     LocalSetting.FPageNav = new frmPageNav();
                 }
 
+                LocalSetting.FPageNav.SetToolFormManager(_toolManager);
                 LocalSetting.FPageNav.NavEventHandler = PageNavigationEvent; // register page event handler
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
                 LocalSetting.FPageNav.Owner = this;

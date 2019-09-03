@@ -33,23 +33,44 @@ namespace ImageGlass
 
 
         #region Borderless form moving
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
 
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, Int32 lParam);
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
+        private bool mouseDown; // moving windows is taking place
+        private Point lastLocation; // initial mouse position
+        private bool moveSnapped; // move toolform windows together
 
-
-        protected void ToolForm_MouseDown(object sender, MouseEventArgs e)
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Clicks == 1)
+                mouseDown = true;
+            if (ModifierKeys == Keys.Control)
+                moveSnapped = true;
+
+            lastLocation = e.Location;
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!mouseDown) return; // not moving windows, ignore
+
+            if (moveSnapped)
             {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                _manager.MoveSnappedTools(lastLocation, e.Location);
+            }
+            else
+            {
+                Location = new Point((Location.X - lastLocation.X) + e.X, 
+                    (Location.Y - lastLocation.Y) + e.Y);
+
+                Update();
             }
         }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+            moveSnapped = false;
+        }
+
         #endregion
 
         #region Create shadow for borderless form
@@ -106,7 +127,7 @@ namespace ImageGlass
                     if (m_aeroEnabled)
                     {
                         var v = 2;
-                        DwmSetWindowAttribute(this.Handle, 2, ref v, 4);
+                        DwmSetWindowAttribute(Handle, 2, ref v, 4);
 
                         MARGINS margins = new MARGINS()
                         {
@@ -116,7 +137,7 @@ namespace ImageGlass
                             topHeight = 1
                         };
 
-                        DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+                        DwmExtendFrameIntoClientArea(Handle, ref margins);
                     }
                     break;
                 default:
@@ -157,7 +178,7 @@ namespace ImageGlass
 
         #endregion
 
-        #region Events to manage the form location
+        #region Events to manage the form location relative to parent
 
         protected Point parentOffset = Point.Empty;
         private bool formOwnerMoving;
@@ -174,6 +195,7 @@ namespace ImageGlass
             frmOwner.VisibleChanged += Owner_Move;
             frmOwner.LocationChanged += FrmOwner_LocationChanged;
         }
+
 
         private void FrmOwner_LocationChanged(object sender, EventArgs e)
         {
@@ -195,18 +217,20 @@ namespace ImageGlass
 
         private void Owner_Move(object sender, EventArgs e)
         {
-            if (this.Owner == null) return;
+            if (Owner == null) return;
 
             formOwnerMoving = true;
 
             _SetLocationBasedOnParent();
         }
 
-        protected void ToolForm_Move(object sender, EventArgs e)
+
+        // The tool windows itself has moved; track its location relative to parent
+        private void ToolForm_Move(object sender, EventArgs e)
         {
             if (!formOwnerMoving)
             {
-                _locationOffset = new Point(this.Left - this.Owner.Left, this.Top - this.Owner.Top);
+                _locationOffset = new Point(Left - Owner.Left, Top - Owner.Top);
                 parentOffset = _locationOffset;
             }
         }
@@ -239,10 +263,76 @@ namespace ImageGlass
             Point ownerLocation = Owner.Location;
             ownerLocation.Offset(parentOffset);
 
-            this.Location = ownerLocation;
+            Location = ownerLocation;
         }
 
         #endregion
 
+
+        /// <summary>
+        /// Apply theme colors to controls
+        /// </summary>
+        internal void SetColors()
+        {
+            var bColor = LocalSetting.Theme.BackgroundColor;
+            var fColor = Theme.Theme.InvertBlackAndWhiteColor(bColor);
+
+            foreach (Control control in Controls)
+            {
+                if (control is Button button)
+                {
+                    button.FlatAppearance.BorderColor = bColor;
+                }
+
+                if (control is Label ||
+                    control is TextBox ||
+                    control is Button)
+                {
+                    control.BackColor = bColor;
+                    control.ForeColor = fColor;
+                }
+            }
+
+            BackColor = bColor;
+        }
+
+
+        #region ToolForm "Snap" support
+        private ToolFormManager _manager;
+        public void SetToolFormManager(ToolFormManager manager) 
+        {
+            _manager = manager;
+            _manager.Add(this);
+        }
+
+
+        internal void SnapButton_Click(object sender, EventArgs e)
+        {
+            _manager.SnapToNearest(this);
+        }
+        #endregion
+
+
+        // Initialize all event handlers required to manage
+        // borderless window movement.
+        internal void RegisterToolFormEvents()
+        {
+            Move += ToolForm_Move;
+
+            MouseDown += Form1_MouseDown;
+            MouseUp += Form1_MouseUp;
+            MouseMove += Form1_MouseMove;
+
+            foreach (Control control in Controls)
+            {
+                if (control is Label ||
+                    control is Panel)
+                {
+                    control.MouseDown += Form1_MouseDown;
+                    control.MouseUp += Form1_MouseUp;
+                    control.MouseMove += Form1_MouseMove;
+                }
+            }
+        }
     }
 }

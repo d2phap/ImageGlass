@@ -194,6 +194,7 @@
     <Compile Include="ToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ToolFormManager.cs" />
     <Compile Include="ToolStripToolTip.cs">
       <SubType>Component</SubType>
     </Compile>

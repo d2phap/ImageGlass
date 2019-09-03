@@ -35,6 +35,7 @@
             this.btnNextPage = new System.Windows.Forms.Button();
             this.btnLastPage = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSnapTo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnClose
@@ -100,6 +101,24 @@
             // 
             this.toolTip1.ShowAlways = true;
             // 
+            // btnSnapTo
+            // 
+            this.btnSnapTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSnapTo.AutoSize = true;
+            this.btnSnapTo.BackColor = System.Drawing.Color.Teal;
+            this.btnSnapTo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
+            this.btnSnapTo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(62)))), ((int)(((byte)(74)))));
+            this.btnSnapTo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSnapTo.ForeColor = System.Drawing.Color.White;
+            this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSnapTo.Location = new System.Drawing.Point(69, 1);
+            this.btnSnapTo.Name = "btnSnapTo";
+            this.btnSnapTo.Size = new System.Drawing.Size(49, 27);
+            this.btnSnapTo.TabIndex = 6;
+            this.btnSnapTo.Text = "^";
+            this.btnSnapTo.UseVisualStyleBackColor = false;
+            // 
             // frmPageNav
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -110,6 +129,7 @@
             this.Controls.Add(this.btnNextPage);
             this.Controls.Add(this.btnPrevPage);
             this.Controls.Add(this.btnFirstPage);
+            this.Controls.Add(this.btnSnapTo);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -137,5 +157,6 @@
         private System.Windows.Forms.Button btnNextPage;
         private System.Windows.Forms.Button btnLastPage;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnSnapTo;
     }
 }

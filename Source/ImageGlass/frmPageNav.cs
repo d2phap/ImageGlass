@@ -54,14 +54,17 @@ namespace ImageGlass
             InitializeComponent();
 
             _locationOffset = DefaultLocationOffset; // TODO simplify and move logic to ToolForm
-            MouseDown += ToolForm_MouseDown;
-            Move += ToolForm_Move;
+
+            RegisterToolFormEvents();
+
             FormClosing += frmPageNav_FormClosing;
 
             btnFirstPage.Click += ButtonClick;
             btnPrevPage.Click += ButtonClick;
             btnNextPage.Click += ButtonClick;
             btnLastPage.Click += ButtonClick;
+
+            btnSnapTo.Click += SnapButton_Click;
         }
 
 
@@ -139,32 +142,13 @@ namespace ImageGlass
             btnNextPage.Image = t.ToolbarIcons.ViewNextImage.Image;
             btnLastPage.Image = t.ToolbarIcons.Last.Image;
 
-            BackColor =
-                btnFirstPage.BackColor =
-                btnPrevPage.BackColor =
-                btnNextPage.BackColor =
-                btnLastPage.BackColor =
-                btnFirstPage.FlatAppearance.BorderColor =
-                btnPrevPage.FlatAppearance.BorderColor =
-                btnNextPage.FlatAppearance.BorderColor =
-                btnLastPage.FlatAppearance.BorderColor =
-                btnClose.FlatAppearance.BorderColor = 
-                btnClose.BackColor =
-                    LocalSetting.Theme.BackgroundColor;
-
-            btnFirstPage.ForeColor =
-            btnPrevPage.ForeColor =
-            btnNextPage.ForeColor =
-            btnLastPage.ForeColor = 
-            btnClose.ForeColor =
-                Theme.Theme.InvertBlackAndWhiteColor(LocalSetting.Theme.BackgroundColor);
+            SetColors();
 
             toolTip1.SetToolTip(btnFirstPage, GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"]);
             toolTip1.SetToolTip(btnPrevPage, GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"]);
             toolTip1.SetToolTip(btnNextPage, GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"]);
             toolTip1.SetToolTip(btnLastPage, GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"]);
         }
-
 
         private void frmPageNav_Load(object sender, EventArgs e)
         {
