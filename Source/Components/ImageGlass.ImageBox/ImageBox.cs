@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
@@ -5154,7 +5154,7 @@ namespace ImageGlass
 
                         if (_autoScrollPosition != value)
                         {
-                            Debug.WriteLine(value);
+//                            Debug.WriteLine(value);
 
                             _autoScrollPosition = value;
 

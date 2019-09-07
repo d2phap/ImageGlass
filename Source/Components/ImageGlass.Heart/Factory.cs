@@ -306,18 +306,21 @@ namespace ImageGlass.Heart
 
 
             // wait until the image loading is done
-            while (!this.ImgList[index].IsDone)
+            if (ImgList.Count > 0)
             {
-                await Task.Delay(1);
+                while (!this.ImgList[index].IsDone)
+                {
+                    await Task.Delay(1);
+                }
             }
 
             // Trigger event OnFinishLoadingImage
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (this.ImgList[index].Error == null)
+            if (ImgList.Count > 0 && ImgList[index].Error == null)
             {
-                return this.ImgList[index];
+                return ImgList[index];
             }
 
             return null;
@@ -333,7 +336,7 @@ namespace ImageGlass.Heart
         {
             try
             {
-                if (this.ImgList[index] != null)
+                if (ImgList.Count > 0 && ImgList[index] != null)
                 {
                     return this.ImgList[index].Filename;
                 }

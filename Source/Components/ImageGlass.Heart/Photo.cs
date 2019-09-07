@@ -22,7 +22,6 @@ using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 using System.Linq;
-using System;
 
 namespace ImageGlass.Heart
 {
@@ -168,17 +167,8 @@ namespace ImageGlass.Heart
                 {
                     if (profile != null)
                     {
-                        IExifValue exifTag = null;
-                        try
-                        {
-                            // Get Orientation Flag
-                            exifTag = profile.GetValue(ExifTag.Orientation);
-                        }
-                        catch
-                        {
-                            // Issue #603: Magick.NET threw exception with specific image
-                            // Temporary workaround pending a Magick.NET fix.
-                        }
+                        // Get Orientation Flag
+                        var exifTag = profile.GetValue(ExifTag.Orientation);
 
                         if (exifTag != null)
                         {

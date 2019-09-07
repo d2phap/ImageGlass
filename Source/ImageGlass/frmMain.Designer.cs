@@ -1207,6 +1207,7 @@
             this.sp1.SplitterWidth = 2;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
+            this.sp1.SplitterMoved += sp1_SplitterMoved;
             // 
             // picMain
             // 
