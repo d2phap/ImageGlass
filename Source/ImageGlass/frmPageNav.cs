@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.Services.Configuration;
 using ImageGlass.UI;
+using ImageGlass.UI.ToolForms;
 
 namespace ImageGlass
 {
@@ -45,10 +46,9 @@ namespace ImageGlass
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), 
-                                                               (int)(300 * DPIScaling.GetDPIScaleFactor()));
+        private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
 
-        
+
         public frmPageNav()
         {
             InitializeComponent();
@@ -110,11 +110,11 @@ namespace ImageGlass
 
         private void frmPageNav_KeyDown(object sender, KeyEventArgs e)
         {
-// TODO TIF what is the shortcut key for this menu?
+            // TODO TIF what is the shortcut key for this menu?
             //ESC or ???? --------------------------------------------------------
-            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)) 
-                //|| //ESC 
-                //(e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
+            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt))
+            //|| //ESC 
+            //(e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
             {
                 Close();
             }

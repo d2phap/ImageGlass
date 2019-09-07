@@ -33,6 +33,7 @@ using System.Collections.Specialized;
 using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.UI;
+using ImageGlass.UI.ToolForms;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using FileWatcherEx;

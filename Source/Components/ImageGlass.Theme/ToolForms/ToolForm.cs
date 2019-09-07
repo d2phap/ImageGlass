@@ -276,7 +276,7 @@ namespace ImageGlass.UI.ToolForms
         /// Apply theme colors to controls
         /// </summary>
         /// <param name="th">Theme</param>
-        internal void SetColors(Theme th)
+        protected void SetColors(Theme th)
         {
             var bgColor = th.BackgroundColor;
             var fontColor = th.TextInfoColor;
@@ -310,7 +310,7 @@ namespace ImageGlass.UI.ToolForms
         }
 
 
-        internal void SnapButton_Click(object sender, EventArgs e)
+        protected void SnapButton_Click(object sender, EventArgs e)
         {
             _manager.SnapToNearest(this);
         }
@@ -320,7 +320,7 @@ namespace ImageGlass.UI.ToolForms
         /// <summary>
         /// Initialize all event handlers required to manage borderless window movement.
         /// </summary>
-        internal void RegisterToolFormEvents()
+        protected void RegisterToolFormEvents()
         {
             Move += ToolForm_Move;
 

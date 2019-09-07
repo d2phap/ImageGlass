@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.UI;
+using ImageGlass.UI.ToolForms;
 using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
