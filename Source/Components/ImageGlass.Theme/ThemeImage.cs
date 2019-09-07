@@ -23,7 +23,7 @@ using ImageGlass.Services.Configuration;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Theme
+namespace ImageGlass.UI
 {
     public class ThemeImage
     {

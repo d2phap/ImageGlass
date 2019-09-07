@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Theme
+namespace ImageGlass.UI
 {
     public class RenderTheme
     {

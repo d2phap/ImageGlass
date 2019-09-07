@@ -26,7 +26,7 @@ using System.IO;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.Linq;
-using ImageGlass.Theme;
+using ImageGlass.UI;
 using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -1881,9 +1881,9 @@ namespace ImageGlass
 
             if (Directory.Exists(themeFolder))
             {
-                var lstThemes = new List<Theme.Theme>();
+                var lstThemes = new List<UI.Theme>();
 
-                await Task.Run(() =>
+                await Task.Run((Action)(() =>
                 {
                     foreach (string d in Directory.GetDirectories(themeFolder))
                     {
@@ -1891,10 +1891,10 @@ namespace ImageGlass
 
                         if (File.Exists(configFile))
                         {
-                            Theme.Theme th = new Theme.Theme(d);
+                            Theme th = new Theme(d);
 
                             //invalid theme
-                            if (!th.IsThemeValid)
+                            if (!th.IsValid)
                             {
                                 continue;
                             }
@@ -1902,7 +1902,7 @@ namespace ImageGlass
                             lstThemes.Add(th);
                         }
                     }
-                });
+                }));
 
                 // add themes to the listview
                 foreach (var th in lstThemes)
@@ -1910,11 +1910,11 @@ namespace ImageGlass
                     var lvi = new ListViewItem(th.Name)
                     {
                         // folder name of the theme
-                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ThemeConfigFilePath)),
+                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ConfigFilePath)),
                         ImageKey = "_blank"
                     };
 
-                    if (LocalSetting.Theme.ThemeConfigFilePath == th.ThemeConfigFilePath)
+                    if (LocalSetting.Theme.ConfigFilePath == th.ConfigFilePath)
                     {
                         lvi.Selected = true;
                         lvi.Checked = true;
@@ -1964,7 +1964,7 @@ namespace ImageGlass
                 }
 
 
-                Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
+                UI.Theme t = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
                 picPreview.BackgroundImage = t.PreviewImage.Image;
 
                 txtThemeInfo.Text =
@@ -1999,7 +1999,7 @@ namespace ImageGlass
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
             {
-                var result = Theme.Theme.InstallTheme(o.FileName);
+                var result = UI.Theme.InstallTheme(o.FileName);
 
                 if (result == ThemeInstallingResult.SUCCESS)
                 {
@@ -2020,7 +2020,7 @@ namespace ImageGlass
             if (lvTheme.SelectedItems.Count > 0)
             {
                 string themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                var result = Theme.Theme.UninstallTheme(themeName);
+                var result = UI.Theme.UninstallTheme(themeName);
 
                 if (result == ThemeUninstallingResult.SUCCESS)
                 {
@@ -2064,7 +2064,7 @@ namespace ImageGlass
                     }
 
                     var themeDir = Path.GetDirectoryName(configFilePath);
-                    var result = Theme.Theme.PackTheme(themeDir, s.FileName);
+                    var result = UI.Theme.PackTheme(themeDir, s.FileName);
 
                     if (result == ThemePackingResult.SUCCESS)
                     {
@@ -2093,9 +2093,9 @@ namespace ImageGlass
                 string themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
                 string themeFolderPath = GlobalSetting.ConfigDir(Dir.Themes, themeFolderName);
 
-                var th = Theme.Theme.ApplyTheme(themeFolderPath);
+                var th = UI.Theme.ApplyTheme(themeFolderPath);
 
-                if (th.IsThemeValid)
+                if (th.IsValid)
                 {
                     LocalSetting.Theme = th;
                     GlobalSetting.BackgroundColor = picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
@@ -2359,7 +2359,7 @@ namespace ImageGlass
             if (GlobalSetting.BackgroundColor != newColor)
             {
                 GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-                GlobalSetting.SetConfig("BackgroundColor", Theme.Theme.ConvertColorToHEX(GlobalSetting.BackgroundColor, true));
+                GlobalSetting.SetConfig("BackgroundColor", UI.Theme.ConvertColorToHEX(GlobalSetting.BackgroundColor, true));
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion

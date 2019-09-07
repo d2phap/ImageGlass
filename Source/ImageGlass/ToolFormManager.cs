@@ -21,7 +21,7 @@ namespace ImageGlass
 
 
         // How many pixels to leave between snapped forms (top/bottom)
-        private static int MARGIN = 2;
+        const int MARGIN = 10;
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace ImageGlass
             else
             {
                 // snapping form BELOW or OVERLAP other form
-                if (destForm.Bottom+MARGIN < formToSnap.Top ||
+                if (destForm.Bottom + MARGIN < formToSnap.Top ||
                     formToSnap.Top < destForm.Bottom + MARGIN)
                     formToSnap.Top = destForm.Bottom + MARGIN;
             }

@@ -22,7 +22,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageGlass.Theme;
+using ImageGlass.UI;
 using ImageGlass.Services.Configuration;
 
 namespace ImageGlass
@@ -158,20 +158,20 @@ namespace ImageGlass
             if (GlobalSetting.IsColorPickerHEXA)
             {
                 lblHEX.Text = "HEXA:";
-                txtHEX.Text = Theme.Theme.ConvertColorToHEX(color);
+                txtHEX.Text = UI.Theme.ConvertColorToHEX(color);
             }
             else
             {
                 lblHEX.Text = "HEX:";
-                txtHEX.Text = Theme.Theme.ConvertColorToHEX(color, true);
+                txtHEX.Text = UI.Theme.ConvertColorToHEX(color, true);
             }
 
             //CMYK color -----------------------------------------------
-            var cmyk = Theme.Theme.ConvertColorToCMYK(color);
+            var cmyk = UI.Theme.ConvertColorToCMYK(color);
             txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
 
             //HSLA color -----------------------------------------------
-            var hsla = Theme.Theme.ConvertColorToHSLA(color);
+            var hsla = UI.Theme.ConvertColorToHSLA(color);
             if (GlobalSetting.IsColorPickerHSLA)
             {
                 lblHSL.Text = "HSLA:";
@@ -184,7 +184,7 @@ namespace ImageGlass
             }
             
 
-            lblPixel.ForeColor = Theme.Theme.InvertBlackAndWhiteColor(color);
+            lblPixel.ForeColor = UI.Theme.InvertBlackAndWhiteColor(color);
         }
 
         private void _ResetColor()
@@ -246,7 +246,7 @@ namespace ImageGlass
         /// </summary>
         public void UpdateUI()
         {
-            SetColors();
+            SetColors(LocalSetting.Theme);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

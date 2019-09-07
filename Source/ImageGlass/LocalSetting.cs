@@ -28,7 +28,7 @@ namespace ImageGlass
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
-        private static Theme.Theme _theme;
+        private static UI.Theme _theme;
 
 
         #region Auto Properties
@@ -156,9 +156,9 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets current app theme
         /// </summary>
-        public static Theme.Theme Theme
+        public static UI.Theme Theme
         {
-            get => LazyInitializer.EnsureInitialized(ref _theme, () => new Theme.Theme());
+            get => LazyInitializer.EnsureInitialized(ref _theme, () => new UI.Theme());
             set => _theme = value;
         }
 

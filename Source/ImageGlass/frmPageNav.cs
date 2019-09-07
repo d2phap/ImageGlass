@@ -21,7 +21,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.Services.Configuration;
-using ImageGlass.Theme;
+using ImageGlass.UI;
 
 namespace ImageGlass
 {
@@ -136,13 +136,13 @@ namespace ImageGlass
         {
             //apply current theme ------------------------------------------------------
             var themeName = GlobalSetting.GetConfig("Theme", "default");
-            Theme.Theme t = new Theme.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
+            UI.Theme t = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
             btnFirstPage.Image = t.ToolbarIcons.First.Image;
             btnPrevPage.Image = t.ToolbarIcons.ViewPreviousImage.Image;
             btnNextPage.Image = t.ToolbarIcons.ViewNextImage.Image;
             btnLastPage.Image = t.ToolbarIcons.Last.Image;
 
-            SetColors();
+            SetColors(LocalSetting.Theme);
 
             toolTip1.SetToolTip(btnFirstPage, GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"]);
             toolTip1.SetToolTip(btnPrevPage, GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"]);

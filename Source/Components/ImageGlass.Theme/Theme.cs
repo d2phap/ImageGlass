@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -28,31 +28,26 @@ using System.Text;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace ImageGlass.Theme
+namespace ImageGlass.UI
 {
     public class Theme
     {
-        private string _themeFolderName = string.Empty;
-        private string _themeConfigFilePath = string.Empty;
-        private bool _isThemeValid = true;
-
-
-        #region CLASS PROPERTIES
+        #region PUBLIC PROPERTIES
 
         /// <summary>
-        /// Get thename of theme folder
+        /// Get the name of theme folder
         /// </summary>
-        public string ThemeFolderName { get => _themeFolderName; }
+        public string FolderName { get; internal set; }
 
         /// <summary>
         /// Get theme config file path (config.xml)
         /// </summary>
-        public string ThemeConfigFilePath { get => _themeConfigFilePath; }
+        public string ConfigFilePath { get; internal set; }
 
         /// <summary>
         /// Check if this theme is valid
         /// </summary>
-        public bool IsThemeValid { get => _isThemeValid; }
+        public bool IsValid { get; internal set; }
 
         #endregion
 
@@ -181,7 +176,7 @@ namespace ImageGlass.Theme
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
         public Theme(string themeFolderPath = "")
         {
-            this._isThemeValid = LoadTheme(themeFolderPath);
+            this.IsValid = LoadTheme(themeFolderPath);
         }
 
 
@@ -227,8 +222,8 @@ namespace ImageGlass.Theme
                 configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
             }
 
-            this._themeConfigFilePath = configFilePath;
-            this._themeFolderName = Path.GetFileName(themeFolderPath); // get folder name
+            this.ConfigFilePath = configFilePath;
+            this.FolderName = Path.GetFileName(themeFolderPath); // get folder name
 
             string dir = Path.GetDirectoryName(configFilePath);
             XmlDocument doc = new XmlDocument();
@@ -246,7 +241,7 @@ namespace ImageGlass.Theme
             }
             catch
             {
-                this._isThemeValid = false;
+                this.IsValid = false;
             }
 
             //Get Scaling factor
@@ -453,8 +448,8 @@ namespace ImageGlass.Theme
 
             #endregion
 
-            this._isThemeValid = true;
-            return this.IsThemeValid;
+            this.IsValid = true;
+            return this.IsValid;
         }
 
 
@@ -605,7 +600,7 @@ namespace ImageGlass.Theme
             {
                 Theme th = new Theme(themeFolderPath);
                 
-                if (th.IsThemeValid)
+                if (th.IsValid)
                 {
                     GlobalSetting.SetConfig("BackgroundColor", ConvertColorToHEX(th.BackgroundColor, true));
 

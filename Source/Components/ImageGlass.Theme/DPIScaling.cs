@@ -21,7 +21,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.Theme
+namespace ImageGlass.UI
 {
     public static class DPIScaling
     {

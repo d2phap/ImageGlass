@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass", "ImageGlass\Im
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{F5248B7E-8B93-4926-9A60-7208F759CAFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Theme", "Components\ImageGlass.Theme\ImageGlass.Theme.csproj", "{76486F88-AA16-4D7D-BBF6-0F1C604D5853}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.UI", "Components\ImageGlass.Theme\ImageGlass.UI.csproj", "{76486F88-AA16-4D7D-BBF6-0F1C604D5853}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ultilities", "Ultilities", "{CA86D298-03CA-4A54-A796-B3EBAF2CF841}"
 EndProject

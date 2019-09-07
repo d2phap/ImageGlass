@@ -1,4 +1,4 @@
-﻿namespace ImageGlass.Theme
+﻿namespace ImageGlass.UI
 {
     partial class frmDialogBox
     {

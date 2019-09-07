@@ -8,8 +8,8 @@
     <ProjectGuid>{76486F88-AA16-4D7D-BBF6-0F1C604D5853}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageGlass.Theme</RootNamespace>
-    <AssemblyName>ImageGlass.Theme</AssemblyName>
+    <RootNamespace>ImageGlass.UI</RootNamespace>
+    <AssemblyName>ImageGlass.UI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

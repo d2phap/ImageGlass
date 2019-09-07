@@ -272,28 +272,29 @@ namespace ImageGlass
         /// <summary>
         /// Apply theme colors to controls
         /// </summary>
-        internal void SetColors()
+        /// <param name="th">Theme</param>
+        internal void SetColors(UI.Theme th)
         {
-            var bColor = LocalSetting.Theme.BackgroundColor;
-            var fColor = Theme.Theme.InvertBlackAndWhiteColor(bColor);
+            var bgColor = th.BackgroundColor;
+            var fontColor = th.TextInfoColor;
 
             foreach (Control control in Controls)
             {
                 if (control is Button button)
                 {
-                    button.FlatAppearance.BorderColor = bColor;
+                    button.FlatAppearance.BorderColor = bgColor;
                 }
 
                 if (control is Label ||
                     control is TextBox ||
                     control is Button)
                 {
-                    control.BackColor = bColor;
-                    control.ForeColor = fColor;
+                    control.BackColor = bgColor;
+                    control.ForeColor = fontColor;
                 }
             }
 
-            BackColor = bColor;
+            this.BackColor = bgColor;
         }
 
 
@@ -313,8 +314,9 @@ namespace ImageGlass
         #endregion
 
 
-        // Initialize all event handlers required to manage
-        // borderless window movement.
+        /// <summary>
+        /// Initialize all event handlers required to manage borderless window movement.
+        /// </summary>
         internal void RegisterToolFormEvents()
         {
             Move += ToolForm_Move;
