@@ -302,7 +302,8 @@ namespace ImageGlass.ImageListView
 		public void Clear ()
 		{
 			bw.CancelAsync ();
-			processing.Clear ();
+			// [IG_CHANGE] Don't keep the fully allocated dict. from before, create an empty one
+			processing = new ConcurrentDictionary<Guid, bool>();
 		}
 		/// <summary>
 		/// Adds the item to the cache queue.

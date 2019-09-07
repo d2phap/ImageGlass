@@ -16,6 +16,9 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public class FileSystemAdaptor : ImageListView.ImageListViewItemAdaptor
         {
+		    // [IG_CHANGE] use a cache for commonly repeated strings
+            private static StringCache _stringCache = new StringCache();
+
             private bool disposed;
 
             /// <summary>
@@ -83,13 +86,15 @@ namespace ImageGlass.ImageListView
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateAccessed, string.Empty, info.LastAccessTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateModified, string.Empty, info.LastWriteTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FileSize, string.Empty, info.Length));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, info.DirectoryName ?? ""));
+					// [IG_CHANGE] use string cache
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
 
                     // Get metadata
                     MetadataExtractor metadata = MetadataExtractor.FromFile(filename, useWIC);
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Dimensions, string.Empty, new Size(metadata.Width, metadata.Height)));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Resolution, string.Empty, new SizeF((float)metadata.DPIX, (float)metadata.DPIY)));
-                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.ImageDescription, string.Empty, metadata.ImageDescription ?? ""));
+                    // [IG_CHANGE] use string cache
+                    details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.ImageDescription, string.Empty, metadata.ImageDescription == null ? "" : _stringCache.GetFromCache(metadata.ImageDescription)));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.EquipmentModel, string.Empty, metadata.EquipmentModel ?? ""));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateTaken, string.Empty, metadata.DateTaken));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Artist, string.Empty, metadata.Artist ?? ""));
