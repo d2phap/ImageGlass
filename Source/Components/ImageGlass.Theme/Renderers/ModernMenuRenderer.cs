@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI
+namespace ImageGlass.UI.Renderers
 {
     public class ModernMenuRenderer : ToolStripProfessionalRenderer
     {

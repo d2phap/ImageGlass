@@ -27,6 +27,7 @@ using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
 using System.Linq;
 using ImageGlass.UI;
+using ImageGlass.UI.Renderers;
 using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -487,7 +488,7 @@ namespace ImageGlass
 
                 LoadTabImageConfig();
 
-                RenderTheme r = new RenderTheme();
+                SystemRenderer r = new SystemRenderer();
                 r.ApplyTheme(lvImageEditing);
             }
             else if (tab1.SelectedTab == tabEdit)
@@ -507,7 +508,7 @@ namespace ImageGlass
 
                 lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
 
-                RenderTheme r = new RenderTheme();
+                SystemRenderer r = new SystemRenderer();
                 r.ApplyTheme(lvExtension);
             }
             else if (tab1.SelectedTab == tabLanguage)
@@ -1322,7 +1323,7 @@ namespace ImageGlass
             chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
 
             // Apply Windows System theme to listview
-            RenderTheme th = new RenderTheme();
+            SystemRenderer th = new SystemRenderer();
             th.ApplyTheme(lvAvailButtons);
             th.ApplyTheme(lvUsedButtons);
 
@@ -1861,7 +1862,7 @@ namespace ImageGlass
         {
             if (lvTheme.Items.Count == 0)
             {
-                RenderTheme r = new RenderTheme();
+                SystemRenderer r = new SystemRenderer();
                 r.ApplyTheme(lvTheme);
 
                 RefreshThemeList();

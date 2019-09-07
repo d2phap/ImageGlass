@@ -34,6 +34,7 @@ using ImageGlass.Services.InstanceManagement;
 using System.Drawing.Imaging;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
+using ImageGlass.UI.Renderers;
 using System.Threading.Tasks;
 using ImageGlass.Library.WinAPI;
 using FileWatcherEx;
@@ -1811,8 +1812,8 @@ namespace ImageGlass
 
             //Update toolbar icon size
             var themeName = GlobalSetting.GetConfig("Theme", "default");
-            UI.Theme t = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
-            LoadToolbarIcons(t);
+            Theme th = new Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
+            LoadToolbarIcons(th);
 
             #endregion
 
@@ -2128,10 +2129,10 @@ namespace ImageGlass
 
             return th;
 
-            void LoadTheme(UI.Theme t)
+            void LoadTheme(Theme t)
             {
                 //Remove white line under tool strip
-                toolMain.Renderer = new UI.ToolStripRenderer(t.ToolbarBackgroundColor, t.TextInfoColor);
+                toolMain.Renderer = new UI.Renderers.ToolStripRenderer(t.ToolbarBackgroundColor, t.TextInfoColor);
 
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
@@ -2148,7 +2149,7 @@ namespace ImageGlass
                 sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = UI.Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
 
                 //Modern UI menu renderer
                 mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.MenuBackgroundColor, t.MenuTextColor);
@@ -2168,7 +2169,7 @@ namespace ImageGlass
         /// Load toolbar icons
         /// </summary>
         /// <param name="t">Theme</param>
-        private void LoadToolbarIcons(UI.Theme t)
+        private void LoadToolbarIcons(Theme t)
         {
             // <toolbar_icon>
             btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
@@ -2258,9 +2259,9 @@ namespace ImageGlass
 
 
                 #region Load background
-                var bgValue = GlobalSetting.GetConfig("BackgroundColor", UI.Theme.ConvertColorToHEX(LocalSetting.Theme.BackgroundColor));
+                var bgValue = GlobalSetting.GetConfig("BackgroundColor", Theme.ConvertColorToHEX(LocalSetting.Theme.BackgroundColor));
 
-                GlobalSetting.BackgroundColor = UI.Theme.ConvertHexStringToColor(bgValue, true);
+                GlobalSetting.BackgroundColor = Theme.ConvertHexStringToColor(bgValue, true);
                 picMain.BackColor = GlobalSetting.BackgroundColor;
                 #endregion
 

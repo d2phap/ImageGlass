@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.UI
+namespace ImageGlass.UI.Renderers
 {
-    public class RenderTheme
+    public class SystemRenderer
     {
         [DllImport("uxtheme.dll")]
         public static extern int SetWindowTheme(
