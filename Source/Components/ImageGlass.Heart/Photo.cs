@@ -113,28 +113,17 @@ namespace ImageGlass.Heart
                     // Issue #530: ImageMagick falls over if the file path is longer than the (old)
                     // windows limit of 260 characters. Workaround is to read the file bytes, but 
                     // that requires using the "long path name" prefix to succeed.
-                    if (filename.Length > 255)
+                    filename = Helpers.PrefixLongPath(filename);
+                    var allBytes = File.ReadAllBytes(filename);
+
+                    using (var imgM = new MagickImage(allBytes, settings))
                     {
-                        filename = Helpers.PrefixLongPath(filename);
-                        var allbytes = File.ReadAllBytes(filename);
-                        using (var imgM = new MagickImage(allbytes, settings))
+                        var checkRotation = ext != ".HEIC";
+                        PreprocesMagickImage(imgM, checkRotation);
+
+                        using (var channelImgM = ApplyColorChannel(imgM))
                         {
-                            PreprocesMagickImage(imgM);
-                            using (var channelImgM = ApplyColorChannel(imgM))
-                            {
-                                bitmap = channelImgM.ToBitmap();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (var imgM = new MagickImage(filename, settings))
-                        {
-                            PreprocesMagickImage(imgM);
-                            using (var channelImgM = ApplyColorChannel(imgM))
-                            {
-                                bitmap = channelImgM.ToBitmap();
-                            }
+                            bitmap = channelImgM.ToBitmap();
                         }
                     }
 
@@ -146,7 +135,7 @@ namespace ImageGlass.Heart
             #region Internal Functions 
 
             // Preprocess magick image
-            void PreprocesMagickImage(MagickImage imgM)
+            void PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
             {
                 imgM.Quality = quality;
 
@@ -165,14 +154,14 @@ namespace ImageGlass.Heart
                 // Revert to source image if an embedded thumbnail with required size was not found.
                 if (bitmap == null)
                 {
-                    if (profile != null)
+                    if (profile != null && checkRotation)
                     {
                         // Get Orientation Flag
-                        var exifTag = profile.GetValue(ExifTag.Orientation);
+                        var exifRotationTag = profile.GetValue(ExifTag.Orientation);
 
-                        if (exifTag != null)
+                        if (exifRotationTag != null)
                         {
-                            if (int.TryParse(exifTag.Value.ToString(), out var orientationFlag))
+                            if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
                             {
                                 var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
                                 if (orientationDegree != 0)
@@ -181,7 +170,6 @@ namespace ImageGlass.Heart
                                     imgM.Rotate(orientationDegree);
                                 }
                             }
-
                         }
                     }
 
