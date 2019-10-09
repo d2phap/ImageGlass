@@ -4877,11 +4877,20 @@ namespace ImageGlass
                     if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
                     {
                         Animation ani = new Animation();
-                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath);
+                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath,
+                            extractCallback);
                     }
                 }
             }
+
+            void extractCallback()
+            {
+                // Issue #565: let the user know the frame extraction has finished
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._FrameExtractComplete"], 2000);
+            }
+
         }
+
 
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
