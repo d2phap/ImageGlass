@@ -628,7 +628,8 @@ namespace ImageGlass
             // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
             // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
             // This below fixes that.
-            if (GlobalSetting.IsPlaySlideShow)
+            // Issue #609: do not auto-reactivate slideshow if disabled
+            if (GlobalSetting.IsPlaySlideShow && timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
                 timSlideShow.Enabled = true;
