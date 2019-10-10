@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -102,30 +103,22 @@ namespace ImageGlass.Heart
                     break;
 
                 case ".TIF":
-                    using (var imgColl = new MagickImageCollection(filename, settings))
+                    try
                     {
-                        bitmap = imgColl.ToBitmap();
+                        using (var imgColl = new MagickImageCollection(filename, settings))
+                        {
+                            bitmap = imgColl.ToBitmap();
+                        }
+                    }
+                    catch
+                    {
+                        // Issue #637: MagickImageCollection falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
                     }
                     break;
 
                 default:
-
-                    // Issue #530: ImageMagick falls over if the file path is longer than the (old)
-                    // windows limit of 260 characters. Workaround is to read the file bytes, but 
-                    // that requires using the "long path name" prefix to succeed.
-                    filename = Helpers.PrefixLongPath(filename);
-                    var allBytes = File.ReadAllBytes(filename);
-
-                    using (var imgM = new MagickImage(allBytes, settings))
-                    {
-                        var checkRotation = ext != ".HEIC";
-                        PreprocesMagickImage(imgM, checkRotation);
-
-                        using (var channelImgM = ApplyColorChannel(imgM))
-                        {
-                            bitmap = channelImgM.ToBitmap();
-                        }
-                    }
+                    ReadWithMagickImage();
 
                     break;
             }
@@ -228,6 +221,27 @@ namespace ImageGlass.Heart
                 }
 
                 return imgM;
+            }
+
+            void ReadWithMagickImage()
+            {
+                // Issue #530: ImageMagick falls over if the file path is longer than the (old)
+                // windows limit of 260 characters. Workaround is to read the file bytes, but 
+                // that requires using the "long path name" prefix to succeed.
+                filename = Helpers.PrefixLongPath(filename);
+                var allBytes = File.ReadAllBytes(filename);
+
+                using (var imgM = new MagickImage(allBytes, settings))
+                {
+                    var checkRotation = ext != ".HEIC";
+                    PreprocesMagickImage(imgM, checkRotation);
+
+                    using (var channelImgM = ApplyColorChannel(imgM))
+                    {
+                        bitmap = channelImgM.ToBitmap();
+                    }
+                }
+
             }
             #endregion
 
