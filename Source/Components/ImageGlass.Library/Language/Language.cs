@@ -423,6 +423,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
             Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
+
+            Items.Add("frmMain._FrameExtractComplete", "Frame extraction completed."); // V8
             #endregion
 
 

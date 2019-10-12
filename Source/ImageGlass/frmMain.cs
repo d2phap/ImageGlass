@@ -631,7 +631,8 @@ namespace ImageGlass
             // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
             // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
             // This below fixes that.
-            if (GlobalSetting.IsPlaySlideShow)
+            // Issue #609: do not auto-reactivate slideshow if disabled
+            if (GlobalSetting.IsPlaySlideShow && timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
                 timSlideShow.Enabled = true;
@@ -4917,11 +4918,20 @@ namespace ImageGlass
                     if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
                     {
                         Animation ani = new Animation();
-                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath);
+                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath,
+                            extractCallback);
                     }
                 }
             }
+
+            void extractCallback()
+            {
+                // Issue #565: let the user know the frame extraction has finished
+                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._FrameExtractComplete"], 2000);
+            }
+
         }
+
 
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
