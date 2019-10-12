@@ -54,9 +54,15 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Gets, sets number if image frames
+        /// Gets, sets number of image frames
         /// </summary>
         public int FrameCount { get; private set; } = 0;
+
+
+        /// <summary>
+        /// Gets, sets the active frame index
+        /// </summary>
+        public int ActiveFrameIndex { get; private set; } = 0;
 
         #endregion
 
@@ -97,7 +103,8 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1)
+        /// <param name="frameIndex">The index of image frame to display (if it's multipage)</param>
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, int frameIndex = 0)
         {
             // reset done status
             this.IsDone = false;
@@ -141,6 +148,28 @@ namespace ImageGlass.Heart
         public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
         {
             return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
+        }
+
+
+        /// <summary>
+        /// Sets active frame index
+        /// </summary>
+        /// <param name="index">Frame index</param>
+        public void SetActiveFrame(int index)
+        {
+            //Check if page index is greater than upper limit
+            if (index >= this.FrameCount)
+                index = 0;
+
+            //Check if page index is less than lower limit
+            if (index < 0)
+                index = this.FrameCount - 1;
+
+            this.ActiveFrameIndex = index;
+
+            // Set active frame index
+            FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+            this.Image.SelectActiveFrame(dim, this.ActiveFrameIndex);
         }
 
         #endregion

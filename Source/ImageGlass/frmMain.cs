@@ -626,27 +626,10 @@ namespace ImageGlass
         /// Change image
         /// </summary>
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
-        public void NextPic(int step)
-        {
-            // KBR 20190302 Something which has bugged me for a long time: if I'm viewing a slideshow and
-            // force a 'next image', the new image is NOT shown for the length of the slideshow timer.
-            // This below fixes that.
-            // Issue #609: do not auto-reactivate slideshow if disabled
-            if (GlobalSetting.IsPlaySlideShow && timSlideShow.Enabled)
-            {
-                timSlideShow.Enabled = false;
-                timSlideShow.Enabled = true;
-            }
-            NextPic(step, false);
-        }
-
-        /// <summary>
-        /// Change image
-        /// </summary>
-        /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
-        public async void NextPic(int step, bool isKeepZoomRatio, bool isSkipCache = false)
+        /// <param name="frameIndex"></param>
+        public async void NextPic(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int frameIndex = 0)
         {
             Timer _loadingTimer = null; // busy state timer
 
@@ -702,8 +685,19 @@ namespace ImageGlass
                 return;
             }
 
-            //temp index
+
+            #region Validate image index
+
+            // temp index
             int tempIndex = GlobalSetting.CurrentIndex + step;
+
+
+            // Issue #609: do not auto-reactivate slideshow if disabled
+            if (GlobalSetting.IsPlaySlideShow && timSlideShow.Enabled)
+            {
+                timSlideShow.Enabled = false;
+                timSlideShow.Enabled = true;
+            }
 
             if (!GlobalSetting.IsPlaySlideShow && !GlobalSetting.IsLoopBackViewer)
             {
@@ -722,16 +716,20 @@ namespace ImageGlass
                 }
             }
 
-            //Check if current index is greater than upper limit
+            // Check if current index is greater than upper limit
             if (tempIndex >= GlobalSetting.ImageList.Length)
                 tempIndex = 0;
 
-            //Check if current index is less than lower limit
+            // Check if current index is less than lower limit
             if (tempIndex < 0)
                 tempIndex = GlobalSetting.ImageList.Length - 1;
 
-            //Update current index
+
+            // Update current index
             GlobalSetting.CurrentIndex = tempIndex;
+
+            #endregion
+
 
             //Select thumbnail item
             SelectCurrentThumbnail();
@@ -754,15 +752,16 @@ namespace ImageGlass
                 // skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true);
 
-
-                // TODO TIF Somewhere in here, invoke mnuMainPageNav_Click for a multi-page image
-
-
+                // Get image
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
                     GlobalSetting.CurrentIndex,
-                    isSkipCache: isSkipCache
+                    isSkipCache: isSkipCache,
+                    frameIndex: frameIndex
                    );
                 im = bmpImg.Image;
+
+                // Update current frame index
+                LocalSetting.CurrentFrameIndex = bmpImg.ActiveFrameIndex;
 
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
@@ -977,7 +976,11 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            //this.Text = e.KeyValue.ToString();
+            // this.Text = e.KeyValue.ToString();
+
+            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            bool ignore = _isAppBusy || _isWindowsKeyPressed;
+
 
             #region Register MAIN MENU shortcuts
             bool checkMenuShortcut(ToolStripMenuItem mnu)
@@ -1020,7 +1023,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Show main menu
+            // Show main menu
             #region Ctrl + `
             if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
             {
@@ -1039,7 +1042,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Rotate Clockwise--------------------------------------------------------------
+            // Rotate Clockwise--------------------------------------------------------------
             #region Ctrl + .
             if (e.KeyValue == 190 && e.Control && !e.Shift && !e.Alt)//Ctrl + .
             {
@@ -1049,7 +1052,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Flip Horizontally-----------------------------------------------------------
+            // Flip Horizontally-----------------------------------------------------------
             #region Ctrl + ;
             if (e.KeyValue == 186 && e.Control && !e.Shift && !e.Alt)//Ctrl + ;
             {
@@ -1059,7 +1062,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Flip Vertically-----------------------------------------------------------
+            // Flip Vertically-----------------------------------------------------------
             #region Ctrl + '
             if (e.KeyValue == 222 && e.Control && !e.Shift && !e.Alt)//Ctrl + '
             {
@@ -1069,7 +1072,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Clear clipboard----------------------------------------------------------------
+            // Clear clipboard----------------------------------------------------------------
             #region CTRL + `
             if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)//CTRL + `
             {
@@ -1079,7 +1082,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Zoom + ------------------------------------------------------------------------
+            // Zoom + ------------------------------------------------------------------------
             #region Ctrl + = or = or + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
@@ -1099,7 +1102,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Zoom to fit--------------------------------------------------------------------
+            // Zoom to fit--------------------------------------------------------------------
             #region CTRL + /
             if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
             {
@@ -1109,7 +1112,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Actual size image -------------------------------------------------------------
+            // Actual size image -------------------------------------------------------------
             #region Ctrl + 0 / Ctrl + Num0 / 0 / Num0
             if (!e.Shift && !e.Alt && (e.KeyValue == 48 || e.KeyValue == 96)) // 0 || Num0 || Ctrl + 0 || Ctrl + Num0
             {
@@ -1119,7 +1122,7 @@ namespace ImageGlass
             #endregion
 
 
-            //ESC ultility------------------------------------------------------------------
+            // ESC ultility------------------------------------------------------------------
             #region ESC
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
@@ -1138,22 +1141,8 @@ namespace ImageGlass
             #endregion
 
 
-            //Ctrl---------------------------------------------------------------------------
-            #region CTRL (for Zooming)
-            if (e.Control && !e.Alt && !e.Shift)//Ctrl
-            {
-                //Enable dragging viewing image to desktop feature---------------------------
-                _isDraggingImage = true;
-
-                return;
-            }
-            #endregion
-
-
-            //Previous Image----------------------------------------------------------------
+            // Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            bool no_mods = !e.Control && !e.Shift && !e.Alt;
-            bool ignore = _isAppBusy || _isWindowsKeyPressed;
             if (!ignore && e.KeyValue == (int)Keys.Left && no_mods)
             {
                 if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
@@ -1179,7 +1168,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Next Image---------------------------------------------------------------------
+            // Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
             if (!ignore && e.KeyValue == (int)Keys.Right && no_mods)
             {
@@ -1205,6 +1194,8 @@ namespace ImageGlass
             }
             #endregion
 
+
+            // Pan up
             #region UP ARROW
             if (!ignore && e.KeyValue == (int)Keys.Up && no_mods)
             {
@@ -1217,6 +1208,8 @@ namespace ImageGlass
             }
             #endregion
 
+
+            // Pan down
             #region DOWN ARROW
             if (!ignore && e.KeyValue == (int)Keys.Down && no_mods)
             {
@@ -1241,7 +1234,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Goto the last Image---------------------------------------------------------------
+            // Goto the last Image---------------------------------------------------------------
             #region END
             if (!_isWindowsKeyPressed && e.KeyValue == 35 &&
                 !e.Control && !e.Shift && !e.Alt)
@@ -1251,6 +1244,44 @@ namespace ImageGlass
             }
             #endregion
 
+
+            // Ctrl---------------------------------------------------------------------------
+            #region CTRL
+            if (e.Control && !e.Alt && !e.Shift) // Ctrl
+            {
+                // Enable dragging viewing image to desktop feature---------------------------
+                _isDraggingImage = true;
+
+
+                #region View previous image frame
+                if ((e.KeyValue == (int)Keys.Left
+                    && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                    || (e.KeyValue == (int)Keys.PageUp
+                    && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
+                    )
+                {
+                    mnuMainPreviousFrame_Click(null, null);
+                    return;
+                }
+                #endregion
+
+
+                #region View next image frame
+                if ((e.KeyValue == (int)Keys.Right
+                    && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                    || (e.KeyValue == (int)Keys.PageDown
+                    && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
+                    )
+                {
+                    mnuMainNextFrame_Click(null, null);
+                    return;
+                }
+                #endregion
+
+
+                return;
+            }
+            #endregion
         }
 
         private void frmMain_KeyUp(object sender, KeyEventArgs e)
@@ -1309,16 +1340,14 @@ namespace ImageGlass
             string appName = "";
             mnuMainEditImage.Image = null;
 
-            //Temporary memory data
-            if (LocalSetting.IsTempMemoryData)
-            { }
-            else
+            // Temporary memory data
+            if (!LocalSetting.IsTempMemoryData)
             {
-                //Find file format
+                // Find file format
                 var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
 
-                //Get App assoc info
+                // Get App assoc info
                 if (assoc != null && File.Exists(assoc.AppPath))
                 {
                     appName = $"({ assoc.AppName})";
@@ -1835,6 +1864,8 @@ namespace ImageGlass
                 mnuMainAbout.Image = 
                 mnuMainSettings.Image =
 
+                mnuMainExtractFrames.Image =
+
                 new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
             if (mnuMainChannels.DropDownItems.Count > 0)
@@ -2118,9 +2149,9 @@ namespace ImageGlass
         /// Apply ImageGlass theme
         /// </summary>
         /// <param name="themeFolderName">The folder name of theme. By default, load default theme</param>
-        private UI.Theme ApplyTheme(string themeFolderName = "default")
+        private Theme ApplyTheme(string themeFolderName = "default")
         {
-            UI.Theme th = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeFolderName));
+            var th = new Theme(GlobalSetting.ConfigDir(Dir.Themes, themeFolderName));
 
             if (th.IsValid)
             {
@@ -4459,21 +4490,11 @@ namespace ImageGlass
 
         private void mnuMainViewNext_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1)
-            {
-                return;
-            }
-
             NextPic(1);
         }
 
         private void mnuMainViewPrevious_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageList.Length < 1)
-            {
-                return;
-            }
-
             NextPic(-1);
         }
 
@@ -5434,6 +5455,8 @@ namespace ImageGlass
                 return; // not a drop down item
             }
 
+            mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
+
             //get position of current menu item
             var pos = new Point(mnuItem.GetCurrentParent().Left, mnuItem.GetCurrentParent().Top);
 
@@ -5467,15 +5490,23 @@ namespace ImageGlass
             {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
-
-
-            mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
         }
+
 
 
 
         #endregion
 
-        
+        private void mnuMainPreviousFrame_Click(object sender, EventArgs e)
+        {
+            LocalSetting.CurrentFrameIndex -= 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+        }
+
+        private void mnuMainNextFrame_Click(object sender, EventArgs e)
+        {
+            LocalSetting.CurrentFrameIndex += 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+        }
     }
 }
