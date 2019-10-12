@@ -320,9 +320,12 @@ namespace ImageGlass.Heart
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (ImgList.Count > 0 && ImgList[index].Error == null)
+            if (ImgList.Count > 0)
             {
-                ImgList[index].SetActiveFrame(frameIndex);
+                if (ImgList[index].Error == null)
+                {
+                    ImgList[index].SetActiveFrame(frameIndex);
+                }
 
                 return ImgList[index];
             }

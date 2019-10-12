@@ -380,13 +380,12 @@ namespace ImageGlass
             if (GlobalSetting.CurrentIndex == -1)
             {
                 // Mark as Image Error
-                GlobalSetting.IsImageError = true;
+                GlobalSetting.ImageError = new Exception("File not found.");
                 this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = GlobalSetting.LangPack.Items[$"{Name}.picMain._ErrorText"];
                 picMain.Image = null;
 
-                // Exit function
                 return;
             }
 
@@ -674,11 +673,11 @@ namespace ImageGlass
             picMain.Text = "";
             LocalSetting.IsTempMemoryData = false;
 
-            if (GlobalSetting.ImageList.Length < 1)
+            if (GlobalSetting.ImageList.Length == 0)
             {
                 Text = Application.ProductName;
 
-                GlobalSetting.IsImageError = true;
+                GlobalSetting.ImageError = new Exception("File not found.");
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
 
@@ -766,14 +765,15 @@ namespace ImageGlass
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
 
-                GlobalSetting.IsImageError = bmpImg.Error != null;
+                GlobalSetting.ImageError = bmpImg.Error;
 
                 if (!token.Token.IsCancellationRequested)
                 {
                     //Show image
+                    picMain.Refresh();
                     picMain.Image = im;
+                    
                     im = null;
-
 
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
@@ -786,6 +786,7 @@ namespace ImageGlass
             }
             catch (Exception ex)
             {
+                GlobalSetting.ImageError = ex;
                 SetAppBusy(false); // make sure busy state is off if exception during image load
 
                 picMain.Image = null;
@@ -798,9 +799,10 @@ namespace ImageGlass
             }
 
 
-            if (GlobalSetting.IsImageError)
+            if (GlobalSetting.ImageError != null)
             {
-                picMain.Text = GlobalSetting.LangPack.Items[$"{Name}.picMain._ErrorText"];
+                picMain.Text = GlobalSetting.LangPack.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + GlobalSetting.ImageError.Source + ": " + GlobalSetting.ImageError.Message;
+
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
             }
@@ -922,7 +924,7 @@ namespace ImageGlass
                 }
 
 
-                if (GlobalSetting.IsImageError)
+                if (GlobalSetting.ImageError != null)
                 {
                     if (!isShowMoreData) // size and date not available
                         this.Text = $"{filename}  |  {indexTotal}  - {appName}";
@@ -1528,7 +1530,7 @@ namespace ImageGlass
         {
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (GlobalSetting.ImageError != null || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
                 {
                     return;
                 }
@@ -1667,7 +1669,7 @@ namespace ImageGlass
 
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(filename))
+                if (GlobalSetting.ImageError != null || !File.Exists(filename))
                 {
                     return;
                 }
@@ -1717,7 +1719,7 @@ namespace ImageGlass
 
             try
             {
-                if (GlobalSetting.IsImageError || !File.Exists(filename))
+                if (GlobalSetting.ImageError != null || !File.Exists(filename))
                 {
                     return;
                 }
@@ -3709,7 +3711,7 @@ namespace ImageGlass
                 // change the viewing image to memory data mode
                 if (imgIndex == GlobalSetting.CurrentIndex)
                 {
-                    GlobalSetting.IsImageError = true;
+                    GlobalSetting.ImageError = new Exception("File not found.");
                     LocalSetting.IsTempMemoryData = true;
 
                     DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._ImageNotExist"], 1300);
@@ -4091,7 +4093,7 @@ namespace ImageGlass
 
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) || GlobalSetting.IsImageError)
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) || GlobalSetting.ImageError != null)
                 {
                     isImageError = true;
                 }
@@ -4420,7 +4422,7 @@ namespace ImageGlass
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.IsImageError)
+            if (GlobalSetting.ImageError != null)
             {
                 return;
             }
@@ -4926,7 +4928,7 @@ namespace ImageGlass
             if (!(sender as ToolStripMenuItem).Enabled)
                 return;
 
-            if (!GlobalSetting.IsImageError)
+            if (GlobalSetting.ImageError != null)
             {
                 using (FolderBrowserDialog f = new FolderBrowserDialog()
                 {
