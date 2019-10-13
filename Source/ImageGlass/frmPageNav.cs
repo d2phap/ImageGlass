@@ -60,7 +60,7 @@ namespace ImageGlass
             FormClosing += frmPageNav_FormClosing;
 
             btnFirstPage.Click += ButtonClick;
-            btnPrevPage.Click += ButtonClick;
+            btnPreviousPage.Click += ButtonClick;
             btnNextPage.Click += ButtonClick;
             btnLastPage.Click += ButtonClick;
 
@@ -81,7 +81,7 @@ namespace ImageGlass
 
             if (sender == btnFirstPage)
                 NavEventHandler(NavEvent.PageFirst);
-            if (sender == btnPrevPage)
+            if (sender == btnPreviousPage)
                 NavEventHandler(NavEvent.PagePrevious);
             if (sender == btnNextPage)
                 NavEventHandler(NavEvent.PageNext);
@@ -134,25 +134,46 @@ namespace ImageGlass
         /// </summary>
         internal void UpdateUI()
         {
-            //apply current theme ------------------------------------------------------
-            var themeName = GlobalSetting.GetConfig("Theme", "default");
-            UI.Theme t = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
-            btnFirstPage.Image = t.ToolbarIcons.First.Image;
-            btnPrevPage.Image = t.ToolbarIcons.ViewPreviousImage.Image;
-            btnNextPage.Image = t.ToolbarIcons.ViewNextImage.Image;
-            btnLastPage.Image = t.ToolbarIcons.Last.Image;
-
+            // Apply current theme ------------------------------------------------------
+            OnDpiChanged();
             SetColors(LocalSetting.Theme);
 
-            toolTip1.SetToolTip(btnFirstPage, GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"]);
-            toolTip1.SetToolTip(btnPrevPage, GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"]);
-            toolTip1.SetToolTip(btnNextPage, GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"]);
-            toolTip1.SetToolTip(btnLastPage, GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"]);
+            // Remove white line under tool strip
+            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(LocalSetting.Theme.ToolbarBackgroundColor, LocalSetting.Theme.TextInfoColor);
+
+            toolPageNav.BackgroundImage = LocalSetting.Theme.ToolbarBackgroundImage.Image;
+            toolPageNav.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+
+            // Overflow button and Overflow dropdown
+            toolPageNav.OverflowButton.DropDown.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            toolPageNav.OverflowButton.AutoSize = false;
+            toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
+
+            btnFirstPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"];
+            btnNextPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"];
+            btnPreviousPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"];
+            btnLastPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"];
+        }
+
+        private void OnDpiChanged()
+        {
+            // Update size of toolbar
+            DPIScaling.TransformToolbar(ref toolPageNav, (int)Constants.TOOLBAR_HEIGHT);
+
+            // Update toolbar icon according to the new size
+            LoadToolbarIcons(LocalSetting.Theme);
+        }
+
+        private void LoadToolbarIcons(Theme th)
+        {
+            btnFirstPage.Image = th.ToolbarIcons.ViewFirstImage.Image;
+            btnPreviousPage.Image = th.ToolbarIcons.ViewPreviousImage.Image;
+            btnNextPage.Image = th.ToolbarIcons.ViewNextImage.Image;
+            btnLastPage.Image = th.ToolbarIcons.ViewLastImage.Image;
         }
 
         private void frmPageNav_Load(object sender, EventArgs e)
         {
-            // TODO move to ToolForm?
             UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
@@ -178,7 +199,7 @@ namespace ImageGlass
         /// </summary>
         public bool AtFirstPage
         {
-            set => btnFirstPage.Enabled = btnPrevPage.Enabled = !value;
+            set => btnFirstPage.Enabled = btnPreviousPage.Enabled = !value;
         }
 
 

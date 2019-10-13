@@ -90,6 +90,9 @@
     </Compile>
     <Compile Include="ToolForms\ToolFormManager.cs" />
     <Compile Include="Renderers\ToolStripRenderer.cs" />
+    <Compile Include="ToolStripToolTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">

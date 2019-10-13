@@ -1812,37 +1812,10 @@ namespace ImageGlass
 
 
             #region change size of toolbar
-            //Update size of toolbar
-            toolMain.Height = DPIScaling.TransformNumber((int)Constants.TOOLBAR_HEIGHT);
+            // Update size of toolbar
+            DPIScaling.TransformToolbar(ref toolMain, (int)Constants.TOOLBAR_HEIGHT);
 
-            //Get new toolbar item height
-            int currentToolbarHeight = toolMain.Height;
-            int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
-
-            //Update toolbar items size
-            //Tool bar buttons
-            foreach (var item in toolMain.Items.OfType<ToolStripButton>())
-            {
-                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
-            }
-
-            //Tool bar menu buttons
-            foreach (var item in toolMain.Items.OfType<ToolStripDropDownButton>())
-            {
-                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
-            }
-
-            // get correct icon height
-            var hIcon = ThemeImage.GetCorrectIconHeight();
-
-            //Tool bar separators
-            foreach (var item in toolMain.Items.OfType<ToolStripSeparator>())
-            {
-                item.Size = new Size(5, (int)(hIcon * 1.2));
-                item.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
-            }
-
-            //Update toolbar icon size
+            // Update toolbar icon according to the new size
             var themeName = GlobalSetting.GetConfig("Theme", "default");
             Theme th = new Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
             LoadToolbarIcons(th);
@@ -5403,8 +5376,13 @@ namespace ImageGlass
                 }
 
 
-                mnuMainExtractFrames.Enabled = false;
-                mnuMainStartStopAnimating.Enabled = false;
+                mnuMainExtractFrames.Enabled = 
+                    mnuMainStartStopAnimating.Enabled = 
+                    mnuMainPreviousFrame.Enabled =
+                    mnuMainNextFrame.Enabled =
+                    mnuMainPageNav.Enabled = false;
+
+                mnuMainSetAsLockImage.Enabled = true;
 
 
                 int frameCount = 0;
@@ -5414,23 +5392,21 @@ namespace ImageGlass
                     frameCount = imgData?.FrameCount ?? 0;
                 }
 
-
-                mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], frameCount);
-
                 if (frameCount > 1)
                 {
-                    mnuMainExtractFrames.Enabled = true;
-                    mnuMainStartStopAnimating.Enabled = true;
+                    mnuMainExtractFrames.Enabled = 
+                        mnuMainStartStopAnimating.Enabled = 
+                        mnuMainPreviousFrame.Enabled =
+                        mnuMainNextFrame.Enabled =
+                        mnuMainPageNav.Enabled = true;
                 }
+
+                mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], frameCount);
 
                 // check if igcmdWin10.exe exists!
                 if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuMainSetAsLockImage.Enabled = false;
-                }
-                else
-                {
-                    mnuMainSetAsLockImage.Enabled = true;
                 }
 
                 // add hotkey to Exit menu
@@ -5440,7 +5416,7 @@ namespace ImageGlass
                 UpdateEditingAssocAppInfoForMenu();
 
             }
-            catch (Exception) { }
+            catch { }
         }
 
         private void mnuMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)

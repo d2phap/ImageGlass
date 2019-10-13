@@ -39,7 +39,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass
+namespace ImageGlass.UI
 {
     public class ToolStripToolTip : ToolStrip
     {

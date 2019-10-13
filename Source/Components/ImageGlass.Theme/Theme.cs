@@ -425,8 +425,8 @@ namespace ImageGlass.UI
             ToolbarIcons.Settings = LoadThemeImage(dir, n, "settings", iconHeight);
             ToolbarIcons.About = LoadThemeImage(dir, n, "about", iconHeight);
             ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu", iconHeight);
-            ToolbarIcons.First = LoadThemeImage(dir, n, "double-left-chevron", iconHeight);
-            ToolbarIcons.Last = LoadThemeImage(dir, n, "double-right-chevron", iconHeight);
+            ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "double-left-chevron", iconHeight);
+            ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "double-right-chevron", iconHeight);
 
             // TODO Not used?
             //ToolbarIcons.Sharing = LoadThemeImage(dir, n, "uploadfb", iconHeight);
@@ -521,8 +521,8 @@ namespace ImageGlass.UI
             n.SetAttribute("about", Path.GetFileName(ToolbarIcons.About.Filename));
             n.SetAttribute("menu", Path.GetFileName(ToolbarIcons.Menu.Filename));
 
-            n.SetAttribute("double-left-chevron", Path.GetFileName(ToolbarIcons.First.Filename));
-            n.SetAttribute("double-right-chevron", Path.GetFileName(ToolbarIcons.Last.Filename));
+            n.SetAttribute("double-left-chevron", Path.GetFileName(ToolbarIcons.ViewFirstImage.Filename));
+            n.SetAttribute("double-right-chevron", Path.GetFileName(ToolbarIcons.ViewLastImage.Filename));
             nType.AppendChild(n);
 
             root.AppendChild(nType);

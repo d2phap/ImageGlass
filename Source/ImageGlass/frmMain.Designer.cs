@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,8 +76,8 @@
             this.mnuMainMoveToRecycleBin = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainDeleteFromHardDisk = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainStartStopAnimating = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSetAsDesktop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSetAsLockImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImageLocation = new System.Windows.Forms.ToolStripMenuItem();
@@ -121,7 +121,7 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBox();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
-            this.toolMain = new ImageGlass.ToolStripToolTip();
+            this.toolMain = new ImageGlass.UI.ToolStripToolTip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -626,8 +626,8 @@
             this.mnuMainMoveToRecycleBin,
             this.mnuMainDeleteFromHardDisk,
             this.toolStripMenuItem13,
-            this.mnuMainExtractFrames,
             this.mnuMainStartStopAnimating,
+            this.mnuMainExtractFrames,
             this.mnuMainSetAsDesktop,
             this.mnuMainSetAsLockImage,
             this.mnuMainImageLocation,
@@ -747,17 +747,6 @@
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
             this.toolStripMenuItem13.Size = new System.Drawing.Size(437, 6);
             // 
-            // mnuMainExtractFrames
-            // 
-            this.mnuMainExtractFrames.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainExtractFrames.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainExtractFrames.Name = "mnuMainExtractFrames";
-            this.mnuMainExtractFrames.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainExtractFrames.ShortcutKeyDisplayString = "";
-            this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.mnuMainExtractFrames.Size = new System.Drawing.Size(440, 33);
-            this.mnuMainExtractFrames.Text = "[Extract image frames]";
-            // 
             // mnuMainStartStopAnimating
             // 
             this.mnuMainStartStopAnimating.ForeColor = System.Drawing.Color.Black;
@@ -769,6 +758,17 @@
             this.mnuMainStartStopAnimating.Size = new System.Drawing.Size(440, 33);
             this.mnuMainStartStopAnimating.Text = "Start / Stop &animating image";
             this.mnuMainStartStopAnimating.Click += new System.EventHandler(this.mnuMainStartStopAnimating_Click);
+            // 
+            // mnuMainExtractFrames
+            // 
+            this.mnuMainExtractFrames.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainExtractFrames.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainExtractFrames.Name = "mnuMainExtractFrames";
+            this.mnuMainExtractFrames.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainExtractFrames.ShortcutKeyDisplayString = "";
+            this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
+            this.mnuMainExtractFrames.Size = new System.Drawing.Size(440, 33);
+            this.mnuMainExtractFrames.Text = "[Extract image frames]";
             // 
             // mnuMainSetAsDesktop
             // 
@@ -1244,7 +1244,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1272,6 +1272,7 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1765,7 +1766,7 @@
             this.MinimumSize = new System.Drawing.Size(91, 74);
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
-            this.Text = "ImageGlass 5";
+            this.Text = "ImageGlass";
             this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.Deactivate += new System.EventHandler(this.frmMain_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
@@ -1792,7 +1793,7 @@
 
         #endregion
 
-        private ToolStripToolTip toolMain;
+        private ImageGlass.UI.ToolStripToolTip toolMain;
         private System.Windows.Forms.Timer timSlideShow;
         private System.Windows.Forms.ToolStripButton btnNext;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -62,24 +63,12 @@ namespace ImageGlass.UI
         public const int WM_DPICHANGED = 0x02E0;
         public const int DPI_DEFAULT = 96;
         
-        private static int _currentDPI = 96;
-        
+
 
         /// <summary>
         /// Gets, sets current DPI scaling value
         /// </summary>
-        public static int CurrentDPI
-        {
-            get
-            {
-                return _currentDPI;
-            }
-
-            set
-            {
-                _currentDPI = value;
-            }
-        }
+        public static int CurrentDPI { get; set; } = DPI_DEFAULT;
 
 
         public static short LOWORD(int number)
@@ -138,5 +127,38 @@ namespace ImageGlass.UI
             return (int) Math.Round(num * GetDPIScaleFactor());
         }
 
+
+        public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight)
+        {
+            //Update size of toolbar
+            toolbar.Height = DPIScaling.TransformNumber(baseHeight);
+
+            //Get new toolbar item height
+            int currentToolbarHeight = toolbar.Height;
+            int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
+
+            //Update toolbar items size
+            //Tool bar buttons
+            foreach (var item in toolbar.Items.OfType<ToolStripButton>())
+            {
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+            }
+
+            //Tool bar menu buttons
+            foreach (var item in toolbar.Items.OfType<ToolStripDropDownButton>())
+            {
+                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+            }
+
+            // get correct icon height
+            var hIcon = ThemeImage.GetCorrectIconHeight();
+
+            //Tool bar separators
+            foreach (var item in toolbar.Items.OfType<ToolStripSeparator>())
+            {
+                item.Size = new Size(5, (int)(hIcon * 1.2));
+                item.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
+            }
+        }
     }
 }
