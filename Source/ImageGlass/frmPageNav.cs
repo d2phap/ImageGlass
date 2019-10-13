@@ -32,7 +32,6 @@ namespace ImageGlass
     /// </summary>
     public partial class frmPageNav : ToolForm
     {
-
         public enum NavEvent
         {
             PageFirst,
@@ -47,6 +46,24 @@ namespace ImageGlass
 
         // default location offset on the parent form
         private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
+
+
+        /// <summary>
+        /// User has reached the first page of the document - disable prev/first buttons
+        /// </summary>
+        public bool AtFirstPage
+        {
+            set => btnFirstPage.Enabled = btnPreviousPage.Enabled = !value;
+        }
+
+
+        /// <summary>
+        /// User has reached the last page of the document - disable next/last buttons
+        /// </summary>
+        public bool AtLastPage
+        {
+            set => btnNextPage.Enabled = btnLastPage.Enabled = !value;
+        }
 
 
         public frmPageNav()
@@ -108,27 +125,6 @@ namespace ImageGlass
         }
 
 
-        private void frmPageNav_KeyDown(object sender, KeyEventArgs e)
-        {
-            // TODO TIF what is the shortcut key for this menu?
-            //ESC or ???? --------------------------------------------------------
-            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt))
-            //|| //ESC 
-            //(e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
-            {
-                Close();
-            }
-        }
-
-
-        private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            LocalSetting.IsPageNavToolOpen = false;
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
-            NavEventHandler = null;
-        }
-
-
         /// <summary>
         /// Apply theme / language
         /// </summary>
@@ -172,6 +168,8 @@ namespace ImageGlass
             btnLastPage.Image = th.ToolbarIcons.ViewLastImage.Image;
         }
 
+
+        #region Form Events
         private void frmPageNav_Load(object sender, EventArgs e)
         {
             UpdateUI();
@@ -193,23 +191,23 @@ namespace ImageGlass
             }
         }
 
-
-        /// <summary>
-        /// User has reached the first page of the document - disable prev/first buttons
-        /// </summary>
-        public bool AtFirstPage
+        private void frmPageNav_KeyDown(object sender, KeyEventArgs e)
         {
-            set => btnFirstPage.Enabled = btnPreviousPage.Enabled = !value;
+            // TODO TIF what is the shortcut key for this menu?
+            //ESC or ???? --------------------------------------------------------
+            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt))
+            //|| //ESC 
+            //(e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
+            {
+                Close();
+            }
         }
-
-
-        /// <summary>
-        /// User has reached the last page of the document - disable next/last buttons
-        /// </summary>
-        public bool AtLastPage
+        private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
         {
-            set => btnNextPage.Enabled = btnLastPage.Enabled = !value;
+            LocalSetting.IsPageNavToolOpen = false;
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+            NavEventHandler = null;
         }
-
+        #endregion
     }
 }

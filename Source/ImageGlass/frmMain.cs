@@ -2091,8 +2091,6 @@ namespace ImageGlass
 
         private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
         {
-            // Receives page navigation events 
-
             // TODO TIF user has clicked on a page navigation button: move to requested page
 
             switch (navEvent)
@@ -2100,8 +2098,10 @@ namespace ImageGlass
                 case frmPageNav.NavEvent.PageFirst:
                     break;
                 case frmPageNav.NavEvent.PageNext:
+                    mnuMainNextFrame_Click(null, null);
                     break;
                 case frmPageNav.NavEvent.PagePrevious:
+                    mnuMainPreviousFrame_Click(null, null);
                     break;
                 case frmPageNav.NavEvent.PageLast:
                     break;
@@ -4510,6 +4510,18 @@ namespace ImageGlass
             NextPic(0);
         }
 
+        private void mnuMainPreviousFrame_Click(object sender, EventArgs e)
+        {
+            LocalSetting.CurrentFrameIndex -= 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+        }
+
+        private void mnuMainNextFrame_Click(object sender, EventArgs e)
+        {
+            LocalSetting.CurrentFrameIndex += 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+        }
+
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
         {
             //enter full screen
@@ -5255,8 +5267,6 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
-            // TODO TIF disable the menu if the current image is not multi-page
-
             LocalSetting.IsPageNavToolOpen = mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
@@ -5475,16 +5485,6 @@ namespace ImageGlass
 
         #endregion
 
-        private void mnuMainPreviousFrame_Click(object sender, EventArgs e)
-        {
-            LocalSetting.CurrentFrameIndex -= 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
-        }
-
-        private void mnuMainNextFrame_Click(object sender, EventArgs e)
-        {
-            LocalSetting.CurrentFrameIndex += 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
-        }
+        
     }
 }
