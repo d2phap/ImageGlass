@@ -5304,7 +5304,7 @@ namespace ImageGlass
                 if (GlobalSetting.CurrentIndex >= 0)
                 {
                     var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
-                    frameCount = imgData.FrameCount;
+                    frameCount = imgData?.FrameCount ?? 0;
                 }
 
 
