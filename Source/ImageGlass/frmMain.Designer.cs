@@ -60,6 +60,7 @@
             this.mnuMainScaleToWidth = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainLockZoomRatio = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,6 +135,7 @@
             this.btnScaletoWidth = new System.Windows.Forms.ToolStripButton();
             this.btnScaletoHeight = new System.Windows.Forms.ToolStripButton();
             this.btnScaleToFit = new System.Windows.Forms.ToolStripButton();
+            this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
@@ -453,7 +455,9 @@
             this.mnuMainScaleToWidth,
             this.mnuMainScaleToHeight,
             this.mnuMainScaleToFit,
-            this.mnuMainLockZoomRatio});
+            this.mnuMainLockZoomRatio,
+            this.mnuMainScaleToFill
+            });
             this.mnuMainZoom.ForeColor = System.Drawing.Color.Black;
             this.mnuMainZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainZoom.Name = "mnuMainZoom";
@@ -565,6 +569,17 @@
             this.mnuMainScaleToFit.Size = new System.Drawing.Size(584, 31);
             this.mnuMainScaleToFit.Text = "Scale to &fit";
             this.mnuMainScaleToFit.Click += new System.EventHandler(this.mnuMainScaleToFit_Click);
+            // 
+            // mnuMainScaleToFill
+            // 
+            this.mnuMainScaleToFill.CheckOnClick = true;
+            this.mnuMainScaleToFill.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainScaleToFill.Name = "mnuMainScaleToFill";
+            this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainScaleToFill.Size = new System.Drawing.Size(584, 31);
+            this.mnuMainScaleToFill.Text = "Scale to fill";
+            this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
             // 
             // mnuMainLockZoomRatio
             // 
@@ -1509,6 +1524,22 @@
             this.btnScaleToFit.ToolTipText = "Zoom to fit  (Ctrl + /)";
             this.btnScaleToFit.Click += new System.EventHandler(this.btnScaleToFit_Click);
             // 
+            // btnScaleToFill
+            // 
+            this.btnScaleToFill.AutoSize = false;
+            this.btnScaleToFill.BackColor = System.Drawing.Color.Transparent;
+            this.btnScaleToFill.CheckOnClick = true;
+            this.btnScaleToFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnScaleToFill.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnScaleToFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnScaleToFill.Margin = new System.Windows.Forms.Padding(0);
+            this.btnScaleToFill.Name = "btnScaleToFill";
+            this.btnScaleToFill.Size = new System.Drawing.Size(33, 33);
+            this.btnScaleToFill.Tag = "";
+            this.btnScaleToFill.ToolTipText = "Zoom to fill";
+            this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
+            // 
             // btnZoomLock
             // 
             this.btnZoomLock.AutoSize = false;
@@ -1760,6 +1791,7 @@
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
         private System.Windows.Forms.ToolStripButton btnScaleToFit;
+        private System.Windows.Forms.ToolStripButton btnScaleToFill;
         private System.Windows.Forms.ToolStripButton btnActualSize;
         private System.Windows.Forms.ToolStripButton btnScaletoWidth;
         private System.Windows.Forms.ToolStripButton btnScaletoHeight;
@@ -1871,6 +1903,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToWidth;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToHeight;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToFit;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToFill;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLockZoomRatio;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
