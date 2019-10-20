@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -795,6 +795,7 @@
             this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
             this.mnuMainExtractFrames.Size = new System.Drawing.Size(440, 33);
             this.mnuMainExtractFrames.Text = "[Extract image frames]";
+            this.mnuMainExtractFrames.Click += new System.EventHandler(this.mnuMainExtractFrames_Click);
             // 
             // mnuMainSetAsDesktop
             // 
@@ -1123,7 +1124,9 @@
             this.mnuMainPageNav.Name = "mnuMainPageNav";
             this.mnuMainPageNav.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainPageNav.ShortcutKeyDisplayString = "";
-            this.mnuMainPageNav.Size = new System.Drawing.Size(318, 33);
+            this.mnuMainPageNav.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.J)));
+            this.mnuMainPageNav.Size = new System.Drawing.Size(348, 33);
             this.mnuMainPageNav.Text = "Page Navigation";
             this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
             // 
@@ -1270,7 +1273,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;

@@ -132,6 +132,7 @@ namespace ImageGlass
             btnNextPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"];
             btnPreviousPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"];
             btnLastPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"];
+
         }
 
         private void OnDpiChanged()

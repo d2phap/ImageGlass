@@ -4881,37 +4881,28 @@ namespace ImageGlass
             }
         }
 
-        private void mnuMainExtractFrames_Click(object sender, EventArgs e)
+        private async void mnuMainExtractFrames_Click(object sender, EventArgs e)
         {
             // Shortcut keys still work even when menu is disabled!
-            if (!(sender as ToolStripMenuItem).Enabled)
+            if (!(sender as ToolStripMenuItem).Enabled || GlobalSetting.ImageError != null)
                 return;
 
-            if (GlobalSetting.ImageError != null)
+            using (FolderBrowserDialog fb = new FolderBrowserDialog()
             {
-                using (FolderBrowserDialog f = new FolderBrowserDialog()
-                {
-                    Description = GlobalSetting.LangPack.Items[$"{Name}._ExtractFrameText"],
-                    ShowNewFolderButton = true
-                })
-                {
-                    DialogResult res = f.ShowDialog();
+                Description = GlobalSetting.LangPack.Items[$"{Name}._ExtractFrameText"],
+                ShowNewFolderButton = true
+            })
+            {
+                DialogResult result = fb.ShowDialog();
 
-                    if (res == DialogResult.OK && Directory.Exists(f.SelectedPath))
-                    {
-                        Animation ani = new Animation();
-                        ani.ExtractAllFrames(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex), f.SelectedPath,
-                            extractCallback);
-                    }
+                if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath))
+                {
+                    var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    await img.SaveImagePages(fb.SelectedPath);
+
+                    DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._FrameExtractComplete"], 2000);
                 }
             }
-
-            void extractCallback()
-            {
-                // Issue #565: let the user know the frame extraction has finished
-                DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._FrameExtractComplete"], 2000);
-            }
-
         }
 
 
@@ -5455,8 +5446,7 @@ namespace ImageGlass
 
 
 
-        #endregion
 
-        
+        #endregion
     }
 }

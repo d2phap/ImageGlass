@@ -365,6 +365,42 @@ namespace ImageGlass.Heart
             }
         }
 
+
+        /// <summary>
+        /// Save image pages to files
+        /// </summary>
+        /// <param name="filename">The full path of source file</param>
+        /// <param name="destFileName">The destination folder to save to</param>
+        public static async Task SaveImagePagesAsync(string filename, string destFolder)
+        {
+            await Task.Run(() =>
+            {
+                // create dirs unless it does not exist
+                Directory.CreateDirectory(destFolder);
+
+                using (var imgColl = new MagickImageCollection(filename))
+                {
+                    var index = 0;
+                    foreach (var imgM in imgColl)
+                    {
+                        index++;
+                        imgM.Quality = 100;
+
+                        try
+                        {
+                            var newFilename = Path.GetFileNameWithoutExtension(filename) + " - " +
+                    index.ToString($"D{imgColl.Count.ToString().Length}") + ".png";
+                            var destFilePath = Path.Combine(destFolder, newFilename);
+
+                            imgM.Write(destFilePath, MagickFormat.Png);
+                        }
+                        catch { }
+                    }
+                }
+            });
+        }
+
+
         #endregion
 
 

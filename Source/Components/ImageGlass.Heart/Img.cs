@@ -152,24 +152,35 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Sets active frame index
+        /// Sets active page index
         /// </summary>
-        /// <param name="index">Frame index</param>
-        public void SetActiveFrame(int index)
+        /// <param name="index">Page index</param>
+        public void SetActivePage(int index)
         {
-            //Check if page index is greater than upper limit
+            // Check if page index is greater than upper limit
             if (index >= this.FrameCount)
                 index = 0;
 
-            //Check if page index is less than lower limit
+            // Check if page index is less than lower limit
             if (index < 0)
                 index = this.FrameCount - 1;
 
             this.ActiveFrameIndex = index;
 
-            // Set active frame index
+            // Set active page index
             FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
             this.Image.SelectActiveFrame(dim, this.ActiveFrameIndex);
+        }
+
+
+        /// <summary>
+        /// Save image pages to files
+        /// </summary>
+        /// <param name="destFolder">The destination folder to save to</param>
+        /// <returns></returns>
+        public async Task SaveImagePages(string destFolder)
+        {
+            await Photo.SaveImagePagesAsync(this.Filename, destFolder);
         }
 
         #endregion

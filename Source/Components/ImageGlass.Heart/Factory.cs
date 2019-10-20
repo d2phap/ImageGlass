@@ -324,7 +324,7 @@ namespace ImageGlass.Heart
             {
                 if (ImgList[index].Error == null)
                 {
-                    ImgList[index].SetActiveFrame(frameIndex);
+                    ImgList[index].SetActivePage(frameIndex);
                 }
 
                 return ImgList[index];
