@@ -627,8 +627,8 @@ namespace ImageGlass
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
-        /// <param name="frameIndex"></param>
-        public async void NextPic(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int frameIndex = 0)
+        /// <param name="pageIndex"></param>
+        public async void NextPic(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0)
         {
             Timer _loadingTimer = null; // busy state timer
 
@@ -755,7 +755,7 @@ namespace ImageGlass
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
                     GlobalSetting.CurrentIndex,
                     isSkipCache: isSkipCache,
-                    frameIndex: frameIndex
+                    frameIndex: pageIndex
                    );
                 im = bmpImg.Image;
 
@@ -1334,6 +1334,8 @@ namespace ImageGlass
                 return;
             }
             #endregion
+
+
             #region Backspace
             if (e.KeyCode == Keys.Back && no_mods)
             {
@@ -4471,19 +4473,19 @@ namespace ImageGlass
         private void mnuMainPrevPage_Click(object sender, EventArgs e)
         {
             LocalSetting.CurrentPageIndex -= 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+            NextPic(0, pageIndex: LocalSetting.CurrentPageIndex);
         }
 
         private void mnuMainNextPage_Click(object sender, EventArgs e)
         {
             LocalSetting.CurrentPageIndex += 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+            NextPic(0, pageIndex: LocalSetting.CurrentPageIndex);
         }
 
         private void mnuMainFirstPage_Click(object sender, EventArgs e)
         {
             LocalSetting.CurrentPageIndex = 0;
-            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+            NextPic(0, pageIndex: LocalSetting.CurrentPageIndex);
         }
 
         private async void mnuMainLastPage_Click(object sender, EventArgs e)
@@ -4491,7 +4493,7 @@ namespace ImageGlass
             var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
 
             LocalSetting.CurrentPageIndex = img.FrameCount - 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+            NextPic(0, pageIndex: LocalSetting.CurrentPageIndex);
         }
 
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
