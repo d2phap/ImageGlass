@@ -48,23 +48,6 @@ namespace ImageGlass
         private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
 
 
-        /// <summary>
-        /// User has reached the first page of the document - disable prev/first buttons
-        /// </summary>
-        public bool AtFirstPage
-        {
-            set => btnFirstPage.Enabled = btnPreviousPage.Enabled = !value;
-        }
-
-
-        /// <summary>
-        /// User has reached the last page of the document - disable next/last buttons
-        /// </summary>
-        public bool AtLastPage
-        {
-            set => btnNextPage.Enabled = btnLastPage.Enabled = !value;
-        }
-
 
         public frmPageNav()
         {
@@ -73,7 +56,6 @@ namespace ImageGlass
             _locationOffset = DefaultLocationOffset; // TODO simplify and move logic to ToolForm
 
             RegisterToolFormEvents();
-
             FormClosing += frmPageNav_FormClosing;
 
             btnFirstPage.Click += ButtonClick;

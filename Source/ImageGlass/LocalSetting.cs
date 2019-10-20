@@ -122,7 +122,7 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets the current frame index of the viewing image
         /// </summary>
-        public static int CurrentFrameIndex { get; set; } = 0;
+        public static int CurrentPageIndex { get; set; } = 0;
 
         #endregion
 

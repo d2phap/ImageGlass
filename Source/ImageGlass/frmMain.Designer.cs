@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,11 +48,13 @@
             this.mnuMainViewPrevious = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem24 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainGoto = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainGotoLast = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainGotoFirst = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainGotoLast = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainNextFrame = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainPreviousFrame = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainNextPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainPrevPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFirstPage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainLastPage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -214,7 +216,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 438);
+            this.mnuMain.Size = new System.Drawing.Size(258, 471);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -374,11 +376,13 @@
             this.mnuMainViewPrevious,
             this.toolStripMenuItem24,
             this.mnuMainGoto,
-            this.mnuMainGotoLast,
             this.mnuMainGotoFirst,
+            this.mnuMainGotoLast,
             this.toolStripSeparator14,
-            this.mnuMainNextFrame,
-            this.mnuMainPreviousFrame});
+            this.mnuMainNextPage,
+            this.mnuMainPrevPage,
+            this.mnuMainFirstPage,
+            this.mnuMainLastPage});
             this.mnuMainNavigation.ForeColor = System.Drawing.Color.Black;
             this.mnuMainNavigation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainNavigation.Name = "mnuMainNavigation";
@@ -426,17 +430,6 @@
             this.mnuMainGoto.Text = "&Go to ...";
             this.mnuMainGoto.Click += new System.EventHandler(this.mnuMainGoto_Click);
             // 
-            // mnuMainGotoLast
-            // 
-            this.mnuMainGotoLast.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainGotoLast.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainGotoLast.Name = "mnuMainGotoLast";
-            this.mnuMainGotoLast.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainGotoLast.ShortcutKeyDisplayString = "End";
-            this.mnuMainGotoLast.Size = new System.Drawing.Size(449, 33);
-            this.mnuMainGotoLast.Text = "Go to the &last image";
-            this.mnuMainGotoLast.Click += new System.EventHandler(this.mnuMainGotoLast_Click);
-            // 
             // mnuMainGotoFirst
             // 
             this.mnuMainGotoFirst.ForeColor = System.Drawing.Color.Black;
@@ -448,32 +441,65 @@
             this.mnuMainGotoFirst.Text = "Go to the &first image";
             this.mnuMainGotoFirst.Click += new System.EventHandler(this.mnuMainGotoFirst_Click);
             // 
+            // mnuMainGotoLast
+            // 
+            this.mnuMainGotoLast.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainGotoLast.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainGotoLast.Name = "mnuMainGotoLast";
+            this.mnuMainGotoLast.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainGotoLast.ShortcutKeyDisplayString = "End";
+            this.mnuMainGotoLast.Size = new System.Drawing.Size(449, 33);
+            this.mnuMainGotoLast.Text = "Go to the &last image";
+            this.mnuMainGotoLast.Click += new System.EventHandler(this.mnuMainGotoLast_Click);
+            // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             this.toolStripSeparator14.Size = new System.Drawing.Size(446, 6);
             // 
-            // mnuMainNextFrame
+            // mnuMainNextPage
             // 
-            this.mnuMainNextFrame.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainNextFrame.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainNextFrame.Name = "mnuMainNextFrame";
-            this.mnuMainNextFrame.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainNextFrame.ShortcutKeyDisplayString = "Ctrl+Right arrow";
-            this.mnuMainNextFrame.Size = new System.Drawing.Size(449, 33);
-            this.mnuMainNextFrame.Text = "[View next frame]";
-            this.mnuMainNextFrame.Click += new System.EventHandler(this.mnuMainNextFrame_Click);
+            this.mnuMainNextPage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainNextPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainNextPage.Name = "mnuMainNextPage";
+            this.mnuMainNextPage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainNextPage.ShortcutKeyDisplayString = "Ctrl+Right arrow";
+            this.mnuMainNextPage.Size = new System.Drawing.Size(449, 33);
+            this.mnuMainNextPage.Text = "[View next frame]";
+            this.mnuMainNextPage.Click += new System.EventHandler(this.mnuMainNextPage_Click);
             // 
-            // mnuMainPreviousFrame
+            // mnuMainPrevPage
             // 
-            this.mnuMainPreviousFrame.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainPreviousFrame.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainPreviousFrame.Name = "mnuMainPreviousFrame";
-            this.mnuMainPreviousFrame.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainPreviousFrame.ShortcutKeyDisplayString = "Ctrl+Left arrow";
-            this.mnuMainPreviousFrame.Size = new System.Drawing.Size(449, 33);
-            this.mnuMainPreviousFrame.Text = "[View previous frame]";
-            this.mnuMainPreviousFrame.Click += new System.EventHandler(this.mnuMainPreviousFrame_Click);
+            this.mnuMainPrevPage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainPrevPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainPrevPage.Name = "mnuMainPrevPage";
+            this.mnuMainPrevPage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainPrevPage.ShortcutKeyDisplayString = "Ctrl+Left arrow";
+            this.mnuMainPrevPage.Size = new System.Drawing.Size(449, 33);
+            this.mnuMainPrevPage.Text = "[View previous frame]";
+            this.mnuMainPrevPage.Click += new System.EventHandler(this.mnuMainPrevPage_Click);
+            // 
+            // mnuMainFirstPage
+            // 
+            this.mnuMainFirstPage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFirstPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFirstPage.Name = "mnuMainFirstPage";
+            this.mnuMainFirstPage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFirstPage.ShortcutKeyDisplayString = "Ctrl+Home";
+            this.mnuMainFirstPage.Size = new System.Drawing.Size(449, 33);
+            this.mnuMainFirstPage.Text = "[View the first page]";
+            this.mnuMainFirstPage.Click += new System.EventHandler(this.mnuMainFirstPage_Click);
+            // 
+            // mnuMainLastPage
+            // 
+            this.mnuMainLastPage.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainLastPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainLastPage.Name = "mnuMainLastPage";
+            this.mnuMainLastPage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainLastPage.ShortcutKeyDisplayString = "Ctrl+End";
+            this.mnuMainLastPage.Size = new System.Drawing.Size(449, 33);
+            this.mnuMainLastPage.Text = "[View the last page]";
+            this.mnuMainLastPage.Click += new System.EventHandler(this.mnuMainLastPage_Click);
             // 
             // mnuMainZoom
             // 
@@ -1244,7 +1270,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1292,6 +1318,7 @@
             // 
             // toolMain
             // 
+            this.toolMain.Alignment = ImageGlass.UI.ToolbarAlignment.LEFT;
             this.toolMain.AllowMerge = false;
             this.toolMain.AutoSize = false;
             this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
@@ -1919,9 +1946,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainNextFrame;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainPreviousFrame;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainNextPage;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainPrevPage;
         private System.Windows.Forms.ToolStripMenuItem mnuMainExtractFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFirstPage;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainLastPage;
     }
 }
 

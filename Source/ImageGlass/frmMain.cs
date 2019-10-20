@@ -760,7 +760,7 @@ namespace ImageGlass
                 im = bmpImg.Image;
 
                 // Update current frame index
-                LocalSetting.CurrentFrameIndex = bmpImg.ActiveFrameIndex;
+                LocalSetting.CurrentPageIndex = bmpImg.ActiveFrameIndex;
 
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
@@ -980,7 +980,7 @@ namespace ImageGlass
         {
             // this.Text = e.KeyValue.ToString();
 
-            bool no_mods = !e.Control && !e.Shift && !e.Alt;
+            bool hasNoMods = !e.Control && !e.Shift && !e.Alt;
             bool ignore = _isAppBusy || _isWindowsKeyPressed;
 
 
@@ -1085,7 +1085,7 @@ namespace ImageGlass
 
 
             // Zoom + ------------------------------------------------------------------------
-            #region Ctrl + = or = or + (numPad)
+            #region Ctrl + = / = / + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
                 btnZoomIn_Click(null, null);
@@ -1095,7 +1095,7 @@ namespace ImageGlass
 
 
             //Zoom - ------------------------------------------------------------------------
-            #region Ctrl + - or - or - (numPad)
+            #region Ctrl + - / - / - (numPad)
             if ((e.KeyValue == 189 || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
                 btnZoomOut_Click(null, null);
@@ -1145,7 +1145,7 @@ namespace ImageGlass
 
             // Previous Image----------------------------------------------------------------
             #region LEFT ARROW / PAGE UP
-            if (!ignore && e.KeyValue == (int)Keys.Left && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.Left && hasNoMods)
             {
                 if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                 {
@@ -1153,7 +1153,7 @@ namespace ImageGlass
                 }
                 return; // fall-through lets pan happen
             }
-            if (!ignore && e.KeyValue == (int)Keys.PageUp && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.PageUp && hasNoMods)
             {
                 var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
                 if (action == AssignableActions.PrevNextImage)
@@ -1172,7 +1172,7 @@ namespace ImageGlass
 
             // Next Image---------------------------------------------------------------------
             #region RIGHT ARROW / PAGE DOWN
-            if (!ignore && e.KeyValue == (int)Keys.Right && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods)
             {
                 if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                 {
@@ -1180,7 +1180,7 @@ namespace ImageGlass
                 }
                 return; // fall-through lets pan happen
             }
-            if (!ignore && e.KeyValue == (int)Keys.PageDown && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.PageDown && hasNoMods)
             {
                 var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
                 if (action == AssignableActions.PrevNextImage)
@@ -1199,7 +1199,7 @@ namespace ImageGlass
 
             // Pan up
             #region UP ARROW
-            if (!ignore && e.KeyValue == (int)Keys.Up && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.Up && hasNoMods)
             {
                 if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
                 {
@@ -1213,7 +1213,7 @@ namespace ImageGlass
 
             // Pan down
             #region DOWN ARROW
-            if (!ignore && e.KeyValue == (int)Keys.Down && no_mods)
+            if (!ignore && e.KeyValue == (int)Keys.Down && hasNoMods)
             {
                 if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
                 {
@@ -1248,38 +1248,55 @@ namespace ImageGlass
 
 
             // Ctrl---------------------------------------------------------------------------
-            #region CTRL
+            #region CTRL + ...
             if (e.Control && !e.Alt && !e.Shift) // Ctrl
             {
                 // Enable dragging viewing image to desktop feature---------------------------
                 _isDraggingImage = true;
 
 
-                #region View previous image frame
+                #region View previous image page
                 if ((e.KeyValue == (int)Keys.Left
                     && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageUp
                     && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
                     )
                 {
-                    mnuMainPreviousFrame_Click(null, null);
+                    mnuMainPrevPage_Click(null, null);
                     return;
                 }
                 #endregion
 
 
-                #region View next image frame
+                #region View next image page
                 if ((e.KeyValue == (int)Keys.Right
                     && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageDown
                     && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
                     )
                 {
-                    mnuMainNextFrame_Click(null, null);
+                    mnuMainNextPage_Click(null, null);
                     return;
                 }
                 #endregion
 
+
+                // View first image page
+                #region Ctrl + Home
+                if (!_isWindowsKeyPressed && e.KeyValue == 36)
+                {
+                    mnuMainFirstPage_Click(null, null);
+                }
+                #endregion
+
+
+                // View last image page
+                #region Ctrl + End
+                if (!_isWindowsKeyPressed && e.KeyValue == 35)
+                {
+                    mnuMainLastPage_Click(null, null);
+                }
+                #endregion
 
                 return;
             }
@@ -2037,29 +2054,30 @@ namespace ImageGlass
             }
         }
 
+        /// <summary>
+        /// Handle page navigation event
+        /// </summary>
+        /// <param name="navEvent"></param>
         private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
         {
-            // TODO TIF user has clicked on a page navigation button: move to requested page
-
             switch (navEvent)
             {
                 case frmPageNav.NavEvent.PageFirst:
+                    mnuMainFirstPage_Click(null, null);
                     break;
+
                 case frmPageNav.NavEvent.PageNext:
-                    mnuMainNextFrame_Click(null, null);
+                    mnuMainNextPage_Click(null, null);
                     break;
+
                 case frmPageNav.NavEvent.PagePrevious:
-                    mnuMainPreviousFrame_Click(null, null);
+                    mnuMainPrevPage_Click(null, null);
                     break;
+
                 case frmPageNav.NavEvent.PageLast:
+                    mnuMainLastPage_Click(null, null);
                     break;
             }
-
-            // TODO TIF update the page navigation form when user reaches first or last page
-
-            LocalSetting.FPageNav.AtFirstPage = false;
-            LocalSetting.FPageNav.AtLastPage = false;
-
         }
 
         #endregion
@@ -4450,16 +4468,30 @@ namespace ImageGlass
             NextPic(0);
         }
 
-        private void mnuMainPreviousFrame_Click(object sender, EventArgs e)
+        private void mnuMainPrevPage_Click(object sender, EventArgs e)
         {
-            LocalSetting.CurrentFrameIndex -= 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+            LocalSetting.CurrentPageIndex -= 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
         }
 
-        private void mnuMainNextFrame_Click(object sender, EventArgs e)
+        private void mnuMainNextPage_Click(object sender, EventArgs e)
         {
-            LocalSetting.CurrentFrameIndex += 1;
-            NextPic(0, frameIndex: LocalSetting.CurrentFrameIndex);
+            LocalSetting.CurrentPageIndex += 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+        }
+
+        private void mnuMainFirstPage_Click(object sender, EventArgs e)
+        {
+            LocalSetting.CurrentPageIndex = 0;
+            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
+        }
+
+        private async void mnuMainLastPage_Click(object sender, EventArgs e)
+        {
+            var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+
+            LocalSetting.CurrentPageIndex = img.FrameCount - 1;
+            NextPic(0, frameIndex: LocalSetting.CurrentPageIndex);
         }
 
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
@@ -5218,11 +5250,10 @@ namespace ImageGlass
                 }
 
                 LocalSetting.FPageNav.SetToolFormManager(_toolManager);
-                LocalSetting.FPageNav.NavEventHandler = PageNavigationEvent; // register page event handler
+                // register page event handler
+                LocalSetting.FPageNav.NavEventHandler = PageNavigationEvent;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
                 LocalSetting.FPageNav.Owner = this;
-                LocalSetting.FPageNav.AtFirstPage = true;
-                LocalSetting.FPageNav.AtLastPage = false; // TODO TIF set to true if a one-page file
 
                 LocalSetting.FPageNav.Show(this);
                 this.Activate();
@@ -5328,8 +5359,8 @@ namespace ImageGlass
 
                 mnuMainExtractFrames.Enabled = 
                     mnuMainStartStopAnimating.Enabled = 
-                    mnuMainPreviousFrame.Enabled =
-                    mnuMainNextFrame.Enabled =
+                    mnuMainPrevPage.Enabled =
+                    mnuMainNextPage.Enabled =
                     mnuMainPageNav.Enabled = false;
 
                 mnuMainSetAsLockImage.Enabled = true;
@@ -5346,8 +5377,8 @@ namespace ImageGlass
                 {
                     mnuMainExtractFrames.Enabled = 
                         mnuMainStartStopAnimating.Enabled = 
-                        mnuMainPreviousFrame.Enabled =
-                        mnuMainNextFrame.Enabled =
+                        mnuMainPrevPage.Enabled =
+                        mnuMainNextPage.Enabled =
                         mnuMainPageNav.Enabled = true;
                 }
 
@@ -5419,7 +5450,6 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
-
 
 
 
