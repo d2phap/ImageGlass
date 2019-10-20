@@ -196,14 +196,14 @@ namespace ImageGlass.UI
             try
             {
                 var attrib = n.GetAttribute(attribname);
-                if (string.IsNullOrEmpty(attrib))  // KBR 20180827 avoid throwing exception
-                    return new ThemeImage("");     // KBR 20180827 code in frmMain assumes not null
+                if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
+                    return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
                 var imgFile = Path.Combine(dir, attrib);
                 return new ThemeImage(imgFile, new Size(iconHeight, iconHeight));
             }
             catch (Exception ex)
             {
-                return new ThemeImage("");         // KBR 20180827 code in frmMain assumes not null
+                return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
             }
         }
 

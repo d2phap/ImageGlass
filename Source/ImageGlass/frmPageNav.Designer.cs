@@ -96,7 +96,7 @@
             this.btnPreviousPage,
             this.btnNextPage,
             this.btnLastPage});
-            this.toolPageNav.Location = new System.Drawing.Point(0, 72);
+            this.toolPageNav.Location = new System.Drawing.Point(0, 55);
             this.toolPageNav.Name = "toolPageNav";
             this.toolPageNav.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolPageNav.ShowItemToolTips = false;
@@ -160,17 +160,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(316, 137);
+            this.ClientSize = new System.Drawing.Size(316, 120);
             this.Controls.Add(this.toolPageNav);
             this.Controls.Add(this.btnSnapTo);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(316, 120);
             this.Name = "frmPageNav";
-            this.RightToLeftLayout = true;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

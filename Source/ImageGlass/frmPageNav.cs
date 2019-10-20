@@ -139,7 +139,6 @@ namespace ImageGlass
 
             toolPageNav.BackgroundImage = LocalSetting.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
-
             toolPageNav.Alignment = ToolbarAlignment.CENTER;
 
             // Overflow button and Overflow dropdown
@@ -160,6 +159,10 @@ namespace ImageGlass
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(LocalSetting.Theme);
+
+            // Update window size
+            this.Width = toolPageNav.PreferredSize.Width;
+            this.Height = toolPageNav.PreferredSize.Height + btnClose.Height + 30;
         }
 
         private void LoadToolbarIcons(Theme th)
