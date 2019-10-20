@@ -40,6 +40,11 @@ namespace ImageGlass
             PageLast
         }
 
+        /// <summary>
+        /// The handler to send NavEvents to.
+        /// </summary>
+        public PageNavEvent NavEventHandler { get; set; }
+
 
         public delegate void PageNavEvent(NavEvent navEvent);
 
@@ -67,9 +72,10 @@ namespace ImageGlass
         }
 
 
+
+        #region Private Methods
         /// <summary>
-        /// User has clicked on one of the navigation buttons. Fire off the
-        /// appropriate event to our listener.
+        /// User has clicked on one of the navigation buttons. Fire off the appropriate event to our listener.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -88,23 +94,6 @@ namespace ImageGlass
                 NavEventHandler(NavEvent.PageLast);
         }
 
-
-        /// <summary>
-        /// The handler to send NavEvents to.
-        /// </summary>
-        public PageNavEvent NavEventHandler { get; set; }
-
-
-        /// <summary>
-        /// User clicked the close button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            // TODO move to ToolForm?
-            Close();
-        }
 
 
         /// <summary>
@@ -155,9 +144,10 @@ namespace ImageGlass
             btnNextPage.Image = th.ToolbarIcons.ViewNextImage.Image;
             btnLastPage.Image = th.ToolbarIcons.ViewLastImage.Image;
         }
+        #endregion
 
 
-        #region Form Events
+        #region Events
         private void frmPageNav_Load(object sender, EventArgs e)
         {
             UpdateUI();
@@ -166,7 +156,7 @@ namespace ImageGlass
             // TODO must be different from Color Picker
             Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
 
-            if (rc.X == 0 && rc.Y == 0) // TODO isn't this always true?
+            if (rc.X == 0 && rc.Y == 0)
             {
                 _locationOffset = DefaultLocationOffset;
                 parentOffset = _locationOffset;
@@ -181,20 +171,26 @@ namespace ImageGlass
 
         private void frmPageNav_KeyDown(object sender, KeyEventArgs e)
         {
-            // TODO TIF what is the shortcut key for this menu?
-            //ESC or ???? --------------------------------------------------------
-            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt))
-            //|| //ESC 
-            //(e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
+            // ESC or Ctrl+Shift+J --------------------------------------------------------
+            if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
+                (e.KeyCode == Keys.J && e.Control && e.Shift && !e.Alt)) // CTRL + SHIFT + J
             {
                 Close();
             }
         }
+
         private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LocalSetting.IsPageNavToolOpen = false;
+            LocalSetting.IsPageNavToolOpenning = false;
+            LocalSetting.IsShowPageNavOnStartup = false;
+
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
             NavEventHandler = null;
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
         #endregion
     }

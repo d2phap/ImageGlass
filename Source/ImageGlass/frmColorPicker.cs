@@ -42,7 +42,6 @@ namespace ImageGlass
         public frmColorPicker()
         {
             InitializeComponent();
-
             RegisterToolFormEvents();
 
             btnSnapTo.Click += SnapButton_Click;
@@ -164,15 +163,15 @@ namespace ImageGlass
             else
             {
                 lblHEX.Text = "HEX:";
-                txtHEX.Text = UI.Theme.ConvertColorToHEX(color, true);
+                txtHEX.Text = Theme.ConvertColorToHEX(color, true);
             }
 
             //CMYK color -----------------------------------------------
-            var cmyk = UI.Theme.ConvertColorToCMYK(color);
+            var cmyk = Theme.ConvertColorToCMYK(color);
             txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
 
             //HSLA color -----------------------------------------------
-            var hsla = UI.Theme.ConvertColorToHSLA(color);
+            var hsla = Theme.ConvertColorToHSLA(color);
             if (GlobalSetting.IsColorPickerHSLA)
             {
                 lblHSL.Text = "HSLA:";
@@ -185,7 +184,7 @@ namespace ImageGlass
             }
             
 
-            lblPixel.ForeColor = UI.Theme.InvertBlackAndWhiteColor(color);
+            lblPixel.ForeColor = Theme.InvertBlackAndWhiteColor(color);
         }
 
         private void _ResetColor()
@@ -210,7 +209,6 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowColorPickerOnStartup = false;
             this.Close();
         }
 
@@ -238,6 +236,8 @@ namespace ImageGlass
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
         {
             LocalSetting.IsColorPickerToolOpening = false;
+            LocalSetting.IsShowColorPickerOnStartup = false;
+
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
         }
 
@@ -254,10 +254,10 @@ namespace ImageGlass
         {
             UpdateUI();
 
-            //Windows Bound (Position + Size)-------------------------------------------
+            // Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
 
-            if (rc.X == 0 && rc.Y == 0) // TODO this is always true?
+            if (rc.X == 0 && rc.Y == 0)
             {
                 _locationOffset = DefaultLocationOffset;
                 parentOffset = _locationOffset;
@@ -291,12 +291,6 @@ namespace ImageGlass
 
         }
 
-
-
-
-
         #endregion
-
-        
     }
 }

@@ -2537,11 +2537,21 @@ namespace ImageGlass
                 GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
 
 
-                //Get IsShowColorPicker
+                // Get IsShowColorPicker
                 LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
                 if (LocalSetting.IsShowColorPickerOnStartup)
                 {
                     mnuMainColorPicker.PerformClick();
+                }
+                #endregion
+
+
+                #region Load Page navigation tool
+                // Get IsShowPageNav
+                LocalSetting.IsShowPageNavOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowPageNavOnStartup", "False"));
+                if (LocalSetting.IsShowPageNavOnStartup)
+                {
+                    mnuMainPageNav.PerformClick();
                 }
                 #endregion
 
@@ -2785,7 +2795,7 @@ namespace ImageGlass
             // Save thumbnail bar orientation state
             GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
 
-            //Save thumbnail bar width
+            // Save thumbnail bar width
             GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
             GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
 
@@ -2795,7 +2805,7 @@ namespace ImageGlass
                 GlobalSetting.SetConfig("ThumbnailBarWidth", (sp1.Width - sp1.SplitterDistance).ToString(GlobalSetting.NumberFormat));
             }
 
-            //Save previous image if it was modified
+            // Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
                 DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._SaveChanges"], 1000);
@@ -2804,18 +2814,21 @@ namespace ImageGlass
                 ImageSaveChange();
             }
 
-            //Save IsShowColorPickerOnStartup
+            // Save IsShowColorPickerOnStartup
             GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsShowColorPickerOnStartup.ToString());
 
-            //Save toolbar buttons
-            GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons); // KBR
+            // Save IsShowPageNavOnStartup
+            GlobalSetting.SetConfig("IsShowPageNavOnStartup", LocalSetting.IsShowPageNavOnStartup.ToString());
+
+            // Save toolbar buttons
+            GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
 
 
             // Save last seen image path
             GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
 
             // Save centering of toolbar buttons
-            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()); // KBR
+            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
 
             // Save fullscreen state
             GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
@@ -3256,7 +3269,7 @@ namespace ImageGlass
             #region PAGE_NAV_MENU
             if ((flags & MainFormForceUpdateAction.PAGE_NAV_MENU) != 0)
             {
-                mnuMainPageNav.Checked = LocalSetting.IsPageNavToolOpen;
+                mnuMainPageNav.Checked = LocalSetting.IsPageNavToolOpenning;
             }
             #endregion
 
@@ -5232,7 +5245,7 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsPageNavToolOpen = mnuMainPageNav.Checked;
+            LocalSetting.IsShowPageNavOnStartup = LocalSetting.IsPageNavToolOpenning = mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
             {
@@ -5353,8 +5366,7 @@ namespace ImageGlass
                 mnuMainExtractFrames.Enabled = 
                     mnuMainStartStopAnimating.Enabled = 
                     mnuMainPrevPage.Enabled =
-                    mnuMainNextPage.Enabled =
-                    mnuMainPageNav.Enabled = false;
+                    mnuMainNextPage.Enabled = false;
 
                 mnuMainSetAsLockImage.Enabled = true;
 
@@ -5371,8 +5383,7 @@ namespace ImageGlass
                     mnuMainExtractFrames.Enabled = 
                         mnuMainStartStopAnimating.Enabled = 
                         mnuMainPrevPage.Enabled =
-                        mnuMainNextPage.Enabled =
-                        mnuMainPageNav.Enabled = true;
+                        mnuMainNextPage.Enabled = true;
                 }
 
                 mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], frameCount);
