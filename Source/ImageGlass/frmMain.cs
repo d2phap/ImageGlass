@@ -1887,58 +1887,6 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Update toolbar buttons alignment
-        /// </summary>
-        private void UpdateToolbarButtonsAlignment()
-        {
-            // Issue 425: option to center the toolbar buttons horizontally 
-            // [useful for wide screen]
-            // I'm assuming the btnMenu stays to the right, 
-            // in order to always be at a fixed location.
-
-            var firstBtn = toolMain.Items[0];
-            var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
-            
-
-            // reset the alignment to left
-            firstBtn.Margin = defaultMargin;
-
-            if (GlobalSetting.IsCenterToolbar)
-            {
-                // get the correct content width
-                var toolbarContentWidth = btnMenu.Width;
-                foreach (ToolStripItem item in toolMain.Items)
-                {
-                    toolbarContentWidth += item.Width;
-                }
-
-                // if the content cannot fit the toolbar size:
-                // (toolbarContentWidth > toolMain.Size.Width)
-                if (toolMain.OverflowButton.Visible)
-                {
-                    // align left
-                    firstBtn.Margin = defaultMargin;
-                }
-                else
-                {
-                    // the default margin (left alignment)
-                    var margin = defaultMargin;
-
-
-                    // get the gap of content width and toolbar width
-                    int gap = Math.Abs(toolMain.Width - toolbarContentWidth);
-
-                    // update the left margin value
-                    margin.Left = gap / 2;
-
-                    // align the first item
-                    firstBtn.Margin = margin;
-                }
-            }
-        }
-
-
-        /// <summary>
         /// Check and run an action if cursor position is the LEFT/CENTER/RIGHT side of picMain
         /// </summary>
         /// <param name="location">Cursor Location</param>
@@ -2289,7 +2237,9 @@ namespace ImageGlass
                 #endregion
 
 
-                GlobalSetting.LoadKeyAssignments();
+                #region Toolbar alignment and position
+                // Load Toolbar buttons alignment
+                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()));
 
 
                 #region Load state of Toolbar Below Image
@@ -2298,11 +2248,15 @@ namespace ImageGlass
                 if (Enum.TryParse(vString, out ToolbarPosition toolbarPos))
                 {
                     GlobalSetting.ToolbarPosition = toolbarPos;
-
-                    //Request frmMain to update
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
-                    frmMain_Activated(null, EventArgs.Empty);
                 }
+                #endregion
+
+
+                // Request frmMain to update
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                frmMain_Activated(null, EventArgs.Empty);
+
+                GlobalSetting.LoadKeyAssignments();
                 #endregion
 
 
@@ -2416,11 +2370,6 @@ namespace ImageGlass
                     rc.Location = new Point(280, 125);
                 }
                 this.Bounds = rc;
-                #endregion
-
-
-                #region Load Toolbar button centering state
-                GlobalSetting.IsCenterToolbar = bool.Parse(GlobalSetting.GetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString()));
                 #endregion
 
 
@@ -2946,8 +2895,6 @@ namespace ImageGlass
                         //Show toolbar
                         toolMain.Visible = true;
                         mnuMainToolbar.Checked = true;
-
-                        UpdateToolbarButtonsAlignment();
                     }
 
                     if (GlobalSetting.IsShowThumbnail)
@@ -3048,10 +2995,6 @@ namespace ImageGlass
                 IsBackground = true
             };
             thDeleteWorker.Start();
-
-            // update the alignment of toolbar buttons
-            UpdateToolbarButtonsAlignment();
-
         }
 
         public void LoadFromParams(string[] args)
@@ -3332,9 +3275,8 @@ namespace ImageGlass
                     toolMain.Dock = DockStyle.Bottom;
                 }
 
-
-                // For centered toolbar buttons
-                UpdateToolbarButtonsAlignment();
+                // update toolbar items alignment
+                toolMain.Alignment = GlobalSetting.IsCenterToolbar ? ToolbarAlignment.CENTER : ToolbarAlignment.LEFT;
             }
             #endregion
 
@@ -3436,8 +3378,6 @@ namespace ImageGlass
             {
                 ApplyZoomMode(GlobalSetting.ZoomMode);
             }
-
-            UpdateToolbarButtonsAlignment();
         }
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)

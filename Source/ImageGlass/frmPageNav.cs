@@ -140,6 +140,8 @@ namespace ImageGlass
             toolPageNav.BackgroundImage = LocalSetting.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
 
+            toolPageNav.Alignment = ToolbarAlignment.CENTER;
+
             // Overflow button and Overflow dropdown
             toolPageNav.OverflowButton.DropDown.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
             toolPageNav.OverflowButton.AutoSize = false;

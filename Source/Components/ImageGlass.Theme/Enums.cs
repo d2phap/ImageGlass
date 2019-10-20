@@ -38,4 +38,8 @@ namespace ImageGlass.UI
         ERROR = 1
     }
 
+    public enum ToolbarAlignment {
+        LEFT = 0,
+        CENTER = 1,
+    }
 }

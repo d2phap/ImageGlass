@@ -245,27 +245,26 @@ namespace ImageGlass.UI
             }
 
             //Get Scaling factor
-            //double scaleFactor = DPIScaling.GetDPIScaleFactor();
-            int iconHeight = ThemeImage.GetCorrectIconHeight(); //(int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
+            int iconHeight = ThemeImage.GetCorrectIconHeight();
 
 
             #region Theme <Info>
             try { Name = n.GetAttribute("name"); }
-            catch (Exception ex) { };
+            catch { };
             try { Version = n.GetAttribute("version"); }
-            catch (Exception ex) { };
+            catch { };
             try { Author = n.GetAttribute("author"); }
-            catch (Exception ex) { };
+            catch { };
             try { Email = n.GetAttribute("email"); }
-            catch (Exception ex) { };
+            catch { };
             try { Website = n.GetAttribute("website"); }
-            catch (Exception ex) { };
+            catch { };
             try { Description = n.GetAttribute("description"); }
-            catch (Exception ex) { };
+            catch { };
             try { Type = n.GetAttribute("type"); }
-            catch (Exception ex) { };
+            catch { };
             try { Compatibility = n.GetAttribute("compatibility"); }
-            catch (Exception ex) { };
+            catch { };
             #endregion
 
 
@@ -425,14 +424,15 @@ namespace ImageGlass.UI
             ToolbarIcons.Settings = LoadThemeImage(dir, n, "settings", iconHeight);
             ToolbarIcons.About = LoadThemeImage(dir, n, "about", iconHeight);
             ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu", iconHeight);
-            ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "double-left-chevron", iconHeight);
-            ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "double-right-chevron", iconHeight);
+            ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "gofirst", iconHeight);
+            ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast", iconHeight);
 
             // TODO Not used?
             //ToolbarIcons.Sharing = LoadThemeImage(dir, n, "uploadfb", iconHeight);
             //ToolbarIcons.Plugins = LoadThemeImage(dir, n, "extension", iconHeight);
 
             #endregion
+
 
             #region Arrow cursors (derived from toolbar)
 
@@ -447,6 +447,7 @@ namespace ImageGlass.UI
 
 
             #endregion
+
 
             this.IsValid = true;
             return this.IsValid;
