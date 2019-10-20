@@ -25,7 +25,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using ImageGlass.Library;
-using ImageGlass.Theme;
+using ImageGlass.UI;
 
 namespace igcmd
 {
@@ -283,7 +283,7 @@ namespace igcmd
                         Theme th = new Theme(d);
 
                         //invalid theme
-                        if (!th.IsThemeValid)
+                        if (!th.IsValid)
                         {
                             continue;
                         }
@@ -291,7 +291,7 @@ namespace igcmd
                         _themeList.Add(th);
                         cmbTheme.Items.Add(th.Name);
 
-                        if (currentTheme.ToLower().CompareTo(th.ThemeFolderName.ToLower()) == 0)
+                        if (currentTheme.ToLower().CompareTo(th.FolderName.ToLower()) == 0)
                         {
                             cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                         }
@@ -321,11 +321,11 @@ namespace igcmd
                 tabFileAssociation.BackColor =
                 th.BackgroundColor;
 
-            lblStepNumber.ForeColor =
-                lblLanguage.ForeColor =
-                lblLayout.ForeColor =
-                lblTheme.ForeColor =
-                lblDefaultApp.ForeColor =
+            this.lblStepNumber.ForeColor =
+                this.lblLanguage.ForeColor =
+                this.lblLayout.ForeColor =
+                this.lblTheme.ForeColor =
+                this.lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
 
         }
@@ -368,7 +368,7 @@ namespace igcmd
         private void ApplySettings()
         {
             GlobalSetting.SetConfig("Language", Path.GetFileName(_lang.FileName));
-            GlobalSetting.SetConfig("Theme", _theme.ThemeFolderName);
+            GlobalSetting.SetConfig("Theme", this._theme.FolderName);
 
 
             if (_layout == LayoutMode.Designer)

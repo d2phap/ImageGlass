@@ -33,6 +33,8 @@
 		    delete="delete.svg"
         fliphorz="FlipHorz.svg" 
         flipvert="FlipVert.svg"
+		double-left-chevron="double-left-chevron.svg"
+		double-right-chevron="double-right-chevron.svg"
 		/>
   </Theme>
 </ImageGlass>
