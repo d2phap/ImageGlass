@@ -377,6 +377,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             //Items.Add("frmMain.mnuMainExtensionManager", "Extension manager"); //v3.0, removed v5.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
+            Items.Add("frmMain.mnuMainPageNav", "Page Navigation"); // V8
 
 
             Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
@@ -744,6 +745,12 @@ namespace ImageGlass.Library
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion
 
+            #region frmPageNav
+            Items.Add("frmPageNav.button1Tooltip", "Goto First Page"); // V8.0
+            Items.Add("frmPageNav.button2Tooltip", "Goto Previous Page"); // V8.0
+            Items.Add("frmPageNav.button3Tooltip", "Goto Next Page"); // V8.0
+            Items.Add("frmPageNav.button4Tooltip", "Goto Last Page"); // V8.0
+            #endregion
 
             #region REMOVED strings
             //this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet"); //removed v2.0 final

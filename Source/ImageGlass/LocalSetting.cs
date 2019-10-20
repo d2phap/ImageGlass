@@ -27,7 +27,8 @@ namespace ImageGlass
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
-        private static Theme.Theme _theme;
+        private static frmPageNav _fPageNav;
+        private static UI.Theme _theme;
 
 
         #region Auto Properties
@@ -39,10 +40,22 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Check if frmColorPicker is not closed by user (toggle the menu / press ESC on frmColorPicker form). 
-        /// This is for auto open Color Picker tool when startup
+        /// Gets, sets value that indicates frmColorPicker tool will be open on startup
         /// </summary>
         public static bool IsShowColorPickerOnStartup { get; set; } = false;
+
+
+        /// <summary>
+        /// Check if frmPageNav is opening.
+        /// This is for toggle Page Navigation menu in frmMain
+        /// </summary>
+        public static bool IsPageNavToolOpenning { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value that indicates frmPageNav tool will be open on startup
+        /// </summary>
+        public static bool IsShowPageNavOnStartup { get; set; } = false;
 
 
         /// <summary>
@@ -110,6 +123,13 @@ namespace ImageGlass
         /// </summary>
         public static ColorChannels Channels { get; set; } = ColorChannels.All;
 
+
+
+        /// <summary>
+        /// Gets, sets the current frame index of the viewing image
+        /// </summary>
+        public static int CurrentPageIndex { get; set; } = 0;
+
         #endregion
 
 
@@ -124,6 +144,17 @@ namespace ImageGlass
             set { _fSetting = value; }
         }
 
+
+        /// <summary>
+        /// The Page Navigation form
+        /// </summary>
+        public static frmPageNav FPageNav
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fPageNav); }
+            set { _fPageNav = value; }
+        }
+
+
         /// <summary>
         /// Form frmColorPicker
         /// </summary>
@@ -137,9 +168,9 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets current app theme
         /// </summary>
-        public static Theme.Theme Theme
+        public static UI.Theme Theme
         {
-            get => LazyInitializer.EnsureInitialized(ref _theme, () => new Theme.Theme());
+            get => LazyInitializer.EnsureInitialized(ref _theme, () => new UI.Theme());
             set => _theme = value;
         }
 

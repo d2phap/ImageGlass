@@ -39,7 +39,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass
+namespace ImageGlass.UI
 {
     public class ToolStripToolTip : ToolStrip
     {
@@ -51,6 +51,36 @@ namespace ImageGlass
         public string ToolTipText;
         public bool ToolTipShowUp;
 
+        private ToolbarAlignment _alignment = ToolbarAlignment.LEFT;
+
+        private ToolTip Tooltip
+        {
+            get
+            {
+                if (_tooltip == null)
+                {
+                    _tooltip = new ToolTip();
+                    Tooltip.AutomaticDelay = 2000;
+                    Tooltip.InitialDelay = 2000;
+                }
+                return _tooltip;
+            }
+        }
+
+        /// <summary>
+        /// Gets, sets items alignment
+        /// </summary>
+        public ToolbarAlignment Alignment {
+            get => _alignment;
+            set {
+                this._alignment = value;
+
+                this.UpdateAlignment();
+            }
+        }
+
+
+        #region Protected methods
         protected override void OnMouseMove(MouseEventArgs mea)
         {
             base.OnMouseMove(mea);
@@ -91,7 +121,7 @@ namespace ImageGlass
             mouseOverItem = null;
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
             try
@@ -123,20 +153,7 @@ namespace ImageGlass
             { }
         }
 
-        private ToolTip Tooltip
-        {
-            get
-            {
-                if (_tooltip == null)
-                {
-                    _tooltip = new ToolTip();
-                    Tooltip.AutomaticDelay = 2000;
-                    Tooltip.InitialDelay = 2000;
-                }
-                return _tooltip;
-            }
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -147,13 +164,83 @@ namespace ImageGlass
             }
         }
 
+        #endregion
+
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            this.UpdateAlignment();
+        }
+
+
         public ToolStripToolTip() : base()
         {
             ShowItemToolTips = false;
-            timer = new Timer();
-            timer.Enabled = false;
-            timer.Interval = 200; // KBR enforce long initial time SystemInformation.MouseHoverTime;
+            timer = new Timer
+            {
+                Enabled = false,
+                Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
+            };
             timer.Tick += new EventHandler(timer_Tick);
+        }
+
+
+        /// <summary>
+        /// Update the alignment if toolstrip items
+        /// </summary>
+        public void UpdateAlignment()
+        {
+            if (this.Items.Count == 0) return;
+
+
+            var firstBtn = this.Items[0];
+            var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
+
+
+            // reset the alignment to left
+            firstBtn.Margin = defaultMargin;
+
+
+            if (this.Alignment == ToolbarAlignment.CENTER)
+            {
+                // get the correct content width, excluding the sticky right items
+                var toolbarContentWidth = 0;
+                foreach (ToolStripItem item in this.Items)
+                {
+                    if (item.Alignment == ToolStripItemAlignment.Right)
+                    {
+                        toolbarContentWidth += item.Width * 2;
+                    }
+                    else
+                    {
+                        toolbarContentWidth += item.Width;
+                    }
+                }
+
+                // if the content cannot fit the toolbar size:
+                // (toolbarContentWidth > toolMain.Size.Width)
+                if (this.OverflowButton.Visible)
+                {
+                    // align left
+                    firstBtn.Margin = defaultMargin;
+                }
+                else
+                {
+                    // the default margin (left alignment)
+                    var margin = defaultMargin;
+
+
+                    // get the gap of content width and toolbar width
+                    int gap = Math.Abs(this.Width - toolbarContentWidth);
+
+                    // update the left margin value
+                    margin.Left = gap / 2;
+
+                    // align the first item
+                    firstBtn.Margin = margin;
+                }
+            }
         }
     }
 }

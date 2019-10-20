@@ -173,7 +173,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets image error value
         /// </summary>
-        public static bool IsImageError { get; set; } = false;
+        public static Exception ImageError { get; set; } = null;
 
 
         /// <summary>

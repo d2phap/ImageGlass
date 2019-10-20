@@ -41,6 +41,7 @@
             this.txtLocation = new System.Windows.Forms.TextBox();
             this.lblLocation = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnSnapTo = new System.Windows.Forms.Button();
             this.panelColor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +57,6 @@
             this.lblPixel.TabIndex = 0;
             this.lblPixel.Text = "(255, 1000)";
             this.lblPixel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblPixel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // panelColor
             // 
@@ -65,24 +65,22 @@
             this.panelColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelColor.Controls.Add(this.lblPixel);
             this.panelColor.Location = new System.Drawing.Point(20, 64);
-            this.panelColor.Margin = new System.Windows.Forms.Padding(4);
+            this.panelColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelColor.Name = "panelColor";
             this.panelColor.Size = new System.Drawing.Size(276, 40);
             this.panelColor.TabIndex = 1;
-            this.panelColor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // lblRGB
             // 
             this.lblRGB.AutoSize = true;
             this.lblRGB.BackColor = System.Drawing.Color.Transparent;
             this.lblRGB.ForeColor = System.Drawing.Color.White;
-            this.lblRGB.Location = new System.Drawing.Point(15, 151);
+            this.lblRGB.Location = new System.Drawing.Point(15, 152);
             this.lblRGB.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRGB.Name = "lblRGB";
             this.lblRGB.Size = new System.Drawing.Size(61, 25);
             this.lblRGB.TabIndex = 2;
             this.lblRGB.Text = "RGBA:";
-            this.lblRGB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // lblHEX
             // 
@@ -95,7 +93,6 @@
             this.lblHEX.Size = new System.Drawing.Size(61, 25);
             this.lblHEX.TabIndex = 3;
             this.lblHEX.Text = "HEXA:";
-            this.lblHEX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // txtRGB
             // 
@@ -116,7 +113,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHEX.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.txtHEX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHEX.Location = new System.Drawing.Point(82, 185);
+            this.txtHEX.Location = new System.Drawing.Point(82, 184);
             this.txtHEX.Name = "txtHEX";
             this.txtHEX.ReadOnly = true;
             this.txtHEX.Size = new System.Drawing.Size(214, 31);
@@ -147,7 +144,6 @@
             this.lblCMYK.Size = new System.Drawing.Size(63, 25);
             this.lblCMYK.TabIndex = 6;
             this.lblCMYK.Text = "CMYK:";
-            this.lblCMYK.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // txtHSL
             // 
@@ -155,7 +151,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHSL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.txtHSL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHSL.Location = new System.Drawing.Point(82, 259);
+            this.txtHSL.Location = new System.Drawing.Point(82, 260);
             this.txtHSL.Name = "txtHSL";
             this.txtHSL.ReadOnly = true;
             this.txtHSL.Size = new System.Drawing.Size(214, 31);
@@ -173,7 +169,6 @@
             this.lblHSL.Size = new System.Drawing.Size(60, 25);
             this.lblHSL.TabIndex = 8;
             this.lblHSL.Text = "HSLA:";
-            this.lblHSL.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
             // 
             // txtLocation
             // 
@@ -211,21 +206,41 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(242, 1);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClose.Location = new System.Drawing.Point(241, 2);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(73, 40);
+            this.btnClose.Size = new System.Drawing.Size(74, 40);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
+            // 
+            // btnSnapTo
+            // 
+            this.btnSnapTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSnapTo.AutoSize = true;
+            this.btnSnapTo.BackColor = System.Drawing.Color.Teal;
+            this.btnSnapTo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
+            this.btnSnapTo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(62)))), ((int)(((byte)(74)))));
+            this.btnSnapTo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSnapTo.ForeColor = System.Drawing.Color.White;
+            this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSnapTo.Location = new System.Drawing.Point(165, 2);
+            this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSnapTo.Name = "btnSnapTo";
+            this.btnSnapTo.Size = new System.Drawing.Size(74, 40);
+            this.btnSnapTo.TabIndex = 12;
+            this.btnSnapTo.Text = "^";
+            this.btnSnapTo.UseVisualStyleBackColor = false;
             // 
             // frmColorPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(316, 313);
+            this.ClientSize = new System.Drawing.Size(316, 314);
+            this.Controls.Add(this.btnSnapTo);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtLocation);
             this.Controls.Add(this.lblLocation);
@@ -241,7 +256,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmColorPicker";
@@ -251,12 +266,9 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Color Picker";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmColorPicker_FormClosing);
             this.Load += new System.EventHandler(this.frmColorPicker_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmColorPicker_KeyDown);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frmColorPicker_MouseDown);
-            this.Move += new System.EventHandler(this.frmColorPicker_Move);
             this.panelColor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -278,5 +290,6 @@
         private System.Windows.Forms.TextBox txtLocation;
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnSnapTo;
     }
 }

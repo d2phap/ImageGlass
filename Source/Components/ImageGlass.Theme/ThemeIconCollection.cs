@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,79 +17,41 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.Theme
+namespace ImageGlass.UI
 {
     public class ThemeIconCollection
     {
-        public ThemeImage About { get; set; }
-        public ThemeImage ActualSize { get; set; }
-        public ThemeImage AdjustWindowSize { get; set; }
-        public ThemeImage Checkerboard { get; set; }
-        public ThemeImage Convert { get; set; }
-        public ThemeImage FullScreen { get; set; }
-        public ThemeImage GoToImage { get; set; }
-        public ThemeImage LockRatio { get; set; }
-        public ThemeImage Menu { get; set; }
-        public ThemeImage OpenFile { get; set; }
-        public ThemeImage Plugins { get; set; }
-        public ThemeImage Print { get; set; }
-        public ThemeImage Refresh { get; set; }
-        public ThemeImage RotateLeft { get; set; }
-        public ThemeImage RotateRight { get; set; }
-        public ThemeImage FlipHorz { get; set; }
-        public ThemeImage FlipVert { get; set; }
-        public ThemeImage Detele { get; set; }
-        public ThemeImage ScaleToHeight { get; set; }
-        public ThemeImage ScaleToWidth { get; set; }
-        public ThemeImage Settings { get; set; }
-        public ThemeImage Sharing { get; set; }
-        public ThemeImage Slideshow { get; set; }
-        public ThemeImage ThumbnailBar { get; set; }
-        public ThemeImage ViewNextImage { get; set; }
-        public ThemeImage ViewPreviousImage { get; set; }
-        public ThemeImage ZoomIn { get; set; }
-        public ThemeImage ZoomOut { get; set; }
-        public ThemeImage ScaleToFit { get; set; }
-        public ThemeImage AutoZoom { get; set; }
-
-        /// <summary>
-        /// Icon collection for the theme
-        /// </summary>
-        public ThemeIconCollection()
-        {
-            About = new ThemeImage();
-            ActualSize = new ThemeImage();
-            AdjustWindowSize = new ThemeImage();
-            Checkerboard = new ThemeImage();
-            Convert = new ThemeImage();
-            FullScreen = new ThemeImage();
-            GoToImage = new ThemeImage();
-            LockRatio = new ThemeImage();
-            Menu = new ThemeImage();
-            OpenFile = new ThemeImage();
-            Plugins = new ThemeImage();
-            Print = new ThemeImage();
-            Refresh = new ThemeImage();
-            RotateLeft = new ThemeImage();
-            RotateRight = new ThemeImage();
-            FlipHorz = new ThemeImage();
-            FlipVert = new ThemeImage();
-            Detele = new ThemeImage();
-            ScaleToHeight = new ThemeImage();
-            ScaleToWidth = new ThemeImage();
-            Settings = new ThemeImage();
-            Sharing = new ThemeImage();
-            Slideshow = new ThemeImage();
-            ThumbnailBar = new ThemeImage();
-            ViewNextImage = new ThemeImage();
-            ViewPreviousImage = new ThemeImage();
-            ZoomIn = new ThemeImage();
-            ZoomOut = new ThemeImage();
-            ScaleToFit = new ThemeImage();
-            AutoZoom = new ThemeImage();
-        }
+        public ThemeImage About { get; set; } = new ThemeImage();
+        public ThemeImage ActualSize { get; set; } = new ThemeImage();
+        public ThemeImage AdjustWindowSize { get; set; } = new ThemeImage();
+        public ThemeImage Checkerboard { get; set; } = new ThemeImage();
+        public ThemeImage Convert { get; set; } = new ThemeImage();
+        public ThemeImage FullScreen { get; set; } = new ThemeImage();
+        public ThemeImage GoToImage { get; set; } = new ThemeImage();
+        public ThemeImage LockRatio { get; set; } = new ThemeImage();
+        public ThemeImage Menu { get; set; } = new ThemeImage();
+        public ThemeImage OpenFile { get; set; } = new ThemeImage();
+        public ThemeImage Plugins { get; set; } = new ThemeImage();
+        public ThemeImage Print { get; set; } = new ThemeImage();
+        public ThemeImage Refresh { get; set; } = new ThemeImage();
+        public ThemeImage RotateLeft { get; set; } = new ThemeImage();
+        public ThemeImage RotateRight { get; set; } = new ThemeImage();
+        public ThemeImage FlipHorz { get; set; } = new ThemeImage();
+        public ThemeImage FlipVert { get; set; } = new ThemeImage();
+        public ThemeImage Detele { get; set; } = new ThemeImage();
+        public ThemeImage ScaleToHeight { get; set; } = new ThemeImage();
+        public ThemeImage ScaleToWidth { get; set; } = new ThemeImage();
+        public ThemeImage Settings { get; set; } = new ThemeImage();
+        public ThemeImage Sharing { get; set; } = new ThemeImage();
+        public ThemeImage Slideshow { get; set; } = new ThemeImage();
+        public ThemeImage ThumbnailBar { get; set; } = new ThemeImage();
+        public ThemeImage ViewNextImage { get; set; } = new ThemeImage();
+        public ThemeImage ViewPreviousImage { get; set; } = new ThemeImage();
+        public ThemeImage ZoomIn { get; set; } = new ThemeImage();
+        public ThemeImage ZoomOut { get; set; } = new ThemeImage();
+        public ThemeImage ScaleToFit { get; set; } = new ThemeImage();
+        public ThemeImage AutoZoom { get; set; } = new ThemeImage();
+        public ThemeImage ViewFirstImage { get; set; } = new ThemeImage();
+        public ThemeImage ViewLastImage { get; set; } = new ThemeImage();
     }
-
-    
-    
 }

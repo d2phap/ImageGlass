@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -284,8 +285,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
+        /// <param name="frameIndex">The index of image frame to display (if it's multi-frame)</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int frameIndex = 0)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -318,8 +320,13 @@ namespace ImageGlass.Heart
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (ImgList.Count > 0 && ImgList[index].Error == null)
+            if (ImgList.Count > 0)
             {
+                if (ImgList[index].Error == null)
+                {
+                    ImgList[index].SetActivePage(frameIndex);
+                }
+
                 return ImgList[index];
             }
 
