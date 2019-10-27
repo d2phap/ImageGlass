@@ -65,8 +65,8 @@
             this.mnuMainScaleToWidth = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainLockZoomRatio = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -141,7 +141,6 @@
             this.btnScaletoWidth = new System.Windows.Forms.ToolStripButton();
             this.btnScaletoHeight = new System.Windows.Forms.ToolStripButton();
             this.btnScaleToFit = new System.Windows.Forms.ToolStripButton();
-            this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.btnZoomLock = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
@@ -157,6 +156,7 @@
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
+            this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuContext.SuspendLayout();
@@ -515,9 +515,8 @@
             this.mnuMainScaleToWidth,
             this.mnuMainScaleToHeight,
             this.mnuMainScaleToFit,
-            this.mnuMainLockZoomRatio,
-            this.mnuMainScaleToFill
-            });
+            this.mnuMainScaleToFill,
+            this.mnuMainLockZoomRatio});
             this.mnuMainZoom.ForeColor = System.Drawing.Color.Black;
             this.mnuMainZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainZoom.Name = "mnuMainZoom";
@@ -630,17 +629,6 @@
             this.mnuMainScaleToFit.Text = "Scale to &fit";
             this.mnuMainScaleToFit.Click += new System.EventHandler(this.mnuMainScaleToFit_Click);
             // 
-            // mnuMainScaleToFill
-            // 
-            this.mnuMainScaleToFill.CheckOnClick = true;
-            this.mnuMainScaleToFill.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainScaleToFill.Name = "mnuMainScaleToFill";
-            this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainScaleToFill.Size = new System.Drawing.Size(584, 31);
-            this.mnuMainScaleToFill.Text = "Scale to fill";
-            this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
-            // 
             // mnuMainLockZoomRatio
             // 
             this.mnuMainLockZoomRatio.ForeColor = System.Drawing.Color.Black;
@@ -652,6 +640,18 @@
             this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(602, 33);
             this.mnuMainLockZoomRatio.Text = "&Lock zoom ratio";
             this.mnuMainLockZoomRatio.Click += new System.EventHandler(this.mnuMainLockZoomRatio_Click);
+            // 
+            // mnuMainScaleToFill
+            // 
+            this.mnuMainScaleToFill.CheckOnClick = true;
+            this.mnuMainScaleToFill.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainScaleToFill.Name = "mnuMainScaleToFill";
+            this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainScaleToFill.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.mnuMainScaleToFill.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainScaleToFill.Text = "Scale to fill";
+            this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
             // 
             // mnuMainImage
             // 
@@ -800,11 +800,11 @@
             this.mnuMainStartStopAnimating.Text = "Start / Stop &animating image";
             this.mnuMainStartStopAnimating.Click += new System.EventHandler(this.mnuMainStartStopAnimating_Click);
             // 
-            // mnuMainExtractFrames
+            // mnuMainExtractPages
             // 
             this.mnuMainExtractPages.ForeColor = System.Drawing.Color.Black;
             this.mnuMainExtractPages.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainExtractPages.Name = "mnuMainExtractFrames";
+            this.mnuMainExtractPages.Name = "mnuMainExtractPages";
             this.mnuMainExtractPages.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainExtractPages.ShortcutKeyDisplayString = "";
             this.mnuMainExtractPages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
@@ -1127,7 +1127,7 @@
             this.mnuMainColorPicker.ShortcutKeyDisplayString = "";
             this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.K)));
-            this.mnuMainColorPicker.Size = new System.Drawing.Size(318, 33);
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(348, 33);
             this.mnuMainColorPicker.Text = "&Color picker";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
@@ -1598,22 +1598,6 @@
             this.btnScaleToFit.ToolTipText = "Zoom to fit  (Ctrl + /)";
             this.btnScaleToFit.Click += new System.EventHandler(this.btnScaleToFit_Click);
             // 
-            // btnScaleToFill
-            // 
-            this.btnScaleToFill.AutoSize = false;
-            this.btnScaleToFill.BackColor = System.Drawing.Color.Transparent;
-            this.btnScaleToFill.CheckOnClick = true;
-            this.btnScaleToFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnScaleToFill.Image = global::ImageGlass.Properties.Resources.info;
-            this.btnScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnScaleToFill.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnScaleToFill.Margin = new System.Windows.Forms.Padding(0);
-            this.btnScaleToFill.Name = "btnScaleToFill";
-            this.btnScaleToFill.Size = new System.Drawing.Size(33, 33);
-            this.btnScaleToFill.Tag = "";
-            this.btnScaleToFill.ToolTipText = "Zoom to fill";
-            this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
-            // 
             // btnZoomLock
             // 
             this.btnZoomLock.AutoSize = false;
@@ -1810,6 +1794,22 @@
             this.lblInfo.Margin = new System.Windows.Forms.Padding(10, 1, 5, 2);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 57);
+            // 
+            // btnScaleToFill
+            // 
+            this.btnScaleToFill.AutoSize = false;
+            this.btnScaleToFill.BackColor = System.Drawing.Color.Transparent;
+            this.btnScaleToFill.CheckOnClick = true;
+            this.btnScaleToFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnScaleToFill.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnScaleToFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnScaleToFill.Margin = new System.Windows.Forms.Padding(0);
+            this.btnScaleToFill.Name = "btnScaleToFill";
+            this.btnScaleToFill.Size = new System.Drawing.Size(33, 33);
+            this.btnScaleToFill.Tag = "";
+            this.btnScaleToFill.ToolTipText = "Zoom to fill";
+            this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
             // 
             // frmMain
             // 
