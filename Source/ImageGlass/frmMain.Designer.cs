@@ -79,7 +79,7 @@
             this.mnuMainDeleteFromHardDisk = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainStartStopAnimating = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainExtractPages = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSetAsDesktop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSetAsLockImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImageLocation = new System.Windows.Forms.ToolStripMenuItem();
@@ -653,7 +653,7 @@
             this.mnuMainDeleteFromHardDisk,
             this.toolStripMenuItem13,
             this.mnuMainStartStopAnimating,
-            this.mnuMainExtractFrames,
+            this.mnuMainExtractPages,
             this.mnuMainSetAsDesktop,
             this.mnuMainSetAsLockImage,
             this.mnuMainImageLocation,
@@ -787,15 +787,15 @@
             // 
             // mnuMainExtractFrames
             // 
-            this.mnuMainExtractFrames.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainExtractFrames.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainExtractFrames.Name = "mnuMainExtractFrames";
-            this.mnuMainExtractFrames.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainExtractFrames.ShortcutKeyDisplayString = "";
-            this.mnuMainExtractFrames.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.mnuMainExtractFrames.Size = new System.Drawing.Size(440, 33);
-            this.mnuMainExtractFrames.Text = "[Extract image frames]";
-            this.mnuMainExtractFrames.Click += new System.EventHandler(this.mnuMainExtractFrames_Click);
+            this.mnuMainExtractPages.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainExtractPages.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainExtractPages.Name = "mnuMainExtractFrames";
+            this.mnuMainExtractPages.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainExtractPages.ShortcutKeyDisplayString = "";
+            this.mnuMainExtractPages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
+            this.mnuMainExtractPages.Size = new System.Drawing.Size(440, 33);
+            this.mnuMainExtractPages.Text = "[Extract image frames]";
+            this.mnuMainExtractPages.Click += new System.EventHandler(this.mnuMainExtractPages_Click);
             // 
             // mnuMainSetAsDesktop
             // 
@@ -1951,7 +1951,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripMenuItem mnuMainNextPage;
         private System.Windows.Forms.ToolStripMenuItem mnuMainPrevPage;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainExtractFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainExtractPages;
         private System.Windows.Forms.ToolStripMenuItem mnuMainFirstPage;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLastPage;
     }

@@ -1858,7 +1858,7 @@ namespace ImageGlass
                 mnuMainAbout.Image = 
                 mnuMainSettings.Image =
 
-                mnuMainExtractFrames.Image =
+                mnuMainExtractPages.Image =
 
                 new Bitmap(newMenuIconHeight, newMenuIconHeight);
 
@@ -3142,6 +3142,11 @@ namespace ImageGlass
                 mnuMainGoto.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainGoto"];
                 mnuMainGotoFirst.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainGotoFirst"];
                 mnuMainGotoLast.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainGotoLast"];
+
+                mnuMainNextPage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainNextPage"];
+                mnuMainPrevPage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainPrevPage"];
+                mnuMainFirstPage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainFirstPage"];
+                mnuMainLastPage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainLastPage"];
                 #endregion
 
 
@@ -3169,7 +3174,7 @@ namespace ImageGlass
                 mnuMainRename.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainRename"];
                 mnuMainMoveToRecycleBin.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainMoveToRecycleBin"];
                 mnuMainDeleteFromHardDisk.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainDeleteFromHardDisk"];
-                mnuMainExtractFrames.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"];
+                mnuMainExtractPages.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractPages"];
                 mnuMainStartStopAnimating.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainStartStopAnimating"];
                 mnuMainSetAsDesktop.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainSetAsDesktop"];
                 mnuMainSetAsLockImage.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainSetAsLockImage"];
@@ -4082,8 +4087,8 @@ namespace ImageGlass
 
                     if (imgData.FrameCount > 1)
                     {
-                        var mnu1 = Library.Menu.Clone(mnuMainExtractFrames);
-                        mnu1.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], imgData.FrameCount);
+                        var mnu1 = Library.Menu.Clone(mnuMainExtractPages);
+                        mnu1.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractPages"], imgData.FrameCount);
                         mnu1.Enabled = true;
 
                         var mnu2 = Library.Menu.Clone(mnuMainStartStopAnimating);
@@ -4894,7 +4899,7 @@ namespace ImageGlass
             }
         }
 
-        private async void mnuMainExtractFrames_Click(object sender, EventArgs e)
+        private async void mnuMainExtractPages_Click(object sender, EventArgs e)
         {
             // Shortcut keys still work even when menu is disabled!
             if (!(sender as ToolStripMenuItem).Enabled || GlobalSetting.ImageError != null)
@@ -4902,7 +4907,7 @@ namespace ImageGlass
 
             using (FolderBrowserDialog fb = new FolderBrowserDialog()
             {
-                Description = GlobalSetting.LangPack.Items[$"{Name}._ExtractFrameText"],
+                Description = GlobalSetting.LangPack.Items[$"{Name}._ExtractPageText"],
                 ShowNewFolderButton = true
             })
             {
@@ -4913,7 +4918,7 @@ namespace ImageGlass
                     var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
                     await img.SaveImagePages(fb.SelectedPath);
 
-                    DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._FrameExtractComplete"], 2000);
+                    DisplayTextMessage(GlobalSetting.LangPack.Items[$"{Name}._PageExtractComplete"], 2000);
                 }
             }
         }
@@ -5363,10 +5368,12 @@ namespace ImageGlass
                 }
 
 
-                mnuMainExtractFrames.Enabled = 
+                mnuMainExtractPages.Enabled = 
                     mnuMainStartStopAnimating.Enabled = 
                     mnuMainPrevPage.Enabled =
-                    mnuMainNextPage.Enabled = false;
+                    mnuMainNextPage.Enabled =
+                    mnuMainFirstPage.Enabled =
+                    mnuMainLastPage.Enabled = false;
 
                 mnuMainSetAsLockImage.Enabled = true;
 
@@ -5380,13 +5387,15 @@ namespace ImageGlass
 
                 if (frameCount > 1)
                 {
-                    mnuMainExtractFrames.Enabled = 
+                    mnuMainExtractPages.Enabled = 
                         mnuMainStartStopAnimating.Enabled = 
                         mnuMainPrevPage.Enabled =
-                        mnuMainNextPage.Enabled = true;
+                        mnuMainNextPage.Enabled = 
+                        mnuMainFirstPage.Enabled =
+                        mnuMainLastPage.Enabled = true;
                 }
 
-                mnuMainExtractFrames.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractFrames"], frameCount);
+                mnuMainExtractPages.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.mnuMainExtractPages"], frameCount);
 
                 // check if igcmdWin10.exe exists!
                 if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
