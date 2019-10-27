@@ -116,7 +116,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "7.0.7.26";
+            _minVersion = "7.5.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -245,39 +245,34 @@ namespace ImageGlass.Library
 
             #region Toolbar
 
-            //Items.Add("frmMain.btnBack", "Go to previous image (Left arrow / PageUp)"); // removed V6.0
-            //Items.Add("frmMain.btnNext", "Go to next image (Right arrow / PageDown)"); // removed V6.0
 
-            Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise (Ctrl + ,)");
-            Items.Add("frmMain.btnRotateRight", "Rotate Clockwise (Ctrl + .)");
+            Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise");
+            Items.Add("frmMain.btnRotateRight", "Rotate Clockwise");
 
             Items.Add("frmMain.btnFlipHorz", "Flip Horizontal"); // Added V6.0
             Items.Add("frmMain.btnFlipVert", "Flip Vertical");   // Added V6.0
 
-            Items.Add("frmMain.btnZoomIn", "Zoom in (Ctrl + =)");
-            Items.Add("frmMain.btnZoomOut", "Zoom out (Ctrl + -)");
-            //Items.Add("frmMain.btnZoomToFit", "Zoom to fit (Ctrl + /)"); //4.5, removed v5.5
-            Items.Add("frmMain.btnAutoZoom", "Auto zoom (Ctrl + A)"); //5.5
-            Items.Add("frmMain.btnScaleToFit", "Scale to fit (Ctrl + /)"); //5.5
-            Items.Add("frmMain.btnActualSize", "Actual size (Ctrl + 0)");
-            Items.Add("frmMain.btnZoomLock", "Lock zoom ratio (Ctrl + L)");
-            Items.Add("frmMain.btnScaletoWidth", "Scale to Width (Ctrl + W)");
-            Items.Add("frmMain.btnScaletoHeight", "Scale to Height (Ctrl + H)");
-            Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions (Ctrl + M)"); //updated 4.0
-            Items.Add("frmMain.btnOpen", "Open file (Ctrl + O)");
-            Items.Add("frmMain.btnRefresh", "Refresh (F5)");
-            Items.Add("frmMain.btnGoto", "Go to ... (Ctrl + G)");
-            Items.Add("frmMain.btnThumb", "Show thumbnail (Ctrl + T)");
-            //Items.Add("frmMain.btnCaro", "Show checked background (Ctrl + B)"); //removed v5.0
-            Items.Add("frmMain.btnFullScreen", "Full screen (Alt + Enter)");
-            Items.Add("frmMain.btnSlideShow", "Play slideshow (F11, ESC to exit)");
-            Items.Add("frmMain.btnConvert", "Convert image (Ctrl + S)");
-            Items.Add("frmMain.btnPrintImage", "Print image (Ctrl + P)");
-            //Items.Add("frmMain.btnFacebook", "Upload to Facebook (Ctrl + U)"); //removed 4.5
-            //Items.Add("frmMain.btnExtension", "Extension Manager (Ctrl + Shift + E)"); //removed 4.5
-            //Items.Add("frmMain.btnSetting", "ImageGlass Settings (Ctrl + Shift + P)"); //removed 4.5
-            //Items.Add("frmMain.btnHelp", "Help (F1)"); //removed 4.5
+            Items.Add("frmMain.btnZoomIn", "Zoom in");
+            Items.Add("frmMain.btnZoomOut", "Zoom out");
+            Items.Add("frmMain.btnActualSize", "Actual size");
 
+            Items.Add("frmMain.btnAutoZoom", "Auto zoom"); //5.5
+            Items.Add("frmMain.btnScaletoWidth", "Scale to Width");
+            Items.Add("frmMain.btnScaletoHeight", "Scale to Height");
+            Items.Add("frmMain.btnScaleToFit", "Scale to fit"); //5.5
+            Items.Add("frmMain.btnScaleToFill", "Scale to fill"); // v7.5
+            Items.Add("frmMain.btnZoomLock", "Lock zoom ratio");
+
+            
+            Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions"); //updated 4.0
+            Items.Add("frmMain.btnOpen", "Open file");
+            Items.Add("frmMain.btnRefresh", "Refresh");
+            Items.Add("frmMain.btnGoto", "Go to...");
+            Items.Add("frmMain.btnThumb", "Show thumbnail");
+            Items.Add("frmMain.btnFullScreen", "Full screen");
+            Items.Add("frmMain.btnSlideShow", "Play slideshow");
+            Items.Add("frmMain.btnConvert", "Convert image");
+            Items.Add("frmMain.btnPrintImage", "Print image");
             Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
             #endregion
 
@@ -321,10 +316,11 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainZoom", "Zoom"); //v7.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-            Items.Add("frmMain.mnuMainScaleToFit", "Zoom to fit"); //v3.5
+            Items.Add("frmMain.mnuMainScaleToFit", "Scale to fit"); //v3.5
+            Items.Add("frmMain.mnuMainScaleToFill", "Scale to fill"); //v7.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
             Items.Add("frmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
-            Items.Add("frmMain.mnuMainAutoZoom", "Auto Zoom"); //v5.5
+            Items.Add("frmMain.mnuMainAutoZoom", "Auto zoom"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
             Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
@@ -392,7 +388,7 @@ namespace ImageGlass.Library
             #region Tools
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
-            Items.Add("frmMain.mnuMainPageNav", "Page Navigation"); // V7.5
+            Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // V7.5
             #endregion
 
 
@@ -416,15 +412,15 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Text", "file(s)");
-            Items.Add("frmMain._ImageData", "Image Data"); //v5.0
+            Items.Add("frmMain._ImageData", "Image data"); //v5.0
             Items.Add("frmMain._RenameDialogText", "Rename"); //v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");
-            Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");
+            Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
             Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
             Items.Add("frmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
-            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.");//v2.0 beta, v6.0
+            Items.Add("frmMain._FullScreenMessage", "Press ALT+ENTER to exit full screen mode.");//v2.0 beta, v6.0
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
@@ -444,7 +440,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
 
-            Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // V7.5
+            Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             #endregion
 
 

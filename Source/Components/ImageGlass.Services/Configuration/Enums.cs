@@ -156,6 +156,7 @@ namespace ImageGlass.Services.Configuration
         // NOTE: add new items here, must match order in _lstToolbarImg.Images list
         btnFlipHorz = 23,
         btnFlipVert = 24,
+        btnScaleToFill = 25,
 
         MAX // DO NOT ADD ANYTHING AFTER THIS
     }
@@ -170,7 +171,8 @@ namespace ImageGlass.Services.Configuration
         ScaleToFit = 1,
         ScaleToWidth = 2,
         ScaleToHeight = 4,
-        LockZoomRatio = 8
+        LockZoomRatio = 8,
+        ScaleToFill = 16,
     }
 
     /// <summary>

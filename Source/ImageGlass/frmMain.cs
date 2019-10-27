@@ -1394,57 +1394,41 @@ namespace ImageGlass
             // Reset (Disable) Zoom Lock
             GlobalSetting.ZoomLockValue = 100.0;
 
+            btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
+                btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
+                btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
+                btnZoomLock.Checked = mnuMainLockZoomRatio.Checked =
+                btnScaleToFit.Checked = mnuMainScaleToFit.Checked = 
+                btnScaleToFill.Checked = mnuMainScaleToFill.Checked = false;
 
             switch (GlobalSetting.ZoomMode)
             {
                 case ZoomMode.ScaleToFit:
                     btnScaleToFit.Checked = mnuMainScaleToFit.Checked = true;
-
-                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
-                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
-                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
-                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
                     break;
 
                 case ZoomMode.ScaleToWidth:
                     btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked = true;
-
-                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
-                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
-                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
-                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
                     break;
 
                 case ZoomMode.ScaleToHeight:
                     btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = true;
-
-                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
-                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
-                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
-                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
                     break;
 
                 case ZoomMode.LockZoomRatio:
                     btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
 
-                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
-                        btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
-                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
-                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = false;
-
                     //Enable Zoom Lock
                     GlobalSetting.ZoomLockValue = picMain.Zoom;
+                    break;
+
+                case ZoomMode.ScaleToFill:
+                    mnuMainScaleToFill.Checked = btnScaleToFill.Checked = true;
                     break;
 
                 case ZoomMode.AutoZoom:
                 default:
                     btnAutoZoom.Checked = mnuMainAutoZoom.Checked = true;
-
-                    btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
-                        btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
-                        btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
-                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = false;
-
                     break;
             }
         }
@@ -1457,46 +1441,58 @@ namespace ImageGlass
         /// <param name="isResetScrollPosition"></param>
         private void ApplyZoomMode(ZoomMode zoomMode, bool isResetScrollPosition = true)
         {
+            if (picMain.Image == null)
+            {
+                return;
+            }
+
             // Reset scrollbar position
             if (isResetScrollPosition)
             {
                 picMain.ScrollTo(0, 0, 0, 0);
             }
 
+            double frac;
+            switch (zoomMode)
+            {
+                case ZoomMode.ScaleToWidth:
+                    frac = picMain.Width / (1f * picMain.Image.Width);
+                    picMain.Zoom = frac * 100;
+                    break;
 
-            if (zoomMode == ZoomMode.ScaleToWidth)
-            {
-                if (picMain.Image == null)
-                {
-                    return;
-                }
+                case ZoomMode.ScaleToHeight:
+                    frac = picMain.Height / (1f * picMain.Image.Height);
+                    picMain.Zoom = frac * 100;
+                    break;
 
-                // Scale to Width
-                double frac = picMain.Width / (1.0 * picMain.Image.Width);
-                picMain.Zoom = frac * 100;
-            }
-            else if (zoomMode == ZoomMode.ScaleToHeight)
-            {
-                if (picMain.Image == null)
-                {
-                    return;
-                }
+                case ZoomMode.ScaleToFit:
+                    picMain.ZoomToFit();
+                    break;
 
-                // Scale to Height
-                double frac = picMain.Height / (1.0 * picMain.Image.Height);
-                picMain.Zoom = frac * 100;
-            }
-            else if (zoomMode == ZoomMode.ScaleToFit)
-            {
-                picMain.ZoomToFit();
-            }
-            else if (zoomMode == ZoomMode.LockZoomRatio)
-            {
-                picMain.Zoom = GlobalSetting.ZoomLockValue;
-            }
-            else //zoomMode == ZoomMode.AutoZoom
-            {
-                picMain.ZoomAuto();
+                case ZoomMode.LockZoomRatio:
+                    picMain.Zoom = GlobalSetting.ZoomLockValue;
+                    break;
+
+                case ZoomMode.ScaleToFill:
+                    var widthRatio = picMain.Width / (1f * picMain.Image.Width);
+                    var heightRatio = picMain.Height / (1f * picMain.Image.Height);
+
+                    if (widthRatio > heightRatio)
+                    {
+                        frac = picMain.Width / (1f * picMain.Image.Width);
+                    }
+                    else
+                    {
+                        frac = picMain.Height / (1f * picMain.Image.Height);
+                    }
+
+                    picMain.Zoom = frac * 100;
+                    break;
+
+                case ZoomMode.AutoZoom:
+                default:
+                    picMain.ZoomAuto();
+                    break;
             }
 
 
@@ -1507,10 +1503,10 @@ namespace ImageGlass
             }
             
 
-            //Tell the app that it's not zoomed by user
+            // Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
 
-            //Get image file information
+            // Get image file information
             UpdateStatusBar();
         }
 
@@ -2164,6 +2160,7 @@ namespace ImageGlass
             btnAutoZoom.Image = t.ToolbarIcons.AutoZoom.Image;
             btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
             btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
+            btnScaleToFill.Image = t.ToolbarIcons.ScaleToFill.Image;
             btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
 
             btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
@@ -3098,6 +3095,7 @@ namespace ImageGlass
                 btnZoomOut.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnZoomOut"];
                 btnAutoZoom.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnAutoZoom"];
                 btnScaleToFit.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnScaleToFit"];
+                btnScaleToFill.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnScaleToFill"];
                 btnActualSize.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnActualSize"];
                 btnZoomLock.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnZoomLock"];
                 btnScaletoWidth.ToolTipText = GlobalSetting.LangPack.Items[$"{Name}.btnScaletoWidth"];
@@ -3155,6 +3153,7 @@ namespace ImageGlass
                 mnuMainZoomIn.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainZoomIn"];
                 mnuMainZoomOut.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainZoomOut"];
                 mnuMainScaleToFit.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainScaleToFit"];
+                mnuMainScaleToFill.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainScaleToFill"];
                 mnuMainActualSize.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainActualSize"];
                 mnuMainLockZoomRatio.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainLockZoomRatio"];
                 mnuMainAutoZoom.Text = GlobalSetting.LangPack.Items[$"{Name}.mnuMainAutoZoom"];
@@ -4004,6 +4003,11 @@ namespace ImageGlass
             mnuMainScaleToFit_Click(null, e);
         }
 
+        private void btnScaleToFill_Click(object sender, EventArgs e)
+        {
+            mnuMainScaleToFill_Click(null, e);
+        }
+
         private void btnZoomLock_Click(object sender, EventArgs e)
         {
             mnuMainLockZoomRatio_Click(null, e);
@@ -4816,6 +4820,14 @@ namespace ImageGlass
         private void mnuMainScaleToFit_Click(object sender, EventArgs e)
         {
             GlobalSetting.ZoomMode = ZoomMode.ScaleToFit;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(GlobalSetting.ZoomMode);
+        }
+
+        private void mnuMainScaleToFill_Click(object sender, EventArgs e)
+        {
+            GlobalSetting.ZoomMode = ZoomMode.ScaleToFill;
 
             SelectUIZoomMode();
             ApplyZoomMode(GlobalSetting.ZoomMode);

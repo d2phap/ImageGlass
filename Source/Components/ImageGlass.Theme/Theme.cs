@@ -196,12 +196,15 @@ namespace ImageGlass.UI
             try
             {
                 var attrib = n.GetAttribute(attribname);
+
                 if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
                     return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+
                 var imgFile = Path.Combine(dir, attrib);
+
                 return new ThemeImage(imgFile, new Size(iconHeight, iconHeight));
             }
-            catch (Exception ex)
+            catch
             {
                 return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
             }
@@ -411,6 +414,7 @@ namespace ImageGlass.UI
             ToolbarIcons.AutoZoom = LoadThemeImage(dir, n, "autozoom", iconHeight);
             ToolbarIcons.ScaleToWidth = LoadThemeImage(dir, n, "scaletowidth", iconHeight);
             ToolbarIcons.ScaleToHeight = LoadThemeImage(dir, n, "scaletoheight", iconHeight);
+            ToolbarIcons.ScaleToFill = LoadThemeImage(dir, n, "scaletofill", iconHeight);
             ToolbarIcons.AdjustWindowSize = LoadThemeImage(dir, n, "autosizewindow", iconHeight);
             ToolbarIcons.OpenFile = LoadThemeImage(dir, n, "open", iconHeight);
             ToolbarIcons.Refresh = LoadThemeImage(dir, n, "refresh", iconHeight);
@@ -426,11 +430,6 @@ namespace ImageGlass.UI
             ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu", iconHeight);
             ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "gofirst", iconHeight);
             ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast", iconHeight);
-
-            // TODO Not used?
-            //ToolbarIcons.Sharing = LoadThemeImage(dir, n, "uploadfb", iconHeight);
-            //ToolbarIcons.Plugins = LoadThemeImage(dir, n, "extension", iconHeight);
-
             #endregion
 
 
@@ -506,6 +505,7 @@ namespace ImageGlass.UI
             n.SetAttribute("scaletofit", Path.GetFileName(ToolbarIcons.ActualSize.Filename));
             n.SetAttribute("scaletowidth", Path.GetFileName(ToolbarIcons.ScaleToWidth.Filename));
             n.SetAttribute("scaletoheight", Path.GetFileName(ToolbarIcons.ScaleToHeight.Filename));
+            n.SetAttribute("scaletofill", Path.GetFileName(ToolbarIcons.ScaleToFill.Filename));
             n.SetAttribute("autosizewindow", Path.GetFileName(ToolbarIcons.AdjustWindowSize.Filename));
             n.SetAttribute("open", Path.GetFileName(ToolbarIcons.OpenFile.Filename));
             n.SetAttribute("refresh", Path.GetFileName(ToolbarIcons.Refresh.Filename));
@@ -877,7 +877,7 @@ namespace ImageGlass.UI
             float min = 0.001f;
             float max = 1.999f;
 
-            return System.Windows.Forms.ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
+            return ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }
 
 
@@ -892,7 +892,7 @@ namespace ImageGlass.UI
             float min = -0.5f;
             float max = 1f;
 
-            return System.Windows.Forms.ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
+            return ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }
 
 

@@ -1299,7 +1299,7 @@ namespace ImageGlass
            The button does NOT need to be added to the toolstrip, or created by the designer.
            It can be created and initialized in code, either by, or before, UpdateToolbarButtons
            is invoked. The image, tooltip and Click event must all be specified!
-        4. Add a new enum to ToolbarButtons below, with the same name as the field name assigned in
+        4. Add a new enum to ToolbarButtons (see Enums.cs), with the same name as the field name assigned in
            the step above (e.g. "btnRename"). The new enum goes BEFORE the MAX entry.
 
         The new toolbar button will now be available, the user would use the toolbar config
