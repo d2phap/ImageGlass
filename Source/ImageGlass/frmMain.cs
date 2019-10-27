@@ -1396,11 +1396,10 @@ namespace ImageGlass
 
             btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
                 btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
-                    btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
-                        btnZoomLock.Checked = mnuMainLockZoomRatio.Checked =
-                            btnScaleToFit.Checked = mnuMainScaleToFit.Checked = 
-                                btnScaleToFill.Checked = mnuMainScaleToFill.Checked =
-                                 false;
+                btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
+                btnZoomLock.Checked = mnuMainLockZoomRatio.Checked =
+                btnScaleToFit.Checked = mnuMainScaleToFit.Checked = 
+                btnScaleToFill.Checked = mnuMainScaleToFill.Checked = false;
 
             switch (GlobalSetting.ZoomMode)
             {
@@ -1457,29 +1456,39 @@ namespace ImageGlass
             switch (zoomMode)
             {
                 case ZoomMode.ScaleToWidth:
-                    // Scale to Width
-                    frac = picMain.Width / (1.0 * picMain.Image.Width);
+                    frac = picMain.Width / (1f * picMain.Image.Width);
                     picMain.Zoom = frac * 100;
                     break;
+
                 case ZoomMode.ScaleToHeight:
-                    // Scale to Height
-                    frac = picMain.Height / (1.0 * picMain.Image.Height);
+                    frac = picMain.Height / (1f * picMain.Image.Height);
                     picMain.Zoom = frac * 100;
                     break;
+
                 case ZoomMode.ScaleToFit:
                     picMain.ZoomToFit();
                     break;
+
                 case ZoomMode.LockZoomRatio:
                     picMain.Zoom = GlobalSetting.ZoomLockValue;
                     break;
+
                 case ZoomMode.ScaleToFill:
-                    // Expand the _smaller_ dimension to fit window
-                    if (picMain.Image.Width > picMain.Image.Height)
-                        frac = picMain.Height / (1.0 * picMain.Image.Height);
+                    var widthRatio = picMain.Width / (1f * picMain.Image.Width);
+                    var heightRatio = picMain.Height / (1f * picMain.Image.Height);
+
+                    if (widthRatio > heightRatio)
+                    {
+                        frac = picMain.Width / (1f * picMain.Image.Width);
+                    }
                     else
-                        frac = picMain.Width / (1.0 * picMain.Image.Width);
+                    {
+                        frac = picMain.Height / (1f * picMain.Image.Height);
+                    }
+
                     picMain.Zoom = frac * 100;
                     break;
+
                 case ZoomMode.AutoZoom:
                 default:
                     picMain.ZoomAuto();
@@ -1494,10 +1503,10 @@ namespace ImageGlass
             }
             
 
-            //Tell the app that it's not zoomed by user
+            // Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
 
-            //Get image file information
+            // Get image file information
             UpdateStatusBar();
         }
 
