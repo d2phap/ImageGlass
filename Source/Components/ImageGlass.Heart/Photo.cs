@@ -86,22 +86,6 @@ namespace ImageGlass.Heart
                     break;
 
                 case ".ICO":
-                    using (var imgColl = new MagickImageCollection(filename, settings))
-                    {
-                        if (imgColl.Count > 0)
-                        {
-                            // Get the biggest image in the collection
-                            using (var imgM = imgColl.OrderByDescending(frame => frame.Width).First())
-                            {
-                                using (var channelImgM = ApplyColorChannel((MagickImage)imgM))
-                                {
-                                    bitmap = channelImgM.ToBitmap();
-                                }
-                            }
-                        }
-                    }
-                    break;
-
                 case ".TIF":
                     try
                     {
@@ -242,7 +226,6 @@ namespace ImageGlass.Heart
                         bitmap = channelImgM.ToBitmap();
                     }
                 }
-
             }
             #endregion
 
