@@ -116,7 +116,7 @@ namespace ImageGlass.Library
             _langName = "Local name of the language";
             _author = "ImageGlass community";
             _description = "English name of language";
-            _minVersion = "7.0.7.26";
+            _minVersion = "7.5.0.0";
             _fileName = "";
             _isRightToLeftLayout = RightToLeft.No;
 
@@ -388,7 +388,7 @@ namespace ImageGlass.Library
             #region Tools
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
-            Items.Add("frmMain.mnuMainPageNav", "Page Navigation"); // V7.5
+            Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // V7.5
             #endregion
 
 
@@ -412,15 +412,15 @@ namespace ImageGlass.Library
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Text", "file(s)");
-            Items.Add("frmMain._ImageData", "Image Data"); //v5.0
+            Items.Add("frmMain._ImageData", "Image data"); //v5.0
             Items.Add("frmMain._RenameDialogText", "Rename"); //v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");
-            Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press {ENTER}");
+            Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
             Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
             Items.Add("frmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
-            Items.Add("frmMain._FullScreenMessage", "Press ALT + ENTER to exit full screen mode.");//v2.0 beta, v6.0
+            Items.Add("frmMain._FullScreenMessage", "Press ALT+ENTER to exit full screen mode.");//v2.0 beta, v6.0
             Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
@@ -440,7 +440,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
 
-            Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // V7.5
+            Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             #endregion
 
 
