@@ -117,10 +117,11 @@ namespace ImageGlass
             toolPageNav.OverflowButton.AutoSize = false;
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
-            btnFirstPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button1Tooltip"];
-            btnNextPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button2Tooltip"];
-            btnPreviousPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button3Tooltip"];
-            btnLastPage.ToolTipText = GlobalSetting.LangPack.Items["frmPageNav.button4Tooltip"];
+            
+            btnNextPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainNextPage"];
+            btnPreviousPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainPrevPage"];
+            btnFirstPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstPage"];
+            btnLastPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainLastPage"];
 
         }
 

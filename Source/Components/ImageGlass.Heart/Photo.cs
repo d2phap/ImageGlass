@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
+
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace ImageGlass.Heart
 {
-    public class Photo
+    public static class Photo
     {
 
         #region Load image / thumbnail
@@ -222,6 +222,7 @@ namespace ImageGlass.Heart
 
                 return imgM;
             }
+
 
             void ReadWithMagickImage()
             {
