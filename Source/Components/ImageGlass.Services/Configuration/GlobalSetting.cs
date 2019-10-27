@@ -453,6 +453,7 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnScaletoWidth}," +
             $"{(int)Configuration.ToolbarButtons.btnScaletoHeight}," +
             $"{(int)Configuration.ToolbarButtons.btnScaleToFit}," +
+            $"{(int)Configuration.ToolbarButtons.btnScaleToFill}," +
             $"{(int)Configuration.ToolbarButtons.btnZoomLock}," +
             $"{(int)Configuration.ToolbarButtons.Separator}," +
 
