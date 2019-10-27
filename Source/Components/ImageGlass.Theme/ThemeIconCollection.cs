@@ -50,6 +50,7 @@ namespace ImageGlass.UI
         public ThemeImage ZoomIn { get; set; } = new ThemeImage();
         public ThemeImage ZoomOut { get; set; } = new ThemeImage();
         public ThemeImage ScaleToFit { get; set; } = new ThemeImage();
+        public ThemeImage ScaleToFill { get; set; } = new ThemeImage();
         public ThemeImage AutoZoom { get; set; } = new ThemeImage();
         public ThemeImage ViewFirstImage { get; set; } = new ThemeImage();
         public ThemeImage ViewLastImage { get; set; } = new ThemeImage();
