@@ -34,6 +34,9 @@ namespace ImageGlass.UI
 
         [DllImport("user32.dll")]
         static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        static extern void ReleaseDC(IntPtr hWnd);
         
 
         private enum DeviceCaps
@@ -85,17 +88,10 @@ namespace ImageGlass.UI
         {
             IntPtr hdc = GetDC(IntPtr.Zero);
 
-            return GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
-            //using (Graphics screen = Graphics.FromHwnd(IntPtr.Zero))
-            //{
-            //    IntPtr hdc = screen.GetHdc();
+            var val = GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
 
-            //    int virtualWidth = GetDeviceCaps(hdc, DeviceCaps.HORZRES);
-            //    int physicalWidth = GetDeviceCaps(hdc, DeviceCaps.DESKTOPHORZRES);
-            //    screen.ReleaseHdc(hdc);
-
-            //    return (int)(96f * physicalWidth / virtualWidth);
-            //}
+            ReleaseDC(hdc);
+            return val;
         }
 
         /// <summary>
