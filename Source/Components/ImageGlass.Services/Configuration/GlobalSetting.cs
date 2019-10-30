@@ -125,7 +125,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
-        public static Library.Language LangPack { get; set; } = new Library.Language();
+        public static Library.Language Lang { get; set; } = new Library.Language();
 
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// Setting to control whether the image's original modified date value is preserved on save
         /// </summary>
-        public static bool PreserveModifiedDate { get; set; } = false;
+        public static bool PreserveModifiedDate { get; set; } = true;
 
         /// <summary>
         /// Gets, sets the value indicates that there is a new version
@@ -466,8 +466,8 @@ namespace ImageGlass.Services.Configuration
             $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
             $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
             $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Configuration.ToolbarButtons.btnDelete},";
-
+            $"{(int)Configuration.ToolbarButtons.btnDelete}," + 
+            $"{(int)Configuration.ToolbarButtons.btnEdit}";
 
 
 

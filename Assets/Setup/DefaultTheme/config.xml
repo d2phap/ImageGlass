@@ -32,6 +32,7 @@
         flipvert="FlipVert.svg"
         gofirst="GoToFirst.svg"
         golast="GoToLast.svg"
+        edit="Edit.svg"
         />
   </Theme>
 </ImageGlass>

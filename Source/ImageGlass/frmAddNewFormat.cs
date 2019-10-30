@@ -34,14 +34,14 @@ namespace ImageGlass
             InitializeComponent();
 
             // Add group items
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"]);
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"]);
+            cmbFormatGroup.Items.Add(GlobalSetting.Lang.Items["_.ImageFormatGroup.Default"]);
+            cmbFormatGroup.Items.Add(GlobalSetting.Lang.Items["_.ImageFormatGroup.Optional"]);
             cmbFormatGroup.SelectedIndex = 0;
             
-            lblFileExtension.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFileExtension"];
-            lblFormatGroup.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFormatGroup"];
-            btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnClose"];
+            lblFileExtension.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFileExtension"];
+            lblFormatGroup.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFormatGroup"];
+            btnOK.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnClose"];
         }
 
         private void btnClose_Click(object sender, EventArgs e)

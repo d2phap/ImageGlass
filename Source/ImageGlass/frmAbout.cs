@@ -114,7 +114,7 @@ namespace ImageGlass
 
             //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
-            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsStartUpDirWritable ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
+            lblVersion.Text = String.Format(GlobalSetting.Lang.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsStartUpDirWritable ? " " + GlobalSetting.Lang.Items["frmAbout._PortableText"] : "");
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             //Load item component
@@ -134,14 +134,14 @@ namespace ImageGlass
             }
 
             //Load language:
-            lblSlogant.Text = GlobalSetting.LangPack.Items["frmAbout.lblSlogant"];
-            lblInfo.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfo"];
-            lblComponent.Text = GlobalSetting.LangPack.Items["frmAbout.lblComponent"];
-            lblReferences.Text = GlobalSetting.LangPack.Items["frmAbout.lblReferences"];
-            lblInfoContact.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfoContact"];
-            lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
-            lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
-            Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
+            lblSlogant.Text = GlobalSetting.Lang.Items["frmAbout.lblSlogant"];
+            lblInfo.Text = GlobalSetting.Lang.Items["frmAbout.lblInfo"];
+            lblComponent.Text = GlobalSetting.Lang.Items["frmAbout.lblComponent"];
+            lblReferences.Text = GlobalSetting.Lang.Items["frmAbout.lblReferences"];
+            lblInfoContact.Text = GlobalSetting.Lang.Items["frmAbout.lblInfoContact"];
+            lblSoftwareUpdate.Text = GlobalSetting.Lang.Items["frmAbout.lblSoftwareUpdate"];
+            lnkCheckUpdate.Text = GlobalSetting.Lang.Items["frmAbout.lnkCheckUpdate"];
+            Text = GlobalSetting.Lang.Items["frmAbout._Text"];
             
         }
 

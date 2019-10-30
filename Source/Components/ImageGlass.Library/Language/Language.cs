@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -239,44 +239,7 @@ namespace ImageGlass.Library
 
 
             #region frmMain
-            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");//v2.0 beta, updated 4.0
-            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");//4.5
-
-
-            #region Toolbar
-
-
-            Items.Add("frmMain.btnRotateLeft", "Rotate Counterclockwise");
-            Items.Add("frmMain.btnRotateRight", "Rotate Clockwise");
-
-            Items.Add("frmMain.btnFlipHorz", "Flip Horizontal"); // Added V6.0
-            Items.Add("frmMain.btnFlipVert", "Flip Vertical");   // Added V6.0
-
-            Items.Add("frmMain.btnZoomIn", "Zoom in");
-            Items.Add("frmMain.btnZoomOut", "Zoom out");
-            Items.Add("frmMain.btnActualSize", "Actual size");
-
-            Items.Add("frmMain.btnAutoZoom", "Auto zoom"); //5.5
-            Items.Add("frmMain.btnScaletoWidth", "Scale to Width");
-            Items.Add("frmMain.btnScaletoHeight", "Scale to Height");
-            Items.Add("frmMain.btnScaleToFit", "Scale to fit"); //5.5
-            Items.Add("frmMain.btnScaleToFill", "Scale to fill"); // v7.5
-            Items.Add("frmMain.btnZoomLock", "Lock zoom ratio");
-
             
-            Items.Add("frmMain.btnWindowAutosize", "Adjust window to actual image dimensions"); //updated 4.0
-            Items.Add("frmMain.btnOpen", "Open file");
-            Items.Add("frmMain.btnRefresh", "Refresh");
-            Items.Add("frmMain.btnGoto", "Go to...");
-            Items.Add("frmMain.btnThumb", "Show thumbnail");
-            Items.Add("frmMain.btnFullScreen", "Full screen");
-            Items.Add("frmMain.btnSlideShow", "Play slideshow");
-            Items.Add("frmMain.btnConvert", "Convert image");
-            Items.Add("frmMain.btnPrintImage", "Print image");
-            Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); //v3.0
-            #endregion
-
-
             #region Main menu
 
             #region File
@@ -410,37 +373,44 @@ namespace ImageGlass.Library
             #endregion
 
 
+            #region Form message texts
+            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");// v2.0 beta, updated 4.0
+            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");// v4.5
+            Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); // v3.0
+
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Text", "file(s)");
-            Items.Add("frmMain._ImageData", "Image data"); //v5.0
-            Items.Add("frmMain._RenameDialogText", "Rename"); //v3.5
+            Items.Add("frmMain._ImageData", "Image data"); // v5.0
+            Items.Add("frmMain._RenameDialogText", "Rename"); // v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");
             Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
             Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
 
             Items.Add("frmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
-            Items.Add("frmMain._FullScreenMessage", "Press ALT+ENTER to exit full screen mode.");//v2.0 beta, v6.0
-            Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu.");//v2.0 beta
+            Items.Add("frmMain._FullScreenMessage", "Press ALT+ENTER to exit full screen mode.");// v2.0 beta, v6.0
+            Items.Add("frmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu."); // v2.0 beta
             Items.Add("frmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
             Items.Add("frmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
-            Items.Add("frmMain._CopyFileText", "Copied {0} file(s)"); //v2.0 final
-            Items.Add("frmMain._CutFileText", "Cut {0} file(s)"); //v2.0 final
-            Items.Add("frmMain._CopyImageData", "Image was copied to clipboard"); //v5.0
-            Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); //v2.0 final
-            Items.Add("frmMain._SaveChanges", "Saving change..."); //v2.0 final
-            Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); //v5.0
-            Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); //v5.0
-            Items.Add("frmMain._Loading", "Loading..."); //v3.0
-            Items.Add("frmMain._FirstItemOfList", "Reached the first image"); //v4.0
-            Items.Add("frmMain._LastItemOfList", "Reached the last image"); //v4.0
-            Items.Add("frmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); //Added V5.0; Modified V6.0
-            Items.Add("frmMain._SetLockImage_Error", "There was an error while setting lock screen image"); //v6.0
+            Items.Add("frmMain._CopyFileText", "Copied {0} file(s)"); // v2.0 final
+            Items.Add("frmMain._CutFileText", "Cut {0} file(s)"); // v2.0 final
+            Items.Add("frmMain._CopyImageData", "Image was copied to clipboard"); // v5.0
+            Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
+            Items.Add("frmMain._SaveChanges", "Saving change..."); // v2.0 final
+            Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
+            Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
+            Items.Add("frmMain._Loading", "Loading..."); // v3.0
+            Items.Add("frmMain._FirstItemOfList", "Reached the first image"); // v4.0
+            Items.Add("frmMain._LastItemOfList", "Reached the last image"); // v4.0
+            Items.Add("frmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
+            Items.Add("frmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
             Items.Add("frmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
-            Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); //v6.0
-            Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); //v6.0
+            Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); // v6.0
+            Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); // v6.0
 
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
+            #endregion
+
             #endregion
 
 
@@ -759,85 +729,6 @@ namespace ImageGlass.Library
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion
 
-
-            #region REMOVED strings
-            //this.Items.Add("frmMain.btnFacebookLike", "Find ImageGlass on the Internet"); //removed v2.0 final
-            //this.Items.Add("frmMain.btnFollow", "Follow ImageGlass by email"); //removed v2.0 final
-            //this.Items.Add("frmMain.btnReport", "Leave ImageGlass feedbacks"); //removed v3.0
-
-            //this.Items.Add("frmMain.mnuStartSlideshow", "Start slideshow"); //remove 3.0
-            //this.Items.Add("frmMain.mnuStopSlideshow", "Stop slideshow"); //remove 3.0
-            //this.Items.Add("frmMain.mnuExitSlideshow", "Exit slideshow"); //remove 3.0
-            //this.Items.Add("frmMain.mnuShowToolBar._Hide", "Hide toolbar"); //remove 3.0
-            //this.Items.Add("frmMain.mnuShowToolBar._Show", "Show toolbar"); //remove 3.0
-            ////this.Items.Add("frmMain.mnuEditWithPaint", "Edit with Paint"); //remove 3.0      
-            //this.Items.Add("frmMain.mnuExtractFrames", "Extract image frames ({0})"); //remove 3.0
-            //this.Items.Add("frmMain.mnuSetWallpaper", "Set as desktop background"); //remove 3.0
-
-            //this.Items.Add("frmMain.mnuPasteImage", "Paste image data"); //v2.0, remove 3.0
-            //this.Items.Add("frmMain.mnuCopy", "Copy"); //v2.0, remove 3.0
-            //this.Items.Add("frmMain.mnuMultiCopy", "Copy multiple files"); //v2.0, remove 3.0
-            //this.Items.Add("frmMain.mnuCut", "Cut"); //v2.0, remove 3.0
-            //this.Items.Add("frmMain.mnuMultiCut", "Cut multiple files"); //v2.0, remove 3.0
-            //this.Items.Add("frmMain.mnuClearClipboard", "Clear clipboard"); //v2.0, remove 3.0
-
-            //this.Items.Add("frmMain.mnuMoveRecycle", "Move to recycle bin"); //remove 3.0
-            //this.Items.Add("frmMain.mnuDelete", "Delete from hard disk"); //remove 3.0
-            //this.Items.Add("frmMain.mnuRename", "Rename image"); //remove 3.0
-            //this.Items.Add("frmMain.mnuUploadFacebook", "Upload to Facebook"); //remove 3.0
-            //this.Items.Add("frmMain.mnuCopyImagePath", "Copy image path"); //remove 3.0
-            //this.Items.Add("frmMain.mnuOpenLocation", "Open image location"); //remove 3.0
-            //this.Items.Add("frmMain.mnuImageProperties", "Image properties"); //remove 3.0
-            //this.Items.Add("frmMain._RecycleBinDialogText", "Send file '{0}' to recycle bin ?"); //removed v3.0
-            //this.Items.Add("frmMain._RecycleBinDialogTitle", "Confirm"); //remove v3.0
-            //this.Items.Add("frmExtension.Node0", "Get more extensions"); //removed v2.0 final
-            //this.Items.Add("frmExtension.lnkGetMoreExt", "Get more extensions"); //removed v2.0 final
-            //this.Items.Add("frmSetting.lblContextMenu", "Context menu"); //removed v2.0 final
-            //this.Items.Add("frmSetting.chkLockWorkspace", "Lock to workspace edge"); //removed v2.0 beta
-            //this.Items.Add("frmSetting._OpenWithImageGlass", "Open with ImageGlass"); //remove 3.0
-            //this.Items.Add("frmSetting.lbl_ContextMenu_Description", "This feature helps you open an image quickly by context menu. 'Add default' button lets you add the context menu into all supported extensions of ImageGlass. If you want to customize your extensions, please modify them in 'Extensions' textbox, and then click 'Update' button. 'Remove all' button lets you remove all context menus related to ImageGlass.\n\nAdd shortcut 'Open with ImageGlass' to context menu."); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblExtensions", "Extensions:"); //remove 3.0
-            //this.Items.Add("frmSetting.btnAddDefaultExtension", "Add default"); //2.0 final, remove 3.0
-            //this.Items.Add("frmSetting.lblAddDefaultContextMenu", "Add default"); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblContextMenu", "Context menu:"); //2.0 final, remove 3.0
-            //this.Items.Add("frmSetting.btnUpdateContextMenu", "Update"); //2.0 final, remove 3.0
-            //this.Items.Add("frmSetting.btnRemoveAllContextMenu", "Remove all"); //2.0 final, remove 3.0
-            //this.Items.Add("frmSetting.lblUpdateContextMenu", "Update"); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblRemoveAllContextMenu", "Remove all"); //removed 2.0 final
-            //this.Items.Add("frmSetting.lblFileAssociationsMng", "File associations:"); //add 2.0 final, remove 3.0
-            //this.Items.Add("frmSetting.btnSetAssociations", "Set associations"); //v2.0 final, remove 3.0
-            //Items.Add("frmSetting.btnOpenFileAssociations", "Open File Associations"); //v2.0 final, -3.5
-
-
-            #region frmFacebook
-            //Items.Add("frmFacebook.lblMessage", "Message"); //removed v5.0
-            //Items.Add("frmFacebook.btnUpload._Upload", "Upload"); //removed v5.0
-            //Items.Add("frmFacebook.btnUpload._Cancel", "Cancel"); //removed v5.0
-            //Items.Add("frmFacebook.btnUpload._ViewImage", "View image"); //removed v5.0
-            //Items.Add("frmFacebook.btnClose", "Close"); //removed v5.0
-            //Items.Add("frmFacebook._StatusBegin", "Click '{0}' to begin"); //removed v5.0
-            //Items.Add("frmFacebook._StatusInvalid", "Invalid filename"); //removed v5.0
-            //Items.Add("frmFacebook._StatusUploading", "Uploading..."); //removed v5.0
-            //Items.Add("frmFacebook._StatusCancel", "Cancelled"); //removed v5.0
-            //Items.Add("frmFacebook._StatusSuccessful", "Successful"); //removed v5.0
-            //Items.Add("frmFaceBookLogin._Text", "Logging in to Facebook ..."); //removed v5.0
-            #endregion
-
-
-            #region frmExtension
-            //Items.Add("frmExtension._Text", "Extension Manager"); //removed v5.0
-
-            //Items.Add("frmExtension.btnGetMoreExt", "Get more extensions"); //v2.0 final, removed v5.0
-            //Items.Add("frmExtension.btnRefreshAllExt", "Refresh"); //v2.0 final, removed v5.0
-            //Items.Add("frmExtension.btnInstallExt", "Install"); //v2.0 final, removed v5.0
-            //Items.Add("frmExtension.btnClose", "Close"); //removed v5.0
-            #endregion
-
-
-            #endregion
-
-
         }
-
     }
 }

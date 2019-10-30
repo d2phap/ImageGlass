@@ -406,6 +406,7 @@ namespace ImageGlass.UI
             ToolbarIcons.FlipHorz = LoadThemeImage(dir, n, "fliphorz", iconHeight);
             ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert", iconHeight);
             ToolbarIcons.Detele = LoadThemeImage(dir, n, "delete", iconHeight);
+            ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit", iconHeight);
             ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin", iconHeight);
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout", iconHeight);
             ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit", iconHeight);
@@ -497,6 +498,7 @@ namespace ImageGlass.UI
             n.SetAttribute("fliphorz", Path.GetFileName(ToolbarIcons.FlipHorz.Filename));
             n.SetAttribute("flipvert", Path.GetFileName(ToolbarIcons.FlipVert.Filename));
             n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Detele.Filename));
+            n.SetAttribute("edit", Path.GetFileName(ToolbarIcons.Edit.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
             n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ScaleToFit.Filename));

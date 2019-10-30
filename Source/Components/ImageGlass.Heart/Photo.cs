@@ -87,6 +87,7 @@ namespace ImageGlass.Heart
 
                 case ".ICO":
                 case ".TIF":
+                case ".WEBP":
                     try
                     {
                         using (var imgColl = new MagickImageCollection(filename, settings))

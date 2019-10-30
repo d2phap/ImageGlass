@@ -39,6 +39,7 @@ namespace ImageGlass.UI
         public ThemeImage FlipHorz { get; set; } = new ThemeImage();
         public ThemeImage FlipVert { get; set; } = new ThemeImage();
         public ThemeImage Detele { get; set; } = new ThemeImage();
+        public ThemeImage Edit { get; set; } = new ThemeImage();
         public ThemeImage ScaleToHeight { get; set; } = new ThemeImage();
         public ThemeImage ScaleToWidth { get; set; } = new ThemeImage();
         public ThemeImage Settings { get; set; } = new ThemeImage();

@@ -234,9 +234,9 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
-            var lang = GlobalSetting.LangPack.Items;
+            var lang = GlobalSetting.Lang.Items;
 
-            RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+            RightToLeft = GlobalSetting.Lang.IsRightToLeftLayout;
             Text = lang[$"{Name}._Text"];
 
 
@@ -664,7 +664,7 @@ namespace ImageGlass
 
             foreach (var item in loadingOrderList)
             {
-                cmbImageOrder.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrder._{item}"]);
+                cmbImageOrder.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbImageOrder._{item}"]);
             }
 
             //Get value of cmbImageOrder
@@ -678,7 +678,7 @@ namespace ImageGlass
 
             foreach (var item in orderTypesList)
             {
-                cmbImageOrderType.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
+                cmbImageOrderType.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
             }
 
             //Get value of cmbImageOrder
@@ -695,9 +695,9 @@ namespace ImageGlass
 
             // color profile list
             cmbColorProfile.Items.Clear();
-            cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._None"]);
+            cmbColorProfile.Items.Add(GlobalSetting.Lang.Items[$"{Name}.cmbColorProfile._None"]);
             cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
-            cmbColorProfile.Items.Add(GlobalSetting.LangPack.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
+            cmbColorProfile.Items.Add(GlobalSetting.Lang.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
 
             // select the color profile
@@ -748,10 +748,10 @@ namespace ImageGlass
             var mouseWheelActionsList = Enum.GetNames(typeof(MouseWheelActions));
             foreach (var item in mouseWheelActionsList)
             {
-                cmbMouseWheel.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelCtrl.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelShift.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelAlt.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheel.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelCtrl.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelShift.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelAlt.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
             }
 
             //Get value of cmbMouseWheel
@@ -776,7 +776,7 @@ namespace ImageGlass
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList)
             {
-                cmbZoomOptimization.Items.Add(GlobalSetting.LangPack.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
+                cmbZoomOptimization.Items.Add(GlobalSetting.Lang.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
             }
 
             // Get value of cmbZoomOptimization
@@ -802,14 +802,14 @@ namespace ImageGlass
 
             // Set value of barInterval
             barInterval.Value = GlobalSetting.SlideShowInterval;
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.Lang.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
 
         }
 
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            lblSlideshowInterval.Text = string.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            lblSlideshowInterval.Text = string.Format(GlobalSetting.Lang.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
         }
 
 
@@ -964,7 +964,7 @@ namespace ImageGlass
         {
             frmEditEditingAssocisation f = new frmEditEditingAssocisation()
             {
-                FileExtension = $"<{string.Format(GlobalSetting.LangPack.Items[$"{Name}._allExtensions"])}>",
+                FileExtension = $"<{string.Format(GlobalSetting.Lang.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
             };
 
@@ -1033,7 +1033,7 @@ namespace ImageGlass
         {
             Process p = new Process();
             p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.LangPack.FileName + "\"";
+            p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.Lang.FileName + "\"";
 
             try
             {
@@ -1071,7 +1071,7 @@ namespace ImageGlass
                 for (int i = 1; i < lstLanguages.Count; i++)
                 {
                     int iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
-                    string curLang = GlobalSetting.LangPack.FileName;
+                    string curLang = GlobalSetting.Lang.FileName;
 
                     //using current language pack
                     if (lstLanguages[i].FileName.CompareTo(curLang) == 0)
@@ -1150,7 +1150,7 @@ namespace ImageGlass
                 lvExtension.Items.Add(li);
             }
 
-            lblSupportedExtension.Text = String.Format(GlobalSetting.LangPack.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
+            lblSupportedExtension.Text = String.Format(GlobalSetting.Lang.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
 
             // Write suported image formats to settings -----------------------------------------
             // Load Default Image Formats
@@ -1190,11 +1190,11 @@ namespace ImageGlass
 
                 if (isError)
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -1308,7 +1308,7 @@ namespace ImageGlass
 
         private void LoadTabToolbar()
         {
-            var lang = GlobalSetting.LangPack.Items;
+            var lang = GlobalSetting.Lang.Items;
 
             // Load toolbar position
             cmbToolbarPosition.Items.Clear();
@@ -1938,7 +1938,7 @@ namespace ImageGlass
             lvTheme.Enabled = true;
             this.Cursor = Cursors.Default;
 
-            lblInstalledThemes.Text = string.Format(GlobalSetting.LangPack.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
+            lblInstalledThemes.Text = string.Format(GlobalSetting.Lang.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
 
 
@@ -1950,7 +1950,7 @@ namespace ImageGlass
 
         private void lvTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var lang = GlobalSetting.LangPack.Items;
+            var lang = GlobalSetting.Lang.Items;
 
             if (lvTheme.SelectedIndices.Count > 0)
             {
@@ -2006,11 +2006,11 @@ namespace ImageGlass
                 {
                     RefreshThemeList();
 
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -2029,7 +2029,7 @@ namespace ImageGlass
                 }
                 else if (result == ThemeUninstallingResult.ERROR)
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -2069,11 +2069,11 @@ namespace ImageGlass
 
                     if (result == ThemePackingResult.SUCCESS)
                     {
-                        MessageBox.Show(string.Format(GlobalSetting.LangPack.Items[$"{Name}.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(string.Format(GlobalSetting.Lang.Items[$"{Name}.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeSaveAs._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeSaveAs._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -2105,11 +2105,11 @@ namespace ImageGlass
 
                     th = null;
 
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(GlobalSetting.LangPack.Items[$"{Name}.btnThemeApply._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GlobalSetting.Lang.Items[$"{Name}.btnThemeApply._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -2123,7 +2123,7 @@ namespace ImageGlass
         private void LoadTabKeyboard()
         {
             GlobalSetting.LoadKeyAssignments();
-            var lang = GlobalSetting.LangPack.Items;
+            var lang = GlobalSetting.Lang.Items;
 
             cmbKeysLeftRight.Items.Clear();
             cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
@@ -2166,7 +2166,7 @@ namespace ImageGlass
         {
             try
             {
-                var lang = GlobalSetting.LangPack.Items;
+                var lang = GlobalSetting.Lang.Items;
 
                 // Fetch the string from language based on the action value
                 var act = GlobalSetting.GetKeyAction(which);
@@ -2214,7 +2214,7 @@ namespace ImageGlass
             if (selected == null)
                 return; // user hasn't visited keyboard page, no changes
 
-            var lang = GlobalSetting.LangPack.Items;
+            var lang = GlobalSetting.Lang.Items;
 
             // match the text of the selected combobox item against
             // the language string for the available actions
@@ -2507,7 +2507,7 @@ namespace ImageGlass
                 {
                     isSuccessful = false;
                     txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
-                    var msg = string.Format(GlobalSetting.LangPack.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
+                    var msg = string.Format(GlobalSetting.Lang.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
 
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -2608,10 +2608,10 @@ namespace ImageGlass
             {
                 newString = lstLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
 
-                if (GlobalSetting.LangPack.FileName.ToLower().CompareTo(newString) != 0)
+                if (GlobalSetting.Lang.FileName.ToLower().CompareTo(newString) != 0)
                 {
-                    GlobalSetting.LangPack = lstLanguages[cmbLanguage.SelectedIndex];
-                    GlobalSetting.SetConfig("Language", Path.GetFileName(GlobalSetting.LangPack.FileName));
+                    GlobalSetting.Lang = lstLanguages[cmbLanguage.SelectedIndex];
+                    GlobalSetting.SetConfig("Language", Path.GetFileName(GlobalSetting.Lang.FileName));
 
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
                 }

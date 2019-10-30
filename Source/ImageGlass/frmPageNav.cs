@@ -118,10 +118,10 @@ namespace ImageGlass
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
             
-            btnNextPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainNextPage"];
-            btnPreviousPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainPrevPage"];
-            btnFirstPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainFirstPage"];
-            btnLastPage.ToolTipText = GlobalSetting.LangPack.Items["frmMain.mnuMainLastPage"];
+            btnNextPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainNextPage"];
+            btnPreviousPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainPrevPage"];
+            btnFirstPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainFirstPage"];
+            btnLastPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainLastPage"];
 
         }
 

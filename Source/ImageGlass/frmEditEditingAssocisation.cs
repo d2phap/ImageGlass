@@ -35,15 +35,15 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            lblFileExtension.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFileExtension"];
-            lblAppName.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppName"];
-            lblAppPath.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppPath"];
-            lblAppArguments.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblAppArguments"];
-            lblPreviewLabel.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblPreviewLabel"];
+            lblFileExtension.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFileExtension"];
+            lblAppName.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppName"];
+            lblAppPath.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppPath"];
+            lblAppArguments.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppArguments"];
+            lblPreviewLabel.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblPreviewLabel"];
 
-            btnReset.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnReset"];
-            btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnClose"];
+            btnReset.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnReset"];
+            btnOK.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnClose"];
         }
 
         private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
