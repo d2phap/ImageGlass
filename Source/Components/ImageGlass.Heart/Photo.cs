@@ -125,7 +125,11 @@ namespace ImageGlass.Heart
                 if (profile != null && useEmbeddedThumbnails)
                 {
                     // Fetch the embedded thumbnail
-                    bitmap = profile.CreateThumbnail().ToBitmap();
+                    var thumbM = profile.CreateThumbnail();
+                    if (thumbM != null)
+                    {
+                        bitmap = thumbM.ToBitmap();
+                    }
                 }
 
 
