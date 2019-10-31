@@ -176,14 +176,14 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
                 (e.KeyCode == Keys.J && e.Control && e.Shift && !e.Alt)) // CTRL + SHIFT + J
             {
-                Close();
+                LocalSetting.IsShowPageNavOnStartup = false;
+                this.Close();
             }
         }
 
         private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
         {
             LocalSetting.IsPageNavToolOpenning = false;
-            LocalSetting.IsShowPageNavOnStartup = false;
 
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
             NavEventHandler = null;
@@ -191,6 +191,7 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
+            LocalSetting.IsShowPageNavOnStartup = false;
             this.Close();
         }
         #endregion

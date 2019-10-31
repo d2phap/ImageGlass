@@ -65,7 +65,6 @@ namespace ImageGlass
              * Done here rather than in designer so this bugfix is visible.
              */
             picMain.ShortcutsEnabled = false;
-
         }
 
 
@@ -858,6 +857,7 @@ namespace ImageGlass
             string imgSize = string.Empty;
             string fileSize = string.Empty;
             string fileDate = string.Empty;
+            string pageInfo = string.Empty;
 
 
             if (LocalSetting.IsTempMemoryData)
@@ -873,7 +873,7 @@ namespace ImageGlass
                     }
                     catch { }
 
-                    //(Image data)  |  {zoom}  |  {image size} - ImageGlass
+                    // (Image data)  |  {zoom}  |  {image size} - ImageGlass
                     this.Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
                 }
                 else
@@ -889,30 +889,29 @@ namespace ImageGlass
                     return;
                 }
 
-                string currentFilePath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
 
                 // when there is a problem with a file, don't try to show some info
-                bool isShowMoreData = File.Exists(currentFilePath);
+                bool isShowMoreData = File.Exists(filename);
 
                 indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.Lang.Items[$"{Name}._Text"]}";
 
                 if (isShowMoreData)
                 {
-                    fileSize = ImageInfo.GetFileSize(currentFilePath);
-                    fileDate = File.GetCreationTime(currentFilePath).ToString("yyyy/MM/dd HH:mm:ss");
+                    fileSize = ImageInfo.GetFileSize(filename);
+                    fileDate = File.GetCreationTime(filename).ToString("yyyy/MM/dd HH:mm:ss");
                 }
 
 
                 if (GlobalSetting.IsDisplayBasenameOfImage)
                 {
-                    filename = Path.GetFileName(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                    filename = Path.GetFileName(filename);
                 }
                 else
                 {
-                    //auto ellipsis the filename
-                    //the minimum text to show is Drive letter + basename.
-                    //ex: C:\...\example.jpg
-                    filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                    // auto ellipsis the filename
+                    // the minimum text to show is Drive letter + basename.
+                    // ex: C:\...\example.jpg
                     var basename = Path.GetFileName(filename);
 
                     var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
@@ -1255,7 +1254,8 @@ namespace ImageGlass
                 _isDraggingImage = true;
 
 
-                #region View previous image page
+                // View previous image page
+                #region Ctrl + (previous)
                 if ((e.KeyValue == (int)Keys.Left
                     && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageUp
@@ -1268,7 +1268,8 @@ namespace ImageGlass
                 #endregion
 
 
-                #region View next image page
+                // View next image page
+                #region Ctrl + (next)
                 if ((e.KeyValue == (int)Keys.Right
                     && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageDown
@@ -1317,6 +1318,7 @@ namespace ImageGlass
                 return;
             }
             #endregion
+
 
             //Start / stop slideshow---------------------------------------------------------
             #region SPACE
@@ -3277,7 +3279,7 @@ namespace ImageGlass
 
 
             #region PAGE_NAV_MENU
-            if ((flags & MainFormForceUpdateAction.PAGE_NAV_MENU) != 0)
+            if ((flags & MainFormForceUpdateAction.PAGE_NAV_MENU) == MainFormForceUpdateAction.PAGE_NAV_MENU)
             {
                 mnuMainPageNav.Checked = LocalSetting.IsPageNavToolOpenning;
             }
@@ -4785,7 +4787,7 @@ namespace ImageGlass
             Rectangle screen = Screen.FromControl(this).WorkingArea;
             WindowState = FormWindowState.Normal;
 
-            //if image size is bigger than screen
+            // if image size is bigger than screen
             if (picMain.Image.Width >= screen.Width || picMain.Height >= screen.Height)
             {
                 Width = screen.Width;

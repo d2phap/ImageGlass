@@ -201,7 +201,7 @@ namespace ImageGlass
             var txt = (TextBox)sender;
             txt.SelectAll();
 
-            //fixed: cannot copy the text if Owner form is not activated
+            // fixed: cannot copy the text if Owner form is not activated
             this.Owner.Activate();
             this.Activate();
         }
@@ -209,6 +209,7 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
+            LocalSetting.IsShowColorPickerOnStartup = false;
             this.Close();
         }
 
@@ -218,11 +219,11 @@ namespace ImageGlass
         #region Other Form Events
         private void frmColorPicker_KeyDown(object sender, KeyEventArgs e)
         {
-            //lblPixel.Text = e.KeyCode.ToString();
+            // lblPixel.Text = e.KeyCode.ToString();
 
 
             #region ESC or CTRL + SHIFT + K
-            //ESC or CTRL + SHIFT + K --------------------------------------------------------
+            // ESC or CTRL + SHIFT + K --------------------------------------------------------
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
                 (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
             {
@@ -236,7 +237,6 @@ namespace ImageGlass
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
         {
             LocalSetting.IsColorPickerToolOpening = false;
-            LocalSetting.IsShowColorPickerOnStartup = false;
 
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
         }
