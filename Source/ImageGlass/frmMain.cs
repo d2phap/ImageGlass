@@ -3222,6 +3222,7 @@ namespace ImageGlass
                 #region Menu Tools
                 mnuMainTools.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainTools"];
                 mnuMainColorPicker.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainColorPicker"];
+                mnuMainPageNav.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainPageNav"];
                 #endregion
 
 
