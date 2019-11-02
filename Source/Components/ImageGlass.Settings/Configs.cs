@@ -1,8 +1,11 @@
 ﻿
+using ImageGlass.Library;
 using ImageGlass.Services.Configuration;
+using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace ImageGlass.Settings
 {
@@ -11,7 +14,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Configuration Source file
         /// </summary>
-        public static ConfigSource Source { get; private set; } = new ConfigSource();
+        private static ConfigSource Source { get; set; } = new ConfigSource();
 
 
         #region Public configs
@@ -203,6 +206,17 @@ namespace ImageGlass.Settings
         public static bool IsShowingHiddenImages { get; set; } = false;
 
 
+        /// <summary>
+        /// Gets, sets value that indicates frmColorPicker tool will be open on startup
+        /// </summary>
+        public static bool IsShowColorPickerOnStartup { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value that indicates frmPageNav tool will be open on startup
+        /// </summary>
+        public static bool IsShowPageNavOnStartup { get; set; } = false;
+
         #endregion
 
 
@@ -267,39 +281,40 @@ namespace ImageGlass.Settings
         public static string ColorProfile { get; set; } = "sRGB";
 
 
+
         /// <summary>
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
-            $"{(int)Services.Configuration.ToolbarButtons.btnBack}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnNext}," +
-            $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnBack}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnNext}," +
+                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
 
-            $"{(int)Services.Configuration.ToolbarButtons.btnRotateLeft}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnRotateRight}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnFlipHorz}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnFlipVert}," +
-            $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnRotateLeft}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnRotateRight}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnFlipHorz}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnFlipVert}," +
+                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
 
-            $"{(int)Services.Configuration.ToolbarButtons.btnAutoZoom}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnScaletoWidth}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnScaletoHeight}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFit}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFill}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnZoomLock}," +
-            $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnAutoZoom}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnScaletoWidth}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnScaletoHeight}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFit}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFill}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnZoomLock}," +
+                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
 
-            $"{(int)Services.Configuration.ToolbarButtons.btnOpen}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnRefresh}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnGoto}," +
-            $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnOpen}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnRefresh}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnGoto}," +
+                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
 
-            $"{(int)Services.Configuration.ToolbarButtons.btnThumb}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnCheckedBackground}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnFullScreen}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnDelete}," +
-            $"{(int)Services.Configuration.ToolbarButtons.btnEdit}";
+                $"{(int)Services.Configuration.ToolbarButtons.btnThumb}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnCheckedBackground}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnFullScreen}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnSlideShow}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnDelete}," +
+                $"{(int)Services.Configuration.ToolbarButtons.btnEdit}";
 
 
 
@@ -312,6 +327,7 @@ namespace ImageGlass.Settings
             $"{(int)KeyCombos.UpDown},{(int)AssignableActions.PanUpDown};" +
             $"{(int)KeyCombos.PageUpDown},{(int)AssignableActions.PrevNextImage};" +
             $"{(int)KeyCombos.SpaceBack},{(int)AssignableActions.PauseSlideshow};";
+
         #endregion
 
 
@@ -335,9 +351,21 @@ namespace ImageGlass.Settings
         #region Enum items
 
         /// <summary>
+        /// Gets, sets state of main window
+        /// </summary>
+        public static FormWindowState FrmMainWindowState { get; set; } = FormWindowState.Normal;
+
+
+        /// <summary>
+        /// Gets, sets state of settings window
+        /// </summary>
+        public static FormWindowState FrmSettingsWindowState { get; set; } = FormWindowState.Normal;
+
+
+        /// <summary>
         /// Gets, sets image loading order
         /// </summary>
-        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
+        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Extension;// ImageOrderBy.Name;
 
 
         /// <summary>
@@ -397,19 +425,33 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets background color
         /// </summary>
-        public static Color BackgroundColor { get; set; } = Color.White;
+        public static Color BackgroundColor { get; set; } = Color.Black;
+
+
+        /// <summary>
+        /// Gets, sets window bound of main form
+        /// </summary>
+        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1000, 800);
+
+
+        /// <summary>
+        /// Gets, sets window bound of main form
+        /// </summary>
+        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 900, 700);
+
 
 
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
-        public static Library.Language Lang { get; set; } = new Library.Language();
+        public static Language Lang { get; set; } = new Language();
 
 
         /// <summary>
-        /// Gets, sets image error value
+        /// Gets, sets theme
         /// </summary>
-        public static Exception ImageError { get; set; } = null;
+        public static Theme Theme { get; set; } = new Theme();
+
 
         #endregion
 
@@ -430,11 +472,6 @@ namespace ImageGlass.Settings
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        #endregion
-
-
-
-        #region Public methods
 
         /// <summary>
         /// Gets config item from ConfigSource
@@ -443,7 +480,7 @@ namespace ImageGlass.Settings
         /// <param name="key">Key of the config</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns></returns>
-        public static T Get<T>(string key, object defaultValue)
+        private static T Get<T>(string key, object defaultValue)
         {
             try
             {
@@ -461,7 +498,7 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="key">Key of the config</param>
         /// <param name="value">Value</param>
-        public static void Set(string key, object value)
+        private static void Set(string key, object value)
         {
             if (Source.ContainsKey(key))
             {
@@ -473,6 +510,217 @@ namespace ImageGlass.Settings
             }
         }
 
+
+        #endregion
+
+
+
+        #region Public methods
+
+        /// <summary>
+        /// Load and parse configs from file
+        /// </summary>
+        public static void Load()
+        {
+            // load user configs from file
+            Source.LoadUserConfigs();
+
+
+            // load configs to public properties
+
+            #region Boolean items
+
+            IsPlaySlideShow = Get<bool>(nameof(IsPlaySlideShow), IsPlaySlideShow);
+            IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
+            IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
+            IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
+            IsColorPickerRGBA = Get<bool>(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
+            IsColorPickerHEXA = Get<bool>(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
+            IsColorPickerHSLA = Get<bool>(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            IsShowWelcome = Get<bool>(nameof(IsShowWelcome), IsShowWelcome);
+            IsShowToolBar = Get<bool>(nameof(IsShowToolBar), IsShowToolBar);
+            IsShowThumbnailScrollbar = Get<bool>(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
+            IsLoopBackSlideShow = Get<bool>(nameof(IsLoopBackSlideShow), IsLoopBackSlideShow);
+            IsLoopBackViewer = Get<bool>(nameof(IsLoopBackViewer), IsLoopBackViewer);
+            IsPressESCToQuit = Get<bool>(nameof(IsPressESCToQuit), IsPressESCToQuit);
+            IsShowCheckerBoard = Get<bool>(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
+            IsAllowMultiInstances = Get<bool>(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
+            IsWindowAlwaysOnTop = Get<bool>(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
+            IsThumbnailHorizontal = Get<bool>(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
+            IsConfirmationDelete = Get<bool>(nameof(IsConfirmationDelete), IsConfirmationDelete);
+            IsScrollbarsVisible = Get<bool>(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
+            IsSaveAfterRotating = Get<bool>(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
+            PreserveModifiedDate = Get<bool>(nameof(PreserveModifiedDate), PreserveModifiedDate);
+            IsNewVersionAvailable = Get<bool>(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
+            IsDisplayBasenameOfImage = Get<bool>(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
+            IsCenterToolbar = Get<bool>(nameof(IsCenterToolbar), IsCenterToolbar);
+            IsOpenLastSeenImage = Get<bool>(nameof(IsOpenLastSeenImage), IsOpenLastSeenImage);
+            IsApplyColorProfileForAll = Get<bool>(nameof(IsApplyColorProfileForAll), IsApplyColorProfileForAll);
+            IsShowNavigationButtons = Get<bool>(nameof(IsShowNavigationButtons), IsShowNavigationButtons);
+            IsShowCheckerboardOnlyImageRegion = Get<bool>(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
+            IsRecursiveLoading = Get<bool>(nameof(IsRecursiveLoading), IsRecursiveLoading);
+            IsUseFileExplorerSortOrder = Get<bool>(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
+            IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
+            IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+
+            #endregion
+
+
+            #region Number items
+
+            SlideShowInterval = Get<int>(nameof(SlideShowInterval), SlideShowInterval);
+            ThumbnailDimension = Get<int>(nameof(ThumbnailDimension), ThumbnailDimension);
+            ThumbnailBarWidth = Get<int>(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+
+            ImageBoosterCachedCount = Get<int>(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+            ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
+
+            ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
+
+            #endregion
+
+
+            #region String items
+            // TODO: merge 2 list
+            DefaultImageFormats = Get<string>(nameof(DefaultImageFormats), DefaultImageFormats);
+            OptionalImageFormats = Get<string>(nameof(OptionalImageFormats), OptionalImageFormats);
+
+            ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
+            ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
+
+            ToolbarButtons = Get<string>(nameof(ToolbarButtons), ToolbarButtons);
+            KeyAssignments = Get<string>(nameof(KeyAssignments), KeyAssignments);
+
+            #endregion
+
+
+            #region Array items
+
+            #region ZoomLevels
+
+            var zoomLevelStr = Get<string>(nameof(ZoomLevels), "");
+            var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
+
+            if (zoomLevels.Length > 0)
+            {
+                ZoomLevels = zoomLevels;
+            }
+
+            #endregion
+
+
+            #region ImageEditingAssociationList
+
+            var editAssocStr = Get<string>(nameof(ImageEditingAssociationList), "");
+            var editAssocList = editAssocStr.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            if (editAssocList.Length > 0)
+            {
+                foreach (var configStr in editAssocList)
+                {
+                    try
+                    {
+                        var extAssoc = new ImageEditingAssociation(configStr);
+                        ImageEditingAssociationList.Add(extAssoc);
+                    }
+                    catch (InvalidCastException) { }
+                }
+            }
+            #endregion
+
+            #endregion
+
+
+            #region Enum items
+
+            FrmMainWindowState = (FormWindowState)Get<int>(nameof(FrmMainWindowState), FrmMainWindowState);
+            FrmSettingsWindowState = (FormWindowState)Get<int>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            ImageLoadingOrder = (ImageOrderBy)Get<int>(nameof(ImageLoadingOrder), ImageLoadingOrder);
+            ImageLoadingOrderType = (ImageOrderType)Get<int>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+            MouseWheelAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAction), MouseWheelAction);
+            MouseWheelCtrlAction = (MouseWheelActions)Get<int>(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+            MouseWheelShiftAction = (MouseWheelActions)Get<int>(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+            MouseWheelAltAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAltAction), MouseWheelAltAction);
+            ZoomMode = (ZoomMode)Get<int>(nameof(ZoomMode), ZoomMode);
+            ZoomOptimizationMethod = (ZoomOptimizationMethods)Get<int>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+            ToolbarPosition = (ToolbarPosition)Get<int>(nameof(ToolbarPosition), ToolbarPosition);
+
+            #endregion
+
+
+            #region Other types items
+
+            #region BackgroundColor
+            var bgValue = Get<string>(nameof(BackgroundColor), "#000");
+            BackgroundColor = Theme.ConvertHexStringToColor(bgValue, true);
+            #endregion
+
+
+            #region FrmMainWindowsBound
+            var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
+            if (string.IsNullOrEmpty(boundStr))
+            {
+                var rc = Helpers.StringToRect(boundStr);
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+
+                FrmMainWindowsBound = rc;
+            }
+            #endregion
+
+
+            #region FrmSettingsWindowsBound
+            boundStr = Get<string>(nameof(FrmSettingsWindowsBound), "");
+            if (string.IsNullOrEmpty(boundStr))
+            {
+                var rc = Helpers.StringToRect(boundStr);
+
+                if (!Helper.IsOnScreen(rc.Location))
+                {
+                    rc.Location = new Point(280, 125);
+                }
+
+                FrmSettingsWindowsBound = rc;
+            }
+            #endregion
+
+
+            #region Lang
+            var langPath = Get<string>(nameof(Lang), "English");
+            Lang = new Language(langPath, App.StartUpDir(Dir.Languages));
+            #endregion
+
+
+            #region Theme
+            var themeFolderName = Get<string>(nameof(Theme), "default");
+            var th = new Theme(App.ConfigDir(Dir.Themes, themeFolderName));
+
+            if (th.IsValid)
+            {
+                Theme = th;
+            }
+            #endregion
+
+            #endregion
+
+        }
+
+
+        /// <summary>
+        /// Parse and write configs to file
+        /// </summary>
+        public static void Write()
+        {
+            // save public properties to configs
+
+
+            // write user configs to file
+            Source.WriteUserConfigs();
+        }
 
         #endregion
 

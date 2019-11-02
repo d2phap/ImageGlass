@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Heart", "Compone
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImageGlass", "Setup\MSI\ImageGlass\ImageGlass.vdproj", "{D8D571C9-34A6-4492-BD04-116DB52A0250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Settings", "Components\ImageGlass.Configs\ImageGlass.Settings.csproj", "{4BAD780F-8071-4034-9020-ECC9F4352422}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Settings", "Components\ImageGlass.Settings\ImageGlass.Settings.csproj", "{4BAD780F-8071-4034-9020-ECC9F4352422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

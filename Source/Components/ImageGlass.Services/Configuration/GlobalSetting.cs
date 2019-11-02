@@ -39,7 +39,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// First launch version constant. 
+        /// ~First launch version constant. 
         /// If the value read from config file is less than this value, 
         /// the First-Launch Configs screen will be launched.
         /// </summary>
@@ -47,7 +47,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// The URI Scheme to register web-to-app linking
+        /// ~The URI Scheme to register web-to-app linking
         /// </summary>
         public const string URI_SCHEME = "imageglass";
 
@@ -171,7 +171,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// ~Gets, sets image error value
+        /// Gets, sets image error value
         /// </summary>
         public static Exception ImageError { get; set; } = null;
 
@@ -684,7 +684,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert string to int array
+        /// ~Convert string to int array
         /// </summary>
         /// <param name="str">Input string. E.g. "12, -40, 50"</param>
         /// <returns></returns>
@@ -714,7 +714,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert int array to string
+        /// ~Convert int array to string
         /// </summary>
         /// <param name="array">Input int array</param>
         /// <returns></returns>
@@ -725,7 +725,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert string to Rectangle
+        /// ~Convert string to Rectangle
         /// </summary>
         /// <param name="str">Input string. E.g. "12, 40, 50"</param>
         /// <returns></returns>
@@ -743,7 +743,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Convert Rectangle to String
+        /// ~Convert Rectangle to String
         /// </summary>
         /// <param name="rc"></param>
         /// <returns></returns>
@@ -800,7 +800,7 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Parse string to absolute path
+        /// ~Parse string to absolute path
         /// </summary>
         /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
         /// <returns></returns>

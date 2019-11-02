@@ -1,29 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security;
-using System.Security.Permissions;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageGlass.Settings
 {
-    public class Helpers
+    public static class App
     {
-        /// <summary>
-        /// Check if the given dir is writable
-        /// </summary>
-        /// <param name="dir">Full path of dir</param>
-        /// <returns></returns>
-        public static bool IsDirWritable(string dir)
-        {
-            var permissionSet = new PermissionSet(PermissionState.None);
-            var writePermission = new FileIOPermission(FileIOPermissionAccess.Write, dir);
-            permissionSet.AddPermission(writePermission);
-
-            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-        }
-
-
         /// <summary>
         /// Get the path based on the startup folder of ImageGlass.
         /// </summary>
@@ -50,7 +36,7 @@ namespace ImageGlass.Settings
         {
             // use StartUp dir if it's writable
             var startUpDir = StartUpDir(paths);
-            if (IsDirWritable(startUpDir))
+            if (Helpers.IsDirWritable(startUpDir))
             {
                 return startUpDir;
             }
@@ -66,8 +52,28 @@ namespace ImageGlass.Settings
         }
 
 
-        
-        
+        /// <summary>
+        /// Parse string to absolute path
+        /// </summary>
+        /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
+        /// <returns></returns>
+        public static string ToAbsolutePath(string inputPath)
+        {
+            var path = inputPath;
+            var protocol = Constants.URI_SCHEME + ":";
+
+            // If inputPath is URI Scheme
+            if (path.StartsWith(protocol))
+            {
+                // Retrieve the real path
+                path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
+            }
+
+            // Parse environment vars to absolute path
+            path = Environment.ExpandEnvironmentVariables(path);
+
+            return path;
+        }
 
     }
 }

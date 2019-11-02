@@ -40,7 +40,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Gets, sets value that indicates frmColorPicker tool will be open on startup
+        /// ~Gets, sets value that indicates frmColorPicker tool will be open on startup
         /// </summary>
         public static bool IsShowColorPickerOnStartup { get; set; } = false;
 
@@ -53,7 +53,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Gets, sets value that indicates frmPageNav tool will be open on startup
+        /// ~Gets, sets value that indicates frmPageNav tool will be open on startup
         /// </summary>
         public static bool IsShowPageNavOnStartup { get; set; } = false;
 
@@ -166,7 +166,7 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Gets, sets current app theme
+        /// ~Gets, sets current app theme
         /// </summary>
         public static UI.Theme Theme
         {
