@@ -4,6 +4,9 @@ using System.Xml;
 
 namespace ImageGlass.Settings
 {
+    /// <summary>
+    /// Configuration Source File
+    /// </summary>
     public class ConfigSource : Dictionary<string, string>
     {
 
@@ -151,6 +154,7 @@ namespace ImageGlass.Settings
             catch { }
         }
 
+
         #endregion
 
 
@@ -178,6 +182,14 @@ namespace ImageGlass.Settings
             foreach (var item in this.AdminConfigs)
             {
                 userConfigs[item.Key] = item.Value;
+            }
+
+
+            // set user configs to the dictionary
+            this.Clear();
+            foreach (var item in userConfigs)
+            {
+                this.Add(item.Key, item.Value);
             }
         }
 

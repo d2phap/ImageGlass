@@ -285,6 +285,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.Configs\ImageGlass.Settings.csproj">
+      <Project>{4bad780f-8071-4034-9020-ecc9f4352422}</Project>
+      <Name>ImageGlass.Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Heart\ImageGlass.Heart.csproj">
       <Project>{51493B09-7A0E-461F-BE18-A6CF629A8FAB}</Project>
       <Name>ImageGlass.Heart</Name>
