@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass", "ImageGlass\Im
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{F5248B7E-8B93-4926-9A60-7208F759CAFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.UI", "Components\ImageGlass.Theme\ImageGlass.UI.csproj", "{76486F88-AA16-4D7D-BBF6-0F1C604D5853}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.UI", "Components\ImageGlass.UI\ImageGlass.UI.csproj", "{76486F88-AA16-4D7D-BBF6-0F1C604D5853}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ultilities", "Ultilities", "{CA86D298-03CA-4A54-A796-B3EBAF2CF841}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Heart", "Components\ImageGlass.Heart\ImageGlass.Heart.csproj", "{51493B09-7A0E-461F-BE18-A6CF629A8FAB}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImageGlass", "Setup\MSI\ImageGlass\ImageGlass.vdproj", "{D8D571C9-34A6-4492-BD04-116DB52A0250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Settings", "Components\ImageGlass.Configs\ImageGlass.Settings.csproj", "{4BAD780F-8071-4034-9020-ECC9F4352422}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -366,6 +368,36 @@ Global
 		{D8D571C9-34A6-4492-BD04-116DB52A0250}.Release|Any CPU.ActiveCfg = Release
 		{D8D571C9-34A6-4492-BD04-116DB52A0250}.Release|x64.ActiveCfg = Release
 		{D8D571C9-34A6-4492-BD04-116DB52A0250}.Release|x86.ActiveCfg = Release
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|Any CPU.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|x64.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|x64.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|x86.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug Designer|x86.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|x64.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Debug|x86.Build.0 = Debug|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|Any CPU.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|x64.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|x64.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|x86.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release without WIC|x86.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|Any CPU.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|x64.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|x64.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|x86.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release_86|x86.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|x64.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|x64.Build.0 = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|x86.ActiveCfg = Release|Any CPU
+		{4BAD780F-8071-4034-9020-ECC9F4352422}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -381,6 +413,7 @@ Global
 		{E1B466B0-8ECE-4D5C-807A-600AAE97BEC7} = {CA86D298-03CA-4A54-A796-B3EBAF2CF841}
 		{51493B09-7A0E-461F-BE18-A6CF629A8FAB} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 		{D8D571C9-34A6-4492-BD04-116DB52A0250} = {609EA266-4EB7-4EB6-A2B5-4496B3721585}
+		{4BAD780F-8071-4034-9020-ECC9F4352422} = {F5248B7E-8B93-4926-9A60-7208F759CAFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B615DD31-5898-4B61-82D5-F63AB5690C5F}
