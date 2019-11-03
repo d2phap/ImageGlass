@@ -16,14 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using System;
-using System.Windows.Forms;
-using Microsoft.Win32;
-using ImageGlass.Services.Configuration;
 using ImageGlass.Library;
-using System.IO;
 using ImageGlass.Library.FileAssociations;
+using ImageGlass.Settings;
+using Microsoft.Win32;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace igtasks
 {
@@ -43,15 +43,15 @@ namespace igtasks
             if (o.ShowDialog() == DialogResult.OK)
             {
                 // create directory if not exist
-                if (!Directory.Exists(GlobalSetting.StartUpDir(Dir.Languages))) {
-                    Directory.CreateDirectory(GlobalSetting.StartUpDir(Dir.Languages));
+                if (!Directory.Exists(App.StartUpDir(Dir.Languages))) {
+                    Directory.CreateDirectory(App.StartUpDir(Dir.Languages));
                 }
 
                 foreach (string f in o.FileNames)
                 {
                     try
                     {
-                        File.Copy(f, GlobalSetting.StartUpDir(Dir.Languages, Path.GetFileName(f)));
+                        File.Copy(f, App.StartUpDir(Dir.Languages, Path.GetFileName(f)));
                     }
                     catch (Exception ex)
                     {
@@ -185,7 +185,7 @@ namespace igtasks
                 return 1;
             }
 
-            if (!reg.Write("ApplicationIcon", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\", 0"))
+            if (!reg.Write("ApplicationIcon", $"\"{Constants.IGExePath}\", 0"))
             {
                 return 1;
             }
@@ -209,10 +209,10 @@ namespace igtasks
                 }
 
                 // Config the File Associations - Icon
-                var iconPath = GlobalSetting.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
+                var iconPath = App.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
                 if (!File.Exists(iconPath))
                 {
-                    iconPath = GlobalSetting.StartUpDir("ImageGlass.exe");
+                    iconPath = Constants.IGExePath;
                 }
 
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
@@ -230,7 +230,7 @@ namespace igtasks
 
                 // Config the File Associations - Command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
-                if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\" \"%1\""))
+                if (!reg.Write("", $"\"{Constants.IGExePath}\" \"%1\""))
                 {
                     return 1;
                 }
@@ -248,7 +248,7 @@ namespace igtasks
         /// <returns></returns>
         public static int DeleteURIScheme()
         {
-            string baseKey = $@"SOFTWARE\Classes\{GlobalSetting.URI_SCHEME}";
+            string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
 
             RegistryHelper reg = new RegistryHelper
             {
@@ -274,7 +274,7 @@ namespace igtasks
             DeleteURIScheme();
 
 
-            string baseKey = $@"SOFTWARE\Classes\{GlobalSetting.URI_SCHEME}";
+            string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
             RegistryHelper reg = new RegistryHelper
             {
                 ShowError = true,
@@ -295,7 +295,7 @@ namespace igtasks
 
             // DefaultIcon
             reg.SubKey = $@"{baseKey}\DefaultIcon";
-            if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\", 0"))
+            if (!reg.Write("", $"\"{Constants.IGExePath}\", 0"))
             {
                 return 1;
             }
@@ -303,7 +303,7 @@ namespace igtasks
 
             // shell\open\command
             reg.SubKey = $@"{baseKey}\shell\open\command";
-            if (!reg.Write("", $"\"{GlobalSetting.StartUpDir("ImageGlass.exe")}\" \"%1\""))
+            if (!reg.Write("", $"\"{Constants.IGExePath}\" \"%1\""))
             {
                 return 1;
             }
