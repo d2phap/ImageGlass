@@ -18,8 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Library.Image;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
@@ -27,7 +28,7 @@ namespace igcmd
 {
     static class Program
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
 
@@ -46,8 +47,8 @@ namespace igcmd
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+            // Load user configs
+            Configs.Load();
             
 
             //Set desktop wallpaper
@@ -73,14 +74,14 @@ namespace igcmd
             // check for update
             else if (topcmd == "igupdate")
             {
-                Core.CheckForUpdate();
+                return Core.CheckForUpdate() ? 1 : 0;
             }
 
 
             // auto check for update
             else if (topcmd == "igautoupdate")
             {
-                Core.AutoUpdate();
+                return Core.AutoUpdate() ? 1 : 0;
             }
 
 

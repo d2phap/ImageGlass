@@ -153,6 +153,7 @@
             this.Name = "frmCheckForUpdate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Check for update";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCheckForUpdate_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).EndInit();
             this.panel1.ResumeLayout(false);

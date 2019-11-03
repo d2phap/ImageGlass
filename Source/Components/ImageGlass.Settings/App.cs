@@ -75,5 +75,6 @@ namespace ImageGlass.Settings
             return path;
         }
 
+
     }
 }

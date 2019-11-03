@@ -715,6 +715,7 @@ namespace ImageGlass.Library
 
             #region frmFirstLaunch
             Items.Add("frmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
+            Items.Add("frmFirstLaunch._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
             Items.Add("frmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
             Items.Add("frmFirstLaunch.btnNextStep", "Next"); //v5.0
             Items.Add("frmFirstLaunch.btnNextStep._Done", "Done!"); //v5.0

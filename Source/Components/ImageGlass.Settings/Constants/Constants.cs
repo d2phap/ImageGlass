@@ -26,6 +26,12 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
+        /// Gets the application version
+        /// </summary>
+        public static string IGExePath { get => App.StartUpDir("ImageGlass.exe"); }
+
+
+        /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
         public static NumberFormatInfo NumberFormat

@@ -122,12 +122,6 @@
     <Compile Include="frmFirstLaunch.Designer.cs">
       <DependentUpon>frmFirstLaunch.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMsg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMsg.Designer.cs">
-      <DependentUpon>frmMsg.cs</DependentUpon>
-    </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,9 +130,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmFirstLaunch.resx">
       <DependentUpon>frmFirstLaunch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMsg.resx">
-      <DependentUpon>frmMsg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -203,6 +194,10 @@
     <ProjectReference Include="..\..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj">
+      <Project>{4bad780f-8071-4034-9020-ecc9f4352422}</Project>
+      <Name>ImageGlass.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Components\ImageGlass.UI\ImageGlass.UI.csproj">
       <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>
