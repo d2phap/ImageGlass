@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Permissions;
@@ -14,13 +15,21 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="dir">Full path of dir</param>
         /// <returns></returns>
-        public static bool IsDirWritable(string dir)
+        public static bool CheckDirWritable(string dir)
         {
-            var permissionSet = new PermissionSet(PermissionState.None);
-            var writePermission = new FileIOPermission(FileIOPermissionAccess.Write, dir);
-            permissionSet.AddPermission(writePermission);
+            try
+            {
+                var testFile = Path.Combine(dir, "test_write_file.temp");
 
-            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+                using (File.Create(testFile)) { }
+                File.Delete(testFile);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 

@@ -3028,6 +3028,10 @@ namespace ImageGlass
                 IsBackground = true
             };
             thDeleteWorker.Start();
+
+
+            
+            Settings.Configs.Load();
         }
 
         public void LoadFromParams(string[] args)

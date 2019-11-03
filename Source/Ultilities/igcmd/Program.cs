@@ -51,21 +51,21 @@ namespace igcmd
             Configs.Load();
             
 
-            //Set desktop wallpaper
+            // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper")
             {
-                //Get image's path
+                // Get image's path
                 string imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2)
                 {
-                    //Get style
+                    // Get style
                     Enum.TryParse(args[2], out style);
                 }
 
-                //Apply changes and return exit code
+                // Apply changes and return exit code
                 return (int)DesktopWallapaper.Set(imgPath, style);
             }
             #endregion

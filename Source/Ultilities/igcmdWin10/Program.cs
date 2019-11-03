@@ -33,6 +33,7 @@ namespace igcmdWin10
         static int Main(string[] args)
         {
             string topcmd = args[0].ToLower().Trim();
+
             if (topcmd == "setlockimage")
             {
                 var task = SetLockScreenImageAsync(args);

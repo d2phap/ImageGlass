@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageGlass.Settings
 {
     public static class App
     {
+
+        /// <summary>
+        /// Gets value of Portable mode if the startup dir is writtable
+        /// </summary>
+        public static bool IsPortable { get => Helpers.CheckDirWritable(StartUpDir()); }
+
+
         /// <summary>
         /// Get the path based on the startup folder of ImageGlass.
         /// </summary>
@@ -36,7 +40,7 @@ namespace ImageGlass.Settings
         {
             // use StartUp dir if it's writable
             var startUpDir = StartUpDir(paths);
-            if (Helpers.IsDirWritable(startUpDir))
+            if (Helpers.CheckDirWritable(startUpDir))
             {
                 return startUpDir;
             }
