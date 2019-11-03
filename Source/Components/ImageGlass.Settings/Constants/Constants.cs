@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Windows.Forms;
 
 namespace ImageGlass.Settings
 {
@@ -16,6 +17,12 @@ namespace ImageGlass.Settings
         /// The URI Scheme to register web-to-app linking
         /// </summary>
         public const string URI_SCHEME = "imageglass";
+
+
+        /// <summary>
+        /// Gets the application version
+        /// </summary>
+        public static string AppVersion { get => Application.ProductVersion; }
 
 
         /// <summary>

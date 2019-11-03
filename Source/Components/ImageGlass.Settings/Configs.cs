@@ -5,6 +5,8 @@ using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ImageGlass.Settings
@@ -223,6 +225,12 @@ namespace ImageGlass.Settings
         #region Number items
 
         /// <summary>
+        /// Gets, sets the version that requires to launch First-Launch Configs screen
+        /// </summary>
+        public static int FirstLaunchVersion { get; set; } = 0;
+
+
+        /// <summary>
         /// Gets, sets slide show interval
         /// </summary>
         public static int SlideShowInterval { get; set; } = 5;
@@ -281,6 +289,11 @@ namespace ImageGlass.Settings
         public static string ColorProfile { get; set; } = "sRGB";
 
 
+        /// <summary>
+        /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
+        /// </summary>
+        public static string AutoUpdate { get; set; } = "7/26/1991 12:13:08 AM";
+
 
         /// <summary>
         /// The toolbar button configuration: contents and order.
@@ -322,7 +335,7 @@ namespace ImageGlass.Settings
         /// User-selected action tied to key pairings.
         /// E.g. Left/Right arrows: prev/next image
         /// </summary>
-        public static string KeyAssignments { get; set; } = $"" +
+        public static string KeyboardActions { get; set; } = $"" +
             $"{(int)KeyCombos.LeftRight},{(int)AssignableActions.PrevNextImage};" +
             $"{(int)KeyCombos.UpDown},{(int)AssignableActions.PanUpDown};" +
             $"{(int)KeyCombos.PageUpDown},{(int)AssignableActions.PrevNextImage};" +
@@ -444,7 +457,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
-        public static Language Lang { get; set; } = new Language();
+        public static Language Language { get; set; } = new Language();
 
 
         /// <summary>
@@ -456,7 +469,6 @@ namespace ImageGlass.Settings
         #endregion
 
         #endregion
-
 
 
 
@@ -527,7 +539,6 @@ namespace ImageGlass.Settings
 
 
             // load configs to public properties
-
             #region Boolean items
 
             IsPlaySlideShow = Get<bool>(nameof(IsPlaySlideShow), IsPlaySlideShow);
@@ -569,6 +580,7 @@ namespace ImageGlass.Settings
 
             #region Number items
 
+            FirstLaunchVersion = Get<int>(nameof(FirstLaunchVersion), FirstLaunchVersion);
             SlideShowInterval = Get<int>(nameof(SlideShowInterval), SlideShowInterval);
             ThumbnailDimension = Get<int>(nameof(ThumbnailDimension), ThumbnailDimension);
             ThumbnailBarWidth = Get<int>(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
@@ -577,6 +589,23 @@ namespace ImageGlass.Settings
             ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
 
             ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
+
+            #endregion
+
+
+            #region Enum items
+
+            FrmMainWindowState = (FormWindowState)Get<int>(nameof(FrmMainWindowState), FrmMainWindowState);
+            FrmSettingsWindowState = (FormWindowState)Get<int>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            ImageLoadingOrder = (ImageOrderBy)Get<int>(nameof(ImageLoadingOrder), ImageLoadingOrder);
+            ImageLoadingOrderType = (ImageOrderType)Get<int>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+            MouseWheelAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAction), MouseWheelAction);
+            MouseWheelCtrlAction = (MouseWheelActions)Get<int>(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+            MouseWheelShiftAction = (MouseWheelActions)Get<int>(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+            MouseWheelAltAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAltAction), MouseWheelAltAction);
+            ZoomMode = (ZoomMode)Get<int>(nameof(ZoomMode), ZoomMode);
+            ZoomOptimizationMethod = (ZoomOptimizationMethods)Get<int>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+            ToolbarPosition = (ToolbarPosition)Get<int>(nameof(ToolbarPosition), ToolbarPosition);
 
             #endregion
 
@@ -590,7 +619,9 @@ namespace ImageGlass.Settings
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
             ToolbarButtons = Get<string>(nameof(ToolbarButtons), ToolbarButtons);
-            KeyAssignments = Get<string>(nameof(KeyAssignments), KeyAssignments);
+            KeyboardActions = Get<string>(nameof(KeyboardActions), KeyboardActions);
+
+            AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
 
             #endregion
 
@@ -628,23 +659,6 @@ namespace ImageGlass.Settings
                 }
             }
             #endregion
-
-            #endregion
-
-
-            #region Enum items
-
-            FrmMainWindowState = (FormWindowState)Get<int>(nameof(FrmMainWindowState), FrmMainWindowState);
-            FrmSettingsWindowState = (FormWindowState)Get<int>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
-            ImageLoadingOrder = (ImageOrderBy)Get<int>(nameof(ImageLoadingOrder), ImageLoadingOrder);
-            ImageLoadingOrderType = (ImageOrderType)Get<int>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
-            MouseWheelAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAction), MouseWheelAction);
-            MouseWheelCtrlAction = (MouseWheelActions)Get<int>(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
-            MouseWheelShiftAction = (MouseWheelActions)Get<int>(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
-            MouseWheelAltAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAltAction), MouseWheelAltAction);
-            ZoomMode = (ZoomMode)Get<int>(nameof(ZoomMode), ZoomMode);
-            ZoomOptimizationMethod = (ZoomOptimizationMethods)Get<int>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
-            ToolbarPosition = (ToolbarPosition)Get<int>(nameof(ToolbarPosition), ToolbarPosition);
 
             #endregion
 
@@ -690,8 +704,8 @@ namespace ImageGlass.Settings
 
 
             #region Lang
-            var langPath = Get<string>(nameof(Lang), "English");
-            Lang = new Language(langPath, App.StartUpDir(Dir.Languages));
+            var langPath = Get<string>(nameof(Language), "English");
+            Language = new Language(langPath, App.StartUpDir(Dir.Languages));
             #endregion
 
 
@@ -716,6 +730,117 @@ namespace ImageGlass.Settings
         public static void Write()
         {
             // save public properties to configs
+            #region Boolean items
+
+            Set(nameof(IsPlaySlideShow), IsPlaySlideShow);
+            Set(nameof(IsFullScreen), IsFullScreen);
+            Set(nameof(IsShowThumbnail), IsShowThumbnail);
+            Set(nameof(IsCenterImage), IsCenterImage);
+            Set(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
+            Set(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
+            Set(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            Set(nameof(IsShowWelcome), IsShowWelcome);
+            Set(nameof(IsShowToolBar), IsShowToolBar);
+            Set(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
+            Set(nameof(IsLoopBackSlideShow), IsLoopBackSlideShow);
+            Set(nameof(IsLoopBackViewer), IsLoopBackViewer);
+            Set(nameof(IsPressESCToQuit), IsPressESCToQuit);
+            Set(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
+            Set(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
+            Set(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
+            Set(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
+            Set(nameof(IsConfirmationDelete), IsConfirmationDelete);
+            Set(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
+            Set(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
+            Set(nameof(PreserveModifiedDate), PreserveModifiedDate);
+            Set(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
+            Set(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
+            Set(nameof(IsCenterToolbar), IsCenterToolbar);
+            Set(nameof(IsOpenLastSeenImage), IsOpenLastSeenImage);
+            Set(nameof(IsApplyColorProfileForAll), IsApplyColorProfileForAll);
+            Set(nameof(IsShowNavigationButtons), IsShowNavigationButtons);
+            Set(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
+            Set(nameof(IsRecursiveLoading), IsRecursiveLoading);
+            Set(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
+            Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
+            Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+
+            #endregion
+
+
+            #region Number items
+
+            Set(nameof(FirstLaunchVersion), FirstLaunchVersion);
+            Set(nameof(SlideShowInterval), SlideShowInterval);
+            Set(nameof(ThumbnailDimension), ThumbnailDimension);
+            Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+            Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+            Set(nameof(ZoomLockValue), ZoomLockValue);
+
+            #endregion
+
+
+            #region Enum items
+
+            Set(nameof(FrmMainWindowState), FrmMainWindowState);
+            Set(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            Set(nameof(ImageLoadingOrder), ImageLoadingOrder);
+            Set(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+            Set(nameof(MouseWheelAction), MouseWheelAction);
+            Set(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+            Set(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+            Set(nameof(MouseWheelAltAction), MouseWheelAltAction);
+            Set(nameof(ZoomMode), ZoomMode);
+            Set(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+            Set(nameof(ToolbarPosition), ToolbarPosition);
+
+            #endregion
+
+
+            #region String items
+
+            // TODO: merge 2 list
+            Set(nameof(DefaultImageFormats), DefaultImageFormats);
+            Set(nameof(OptionalImageFormats), OptionalImageFormats);
+
+            Set(nameof(ColorProfile), ColorProfile);
+            Set(nameof(ToolbarButtons), ToolbarButtons);
+            Set(nameof(KeyboardActions), KeyboardActions);
+            Set(nameof(AutoUpdate), AutoUpdate);
+
+            #endregion
+
+
+            #region Array items
+
+            Set(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
+
+            #region ImageEditingAssociationList
+
+            var editingAssocString = new StringBuilder();
+
+            foreach (var item in ImageEditingAssociationList)
+            {
+                editingAssocString.Append($"[{item.ToString()}]");
+            }
+
+            Set(nameof(ImageEditingAssociationList), editingAssocString);
+
+            #endregion
+
+            #endregion
+
+
+            #region Other types items
+
+            Set(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
+            Set(nameof(FrmMainWindowsBound), Helpers.RectToString(FrmMainWindowsBound));
+            Set(nameof(FrmSettingsWindowsBound), Helpers.RectToString(FrmSettingsWindowsBound));
+            Set(nameof(Language), Path.GetFileName(Language.FileName));
+            Set(nameof(Theme), Theme.FolderName);
+
+            #endregion
 
 
             // write user configs to file
