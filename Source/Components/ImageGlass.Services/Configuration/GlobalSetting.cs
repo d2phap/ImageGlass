@@ -125,7 +125,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// ~Gets, sets language pack
         /// </summary>
-        public static Library.Language Lang { get; set; } = new Library.Language();
+        //public static Library.Language Lang { get; set; } = new Library.Language();
 
 
         /// <summary>

@@ -48,22 +48,18 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            //Get DPI Scaling ratio
-            //NOTE: the this.DeviceDpi property is not accurate
+            // Get DPI Scaling ratio
+            // NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
-            //Load UI Configs
+            // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
 
-            //Update form with new DPI
+            // Update form with new DPI
             OnDpiChanged();
             Application.DoEvents();
 
-            /* KBR 20181009 - Fix observed bug. 
-             * If picMain had input focus, CTRL+/CTRL- keys would zoom *twice*. 
-             * This is disabled by turning off ImageBox shortcuts. 
-             * Done here rather than in designer so this bugfix is visible.
-             */
+            // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
         }
 
@@ -208,8 +204,8 @@ namespace ImageGlass
         {
             using (var o = new OpenFileDialog()
             {
-                Filter = GlobalSetting.Lang.Items[$"{Name}._OpenFileDialog"] + "|" +
-                        GlobalSetting.AllImageFormats,
+                Filter = Settings.Configs.Language.Items[$"{Name}._OpenFileDialog"] + "|" +
+                        Settings.Configs.AllImageFormats,
                 CheckFileExists = true,
             })
             {
@@ -382,7 +378,7 @@ namespace ImageGlass
                 GlobalSetting.ImageError = new Exception("File not found.");
                 this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
-                picMain.Text = GlobalSetting.Lang.Items[$"{Name}.picMain._ErrorText"];
+                picMain.Text = Settings.Configs.Language.Items[$"{Name}.picMain._ErrorText"];
                 picMain.Image = null;
 
                 return;
@@ -648,7 +644,7 @@ namespace ImageGlass
             //Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._SaveChanges"], 2000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -702,14 +698,14 @@ namespace ImageGlass
                 //Reach end of list
                 if (tempIndex >= GlobalSetting.ImageList.Length)
                 {
-                    DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._LastItemOfList"], 1000);
+                    DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._LastItemOfList"], 1000);
                     return;
                 }
 
                 //Reach the first item of list
                 if (tempIndex < 0)
                 {
-                    DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._FirstItemOfList"], 1000);
+                    DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._FirstItemOfList"], 1000);
                     return;
                 }
             }
@@ -800,7 +796,7 @@ namespace ImageGlass
 
             if (GlobalSetting.ImageError != null)
             {
-                picMain.Text = GlobalSetting.Lang.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + GlobalSetting.ImageError.Source + ": " + GlobalSetting.ImageError.Message;
+                picMain.Text = Settings.Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + GlobalSetting.ImageError.Source + ": " + GlobalSetting.ImageError.Message;
 
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
@@ -862,7 +858,7 @@ namespace ImageGlass
 
             if (LocalSetting.IsTempMemoryData)
             {
-                var imgData = GlobalSetting.Lang.Items[$"{Name}._ImageData"];
+                var imgData = Settings.Configs.Language.Items[$"{Name}._ImageData"];
                 zoom = $"{picMain.Zoom.ToString()}%";
 
                 if (picMain.Image != null)
@@ -894,7 +890,7 @@ namespace ImageGlass
                 // when there is a problem with a file, don't try to show some info
                 bool isShowMoreData = File.Exists(filename);
 
-                indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {GlobalSetting.Lang.Items[$"{Name}._Text"]}";
+                indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {Settings.Configs.Language.Items[$"{Name}._Text"]}";
 
                 if (isShowMoreData)
                 {
@@ -1384,7 +1380,7 @@ namespace ImageGlass
                 }
             }
 
-            mnuMainEditImage.Text = string.Format(GlobalSetting.Lang.Items[$"{Name}.mnuMainEditImage"], appName);
+            mnuMainEditImage.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainEditImage"], appName);
         }
 
 
@@ -1567,7 +1563,7 @@ namespace ImageGlass
             //Show input box
             string str = null;
 
-            if (InputBox.ShowDiaLog(GlobalSetting.Lang.Items[$"{Name}._RenameDialogText"], GlobalSetting.Lang.Items[$"{Name}._RenameDialog"], newName, false) == DialogResult.OK)
+            if (InputBox.ShowDiaLog(Settings.Configs.Language.Items[$"{Name}._RenameDialogText"], Settings.Configs.Language.Items[$"{Name}._RenameDialog"], newName, false) == DialogResult.OK)
             {
                 str = InputBox.Message;
             }
@@ -1612,7 +1608,7 @@ namespace ImageGlass
 
             if (_isAppBusy)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{this.Name}._Loading"], 10000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{this.Name}._Loading"], 10000);
             }
 
             timer.Dispose();
@@ -1721,7 +1717,7 @@ namespace ImageGlass
             Clipboard.SetFileDropList(fileDropList);
 
             DisplayTextMessage(
-                string.Format(GlobalSetting.Lang.Items[$"{Name}._CopyFileText"],
+                string.Format(Settings.Configs.Language.Items[$"{Name}._CopyFileText"],
                 LocalSetting.StringClipboard.Count), 1000);
         }
 
@@ -1781,7 +1777,7 @@ namespace ImageGlass
             Clipboard.SetDataObject(data, true);
 
             DisplayTextMessage(
-                string.Format(GlobalSetting.Lang.Items[$"{Name}._CutFileText"],
+                string.Format(Settings.Configs.Language.Items[$"{Name}._CutFileText"],
                 LocalSetting.StringClipboard.Count), 1000);
         }
 
@@ -1812,7 +1808,7 @@ namespace ImageGlass
             }
             catch (Exception)
             {
-                MessageBox.Show(string.Format(GlobalSetting.Lang.Items[$"{this.Name}._SaveImageError"], LocalSetting.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{this.Name}._SaveImageError"], LocalSetting.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             LocalSetting.ImageModifiedPath = "";
@@ -2014,7 +2010,7 @@ namespace ImageGlass
                 var channelName = Enum.GetName(typeof(ColorChannels), channel);
                 var mnu = new ToolStripMenuItem()
                 {
-                    Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainChannels._{channelName}"],
+                    Text = Settings.Configs.Language.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
                     Checked = (int)channel == (int)LocalSetting.Channels,
@@ -2400,7 +2396,7 @@ namespace ImageGlass
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
-                GlobalSetting.Lang = new Language(configValue, GlobalSetting.StartUpDir(Dir.Languages));
+                Settings.Configs.Language = new Language(configValue, GlobalSetting.StartUpDir(Dir.Languages));
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
@@ -2808,7 +2804,7 @@ namespace ImageGlass
             // Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._SaveChanges"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -3086,165 +3082,165 @@ namespace ImageGlass
                 #region Update language strings
 
                 #region Toolbar
-                btnBack.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewPrevious"];
-                btnNext.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewNext"];
+                btnBack.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainViewPrevious"];
+                btnNext.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainViewNext"];
                 
-                btnRotateLeft.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainRotateCounterclockwise"];
-                btnRotateRight.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainRotateClockwise"];
-                btnFlipHorz.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainFlipHorz"];
-                btnFlipVert.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainFlipVert"];
-                btnDelete.ToolTipText = $"{GlobalSetting.Lang.Items[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
+                btnRotateLeft.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateCounterclockwise"];
+                btnRotateRight.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateClockwise"];
+                btnFlipHorz.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainFlipHorz"];
+                btnFlipVert.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainFlipVert"];
+                btnDelete.ToolTipText = $"{Settings.Configs.Language.Items[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
 
                 // Zoom
-                btnZoomIn.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainZoomIn"];
-                btnZoomOut.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainZoomOut"];
-                btnActualSize.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainActualSize"];
-                btnWindowAutosize.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainWindowAdaptImage"];
+                btnZoomIn.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainZoomIn"];
+                btnZoomOut.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainZoomOut"];
+                btnActualSize.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainActualSize"];
+                btnWindowAutosize.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainWindowAdaptImage"];
 
-                btnAutoZoom.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainAutoZoom"];
-                btnScaletoWidth.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToWidth"];
-                btnScaletoHeight.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToHeight"];
-                btnScaleToFit.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToFit"];
-                btnScaleToFill.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToFill"];
-                btnZoomLock.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainLockZoomRatio"];
+                btnAutoZoom.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainAutoZoom"];
+                btnScaletoWidth.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToWidth"];
+                btnScaletoHeight.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToHeight"];
+                btnScaleToFit.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFit"];
+                btnScaleToFill.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFill"];
+                btnZoomLock.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainLockZoomRatio"];
                 
-                btnOpen.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainOpenFile"];
-                btnRefresh.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainRefresh"];
-                btnGoto.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainGoto"];
-                btnThumb.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainThumbnailBar"];
-                btnCheckedBackground.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainCheckBackground"];
-                btnFullScreen.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainFullScreen"];
-                btnSlideShow.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainSlideShowStart"];
-                btnConvert.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainSaveAs"];
-                btnPrintImage.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.mnuMainPrint"];
-                btnMenu.ToolTipText = GlobalSetting.Lang.Items[$"{Name}.btnMenu"];
-                btnEdit.ToolTipText = string.Format(GlobalSetting.Lang.Items[$"{Name}.mnuMainEditImage"], "");
+                btnOpen.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainOpenFile"];
+                btnRefresh.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRefresh"];
+                btnGoto.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainGoto"];
+                btnThumb.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainThumbnailBar"];
+                btnCheckedBackground.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckBackground"];
+                btnFullScreen.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainFullScreen"];
+                btnSlideShow.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainSlideShowStart"];
+                btnConvert.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainSaveAs"];
+                btnPrintImage.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainPrint"];
+                btnMenu.ToolTipText = Settings.Configs.Language.Items[$"{Name}.btnMenu"];
+                btnEdit.ToolTipText = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainEditImage"], "");
                 #endregion
 
                 
                 #region Main menu
 
                 #region Menu File
-                mnuMainFile.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFile"];
-                mnuMainOpenFile.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainOpenFile"];
-                mnuMainOpenImageData.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainOpenImageData"];
-                mnuMainNewWindow.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainNewWindow"];
-                mnuMainSaveAs.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSaveAs"];
-                mnuMainRefresh.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainRefresh"];
-                mnuMainReloadImage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainReloadImage"];
-                mnuMainReloadImageList.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainReloadImageList"];
-                mnuMainEditImage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainEditImage"];
-                mnuMainPrint.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainPrint"];
+                mnuMainFile.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFile"];
+                mnuMainOpenFile.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainOpenFile"];
+                mnuMainOpenImageData.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainOpenImageData"];
+                mnuMainNewWindow.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainNewWindow"];
+                mnuMainSaveAs.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSaveAs"];
+                mnuMainRefresh.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainRefresh"];
+                mnuMainReloadImage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainReloadImage"];
+                mnuMainReloadImageList.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainReloadImageList"];
+                mnuMainEditImage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainEditImage"];
+                mnuMainPrint.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainPrint"];
                 #endregion
 
 
                 #region Menu Navigation
-                mnuMainNavigation.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainNavigation"];
-                mnuMainViewNext.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewNext"];
-                mnuMainViewNext.ShortcutKeyDisplayString = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewNext.Shortcut"];
-                mnuMainViewPrevious.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewPrevious"];
-                mnuMainViewPrevious.ShortcutKeyDisplayString = GlobalSetting.Lang.Items[$"{Name}.mnuMainViewPrevious.Shortcut"];
+                mnuMainNavigation.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainNavigation"];
+                mnuMainViewNext.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainViewNext"];
+                mnuMainViewNext.ShortcutKeyDisplayString = Settings.Configs.Language.Items[$"{Name}.mnuMainViewNext.Shortcut"];
+                mnuMainViewPrevious.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainViewPrevious"];
+                mnuMainViewPrevious.ShortcutKeyDisplayString = Settings.Configs.Language.Items[$"{Name}.mnuMainViewPrevious.Shortcut"];
 
-                mnuMainGoto.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainGoto"];
-                mnuMainGotoFirst.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainGotoFirst"];
-                mnuMainGotoLast.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainGotoLast"];
+                mnuMainGoto.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainGoto"];
+                mnuMainGotoFirst.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainGotoFirst"];
+                mnuMainGotoLast.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainGotoLast"];
 
-                mnuMainNextPage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainNextPage"];
-                mnuMainPrevPage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainPrevPage"];
-                mnuMainFirstPage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFirstPage"];
-                mnuMainLastPage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainLastPage"];
+                mnuMainNextPage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainNextPage"];
+                mnuMainPrevPage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainPrevPage"];
+                mnuMainFirstPage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFirstPage"];
+                mnuMainLastPage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainLastPage"];
                 #endregion
 
 
                 #region Menu Zoom
-                mnuMainZoom.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainZoom"];
-                mnuMainZoomIn.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainZoomIn"];
-                mnuMainZoomOut.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainZoomOut"];
-                mnuMainScaleToFit.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToFit"];
-                mnuMainScaleToFill.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToFill"];
-                mnuMainActualSize.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainActualSize"];
-                mnuMainLockZoomRatio.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainLockZoomRatio"];
-                mnuMainAutoZoom.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainAutoZoom"];
-                mnuMainScaleToWidth.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToWidth"];
-                mnuMainScaleToHeight.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainScaleToHeight"];
-                mnuMainWindowAdaptImage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainWindowAdaptImage"];
+                mnuMainZoom.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainZoom"];
+                mnuMainZoomIn.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainZoomIn"];
+                mnuMainZoomOut.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainZoomOut"];
+                mnuMainScaleToFit.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFit"];
+                mnuMainScaleToFill.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFill"];
+                mnuMainActualSize.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainActualSize"];
+                mnuMainLockZoomRatio.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainLockZoomRatio"];
+                mnuMainAutoZoom.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainAutoZoom"];
+                mnuMainScaleToWidth.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToWidth"];
+                mnuMainScaleToHeight.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToHeight"];
+                mnuMainWindowAdaptImage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainWindowAdaptImage"];
                 #endregion
 
 
                 #region Menu Image
-                mnuMainImage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainImage"];
-                mnuMainRotateCounterclockwise.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainRotateCounterclockwise"];
-                mnuMainRotateClockwise.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainRotateClockwise"];
-                mnuMainFlipHorz.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFlipHorz"];
-                mnuMainFlipVert.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFlipVert"];
+                mnuMainImage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainImage"];
+                mnuMainRotateCounterclockwise.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateCounterclockwise"];
+                mnuMainRotateClockwise.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateClockwise"];
+                mnuMainFlipHorz.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFlipHorz"];
+                mnuMainFlipVert.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFlipVert"];
 
-                mnuMainRename.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainRename"];
-                mnuMainMoveToRecycleBin.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainMoveToRecycleBin"];
-                mnuMainDeleteFromHardDisk.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainDeleteFromHardDisk"];
-                mnuMainExtractPages.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainExtractPages"];
-                mnuMainStartStopAnimating.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainStartStopAnimating"];
-                mnuMainSetAsDesktop.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSetAsDesktop"];
-                mnuMainSetAsLockImage.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSetAsLockImage"];
-                mnuMainImageLocation.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainImageLocation"];
-                mnuMainImageProperties.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainImageProperties"];
-                mnuMainChannels.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainChannels"];
+                mnuMainRename.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainRename"];
+                mnuMainMoveToRecycleBin.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainMoveToRecycleBin"];
+                mnuMainDeleteFromHardDisk.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainDeleteFromHardDisk"];
+                mnuMainExtractPages.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainExtractPages"];
+                mnuMainStartStopAnimating.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainStartStopAnimating"];
+                mnuMainSetAsDesktop.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSetAsDesktop"];
+                mnuMainSetAsLockImage.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSetAsLockImage"];
+                mnuMainImageLocation.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainImageLocation"];
+                mnuMainImageProperties.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainImageProperties"];
+                mnuMainChannels.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainChannels"];
                 LoadViewChannelsMenuItems(); // update Channels menu items
                 #endregion
 
 
                 #region Menu CLipboard
-                mnuMainClipboard.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainClipboard"];
-                mnuMainCopy.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCopy"];
-                mnuMainCopyImageData.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCopyImageData"];
-                mnuMainCut.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCut"];
-                mnuMainCopyImagePath.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCopyImagePath"];
-                mnuMainClearClipboard.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainClearClipboard"];
+                mnuMainClipboard.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainClipboard"];
+                mnuMainCopy.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCopy"];
+                mnuMainCopyImageData.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCopyImageData"];
+                mnuMainCut.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCut"];
+                mnuMainCopyImagePath.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCopyImagePath"];
+                mnuMainClearClipboard.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainClearClipboard"];
                 #endregion
 
 
                 #region Menu Slideshow
-                mnuMainSlideShow.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSlideShow"];
-                mnuMainSlideShowStart.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSlideShowStart"];
-                mnuMainSlideShowPause.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSlideShowPause"];
-                mnuMainSlideShowExit.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSlideShowExit"];
+                mnuMainSlideShow.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSlideShow"];
+                mnuMainSlideShowStart.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSlideShowStart"];
+                mnuMainSlideShowPause.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSlideShowPause"];
+                mnuMainSlideShowExit.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSlideShowExit"];
                 #endregion
 
 
                 #region Menu Layout
-                mnuMainLayout.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainLayout"];
-                mnuMainToolbar.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainToolbar"];
-                mnuMainThumbnailBar.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainThumbnailBar"];
-                mnuMainCheckBackground.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCheckBackground"];
-                mnuMainAlwaysOnTop.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainAlwaysOnTop"];
+                mnuMainLayout.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainLayout"];
+                mnuMainToolbar.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainToolbar"];
+                mnuMainThumbnailBar.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainThumbnailBar"];
+                mnuMainCheckBackground.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckBackground"];
+                mnuMainAlwaysOnTop.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainAlwaysOnTop"];
                 #endregion
 
 
                 #region Menu Tools
-                mnuMainTools.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainTools"];
-                mnuMainColorPicker.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainColorPicker"];
-                mnuMainPageNav.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainPageNav"];
+                mnuMainTools.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainTools"];
+                mnuMainColorPicker.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainColorPicker"];
+                mnuMainPageNav.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainPageNav"];
                 #endregion
 
 
                 #region Menu Help
-                mnuMainHelp.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainHelp"];
-                mnuMainAbout.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainAbout"];
-                mnuMainFirstLaunch.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFirstLaunch"];
-                mnuMainReportIssue.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainReportIssue"];
+                mnuMainHelp.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainHelp"];
+                mnuMainAbout.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainAbout"];
+                mnuMainFirstLaunch.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFirstLaunch"];
+                mnuMainReportIssue.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainReportIssue"];
                 #endregion
 
 
-                mnuMainFullScreen.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainFullScreen"];
-                mnuMainShare.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainShare"];
-                mnuMainSettings.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainSettings"];
-                mnuMainExitApplication.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainExitApplication"];
+                mnuMainFullScreen.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainFullScreen"];
+                mnuMainShare.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainShare"];
+                mnuMainSettings.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainSettings"];
+                mnuMainExitApplication.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainExitApplication"];
 
                 #endregion
 
                 #endregion
 
                 //Update language layout ------------------
-                RightToLeft = GlobalSetting.Lang.IsRightToLeftLayout;
+                RightToLeft = Settings.Configs.Language.IsRightToLeftLayout;
             }
             #endregion
 
@@ -3673,7 +3669,7 @@ namespace ImageGlass
                     GlobalSetting.ImageError = new Exception("File not found.");
                     LocalSetting.IsTempMemoryData = true;
 
-                    DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._ImageNotExist"], 1300);
+                    DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._ImageNotExist"], 1300);
 
                     if (_queueListForDeleting.Count == 0)
                     {
@@ -4106,7 +4102,7 @@ namespace ImageGlass
                     if (imgData.FrameCount > 1)
                     {
                         var mnu1 = Library.Menu.Clone(mnuMainExtractPages);
-                        mnu1.Text = string.Format(GlobalSetting.Lang.Items[$"{Name}.mnuMainExtractPages"], imgData.FrameCount);
+                        mnu1.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.FrameCount);
                         mnu1.Enabled = true;
 
                         var mnu2 = Library.Menu.Clone(mnuMainStartStopAnimating);
@@ -4182,7 +4178,7 @@ namespace ImageGlass
         {
             if (!GlobalSetting.IsAllowMultiInstances)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
 
                 return;
             }
@@ -4366,7 +4362,7 @@ namespace ImageGlass
                 //display successful msg
                 if (File.Exists(s.FileName))
                 {
-                    DisplayTextMessage(string.Format(GlobalSetting.Lang.Items[$"{Name}._SaveImage"], s.FileName), 2000);
+                    DisplayTextMessage(string.Format(Settings.Configs.Language.Items[$"{Name}._SaveImage"], s.FileName), 2000);
                 }
             }
 
@@ -4475,7 +4471,7 @@ namespace ImageGlass
             // KBR 20190302 init to current index
             string s = (n + 1).ToString();
 
-            if (InputBox.ShowDiaLog("", GlobalSetting.Lang.Items[$"{Name}._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
+            if (InputBox.ShowDiaLog("", Settings.Configs.Language.Items[$"{Name}._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
@@ -4543,7 +4539,7 @@ namespace ImageGlass
 
                 FullScreenMode(enabled: true);
 
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._FullScreenMessage"]
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._FullScreenMessage"]
                     , 2000);
             }
             //exit full screen
@@ -4578,7 +4574,7 @@ namespace ImageGlass
 
                 GlobalSetting.IsPlaySlideShow = true;
 
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._SlideshowMessage"], 2000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
             }
             //performing
             else
@@ -4594,13 +4590,13 @@ namespace ImageGlass
             {
                 timSlideShow.Enabled = false;
 
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._SlideshowMessagePause"], 2000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else
             {
                 timSlideShow.Enabled = true;
 
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._SlideshowMessageResume"], 2000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
             }
         }
 
@@ -4652,7 +4648,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4677,7 +4673,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4702,7 +4698,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4725,7 +4721,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4876,7 +4872,7 @@ namespace ImageGlass
 
             if (GlobalSetting.IsConfirmationDelete)
             {
-                msg = MessageBox.Show(string.Format(GlobalSetting.Lang.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.Lang.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
 
             if (msg == DialogResult.Yes)
@@ -4908,7 +4904,7 @@ namespace ImageGlass
 
             if (GlobalSetting.IsConfirmationDelete)
             {
-                msg = MessageBox.Show(string.Format(GlobalSetting.Lang.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), GlobalSetting.Lang.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
 
             if (msg == DialogResult.Yes)
@@ -4933,7 +4929,7 @@ namespace ImageGlass
 
             using (FolderBrowserDialog fb = new FolderBrowserDialog()
             {
-                Description = GlobalSetting.Lang.Items[$"{Name}._ExtractPageText"],
+                Description = Settings.Configs.Language.Items[$"{Name}._ExtractPageText"],
                 ShowNewFolderButton = true
             })
             {
@@ -4944,7 +4940,7 @@ namespace ImageGlass
                     var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
                     await img.SaveImagePages(fb.SelectedPath);
 
-                    DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._PageExtractComplete"], 2000);
+                    DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
                 }
             }
         }
@@ -4998,12 +4994,12 @@ namespace ImageGlass
                 // show result message
                 if (isError)
                 {
-                    var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Error"];
+                    var msg = Settings.Configs.Language.Items[$"{Name}._SetBackground_Error"];
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Success"];
+                    var msg = Settings.Configs.Language.Items[$"{Name}._SetBackground_Success"];
                     DisplayTextMessage(msg, 2000);
                 }
             });
@@ -5043,12 +5039,12 @@ namespace ImageGlass
             // show result message
             if (isError)
             {
-                var msg = GlobalSetting.Lang.Items[$"{Name}._SetLockImage_Error"];
+                var msg = Settings.Configs.Language.Items[$"{Name}._SetLockImage_Error"];
                 MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                var msg = GlobalSetting.Lang.Items[$"{Name}._SetLockImage_Success"];
+                var msg = Settings.Configs.Language.Items[$"{Name}._SetLockImage_Success"];
                 DisplayTextMessage(msg, 2000);
             }
         }
@@ -5087,7 +5083,7 @@ namespace ImageGlass
             if (picMain.Image != null)
             {
                 Clipboard.SetImage(picMain.Image);
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._CopyImageData"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }
 
@@ -5107,7 +5103,7 @@ namespace ImageGlass
             {
                 LocalSetting.StringClipboard = new List<string>();
                 Clipboard.Clear();
-                DisplayTextMessage(GlobalSetting.Lang.Items[$"{Name}._ClearClipboard"], 1000);
+                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._ClearClipboard"], 1000);
             }
         }
 
@@ -5385,12 +5381,12 @@ namespace ImageGlass
                 // Alert user if there is a new version
                 if (GlobalSetting.IsNewVersionAvailable)
                 {
-                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCheckForUpdate._NewVersion"];
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NewVersion"];
                     mnuMainHelp.BackColor = mnuMainCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
                 }
                 else
                 {
-                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = GlobalSetting.Lang.Items[$"{Name}.mnuMainCheckForUpdate._NoUpdate"];
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NoUpdate"];
                 }
 
 
@@ -5421,7 +5417,7 @@ namespace ImageGlass
                         mnuMainLastPage.Enabled = true;
                 }
 
-                mnuMainExtractPages.Text = string.Format(GlobalSetting.Lang.Items[$"{Name}.mnuMainExtractPages"], frameCount);
+                mnuMainExtractPages.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainExtractPages"], frameCount);
 
                 // check if igcmdWin10.exe exists!
                 if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))

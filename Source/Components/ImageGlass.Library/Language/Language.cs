@@ -686,6 +686,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
             Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
             Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v7.0
+            Items.Add("frmSetting.KeyActions._DoNothing", "Do nothing"); // v7.0
             #endregion
 
             #endregion
