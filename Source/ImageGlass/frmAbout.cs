@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.IO;
 using ImageGlass.Settings;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
@@ -198,10 +198,7 @@ namespace ImageGlass
 
         private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-            p.StartInfo.Arguments = "igupdate";
-            p.Start();
+            Program.CheckForUpdate();
         }
         #endregion
 

@@ -17,28 +17,28 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using FileWatcherEx;
+using ImageGlass.Library;
+using ImageGlass.Library.Comparer;
+using ImageGlass.Library.Image;
+using ImageGlass.Library.WinAPI;
+using ImageGlass.Services;
+using ImageGlass.Services.Configuration;
+using ImageGlass.Services.InstanceManagement;
+using ImageGlass.UI;
+using ImageGlass.UI.Renderers;
+using ImageGlass.UI.ToolForms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Drawing;
-using System.Windows.Forms;
-using ImageGlass.Library.Image;
-using ImageGlass.Library.Comparer;
-using System.IO;
-using System.Diagnostics;
-using ImageGlass.Services.Configuration;
-using ImageGlass.Library;
 using System.Collections.Specialized;
-using ImageGlass.Services.InstanceManagement;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
-using ImageGlass.UI;
-using ImageGlass.UI.ToolForms;
-using ImageGlass.UI.Renderers;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using ImageGlass.Library.WinAPI;
-using FileWatcherEx;
-using ImageGlass.Services;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
@@ -3028,10 +3028,6 @@ namespace ImageGlass
                 IsBackground = true
             };
             thDeleteWorker.Start();
-
-
-            
-            Settings.Configs.Load();
         }
 
         public void LoadFromParams(string[] args)
@@ -4957,57 +4953,60 @@ namespace ImageGlass
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e)
         {
-            var isError = false;
-
-            try
+            Task.Run(() =>
             {
-                // save the current image data to temp file
-                var imgFile = SaveTemporaryMemoryData();
+                var isError = false;
 
-                using (Process p = new Process())
+                try
                 {
-                    var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
+                    // save the current image data to temp file
+                    var imgFile = SaveTemporaryMemoryData();
 
-                    // Issue #326: first attempt to set wallpaper w/o privs. 
-                    p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
-                    p.StartInfo.Arguments = args;
-                    p.Start();
-
-                    p.WaitForExit();
-
-
-                    // If that fails due to privs error, re-attempt with admin privs.
-                    if (p.ExitCode == (int)DesktopWallapaper.Result.PrivsFail)
+                    using (Process p = new Process())
                     {
-                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                        var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
+
+                        // Issue #326: first attempt to set wallpaper w/o privs. 
+                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
                         p.StartInfo.Arguments = args;
                         p.Start();
 
                         p.WaitForExit();
 
-                        // success or error
-                        isError = p.ExitCode != 0;
-                    }
-                    else
-                    {
-                        // success or error
-                        isError = p.ExitCode != 0;
+
+                        // If that fails due to privs error, re-attempt with admin privs.
+                        if (p.ExitCode == (int)DesktopWallapaper.Result.PrivsFail)
+                        {
+                            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                            p.StartInfo.Arguments = args;
+                            p.Start();
+
+                            p.WaitForExit();
+
+                            // success or error
+                            isError = p.ExitCode != 0;
+                        }
+                        else
+                        {
+                            // success or error
+                            isError = p.ExitCode != 0;
+                        }
                     }
                 }
-            }
-            catch { isError = true; }
+                catch { isError = true; }
 
-            // show result message
-            if (isError)
-            {
-                var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Error"];
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Success"];
-                DisplayTextMessage(msg, 2000);
-            }
+                // show result message
+                if (isError)
+                {
+                    var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Error"];
+                    MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    var msg = GlobalSetting.Lang.Items[$"{Name}._SetBackground_Success"];
+                    DisplayTextMessage(msg, 2000);
+                }
+            });
         }
 
 
@@ -5347,10 +5346,7 @@ namespace ImageGlass
 
         private void mnuMainCheckForUpdate_Click(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(Application.StartupPath, "igcmd.exe");
-            p.StartInfo.Arguments = "igupdate";
-            p.Start();
+            Program.CheckForUpdate();
         }
 
         private void mnuMainReportIssue_Click(object sender, EventArgs e)
