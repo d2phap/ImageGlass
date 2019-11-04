@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -35,15 +36,15 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            lblFileExtension.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFileExtension"];
-            lblAppName.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppName"];
-            lblAppPath.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppPath"];
-            lblAppArguments.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppArguments"];
-            lblPreviewLabel.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblPreviewLabel"];
+            lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
+            lblAppName.Text = Configs.Language.Items[$"{this.Name}.lblAppName"];
+            lblAppPath.Text = Configs.Language.Items[$"{this.Name}.lblAppPath"];
+            lblAppArguments.Text = Configs.Language.Items[$"{this.Name}.lblAppArguments"];
+            lblPreviewLabel.Text = Configs.Language.Items[$"{this.Name}.lblPreviewLabel"];
 
-            btnReset.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnReset"];
-            btnOK.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnClose"];
+            btnReset.Text = Configs.Language.Items[$"{this.Name}.btnReset"];
+            btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
         private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
