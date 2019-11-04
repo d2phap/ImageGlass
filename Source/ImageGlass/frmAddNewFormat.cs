@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using System;
 using System.Windows.Forms;
 
@@ -27,21 +27,21 @@ namespace ImageGlass
     {
         private bool _isAllowFormClosed = false;
         public string FileFormat { get; set; }
-        public ImageFormatGroup FormatGroup { get; set; }
+        public Services.Configuration.ImageFormatGroup FormatGroup { get; set; }
 
         public frmAddNewFormat()
         {
             InitializeComponent();
 
             // Add group items
-            cmbFormatGroup.Items.Add(GlobalSetting.Lang.Items["_.ImageFormatGroup.Default"]);
-            cmbFormatGroup.Items.Add(GlobalSetting.Lang.Items["_.ImageFormatGroup.Optional"]);
+            cmbFormatGroup.Items.Add(Configs.Language.Items["_.ImageFormatGroup.Default"]);
+            cmbFormatGroup.Items.Add(Configs.Language.Items["_.ImageFormatGroup.Optional"]);
             cmbFormatGroup.SelectedIndex = 0;
             
-            lblFileExtension.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFileExtension"];
-            lblFormatGroup.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFormatGroup"];
-            btnOK.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnClose"];
+            lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
+            lblFormatGroup.Text = Configs.Language.Items[$"{this.Name}.lblFormatGroup"];
+            btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -53,15 +53,15 @@ namespace ImageGlass
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileFormat = txtFileExtension.Text.ToLower().Trim();
-            FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
+            FormatGroup = (Services.Configuration.ImageFormatGroup)cmbFormatGroup.SelectedIndex;
 
-            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || GlobalSetting.AllImageFormats.Contains(FileFormat))
+            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllImageFormats.Contains(FileFormat))
             {
                 txtFileExtension.Focus();
                 return;
             }
 
-            FileFormat = $"*{FileFormat};"; //standalize extension string
+            FileFormat = $"*{FileFormat};"; // standalize extension string
             DialogResult = DialogResult.OK;
             _isAllowFormClosed = true;
         }
@@ -82,7 +82,7 @@ namespace ImageGlass
 
         private void frmAddNewFormat_KeyDown(object sender, KeyEventArgs e)
         {
-            //close dialog
+            // close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
                 DialogResult = DialogResult.Cancel;
