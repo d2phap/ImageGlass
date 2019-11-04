@@ -11,18 +11,32 @@ namespace ImageGlass.Settings
     public class Helpers
     {
         /// <summary>
-        /// Check if the given dir is writable
+        /// Check if the given path (file or directory) is writable
         /// </summary>
-        /// <param name="dir">Full path of dir</param>
+        /// <param name="path">Full path of file or directory</param>
         /// <returns></returns>
-        public static bool CheckDirWritable(string dir)
+        public static bool CheckPathWritable(string path)
         {
             try
             {
-                var testFile = Path.Combine(dir, "test_write_file.temp");
+                // If path is file
+                if (File.Exists(path))
+                {
+                    using (File.OpenWrite(path)) { }
+                }
+                // if path is directory
+                else if (Directory.Exists(path))
+                {
+                    var sampleFile = Path.Combine(path, "test_write_file.temp");
 
-                using (File.Create(testFile)) { }
-                File.Delete(testFile);
+                    using (File.Create(sampleFile)) { }
+                    File.Delete(sampleFile);
+                }
+                // path not found
+                else
+                {
+                    return false;
+                }
 
                 return true;
             }
