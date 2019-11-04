@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
 
@@ -118,17 +118,17 @@ namespace ImageGlass
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
             
-            btnNextPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainNextPage"];
-            btnPreviousPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainPrevPage"];
-            btnFirstPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainFirstPage"];
-            btnLastPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainLastPage"];
+            btnNextPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainNextPage"];
+            btnPreviousPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainPrevPage"];
+            btnFirstPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainFirstPage"];
+            btnLastPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainLastPage"];
 
         }
 
         private void OnDpiChanged()
         {
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolPageNav, (int)Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolPageNav, (int)Services.Configuration.Constants.TOOLBAR_HEIGHT);
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(LocalSetting.Theme);
@@ -155,7 +155,7 @@ namespace ImageGlass
 
             //Windows Bound (Position + Size)-------------------------------------------
             // TODO must be different from Color Picker
-            Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
+            Rectangle rc = Helpers.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {
@@ -185,7 +185,7 @@ namespace ImageGlass
         {
             LocalSetting.IsPageNavToolOpenning = false;
 
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+            LocalSetting.ForceUpdateActions |= Services.Configuration.MainFormForceUpdateAction.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 
