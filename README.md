@@ -85,5 +85,5 @@ Thanks for your gratitude and finance help!
 ## Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
-<a href="graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
+<a href="https://github.com/d2phap/ImageGlass/graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
 
