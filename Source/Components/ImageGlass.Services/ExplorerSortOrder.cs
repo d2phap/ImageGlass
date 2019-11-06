@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
 
 namespace ImageGlass.Services
 {

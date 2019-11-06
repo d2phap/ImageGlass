@@ -95,6 +95,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">
+      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
+      <Name>ImageGlass.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
       <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
       <Name>ImageGlass.Heart</Name>

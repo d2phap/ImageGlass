@@ -1,10 +1,15 @@
 ﻿using System.Globalization;
 using System.Windows.Forms;
 
-namespace ImageGlass.Settings
+namespace ImageGlass.Base
 {
     public static class Constants
     {
+        public const int MENU_ICON_HEIGHT = 21;
+        public const int TOOLBAR_ICON_HEIGHT = 20;
+        public const int TOOLBAR_HEIGHT = 40;
+        public const int VIEWER_GRID_SIZE = 8;
+
         /// <summary>
         /// First launch version constant. 
         /// If the value read from config file is less than this value, 
@@ -17,18 +22,6 @@ namespace ImageGlass.Settings
         /// The URI Scheme to register web-to-app linking
         /// </summary>
         public const string URI_SCHEME = "imageglass";
-
-
-        /// <summary>
-        /// Gets the application version
-        /// </summary>
-        public static string AppVersion { get => Application.ProductVersion; }
-
-
-        /// <summary>
-        /// Gets the application version
-        /// </summary>
-        public static string IGExePath { get => App.StartUpDir("ImageGlass.exe"); }
 
 
         /// <summary>

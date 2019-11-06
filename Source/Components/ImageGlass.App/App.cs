@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ImageGlass.Settings
+namespace ImageGlass.App
 {
     public static class App
     {

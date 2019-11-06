@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
 using ImageGlass.Settings;
+using ImageGlass.Base;
 
 namespace ImageGlass
 {
@@ -238,7 +239,7 @@ namespace ImageGlass
         {
             LocalSetting.IsColorPickerToolOpening = false;
 
-            LocalSetting.ForceUpdateActions |= Services.Configuration.MainFormForceUpdateAction.COLOR_PICKER_MENU;
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
         }
 
 
@@ -255,7 +256,7 @@ namespace ImageGlass
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            var rc = Settings.Helpers.StringToRect("0,0,300,160");
+            var rc = Base.Helpers.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {

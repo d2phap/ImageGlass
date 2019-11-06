@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using System;
 using System.Diagnostics;
@@ -169,7 +170,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = Settings.Constants.AppVersion;
+                string version = App.AppVersion;
 
                 Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
@@ -180,7 +181,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = Settings.Constants.AppVersion;
+                string version = App.AppVersion;
 
                 Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
@@ -239,7 +240,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = Settings.Constants.AppVersion;
+                string version = App.AppVersion;
 
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageGlass.Base;
+using System;
 using System.Collections.Generic;
 using System.Xml;
 

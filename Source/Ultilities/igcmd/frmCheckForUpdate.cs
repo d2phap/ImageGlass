@@ -26,6 +26,7 @@ using System.Diagnostics;
 using ImageGlass.Services;
 using System.Text;
 using ImageGlass.Settings;
+using ImageGlass.Base;
 
 namespace igcmd
 {
@@ -132,7 +133,7 @@ namespace igcmd
         {
             try
             {
-                var version = Constants.AppVersion.Replace(".", "_");
+                var version = App.AppVersion.Replace(".", "_");
 
                 Process.Start(up.Info.Decription + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
@@ -147,7 +148,7 @@ namespace igcmd
         {
             try
             {
-                var version = Constants.AppVersion.Replace(".", "_");
+                var version = App.AppVersion.Replace(".", "_");
 
                 Process.Start(up.Info.Link.ToString() + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
             }

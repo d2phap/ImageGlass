@@ -17,11 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
+using ImageGlass.Base;
 using ImageGlass.Heart;
-using ImageGlass.Services.Configuration;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace ImageGlass.UI
 {
@@ -66,7 +64,7 @@ namespace ImageGlass.UI
         {
             //Get Scaling factor
             double scaleFactor = DPIScaling.GetDPIScaleFactor();
-            int iconHeight = (int)((int)Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
+            int iconHeight = (int)(Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
             return iconHeight;
         }

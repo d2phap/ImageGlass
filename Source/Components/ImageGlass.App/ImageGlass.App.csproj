@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4BAD780F-8071-4034-9020-ECC9F4352422}</ProjectGuid>
+    <ProjectGuid>{6A51C243-D5A2-4E45-9996-36286B517E53}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageGlass.Settings</RootNamespace>
-    <AssemblyName>ImageGlass.Settings</AssemblyName>
+    <RootNamespace>ImageGlass.App</RootNamespace>
+    <AssemblyName>ImageGlass.App</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,8 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,35 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configs.cs" />
-    <Compile Include="ConfigSource.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">
-      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
-      <Name>ImageGlass.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
-      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
-      <Name>ImageGlass.Heart</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
-      <Project>{4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81}</Project>
-      <Name>ImageGlass.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
-      <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
-      <Name>ImageGlass.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageGlass.UI\ImageGlass.UI.csproj">
-      <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>
-      <Name>ImageGlass.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

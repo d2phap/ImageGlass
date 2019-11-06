@@ -1,6 +1,6 @@
 ﻿
+using ImageGlass.Base;
 using ImageGlass.Library;
-using ImageGlass.Services.Configuration;
 using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
@@ -299,35 +299,35 @@ namespace ImageGlass.Settings
         /// The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
-                $"{(int)Services.Configuration.ToolbarButtons.btnBack}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnNext}," +
-                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Base.ToolbarButtons.btnBack}," +
+                $"{(int)Base.ToolbarButtons.btnNext}," +
+                $"{(int)Base.ToolbarButtons.Separator}," +
 
-                $"{(int)Services.Configuration.ToolbarButtons.btnRotateLeft}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnRotateRight}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnFlipHorz}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnFlipVert}," +
-                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Base.ToolbarButtons.btnRotateLeft}," +
+                $"{(int)Base.ToolbarButtons.btnRotateRight}," +
+                $"{(int)Base.ToolbarButtons.btnFlipHorz}," +
+                $"{(int)Base.ToolbarButtons.btnFlipVert}," +
+                $"{(int)Base.ToolbarButtons.Separator}," +
 
-                $"{(int)Services.Configuration.ToolbarButtons.btnAutoZoom}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnScaletoWidth}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnScaletoHeight}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFit}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnScaleToFill}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnZoomLock}," +
-                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Base.ToolbarButtons.btnAutoZoom}," +
+                $"{(int)Base.ToolbarButtons.btnScaletoWidth}," +
+                $"{(int)Base.ToolbarButtons.btnScaletoHeight}," +
+                $"{(int)Base.ToolbarButtons.btnScaleToFit}," +
+                $"{(int)Base.ToolbarButtons.btnScaleToFill}," +
+                $"{(int)Base.ToolbarButtons.btnZoomLock}," +
+                $"{(int)Base.ToolbarButtons.Separator}," +
 
-                $"{(int)Services.Configuration.ToolbarButtons.btnOpen}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnRefresh}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnGoto}," +
-                $"{(int)Services.Configuration.ToolbarButtons.Separator}," +
+                $"{(int)Base.ToolbarButtons.btnOpen}," +
+                $"{(int)Base.ToolbarButtons.btnRefresh}," +
+                $"{(int)Base.ToolbarButtons.btnGoto}," +
+                $"{(int)Base.ToolbarButtons.Separator}," +
 
-                $"{(int)Services.Configuration.ToolbarButtons.btnThumb}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnCheckedBackground}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnFullScreen}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnSlideShow}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnDelete}," +
-                $"{(int)Services.Configuration.ToolbarButtons.btnEdit}";
+                $"{(int)Base.ToolbarButtons.btnThumb}," +
+                $"{(int)Base.ToolbarButtons.btnCheckedBackground}," +
+                $"{(int)Base.ToolbarButtons.btnFullScreen}," +
+                $"{(int)Base.ToolbarButtons.btnSlideShow}," +
+                $"{(int)Base.ToolbarButtons.btnDelete}," +
+                $"{(int)Base.ToolbarButtons.btnEdit}";
 
 
 

@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
@@ -128,7 +129,7 @@ namespace ImageGlass
         private void OnDpiChanged()
         {
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolPageNav, (int)Services.Configuration.Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(LocalSetting.Theme);
@@ -185,7 +186,7 @@ namespace ImageGlass
         {
             LocalSetting.IsPageNavToolOpenning = false;
 
-            LocalSetting.ForceUpdateActions |= Services.Configuration.MainFormForceUpdateAction.PAGE_NAV_MENU;
+            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 

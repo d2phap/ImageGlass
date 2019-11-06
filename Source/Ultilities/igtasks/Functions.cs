@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.FileAssociations;
 using ImageGlass.Settings;
@@ -185,7 +186,7 @@ namespace igtasks
                 return 1;
             }
 
-            if (!reg.Write("ApplicationIcon", $"\"{Constants.IGExePath}\", 0"))
+            if (!reg.Write("ApplicationIcon", $"\"{App.IGExePath}\", 0"))
             {
                 return 1;
             }
@@ -212,7 +213,7 @@ namespace igtasks
                 var iconPath = App.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
                 if (!File.Exists(iconPath))
                 {
-                    iconPath = Constants.IGExePath;
+                    iconPath = App.IGExePath;
                 }
 
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
@@ -230,7 +231,7 @@ namespace igtasks
 
                 // Config the File Associations - Command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
-                if (!reg.Write("", $"\"{Constants.IGExePath}\" \"%1\""))
+                if (!reg.Write("", $"\"{App.IGExePath}\" \"%1\""))
                 {
                     return 1;
                 }
@@ -295,7 +296,7 @@ namespace igtasks
 
             // DefaultIcon
             reg.SubKey = $@"{baseKey}\DefaultIcon";
-            if (!reg.Write("", $"\"{Constants.IGExePath}\", 0"))
+            if (!reg.Write("", $"\"{App.IGExePath}\", 0"))
             {
                 return 1;
             }
@@ -303,7 +304,7 @@ namespace igtasks
 
             // shell\open\command
             reg.SubKey = $@"{baseKey}\shell\open\command";
-            if (!reg.Write("", $"\"{Constants.IGExePath}\" \"%1\""))
+            if (!reg.Write("", $"\"{App.IGExePath}\" \"%1\""))
             {
                 return 1;
             }

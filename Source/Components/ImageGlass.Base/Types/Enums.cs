@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 
-namespace ImageGlass.Services.Configuration
+namespace ImageGlass.Base
 {
     /// <summary>
     /// The loading order list.
@@ -65,13 +65,6 @@ namespace ImageGlass.Services.Configuration
         Optional = 1
     }
 
-    public enum Constants
-    {
-        MENU_ICON_HEIGHT = 21,
-        TOOLBAR_ICON_HEIGHT = 20,
-        TOOLBAR_HEIGHT = 40,
-        VIEWER_GRID_SIZE = 8
-    }
 
     /// <summary>
     /// The list of mousewheel actions.

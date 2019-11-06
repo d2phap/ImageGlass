@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Settings;
 using ImageGlass.UI;
@@ -41,7 +42,7 @@ namespace igcmd
 
         private Language _lang = new Language();
         private Theme _theme = new Theme();
-        private ImageGlass.Services.Configuration.LayoutMode _layout = ImageGlass.Services.Configuration.LayoutMode.Standard;
+        private LayoutMode _layout = LayoutMode.Standard;
 
 
         #region Form events
@@ -189,7 +190,7 @@ namespace igcmd
 
         private void cmbLayout_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _layout = (ImageGlass.Services.Configuration.LayoutMode)cmbLayout.SelectedIndex;
+            _layout = (LayoutMode)cmbLayout.SelectedIndex;
         }
 
         #endregion
@@ -270,7 +271,7 @@ namespace igcmd
         private void LaunchImageGlass()
         {
             Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(Constants.IGExePath);
+            p.StartInfo.FileName = Path.Combine(App.IGExePath);
             p.Start();
         }
 
@@ -368,7 +369,7 @@ namespace igcmd
         private void LoadLayoutList()
         {
             cmbLayout.Items.Clear();
-            var list = Enum.GetNames(typeof(ImageGlass.Services.Configuration.LayoutMode));
+            var list = Enum.GetNames(typeof(LayoutMode));
 
             foreach (var item in list)
             {
@@ -388,12 +389,12 @@ namespace igcmd
             Configs.Theme = this._theme;
 
 
-            if (_layout == ImageGlass.Services.Configuration.LayoutMode.Designer)
+            if (_layout == LayoutMode.Designer)
             {
-                Configs.MouseWheelAction = ImageGlass.Services.Configuration.MouseWheelActions.ScrollVertically;
-                Configs.MouseWheelCtrlAction = ImageGlass.Services.Configuration.MouseWheelActions.Zoom;
-                Configs.MouseWheelShiftAction = ImageGlass.Services.Configuration.MouseWheelActions.ScrollHorizontally;
-                Configs.MouseWheelAltAction = ImageGlass.Services.Configuration.MouseWheelActions.DoNothing;
+                Configs.MouseWheelAction = MouseWheelActions.ScrollVertically;
+                Configs.MouseWheelCtrlAction = MouseWheelActions.Zoom;
+                Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
+                Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
 
 
                 Configs.ZoomLockValue = 100f;
@@ -401,10 +402,10 @@ namespace igcmd
             }
             else
             {
-                Configs.MouseWheelAction = ImageGlass.Services.Configuration.MouseWheelActions.Zoom;
-                Configs.MouseWheelCtrlAction = ImageGlass.Services.Configuration.MouseWheelActions.ScrollVertically;
-                Configs.MouseWheelShiftAction = ImageGlass.Services.Configuration.MouseWheelActions.ScrollHorizontally;
-                Configs.MouseWheelAltAction = ImageGlass.Services.Configuration.MouseWheelActions.DoNothing;
+                Configs.MouseWheelAction = MouseWheelActions.Zoom;
+                Configs.MouseWheelCtrlAction = MouseWheelActions.ScrollVertically;
+                Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
+                Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
 
                 Configs.ZoomLockValue = -1f;
             }

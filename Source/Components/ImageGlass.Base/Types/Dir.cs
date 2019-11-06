@@ -1,5 +1,5 @@
 ﻿
-namespace ImageGlass.Settings
+namespace ImageGlass.Base
 {
     public static class Dir
     {

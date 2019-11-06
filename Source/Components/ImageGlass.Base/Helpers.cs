@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security;
-using System.Security.Permissions;
 
-namespace ImageGlass.Settings
+namespace ImageGlass.Base
 {
     public class Helpers
     {

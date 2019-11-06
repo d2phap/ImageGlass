@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using System;
 using System.Windows.Forms;
@@ -27,7 +28,7 @@ namespace ImageGlass
     {
         private bool _isAllowFormClosed = false;
         public string FileFormat { get; set; }
-        public Services.Configuration.ImageFormatGroup FormatGroup { get; set; }
+        public ImageFormatGroup FormatGroup { get; set; }
 
         public frmAddNewFormat()
         {
@@ -53,7 +54,7 @@ namespace ImageGlass
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileFormat = txtFileExtension.Text.ToLower().Trim();
-            FormatGroup = (Services.Configuration.ImageFormatGroup)cmbFormatGroup.SelectedIndex;
+            FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
 
             if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllImageFormats.Contains(FileFormat))
             {

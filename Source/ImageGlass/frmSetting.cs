@@ -32,6 +32,7 @@ using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
+using ImageGlass.Base;
 
 namespace ImageGlass
 {

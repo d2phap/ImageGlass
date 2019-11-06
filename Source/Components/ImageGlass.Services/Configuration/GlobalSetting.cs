@@ -28,6 +28,7 @@ using ImageGlass.Library.FileAssociations;
 using System.Linq;
 using System.Globalization;
 using ImageGlass.Heart;
+using ImageGlass.Base;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -36,20 +37,6 @@ namespace ImageGlass.Services.Configuration
         // Configurations file: igconfig.xml
         private static ConfigurationFile _configFile = new ConfigurationFile();
 
-
-
-        /// <summary>
-        /// ~First launch version constant. 
-        /// If the value read from config file is less than this value, 
-        /// the First-Launch Configs screen will be launched.
-        /// </summary>
-        public const int FIRST_LAUNCH_VERSION = 5;
-
-
-        /// <summary>
-        /// ~The URI Scheme to register web-to-app linking
-        /// </summary>
-        public const string URI_SCHEME = "imageglass";
 
 
         #region Private Properties
@@ -439,35 +426,35 @@ namespace ImageGlass.Services.Configuration
         /// ~The toolbar button configuration: contents and order.
         /// </summary>
         public static string ToolbarButtons { get; set; } = $"" +
-            $"{(int)Configuration.ToolbarButtons.btnBack}," +
-            $"{(int)Configuration.ToolbarButtons.btnNext}," +
-            $"{(int)Configuration.ToolbarButtons.Separator}," +
+            $"{(int)Base.ToolbarButtons.btnBack}," +
+            $"{(int)Base.ToolbarButtons.btnNext}," +
+            $"{(int)Base.ToolbarButtons.Separator}," +
 
-            $"{(int)Configuration.ToolbarButtons.btnRotateLeft}," +
-            $"{(int)Configuration.ToolbarButtons.btnRotateRight}," +
-            $"{(int)Configuration.ToolbarButtons.btnFlipHorz}," +
-            $"{(int)Configuration.ToolbarButtons.btnFlipVert}," +
-            $"{(int)Configuration.ToolbarButtons.Separator}," +
+            $"{(int)Base.ToolbarButtons.btnRotateLeft}," +
+            $"{(int)Base.ToolbarButtons.btnRotateRight}," +
+            $"{(int)Base.ToolbarButtons.btnFlipHorz}," +
+            $"{(int)Base.ToolbarButtons.btnFlipVert}," +
+            $"{(int)Base.ToolbarButtons.Separator}," +
 
-            $"{(int)Configuration.ToolbarButtons.btnAutoZoom}," +
-            $"{(int)Configuration.ToolbarButtons.btnScaletoWidth}," +
-            $"{(int)Configuration.ToolbarButtons.btnScaletoHeight}," +
-            $"{(int)Configuration.ToolbarButtons.btnScaleToFit}," +
-            $"{(int)Configuration.ToolbarButtons.btnScaleToFill}," +
-            $"{(int)Configuration.ToolbarButtons.btnZoomLock}," +
-            $"{(int)Configuration.ToolbarButtons.Separator}," +
+            $"{(int)Base.ToolbarButtons.btnAutoZoom}," +
+            $"{(int)Base.ToolbarButtons.btnScaletoWidth}," +
+            $"{(int)Base.ToolbarButtons.btnScaletoHeight}," +
+            $"{(int)Base.ToolbarButtons.btnScaleToFit}," +
+            $"{(int)Base.ToolbarButtons.btnScaleToFill}," +
+            $"{(int)Base.ToolbarButtons.btnZoomLock}," +
+            $"{(int)Base.ToolbarButtons.Separator}," +
 
-            $"{(int)Configuration.ToolbarButtons.btnOpen}," +
-            $"{(int)Configuration.ToolbarButtons.btnRefresh}," +
-            $"{(int)Configuration.ToolbarButtons.btnGoto}," +
-            $"{(int)Configuration.ToolbarButtons.Separator}," +
+            $"{(int)Base.ToolbarButtons.btnOpen}," +
+            $"{(int)Base.ToolbarButtons.btnRefresh}," +
+            $"{(int)Base.ToolbarButtons.btnGoto}," +
+            $"{(int)Base.ToolbarButtons.Separator}," +
 
-            $"{(int)Configuration.ToolbarButtons.btnThumb}," +
-            $"{(int)Configuration.ToolbarButtons.btnCheckedBackground}," +
-            $"{(int)Configuration.ToolbarButtons.btnFullScreen}," +
-            $"{(int)Configuration.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Configuration.ToolbarButtons.btnDelete}," + 
-            $"{(int)Configuration.ToolbarButtons.btnEdit}";
+            $"{(int)Base.ToolbarButtons.btnThumb}," +
+            $"{(int)Base.ToolbarButtons.btnCheckedBackground}," +
+            $"{(int)Base.ToolbarButtons.btnFullScreen}," +
+            $"{(int)Base.ToolbarButtons.btnSlideShow}," +
+            $"{(int)Base.ToolbarButtons.btnDelete}," + 
+            $"{(int)Base.ToolbarButtons.btnEdit}";
 
 
 
@@ -807,7 +794,7 @@ namespace ImageGlass.Services.Configuration
         public static string ToAbsolutePath(string inputPath)
         {
             var path = inputPath;
-            var protocol = GlobalSetting.URI_SCHEME + ":";
+            var protocol = Constants.URI_SCHEME + ":";
 
             // If inputPath is URI Scheme
             if (path.StartsWith(protocol))

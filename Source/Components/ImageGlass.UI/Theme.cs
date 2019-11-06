@@ -20,13 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Xml;
 using System.IO;
 using System.Drawing;
-using ImageGlass.Services.Configuration;
 using System;
 using System.Threading;
 using Ionic.Zip;
 using System.Text;
 using System.Globalization;
 using System.Windows.Forms;
+using ImageGlass.Base;
 
 namespace ImageGlass.UI
 {
@@ -210,11 +210,13 @@ namespace ImageGlass.UI
             }
         }
 
+
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+). 
         /// Return TRUE if successful, FALSE if the theme format is invalid
         /// </summary>
-        /// <param name="themeFolderPath">The absolute path of theme file.</param>
+        /// <param name="themeFolderPath">The absolute path of theme folder.</param>
+        /// <param name="startUpDir">The absolute startup folder of ImageGlass</param>
         /// <returns></returns>
         public bool LoadTheme(string themeFolderPath)
         {
@@ -222,7 +224,7 @@ namespace ImageGlass.UI
 
             if (!File.Exists(configFilePath))
             {
-                configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
+                configFilePath = App.StartUpDir("DefaultTheme", "config.xml");
             }
 
             this.ConfigFilePath = configFilePath;
@@ -436,7 +438,7 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT * 3);
             var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
             IntPtr icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
@@ -605,10 +607,10 @@ namespace ImageGlass.UI
                 
                 if (th.IsValid)
                 {
-                    GlobalSetting.SetConfig("BackgroundColor", ConvertColorToHEX(th.BackgroundColor, true));
+                    //GlobalSetting.SetConfig("BackgroundColor", ConvertColorToHEX(th.BackgroundColor, true));
 
                     //Save theme path
-                    GlobalSetting.SetConfig("Theme", Path.GetFileName(themeFolderPath)); // get theme folder name
+                    //GlobalSetting.SetConfig("Theme", Path.GetFileName(themeFolderPath)); // get theme folder name
 
                     return th;
                 }
@@ -631,7 +633,7 @@ namespace ImageGlass.UI
                 return ThemeInstallingResult.ERROR;
             }
 
-            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(Dir.Themes);
             Directory.CreateDirectory(themeFolder);
 
             return ExtractTheme(themePath, themeFolder);
@@ -645,7 +647,7 @@ namespace ImageGlass.UI
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
         {
-            string fullConfigPath = GlobalSetting.ConfigDir(Dir.Themes, themeFolderName, "config.xml");
+            string fullConfigPath = App.ConfigDir(Dir.Themes, themeFolderName, "config.xml");
 
             if (File.Exists(fullConfigPath))
             {

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using FileWatcherEx;
+using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.Comparer;
 using ImageGlass.Library.Image;
