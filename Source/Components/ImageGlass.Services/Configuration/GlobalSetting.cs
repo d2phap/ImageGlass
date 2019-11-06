@@ -21,8 +21,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
 using System.Text;
 using ImageGlass.Library.FileAssociations;
 using System.Linq;
@@ -53,11 +51,6 @@ namespace ImageGlass.Services.Configuration
         public static int CurrentIndex { get; set; } = -1;
 
 
-        /// <summary>
-        /// ~Gets, sets recursive value
-        /// </summary>
-        public static bool IsRecursiveLoading { get; set; } = false;
-
 
         /// <summary>
         /// ~Gets, sets image loading order
@@ -70,17 +63,6 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
 
-
-        /// <summary>
-        /// ~Gets, sets the value indicates that Windows File Explorer sort order is used if possible
-        /// </summary>
-        public static bool IsUseFileExplorerSortOrder { get; set; } = false;
-
-
-        /// <summary>
-        /// ~Gets, sets showing/loading hidden images
-        /// </summary>
-        public static bool IsShowingHiddenImages { get; set; } = false;
 
 
         /// <summary>
@@ -102,11 +84,6 @@ namespace ImageGlass.Services.Configuration
 
 
         #region Public Properties
-
-        /// <summary>
-        /// ~Gets, sets language pack
-        /// </summary>
-        //public static Library.Language Lang { get; set; } = new Library.Language();
 
 
         /// <summary>
@@ -131,18 +108,6 @@ namespace ImageGlass.Services.Configuration
         /// ~Gets, sets optional image formats
         /// </summary>
         public static string OptionalImageFormats { get; set; } = string.Empty;
-
-
-        /// <summary>
-        /// ~Gets, sets value of slideshow state
-        /// </summary>
-        public static bool IsPlaySlideShow { get; set; } = false;
-
-
-        /// <summary>
-        /// ~Gets, sets value indicating that wheather the window is full screen or not
-        /// </summary>
-        public static bool IsFullScreen { get; set; } = false;
 
 
         /// <summary>

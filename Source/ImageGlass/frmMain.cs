@@ -26,6 +26,7 @@ using ImageGlass.Library.WinAPI;
 using ImageGlass.Services;
 using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
 using ImageGlass.UI.ToolForms;
@@ -404,7 +405,7 @@ namespace ImageGlass
             this._fileWatcher = new FileWatcherEx.FileWatcherEx()
             {
                 FolderPath = pathToWatch,
-                IncludeSubdirectories = GlobalSetting.IsRecursiveLoading,
+                IncludeSubdirectories = Configs.IsRecursiveLoading,
 
                 // auto Invoke the form if required, no need to invidiually invoke in each event
                 SynchronizingObject = this
@@ -451,9 +452,9 @@ namespace ImageGlass
         /// <param name="path">Image folder path</param>
         private IEnumerable<string> LoadImageFilesFromDirectory(string path)
         {
-            //Get files from dir
+            // Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
-                GlobalSetting.IsRecursiveLoading,
+                Configs.IsRecursiveLoading,
                 new Predicate<FileInfo>(delegate (FileInfo fi)
                 {
                     // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
@@ -469,7 +470,7 @@ namespace ImageGlass
                     extension = extension.ToLower(); // Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
 
                     // checks if image is hidden and ignores it if so
-                    if (GlobalSetting.IsShowingHiddenImages == false)
+                    if (Configs.IsShowingHiddenImages == false)
                     {
                         var attributes = fi.Attributes; // File.GetAttributes(f);
                         var isHidden = attributes.HasFlag(FileAttributes.Hidden);
@@ -688,13 +689,13 @@ namespace ImageGlass
 
 
             // Issue #609: do not auto-reactivate slideshow if disabled
-            if (GlobalSetting.IsPlaySlideShow && timSlideShow.Enabled)
+            if (Configs.IsPlaySlideShow && timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
                 timSlideShow.Enabled = true;
             }
 
-            if (!GlobalSetting.IsPlaySlideShow && !GlobalSetting.IsLoopBackViewer)
+            if (!Configs.IsPlaySlideShow && !GlobalSetting.IsLoopBackViewer)
             {
                 //Reach end of list
                 if (tempIndex >= GlobalSetting.ImageList.Length)
@@ -1125,7 +1126,7 @@ namespace ImageGlass
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
                 //exit slideshow
-                if (GlobalSetting.IsPlaySlideShow)
+                if (Configs.IsPlaySlideShow)
                 {
                     mnuMainSlideShowExit_Click(null, null);
                 }
@@ -1322,7 +1323,7 @@ namespace ImageGlass
             bool no_mods = !e.Control && !e.Shift && !e.Alt;
             if (e.KeyCode == Keys.Space && no_mods)
             {
-                if (GlobalSetting.IsPlaySlideShow) // Space always pauses slideshow if playing
+                if (Configs.IsPlaySlideShow) // Space always pauses slideshow if playing
                 {
                     mnuMainSlideShowPause_Click(null, null);
                 }
@@ -1976,7 +1977,7 @@ namespace ImageGlass
             LocalSetting.ActiveImageLoadingOrderType = GlobalSetting.ImageLoadingOrderType;
 
             // Use File Explorer sort order if possible
-            if (GlobalSetting.IsUseFileExplorerSortOrder)
+            if (Configs.IsUseFileExplorerSortOrder)
             {
                 if (ExplorerSortOrder.GetExplorerSortOrder(fullPath, out var explorerOrder, out var isAscending))
                 {
@@ -2429,15 +2430,6 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Recursive loading
-                GlobalSetting.IsRecursiveLoading = bool.Parse(GlobalSetting.GetConfig("IsRecursiveLoading", "False"));
-                #endregion
-
-
-                #region Show hidden images
-                GlobalSetting.IsShowingHiddenImages = bool.Parse(GlobalSetting.GetConfig("IsShowingHiddenImages", "False"));
-                #endregion
-
 
                 #region Load Color Management settings
                 GlobalSetting.IsApplyColorProfileForAll = bool.Parse(GlobalSetting.GetConfig("IsApplyColorProfileForAll", "False"));
@@ -2455,9 +2447,6 @@ namespace ImageGlass
                 // Load image order type config
                 GlobalSetting.ImageLoadingOrderType = GlobalSetting.GetImageOrderTypeConfig();
 
-
-                // Load state of Image Booster
-                GlobalSetting.IsUseFileExplorerSortOrder = bool.Parse(GlobalSetting.GetConfig("IsUseFileExplorerSortOrder", "False"));
 
 
                 // Load ImageBoosterCachedCount value
@@ -2554,10 +2543,9 @@ namespace ImageGlass
 
 
                 #region Load Full Screen mode
-                GlobalSetting.IsFullScreen = bool.Parse(GlobalSetting.GetConfig("IsFullScreen", "False"));
-                if (GlobalSetting.IsFullScreen)
+                if (Configs.IsFullScreen)
                 {
-                    GlobalSetting.IsFullScreen = !GlobalSetting.IsFullScreen;
+                    Configs.IsFullScreen = !Configs.IsFullScreen;
                     mnuMainFullScreen.PerformClick();
                 }
                 #endregion
@@ -2747,7 +2735,7 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 // don't save Bound if in Full screen and SlideShow mode
-                if (!GlobalSetting.IsFullScreen && !GlobalSetting.IsPlaySlideShow)
+                if (!Configs.IsFullScreen && !Configs.IsPlaySlideShow)
                 {
                     //Windows Bound--------------------------------------------------------------
                     GlobalSetting.SetConfig($"{Name}.WindowsBound", Helpers.RectToString(this.Bounds));
@@ -2762,7 +2750,7 @@ namespace ImageGlass
 
 
             #region  Toolbar state
-            if (!GlobalSetting.IsPlaySlideShow)
+            if (!Configs.IsPlaySlideShow)
             {
                 GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
             }
@@ -2782,7 +2770,7 @@ namespace ImageGlass
 
 
             #region Thumbnail panel
-            if (!GlobalSetting.IsPlaySlideShow)
+            if (!Configs.IsPlaySlideShow)
             {
                 GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
             }
@@ -2828,7 +2816,7 @@ namespace ImageGlass
             GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
 
             // Save fullscreen state
-            GlobalSetting.SetConfig("IsFullScreen", GlobalSetting.IsFullScreen.ToString());
+            GlobalSetting.SetConfig("IsFullScreen", Configs.IsFullScreen.ToString());
 
 
             GlobalSetting.SaveKeyAssignments();
@@ -4069,7 +4057,7 @@ namespace ImageGlass
             //clear current items
             mnuContext.Items.Clear();
 
-            if (GlobalSetting.IsPlaySlideShow && !isImageError)
+            if (Configs.IsPlaySlideShow && !isImageError)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
@@ -4532,11 +4520,11 @@ namespace ImageGlass
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
         {
             //enter full screen
-            if (!GlobalSetting.IsFullScreen)
+            if (!Configs.IsFullScreen)
             {
                 mnuMainFullScreen.Checked =
                     btnFullScreen.Checked =
-                    GlobalSetting.IsFullScreen = true;
+                    Configs.IsFullScreen = true;
 
                 FullScreenMode(enabled: true);
 
@@ -4548,7 +4536,7 @@ namespace ImageGlass
             {
                 mnuMainFullScreen.Checked =
                     btnFullScreen.Checked =
-                    GlobalSetting.IsFullScreen = false;
+                    Configs.IsFullScreen = false;
 
                 FullScreenMode(enabled: false);
 
@@ -4563,17 +4551,17 @@ namespace ImageGlass
             }
 
             //not performing
-            if (!GlobalSetting.IsPlaySlideShow)
+            if (!Configs.IsPlaySlideShow)
             {
                 picMain.BackColor = Color.Black;
 
                 // enter full screen
-                FullScreenMode(enabled: true, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
+                FullScreenMode(enabled: true, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
 
                 //perform slideshow
                 timSlideShow.Enabled = true;
 
-                GlobalSetting.IsPlaySlideShow = true;
+                Configs.IsPlaySlideShow = true;
 
                 DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
             }
@@ -4604,12 +4592,12 @@ namespace ImageGlass
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
         {
             timSlideShow.Enabled = false;
-            GlobalSetting.IsPlaySlideShow = false;
+            Configs.IsPlaySlideShow = false;
 
             picMain.BackColor = GlobalSetting.BackgroundColor;
 
             // exit full screen
-            FullScreenMode(enabled: false, changeWindowState: !GlobalSetting.IsFullScreen, onlyShowViewer: true);
+            FullScreenMode(enabled: false, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
 
         }
 

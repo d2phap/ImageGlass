@@ -33,6 +33,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
 using ImageGlass.Base;
+using ImageGlass.Settings;
 
 namespace ImageGlass
 {
@@ -644,10 +645,10 @@ namespace ImageGlass
         private void LoadTabImageConfig()
         {
             // Set value of chkFindChildFolder ---------------------------------------------
-            chkFindChildFolder.Checked = GlobalSetting.IsRecursiveLoading;
+            chkFindChildFolder.Checked = Configs.IsRecursiveLoading;
 
             // Set value of chkShowHiddenImages
-            chkShowHiddenImages.Checked = GlobalSetting.IsShowingHiddenImages;
+            chkShowHiddenImages.Checked = Configs.IsShowingHiddenImages;
 
             // Set value of chkLoopViewer
             chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
@@ -656,7 +657,7 @@ namespace ImageGlass
             chkIsCenterImage.Checked = GlobalSetting.IsCenterImage;
 
             // Set value of chkUseFileExplorerSortOrder
-            chkUseFileExplorerSortOrder.Checked = GlobalSetting.IsUseFileExplorerSortOrder;
+            chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
 
 
             #region Load items of cmbImageOrder
@@ -2382,13 +2383,12 @@ namespace ImageGlass
 
             #region IsRecursiveLoading: MainFormForceUpdateAction.IMAGE_LIST or IMAGE_LIST_NO_RECURSIVE
             newBool = chkFindChildFolder.Checked;
-            if (GlobalSetting.IsRecursiveLoading != newBool) // Only change when the new value selected  
+            if (Configs.IsRecursiveLoading != newBool) // Only change when the new value selected  
             {
-                GlobalSetting.IsRecursiveLoading = newBool;
-                GlobalSetting.SetConfig("IsRecursiveLoading", GlobalSetting.IsRecursiveLoading.ToString());
+                Configs.IsRecursiveLoading = newBool;
 
                 // Request frmMain to update the thumbnail bar
-                if (GlobalSetting.IsRecursiveLoading)
+                if (Configs.IsRecursiveLoading)
                 {
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
@@ -2401,8 +2401,7 @@ namespace ImageGlass
 
 
             // IsShowingHiddenImages
-            GlobalSetting.IsShowingHiddenImages = chkShowHiddenImages.Checked;
-            GlobalSetting.SetConfig("IsShowingHiddenImages", GlobalSetting.IsShowingHiddenImages.ToString());
+            Configs.IsShowingHiddenImages = chkShowHiddenImages.Checked;
 
             // IsLoopBackViewer
             GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
@@ -2443,8 +2442,7 @@ namespace ImageGlass
             }
 
             // IsUseFileExplorerSortOrder
-            GlobalSetting.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
-            GlobalSetting.SetConfig("IsUseFileExplorerSortOrder", GlobalSetting.IsUseFileExplorerSortOrder.ToString());
+            Configs.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
 
             #endregion
 
