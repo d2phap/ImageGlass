@@ -138,6 +138,9 @@ namespace igcmd
 
         private void lnkSkip_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            // Save configs to file
+            Configs.Write();
+
             LaunchImageGlass();
             this.Close();
         }
@@ -146,15 +149,17 @@ namespace igcmd
         private void btnSetDefaultApp_Click(object sender, EventArgs e)
         {
             // Update extensions to registry
-            var p = new Process();
-            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = $"regassociations {Configs.AllImageFormats}";
-
-            try
+            using (var p = new Process())
             {
-                p.Start();
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = $"regassociations {Configs.AllImageFormats}";
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
             }
-            catch { }
         }
 
 

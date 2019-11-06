@@ -4528,7 +4528,7 @@ namespace ImageGlass
 
                 FullScreenMode(enabled: true);
 
-                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._FullScreenMessage"]
+                DisplayTextMessage(Configs.Language.Items[$"{Name}._FullScreenMessage"]
                     , 2000);
             }
             //exit full screen

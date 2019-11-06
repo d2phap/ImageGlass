@@ -292,7 +292,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
         /// </summary>
-        public static string AutoUpdate { get; set; } = "7/26/1991 12:13:08 AM";
+        public static string AutoUpdate { get; set; } = "7/26/1991 12:13:08";
 
 
         /// <summary>
@@ -665,12 +665,6 @@ namespace ImageGlass.Settings
 
             #region Other types items
 
-            #region BackgroundColor
-            var bgValue = Get<string>(nameof(BackgroundColor), "#000");
-            BackgroundColor = Theme.ConvertHexStringToColor(bgValue, true);
-            #endregion
-
-
             #region FrmMainWindowsBound
             var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
             if (string.IsNullOrEmpty(boundStr))
@@ -717,6 +711,13 @@ namespace ImageGlass.Settings
             {
                 Theme = th;
             }
+            #endregion
+
+
+            #region BackgroundColor
+            // must load after Theme
+            var bgValue = Get<string>(nameof(BackgroundColor), Theme.ConvertColorToHEX(Theme.BackgroundColor, true));
+            BackgroundColor = Theme.ConvertHexStringToColor(bgValue, true);
             #endregion
 
             #endregion
