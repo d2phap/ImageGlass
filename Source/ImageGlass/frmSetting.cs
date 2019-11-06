@@ -148,45 +148,37 @@ namespace ImageGlass
         #region FRMSETTING FORM EVENTS
         private void frmSetting_Load(object sender, EventArgs e)
         {
-            //Remove tabs header
+            // Remove tabs header
             tab1.Appearance = TabAppearance.FlatButtons;
             tab1.ItemSize = new Size(0, 1);
             tab1.SizeMode = TabSizeMode.Fixed;
 
-            //Load config
-            //Windows Bound (Position + Size)-------------------------------------------
-            var rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{this.Name}.WindowsBound", "280,125,900,700"));
-
+            // Load config
+            // Windows Bound (Position + Size)-------------------------------------------
+            var rc = Configs.FrmSettingsWindowsBound;
             if (!Helper.IsOnScreen(rc.Location))
             {
                 rc.Location = new Point(280, 125);
+                Configs.FrmSettingsWindowsBound = rc;
             }
-            Bounds = rc;
+            Bounds = Configs.FrmSettingsWindowsBound;
 
-            //windows state--------------------------------------------------------------
-            string s = GlobalSetting.GetConfig($"{this.Name}.WindowsState", "Normal");
-            if (s == "Normal")
-            {
-                WindowState = FormWindowState.Normal;
-            }
-            else if (s == "Maximized")
-            {
-                WindowState = FormWindowState.Maximized;
-            }
+            // windows state--------------------------------------------------------------
+            WindowState = Configs.FrmSettingsWindowState;
 
             InitLanguagePack(); // Needs to be done before setting up the initial tab
 
-            //Get the last view of tab --------------------------------------------------
+            // Get the last view of tab --------------------------------------------------
             tab1.SelectedIndex = LocalSetting.SettingsTabLastView;
             // KBR prevent loading tab config twice tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
 
-            //Load configs
+            // Load configs
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             LoadTabEditConfig();
             LoadTabColorPicker();
 
-            //to prevent the setting: ToolbarPosition = -1, we load this onLoad event
+            // to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
         }
 
@@ -197,17 +189,13 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig(Name + ".WindowsBound", Helpers.RectToString(Bounds));
+                Configs.FrmSettingsWindowsBound = Bounds;
             }
 
-
-            GlobalSetting.SetConfig(Name + ".WindowsState", WindowState.ToString());
-            GlobalSetting.SaveConfigOfImageEditingAssociationList();
+            Configs.FrmSettingsWindowState = WindowState;
 
             //Tabs State---------------------------------------------------------------------------
             LocalSetting.SettingsTabLastView = tab1.SelectedIndex;
-
-
         }
 
 
@@ -236,9 +224,9 @@ namespace ImageGlass
         /// </summary>
         private void InitLanguagePack()
         {
-            var lang = Settings.Configs.Language.Items;
+            var lang = Configs.Language.Items;
 
-            RightToLeft = Settings.Configs.Language.IsRightToLeftLayout;
+            RightToLeft = Configs.Language.IsRightToLeftLayout;
             Text = lang[$"{Name}._Text"];
 
 
@@ -336,7 +324,7 @@ namespace ImageGlass
 
 
             #region FILE ASSOCIATION TAB
-            var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var extList = Configs.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             lblExtensionsGroupDescription.Text = lang[$"{Name}.lblExtensionsGroupDescription"];
             lblSupportedExtension.Text = String.Format(lang[$"{Name}.lblSupportedExtension"], extList.Length);
@@ -559,52 +547,18 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabGeneralConfig()
         {
-            //Get value of chkLastSeenImage ----------------------------------------------------
-            chkLastSeenImage.Checked = GlobalSetting.IsOpenLastSeenImage;
-            GlobalSetting.SetConfig("LastSeenImagePath", "");
-            GlobalSetting.SetConfig("IsOpenLastSeenImage", GlobalSetting.IsOpenLastSeenImage.ToString());
-
-            //Get value of chkWelcomePicture ----------------------------------------------------
-            chkWelcomePicture.Checked = GlobalSetting.IsShowWelcome;
-
-            //Get value of chkShowToolBar
-            chkShowToolBar.Checked = GlobalSetting.IsShowToolBar;
-
-
-            //Get value of cmbAutoUpdate --------------------------------------------------------
-            string configValue = GlobalSetting.GetConfig("AutoUpdate", DateTime.Now.ToString());
-            if (configValue != "0")
-            {
-                chkAutoUpdate.Checked = true;
-            }
-            else
-            {
-                chkAutoUpdate.Checked = false;
-            }
-
-            //Get value of IsAllowMultiInstances
-            chkAllowMultiInstances.Checked = GlobalSetting.IsAllowMultiInstances;
-
-            //Get value of IsPressESCToQuit
-            chkESCToQuit.Checked = GlobalSetting.IsPressESCToQuit;
-
-            //Get value of IsConfirmationDelete
-            chkConfirmationDelete.Checked = GlobalSetting.IsConfirmationDelete;
-
-            //Get value of IsScrollbarsVisible
-            chkShowScrollbar.Checked = GlobalSetting.IsScrollbarsVisible;
-
-            //Get value of IsDisplayBasenameOfImage
-            chkDisplayBasename.Checked = GlobalSetting.IsDisplayBasenameOfImage;
-
-            //Get value of IsShowNavigationButtons
-            chkShowNavButtons.Checked = GlobalSetting.IsShowNavigationButtons;
-
-            //Get value of IsShowNavigationButtons
-            chkShowCheckerboardOnlyImage.Checked = GlobalSetting.IsShowCheckerboardOnlyImageRegion;
-
-            //Get background color
-            picBackgroundColor.BackColor = GlobalSetting.BackgroundColor;
+            chkLastSeenImage.Checked = Configs.IsOpenLastSeenImage;
+            chkWelcomePicture.Checked = Configs.IsShowWelcome;
+            chkShowToolBar.Checked = Configs.IsShowToolBar;
+            chkAutoUpdate.Checked = Configs.AutoUpdate != "0";
+            chkAllowMultiInstances.Checked = Configs.IsAllowMultiInstances;
+            chkESCToQuit.Checked = Configs.IsPressESCToQuit;
+            chkConfirmationDelete.Checked = Configs.IsConfirmationDelete;
+            chkShowScrollbar.Checked = Configs.IsScrollbarsVisible;
+            chkDisplayBasename.Checked = Configs.IsDisplayBasenameOfImage;
+            chkShowNavButtons.Checked = Configs.IsShowNavigationButtons;
+            chkShowCheckerboardOnlyImage.Checked = Configs.IsShowCheckerboardOnlyImageRegion;
+            picBackgroundColor.BackColor = Configs.BackgroundColor;
         }
 
 
@@ -651,10 +605,10 @@ namespace ImageGlass
             chkShowHiddenImages.Checked = Configs.IsShowingHiddenImages;
 
             // Set value of chkLoopViewer
-            chkLoopViewer.Checked = GlobalSetting.IsLoopBackViewer;
+            chkLoopViewer.Checked = Configs.IsLoopBackViewer;
 
             // Set value of chkIsCenterImage
-            chkIsCenterImage.Checked = GlobalSetting.IsCenterImage;
+            chkIsCenterImage.Checked = Configs.IsCenterImage;
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
@@ -666,11 +620,11 @@ namespace ImageGlass
 
             foreach (var item in loadingOrderList)
             {
-                cmbImageOrder.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbImageOrder._{item}"]);
+                cmbImageOrder.Items.Add(Configs.Language.Items[$"{this.Name}.cmbImageOrder._{item}"]);
             }
 
             //Get value of cmbImageOrder
-            cmbImageOrder.SelectedIndex = (int)GlobalSetting.ImageLoadingOrder;
+            cmbImageOrder.SelectedIndex = (int)Configs.ImageLoadingOrder;
             #endregion
 
 
@@ -680,33 +634,33 @@ namespace ImageGlass
 
             foreach (var item in orderTypesList)
             {
-                cmbImageOrderType.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
+                cmbImageOrderType.Items.Add(Configs.Language.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
             }
 
             //Get value of cmbImageOrder
-            cmbImageOrderType.SelectedIndex = (int)GlobalSetting.ImageLoadingOrderType;
+            cmbImageOrderType.SelectedIndex = (int)Configs.ImageLoadingOrderType;
             #endregion
 
 
             // Set value of cmbImageBoosterCachedCount
-            cmbImageBoosterCachedCount.SelectedIndex = GlobalSetting.ImageBoosterCachedCount;
+            cmbImageBoosterCachedCount.SelectedIndex = Configs.ImageBoosterCachedCount;
 
 
             #region Color Management
-            chkApplyColorProfile.Checked = GlobalSetting.IsApplyColorProfileForAll;
+            chkApplyColorProfile.Checked = Configs.IsApplyColorProfileForAll;
 
             // color profile list
             cmbColorProfile.Items.Clear();
-            cmbColorProfile.Items.Add(Settings.Configs.Language.Items[$"{Name}.cmbColorProfile._None"]);
+            cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._None"]);
             cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
-            cmbColorProfile.Items.Add(Settings.Configs.Language.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
+            cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
 
             // select the color profile
-            if (File.Exists(GlobalSetting.ColorProfile))
+            if (File.Exists(Configs.ColorProfile))
             {
                 cmbColorProfile.SelectedIndex = cmbColorProfile.Items.Count - 1;
-                lnkColorProfilePath.Text = GlobalSetting.ColorProfile;
+                lnkColorProfilePath.Text = Configs.ColorProfile;
 
                 lnkColorProfileBrowse.Visible = true;
                 lnkColorProfilePath.Visible = true;
@@ -718,7 +672,7 @@ namespace ImageGlass
 
                 for (int i = 0; i < cmbColorProfile.Items.Count; i++)
                 {
-                    if (cmbColorProfile.Items[i].ToString() == GlobalSetting.ColorProfile)
+                    if (cmbColorProfile.Items[i].ToString() == Configs.ColorProfile)
                     {
                         cmbColorProfile.SelectedIndex = i;
                         break;
@@ -750,23 +704,23 @@ namespace ImageGlass
             var mouseWheelActionsList = Enum.GetNames(typeof(MouseWheelActions));
             foreach (var item in mouseWheelActionsList)
             {
-                cmbMouseWheel.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelCtrl.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelShift.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelAlt.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheel.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelCtrl.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelShift.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelAlt.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
             }
 
             //Get value of cmbMouseWheel
-            cmbMouseWheel.SelectedIndex = (int)GlobalSetting.MouseWheelAction;
+            cmbMouseWheel.SelectedIndex = (int)Configs.MouseWheelAction;
 
             //Get value of cmbMouseWheelCtrl
-            cmbMouseWheelCtrl.SelectedIndex = (int)GlobalSetting.MouseWheelCtrlAction;
+            cmbMouseWheelCtrl.SelectedIndex = (int)Configs.MouseWheelCtrlAction;
 
             //Get value of cmbMouseWheelShift
-            cmbMouseWheelShift.SelectedIndex = (int)GlobalSetting.MouseWheelShiftAction;
+            cmbMouseWheelShift.SelectedIndex = (int)Configs.MouseWheelShiftAction;
 
             //Get value of cmbMouseWheelAlt
-            cmbMouseWheelAlt.SelectedIndex = (int)GlobalSetting.MouseWheelAltAction;
+            cmbMouseWheelAlt.SelectedIndex = (int)Configs.MouseWheelAltAction;
 
             #endregion
 
@@ -778,40 +732,40 @@ namespace ImageGlass
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList)
             {
-                cmbZoomOptimization.Items.Add(Settings.Configs.Language.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
+                cmbZoomOptimization.Items.Add(Configs.Language.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
             }
 
             // Get value of cmbZoomOptimization
-            cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
+            cmbZoomOptimization.SelectedIndex = (int)Configs.ZoomOptimizationMethod;
 
             // Load zoom levels text
-            txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
+            txtZoomLevels.Text = Helpers.IntArrayToString(Configs.ZoomLevels);
 
             #endregion
 
 
             // Thumbnail bar on right side ----------------------------------------------------
-            chkThumbnailVertical.Checked = !GlobalSetting.IsThumbnailHorizontal;
+            chkThumbnailVertical.Checked = !Configs.IsThumbnailHorizontal;
 
             // Show thumbnail scrollbar
-            chkShowThumbnailScrollbar.Checked = GlobalSetting.IsShowThumbnailScrollbar;
+            chkShowThumbnailScrollbar.Checked = Configs.IsShowThumbnailScrollbar;
 
             // load thumbnail dimension
-            cmbThumbnailDimension.SelectedItem = GlobalSetting.ThumbnailDimension.ToString();
+            cmbThumbnailDimension.SelectedItem = Configs.ThumbnailDimension.ToString();
 
             // Set value of chkLoopSlideshow --------------------------------------------------
-            chkLoopSlideshow.Checked = GlobalSetting.IsLoopBackSlideShow;
+            chkLoopSlideshow.Checked = Configs.IsLoopBackSlideShow;
 
             // Set value of barInterval
-            barInterval.Value = GlobalSetting.SlideShowInterval;
-            lblSlideshowInterval.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            barInterval.Value = Configs.SlideShowInterval;
+            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
 
         }
 
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            lblSlideshowInterval.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
         }
 
 
@@ -834,7 +788,7 @@ namespace ImageGlass
 
         private void lnkColorProfileBrowse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            OpenFileDialog o = new OpenFileDialog()
+            var o = new OpenFileDialog()
             {
                 Filter = "Supported files|*.icc;*.icm;|All files|*.*",
                 CheckFileExists = true,
@@ -868,8 +822,8 @@ namespace ImageGlass
         private void LoadTabEditConfig()
         {
             //Get value of IsSaveAfterRotating
-            chkSaveOnRotate.Checked = GlobalSetting.IsSaveAfterRotating;
-            chkSaveModifyDate.Checked = GlobalSetting.PreserveModifiedDate;
+            chkSaveOnRotate.Checked = Configs.IsSaveAfterRotating;
+            chkSaveModifyDate.Checked = Configs.PreserveModifiedDate;
 
             //Load Image Editing extension list
             LoadImageEditingAssociationList();
@@ -886,7 +840,7 @@ namespace ImageGlass
             var newEditingAssocList = new List<ImageEditingAssociation>();
 
             // Load Default group
-            var extList = GlobalSetting.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var extList = Configs.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var ext in extList)
             {
@@ -902,7 +856,7 @@ namespace ImageGlass
                 if (!isResetToDefault)
                 {
                     //Find the extension in the settings
-                    var editingExt = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
+                    var editingExt = Configs.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
 
                     li.SubItems.Add(editingExt?.AppName);
                     li.SubItems.Add(editingExt?.AppPath);
@@ -919,7 +873,7 @@ namespace ImageGlass
             }
 
             //Update the new full list
-            GlobalSetting.ImageEditingAssociationList = newEditingAssocList;
+            Configs.ImageEditingAssociationList = newEditingAssocList;
         }
 
 
@@ -966,13 +920,13 @@ namespace ImageGlass
         {
             frmEditEditingAssocisation f = new frmEditEditingAssocisation()
             {
-                FileExtension = $"<{string.Format(Settings.Configs.Language.Items[$"{Name}._allExtensions"])}>",
+                FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
             };
 
             if (f.ShowDialog() == DialogResult.OK)
             {
-                foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
+                foreach (var assoc in Configs.ImageEditingAssociationList)
                 {
                     assoc.AppName = f.AppName;
                     assoc.AppPath = f.AppPath;
@@ -1039,7 +993,7 @@ namespace ImageGlass
             using (var p = new Process())
             {
                 p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "igeditlang \"" + Settings.Configs.Language.FileName + "\"";
+                p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
 
                 try
                 {
@@ -1078,7 +1032,7 @@ namespace ImageGlass
                 for (int i = 1; i < lstLanguages.Count; i++)
                 {
                     int iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
-                    string curLang = Settings.Configs.Language.FileName;
+                    string curLang = Configs.Language.FileName;
 
                     //using current language pack
                     if (lstLanguages[i].FileName.CompareTo(curLang) == 0)
@@ -1120,8 +1074,8 @@ namespace ImageGlass
         {
             var list = builtInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            GlobalSetting.DefaultImageFormats = list[0];
-            GlobalSetting.OptionalImageFormats = list[1];
+            Configs.DefaultImageFormats = list[0];
+            Configs.OptionalImageFormats = list[1];
 
             LoadExtensionList();
         }
@@ -1134,7 +1088,7 @@ namespace ImageGlass
             lvExtension.Items.Clear();
 
             // Load Default group
-            var extList = GlobalSetting.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var extList = Configs.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in extList)
             {
                 var li = new ListViewItem(lvExtension.Groups["Default"])
@@ -1146,7 +1100,7 @@ namespace ImageGlass
             }
 
             // Load Optional group
-            extList = GlobalSetting.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            extList = Configs.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in extList)
             {
                 var li = new ListViewItem(lvExtension.Groups["Optional"])
@@ -1157,13 +1111,7 @@ namespace ImageGlass
                 lvExtension.Items.Add(li);
             }
 
-            lblSupportedExtension.Text = String.Format(Settings.Configs.Language.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
-
-            // Write suported image formats to settings -----------------------------------------
-            // Load Default Image Formats
-            GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
-            // Load Optional Image Formats
-            GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
+            lblSupportedExtension.Text = String.Format(Configs.Language.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
 
             // build the hashset GlobalSetting.ImageFormatHashSet
             GlobalSetting.BuildImageFormatHashSet();
@@ -1197,11 +1145,11 @@ namespace ImageGlass
 
                 if (isError)
                 {
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -1215,7 +1163,7 @@ namespace ImageGlass
 
         private void btnResetExt_Click(object sender, EventArgs e)
         {
-            RegisterFileAssociations(GlobalSetting.BuiltInImageFormats, true);
+            RegisterFileAssociations(Constants.BuiltInImageFormats, true);
         }
 
         private void btnDeleteExt_Click(object sender, EventArgs e)
@@ -1229,11 +1177,11 @@ namespace ImageGlass
             {
                 if (li.Group.Name == "Default")
                 {
-                    GlobalSetting.DefaultImageFormats = GlobalSetting.DefaultImageFormats.Replace($"*{li.Text};", "");
+                    Configs.DefaultImageFormats = Configs.DefaultImageFormats.Replace($"*{li.Text};", "");
                 }
                 else if (li.Group.Name == "Optional")
                 {
-                    GlobalSetting.OptionalImageFormats = GlobalSetting.OptionalImageFormats.Replace($"*{li.Text};", "");
+                    Configs.OptionalImageFormats = Configs.OptionalImageFormats.Replace($"*{li.Text};", "");
                 }
             }
 
@@ -1256,16 +1204,16 @@ namespace ImageGlass
             if (f.ShowDialog() == DialogResult.OK)
             {
                 // If the ext exist
-                if (GlobalSetting.AllImageFormats.Contains(f.FileFormat))
+                if (Configs.AllImageFormats.Contains(f.FileFormat))
                     return;
 
                 if (f.FormatGroup == ImageFormatGroup.Default)
                 {
-                    GlobalSetting.DefaultImageFormats += f.FileFormat;
+                    Configs.DefaultImageFormats += f.FileFormat;
                 }
                 else if (f.FormatGroup == ImageFormatGroup.Optional)
                 {
-                    GlobalSetting.OptionalImageFormats += f.FileFormat;
+                    Configs.OptionalImageFormats += f.FileFormat;
                 }
 
                 //RegisterFileAssociations(GlobalSetting.AllImageFormats);
@@ -1280,7 +1228,7 @@ namespace ImageGlass
 
         private void btnRegisterExt_Click(object sender, EventArgs e)
         {
-            RegisterFileAssociations(GlobalSetting.AllImageFormats);
+            RegisterFileAssociations(Configs.AllImageFormats);
         }
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)
@@ -1315,7 +1263,7 @@ namespace ImageGlass
 
         private void LoadTabToolbar()
         {
-            var lang = Settings.Configs.Language.Items;
+            var lang = Configs.Language.Items;
 
             // Load toolbar position
             cmbToolbarPosition.Items.Clear();
@@ -1807,19 +1755,19 @@ namespace ImageGlass
 
             ComponentResourceManager resources = new ComponentResourceManager(typeof(frmMain));
 
-            string txt = Settings.Configs.LanguagePack.Items["frmMain.mnuMainMoveToRecycleBin"];
+            string txt = Configs.LanguagePack.Items["frmMain.mnuMainMoveToRecycleBin"];
             btnRecycleBin = new ToolStripButton();
             MakeMenuButton(btnRecycleBin, "btnRecycleBin", txt);
             btnRecycleBin.Image = ((Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
             btnRecycleBin.Click += mnuMainMoveToRecycleBin_Click;
 
-            txt = Settings.Configs.LanguagePack.Items["frmMain.mnuMainRename"];
+            txt = Configs.LanguagePack.Items["frmMain.mnuMainRename"];
             btnRename = new ToolStripButton();
             MakeMenuButton(btnRename, "btnRename", txt);
             btnRename.Image = ((Image)(resources.GetObject("mnuMainRename.Image")));
             btnRename.Click += mnuMainRename_Click;
 
-            txt = Settings.Configs.LanguagePack.Items["frmMain.mnuMainEditImage"];
+            txt = Configs.LanguagePack.Items["frmMain.mnuMainEditImage"];
             btnEditImage = new ToolStripButton();
             MakeMenuButton(btnEditImage, "btnEditImage", txt);
             btnEditImage.Image = ((Image)(resources.GetObject("mnuMainEditImage.Image")));
@@ -1891,7 +1839,7 @@ namespace ImageGlass
             {
                 var lstThemes = new List<UI.Theme>();
 
-                await Task.Run((Action)(() =>
+                await Task.Run(() =>
                 {
                     foreach (string d in Directory.GetDirectories(themeFolder))
                     {
@@ -1910,7 +1858,7 @@ namespace ImageGlass
                             lstThemes.Add(th);
                         }
                     }
-                }));
+                });
 
                 // add themes to the listview
                 foreach (var th in lstThemes)
@@ -1945,7 +1893,7 @@ namespace ImageGlass
             lvTheme.Enabled = true;
             this.Cursor = Cursors.Default;
 
-            lblInstalledThemes.Text = string.Format(Settings.Configs.Language.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
+            lblInstalledThemes.Text = string.Format(Configs.Language.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
 
 
@@ -1957,7 +1905,7 @@ namespace ImageGlass
 
         private void lvTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var lang = Settings.Configs.Language.Items;
+            var lang = Configs.Language.Items;
 
             if (lvTheme.SelectedIndices.Count > 0)
             {
@@ -2013,11 +1961,11 @@ namespace ImageGlass
                 {
                     RefreshThemeList();
 
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -2036,7 +1984,7 @@ namespace ImageGlass
                 }
                 else if (result == ThemeUninstallingResult.ERROR)
                 {
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -2078,11 +2026,11 @@ namespace ImageGlass
 
                     if (result == ThemePackingResult.SUCCESS)
                     {
-                        MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(string.Format(Configs.Language.Items[$"{Name}.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeSaveAs._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeSaveAs._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -2115,11 +2063,11 @@ namespace ImageGlass
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
 
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeApply._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeApply._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -2133,7 +2081,7 @@ namespace ImageGlass
         private void LoadTabKeyboard()
         {
             GlobalSetting.LoadKeyAssignments();
-            var lang = Settings.Configs.Language.Items;
+            var lang = Configs.Language.Items;
 
             cmbKeysLeftRight.Items.Clear();
             cmbKeysLeftRight.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
@@ -2176,7 +2124,7 @@ namespace ImageGlass
         {
             try
             {
-                var lang = Settings.Configs.Language.Items;
+                var lang = Configs.Language.Items;
 
                 // Fetch the string from language based on the action value
                 var act = GlobalSetting.GetKeyAction(which);
@@ -2224,7 +2172,7 @@ namespace ImageGlass
             if (selected == null)
                 return; // user hasn't visited keyboard page, no changes
 
-            var lang = Settings.Configs.Language.Items;
+            var lang = Configs.Language.Items;
 
             // match the text of the selected combobox item against
             // the language string for the available actions
@@ -2294,83 +2242,49 @@ namespace ImageGlass
 
 
             #region General tab --------------------------------------------
-            // IsShowWelcome
-            GlobalSetting.IsShowWelcome = chkWelcomePicture.Checked;
-            GlobalSetting.SetConfig("IsShowWelcome", GlobalSetting.IsShowWelcome.ToString());
-
-            GlobalSetting.IsOpenLastSeenImage = chkLastSeenImage.Checked;
-            GlobalSetting.SetConfig("IsOpenLastSeenImage", GlobalSetting.IsOpenLastSeenImage.ToString());
+            Configs.IsShowWelcome = chkWelcomePicture.Checked;
+            Configs.IsOpenLastSeenImage = chkLastSeenImage.Checked;
+            Configs.IsShowToolBar = chkShowToolBar.Checked;
 
 
-            //IsShowToolBar
-            GlobalSetting.IsShowToolBar = chkShowToolBar.Checked;
-            GlobalSetting.SetConfig("IsShowToolbar", GlobalSetting.IsShowToolBar.ToString());
+            // AutoUpdate
+            Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
 
-
-            //AutoUpdate
-            if (chkAutoUpdate.Checked)
-            {
-                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString());
-            }
-            else
-            {
-                GlobalSetting.SetConfig("AutoUpdate", "0");
-            }
-
-            //IsAllowMultiInstances
-            GlobalSetting.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
-            GlobalSetting.SetConfig("IsAllowMultiInstances", GlobalSetting.IsAllowMultiInstances.ToString());
-
-            //IsPressESCToQuit
-            GlobalSetting.IsPressESCToQuit = chkESCToQuit.Checked;
-            GlobalSetting.SetConfig("IsPressESCToQuit", GlobalSetting.IsPressESCToQuit.ToString());
-
-            //IsConfirmationDelete
-            GlobalSetting.IsConfirmationDelete = chkConfirmationDelete.Checked;
-            GlobalSetting.SetConfig("IsConfirmationDelete", GlobalSetting.IsConfirmationDelete.ToString());
-
-            //IsDisplayBasenameOfImage
-            GlobalSetting.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
-            GlobalSetting.SetConfig("IsDisplayBasenameOfImage", GlobalSetting.IsDisplayBasenameOfImage.ToString());
-
-            //IsShowNavigationButtons
-            GlobalSetting.IsShowNavigationButtons = chkShowNavButtons.Checked;
-            GlobalSetting.SetConfig("IsShowNavigationButtons", GlobalSetting.IsShowNavigationButtons.ToString());
+            Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
+            Configs.IsPressESCToQuit = chkESCToQuit.Checked;
+            Configs.IsConfirmationDelete = chkConfirmationDelete.Checked;
+            Configs.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
+            Configs.IsShowNavigationButtons = chkShowNavButtons.Checked;
 
 
             #region IsShowCheckerboardOnlyImageRegion: MainFormForceUpdateAction.OTHER_SETTINGS
-            //IsShowCheckerboardOnlyImageRegion
+            // IsShowCheckerboardOnlyImageRegion
             newBool = chkShowCheckerboardOnlyImage.Checked;
-            if (GlobalSetting.IsShowCheckerboardOnlyImageRegion != newBool)
+            if (Configs.IsShowCheckerboardOnlyImageRegion != newBool)
             {
-                GlobalSetting.IsShowCheckerboardOnlyImageRegion = newBool;
-                GlobalSetting.SetConfig("IsShowCheckerboardOnlyImageRegion", GlobalSetting.IsShowCheckerboardOnlyImageRegion.ToString());
-
+                Configs.IsShowCheckerboardOnlyImageRegion = newBool;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
 
             #region IsScrollbarsVisible: MainFormForceUpdateAction.OTHER_SETTINGS
-            //IsScrollbarsVisible
+            // IsScrollbarsVisible
             newBool = chkShowScrollbar.Checked;
-            if (GlobalSetting.IsScrollbarsVisible != newBool)
+            if (Configs.IsScrollbarsVisible != newBool)
             {
-                GlobalSetting.IsScrollbarsVisible = newBool;
-                GlobalSetting.SetConfig("IsScrollbarsVisible", GlobalSetting.IsScrollbarsVisible.ToString());
-
+                Configs.IsScrollbarsVisible = newBool;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
 
             #region BackgroundColor: MainFormForceUpdateAction.OTHER_SETTINGS
-            //BackgroundColor
+            // BackgroundColor
             newColor = picBackgroundColor.BackColor;
-            if (GlobalSetting.BackgroundColor != newColor)
+            if (Configs.BackgroundColor != newColor)
             {
-                GlobalSetting.BackgroundColor = picBackgroundColor.BackColor;
-                GlobalSetting.SetConfig("BackgroundColor", UI.Theme.ConvertColorToHEX(GlobalSetting.BackgroundColor, true));
+                Configs.BackgroundColor = picBackgroundColor.BackColor;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
@@ -2400,17 +2314,9 @@ namespace ImageGlass
             #endregion
 
 
-            // IsShowingHiddenImages
             Configs.IsShowingHiddenImages = chkShowHiddenImages.Checked;
-
-            // IsLoopBackViewer
-            GlobalSetting.IsLoopBackViewer = chkLoopViewer.Checked;
-            GlobalSetting.SetConfig("IsLoopBackViewer", GlobalSetting.IsLoopBackViewer.ToString());
-
-
-            // IsCenterImage
-            GlobalSetting.IsCenterImage = chkIsCenterImage.Checked;
-            GlobalSetting.SetConfig("IsCenterImage", GlobalSetting.IsCenterImage.ToString());
+            Configs.IsLoopBackViewer = chkLoopViewer.Checked;
+            Configs.IsCenterImage = chkIsCenterImage.Checked;
 
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
@@ -2418,12 +2324,9 @@ namespace ImageGlass
 
             if (Enum.TryParse(newInt.ToString(), out ImageOrderBy newOrder))
             {
-                if (GlobalSetting.ImageLoadingOrder != newOrder) //Only change when the new value selected  
+                if (Configs.ImageLoadingOrder != newOrder) //Only change when the new value selected  
                 {
-                    GlobalSetting.ImageLoadingOrder = newOrder;
-                    GlobalSetting.SetConfig("ImageLoadingOrder", newInt.ToString());
-
-                    //Request frmMain to update
+                    Configs.ImageLoadingOrder = newOrder;
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
             }
@@ -2431,67 +2334,53 @@ namespace ImageGlass
             newInt = cmbImageOrderType.SelectedIndex;
             if (Enum.TryParse(newInt.ToString(), out ImageOrderType newOrderType))
             {
-                if (GlobalSetting.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
+                if (Configs.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
                 {
-                    GlobalSetting.ImageLoadingOrderType = newOrderType;
-                    GlobalSetting.SetConfig("ImageLoadingOrderType", newInt.ToString());
-
-                    //Request frmMain to update
+                    Configs.ImageLoadingOrderType = newOrderType;
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
             }
 
-            // IsUseFileExplorerSortOrder
             Configs.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
 
             #endregion
 
 
             // ImageBoosterCachedCount
-            GlobalSetting.ImageBoosterCachedCount = cmbImageBoosterCachedCount.SelectedIndex;
-            GlobalSetting.SetConfig("ImageBoosterCachedCount", GlobalSetting.ImageBoosterCachedCount.ToString());
-            GlobalSetting.ImageList.MaxQueue = GlobalSetting.ImageBoosterCachedCount;
+            Configs.ImageBoosterCachedCount = cmbImageBoosterCachedCount.SelectedIndex;
+            GlobalSetting.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
 
 
             #region Color Management
 
             // apply color profile for all
-            GlobalSetting.IsApplyColorProfileForAll = chkApplyColorProfile.Checked;
-            GlobalSetting.SetConfig("IsApplyColorProfileForAll", GlobalSetting.IsApplyColorProfileForAll.ToString());
+            Configs.IsApplyColorProfileForAll = chkApplyColorProfile.Checked;
 
             // color profile
             if (cmbColorProfile.SelectedIndex == cmbColorProfile.Items.Count - 1)
             {
                 // custom color profile file
-                GlobalSetting.ColorProfile = lnkColorProfilePath.Text;
+                Configs.ColorProfile = lnkColorProfilePath.Text;
             }
             else
             {
                 // built-in color profile
-                GlobalSetting.ColorProfile = cmbColorProfile.SelectedItem.ToString();
+                Configs.ColorProfile = cmbColorProfile.SelectedItem.ToString();
             }
-
-            GlobalSetting.SetConfig("ColorProfile", GlobalSetting.ColorProfile);
 
             #endregion
 
 
             #region Mouse wheel actions
-            GlobalSetting.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
-            GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)cmbMouseWheelCtrl.SelectedIndex;
-            GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)cmbMouseWheelShift.SelectedIndex;
-            GlobalSetting.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
-
-            GlobalSetting.SetConfig("MouseWheelAction", ((int)GlobalSetting.MouseWheelAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelCtrlAction", ((int)GlobalSetting.MouseWheelCtrlAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelShiftAction", ((int)GlobalSetting.MouseWheelShiftAction).ToString());
-            GlobalSetting.SetConfig("MouseWheelAltAction", ((int)GlobalSetting.MouseWheelAltAction).ToString());
+            Configs.MouseWheelAction = (MouseWheelActions)cmbMouseWheel.SelectedIndex;
+            Configs.MouseWheelCtrlAction = (MouseWheelActions)cmbMouseWheelCtrl.SelectedIndex;
+            Configs.MouseWheelShiftAction = (MouseWheelActions)cmbMouseWheelShift.SelectedIndex;
+            Configs.MouseWheelAltAction = (MouseWheelActions)cmbMouseWheelAlt.SelectedIndex;
             #endregion
 
 
             // ZoomOptimization
-            GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
-            GlobalSetting.SetConfig("ZoomOptimization", ((int)GlobalSetting.ZoomOptimizationMethod).ToString(GlobalSetting.NumberFormat));
+            Configs.ZoomOptimizationMethod = (ZoomOptimizationMethods)cmbZoomOptimization.SelectedIndex;
 
 
             #region ZoomLevels: MainFormForceUpdateAction.OTHER_SETTINGS;
@@ -2499,22 +2388,20 @@ namespace ImageGlass
 
             if (string.IsNullOrEmpty(newString))
             {
-                txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
+                txtZoomLevels.Text = Helpers.IntArrayToString(Configs.ZoomLevels);
             }
-            else if (Helpers.IntArrayToString(GlobalSetting.ZoomLevels) != newString)
+            else if (Helpers.IntArrayToString(Configs.ZoomLevels) != newString)
             {
                 try
                 {
-                    GlobalSetting.ZoomLevels = Helpers.StringToIntArray(newString, unsignedOnly: true, distinct: true);
-                    GlobalSetting.SetConfig("ZoomLevels", newString);
-
+                    Configs.ZoomLevels = Helpers.StringToIntArray(newString, unsignedOnly: true, distinct: true);
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
                 }
                 catch (Exception ex)
                 {
                     isSuccessful = false;
-                    txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
-                    var msg = string.Format(Settings.Configs.Language.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
+                    txtZoomLevels.Text = Helpers.IntArrayToString(Configs.ZoomLevels);
+                    var msg = string.Format(Configs.Language.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
 
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -2526,14 +2413,11 @@ namespace ImageGlass
 
             #region IsThumbnailHorizontal: MainFormForceUpdateAction.THUMBNAIL_BAR
 
-            //IsThumbnailHorizontal
+            // IsThumbnailHorizontal
             newBool = !chkThumbnailVertical.Checked;
-            if (GlobalSetting.IsThumbnailHorizontal != newBool) //Only change when the new value selected  
+            if (Configs.IsThumbnailHorizontal != newBool) // Only change when the new value selected  
             {
-                GlobalSetting.IsThumbnailHorizontal = newBool;
-                GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
-
-                //Request frmMain to update the thumbnail bar
+                Configs.IsThumbnailHorizontal = newBool;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
             }
             #endregion
@@ -2541,14 +2425,11 @@ namespace ImageGlass
 
             #region IsShowThumbnailScrollbar: MainFormForceUpdateAction.THUMBNAIL_BAR
 
-            //IsShowThumbnailScrollbar
+            // IsShowThumbnailScrollbar
             newBool = chkShowThumbnailScrollbar.Checked;
-            if (GlobalSetting.IsShowThumbnailScrollbar != newBool) //Only change when the new value selected  
+            if (Configs.IsShowThumbnailScrollbar != newBool) // Only change when the new value selected  
             {
-                GlobalSetting.IsShowThumbnailScrollbar = newBool;
-                GlobalSetting.SetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString());
-
-                //Request frmMain to update the thumbnail bar
+                Configs.IsShowThumbnailScrollbar = newBool;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
             }
             #endregion
@@ -2556,15 +2437,14 @@ namespace ImageGlass
 
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
-            //ThumbnailDimension
-            newInt = cmbThumbnailDimension.SelectedItem.ToString() == "" ? GlobalSetting.ThumbnailDimension : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), GlobalSetting.NumberFormat);
+            // ThumbnailDimension
+            newInt = cmbThumbnailDimension.SelectedItem.ToString() == ""
+                ? Configs.ThumbnailDimension
+                : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
 
-            if (GlobalSetting.ThumbnailDimension != newInt) //Only change when the new value selected
+            if (Configs.ThumbnailDimension != newInt) // Only change when the new value selected
             {
-                GlobalSetting.ThumbnailDimension = newInt;
-                GlobalSetting.SetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString(GlobalSetting.NumberFormat));
-
-                //Request frmMain to update the thumbnail bar
+                Configs.ThumbnailDimension = newInt;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
             }
             #endregion
@@ -2573,20 +2453,17 @@ namespace ImageGlass
 
 
             // IsLoopBackSlideShow
-            GlobalSetting.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
-            GlobalSetting.SetConfig("IsLoopBackSlideShow", GlobalSetting.IsLoopBackSlideShow.ToString());
+            Configs.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
 
 
             #region SlideShowInterval: MainFormForceUpdateAction.OTHER_SETTINGS
 
-            //SlideShowInterval
+            // SlideShowInterval
             newInt = barInterval.Value;
 
-            if (GlobalSetting.SlideShowInterval != newInt)
+            if (Configs.SlideShowInterval != newInt)
             {
-                GlobalSetting.SlideShowInterval = newInt;
-                GlobalSetting.SetConfig("SlideShowInterval", GlobalSetting.SlideShowInterval.ToString(GlobalSetting.NumberFormat));
-
+                Configs.SlideShowInterval = newInt;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
@@ -2596,14 +2473,8 @@ namespace ImageGlass
 
 
             #region Edit tab -----------------------------------------------
-
-            //IsSaveAfterRotating
-            GlobalSetting.IsSaveAfterRotating = chkSaveOnRotate.Checked;
-            GlobalSetting.SetConfig("IsSaveAfterRotating", GlobalSetting.IsSaveAfterRotating.ToString());
-
-            // PreserveModifiedDate
-            GlobalSetting.PreserveModifiedDate = chkSaveModifyDate.Checked;
-            GlobalSetting.SetConfig("PreserveModifiedDate", GlobalSetting.PreserveModifiedDate.ToString());
+            Configs.IsSaveAfterRotating = chkSaveOnRotate.Checked;
+            Configs.PreserveModifiedDate = chkSaveModifyDate.Checked;
             #endregion
 
 
@@ -2615,16 +2486,13 @@ namespace ImageGlass
             {
                 newString = lstLanguages[cmbLanguage.SelectedIndex].FileName.ToLower();
 
-                if (Settings.Configs.Language.FileName.ToLower().CompareTo(newString) != 0)
+                if (Configs.Language.FileName.ToLower().CompareTo(newString) != 0)
                 {
-                    Settings.Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
-                    GlobalSetting.SetConfig("Language", Path.GetFileName(Settings.Configs.Language.FileName));
-
+                    Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
                 }
             }
             #endregion
-
 
 
             #endregion
@@ -2637,12 +2505,9 @@ namespace ImageGlass
 
             if (Enum.TryParse(newInt.ToString(), out ToolbarPosition newPosition))
             {
-                if (GlobalSetting.ToolbarPosition != newPosition) //Only change when the new value selected  
+                if (Configs.ToolbarPosition != newPosition) // Only change when the new value selected  
                 {
-                    GlobalSetting.ToolbarPosition = newPosition;
-                    GlobalSetting.SetConfig("ToolbarPosition", newInt.ToString());
-
-                    //Request frmMain to update
+                    Configs.ToolbarPosition = newPosition;
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                 }
             }
@@ -2653,11 +2518,9 @@ namespace ImageGlass
             #region HorzCenterToolbarBtns: MainFormForceUpdateAction.TOOLBAR_POSITION
             newBool = chkHorzCenterToolbarBtns.Checked;
 
-            if (GlobalSetting.IsCenterToolbar != newBool)
+            if (Configs.IsCenterToolbar != newBool)
             {
-                GlobalSetting.IsCenterToolbar = newBool;
-                GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
-
+                Configs.IsCenterToolbar = newBool;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
             }
             #endregion
@@ -2668,14 +2531,9 @@ namespace ImageGlass
 
 
             #region Color Picker tab ---------------------------------------
-            GlobalSetting.IsColorPickerRGBA = chkColorUseRGBA.Checked;
-            GlobalSetting.SetConfig("IsColorPickerRGBA", GlobalSetting.IsColorPickerRGBA.ToString());
-
-            GlobalSetting.IsColorPickerHEXA = chkColorUseHEXA.Checked;
-            GlobalSetting.SetConfig("IsColorPickerHEXA", GlobalSetting.IsColorPickerHEXA.ToString());
-
-            GlobalSetting.IsColorPickerHSLA = chkColorUseHSLA.Checked;
-            GlobalSetting.SetConfig("IsColorPickerHSLA", GlobalSetting.IsColorPickerHSLA.ToString());
+            Configs.IsColorPickerRGBA = chkColorUseRGBA.Checked;
+            Configs.IsColorPickerHEXA = chkColorUseHEXA.Checked;
+            Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
 
             #endregion
 

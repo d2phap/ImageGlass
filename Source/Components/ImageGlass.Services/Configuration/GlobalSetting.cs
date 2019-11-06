@@ -66,12 +66,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets built-in image formats for both Default and Optional formats
-        /// </summary>
-        public static string BuiltInImageFormats { get; } = "*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;|*.exr;*.hdr;*.psd;*.tga;" + "*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.tif;*.x3f;";
-
-
-        /// <summary>
         /// Gets or sets the hash array of all supported formats. 
         /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
         /// </summary>
@@ -133,11 +127,6 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
 
-
-        /// <summary>
-        /// ~Gets, sets the value that indicates if the default position of image in the viewer is center or top left
-        /// </summary>
-        public static bool IsCenterImage { get; set; } = false;
 
 
         /// <summary>
@@ -438,7 +427,7 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static void LoadBuiltInImageFormats()
         {
-            var exts = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray());
+            var exts = Constants.BuiltInImageFormats.Split("|".ToCharArray());
 
             GlobalSetting.DefaultImageFormats = exts[0];
             GlobalSetting.OptionalImageFormats = exts[1];

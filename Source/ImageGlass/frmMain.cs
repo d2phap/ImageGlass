@@ -1496,7 +1496,7 @@ namespace ImageGlass
             }
 
 
-            if (GlobalSetting.IsCenterImage)
+            if (Configs.IsCenterImage)
             {
                 // auto center the image
                 picMain.CenterToImage();
@@ -2407,7 +2407,7 @@ namespace ImageGlass
 
 
                 #region Read supported image formats
-                var extGroups = GlobalSetting.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                var extGroups = Constants.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                 //Load Default Image Formats
                 GlobalSetting.DefaultImageFormats = GlobalSetting.GetConfig("DefaultImageFormats", extGroups[0]);
@@ -2461,9 +2461,6 @@ namespace ImageGlass
                 // Load IsDisplayBasenameOfImage value
                 GlobalSetting.IsDisplayBasenameOfImage = bool.Parse(GlobalSetting.GetConfig("IsDisplayBasenameOfImage", "False"));
 
-
-                // Load IsCenterImage value
-                GlobalSetting.IsCenterImage = bool.Parse(GlobalSetting.GetConfig("IsCenterImage", "True"));
 
 
                 #region Slideshow Interval
@@ -2820,6 +2817,10 @@ namespace ImageGlass
 
 
             GlobalSetting.SaveKeyAssignments();
+
+
+            // Write user configs file
+            Configs.Write();
         }
 
 
@@ -4753,7 +4754,7 @@ namespace ImageGlass
 
             picMain.ActualSize();
 
-            if (GlobalSetting.IsCenterImage)
+            if (Configs.IsCenterImage)
             {
                 picMain.CenterToImage();
             }
