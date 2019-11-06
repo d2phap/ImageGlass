@@ -54,12 +54,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Gets, sets the value indicates that StartUpDir is writable. NOTE***: need to be manually update by calling GlobalSetting.CheckStartUpDirWritable()
-        /// </summary>
-        public static bool IsStartUpDirWritable { get; set; } = true;
-
-
-        /// <summary>
         /// ~Gets, sets recursive value
         /// </summary>
         public static bool IsRecursiveLoading { get; set; } = false;
@@ -473,44 +467,6 @@ namespace ImageGlass.Services.Configuration
 
         #region Public Methods
 
-        /// <summary>
-        /// Get the path based on the startup folder of ImageGlass.
-        /// </summary>
-        /// <param name="paths"></param>
-        /// <returns></returns>
-        public static string StartUpDir(params string[] paths)
-        {
-            var path = Application.StartupPath;
-
-            var newPaths = paths.ToList();
-            newPaths.Insert(0, path);
-
-            return Path.Combine(newPaths.ToArray());
-        }
-
-
-        /// <summary>
-        /// Get the path based on the configuration folder of ImageGlass.
-        /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
-        /// </summary>
-        /// <param name="paths"></param>
-        /// <returns></returns>
-        public static string ConfigDir(params string[] paths)
-        {
-            if (IsStartUpDirWritable)
-            {
-                return GlobalSetting.StartUpDir(paths);
-            }
-
-            var configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
-
-            var newPaths = paths.ToList();
-            newPaths.Insert(0, configDir);
-            configDir = Path.Combine(newPaths.ToArray());
-
-            return configDir;
-        }
-
 
         /// <summary>
         /// Load the default built-in image formats to the list
@@ -671,76 +627,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// ~Convert string to int array
-        /// </summary>
-        /// <param name="str">Input string. E.g. "12, -40, 50"</param>
-        /// <returns></returns>
-        public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
-        {
-            var args = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var numbers = new List<int>();
-
-            foreach (var item in args)
-            {
-                var num = int.Parse(item, GlobalSetting.NumberFormat);
-                if (unsignedOnly && num < 0)
-                {
-                    continue;
-                }
-
-                numbers.Add(num);
-            }
-
-            if (distinct)
-            {
-                numbers = numbers.Distinct().ToList();
-            }
-
-            return numbers.ToArray();
-        }
-
-
-        /// <summary>
-        /// ~Convert int array to string
-        /// </summary>
-        /// <param name="array">Input int array</param>
-        /// <returns></returns>
-        public static string IntArrayToString(int[] array)
-        {
-            return string.Join(",", array);
-        }
-
-
-        /// <summary>
-        /// ~Convert string to Rectangle
-        /// </summary>
-        /// <param name="str">Input string. E.g. "12, 40, 50"</param>
-        /// <returns></returns>
-        public static Rectangle StringToRect(string str)
-        {
-            var args = GlobalSetting.StringToIntArray(str);
-
-            if (args.Count() == 4)
-            {
-                return new Rectangle(args[0], args[1], args[2], args[3]);
-            }
-
-            return new Rectangle();
-        }
-
-
-        /// <summary>
-        /// ~Convert Rectangle to String
-        /// </summary>
-        /// <param name="rc"></param>
-        /// <returns></returns>
-        public static string RectToString(Rectangle rc)
-        {
-            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
-        }
-
-
-        /// <summary>
         /// Take the supported extensions string from GlobalSetting and convert it 
         /// to a faster lookup mechanism and with wildcard removed.
         /// 
@@ -762,52 +648,6 @@ namespace ImageGlass.Services.Configuration
             }
         }
 
-
-        /// <summary>
-        /// Check if startup folder is writable
-        /// </summary>
-        /// <returns></returns>
-        public static bool CheckStartUpDirWritable()
-        {
-            try
-            {
-                var filePath = GlobalSetting.StartUpDir("test_write_file.temp");
-
-                using (File.Create(filePath)) { }
-                File.Delete(filePath);
-
-                return true;
-            }
-            catch// (Exception ex)
-            {
-                //System.Windows.Forms.MessageBox.Show(ex.Message);
-                return false;
-            }
-        }
-
-
-        /// <summary>
-        /// ~Parse string to absolute path
-        /// </summary>
-        /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
-        /// <returns></returns>
-        public static string ToAbsolutePath(string inputPath)
-        {
-            var path = inputPath;
-            var protocol = Constants.URI_SCHEME + ":";
-
-            // If inputPath is URI Scheme
-            if (path.StartsWith(protocol))
-            {
-                // Retrieve the real path
-                path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
-            }
-
-            // Parse environment vars to absolute path
-            path = Environment.ExpandEnvironmentVariables(path);
-
-            return path;
-        }
 
         #endregion
 

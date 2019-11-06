@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace ImageGlass.Services.Configuration
         private Dictionary<string, string> _dictionary;
         public string Description { get; set; }
         public string Version { get; set; }
-        public string Filename { get => GlobalSetting.ConfigDir("igconfig.xml"); }
+        public string Filename { get => App.ConfigDir("igconfig.xml"); }
 
         public ICollection<string> Keys => _dictionary.Keys;
         public ICollection<string> Values => _dictionary.Values;

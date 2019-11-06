@@ -154,7 +154,7 @@ namespace ImageGlass
 
             //Load config
             //Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{this.Name}.WindowsBound", "280,125,900,700"));
+            var rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{this.Name}.WindowsBound", "280,125,900,700"));
 
             if (!Helper.IsOnScreen(rc.Location))
             {
@@ -196,7 +196,7 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 //Windows Bound-------------------------------------------------------------------
-                GlobalSetting.SetConfig(Name + ".WindowsBound", GlobalSetting.RectToString(Bounds));
+                GlobalSetting.SetConfig(Name + ".WindowsBound", Helpers.RectToString(Bounds));
             }
 
 
@@ -267,7 +267,7 @@ namespace ImageGlass
 
 
             lblHeadConfigDir.Text = lang[$"{Name}.lblHeadConfigDir"];//
-            lnkConfigDir.Text = GlobalSetting.ConfigDir();
+            lnkConfigDir.Text = App.ConfigDir();
 
 
             lblHeadOthers.Text = lang[$"{Name}.lblHeadOthers"];//
@@ -609,7 +609,7 @@ namespace ImageGlass
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("explorer.exe", GlobalSetting.ConfigDir());
+            Process.Start("explorer.exe", App.ConfigDir());
         }
 
 
@@ -784,7 +784,7 @@ namespace ImageGlass
             cmbZoomOptimization.SelectedIndex = (int)GlobalSetting.ZoomOptimizationMethod;
 
             // Load zoom levels text
-            txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+            txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
 
             #endregion
 
@@ -1005,42 +1005,47 @@ namespace ImageGlass
 
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "iginstalllang";
-
-            try
+            using (var p = new Process())
             {
-                p.Start();
-            }
-            catch { }
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "iginstalllang";
 
+                try
+                {
+                    p.Start();
+                }
+                catch { }
+            }
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "ignewlang";
-
-            try
+            using (var p = new Process())
             {
-                p.Start();
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "ignewlang";
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
             }
-            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "igeditlang \"" + Settings.Configs.Language.FileName + "\"";
-
-            try
+            using (var p = new Process())
             {
-                p.Start();
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "igeditlang \"" + Settings.Configs.Language.FileName + "\"";
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
             }
-            catch { }
         }
 
         private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1051,7 +1056,7 @@ namespace ImageGlass
                 new Language()
             };
 
-            string langPath = GlobalSetting.StartUpDir(Dir.Languages);
+            var langPath = App.StartUpDir(Dir.Languages);
 
             if (Directory.Exists(langPath))
             {
@@ -1182,7 +1187,7 @@ namespace ImageGlass
             {
                 var isError = true;
 
-                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
                 p.StartInfo.Arguments = $"regassociations {extensions}";
                 p.Start();
 
@@ -1872,7 +1877,7 @@ namespace ImageGlass
 
         private async void RefreshThemeList()
         {
-            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(Dir.Themes);
 
             lvTheme.Items.Clear();
             lvTheme.Items.Add("2017 (Dark)").Tag = "default";
@@ -1966,17 +1971,17 @@ namespace ImageGlass
                 }
 
 
-                UI.Theme t = new UI.Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
-                picPreview.BackgroundImage = t.PreviewImage.Image;
+                var th = new Theme(App.ConfigDir(Dir.Themes, themeName));
+                picPreview.BackgroundImage = th.PreviewImage.Image;
 
                 txtThemeInfo.Text =
-                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {t.Name}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {t.Version}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {t.Author}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {t.Email}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {t.Website}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {t.Compatibility}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {t.Description}";
+                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {th.Name}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {th.Version}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {th.Author}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {th.Email}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {th.Website}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {th.Compatibility}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {th.Description}";
 
                 txtThemeInfo.Visible = true;
 
@@ -2052,17 +2057,19 @@ namespace ImageGlass
         {
             if (lvTheme.SelectedItems.Count > 0)
             {
-                SaveFileDialog s = new SaveFileDialog();
-                s.Filter = "ImageGlass theme (*.igtheme)|*.igtheme";
+                var s = new SaveFileDialog
+                {
+                    Filter = "ImageGlass theme (*.igtheme)|*.igtheme"
+                };
 
                 if (s.ShowDialog() == DialogResult.OK)
                 {
-                    string themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    string configFilePath = GlobalSetting.ConfigDir(Dir.Themes, themeName, "config.xml");
+                    var themeName = lvTheme.SelectedItems[0].Tag.ToString();
+                    var configFilePath = App.ConfigDir(Dir.Themes, themeName, "config.xml");
 
                     if (!File.Exists(configFilePath))
                     {
-                        configFilePath = GlobalSetting.StartUpDir(@"DefaultTheme\config.xml");
+                        configFilePath = App.StartUpDir(@"DefaultTheme\config.xml");
                     }
 
                     var themeDir = Path.GetDirectoryName(configFilePath);
@@ -2083,7 +2090,7 @@ namespace ImageGlass
 
         private void btnThemeFolderOpen_Click(object sender, EventArgs e)
         {
-            string themeFolder = GlobalSetting.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
 
@@ -2093,18 +2100,19 @@ namespace ImageGlass
             if (lvTheme.SelectedItems.Count > 0)
             {
                 string themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
-                string themeFolderPath = GlobalSetting.ConfigDir(Dir.Themes, themeFolderName);
+                string themeFolderPath = App.ConfigDir(Dir.Themes, themeFolderName);
 
-                var th = UI.Theme.ApplyTheme(themeFolderPath);
+                var th = new Theme(themeFolderPath);
 
                 if (th.IsValid)
                 {
                     LocalSetting.Theme = th;
-                    GlobalSetting.BackgroundColor = picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
+                    GlobalSetting.BackgroundColor = 
+                        picBackgroundColor.BackColor = 
+                        LocalSetting.Theme.BackgroundColor;
 
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
-                    th = null;
 
                     MessageBox.Show(Settings.Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -2493,13 +2501,13 @@ namespace ImageGlass
 
             if (string.IsNullOrEmpty(newString))
             {
-                txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+                txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
             }
-            else if (GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels) != newString)
+            else if (Helpers.IntArrayToString(GlobalSetting.ZoomLevels) != newString)
             {
                 try
                 {
-                    GlobalSetting.ZoomLevels = GlobalSetting.StringToIntArray(newString, unsignedOnly: true, distinct: true);
+                    GlobalSetting.ZoomLevels = Helpers.StringToIntArray(newString, unsignedOnly: true, distinct: true);
                     GlobalSetting.SetConfig("ZoomLevels", newString);
 
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
@@ -2507,7 +2515,7 @@ namespace ImageGlass
                 catch (Exception ex)
                 {
                     isSuccessful = false;
-                    txtZoomLevels.Text = GlobalSetting.IntArrayToString(GlobalSetting.ZoomLevels);
+                    txtZoomLevels.Text = Helpers.IntArrayToString(GlobalSetting.ZoomLevels);
                     var msg = string.Format(Settings.Configs.Language.Items[$"{Name}.txtZoomLevels._Error"], ex.Message);
 
                     MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);

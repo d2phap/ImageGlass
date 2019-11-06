@@ -225,7 +225,7 @@ namespace ImageGlass
         /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
         private void PrepareLoading(string inputPath)
         {
-            var path = GlobalSetting.ToAbsolutePath(inputPath);
+            var path = App.ToAbsolutePath(inputPath);
             var currentFileName = File.Exists(path) ? path : "";
 
             // Start loading path
@@ -248,7 +248,7 @@ namespace ImageGlass
 
 
             // Parse string to absolute path
-            var paths = inputPaths.Select(item => GlobalSetting.ToAbsolutePath(item));
+            var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
 
 
             // prepare the distinct dir list
@@ -1831,7 +1831,7 @@ namespace ImageGlass
 
             // Update toolbar icon according to the new size
             var themeName = GlobalSetting.GetConfig("Theme", "default");
-            Theme th = new Theme(GlobalSetting.ConfigDir(Dir.Themes, themeName));
+            Theme th = new Theme(App.ConfigDir(Dir.Themes, themeName));
             LoadToolbarIcons(th);
 
             #endregion
@@ -1886,7 +1886,7 @@ namespace ImageGlass
         /// </summary>
         private string SaveTemporaryMemoryData()
         {
-            var tempDir = GlobalSetting.ConfigDir(Dir.Temporary);
+            var tempDir = App.ConfigDir(Dir.Temporary);
             if (!Directory.Exists(tempDir))
             {
                 Directory.CreateDirectory(tempDir);
@@ -2089,7 +2089,7 @@ namespace ImageGlass
         /// <param name="themeFolderName">The folder name of theme. By default, load default theme</param>
         private Theme ApplyTheme(string themeFolderName = "default")
         {
-            var th = new Theme(GlobalSetting.ConfigDir(Dir.Themes, themeFolderName));
+            var th = new Theme(App.ConfigDir(Dir.Themes, themeFolderName));
 
             if (th.IsValid)
             {
@@ -2333,7 +2333,7 @@ namespace ImageGlass
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
                 #region Windows Bound (Position + Size)
-                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
+                Rectangle rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
 
                 if (!Helper.IsOnScreen(rc.Location))
                 {
@@ -2380,7 +2380,7 @@ namespace ImageGlass
                 // the windows *Position* is the one UI setting which *must* be applied at
                 // the OnLoad event in order to 'take'.
                 #region Windows Bound (Position + Size)
-                Rectangle rc = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
+                var rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
 
                 if (!Helper.IsOnScreen(rc.Location))
                 {
@@ -2397,7 +2397,7 @@ namespace ImageGlass
 
                 #region Load language pack
                 configValue = GlobalSetting.GetConfig("Language", "English");
-                Settings.Configs.Language = new Language(configValue, GlobalSetting.StartUpDir(Dir.Languages));
+                Settings.Configs.Language = new Language(configValue, App.StartUpDir(Dir.Languages));
 
                 //force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
@@ -2501,7 +2501,7 @@ namespace ImageGlass
 
                 // Load ZoomLevels
                 var zoomLevelStr = GlobalSetting.GetConfig("ZoomLevels");
-                var zoomLevels = GlobalSetting.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
+                var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
                 if (zoomLevels.Length > 0)
                 {
                     GlobalSetting.ZoomLevels = zoomLevels;
@@ -2576,7 +2576,7 @@ namespace ImageGlass
 
                 if (!File.Exists(startUpImg) && GlobalSetting.IsShowWelcome)
                 {
-                    startUpImg = GlobalSetting.StartUpDir("default.jpg");
+                    startUpImg = App.StartUpDir("default.jpg");
                 }
 
                 //Do not show welcome image if params exist.
@@ -2750,7 +2750,7 @@ namespace ImageGlass
                 if (!GlobalSetting.IsFullScreen && !GlobalSetting.IsPlaySlideShow)
                 {
                     //Windows Bound--------------------------------------------------------------
-                    GlobalSetting.SetConfig($"{Name}.WindowsBound", GlobalSetting.RectToString(this.Bounds));
+                    GlobalSetting.SetConfig($"{Name}.WindowsBound", Helpers.RectToString(this.Bounds));
                 }
             }
 
@@ -2914,7 +2914,7 @@ namespace ImageGlass
                     }
 
                     //Windows Bound (Position + Size)
-                    this.Bounds = GlobalSetting.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
+                    this.Bounds = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
                 }
 
 
@@ -3054,7 +3054,7 @@ namespace ImageGlass
                 this._fileWatcher.Dispose();
 
                 //clear temp files
-                var tempDir = GlobalSetting.ConfigDir(Dir.Temporary);
+                var tempDir = App.ConfigDir(Dir.Temporary);
                 if (Directory.Exists(tempDir))
                 {
                     Directory.Delete(tempDir, true);
@@ -4122,7 +4122,7 @@ namespace ImageGlass
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                if (File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
                 }
@@ -4221,7 +4221,7 @@ namespace ImageGlass
             else if (Clipboard.ContainsText())
             {
                 // try to get absolute path
-                var inputPath = GlobalSetting.ToAbsolutePath(Clipboard.GetText());
+                var inputPath = App.ToAbsolutePath(Clipboard.GetText());
 
                 if (File.Exists(inputPath) || Directory.Exists(inputPath))
                 {
@@ -4964,7 +4964,7 @@ namespace ImageGlass
                         var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
 
                         // Issue #326: first attempt to set wallpaper w/o privs. 
-                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
+                        p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
                         p.StartInfo.Arguments = args;
                         p.Start();
 
@@ -4974,7 +4974,7 @@ namespace ImageGlass
                         // If that fails due to privs error, re-attempt with admin privs.
                         if (p.ExitCode == (int)DesktopWallapaper.Result.PrivsFail)
                         {
-                            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
                             p.StartInfo.Arguments = args;
                             p.Start();
 
@@ -5018,11 +5018,11 @@ namespace ImageGlass
                     // save the current image data to temp file
                     var imgFile = SaveTemporaryMemoryData();
 
-                    using (Process p = new Process())
+                    using (var p = new Process())
                     {
                         var args = string.Format("setlockimage \"{0}\"", imgFile);
 
-                        p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmdWin10.exe");
+                        p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
                         p.StartInfo.Arguments = args;
                         p.EnableRaisingEvents = true;
                         p.Start();
@@ -5331,7 +5331,7 @@ namespace ImageGlass
         private void mnuMainFirstLaunch_Click(object sender, EventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
+            p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
             p.StartInfo.Arguments = "firstlaunch";
 
             try
@@ -5421,7 +5421,7 @@ namespace ImageGlass
                 mnuMainExtractPages.Text = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainExtractPages"], frameCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!File.Exists(GlobalSetting.StartUpDir("igcmdWin10.exe")))
+                if (!File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuMainSetAsLockImage.Enabled = false;
                 }

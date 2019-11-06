@@ -593,33 +593,6 @@ namespace ImageGlass.UI
 
 
         #region PUBLIC STATIC FUNCS
-        /// <summary>
-        /// Apply the new theme and save configs
-        /// </summary>
-        /// <param name="themeFolderPath">The absolute theme folder path</param>
-        /// <returns>Return Theme object if success, else NULL</returns>
-        public static Theme ApplyTheme(string themeFolderPath)
-        {
-            //Save background color
-            try
-            {
-                Theme th = new Theme(themeFolderPath);
-                
-                if (th.IsValid)
-                {
-                    //GlobalSetting.SetConfig("BackgroundColor", ConvertColorToHEX(th.BackgroundColor, true));
-
-                    //Save theme path
-                    //GlobalSetting.SetConfig("Theme", Path.GetFileName(themeFolderPath)); // get theme folder name
-
-                    return th;
-                }
-            }
-            catch { }
-
-            return null;
-        }
-
 
         /// <summary>
         /// Install ImageGlass theme
