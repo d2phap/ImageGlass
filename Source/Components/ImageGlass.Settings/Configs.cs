@@ -690,7 +690,7 @@ namespace ImageGlass.Settings
 
             #region FrmMainWindowsBound
             var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
-            if (string.IsNullOrEmpty(boundStr))
+            if (!string.IsNullOrEmpty(boundStr))
             {
                 var rc = Helpers.StringToRect(boundStr);
 
@@ -706,7 +706,7 @@ namespace ImageGlass.Settings
 
             #region FrmSettingsWindowsBound
             boundStr = Get<string>(nameof(FrmSettingsWindowsBound), "");
-            if (string.IsNullOrEmpty(boundStr))
+            if (!string.IsNullOrEmpty(boundStr))
             {
                 var rc = Helpers.StringToRect(boundStr);
 

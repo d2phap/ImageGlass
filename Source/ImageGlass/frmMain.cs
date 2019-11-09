@@ -1798,7 +1798,7 @@ namespace ImageGlass
                 Heart.Photo.SaveImage(newBitmap, LocalSetting.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
-                if (GlobalSetting.PreserveModifiedDate)
+                if (Configs.PreserveModifiedDate)
                 {
                     File.SetLastWriteTime(LocalSetting.ImageModifiedPath, lastWriteTime);
                 }
@@ -2279,15 +2279,9 @@ namespace ImageGlass
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-                #region Windows Bound (Position + Size)
-                Rectangle rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
 
-                if (!Helper.IsOnScreen(rc.Location))
-                {
-                    rc.Location = new Point(280, 125);
-                }
-                this.Bounds = rc;
-                #endregion
+                // Windows Bound (Position + Size)
+                this.Bounds = Configs.FrmMainWindowsBound;
 
 
                 // Issue #402: need to wait to load thumbnail size etc until after window bounds.
@@ -2302,17 +2296,7 @@ namespace ImageGlass
 
 
                 // Windows state must be loaded after Windows Bound!
-                #region Windows state
-                configValue = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
-                if (configValue == "Normal")
-                {
-                    this.WindowState = FormWindowState.Normal;
-                }
-                else if (configValue == "Maximized")
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-                #endregion
+                this.WindowState = Configs.FrmMainWindowState;
 
 
             }
@@ -2326,20 +2310,11 @@ namespace ImageGlass
                 // This is a 'UI' setting which isLoadUI had previously skipped. *However*,
                 // the windows *Position* is the one UI setting which *must* be applied at
                 // the OnLoad event in order to 'take'.
-                #region Windows Bound (Position + Size)
-                var rc = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,1000,800"));
 
-                if (!Helper.IsOnScreen(rc.Location))
-                {
-                    rc.Location = new Point(280, 125);
-                }
-                this.Bounds = rc;
-                #endregion
+                // Windows Bound (Position + Size)
+                this.Bounds = Configs.FrmMainWindowsBound;
 
 
-                #region Show NavigationButtons
-                GlobalSetting.IsShowNavigationButtons = bool.Parse(GlobalSetting.GetConfig("IsShowNavigationButtons", "False").ToString());
-                #endregion
 
 
                 #region Load language pack
@@ -2423,14 +2398,12 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load scrollbars visibility
-                GlobalSetting.IsScrollbarsVisible = bool.Parse(GlobalSetting.GetConfig("IsScrollbarsVisible", "False"));
-                if (GlobalSetting.IsScrollbarsVisible)
+                // Load scrollbars visibility
+                if (Configs.IsScrollbarsVisible)
                 {
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                     picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                 }
-                #endregion
 
 
                 // Load state of IsWindowAlwaysOnTop value 
@@ -2458,13 +2431,12 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load Full Screen mode
+                // Load Full Screen mode
                 if (Configs.IsFullScreen)
                 {
                     Configs.IsFullScreen = !Configs.IsFullScreen;
                     mnuMainFullScreen.PerformClick();
                 }
-                #endregion
 
 
                 #region Get Last Seen Image Path & Welcome Image
@@ -2509,7 +2481,7 @@ namespace ImageGlass
                 }
             }
 
-            //Windows State-------------------------------------------------------------------
+            // Windows State-------------------------------------------------------------------
             Configs.FrmMainWindowState = this.WindowState;
 
 
@@ -2520,7 +2492,7 @@ namespace ImageGlass
             // Save previous image if it was modified
             if (File.Exists(LocalSetting.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
-                DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
+                DisplayTextMessage(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -4567,9 +4539,9 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = DialogResult.Yes;
+            var msg = DialogResult.Yes;
 
-            if (GlobalSetting.IsConfirmationDelete)
+            if (Configs.IsConfirmationDelete)
             {
                 msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
@@ -4599,9 +4571,9 @@ namespace ImageGlass
             }
             catch { return; }
 
-            DialogResult msg = DialogResult.Yes;
+            var msg = DialogResult.Yes;
 
-            if (GlobalSetting.IsConfirmationDelete)
+            if (Configs.IsConfirmationDelete)
             {
                 msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }

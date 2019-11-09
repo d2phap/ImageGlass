@@ -121,38 +121,12 @@ namespace ImageGlass.Services.Configuration
         public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.DoNothing;
 
 
-        /// <summary>
-        /// ~Gets, sets value indicating that Confirmation dialog is displayed when deleting image
-        /// </summary>
-        public static bool IsConfirmationDelete { get; set; } = false;
-
-
-        /// <summary>
-        /// ~Gets, sets the value indicates that viewer scrollbars are visible
-        /// </summary>
-        public static bool IsScrollbarsVisible { get; set; } = false;
-
 
         /// <summary>
         /// ~Gets, sets the list of Image Editing Association
         /// </summary>
         public static List<ImageEditingAssociation> ImageEditingAssociationList { get; set; } = new List<ImageEditingAssociation>();
 
-
-        /// <summary>
-        /// ~Gets, sets the value indicates that the viewing image is auto-saved after rotating
-        /// </summary>
-        public static bool IsSaveAfterRotating { get; set; } = false;
-
-        /// <summary>
-        /// ~Setting to control whether the image's original modified date value is preserved on save
-        /// </summary>
-        public static bool PreserveModifiedDate { get; set; } = true;
-
-        /// <summary>
-        /// ~Gets, sets the value indicates that there is a new version
-        /// </summary>
-        public static bool IsNewVersionAvailable { get; set; } = false;
 
 
         /// <summary>
@@ -165,22 +139,6 @@ namespace ImageGlass.Services.Configuration
         /// ~Gets, sets zoom optimization value
         /// </summary>
         public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
-
-
-        /// <summary>
-        /// Number format to use for save/restore ImageGlass settings
-        /// </summary>
-        public static NumberFormatInfo NumberFormat
-        {
-            get
-            {
-                var newFormat = new NumberFormatInfo
-                {
-                    NegativeSign = "-"
-                };
-                return newFormat;
-            }
-        }
 
 
         /// <summary>
