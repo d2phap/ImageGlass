@@ -48,71 +48,6 @@ namespace ImageGlass.Services.Configuration
 
         #region Public Properties
 
-        /// <summary>
-        /// ~Gets, sets action to be performed when user spins the mouse wheel
-        /// </summary>
-        public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.ScrollVertically;
-
-
-        /// <summary>
-        /// ~Gets, sets action to be performed when user spins the mouse wheel while holding Ctrl key
-        /// </summary>
-        public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.Zoom;
-
-        /// <summary>
-        /// ~Gets, sets action to be performed when user spins the mouse wheel while holding Shift key
-        /// </summary>
-        public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
-
-        /// <summary>
-        /// ~Gets, sets action to be performed when user spins the mouse wheel while holding Alt key
-        /// </summary>
-        public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.DoNothing;
-
-
-
-        /// <summary>
-        /// ~Gets, sets the list of Image Editing Association
-        /// </summary>
-        public static List<EditApp> ImageEditingAssociationList { get; set; } = new List<EditApp>();
-
-
-        
-        /// <summary>
-        /// ~The toolbar button configuration: contents and order.
-        /// </summary>
-        public static string ToolbarButtons { get; set; } = $"" +
-            $"{(int)Base.ToolbarButtons.btnBack}," +
-            $"{(int)Base.ToolbarButtons.btnNext}," +
-            $"{(int)Base.ToolbarButtons.Separator}," +
-
-            $"{(int)Base.ToolbarButtons.btnRotateLeft}," +
-            $"{(int)Base.ToolbarButtons.btnRotateRight}," +
-            $"{(int)Base.ToolbarButtons.btnFlipHorz}," +
-            $"{(int)Base.ToolbarButtons.btnFlipVert}," +
-            $"{(int)Base.ToolbarButtons.Separator}," +
-
-            $"{(int)Base.ToolbarButtons.btnAutoZoom}," +
-            $"{(int)Base.ToolbarButtons.btnScaletoWidth}," +
-            $"{(int)Base.ToolbarButtons.btnScaletoHeight}," +
-            $"{(int)Base.ToolbarButtons.btnScaleToFit}," +
-            $"{(int)Base.ToolbarButtons.btnScaleToFill}," +
-            $"{(int)Base.ToolbarButtons.btnZoomLock}," +
-            $"{(int)Base.ToolbarButtons.Separator}," +
-
-            $"{(int)Base.ToolbarButtons.btnOpen}," +
-            $"{(int)Base.ToolbarButtons.btnRefresh}," +
-            $"{(int)Base.ToolbarButtons.btnGoto}," +
-            $"{(int)Base.ToolbarButtons.Separator}," +
-
-            $"{(int)Base.ToolbarButtons.btnThumb}," +
-            $"{(int)Base.ToolbarButtons.btnCheckedBackground}," +
-            $"{(int)Base.ToolbarButtons.btnFullScreen}," +
-            $"{(int)Base.ToolbarButtons.btnSlideShow}," +
-            $"{(int)Base.ToolbarButtons.btnDelete}," + 
-            $"{(int)Base.ToolbarButtons.btnEdit}";
-
-
 
         /// <summary>
         /// ~User-selected action tied to key pairings. E.g. Left/Right arrows: prev/next image
@@ -154,18 +89,6 @@ namespace ImageGlass.Services.Configuration
             return exts.ToString();
         }
 
-
-
-
-        /// <summary>
-        /// Gets a specify config. Return "" if not found.
-        /// </summary>
-        /// <param name="key">Configuration key</param>
-        /// <returns></returns>
-        public static string GetConfig(string key)
-        {
-            return GetConfig(key, "");
-        }
 
 
         /// <summary>

@@ -862,10 +862,10 @@ namespace ImageGlass.Settings
             Source.WriteUserConfigs();
         }
 
-        #endregion
+        
 
 
-
+        #region Config functions
 
         /// <summary>
         /// Get ImageEditingAssociation from ImageEditingAssociationList
@@ -876,13 +876,7 @@ namespace ImageGlass.Settings
         {
             if (EditApps.Count > 0)
             {
-                try
-                {
-                    var app = EditApps.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
-
-                    return app;
-                }
-                catch { }
+                return EditApps.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
             }
 
             return null;
@@ -924,6 +918,11 @@ namespace ImageGlass.Settings
 
             return sb.ToString();
         }
+
+
+        #endregion
+
+        #endregion
 
     }
 }
