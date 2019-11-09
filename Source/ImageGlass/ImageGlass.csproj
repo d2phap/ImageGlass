@@ -164,11 +164,11 @@
     <Compile Include="frmColorPicker.Designer.cs">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmEditEditingAssocisation.cs">
+    <Compile Include="frmEditApp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEditEditingAssocisation.Designer.cs">
-      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
+    <Compile Include="frmEditApp.Designer.cs">
+      <DependentUpon>frmEditApp.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -201,8 +201,8 @@
     <EmbeddedResource Include="frmColorPicker.resx">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEditEditingAssocisation.resx">
-      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
+    <EmbeddedResource Include="frmEditApp.resx">
+      <DependentUpon>frmEditApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

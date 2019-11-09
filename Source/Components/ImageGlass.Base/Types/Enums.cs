@@ -59,12 +59,6 @@ namespace ImageGlass.Base
         ClearPixels = 2
     }
 
-    public enum ImageFormatGroup
-    {
-        Default = 0,
-        Optional = 1
-    }
-
 
     /// <summary>
     /// The list of mousewheel actions.

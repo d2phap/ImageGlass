@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass
 {
-    public partial class frmEditEditingAssocisation : Form
+    public partial class frmEditApp : Form
     {
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
@@ -33,7 +33,7 @@ namespace ImageGlass
         public string AppPath { get; set; }
         public string AppArguments { get; set; }
 
-        public frmEditEditingAssocisation()
+        public frmEditApp()
         {
             InitializeComponent();
 
@@ -48,7 +48,7 @@ namespace ImageGlass
             btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
-        private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
+        private void frmEditApp_Load(object sender, EventArgs e)
         {
             // Issue #543 Prevent usage of characters which cause problems for settings
             txtFileExtension.KeyPress += textBox_KeyPress;
@@ -116,7 +116,7 @@ namespace ImageGlass
             return false;
         }
 
-        private void frmEditEditingAssocisation_KeyDown(object sender, KeyEventArgs e)
+        private void frmEditApp_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
@@ -126,7 +126,7 @@ namespace ImageGlass
             }
         }
 
-        private void frmEditEditingAssocisation_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmEditApp_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!_isAllowFormClosed)
             {

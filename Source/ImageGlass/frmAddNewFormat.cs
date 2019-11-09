@@ -28,19 +28,12 @@ namespace ImageGlass
     {
         private bool _isAllowFormClosed = false;
         public string FileFormat { get; set; }
-        public ImageFormatGroup FormatGroup { get; set; }
 
         public frmAddNewFormat()
         {
             InitializeComponent();
-
-            // Add group items
-            cmbFormatGroup.Items.Add(Configs.Language.Items["_.ImageFormatGroup.Default"]);
-            cmbFormatGroup.Items.Add(Configs.Language.Items["_.ImageFormatGroup.Optional"]);
-            cmbFormatGroup.SelectedIndex = 0;
             
             lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
-            lblFormatGroup.Text = Configs.Language.Items[$"{this.Name}.lblFormatGroup"];
             btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
             btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
@@ -54,7 +47,6 @@ namespace ImageGlass
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileFormat = txtFileExtension.Text.ToLower().Trim();
-            FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
 
             if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllFormats.Contains(FileFormat))
             {
@@ -70,7 +62,6 @@ namespace ImageGlass
         private void frmAddNewFormat_Load(object sender, EventArgs e)
         {
             txtFileExtension.Text = this.FileFormat;
-            cmbFormatGroup.SelectedIndex = (int) this.FormatGroup;
 
             txtFileExtension.Focus();
         }

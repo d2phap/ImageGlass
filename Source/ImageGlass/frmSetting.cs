@@ -325,15 +325,12 @@ namespace ImageGlass
 
             #region FILE ASSOCIATION TAB
 
-            lblExtensionsGroupDescription.Text = lang[$"{Name}.lblExtensionsGroupDescription"];
             lblSupportedExtension.Text = string.Format(lang[$"{Name}.lblSupportedExtension"], Configs.AllFormats.Count);
             lnkOpenFileAssoc.Text = lang[$"{Name}.lnkOpenFileAssoc"];
             btnAddNewExt.Text = lang[$"{Name}.btnAddNewExt"];
             btnDeleteExt.Text = lang[$"{Name}.btnDeleteExt"];
             btnRegisterExt.Text = lang[$"{Name}.btnRegisterExt"];
             btnResetExt.Text = lang[$"{Name}.btnResetExt"];
-            lvExtension.Groups[(int)ImageFormatGroup.Default].Header = lang["_.ImageFormatGroup.Default"];
-            lvExtension.Groups[(int)ImageFormatGroup.Optional].Header = lang["_.ImageFormatGroup.Optional"];
             #endregion
 
 
@@ -889,7 +886,7 @@ namespace ImageGlass
             if (assoc == null)
                 return;
 
-            frmEditEditingAssocisation f = new frmEditEditingAssocisation()
+            frmEditApp f = new frmEditApp()
             {
                 FileExtension = assoc.Extension,
                 AppName = assoc.AppName,
@@ -913,7 +910,7 @@ namespace ImageGlass
 
         private void btnEditEditAllExt_Click(object sender, EventArgs e)
         {
-            frmEditEditingAssocisation f = new frmEditEditingAssocisation()
+            frmEditApp f = new frmEditApp()
             {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
@@ -955,47 +952,59 @@ namespace ImageGlass
 
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var p = new Process())
+            try
             {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "iginstalllang";
-
-                try
+                using (var p = new Process())
                 {
-                    p.Start();
+                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                    p.StartInfo.Arguments = "iginstalllang";
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            catch { }
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var p = new Process())
+            try
             {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "ignewlang";
-
-                try
+                using (var p = new Process())
                 {
-                    p.Start();
+                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                    p.StartInfo.Arguments = "ignewlang";
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var p = new Process())
+            try
             {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
-
-                try
+                using (var p = new Process())
                 {
-                    p.Start();
+                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                    p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            catch { }
         }
 
         private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1076,10 +1085,7 @@ namespace ImageGlass
 
             foreach (var ext in Configs.AllFormats)
             {
-                var li = new ListViewItem(lvExtension.Groups["Default"])
-                {
-                    Text = ext
-                };
+                var li = new ListViewItem(ext);
 
                 lvExtension.Items.Add(li);
             }
@@ -1095,27 +1101,31 @@ namespace ImageGlass
         {
             LoadExtensionList(resetFormatList);
 
-            using (Process p = new Process())
+            try
             {
-                var isError = true;
-                var formats = Configs.GetImageFormats(Configs.AllFormats);
-
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {formats}";
-                p.Start();
-
-                p.WaitForExit();
-                isError = p.ExitCode != 0;
-
-                if (isError)
+                using (Process p = new Process())
                 {
-                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var isError = true;
+                    var formats = Configs.GetImageFormats(Configs.AllFormats);
+
+                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                    p.StartInfo.Arguments = $"regassociations {formats}";
+                    p.Start();
+
+                    p.WaitForExit();
+                    isError = p.ExitCode != 0;
+
+                    if (isError)
+                    {
+                        MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
+            catch { }
         }
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1154,7 +1164,6 @@ namespace ImageGlass
             var f = new frmAddNewFormat()
             {
                 FileFormat = ".svg",
-                FormatGroup = ImageFormatGroup.Default,
                 TopMost = this.TopMost
             };
 
