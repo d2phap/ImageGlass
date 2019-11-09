@@ -847,7 +847,7 @@ namespace ImageGlass
                 var li = new ListViewItem();
                 li.Text = ext;
 
-                //Build new list
+                // Build new list
                 var newEditingAssoc = new ImageEditingAssociation()
                 {
                     Extension = ext
@@ -855,14 +855,14 @@ namespace ImageGlass
 
                 if (!isResetToDefault)
                 {
-                    //Find the extension in the settings
+                    // Find the extension in the settings
                     var editingExt = Configs.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
 
                     li.SubItems.Add(editingExt?.AppName);
                     li.SubItems.Add(editingExt?.AppPath);
                     li.SubItems.Add(editingExt?.AppArguments);
 
-                    //Build new list
+                    // Build new list
                     newEditingAssoc.AppName = editingExt?.AppName;
                     newEditingAssoc.AppPath = editingExt?.AppPath;
                     newEditingAssoc.AppArguments = editingExt?.AppArguments;
@@ -872,7 +872,7 @@ namespace ImageGlass
                 lvImageEditing.Items.Add(li);
             }
 
-            //Update the new full list
+            // Update the new full list
             Configs.ImageEditingAssociationList = newEditingAssocList;
         }
 
@@ -880,7 +880,6 @@ namespace ImageGlass
         private void btnEditResetExt_Click(object sender, EventArgs e)
         {
             LoadImageEditingAssociationList(true);
-            GlobalSetting.SaveConfigOfImageEditingAssociationList();
         }
 
         private void btnEditEditExt_Click(object sender, EventArgs e)
@@ -888,8 +887,8 @@ namespace ImageGlass
             if (lvImageEditing.SelectedItems.Count == 0)
                 return;
 
-            //Get select Association item
-            var assoc = GlobalSetting.GetImageEditingAssociationFromList(lvImageEditing.SelectedItems[0].Text);
+            // Get select Association item
+            var assoc = Configs.GetImageEditingAssociationFromList(lvImageEditing.SelectedItems[0].Text);
 
             if (assoc == null)
                 return;
@@ -1307,7 +1306,7 @@ namespace ImageGlass
             _lstToolbarImg = new ImageList();
             _lstToolbarImg.ColorDepth = ColorDepth.Depth32Bit; // max out image quality
 
-            var iconHeight = ThemeImage.GetCorrectIconHeight();
+            var iconHeight = ThemeImage.GetCorrectBaseIconHeight();
             _lstToolbarImg.ImageSize = new Size(iconHeight, iconHeight); // TODO empirically determined (can get from ImageGlass.Theme)
 
             Type mainType = typeof(frmMain);
@@ -1533,7 +1532,7 @@ namespace ImageGlass
         private void UpdateButtonsListViewItemSize(ListView lv)
         {
             var width = (int)(lv.Width * 0.85); // reserve right gap for multiple selection
-            var height = ThemeImage.GetCorrectIconHeight() * 2;
+            var height = ThemeImage.GetCorrectBaseIconHeight() * 2;
 
             lv.TileSize = new Size(width, height);
 
@@ -1703,7 +1702,7 @@ namespace ImageGlass
             int newToolBarItemHeight = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectIconHeight();
+            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
 
             foreach (var btn in lstToolbarButtons)
             {

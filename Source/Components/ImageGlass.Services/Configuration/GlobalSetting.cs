@@ -47,19 +47,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// ~Gets, sets image loading order
-        /// </summary>
-        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
-
-
-        /// <summary>
-        /// ~Gets, sets image loading order type
-        /// </summary>
-        public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
-
-
-
-        /// <summary>
         /// Gets or sets the hash array of all supported formats. 
         /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
         /// </summary>
@@ -72,18 +59,6 @@ namespace ImageGlass.Services.Configuration
 
 
         #region Public Properties
-
-
-        /// <summary>
-        /// ~Gets all supported extensions string
-        /// </summary>
-        public static string AllImageFormats
-        {
-            get
-            {
-                return GlobalSetting.DefaultImageFormats + GlobalSetting.OptionalImageFormats;
-            }
-        }
 
 
         /// <summary>
@@ -182,59 +157,6 @@ namespace ImageGlass.Services.Configuration
 
 
         /// <summary>
-        /// Load the default built-in image formats to the list
-        /// </summary>
-        public static void LoadBuiltInImageFormats()
-        {
-            var exts = Constants.BuiltInImageFormats.Split("|".ToCharArray());
-
-            GlobalSetting.DefaultImageFormats = exts[0];
-            GlobalSetting.OptionalImageFormats = exts[1];
-        }
-
-
-        /// <summary>
-        /// Save ImageEditingAssociationList to Settings
-        /// </summary>
-        public static void SaveConfigOfImageEditingAssociationList()
-        {
-            StringBuilder editingAssocString = new StringBuilder();
-
-            foreach (var assoc in GlobalSetting.ImageEditingAssociationList)
-            {
-                editingAssocString.Append($"[{assoc.ToString()}]");
-            }
-
-            GlobalSetting.SetConfig("ImageEditingAssociationList", editingAssocString.ToString());
-        }
-
-
-        /// <summary>
-        /// Get ImageEditingAssociation from ImageEditingAssociationList
-        /// </summary>
-        /// <param name="ext">Extension to search. Ex: .png</param>
-        /// <returns></returns>
-        public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
-        {
-            if (GlobalSetting.ImageEditingAssociationList.Count > 0)
-            {
-                try
-                {
-                    var assoc = GlobalSetting.ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
-
-                    return assoc;
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
-
-        /// <summary>
         /// Get file extensions from registry
         /// Ex: *.svg;*.png;
         /// </summary>
@@ -259,48 +181,6 @@ namespace ImageGlass.Services.Configuration
         }
 
 
-        /// <summary>
-        /// Get image order from configuration file
-        /// </summary>
-        /// <returns></returns>
-        public static ImageOrderBy GetImageOrderConfig()
-        {
-            string s = GetConfig("ImageLoadingOrder", "0");
-
-            if (int.TryParse(s, out int i))
-            {
-                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderBy)).Length) //<=== Number of items in enum
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-
-            return (ImageOrderBy)i;
-        }
-
-
-        /// <summary>
-        /// Get image order type from configuration file
-        /// </summary>
-        /// <returns></returns>
-        public static ImageOrderType GetImageOrderTypeConfig()
-        {
-            string s = GetConfig("ImageLoadingOrderType", "0");
-
-            if (int.TryParse(s, out int i))
-            {
-                if (-1 < i && i < Enum.GetNames(typeof(ImageOrderType)).Length) //<=== Number of items in enum
-                { }
-                else
-                {
-                    i = 0;
-                }
-            }
-
-            return (ImageOrderType)i;
-        }
 
 
         /// <summary>
@@ -349,15 +229,15 @@ namespace ImageGlass.Services.Configuration
         public static void BuildImageFormatHashSet()
         {
             char[] wildtrim = { '*' };
-            var allTypes = GlobalSetting.AllImageFormats;
+            var allTypes = DefaultImageFormats + OptionalImageFormats;
 
             var typesArray = allTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            GlobalSetting.ImageFormatHashSet = new HashSet<string>();
+            ImageFormatHashSet = new HashSet<string>();
 
             foreach (var aType in typesArray)
             {
                 string wildRemoved = aType.Trim(wildtrim);
-                GlobalSetting.ImageFormatHashSet.Add(wildRemoved);
+                ImageFormatHashSet.Add(wildRemoved);
             }
         }
 

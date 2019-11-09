@@ -126,30 +126,30 @@ namespace ImageGlass.UI
 
         public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight)
         {
-            //Update size of toolbar
-            toolbar.Height = DPIScaling.TransformNumber(baseHeight);
+            // Update size of toolbar
+            toolbar.Height = TransformNumber(baseHeight);
 
-            //Get new toolbar item height
+            // Get new toolbar item height
             int currentToolbarHeight = toolbar.Height;
             int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
 
-            //Update toolbar items size
-            //Tool bar buttons
+            // Update toolbar items size
+            // Tool bar buttons
             foreach (var item in toolbar.Items.OfType<ToolStripButton>())
             {
                 item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
             }
 
-            //Tool bar menu buttons
+            // Tool bar menu buttons
             foreach (var item in toolbar.Items.OfType<ToolStripDropDownButton>())
             {
                 item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
             }
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectIconHeight();
+            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
 
-            //Tool bar separators
+            // Tool bar separators
             foreach (var item in toolbar.Items.OfType<ToolStripSeparator>())
             {
                 item.Size = new Size(5, (int)(hIcon * 1.2));

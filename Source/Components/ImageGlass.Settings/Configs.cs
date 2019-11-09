@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -634,9 +635,16 @@ namespace ImageGlass.Settings
 
 
             #region String items
+
+            // set default formats list from constant
+            var exts = Constants.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            DefaultImageFormats = exts[0];
+            OptionalImageFormats = exts[1];
+
             // TODO: merge 2 list
             DefaultImageFormats = Get<string>(nameof(DefaultImageFormats), DefaultImageFormats);
             OptionalImageFormats = Get<string>(nameof(OptionalImageFormats), OptionalImageFormats);
+
 
             ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
@@ -873,6 +881,29 @@ namespace ImageGlass.Settings
 
         #endregion
 
+
+
+
+        /// <summary>
+        /// Get ImageEditingAssociation from ImageEditingAssociationList
+        /// </summary>
+        /// <param name="ext">Extension to search. Ex: .png</param>
+        /// <returns></returns>
+        public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
+        {
+            if (ImageEditingAssociationList.Count > 0)
+            {
+                try
+                {
+                    var assoc = ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+
+                    return assoc;
+                }
+                catch { }
+            }
+
+            return null;
+        }
 
     }
 }

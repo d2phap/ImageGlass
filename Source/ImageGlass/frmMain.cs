@@ -479,6 +479,7 @@ namespace ImageGlass
                             return false;
                         }
                     }
+
                     if (extension.Length > 0 && GlobalSetting.ImageFormatHashSet.Contains(extension))
                     {
                         return true;
@@ -1366,7 +1367,7 @@ namespace ImageGlass
             {
                 // Find file format
                 var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)).ToLower();
-                var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
+                var assoc = Configs.GetImageEditingAssociationFromList(ext);
 
                 // Get App assoc info
                 if (assoc != null && File.Exists(assoc.AppPath))
@@ -1823,17 +1824,15 @@ namespace ImageGlass
         private void OnDpiChanged()
         {
             //Change grid cell size
-            picMain.GridCellSize = DPIScaling.TransformNumber((int)Constants.VIEWER_GRID_SIZE);
+            picMain.GridCellSize = DPIScaling.TransformNumber(Constants.VIEWER_GRID_SIZE);
 
 
             #region change size of toolbar
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolMain, (int)Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolMain, Constants.TOOLBAR_HEIGHT);
 
             // Update toolbar icon according to the new size
-            var themeName = GlobalSetting.GetConfig("Theme", "default");
-            Theme th = new Theme(App.ConfigDir(Dir.Themes, themeName));
-            LoadToolbarIcons(th);
+            LoadToolbarIcons(forceReloadIcon: true);
 
             #endregion
 
@@ -1968,13 +1967,10 @@ namespace ImageGlass
         /// </summary>
         private void DetermineSortOrder(string fullPath)
         {
-            // Read the sorting order from config
-            GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
-
             // Initialize to the user-configured sorting order. Fetching the Explorer sort
             // order may fail, or may be on an unsupported column.
-            LocalSetting.ActiveImageLoadingOrder = GlobalSetting.ImageLoadingOrder;
-            LocalSetting.ActiveImageLoadingOrderType = GlobalSetting.ImageLoadingOrderType;
+            LocalSetting.ActiveImageLoadingOrder = Configs.ImageLoadingOrder;
+            LocalSetting.ActiveImageLoadingOrderType = Configs.ImageLoadingOrderType;
 
             // Use File Explorer sort order if possible
             if (Configs.IsUseFileExplorerSortOrder)
@@ -2012,7 +2008,7 @@ namespace ImageGlass
                 var channelName = Enum.GetName(typeof(ColorChannels), channel);
                 var mnu = new ToolStripMenuItem()
                 {
-                    Text = Settings.Configs.Language.Items[$"{Name}.mnuMainChannels._{channelName}"],
+                    Text = Configs.Language.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
                     Checked = (int)channel == (int)LocalSetting.Channels,
@@ -2087,95 +2083,89 @@ namespace ImageGlass
         /// <summary>
         /// Apply ImageGlass theme
         /// </summary>
-        /// <param name="themeFolderName">The folder name of theme. By default, load default theme</param>
-        private Theme ApplyTheme(string themeFolderName = "default")
+        private void ApplyTheme()
         {
-            var th = new Theme(App.ConfigDir(Dir.Themes, themeFolderName));
+            var th = Configs.Theme;
 
-            if (th.IsValid)
-            {
-                GlobalSetting.SetConfig("Theme", themeFolderName);
-            }
-            LoadTheme(th);
+            // Remove white line under tool strip
+            toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
 
-            return th;
+            // <main>
+            picMain.BackColor = th.BackgroundColor;
+            Configs.BackgroundColor = th.BackgroundColor;
 
-            void LoadTheme(Theme t)
-            {
-                //Remove white line under tool strip
-                toolMain.Renderer = new UI.Renderers.ToolStripRenderer(t.ToolbarBackgroundColor, t.TextInfoColor);
+            picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
+            picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
 
-                // <main>
-                picMain.BackColor = t.BackgroundColor;
-                Configs.BackgroundColor = t.BackgroundColor;
+            toolMain.BackgroundImage = th.ToolbarBackgroundImage.Image;
+            toolMain.BackColor = th.ToolbarBackgroundColor;
 
-                picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
-                picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
+            thumbnailBar.BackgroundImage = th.ThumbnailBackgroundImage.Image;
+            thumbnailBar.BackColor = th.ThumbnailBackgroundColor;
+            sp1.BackColor = th.ThumbnailBackgroundColor;
 
-                toolMain.BackgroundImage = t.ToolbarBackgroundImage.Image;
-                toolMain.BackColor = t.ToolbarBackgroundColor;
+            lblInfo.ForeColor = th.TextInfoColor;
+            picMain.ForeColor = Theme.InvertBlackAndWhiteColor(Configs.BackgroundColor);
 
-                thumbnailBar.BackgroundImage = t.ThumbnailBackgroundImage.Image;
-                thumbnailBar.BackColor = t.ThumbnailBackgroundColor;
-                sp1.BackColor = t.ThumbnailBackgroundColor;
+            //Modern UI menu renderer
+            mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(th.MenuBackgroundColor, th.MenuTextColor);
 
-                lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = Theme.InvertBlackAndWhiteColor(Configs.BackgroundColor);
+            // <toolbar_icon>
+            LoadToolbarIcons();
 
-                //Modern UI menu renderer
-                mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.MenuBackgroundColor, t.MenuTextColor);
-
-                // <toolbar_icon>
-                LoadToolbarIcons(t);
-
-                // Overflow button and Overflow dropdown
-                toolMain.OverflowButton.DropDown.BackColor = t.ToolbarBackgroundColor;
-                toolMain.OverflowButton.AutoSize = false;
-                toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
-            }
+            // Overflow button and Overflow dropdown
+            toolMain.OverflowButton.DropDown.BackColor = th.ToolbarBackgroundColor;
+            toolMain.OverflowButton.AutoSize = false;
+            toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
         }
 
 
         /// <summary>
         /// Load toolbar icons
         /// </summary>
-        /// <param name="t">Theme</param>
-        private void LoadToolbarIcons(Theme t)
+        private void LoadToolbarIcons(bool forceReloadIcon = false)
         {
+            if (forceReloadIcon)
+            {
+                Configs.Theme.ReloadToolbarIcons();
+            }
+
+            var th = Configs.Theme;
+
             // <toolbar_icon>
-            btnBack.Image = t.ToolbarIcons.ViewPreviousImage.Image;
-            btnNext.Image = t.ToolbarIcons.ViewNextImage.Image;
+            btnBack.Image = th.ToolbarIcons.ViewPreviousImage.Image;
+            btnNext.Image = th.ToolbarIcons.ViewNextImage.Image;
 
-            btnRotateLeft.Image = t.ToolbarIcons.RotateLeft.Image;
-            btnRotateRight.Image = t.ToolbarIcons.RotateRight.Image;
-            btnFlipHorz.Image = t.ToolbarIcons.FlipHorz.Image;
-            btnFlipVert.Image = t.ToolbarIcons.FlipVert.Image;
-            btnDelete.Image = t.ToolbarIcons.Detele.Image;
-            btnEdit.Image = t.ToolbarIcons.Edit.Image;
+            btnRotateLeft.Image = th.ToolbarIcons.RotateLeft.Image;
+            btnRotateRight.Image = th.ToolbarIcons.RotateRight.Image;
+            btnFlipHorz.Image = th.ToolbarIcons.FlipHorz.Image;
+            btnFlipVert.Image = th.ToolbarIcons.FlipVert.Image;
+            btnDelete.Image = th.ToolbarIcons.Detele.Image;
+            btnEdit.Image = th.ToolbarIcons.Edit.Image;
 
-            btnZoomIn.Image = t.ToolbarIcons.ZoomIn.Image;
-            btnZoomOut.Image = t.ToolbarIcons.ZoomOut.Image;
-            btnScaleToFit.Image = t.ToolbarIcons.ScaleToFit.Image;
-            btnActualSize.Image = t.ToolbarIcons.ActualSize.Image;
-            btnZoomLock.Image = t.ToolbarIcons.LockRatio.Image;
-            btnAutoZoom.Image = t.ToolbarIcons.AutoZoom.Image;
-            btnScaletoWidth.Image = t.ToolbarIcons.ScaleToWidth.Image;
-            btnScaletoHeight.Image = t.ToolbarIcons.ScaleToHeight.Image;
-            btnScaleToFill.Image = t.ToolbarIcons.ScaleToFill.Image;
-            btnWindowAutosize.Image = t.ToolbarIcons.AdjustWindowSize.Image;
+            btnZoomIn.Image = th.ToolbarIcons.ZoomIn.Image;
+            btnZoomOut.Image = th.ToolbarIcons.ZoomOut.Image;
+            btnScaleToFit.Image = th.ToolbarIcons.ScaleToFit.Image;
+            btnActualSize.Image = th.ToolbarIcons.ActualSize.Image;
+            btnZoomLock.Image = th.ToolbarIcons.LockRatio.Image;
+            btnAutoZoom.Image = th.ToolbarIcons.AutoZoom.Image;
+            btnScaletoWidth.Image = th.ToolbarIcons.ScaleToWidth.Image;
+            btnScaletoHeight.Image = th.ToolbarIcons.ScaleToHeight.Image;
+            btnScaleToFill.Image = th.ToolbarIcons.ScaleToFill.Image;
+            btnWindowAutosize.Image = th.ToolbarIcons.AdjustWindowSize.Image;
 
-            btnOpen.Image = t.ToolbarIcons.OpenFile.Image;
-            btnRefresh.Image = t.ToolbarIcons.Refresh.Image;
-            btnGoto.Image = t.ToolbarIcons.GoToImage.Image;
+            btnOpen.Image = th.ToolbarIcons.OpenFile.Image;
+            btnRefresh.Image = th.ToolbarIcons.Refresh.Image;
+            btnGoto.Image = th.ToolbarIcons.GoToImage.Image;
 
-            btnThumb.Image = t.ToolbarIcons.ThumbnailBar.Image;
-            btnCheckedBackground.Image = t.ToolbarIcons.Checkerboard.Image;
-            btnFullScreen.Image = t.ToolbarIcons.FullScreen.Image;
-            btnSlideShow.Image = t.ToolbarIcons.Slideshow.Image;
-            btnConvert.Image = t.ToolbarIcons.Convert.Image;
-            btnPrintImage.Image = t.ToolbarIcons.Print.Image;
+            btnThumb.Image = th.ToolbarIcons.ThumbnailBar.Image;
+            btnCheckedBackground.Image = th.ToolbarIcons.Checkerboard.Image;
+            btnFullScreen.Image = th.ToolbarIcons.FullScreen.Image;
+            btnSlideShow.Image = th.ToolbarIcons.Slideshow.Image;
+            btnConvert.Image = th.ToolbarIcons.Convert.Image;
+            btnPrintImage.Image = th.ToolbarIcons.Print.Image;
 
-            btnMenu.Image = t.ToolbarIcons.Menu.Image;
+            btnMenu.Image = th.ToolbarIcons.Menu.Image;
         }
 
         /// <summary>
@@ -2210,15 +2200,11 @@ namespace ImageGlass
             if (isLoadUI)
             {
 
-                #region Load theme
-                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); //ThumbnailBar Renderer must be done BEFORE loading theme
-                string themeFolderName = GlobalSetting.GetConfig("Theme", "default");
+                // ThumbnailBar Renderer must be done BEFORE loading theme
+                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); 
+                ApplyTheme();
 
-                LocalSetting.Theme = ApplyTheme(themeFolderName);
                 Application.DoEvents();
-                #endregion
-
-
 
 
                 // Show checkerboard
@@ -2229,13 +2215,9 @@ namespace ImageGlass
                 picMain.BackColor = Configs.BackgroundColor;
 
 
-                #region Load Toolbar buttons
-
-                GlobalSetting.ToolbarButtons = GlobalSetting.GetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
+                // Load Toolbar buttons
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
                 frmMain_Activated(null, null);
-
-                #endregion
 
 
                 // Load state of Toolbar 
@@ -2243,14 +2225,11 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
 
 
-                #region Toolbar alignment and position
-
-                // Request frmMain to update
+                // Toolbar alignment and position
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                 frmMain_Activated(null, EventArgs.Empty);
 
                 GlobalSetting.LoadKeyAssignments();
-                #endregion
 
 
 
@@ -2263,25 +2242,16 @@ namespace ImageGlass
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-
-                // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowsBound;
 
 
-                // Issue #402: need to wait to load thumbnail size etc until after window bounds.
-                // The splitter dimensions may be too small for the user's last splitter bar position.
-                #region Load state of Thumbnail 
-                //GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
-                //GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
-                //mnuMainThumbnailBar_Click(null, EventArgs.Empty);
+                // Load state of Thumbnail
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
                 frmMain_Activated(null, EventArgs.Empty);
-                #endregion
 
 
                 // Windows state must be loaded after Windows Bound!
                 this.WindowState = Configs.FrmMainWindowState;
-
 
             }
             #endregion
@@ -2299,50 +2269,14 @@ namespace ImageGlass
                 this.Bounds = Configs.FrmMainWindowsBound;
 
 
-
-
-                #region Load language pack
-                configValue = GlobalSetting.GetConfig("Language", "English");
-                Settings.Configs.Language = new Language(configValue, App.StartUpDir(Dir.Languages));
-
-                //force update language pack
+                // force update language pack
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
                 frmMain_Activated(null, null);
-                #endregion
 
-
-                #region Read supported image formats
-                var extGroups = Constants.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-                //Load Default Image Formats
-                GlobalSetting.DefaultImageFormats = GlobalSetting.GetConfig("DefaultImageFormats", extGroups[0]);
-
-                //Load Optional Image Formats
-                GlobalSetting.OptionalImageFormats = GlobalSetting.GetConfig("OptionalImageFormats", extGroups[1]);
-
-                if (GlobalSetting.AllImageFormats.Length == 0)
-                {
-                    //If no formats from settings, we need to load from built-in configs
-                    GlobalSetting.LoadBuiltInImageFormats();
-
-                    //Write configs
-                    GlobalSetting.SetConfig("DefaultImageFormats", GlobalSetting.DefaultImageFormats);
-                    GlobalSetting.SetConfig("OptionalImageFormats", GlobalSetting.OptionalImageFormats);
-                }
 
                 // build the hashset GlobalSetting.ImageFormatHashSet
                 GlobalSetting.BuildImageFormatHashSet();
-                #endregion
 
-
-
-
-                // Load image order config
-                GlobalSetting.ImageLoadingOrder = GlobalSetting.GetImageOrderConfig();
-
-
-                // Load image order type config
-                GlobalSetting.ImageLoadingOrderType = GlobalSetting.GetImageOrderTypeConfig();
 
 
 
@@ -2370,25 +2304,20 @@ namespace ImageGlass
                 this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
 
 
-                #region Load Color picker configs 
-
-                // Get IsShowColorPicker
+                // Load Color picker configs
                 LocalSetting.IsShowColorPickerOnStartup = Configs.IsShowColorPickerOnStartup;
                 if (LocalSetting.IsShowColorPickerOnStartup)
                 {
                     mnuMainColorPicker.PerformClick();
                 }
-                #endregion
 
 
-                #region Load Page navigation tool
-                // Get IsShowPageNav
-                LocalSetting.IsShowPageNavOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowPageNavOnStartup", "False"));
+                // Load Page navigation tool
+                LocalSetting.IsShowPageNavOnStartup = Configs.IsShowPageNavOnStartup;
                 if (LocalSetting.IsShowPageNavOnStartup)
                 {
                     mnuMainPageNav.PerformClick();
                 }
-                #endregion
 
 
                 // Load Full Screen mode
@@ -2917,7 +2846,7 @@ namespace ImageGlass
             #region THEME
             if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
             {
-                ApplyTheme(LocalSetting.Theme.FolderName);
+                ApplyTheme();
                 LocalSetting.FColorPicker.UpdateUI();
                 LocalSetting.FPageNav.UpdateUI();
             }
@@ -4040,7 +3969,7 @@ namespace ImageGlass
                 var ext = Path.GetExtension(filename).ToLower();
 
                 // Get association App for editing
-                var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
+                var assoc = Configs.GetImageEditingAssociationFromList(ext);
 
                 if (assoc != null && File.Exists(assoc.AppPath))
                 {
@@ -4070,19 +3999,21 @@ namespace ImageGlass
 
             void EditByDefaultApp()
             {
-                Process p = new Process();
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Verb = "edit";
-
-                //show error dialog
-                p.StartInfo.ErrorDialog = true;
-
-                try
+                using(var p = new Process())
                 {
-                    p.Start();
+                    p.StartInfo.FileName = filename;
+                    p.StartInfo.Verb = "edit";
+
+                    // show error dialog
+                    p.StartInfo.ErrorDialog = true;
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch (Exception)
+                    { }
                 }
-                catch (Exception)
-                { }
             }
         }
 
@@ -4161,7 +4092,7 @@ namespace ImageGlass
 
         private void mnuMainFullScreen_Click(object sender, EventArgs e)
         {
-            //enter full screen
+            // enter full screen
             if (!Configs.IsFullScreen)
             {
                 mnuMainFullScreen.Checked =
@@ -4173,7 +4104,7 @@ namespace ImageGlass
                 DisplayTextMessage(Configs.Language.Items[$"{Name}._FullScreenMessage"]
                     , 2000);
             }
-            //exit full screen
+            // exit full screen
             else
             {
                 mnuMainFullScreen.Checked =

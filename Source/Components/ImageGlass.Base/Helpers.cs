@@ -114,6 +114,5 @@ namespace ImageGlass.Base
             return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
         }
 
-
     }
 }
