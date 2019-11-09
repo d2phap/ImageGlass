@@ -267,24 +267,6 @@ namespace ImageGlass.Settings
         #region String items
 
         /// <summary>
-        /// Gets all supported extensions string
-        /// </summary>
-        public static string AllImageFormats { get => DefaultImageFormats + OptionalImageFormats; }
-
-
-        /// <summary>
-        /// Gets, sets default image formats
-        /// </summary>
-        public static string DefaultImageFormats { get; set; } = string.Empty;
-
-
-        /// <summary>
-        /// Gets, sets optional image formats
-        /// </summary>
-        public static string OptionalImageFormats { get; set; } = string.Empty;
-
-
-        /// <summary>
         /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
         /// </summary>
         public static string ColorProfile { get; set; } = "sRGB";
@@ -362,8 +344,13 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets the list of Image Editing Association
         /// </summary>
-        public static List<ImageEditingAssociation> ImageEditingAssociationList { get; set; } = new List<ImageEditingAssociation>();
+        public static List<EditApp> EditApps { get; set; } = new List<EditApp>();
 
+
+        /// <summary>
+        /// Gets, sets the list of supported image formats
+        /// </summary>
+        public static HashSet<string> AllFormats { get; set; } = new HashSet<string>();
 
         #endregion
 
@@ -636,16 +623,6 @@ namespace ImageGlass.Settings
 
             #region String items
 
-            // set default formats list from constant
-            var exts = Constants.BuiltInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            DefaultImageFormats = exts[0];
-            OptionalImageFormats = exts[1];
-
-            // TODO: merge 2 list
-            DefaultImageFormats = Get<string>(nameof(DefaultImageFormats), DefaultImageFormats);
-            OptionalImageFormats = Get<string>(nameof(OptionalImageFormats), OptionalImageFormats);
-
-
             ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
@@ -674,7 +651,7 @@ namespace ImageGlass.Settings
 
             #region ImageEditingAssociationList
 
-            var editAssocStr = Get<string>(nameof(ImageEditingAssociationList), "");
+            var editAssocStr = Get<string>(nameof(EditApps), "");
             var editAssocList = editAssocStr.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             if (editAssocList.Length > 0)
@@ -683,12 +660,20 @@ namespace ImageGlass.Settings
                 {
                     try
                     {
-                        var extAssoc = new ImageEditingAssociation(configStr);
-                        ImageEditingAssociationList.Add(extAssoc);
+                        var extAssoc = new EditApp(configStr);
+                        EditApps.Add(extAssoc);
                     }
                     catch (InvalidCastException) { }
                 }
             }
+            #endregion
+
+
+            #region ImageFormats
+
+            var formats = Get<string>(nameof(AllFormats), Constants.IMAGE_FORMATS);
+            AllFormats = GetImageFormats(formats);
+
             #endregion
 
             #endregion
@@ -832,10 +817,6 @@ namespace ImageGlass.Settings
 
             #region String items
 
-            // TODO: merge 2 list
-            Set(nameof(DefaultImageFormats), DefaultImageFormats);
-            Set(nameof(OptionalImageFormats), OptionalImageFormats);
-
             Set(nameof(ColorProfile), ColorProfile);
             Set(nameof(ToolbarButtons), ToolbarButtons);
             Set(nameof(KeyboardActions), KeyboardActions);
@@ -848,18 +829,20 @@ namespace ImageGlass.Settings
 
             Set(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
 
-            #region ImageEditingAssociationList
+            #region EditApps
 
-            var editingAssocString = new StringBuilder();
-
-            foreach (var item in ImageEditingAssociationList)
+            var appStr = new StringBuilder();
+            foreach (var item in EditApps)
             {
-                editingAssocString.Append($"[{item.ToString()}]");
+                appStr.Append($"[{item.ToString()}]");
             }
 
-            Set(nameof(ImageEditingAssociationList), editingAssocString);
+            Set(nameof(EditApps), appStr);
 
             #endregion
+
+
+            Set(nameof(AllFormats), GetImageFormats(AllFormats));
 
             #endregion
 
@@ -887,22 +870,59 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Get ImageEditingAssociation from ImageEditingAssociationList
         /// </summary>
-        /// <param name="ext">Extension to search. Ex: .png</param>
+        /// <param name="ext">An extension to search. Ex: .png</param>
         /// <returns></returns>
-        public static ImageEditingAssociation GetImageEditingAssociationFromList(string ext)
+        public static EditApp GetEditApp(string ext)
         {
-            if (ImageEditingAssociationList.Count > 0)
+            if (EditApps.Count > 0)
             {
                 try
                 {
-                    var assoc = ImageEditingAssociationList.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+                    var app = EditApps.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
 
-                    return assoc;
+                    return app;
                 }
                 catch { }
             }
 
             return null;
+        }
+
+
+        /// <summary>
+        /// Returns distinc list of image formats
+        /// </summary>
+        /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
+        /// <returns></returns>
+        public static HashSet<string> GetImageFormats(string formats)
+        {
+            var list = new HashSet<string>();
+            var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            char[] wildTrim = { '*' };
+
+            foreach (var ext in formatList)
+            {
+                list.Add(ext.Trim(wildTrim));
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// Returns the image formats string
+        /// </summary>
+        /// <param name="list">The input HashSet</param>
+        /// <returns></returns>
+        public static string GetImageFormats(HashSet<string> list)
+        {
+            var sb = new StringBuilder(list.Count);
+            foreach (var item in list)
+            {
+                sb.Append($"*{item.ToString()};");
+            }
+
+            return sb.ToString();
         }
 
     }

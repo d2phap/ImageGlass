@@ -56,7 +56,7 @@ namespace ImageGlass
             FileFormat = txtFileExtension.Text.ToLower().Trim();
             FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
 
-            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllImageFormats.Contains(FileFormat))
+            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllFormats.Contains(FileFormat))
             {
                 txtFileExtension.Focus();
                 return;

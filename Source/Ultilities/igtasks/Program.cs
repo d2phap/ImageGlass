@@ -92,7 +92,8 @@ namespace adtasks
             #region delassociations
             else if (topcmd == "delassociations")
             {
-                return Functions.DeleteRegistryAssociations(Configs.AllImageFormats, true);
+                var formats = Configs.GetImageFormats(Configs.AllFormats);
+                return Functions.DeleteRegistryAssociations(formats, true);
             }
             #endregion
 

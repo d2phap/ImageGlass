@@ -17,16 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
+using ImageGlass.Heart;
+using ImageGlass.Library.FileAssociations;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using Microsoft.Win32;
-using System.Drawing;
 using System.Text;
-using ImageGlass.Library.FileAssociations;
-using System.Linq;
-using System.Globalization;
-using ImageGlass.Heart;
-using ImageGlass.Base;
 
 namespace ImageGlass.Services.Configuration
 {
@@ -45,34 +42,11 @@ namespace ImageGlass.Services.Configuration
         public static Factory ImageList { get; set; } = new Factory();
 
 
-
-        /// <summary>
-        /// Gets or sets the hash array of all supported formats. 
-        /// **NOTE: this needs to be manually updated by calling GlobalSetting.MakeImageTypeSet()
-        /// </summary>
-        public static HashSet<string> ImageFormatHashSet { get; set; } = new HashSet<string>();
-
-
-
         #endregion
 
 
 
         #region Public Properties
-
-
-        /// <summary>
-        /// ~Gets, sets default image formats
-        /// </summary>
-        public static string DefaultImageFormats { get; set; } = string.Empty;
-
-
-        /// <summary>
-        /// ~Gets, sets optional image formats
-        /// </summary>
-        public static string OptionalImageFormats { get; set; } = string.Empty;
-
-
 
         /// <summary>
         /// ~Gets, sets action to be performed when user spins the mouse wheel
@@ -100,7 +74,7 @@ namespace ImageGlass.Services.Configuration
         /// <summary>
         /// ~Gets, sets the list of Image Editing Association
         /// </summary>
-        public static List<ImageEditingAssociation> ImageEditingAssociationList { get; set; } = new List<ImageEditingAssociation>();
+        public static List<EditApp> ImageEditingAssociationList { get; set; } = new List<EditApp>();
 
 
         
@@ -218,28 +192,6 @@ namespace ImageGlass.Services.Configuration
             _configFile.SetConfig(configKey, value);
         }
 
-
-        /// <summary>
-        /// Take the supported extensions string from GlobalSetting and convert it 
-        /// to a faster lookup mechanism and with wildcard removed.
-        /// 
-        /// Intended to fix the observed issue where "string.Contains" would cause
-        /// unsupported extensions such as ".c", ".h", ".md", etc to pass.
-        /// </summary>
-        public static void BuildImageFormatHashSet()
-        {
-            char[] wildtrim = { '*' };
-            var allTypes = DefaultImageFormats + OptionalImageFormats;
-
-            var typesArray = allTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            ImageFormatHashSet = new HashSet<string>();
-
-            foreach (var aType in typesArray)
-            {
-                string wildRemoved = aType.Trim(wildtrim);
-                ImageFormatHashSet.Add(wildRemoved);
-            }
-        }
 
 
         #endregion

@@ -324,10 +324,9 @@ namespace ImageGlass
 
 
             #region FILE ASSOCIATION TAB
-            var extList = Configs.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             lblExtensionsGroupDescription.Text = lang[$"{Name}.lblExtensionsGroupDescription"];
-            lblSupportedExtension.Text = String.Format(lang[$"{Name}.lblSupportedExtension"], extList.Length);
+            lblSupportedExtension.Text = string.Format(lang[$"{Name}.lblSupportedExtension"], Configs.AllFormats.Count);
             lnkOpenFileAssoc.Text = lang[$"{Name}.lnkOpenFileAssoc"];
             btnAddNewExt.Text = lang[$"{Name}.btnAddNewExt"];
             btnDeleteExt.Text = lang[$"{Name}.btnDeleteExt"];
@@ -821,34 +820,31 @@ namespace ImageGlass
         /// </summary>
         private void LoadTabEditConfig()
         {
-            //Get value of IsSaveAfterRotating
             chkSaveOnRotate.Checked = Configs.IsSaveAfterRotating;
             chkSaveModifyDate.Checked = Configs.PreserveModifiedDate;
 
-            //Load Image Editing extension list
-            LoadImageEditingAssociationList();
+            // Load image editing apps list
+            LoadEditApps();
         }
 
 
         /// <summary>
-        /// Load ImageEditingAssociation list
+        /// Load image editing apps list
         /// </summary>
         /// <param name="isResetToDefault">True to reset the list to default (empty)</param>
-        private void LoadImageEditingAssociationList(bool @isResetToDefault = false)
+        private void LoadEditApps(bool isResetToDefault = false)
         {
             lvImageEditing.Items.Clear();
-            var newEditingAssocList = new List<ImageEditingAssociation>();
+            var newEditingAssocList = new List<EditApp>();
 
-            // Load Default group
-            var extList = Configs.AllImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var ext in extList)
+            foreach (var ext in Configs.AllFormats)
             {
                 var li = new ListViewItem();
                 li.Text = ext;
 
                 // Build new list
-                var newEditingAssoc = new ImageEditingAssociation()
+                var newEditingAssoc = new EditApp()
                 {
                     Extension = ext
                 };
@@ -856,7 +852,7 @@ namespace ImageGlass
                 if (!isResetToDefault)
                 {
                     // Find the extension in the settings
-                    var editingExt = Configs.ImageEditingAssociationList.FirstOrDefault(item => item?.Extension == ext);
+                    var editingExt = Configs.EditApps.FirstOrDefault(item => item?.Extension == ext);
 
                     li.SubItems.Add(editingExt?.AppName);
                     li.SubItems.Add(editingExt?.AppPath);
@@ -873,13 +869,13 @@ namespace ImageGlass
             }
 
             // Update the new full list
-            Configs.ImageEditingAssociationList = newEditingAssocList;
+            Configs.EditApps = newEditingAssocList;
         }
 
 
         private void btnEditResetExt_Click(object sender, EventArgs e)
         {
-            LoadImageEditingAssociationList(true);
+            LoadEditApps(true);
         }
 
         private void btnEditEditExt_Click(object sender, EventArgs e)
@@ -888,7 +884,7 @@ namespace ImageGlass
                 return;
 
             // Get select Association item
-            var assoc = Configs.GetImageEditingAssociationFromList(lvImageEditing.SelectedItems[0].Text);
+            var assoc = Configs.GetEditApp(lvImageEditing.SelectedItems[0].Text);
 
             if (assoc == null)
                 return;
@@ -908,7 +904,7 @@ namespace ImageGlass
                 assoc.AppPath = f.AppPath;
                 assoc.AppArguments = f.AppArguments;
 
-                LoadImageEditingAssociationList();
+                LoadEditApps();
             }
 
             f.Dispose();
@@ -925,14 +921,14 @@ namespace ImageGlass
 
             if (f.ShowDialog() == DialogResult.OK)
             {
-                foreach (var assoc in Configs.ImageEditingAssociationList)
+                foreach (var assoc in Configs.EditApps)
                 {
                     assoc.AppName = f.AppName;
                     assoc.AppPath = f.AppPath;
                     assoc.AppArguments = f.AppArguments;
                 }
 
-                LoadImageEditingAssociationList();
+                LoadEditApps();
             }
 
             f.Dispose();
@@ -1065,30 +1061,20 @@ namespace ImageGlass
 
 
         #region TAB FILE ASSOCIATIONS
-        /// <summary>
-        /// Load built-in extensions to the list view
-        /// </summary>
-        /// <param name="builtInImageFormats"></param>
-        private void LoadExtensionList(string builtInImageFormats)
-        {
-            var list = builtInImageFormats.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            Configs.DefaultImageFormats = list[0];
-            Configs.OptionalImageFormats = list[1];
-
-            LoadExtensionList();
-        }
 
         /// <summary>
         /// Load extensions from settings to the list view
         /// </summary>
-        private void LoadExtensionList()
+        private void LoadExtensionList(bool resetFormatList = false)
         {
             lvExtension.Items.Clear();
 
-            // Load Default group
-            var extList = Configs.DefaultImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var ext in extList)
+            if (resetFormatList)
+            {
+                Configs.AllFormats = Configs.GetImageFormats(Constants.IMAGE_FORMATS);
+            }
+
+            foreach (var ext in Configs.AllFormats)
             {
                 var li = new ListViewItem(lvExtension.Groups["Default"])
                 {
@@ -1098,45 +1084,24 @@ namespace ImageGlass
                 lvExtension.Items.Add(li);
             }
 
-            // Load Optional group
-            extList = Configs.OptionalImageFormats.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var ext in extList)
-            {
-                var li = new ListViewItem(lvExtension.Groups["Optional"])
-                {
-                    Text = ext
-                };
-
-                lvExtension.Items.Add(li);
-            }
-
-            lblSupportedExtension.Text = String.Format(Configs.Language.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
-
-            // build the hashset GlobalSetting.ImageFormatHashSet
-            GlobalSetting.BuildImageFormatHashSet();
+            lblSupportedExtension.Text = string.Format(Configs.Language.Items[$"{Name}.lblSupportedExtension"], lvExtension.Items.Count);
         }
 
         /// <summary>
         /// Register file associations and Web-to-App linking
         /// </summary>
-        /// <param name="extensions">Extensions to be registered, ex: *.png;*.bmp;</param>
-        private void RegisterFileAssociations(string extensions, bool @isBuiltinExtension = false)
+        /// <param name="resetFormatList">Set it to TRUE if you want to reset the formats list to default</param>
+        private void RegisterFileAssociations(bool resetFormatList = false)
         {
-            if (isBuiltinExtension)
-            {
-                LoadExtensionList(extensions);
-            }
-            else
-            {
-                LoadExtensionList();
-            }
+            LoadExtensionList(resetFormatList);
 
             using (Process p = new Process())
             {
                 var isError = true;
+                var formats = Configs.GetImageFormats(Configs.AllFormats);
 
                 p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {extensions}";
+                p.StartInfo.Arguments = $"regassociations {formats}";
                 p.Start();
 
                 p.WaitForExit();
@@ -1162,7 +1127,7 @@ namespace ImageGlass
 
         private void btnResetExt_Click(object sender, EventArgs e)
         {
-            RegisterFileAssociations(Constants.BuiltInImageFormats, true);
+            RegisterFileAssociations(true);
         }
 
         private void btnDeleteExt_Click(object sender, EventArgs e)
@@ -1174,26 +1139,19 @@ namespace ImageGlass
             // remove extensions from settings
             foreach (ListViewItem li in lvExtension.SelectedItems)
             {
-                if (li.Group.Name == "Default")
-                {
-                    Configs.DefaultImageFormats = Configs.DefaultImageFormats.Replace($"*{li.Text};", "");
-                }
-                else if (li.Group.Name == "Optional")
-                {
-                    Configs.OptionalImageFormats = Configs.OptionalImageFormats.Replace($"*{li.Text};", "");
-                }
+                Configs.AllFormats.Remove(li.Text);
             }
 
-            //RegisterFileAssociations(GlobalSetting.AllImageFormats);
+            // update the list
             LoadExtensionList();
 
-            //Request frmMain to update
+            // Request frmMain to update
             LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
         {
-            frmAddNewFormat f = new frmAddNewFormat()
+            var f = new frmAddNewFormat()
             {
                 FileFormat = ".svg",
                 FormatGroup = ImageFormatGroup.Default,
@@ -1203,22 +1161,15 @@ namespace ImageGlass
             if (f.ShowDialog() == DialogResult.OK)
             {
                 // If the ext exist
-                if (Configs.AllImageFormats.Contains(f.FileFormat))
+                if (Configs.AllFormats.Contains(f.FileFormat))
                     return;
 
-                if (f.FormatGroup == ImageFormatGroup.Default)
-                {
-                    Configs.DefaultImageFormats += f.FileFormat;
-                }
-                else if (f.FormatGroup == ImageFormatGroup.Optional)
-                {
-                    Configs.OptionalImageFormats += f.FileFormat;
-                }
+                Configs.AllFormats.Add(f.FileFormat);
 
-                //RegisterFileAssociations(GlobalSetting.AllImageFormats);
+                // update the list
                 LoadExtensionList();
 
-                //Request frmMain to update
+                // Request frmMain to update
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
 
@@ -1227,7 +1178,7 @@ namespace ImageGlass
 
         private void btnRegisterExt_Click(object sender, EventArgs e)
         {
-            RegisterFileAssociations(Configs.AllImageFormats);
+            RegisterFileAssociations();
         }
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e)

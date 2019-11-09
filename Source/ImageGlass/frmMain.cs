@@ -204,10 +204,11 @@ namespace ImageGlass
         /// </summary>
         private void OpenFile()
         {
+            var formats = Configs.GetImageFormats(Configs.AllFormats);
             using (var o = new OpenFileDialog()
             {
-                Filter = Settings.Configs.Language.Items[$"{Name}._OpenFileDialog"] + "|" +
-                        Settings.Configs.AllImageFormats,
+                Filter = Configs.Language.Items[$"{Name}._OpenFileDialog"] + "|" +
+                        formats,
                 CheckFileExists = true,
             })
             {
@@ -293,7 +294,7 @@ namespace ImageGlass
                         continue;
                     }
 
-                    // TODO Currently only have the ability to watch a single path for changes!
+                    // TODO: Currently only have the ability to watch a single path for changes!
                     if (firstPath)
                     {
                         firstPath = false;
@@ -480,7 +481,7 @@ namespace ImageGlass
                         }
                     }
 
-                    if (extension.Length > 0 && GlobalSetting.ImageFormatHashSet.Contains(extension))
+                    if (extension.Length > 0 && Configs.AllFormats.Contains(extension))
                     {
                         return true;
                     }
@@ -1367,7 +1368,7 @@ namespace ImageGlass
             {
                 // Find file format
                 var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)).ToLower();
-                var assoc = Configs.GetImageEditingAssociationFromList(ext);
+                var assoc = Configs.GetEditApp(ext);
 
                 // Get App assoc info
                 if (assoc != null && File.Exists(assoc.AppPath))
@@ -2274,11 +2275,6 @@ namespace ImageGlass
                 frmMain_Activated(null, null);
 
 
-                // build the hashset GlobalSetting.ImageFormatHashSet
-                GlobalSetting.BuildImageFormatHashSet();
-
-
-
 
                 #region Load Zoom Mode
 
@@ -3027,21 +3023,21 @@ namespace ImageGlass
             var newExt = Path.GetExtension(newFilename).ToLower();
 
             // Only watch the supported file types
-            if (!GlobalSetting.ImageFormatHashSet.Contains(oldExt) && !GlobalSetting.ImageFormatHashSet.Contains(newExt))
+            if (!Configs.AllFormats.Contains(oldExt) && !Configs.AllFormats.Contains(newExt))
             {
                 return;
             }
 
 
-            //Get index of renamed image
+            // Get index of renamed image
             int imgIndex = GlobalSetting.ImageList.IndexOf(oldFilename);
 
 
-            //if user changed file extension
+            // if user changed file extension
             if (oldExt.CompareTo(newExt) != 0)
             {
                 // [old] && [new]: update filename only
-                if (GlobalSetting.ImageFormatHashSet.Contains(oldExt) && GlobalSetting.ImageFormatHashSet.Contains(newExt))
+                if (Configs.AllFormats.Contains(oldExt) && Configs.AllFormats.Contains(newExt))
                 {
                     if (imgIndex > -1)
                     {
@@ -3051,12 +3047,12 @@ namespace ImageGlass
                 else
                 {
                     // [old] && ![new]: remove from image list
-                    if (GlobalSetting.ImageFormatHashSet.Contains(oldExt))
+                    if (Configs.AllFormats.Contains(oldExt))
                     {
                         DoDeleteFiles(oldFilename);
                     }
                     // ![old] && [new]: add to image list
-                    else if (GlobalSetting.ImageFormatHashSet.Contains(newExt))
+                    else if (Configs.AllFormats.Contains(newExt))
                     {
                         FileWatcher_AddNewFileAction(newFilename);
                     }
@@ -3101,7 +3097,7 @@ namespace ImageGlass
         {
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
-            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
+            if (!Configs.AllFormats.Contains(ext))
             {
                 return;
             }
@@ -3134,7 +3130,7 @@ namespace ImageGlass
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
 
-            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
+            if (!Configs.AllFormats.Contains(ext))
             {
                 return;
             }
@@ -3150,7 +3146,7 @@ namespace ImageGlass
         {
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
-            if (!GlobalSetting.ImageFormatHashSet.Contains(ext))
+            if (!Configs.AllFormats.Contains(ext))
             {
                 return;
             }
@@ -3969,7 +3965,7 @@ namespace ImageGlass
                 var ext = Path.GetExtension(filename).ToLower();
 
                 // Get association App for editing
-                var assoc = Configs.GetImageEditingAssociationFromList(ext);
+                var assoc = Configs.GetEditApp(ext);
 
                 if (assoc != null && File.Exists(assoc.AppPath))
                 {
@@ -3978,7 +3974,7 @@ namespace ImageGlass
                     p.StartInfo.FileName = assoc.AppPath;
 
                     //Build the arguments
-                    var args = assoc.AppArguments.Replace(ImageEditingAssociation.FileMacro, filename);
+                    var args = assoc.AppArguments.Replace(EditApp.FileMacro, filename);
                     p.StartInfo.Arguments = $"{args}";
 
                     //show error dialog

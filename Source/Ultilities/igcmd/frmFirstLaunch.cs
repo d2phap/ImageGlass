@@ -151,8 +151,10 @@ namespace igcmd
             // Update extensions to registry
             using (var p = new Process())
             {
+                var formats = Configs.GetImageFormats(Configs.AllFormats);
+
                 p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {Configs.AllImageFormats}";
+                p.StartInfo.Arguments = $"regassociations {formats}";
 
                 try
                 {

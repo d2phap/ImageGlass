@@ -141,11 +141,11 @@ namespace ImageGlass
         {
             // Make certain the app arguments has the file substitution string
             var txt = txtAppArguments.Text.Trim();
-            if (txt.ToLower().Contains(ImageEditingAssociation.FileMacro))
+            if (txt.ToLower().Contains(EditApp.FileMacro))
                 return;
 
             //use double quotes as default
-            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{ImageEditingAssociation.FileMacro}\"";
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{EditApp.FileMacro}\"";
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace ImageGlass
             }
             
             // Something has changed; update the sample text
-            var cmd = $"{appPath} {txtAppArguments.Text.Replace(ImageEditingAssociation.FileMacro, fileSample)}";
+            var cmd = $"{appPath} {txtAppArguments.Text.Replace(EditApp.FileMacro, fileSample)}";
             txtCommandPreview.Text = cmd;
         }
 

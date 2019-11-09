@@ -20,7 +20,7 @@ using System;
 
 namespace ImageGlass.Base
 {
-    public class ImageEditingAssociation
+    public class EditApp
     {
         /// <summary>
         /// Gets, sets extension. Ex: .png
@@ -52,7 +52,7 @@ namespace ImageGlass.Base
         /// <summary>
         /// Initial Image Editing Association
         /// </summary>
-        public ImageEditingAssociation()
+        public EditApp()
         {
             Extension = string.Empty;
             AppName = string.Empty;
@@ -61,12 +61,12 @@ namespace ImageGlass.Base
         }
 
         /// <summary>
-        /// Initial Image Editing Association
+        /// Initial EditApp
         /// </summary>
         /// <param name="extension">Extension. Ex: .png</param>
         /// <param name="appName">Friendly app name.</param>
         /// <param name="appPath">Full path and arguments of app. Ex: C:\app\app.exe --help</param>
-        public ImageEditingAssociation(string extension, string appName, string appPath, string @arguments = "")
+        public EditApp(string extension, string appName, string appPath, string arguments = "")
         {
             Extension = extension.ToLower();
             AppName = appName;
@@ -78,14 +78,14 @@ namespace ImageGlass.Base
         /// Initial Image Editing Association.
         /// Throw InvalidCastException if @mixString is invalid
         /// </summary>
-        /// <param name="mixString">ImageEditingAssociation string. Ex: .jpg|MS Paint|C:\app\mspaint.exe</param>
-        public ImageEditingAssociation(string mixString)
+        /// <param name="mixString">EditApp string. Ex: .jpg|MS Paint|C:\app\mspaint.exe</param>
+        public EditApp(string mixString)
         {
             var itemArray = mixString.Split("|".ToCharArray());
 
             if (itemArray.Length != 4)
             {
-                throw new InvalidCastException("Invalid ImageEditingAssociation string format.");
+                throw new InvalidCastException("Invalid EditApp string format.");
             }
 
             Extension = itemArray[0].ToLower();
