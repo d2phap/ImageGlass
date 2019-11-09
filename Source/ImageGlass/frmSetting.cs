@@ -1273,9 +1273,9 @@ namespace ImageGlass
                 cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
             }
 
-            cmbToolbarPosition.SelectedIndex = (int)GlobalSetting.ToolbarPosition;
+            cmbToolbarPosition.SelectedIndex = (int)Configs.ToolbarPosition;
 
-            chkHorzCenterToolbarBtns.Checked = GlobalSetting.IsCenterToolbar;
+            chkHorzCenterToolbarBtns.Checked = Configs.IsCenterToolbar;
 
             // Apply Windows System theme to listview
             SystemRenderer th = new SystemRenderer();
@@ -1339,7 +1339,7 @@ namespace ImageGlass
 
             lvUsedButtons.Items.Clear();
 
-            string currentSet = GlobalSetting.ToolbarButtons;
+            string currentSet = Configs.ToolbarButtons;
             var enumList = TranslateToolbarButtonsFromConfig(currentSet);
 
             _lstMasterUsed = new List<ListViewItem>(enumList.Count);
@@ -1374,7 +1374,7 @@ namespace ImageGlass
             lvAvailButtons.Items.Clear();
 
             // Build by adding each button NOT in the 'used' list
-            string currentSet = GlobalSetting.ToolbarButtons;
+            string currentSet = Configs.ToolbarButtons;
             var enumList = TranslateToolbarButtonsFromConfig(currentSet);
             for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
             {
@@ -1510,11 +1510,9 @@ namespace ImageGlass
             }
 
             //Only make change if any
-            if (GlobalSetting.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
+            if (Configs.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
             {
-                GlobalSetting.ToolbarButtons = sb.ToString();
-                GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
-
+                Configs.ToolbarButtons = sb.ToString();
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
             }
         }
@@ -1667,7 +1665,7 @@ namespace ImageGlass
         /// <returns></returns>
         public static List<string> LoadToolbarConfig()
         {
-            var xlated = TranslateToolbarButtonsFromConfig(GlobalSetting.ToolbarButtons);
+            var xlated = TranslateToolbarButtonsFromConfig(Configs.ToolbarButtons);
             List<string> lstToolbarButtonNames = new List<string>();
 
             foreach (var btnEnum in xlated)
@@ -1803,9 +1801,9 @@ namespace ImageGlass
         #region TAB COLOR PICKER
         private void LoadTabColorPicker()
         {
-            chkColorUseRGBA.Checked = GlobalSetting.IsColorPickerRGBA;
-            chkColorUseHEXA.Checked = GlobalSetting.IsColorPickerHEXA;
-            chkColorUseHSLA.Checked = GlobalSetting.IsColorPickerHSLA;
+            chkColorUseRGBA.Checked = Configs.IsColorPickerRGBA;
+            chkColorUseHEXA.Checked = Configs.IsColorPickerHEXA;
+            chkColorUseHSLA.Checked = Configs.IsColorPickerHSLA;
         }
 
 
@@ -2056,7 +2054,7 @@ namespace ImageGlass
                 if (th.IsValid)
                 {
                     LocalSetting.Theme = th;
-                    GlobalSetting.BackgroundColor = 
+                    Configs.BackgroundColor = 
                         picBackgroundColor.BackColor = 
                         LocalSetting.Theme.BackgroundColor;
 
@@ -2162,7 +2160,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// For a given combobox, update the key config value in GlobalSetting
+        /// For a given combobox, update the key config value in Configs
         /// </summary>
         /// <param name="which"></param>
         /// <param name="control"></param>

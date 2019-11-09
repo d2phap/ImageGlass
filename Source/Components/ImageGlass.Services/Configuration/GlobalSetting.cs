@@ -45,12 +45,6 @@ namespace ImageGlass.Services.Configuration
         public static Factory ImageList { get; set; } = new Factory();
 
 
-        /// <summary>
-        /// Gets, sets current index of image
-        /// </summary>
-        public static int CurrentIndex { get; set; } = -1;
-
-
 
         /// <summary>
         /// ~Gets, sets image loading order
@@ -109,11 +103,6 @@ namespace ImageGlass.Services.Configuration
         /// </summary>
         public static bool IsShowThumbnail { get; set; } = false;
 
-
-        /// <summary>
-        /// Gets, sets image error value
-        /// </summary>
-        public static Exception ImageError { get; set; } = null;
 
 
         /// <summary>

@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.Services.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -33,6 +33,19 @@ namespace ImageGlass
 
 
         #region Auto Properties
+
+        /// <summary>
+        /// Gets, sets index of the viewing image
+        /// </summary>
+        public static int CurrentIndex { get; set; } = -1;
+
+
+        /// <summary>
+        /// Gets, sets image error value
+        /// </summary>
+        public static Exception ImageError { get; set; } = null;
+
+
         /// <summary>
         /// Check if frmColorPicker is opening.
         /// This is for toggle Color Picker menu in frmMain

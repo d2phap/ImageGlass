@@ -151,7 +151,7 @@ namespace ImageGlass
 
             if (filepaths.Length > 1)
             {
-                PrepareLoading(filepaths, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                PrepareLoading(filepaths, GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
                 return;
             }
 
@@ -168,14 +168,14 @@ namespace ImageGlass
                 PrepareLoading(filePath);
             }
             // The file is in current folder AND it is the viewing image
-            else if (GlobalSetting.CurrentIndex == imageIndex)
+            else if (LocalSetting.CurrentIndex == imageIndex)
             {
                 //do nothing
             }
             // The file is in current folder AND it is NOT the viewing image
             else
             {
-                GlobalSetting.CurrentIndex = imageIndex;
+                LocalSetting.CurrentIndex = imageIndex;
                 NextPic(0);
             }
         }
@@ -185,7 +185,7 @@ namespace ImageGlass
             if (_isDraggingImage)
             {
                 string[] paths = new string[1];
-                paths[0] = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                paths[0] = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
                 var data = new DataObject(DataFormats.FileDrop, paths);
                 picMain.DoDragDrop(data, DragDropEffects.Copy);
@@ -349,7 +349,7 @@ namespace ImageGlass
             // Find the index of current image
             if (filePath.Length > 0)
             {
-                GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
+                LocalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
 
                 // KBR 20181009 Changing "include subfolder" setting could lose the "current" image.
                 // Prefer not to report said image is "corrupt", merely reset the index in that case.
@@ -358,26 +358,26 @@ namespace ImageGlass
                 // 3. Change setting "include subfolders: OFF".
                 // Issue: the image in the subfolder is attempted to be shown, declared as corrupt/missing.
                 // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to open single, hidden image with 'show hidden' OFF)
-                if (GlobalSetting.CurrentIndex == -1 &&
+                if (LocalSetting.CurrentIndex == -1 &&
                     GlobalSetting.ImageList.Length > 0 &&
                     !GlobalSetting.ImageList.ContainsDirPathOf(filePath))
                 {
-                    GlobalSetting.CurrentIndex = 0;
+                    LocalSetting.CurrentIndex = 0;
                 }
             }
             else
             {
-                GlobalSetting.CurrentIndex = 0;
+                LocalSetting.CurrentIndex = 0;
             }
 
             // Load thumnbnail
             LoadThumbnails();
 
             // Cannot find the index
-            if (GlobalSetting.CurrentIndex == -1)
+            if (LocalSetting.CurrentIndex == -1)
             {
                 // Mark as Image Error
-                GlobalSetting.ImageError = new Exception("File not found.");
+                LocalSetting.ImageError = new Exception("File not found.");
                 this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = Settings.Configs.Language.Items[$"{Name}.picMain._ErrorText"];
@@ -437,9 +437,9 @@ namespace ImageGlass
 
                 try
                 {
-                    thumbnailBar.Items[GlobalSetting.CurrentIndex].Selected = true;
-                    thumbnailBar.Items[GlobalSetting.CurrentIndex].Focused = true;
-                    thumbnailBar.EnsureVisible(GlobalSetting.CurrentIndex);
+                    thumbnailBar.Items[LocalSetting.CurrentIndex].Selected = true;
+                    thumbnailBar.Items[LocalSetting.CurrentIndex].Focused = true;
+                    thumbnailBar.EnsureVisible(LocalSetting.CurrentIndex);
                 }
                 catch (Exception) { }
             }
@@ -652,10 +652,10 @@ namespace ImageGlass
                 ImageSaveChange();
 
                 //remove the old image data from cache
-                GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                GlobalSetting.ImageList.Unload(LocalSetting.CurrentIndex);
 
                 //update thumbnail
-                thumbnailBar.Items[GlobalSetting.CurrentIndex].Update();
+                thumbnailBar.Items[LocalSetting.CurrentIndex].Update();
             }
             else
             {
@@ -674,7 +674,7 @@ namespace ImageGlass
             {
                 Text = Application.ProductName;
 
-                GlobalSetting.ImageError = new Exception("File not found.");
+                LocalSetting.ImageError = new Exception("File not found.");
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
 
@@ -685,7 +685,7 @@ namespace ImageGlass
             #region Validate image index
 
             // temp index
-            int tempIndex = GlobalSetting.CurrentIndex + step;
+            int tempIndex = LocalSetting.CurrentIndex + step;
 
 
             // Issue #609: do not auto-reactivate slideshow if disabled
@@ -722,7 +722,7 @@ namespace ImageGlass
 
 
             // Update current index
-            GlobalSetting.CurrentIndex = tempIndex;
+            LocalSetting.CurrentIndex = tempIndex;
 
             #endregion
 
@@ -750,7 +750,7 @@ namespace ImageGlass
 
                 // Get image
                 var bmpImg = await GlobalSetting.ImageList.GetImgAsync(
-                    GlobalSetting.CurrentIndex,
+                    LocalSetting.CurrentIndex,
                     isSkipCache: isSkipCache,
                     frameIndex: pageIndex
                    );
@@ -762,7 +762,7 @@ namespace ImageGlass
 
                 SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
 
-                GlobalSetting.ImageError = bmpImg.Error;
+                LocalSetting.ImageError = bmpImg.Error;
 
                 if (!token.Token.IsCancellationRequested)
                 {
@@ -783,22 +783,22 @@ namespace ImageGlass
             }
             catch (Exception ex)
             {
-                GlobalSetting.ImageError = ex;
+                LocalSetting.ImageError = ex;
                 SetAppBusy(false); // make sure busy state is off if exception during image load
 
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
 
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)))
                 {
-                    GlobalSetting.ImageList.Unload(GlobalSetting.CurrentIndex);
+                    GlobalSetting.ImageList.Unload(LocalSetting.CurrentIndex);
                 }
             }
 
 
-            if (GlobalSetting.ImageError != null)
+            if (LocalSetting.ImageError != null)
             {
-                picMain.Text = Settings.Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + GlobalSetting.ImageError.Source + ": " + GlobalSetting.ImageError.Message;
+                picMain.Text = Settings.Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + LocalSetting.ImageError.Source + ": " + LocalSetting.ImageError.Message;
 
                 picMain.Image = null;
                 LocalSetting.ImageModifiedPath = "";
@@ -887,12 +887,12 @@ namespace ImageGlass
                     return;
                 }
 
-                filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
                 // when there is a problem with a file, don't try to show some info
                 bool isShowMoreData = File.Exists(filename);
 
-                indexTotal = $"{(GlobalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {Settings.Configs.Language.Items[$"{Name}._Text"]}";
+                indexTotal = $"{(LocalSetting.CurrentIndex + 1)}/{GlobalSetting.ImageList.Length} {Settings.Configs.Language.Items[$"{Name}._Text"]}";
 
                 if (isShowMoreData)
                 {
@@ -921,7 +921,7 @@ namespace ImageGlass
                 }
 
 
-                if (GlobalSetting.ImageError != null)
+                if (LocalSetting.ImageError != null)
                 {
                     if (!isShowMoreData) // size and date not available
                         this.Text = $"{filename}  |  {indexTotal}  - {appName}";
@@ -1365,7 +1365,7 @@ namespace ImageGlass
             if (!LocalSetting.IsTempMemoryData)
             {
                 // Find file format
-                var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)).ToLower();
+                var ext = Path.GetExtension(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)).ToLower();
                 var assoc = GlobalSetting.GetImageEditingAssociationFromList(ext);
 
                 // Get App assoc info
@@ -1545,7 +1545,7 @@ namespace ImageGlass
         {
             try
             {
-                if (GlobalSetting.ImageError != null || !File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (LocalSetting.ImageError != null || !File.Exists(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)))
                 {
                     return;
                 }
@@ -1556,7 +1556,7 @@ namespace ImageGlass
             // Replace original logic with the Path functions to access filename bits.
 
             // Extract the various bits of the image path
-            var filepath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            var filepath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             string currentFolder = Path.GetDirectoryName(filepath);
             string oldName = Path.GetFileName(filepath);
             string ext = Path.GetExtension(filepath);
@@ -1680,11 +1680,11 @@ namespace ImageGlass
         private void CopyMultiFiles()
         {
             //get filename
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            string filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
             try
             {
-                if (GlobalSetting.ImageError != null || !File.Exists(filename))
+                if (LocalSetting.ImageError != null || !File.Exists(filename))
                 {
                     return;
                 }
@@ -1730,11 +1730,11 @@ namespace ImageGlass
         private void CutMultiFiles()
         {
             //get filename
-            var filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            var filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
             try
             {
-                if (GlobalSetting.ImageError != null || !File.Exists(filename))
+                if (LocalSetting.ImageError != null || !File.Exists(filename))
                 {
                     return;
                 }
@@ -1804,7 +1804,7 @@ namespace ImageGlass
                 }
 
                 // update cache of the modified item
-                var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                var img = await GlobalSetting.ImageList.GetImgAsync(LocalSetting.CurrentIndex);
                 img.Image = newBitmap;
 
             }
@@ -1922,7 +1922,7 @@ namespace ImageGlass
                 if (location.X < hotpotWidth)
                 {
                     // The first image in the list
-                    if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex == 0)
+                    if (!GlobalSetting.IsLoopBackViewer && LocalSetting.CurrentIndex == 0)
                     {
                         picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
@@ -1935,7 +1935,7 @@ namespace ImageGlass
                 else if (location.X > picMain.Width - hotpotWidth)
                 {
                     // The last image in the list
-                    if (!GlobalSetting.IsLoopBackViewer && GlobalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
+                    if (!GlobalSetting.IsLoopBackViewer && LocalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
                     {
                         picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
@@ -2807,7 +2807,7 @@ namespace ImageGlass
 
 
             // Save last seen image path
-            GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
 
             // Save centering of toolbar buttons
             GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
@@ -3326,7 +3326,7 @@ namespace ImageGlass
             if ((flags & MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE) == MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE)
             {
                 // update image list with the initial input path
-                PrepareLoading(new string[] { LocalSetting.InitialInputPath }, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                PrepareLoading(new string[] { LocalSetting.InitialInputPath }, GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
             }
             #endregion
 
@@ -3414,7 +3414,7 @@ namespace ImageGlass
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
         {
-            GlobalSetting.CurrentIndex = e.Item.Index;
+            LocalSetting.CurrentIndex = e.Item.Index;
             NextPic(0);
         }
 
@@ -3423,7 +3423,7 @@ namespace ImageGlass
             // KBR 20190302 perform this check first: if user hits 'End' during slideshow,
             // the slideshow would start over at beginning, even if IsLoopBackSlideShow was false
             //stop playing slideshow at last image
-            if (GlobalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
+            if (LocalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
             {
                 if (!GlobalSetting.IsLoopBackSlideShow)
                 {
@@ -3549,7 +3549,7 @@ namespace ImageGlass
                 return;
             }
 
-            if (imgIndex == GlobalSetting.CurrentIndex)
+            if (imgIndex == LocalSetting.CurrentIndex)
             {
                 NextPic(0, true, true);
             }
@@ -3654,9 +3654,9 @@ namespace ImageGlass
                 thumbnailBar.Items.RemoveAt(imgIndex);
 
                 // change the viewing image to memory data mode
-                if (imgIndex == GlobalSetting.CurrentIndex)
+                if (imgIndex == LocalSetting.CurrentIndex)
                 {
-                    GlobalSetting.ImageError = new Exception("File not found.");
+                    LocalSetting.ImageError = new Exception("File not found.");
                     LocalSetting.IsTempMemoryData = true;
 
                     DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._ImageNotExist"], 1300);
@@ -4048,7 +4048,7 @@ namespace ImageGlass
 
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)) || GlobalSetting.ImageError != null)
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)) || LocalSetting.ImageError != null)
                 {
                     isImageError = true;
                 }
@@ -4087,7 +4087,7 @@ namespace ImageGlass
                 //check if image can animate (GIF)
                 try
                 {
-                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(LocalSetting.CurrentIndex);
 
                     if (imgData.FrameCount > 1)
                     {
@@ -4175,7 +4175,7 @@ namespace ImageGlass
 
             try
             {
-                var filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                var filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
                 Process.Start(new ProcessStartInfo()
                 {
@@ -4243,7 +4243,7 @@ namespace ImageGlass
                 return;
             }
 
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            string filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             if (filename == "")
             {
                 filename = "untitled.png";
@@ -4372,18 +4372,18 @@ namespace ImageGlass
         private void MnuMainReloadImageList_Click(object sender, EventArgs e)
         {
             // update image list
-            PrepareLoading(GlobalSetting.ImageList.FileNames, GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+            PrepareLoading(GlobalSetting.ImageList.FileNames, GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
         {
-            if (GlobalSetting.ImageError != null)
+            if (LocalSetting.ImageError != null)
             {
                 return;
             }
 
             // Viewing image filename
-            string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            string filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
             // If viewing image is temporary memory data
             if (LocalSetting.IsTempMemoryData)
@@ -4457,7 +4457,7 @@ namespace ImageGlass
 
         private void mnuMainGoto_Click(object sender, EventArgs e)
         {
-            int n = GlobalSetting.CurrentIndex;
+            int n = LocalSetting.CurrentIndex;
             // KBR 20190302 init to current index
             string s = (n + 1).ToString();
 
@@ -4475,20 +4475,20 @@ namespace ImageGlass
                 else if (n >= GlobalSetting.ImageList.Length)
                     n = GlobalSetting.ImageList.Length - 1;
 
-                GlobalSetting.CurrentIndex = n;
+                LocalSetting.CurrentIndex = n;
                 NextPic(0);
             }
         }
 
         private void mnuMainGotoFirst_Click(object sender, EventArgs e)
         {
-            GlobalSetting.CurrentIndex = 0;
+            LocalSetting.CurrentIndex = 0;
             NextPic(0);
         }
 
         private void mnuMainGotoLast_Click(object sender, EventArgs e)
         {
-            GlobalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
+            LocalSetting.CurrentIndex = GlobalSetting.ImageList.Length - 1;
             NextPic(0);
         }
 
@@ -4512,7 +4512,7 @@ namespace ImageGlass
 
         private async void mnuMainLastPage_Click(object sender, EventArgs e)
         {
-            var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+            var img = await GlobalSetting.ImageList.GetImgAsync(LocalSetting.CurrentIndex);
 
             LocalSetting.CurrentPageIndex = img.FrameCount - 1;
             NextPic(0, pageIndex: LocalSetting.CurrentPageIndex);
@@ -4648,7 +4648,7 @@ namespace ImageGlass
             if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             }
 
             ApplyZoomMode(GlobalSetting.ZoomMode);
@@ -4673,7 +4673,7 @@ namespace ImageGlass
             if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             }
 
             ApplyZoomMode(GlobalSetting.ZoomMode);
@@ -4698,7 +4698,7 @@ namespace ImageGlass
             if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             }
         }
 
@@ -4721,7 +4721,7 @@ namespace ImageGlass
             if (!LocalSetting.IsTempMemoryData)
             {
                 // Save the image path for saving
-                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                LocalSetting.ImageModifiedPath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             }
         }
 
@@ -4851,7 +4851,7 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)))
                 {
                     return;
                 }
@@ -4862,12 +4862,12 @@ namespace ImageGlass
 
             if (GlobalSetting.IsConfirmationDelete)
             {
-                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
 
             if (msg == DialogResult.Yes)
             {
-                string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                string filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
                 try
                 {
                     ImageInfo.DeleteFile(filename, isMoveToRecycleBin: true);
@@ -4883,7 +4883,7 @@ namespace ImageGlass
         {
             try
             {
-                if (!File.Exists(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)))
+                if (!File.Exists(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)))
                 {
                     return;
                 }
@@ -4894,12 +4894,12 @@ namespace ImageGlass
 
             if (GlobalSetting.IsConfirmationDelete)
             {
-                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                msg = MessageBox.Show(string.Format(Settings.Configs.Language.Items[$"{Name}._DeleteDialogText"], GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex)), Settings.Configs.Language.Items[$"{Name}._DeleteDialogTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             }
 
             if (msg == DialogResult.Yes)
             {
-                string filename = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+                string filename = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
                 try
                 {
                     ImageInfo.DeleteFile(filename, isMoveToRecycleBin: false);
@@ -4914,20 +4914,20 @@ namespace ImageGlass
         private async void mnuMainExtractPages_Click(object sender, EventArgs e)
         {
             // Shortcut keys still work even when menu is disabled!
-            if (!(sender as ToolStripMenuItem).Enabled || GlobalSetting.ImageError != null)
+            if (!(sender as ToolStripMenuItem).Enabled || LocalSetting.ImageError != null)
                 return;
 
             using (FolderBrowserDialog fb = new FolderBrowserDialog()
             {
-                Description = Settings.Configs.Language.Items[$"{Name}._ExtractPageText"],
+                Description = Configs.Language.Items[$"{Name}._ExtractPageText"],
                 ShowNewFolderButton = true
             })
             {
-                DialogResult result = fb.ShowDialog();
+                var result = fb.ShowDialog();
 
                 if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath))
                 {
-                    var img = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    var img = await GlobalSetting.ImageList.GetImgAsync(LocalSetting.CurrentIndex);
                     await img.SaveImagePages(fb.SelectedPath);
 
                     DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
@@ -5045,7 +5045,7 @@ namespace ImageGlass
             if (GlobalSetting.ImageList.Length > 0)
             {
                 Process.Start("explorer.exe", "/select,\"" +
-                    GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex) + "\"");
+                    GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex) + "\"");
             }
         }
 
@@ -5053,7 +5053,7 @@ namespace ImageGlass
         {
             if (GlobalSetting.ImageList.Length > 0)
             {
-                ImageInfo.DisplayFileProperties(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex),
+                ImageInfo.DisplayFileProperties(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex),
                                                 Handle);
             }
         }
@@ -5081,7 +5081,7 @@ namespace ImageGlass
         {
             try
             {
-                Clipboard.SetText(GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex));
+                Clipboard.SetText(GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
             }
             catch { }
         }
@@ -5391,9 +5391,9 @@ namespace ImageGlass
 
 
                 int frameCount = 0;
-                if (GlobalSetting.CurrentIndex >= 0)
+                if (LocalSetting.CurrentIndex >= 0)
                 {
-                    var imgData = await GlobalSetting.ImageList.GetImgAsync(GlobalSetting.CurrentIndex);
+                    var imgData = await GlobalSetting.ImageList.GetImgAsync(LocalSetting.CurrentIndex);
                     frameCount = imgData?.FrameCount ?? 0;
                 }
 
