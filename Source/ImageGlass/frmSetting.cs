@@ -643,7 +643,7 @@ namespace ImageGlass
 
 
             // Set value of cmbImageBoosterCachedCount
-            cmbImageBoosterCachedCount.SelectedIndex = Configs.ImageBoosterCachedCount;
+            cmbImageBoosterCachedCount.SelectedIndex = (int)Configs.ImageBoosterCachedCount;
 
 
             #region Color Management
@@ -757,7 +757,7 @@ namespace ImageGlass
             chkLoopSlideshow.Checked = Configs.IsLoopBackSlideShow;
 
             // Set value of barInterval
-            barInterval.Value = Configs.SlideShowInterval;
+            barInterval.Value = (int)Configs.SlideShowInterval;
             lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
 
         }
@@ -2234,6 +2234,7 @@ namespace ImageGlass
             // Variables for comparision
             var isSuccessful = true;
             int newInt;
+            uint newUInt;
             bool newBool;
             string newString;
             Color newColor;
@@ -2345,7 +2346,7 @@ namespace ImageGlass
 
 
             // ImageBoosterCachedCount
-            Configs.ImageBoosterCachedCount = cmbImageBoosterCachedCount.SelectedIndex;
+            Configs.ImageBoosterCachedCount = (uint)cmbImageBoosterCachedCount.SelectedIndex;
             GlobalSetting.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
 
 
@@ -2436,13 +2437,13 @@ namespace ImageGlass
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             // ThumbnailDimension
-            newInt = cmbThumbnailDimension.SelectedItem.ToString() == ""
+            newUInt = cmbThumbnailDimension.SelectedItem.ToString() == ""
                 ? Configs.ThumbnailDimension
-                : int.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
+                : uint.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
 
-            if (Configs.ThumbnailDimension != newInt) // Only change when the new value selected
+            if (Configs.ThumbnailDimension != newUInt) // Only change when the new value selected
             {
-                Configs.ThumbnailDimension = newInt;
+                Configs.ThumbnailDimension = newUInt;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
             }
             #endregion
@@ -2457,11 +2458,11 @@ namespace ImageGlass
             #region SlideShowInterval: MainFormForceUpdateAction.OTHER_SETTINGS
 
             // SlideShowInterval
-            newInt = barInterval.Value;
+            newUInt = (uint)barInterval.Value;
 
-            if (Configs.SlideShowInterval != newInt)
+            if (Configs.SlideShowInterval != newUInt)
             {
-                Configs.SlideShowInterval = newInt;
+                Configs.SlideShowInterval = newUInt;
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion

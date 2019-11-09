@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -25,18 +25,18 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets actual thumbnail dimension
         /// </summary>
-        public int Dimension { get; }
+        public uint Dimension { get; }
 
         /// <summary>
         /// Gets extra space to adapt minimum width / height of thumbnail bar
         /// </summary>
-        public int ExtraSpace { get; }
+        public uint ExtraSpace { get; }
 
         /// <summary>
         /// Get total dimension
         /// </summary>
         /// <returns></returns>
-        public int GetTotalDimension()
+        public uint GetTotalDimension()
         {
             return Dimension + ExtraSpace;
         }
@@ -46,7 +46,7 @@ namespace ImageGlass.Base
         /// </summary>
         /// <param name="dimension">Thumbnail size</param>
         /// <param name="isHorizontalView">Horizontal or Verticle view</param>
-        public ThumbnailItemInfo(int dimension, bool isHorizontalView)
+        public ThumbnailItemInfo(uint dimension, bool isHorizontalView)
         {
             if (isHorizontalView)
             {

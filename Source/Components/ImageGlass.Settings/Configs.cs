@@ -233,31 +233,31 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets slide show interval
         /// </summary>
-        public static int SlideShowInterval { get; set; } = 5;
+        public static uint SlideShowInterval { get; set; } = 5;
 
 
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static int ThumbnailDimension { get; set; } = 96;
+        public static uint ThumbnailDimension { get; set; } = 64;
 
 
         /// <summary>
         /// Gets, sets width of horizontal thumbnail bar
         /// </summary>
-        public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(48, true).GetTotalDimension();
+        public static uint ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
 
         /// <summary>
         /// Gets, sets the number of images cached by Image
         /// </summary>
-        public static int ImageBoosterCachedCount { get; set; } = 1;
+        public static uint ImageBoosterCachedCount { get; set; } = 1;
 
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
-        public static double ZoomLockValue { get; set; } = 100.0;
+        public static double ZoomLockValue { get; set; } = 100f;
 
 
         #endregion
@@ -293,6 +293,12 @@ namespace ImageGlass.Settings
         /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
         /// </summary>
         public static string AutoUpdate { get; set; } = "7/26/1991 12:13:08";
+
+
+        /// <summary>
+        /// Gets, sets the absolute file path of the last seen image
+        /// </summary>
+        public static string LastSeenImagePath { get; set; } = "";
 
 
         /// <summary>
@@ -581,14 +587,31 @@ namespace ImageGlass.Settings
             #region Number items
 
             FirstLaunchVersion = Get<int>(nameof(FirstLaunchVersion), FirstLaunchVersion);
-            SlideShowInterval = Get<int>(nameof(SlideShowInterval), SlideShowInterval);
-            ThumbnailDimension = Get<int>(nameof(ThumbnailDimension), ThumbnailDimension);
-            ThumbnailBarWidth = Get<int>(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+            SlideShowInterval = Get<uint>(nameof(SlideShowInterval), SlideShowInterval);
+            if (SlideShowInterval < 1) SlideShowInterval = 5;
 
-            ImageBoosterCachedCount = Get<int>(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+            #region Load thumbnail bar width & position
+            ThumbnailDimension = Get<uint>(nameof(ThumbnailDimension), ThumbnailDimension);
+           
+            if (IsThumbnailHorizontal)
+            {
+                // Get minimum width needed for thumbnail dimension
+                var tbMinWidth = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+
+                // Get the greater width value
+                ThumbnailBarWidth = Math.Max(ThumbnailBarWidth, tbMinWidth);
+            }
+            else
+            {
+                ThumbnailBarWidth = Get<uint>(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+            }
+            #endregion
+
+            ImageBoosterCachedCount = Get<uint>(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
             ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
 
             ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
+            if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
             #endregion
 

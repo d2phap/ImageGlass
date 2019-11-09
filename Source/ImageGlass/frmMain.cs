@@ -338,7 +338,7 @@ namespace ImageGlass
             // Set filename to image list
             GlobalSetting.ImageList = new Heart.Factory(imageFilenameList)
             {
-                MaxQueue = GlobalSetting.ImageBoosterCachedCount,
+                MaxQueue = Configs.ImageBoosterCachedCount,
                 Channels = (int)LocalSetting.Channels
             };
 
@@ -605,7 +605,7 @@ namespace ImageGlass
         {
             thumbnailBar.SuspendLayout();
             thumbnailBar.Items.Clear();
-            thumbnailBar.ThumbnailSize = new Size(GlobalSetting.ThumbnailDimension, GlobalSetting.ThumbnailDimension);
+            thumbnailBar.ThumbnailSize = new Size((int)Configs.ThumbnailDimension, (int)Configs.ThumbnailDimension);
 
             for (int i = 0; i < GlobalSetting.ImageList.Length; i++)
             {
@@ -644,7 +644,7 @@ namespace ImageGlass
             }
 
             //Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
+            if (File.Exists(LocalSetting.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
                 DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
@@ -695,7 +695,7 @@ namespace ImageGlass
                 timSlideShow.Enabled = true;
             }
 
-            if (!Configs.IsPlaySlideShow && !GlobalSetting.IsLoopBackViewer)
+            if (!Configs.IsPlaySlideShow && !Configs.IsLoopBackViewer)
             {
                 //Reach end of list
                 if (tempIndex >= GlobalSetting.ImageList.Length)
@@ -741,8 +741,8 @@ namespace ImageGlass
             try
             {
                 // apply Color Management settings
-                GlobalSetting.ImageList.IsApplyColorProfileForAll = GlobalSetting.IsApplyColorProfileForAll;
-                GlobalSetting.ImageList.ColorProfileName = GlobalSetting.ColorProfile;
+                GlobalSetting.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
+                GlobalSetting.ImageList.ColorProfileName = Configs.ColorProfile;
 
                 // put app in a 'busy' state around image load: allows us to prevent the user from 
                 // skipping past a slow-to-load image by processing too many arrow clicks
@@ -776,7 +776,7 @@ namespace ImageGlass
                     if (!isKeepZoomRatio)
                     {
                         //reset zoom mode
-                        ApplyZoomMode(GlobalSetting.ZoomMode);
+                        ApplyZoomMode(Configs.ZoomMode);
                     }
                 }
 
@@ -901,7 +901,7 @@ namespace ImageGlass
                 }
 
 
-                if (GlobalSetting.IsDisplayBasenameOfImage)
+                if (Configs.IsDisplayBasenameOfImage)
                 {
                     filename = Path.GetFileName(filename);
                 }
@@ -1131,7 +1131,7 @@ namespace ImageGlass
                     mnuMainSlideShowExit_Click(null, null);
                 }
                 //Quit ImageGlass
-                else if (GlobalSetting.IsPressESCToQuit)
+                else if (Configs.IsPressESCToQuit)
                 {
                     Application.Exit();
                 }
@@ -1392,7 +1392,7 @@ namespace ImageGlass
         private void SelectUIZoomMode()
         {
             // Reset (Disable) Zoom Lock
-            GlobalSetting.ZoomLockValue = 100.0;
+            Configs.ZoomLockValue = 100.0;
 
             btnAutoZoom.Checked = mnuMainAutoZoom.Checked =
                 btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
@@ -1419,7 +1419,7 @@ namespace ImageGlass
                     btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
 
                     //Enable Zoom Lock
-                    GlobalSetting.ZoomLockValue = picMain.Zoom;
+                    Configs.ZoomLockValue = picMain.Zoom;
                     break;
 
                 case ZoomMode.ScaleToFill:
@@ -1470,7 +1470,7 @@ namespace ImageGlass
                     break;
 
                 case ZoomMode.LockZoomRatio:
-                    picMain.Zoom = GlobalSetting.ZoomLockValue;
+                    picMain.Zoom = Configs.ZoomLockValue;
                     break;
 
                 case ZoomMode.ScaleToFill:
@@ -1922,7 +1922,7 @@ namespace ImageGlass
                 if (location.X < hotpotWidth)
                 {
                     // The first image in the list
-                    if (!GlobalSetting.IsLoopBackViewer && LocalSetting.CurrentIndex == 0)
+                    if (!Configs.IsLoopBackViewer && LocalSetting.CurrentIndex == 0)
                     {
                         picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
@@ -1935,7 +1935,7 @@ namespace ImageGlass
                 else if (location.X > picMain.Width - hotpotWidth)
                 {
                     // The last image in the list
-                    if (!GlobalSetting.IsLoopBackViewer && LocalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
+                    if (!Configs.IsLoopBackViewer && LocalSetting.CurrentIndex >= GlobalSetting.ImageList.Length - 1)
                     {
                         picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                     }
@@ -2107,7 +2107,7 @@ namespace ImageGlass
 
                 // <main>
                 picMain.BackColor = t.BackgroundColor;
-                GlobalSetting.BackgroundColor = t.BackgroundColor;
+                Configs.BackgroundColor = t.BackgroundColor;
 
                 picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
                 picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
@@ -2120,7 +2120,7 @@ namespace ImageGlass
                 sp1.BackColor = t.ThumbnailBackgroundColor;
 
                 lblInfo.ForeColor = t.TextInfoColor;
-                picMain.ForeColor = Theme.InvertBlackAndWhiteColor(GlobalSetting.BackgroundColor);
+                picMain.ForeColor = Theme.InvertBlackAndWhiteColor(Configs.BackgroundColor);
 
                 //Modern UI menu renderer
                 mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(t.MenuBackgroundColor, t.MenuTextColor);
@@ -2224,19 +2224,12 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Show checkerboard
-                GlobalSetting.IsShowCheckerBoard = bool.Parse(GlobalSetting.GetConfig("IsShowCheckedBackground", "False").ToString());
-                GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
+                // Show checkerboard
+                Configs.IsShowCheckerBoard = !Configs.IsShowCheckerBoard;
                 mnuMainCheckBackground_Click(null, EventArgs.Empty);
-                #endregion
 
 
-                #region Load background
-                var bgValue = GlobalSetting.GetConfig("BackgroundColor", Theme.ConvertColorToHEX(LocalSetting.Theme.BackgroundColor));
-
-                GlobalSetting.BackgroundColor = Theme.ConvertHexStringToColor(bgValue, true);
-                picMain.BackColor = GlobalSetting.BackgroundColor;
-                #endregion
+                picMain.BackColor = Configs.BackgroundColor;
 
 
                 #region Load Toolbar buttons
@@ -2248,11 +2241,9 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load state of Toolbar 
-                GlobalSetting.IsShowToolBar = bool.Parse(GlobalSetting.GetConfig("IsShowToolBar", "True"));
-                GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
+                // Load state of Toolbar 
+                Configs.IsShowToolBar = !Configs.IsShowToolBar;
                 mnuMainToolbar_Click(null, EventArgs.Empty);
-                #endregion
 
 
                 #region Toolbar alignment and position
@@ -2278,51 +2269,6 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load Thumbnail dimension
-                if (int.TryParse(GlobalSetting.GetConfig("ThumbnailDimension", GlobalSetting.ThumbnailDimension.ToString()), out int thumbDimension))
-                {
-                    GlobalSetting.ThumbnailDimension = thumbDimension;
-                }
-                else
-                {
-                    GlobalSetting.ThumbnailDimension = 48;
-                }
-                #endregion
-
-
-                #region Load thumbnail bar width & position
-                if (!int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "0"), out int tb_width))
-                {
-                    tb_width = 0;
-                }
-
-                //Get minimum width needed for thumbnail dimension
-                var tb_minWidth = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, true).GetTotalDimension();
-                //Get the greater width value
-                GlobalSetting.ThumbnailBarWidth = Math.Max(tb_width, tb_minWidth);
-
-                //Load thumbnail orientation state: 
-                //NOTE: needs to be done BEFORE the mnuMainThumbnailBar_Click invocation below!
-                GlobalSetting.IsThumbnailHorizontal = bool.Parse(GlobalSetting.GetConfig("IsThumbnailHorizontal", "True"));
-
-                //Load vertical thumbnail bar width
-                if (GlobalSetting.IsThumbnailHorizontal == false)
-                {
-                    if (int.TryParse(GlobalSetting.GetConfig("ThumbnailBarWidth", "48"), out int vtb_width))
-                    {
-                        GlobalSetting.ThumbnailBarWidth = vtb_width;
-                    }
-                }
-                #endregion
-
-
-                #region Load Thumbnail scrollbar visibility
-                if (bool.TryParse(GlobalSetting.GetConfig("IsShowThumbnailScrollbar", GlobalSetting.IsShowThumbnailScrollbar.ToString()), out bool showThumbScrollbar))
-                {
-                    GlobalSetting.IsShowThumbnailScrollbar = showThumbScrollbar;
-                }
-                #endregion
-
 
                 // Load View Channels menu items
                 LoadViewChannelsMenuItems();
@@ -2347,7 +2293,7 @@ namespace ImageGlass
                 // Issue #402: need to wait to load thumbnail size etc until after window bounds.
                 // The splitter dimensions may be too small for the user's last splitter bar position.
                 #region Load state of Thumbnail 
-                GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
+                //GlobalSetting.IsShowThumbnail = bool.Parse(GlobalSetting.GetConfig("IsShowThumbnail", "False"));
                 //GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
                 //mnuMainThumbnailBar_Click(null, EventArgs.Empty);
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
@@ -2463,15 +2409,6 @@ namespace ImageGlass
 
 
 
-                #region Slideshow Interval
-                int i = int.Parse(GlobalSetting.GetConfig("SlideShowInterval", "5"));
-
-                if (!(0 < i && i < 61)) i = 5;//time limit [1; 60] seconds
-                GlobalSetting.SlideShowInterval = i;
-                timSlideShow.Interval = 1000 * GlobalSetting.SlideShowInterval;
-                #endregion
-
-
                 #region Load Zoom Mode
                 GlobalSetting.ZoomMode = (ZoomMode)Enum.Parse(typeof(ZoomMode), GlobalSetting.GetConfig("ZoomMode", "0"));
 
@@ -2480,19 +2417,8 @@ namespace ImageGlass
                 SelectUIZoomMode();
 
 
-                // Load Zoom Lock Value
-                int zoomLock = int.Parse(GlobalSetting.GetConfig("ZoomLockValue", "-1"), GlobalSetting.NumberFormat);
-                GlobalSetting.ZoomLockValue = zoomLock > 0 ? zoomLock : 100;
-
-
                 // Load ZoomLevels
-                var zoomLevelStr = GlobalSetting.GetConfig("ZoomLevels");
-                var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
-                if (zoomLevels.Length > 0)
-                {
-                    GlobalSetting.ZoomLevels = zoomLevels;
-                }
-                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(GlobalSetting.ZoomLevels);
+                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
 
                 #endregion
 
@@ -2507,21 +2433,14 @@ namespace ImageGlass
                 #endregion
 
 
-                #region Load state of IsWindowAlwaysOnTop value 
-                GlobalSetting.IsWindowAlwaysOnTop = bool.Parse(GlobalSetting.GetConfig("IsWindowAlwaysOnTop", "False"));
-                this.TopMost = mnuMainAlwaysOnTop.Checked = GlobalSetting.IsWindowAlwaysOnTop;
-                #endregion
+                // Load state of IsWindowAlwaysOnTop value 
+                this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
 
 
                 #region Load Color picker configs 
-                //Get Color code format
-                GlobalSetting.IsColorPickerRGBA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerRGBA", "True"));
-                GlobalSetting.IsColorPickerHEXA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHEXA", "True"));
-                GlobalSetting.IsColorPickerHSLA = bool.Parse(GlobalSetting.GetConfig("IsColorPickerHSLA", "True"));
-
 
                 // Get IsShowColorPicker
-                LocalSetting.IsShowColorPickerOnStartup = bool.Parse(GlobalSetting.GetConfig("IsShowColorPickerOnStartup", "False"));
+                LocalSetting.IsShowColorPickerOnStartup = Configs.IsShowColorPickerOnStartup;
                 if (LocalSetting.IsShowColorPickerOnStartup)
                 {
                     mnuMainColorPicker.PerformClick();
@@ -2549,173 +2468,24 @@ namespace ImageGlass
 
 
                 #region Get Last Seen Image Path & Welcome Image
-                GlobalSetting.IsOpenLastSeenImage = bool.Parse(GlobalSetting.GetConfig("IsOpenLastSeenImage", "False"));
-                GlobalSetting.IsShowWelcome = bool.Parse(GlobalSetting.GetConfig("IsShowWelcome", "True"));
-
                 var startUpImg = "";
 
-                if (GlobalSetting.IsOpenLastSeenImage)
+                if (Configs.IsOpenLastSeenImage)
                 {
-                    startUpImg = GlobalSetting.GetConfig("LastSeenImagePath");
+                    startUpImg = Configs.LastSeenImagePath;
                 }
 
-                if (!File.Exists(startUpImg) && GlobalSetting.IsShowWelcome)
+                if (!File.Exists(startUpImg) && Configs.IsShowWelcome)
                 {
                     startUpImg = App.StartUpDir("default.jpg");
                 }
 
-                //Do not show welcome image if params exist.
+                // Do not show welcome image if params exist.
                 if (Environment.GetCommandLineArgs().Count() < 2)
                 {
                     PrepareLoading(startUpImg);
                 }
                 #endregion
-
-
-                //load other configs in another thread
-                Task.Run(() =>
-                {
-                    //Load IsLoopBackViewer
-                    GlobalSetting.IsLoopBackViewer = ValidatedBooleanSetting("IsLoopBackViewer", true);
-
-                    //Load IsLoopBackSlideShow
-                    GlobalSetting.IsLoopBackSlideShow = ValidatedBooleanSetting("IsLoopBackSlideShow", true);
-
-                    //Load IsPressESCToQuit
-                    GlobalSetting.IsPressESCToQuit = ValidatedBooleanSetting("IsPressESCToQuit", true);
-
-
-                    #region Zoom optimization method 
-                    string configValue2 = GlobalSetting.GetConfig("ZoomOptimization", "0");
-                    if (int.TryParse(configValue2, out int zoomValue))
-                    {
-                        if (-1 < zoomValue && zoomValue < Enum.GetNames(typeof(ZoomOptimizationMethods)).Length)
-                        { }
-                        else
-                        {
-                            zoomValue = 0;
-                        }
-                    }
-                    GlobalSetting.ZoomOptimizationMethod = (ZoomOptimizationMethods)zoomValue;
-                    #endregion
-
-
-                    #region Get mouse wheel settings 
-                    configValue2 = GlobalSetting.GetConfig("MouseWheelAction", "1");
-
-                    if (int.TryParse(configValue2, out var mouseWheel))
-                    {
-                        if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                        { }
-                        else
-                        {
-                            mouseWheel = 1; //MouseWheelActions.ZOOM
-                        }
-                    }
-                    else
-                    {
-                        mouseWheel = 1;
-                    }
-                    GlobalSetting.MouseWheelAction = (MouseWheelActions)mouseWheel;
-
-                    configValue2 = GlobalSetting.GetConfig("MouseWheelCtrlAction", "1");
-                    if (int.TryParse(configValue2, out mouseWheel))
-                    {
-                        if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                        { }
-                        else
-                        {
-                            mouseWheel = 1; //MouseWheelActions.ZOOM
-                        }
-                    }
-                    else
-                    {
-                        mouseWheel = 1;
-                    }
-                    GlobalSetting.MouseWheelCtrlAction = (MouseWheelActions)mouseWheel;
-
-                    configValue2 = GlobalSetting.GetConfig("MouseWheelShiftAction", "1");
-                    if (int.TryParse(configValue2, out mouseWheel))
-                    {
-                        if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                        { }
-                        else
-                        {
-                            mouseWheel = 1; //MouseWheelActions.ZOOM
-                        }
-                    }
-                    else
-                    {
-                        mouseWheel = 1;
-                    }
-                    GlobalSetting.MouseWheelShiftAction = (MouseWheelActions)mouseWheel;
-
-                    configValue2 = GlobalSetting.GetConfig("MouseWheelAltAction", "1");
-                    if (int.TryParse(configValue2, out mouseWheel))
-                    {
-                        if (Enum.IsDefined(typeof(MouseWheelActions), mouseWheel))
-                        { }
-                        else
-                        {
-                            mouseWheel = 1; //MouseWheelActions.ZOOM
-                        }
-                    }
-                    else
-                    {
-                        mouseWheel = 1;
-                    }
-                    GlobalSetting.MouseWheelAltAction = (MouseWheelActions)mouseWheel;
-                    #endregion
-
-
-                    //Get IsConfirmationDelete value
-                    GlobalSetting.IsConfirmationDelete = ValidatedBooleanSetting("IsConfirmationDelete", false);
-
-
-                    //Get IsSaveAfterRotating value
-                    GlobalSetting.IsSaveAfterRotating = ValidatedBooleanSetting("IsSaveAfterRotating", false);
-
-                    // Fetch PreserveModifiedDate
-                    GlobalSetting.PreserveModifiedDate = ValidatedBooleanSetting("PreserveModifiedDate", false);
-
-
-                    #region Get ImageEditingAssociationList
-                    configValue2 = GlobalSetting.GetConfig("ImageEditingAssociationList", "");
-                    string[] editingAssoclist = configValue2.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-                    if (editingAssoclist.Length > 0)
-                    {
-                        foreach (var configString in editingAssoclist)
-                        {
-                            try
-                            {
-                                var extAssoc = new ImageEditingAssociation(configString);
-                                GlobalSetting.ImageEditingAssociationList.Add(extAssoc);
-                            }
-                            catch (InvalidCastException) { }
-                        }
-                    }
-                    #endregion
-
-
-                    //Get IsNewVersionAvailable
-                    GlobalSetting.IsNewVersionAvailable = ValidatedBooleanSetting("IsNewVersionAvailable", false);
-
-
-                    bool ValidatedBooleanSetting(string configSetting, bool defaultValue)
-                    {
-                        // KBR 20190716 handle possibly gibberish values in the config file.
-                        // If we don't use TryParse, an exception would happen and other settings
-                        // would not be read.
-
-                        string boolConfigValue = GlobalSetting.GetConfig(configSetting, defaultValue.ToString());
-                        if (!bool.TryParse(boolConfigValue, out var value))
-                            value = defaultValue;
-                        return value;
-                    }
-
-
-                });
 
 
             }
@@ -2734,61 +2504,21 @@ namespace ImageGlass
                 // don't save Bound if in Full screen and SlideShow mode
                 if (!Configs.IsFullScreen && !Configs.IsPlaySlideShow)
                 {
-                    //Windows Bound--------------------------------------------------------------
-                    GlobalSetting.SetConfig($"{Name}.WindowsBound", Helpers.RectToString(this.Bounds));
+                    // Windows Bound--------------------------------------------------------------
+                    Configs.FrmMainWindowsBound = this.Bounds;
                 }
             }
 
             //Windows State-------------------------------------------------------------------
-            GlobalSetting.SetConfig($"{Name}.WindowsState", WindowState.ToString());
+            Configs.FrmMainWindowState = this.WindowState;
 
-            //Checked background
-            GlobalSetting.SetConfig("IsShowCheckedBackground", GlobalSetting.IsShowCheckerBoard.ToString());
-
-
-            #region  Toolbar state
-            if (!Configs.IsPlaySlideShow)
-            {
-                GlobalSetting.SetConfig("IsShowToolBar", GlobalSetting.IsShowToolBar.ToString());
-            }
-
-            GlobalSetting.SetConfig("IsShowThumbnailScroll", GlobalSetting.IsShowThumbnailScrollbar.ToString());
-            #endregion
-
-
-            //Window always on top
-            GlobalSetting.SetConfig("IsWindowAlwaysOnTop", GlobalSetting.IsWindowAlwaysOnTop.ToString());
-
-            //Zoom Mode
-            GlobalSetting.SetConfig("ZoomMode", GlobalSetting.ZoomMode.ToString());
-
-            //Lock zoom ratio
-            GlobalSetting.SetConfig("ZoomLockValue", (GlobalSetting.ZoomMode == ZoomMode.LockZoomRatio) ? GlobalSetting.ZoomLockValue.ToString(GlobalSetting.NumberFormat) : "-1");
-
-
-            #region Thumbnail panel
-            if (!Configs.IsPlaySlideShow)
-            {
-                GlobalSetting.SetConfig("IsShowThumbnail", GlobalSetting.IsShowThumbnail.ToString());
-            }
-            #endregion
-
-
-            // Save thumbnail bar orientation state
-            GlobalSetting.SetConfig("IsThumbnailHorizontal", GlobalSetting.IsThumbnailHorizontal.ToString());
 
             // Save thumbnail bar width
-            GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
-            GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
+            Configs.ThumbnailBarWidth = (uint)(sp1.Width - sp1.SplitterDistance);
 
-            // Save vertical thumbnail bar width
-            if (GlobalSetting.IsThumbnailHorizontal == false)
-            {
-                GlobalSetting.SetConfig("ThumbnailBarWidth", (sp1.Width - sp1.SplitterDistance).ToString(GlobalSetting.NumberFormat));
-            }
 
             // Save previous image if it was modified
-            if (File.Exists(LocalSetting.ImageModifiedPath) && GlobalSetting.IsSaveAfterRotating)
+            if (File.Exists(LocalSetting.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
                 DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
@@ -2796,24 +2526,8 @@ namespace ImageGlass
                 ImageSaveChange();
             }
 
-            // Save IsShowColorPickerOnStartup
-            GlobalSetting.SetConfig("IsShowColorPickerOnStartup", LocalSetting.IsShowColorPickerOnStartup.ToString());
-
-            // Save IsShowPageNavOnStartup
-            GlobalSetting.SetConfig("IsShowPageNavOnStartup", LocalSetting.IsShowPageNavOnStartup.ToString());
-
-            // Save toolbar buttons
-            GlobalSetting.SetConfig("ToolbarButtons", GlobalSetting.ToolbarButtons);
-
-
             // Save last seen image path
-            GlobalSetting.SetConfig("LastSeenImagePath", GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex));
-
-            // Save centering of toolbar buttons
-            GlobalSetting.SetConfig("IsCenterToolbar", GlobalSetting.IsCenterToolbar.ToString());
-
-            // Save fullscreen state
-            GlobalSetting.SetConfig("IsFullScreen", Configs.IsFullScreen.ToString());
+            Configs.LastSeenImagePath = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
 
             GlobalSetting.SaveKeyAssignments();
@@ -2840,8 +2554,8 @@ namespace ImageGlass
                 //save last state of toolbar
                 if (onlyShowViewer)
                 {
-                    _isShowToolbar = GlobalSetting.IsShowToolBar;
-                    _isShowThumbnail = GlobalSetting.IsShowThumbnail;
+                    _isShowToolbar = Configs.IsShowToolBar;
+                    _isShowThumbnail = Configs.IsShowThumbnail;
                 }
 
                 if (changeWindowState)
@@ -2855,11 +2569,11 @@ namespace ImageGlass
                 if (onlyShowViewer)
                 {
                     toolMain.Visible = false;
-                    GlobalSetting.IsShowToolBar = false;
+                    Configs.IsShowToolBar = false;
                     mnuMainToolbar.Checked = false;
 
                     //hide thumbnail
-                    GlobalSetting.IsShowThumbnail = true;
+                    Configs.IsShowThumbnail = true;
                     mnuMainThumbnailBar_Click(null, null);
                 }
 
@@ -2869,7 +2583,7 @@ namespace ImageGlass
                 //realign image
                 if (!_isManuallyZoomed)
                 {
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                    ApplyZoomMode(Configs.ZoomMode);
                 }
 
             }
@@ -2880,46 +2594,41 @@ namespace ImageGlass
                 //restore last state of toolbar
                 if (onlyShowViewer)
                 {
-                    GlobalSetting.IsShowToolBar = _isShowToolbar;
-                    GlobalSetting.IsShowThumbnail = _isShowThumbnail;
+                    Configs.IsShowToolBar = _isShowToolbar;
+                    Configs.IsShowThumbnail = _isShowThumbnail;
                 }
 
                 // restore background color in case of being overriden by SlideShow mode
-                picMain.BackColor = GlobalSetting.BackgroundColor;
+                picMain.BackColor = Configs.BackgroundColor;
 
                 if (changeWindowState)
                 {
                     this.FormBorderStyle = FormBorderStyle.Sizable;
 
                     //windows state
-                    string state_str = GlobalSetting.GetConfig($"{Name}.WindowsState", "Normal");
-                    if (state_str == "Normal")
+                    if (Configs.FrmMainWindowState != FormWindowState.Minimized)
                     {
-                        this.WindowState = FormWindowState.Normal;
-                    }
-                    else if (state_str == "Maximized")
-                    {
-                        this.WindowState = FormWindowState.Maximized;
+                        this.WindowState = Configs.FrmMainWindowState;
                     }
 
                     //Windows Bound (Position + Size)
-                    this.Bounds = Helpers.StringToRect(GlobalSetting.GetConfig($"{Name}.WindowsBound", "280,125,750,545"));
+                    this.Bounds = Configs.FrmMainWindowsBound;
                 }
 
 
                 if (onlyShowViewer)
                 {
-                    if (GlobalSetting.IsShowToolBar)
+                    if (Configs.IsShowToolBar)
                     {
                         //Show toolbar
                         toolMain.Visible = true;
                         mnuMainToolbar.Checked = true;
                     }
 
-                    if (GlobalSetting.IsShowThumbnail)
+                    if (Configs.IsShowThumbnail)
                     {
                         //Show thumbnail
-                        GlobalSetting.IsShowThumbnail = false;
+                        Configs.IsShowThumbnail = false;
                         mnuMainThumbnailBar_Click(null, null);
                     }
                 }
@@ -3230,7 +2939,7 @@ namespace ImageGlass
                 #endregion
 
                 //Update language layout ------------------
-                RightToLeft = Settings.Configs.Language.IsRightToLeftLayout;
+                RightToLeft = Configs.Language.IsRightToLeftLayout;
             }
             #endregion
 
@@ -3238,12 +2947,12 @@ namespace ImageGlass
             #region THUMBNAIL_BAR or THUMBNAIL_ITEMS
             if ((flags & MainFormForceUpdateAction.THUMBNAIL_BAR) == MainFormForceUpdateAction.THUMBNAIL_BAR || (flags & MainFormForceUpdateAction.THUMBNAIL_ITEMS) == MainFormForceUpdateAction.THUMBNAIL_ITEMS)
             {
-                //Update thumbnail bar position
-                GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+                // Update thumbnail bar position
+                Configs.IsShowThumbnail = !Configs.IsShowThumbnail;
                 mnuMainThumbnailBar_Click(null, null);
 
-                //Update thumbnail bar scroll bar visibility
-                thumbnailBar.ScrollBars = GlobalSetting.IsShowThumbnailScrollbar;
+                // Update thumbnail bar scroll bar visibility
+                thumbnailBar.ScrollBars = Configs.IsShowThumbnailScrollbar;
             }
             #endregion
 
@@ -3296,19 +3005,19 @@ namespace ImageGlass
             #region TOOLBAR_POSITION
             if ((flags & MainFormForceUpdateAction.TOOLBAR_POSITION) == MainFormForceUpdateAction.TOOLBAR_POSITION)
             {
-                if (GlobalSetting.ToolbarPosition == ToolbarPosition.Top)
+                if (Configs.ToolbarPosition == ToolbarPosition.Top)
                 {
                     toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Top;
                 }
-                else if (GlobalSetting.ToolbarPosition == ToolbarPosition.Bottom)
+                else if (Configs.ToolbarPosition == ToolbarPosition.Bottom)
                 {
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
                 }
 
                 // update toolbar items alignment
-                toolMain.Alignment = GlobalSetting.IsCenterToolbar ? ToolbarAlignment.CENTER : ToolbarAlignment.LEFT;
+                toolMain.Alignment = Configs.IsCenterToolbar ? ToolbarAlignment.CENTER : ToolbarAlignment.LEFT;
             }
             #endregion
 
@@ -3337,7 +3046,7 @@ namespace ImageGlass
                 #region Update Other Settings
 
                 //Update scrollbars visibility
-                if (GlobalSetting.IsScrollbarsVisible)
+                if (Configs.IsScrollbarsVisible)
                 {
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
                     picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
@@ -3349,20 +3058,20 @@ namespace ImageGlass
                 }
 
                 // update checkerboard display mode
-                if (GlobalSetting.IsShowCheckerBoard)
+                if (Configs.IsShowCheckerBoard)
                 {
-                    GlobalSetting.IsShowCheckerBoard = false;
+                    Configs.IsShowCheckerBoard = false;
                     mnuMainCheckBackground_Click(null, null);
                 }
 
                 //Update background---------------------
-                picMain.BackColor = GlobalSetting.BackgroundColor;
+                picMain.BackColor = Configs.BackgroundColor;
 
                 //Update slideshow interval value of timer
-                timSlideShow.Interval = GlobalSetting.SlideShowInterval * 1000;
+                timSlideShow.Interval = (int)Configs.SlideShowInterval * 1000;
 
                 // Update ZoomLevels
-                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(GlobalSetting.ZoomLevels);
+                picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
 
                 #endregion
 
@@ -3425,7 +3134,7 @@ namespace ImageGlass
             //stop playing slideshow at last image
             if (LocalSetting.CurrentIndex == GlobalSetting.ImageList.Length - 1)
             {
-                if (!GlobalSetting.IsLoopBackSlideShow)
+                if (!Configs.IsLoopBackSlideShow)
                 {
                     mnuMainSlideShowPause_Click(null, null);
                     return;
@@ -3689,17 +3398,17 @@ namespace ImageGlass
             switch (Control.ModifierKeys)
             {
                 case Keys.Control:
-                    action = GlobalSetting.MouseWheelCtrlAction;
+                    action = Configs.MouseWheelCtrlAction;
                     break;
                 case Keys.Shift:
-                    action = GlobalSetting.MouseWheelShiftAction;
+                    action = Configs.MouseWheelShiftAction;
                     break;
                 case Keys.Alt:
-                    action = GlobalSetting.MouseWheelAltAction;
+                    action = Configs.MouseWheelAltAction;
                     break;
                 case Keys.None:
                 default:
-                    action = GlobalSetting.MouseWheelAction;
+                    action = Configs.MouseWheelAction;
                     break;
             }
             switch (action)
@@ -3737,9 +3446,9 @@ namespace ImageGlass
             _isManuallyZoomed = true;
 
             // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
-            if (GlobalSetting.ZoomMode == ZoomMode.LockZoomRatio)
+            if (Configs.ZoomMode == ZoomMode.LockZoomRatio)
             {
-                GlobalSetting.ZoomLockValue = e.NewZoom;
+                Configs.ZoomLockValue = e.NewZoom;
             }
 
             // Zoom optimization
@@ -3754,7 +3463,7 @@ namespace ImageGlass
             switch (e.Button)
             {
                 case MouseButtons.Middle: //Reset zoom mode
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                    ApplyZoomMode(Configs.ZoomMode);
                     break;
 
                 case MouseButtons.XButton1: //Back
@@ -3766,7 +3475,7 @@ namespace ImageGlass
                     break;
 
                 case MouseButtons.Left:
-                    if (GlobalSetting.IsShowNavigationButtons && !picMain.IsPanning)
+                    if (Configs.IsShowNavigationButtons && !picMain.IsPanning)
                     {
                         CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                         {
@@ -3808,12 +3517,12 @@ namespace ImageGlass
                 }
                 else
                 {
-                    ApplyZoomMode(GlobalSetting.ZoomMode);
+                    ApplyZoomMode(Configs.ZoomMode);
                 }
             }
 
 
-            if (GlobalSetting.IsShowNavigationButtons)
+            if (Configs.IsShowNavigationButtons)
             {
                 CheckCursorPositionOnViewer(e.Location, onCursorCenterAction: () =>
                 {
@@ -3853,7 +3562,7 @@ namespace ImageGlass
                 }
 
                 // set the Arrow cursor
-                if (GlobalSetting.IsShowNavigationButtons)
+                if (Configs.IsShowNavigationButtons)
                 {
 
                     CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () =>
@@ -3888,7 +3597,7 @@ namespace ImageGlass
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             // User has moved the thumbnail splitter bar. Update image size.
-            ApplyZoomMode(GlobalSetting.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode);
         }
 
 
@@ -4166,7 +3875,7 @@ namespace ImageGlass
 
         private void MnuMainNewWindow_Click(object sender, EventArgs e)
         {
-            if (!GlobalSetting.IsAllowMultiInstances)
+            if (!Configs.IsAllowMultiInstances)
             {
                 DisplayTextMessage(Settings.Configs.Language.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
 
@@ -4595,7 +4304,7 @@ namespace ImageGlass
             timSlideShow.Enabled = false;
             Configs.IsPlaySlideShow = false;
 
-            picMain.BackColor = GlobalSetting.BackgroundColor;
+            picMain.BackColor = Configs.BackgroundColor;
 
             // exit full screen
             FullScreenMode(enabled: false, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
@@ -5100,8 +4809,8 @@ namespace ImageGlass
 
         private void mnuMainToolbar_Click(object sender, EventArgs e)
         {
-            GlobalSetting.IsShowToolBar = !GlobalSetting.IsShowToolBar;
-            if (GlobalSetting.IsShowToolBar)
+            Configs.IsShowToolBar = !Configs.IsShowToolBar;
+            if (Configs.IsShowToolBar)
             {
                 //Hien
                 toolMain.Visible = true;
@@ -5111,7 +4820,7 @@ namespace ImageGlass
                 //An
                 toolMain.Visible = false;
             }
-            mnuMainToolbar.Checked = GlobalSetting.IsShowToolBar;
+            mnuMainToolbar.Checked = Configs.IsShowToolBar;
 
             // Issue #554 
             if (!_isManuallyZoomed)
@@ -5123,34 +4832,31 @@ namespace ImageGlass
 
         private void mnuMainThumbnailBar_Click(object sender, EventArgs e)
         {
-            GlobalSetting.IsShowThumbnail = !GlobalSetting.IsShowThumbnail;
+            Configs.IsShowThumbnail = !Configs.IsShowThumbnail;
 
-            sp1.Panel2Collapsed = !GlobalSetting.IsShowThumbnail;
-            btnThumb.Checked = GlobalSetting.IsShowThumbnail;
+            sp1.Panel2Collapsed = !Configs.IsShowThumbnail;
+            btnThumb.Checked = Configs.IsShowThumbnail;
 
-            if (GlobalSetting.IsShowThumbnail)
+            if (Configs.IsShowThumbnail)
             {
                 float scaleFactor = ((float)DPIScaling.CurrentDPI) / DPIScaling.DPI_DEFAULT;
-
-                // calculate the gap
-                int gap = 0;
                 double hScrollHeight = 7 * scaleFactor - 1;
 
-                if (GlobalSetting.IsShowThumbnailScrollbar)
+                if (Configs.IsShowThumbnailScrollbar)
                 {
                     hScrollHeight = SystemInformation.HorizontalScrollBarHeight;
                 }
-                gap = (int)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
+                uint gap = (uint)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
                 //show
-                var tb = new ThumbnailItemInfo(GlobalSetting.ThumbnailDimension, GlobalSetting.IsThumbnailHorizontal);
-                int minSize = tb.GetTotalDimension() + gap;
+                var tb = new ThumbnailItemInfo(Configs.ThumbnailDimension, Configs.IsThumbnailHorizontal);
+                uint minSize = tb.GetTotalDimension() + gap;
                 //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
 
 
-                int splitterDistance = Math.Abs(sp1.Height - minSize);
+                int splitterDistance = Math.Abs(sp1.Height - (int)minSize);
 
-                if (GlobalSetting.IsThumbnailHorizontal)
+                if (Configs.IsThumbnailHorizontal)
                 {
                     // BOTTOM
                     sp1.SplitterWidth = 1;
@@ -5166,43 +4872,42 @@ namespace ImageGlass
                     sp1.Orientation = Orientation.Vertical;
 
                     // KBR 20190302 Issue #483: reset splitter width if it gets out of whack somehow
-                    if ((sp1.Width - GlobalSetting.ThumbnailBarWidth) < 1)
+                    if ((sp1.Width - Configs.ThumbnailBarWidth) < 1)
                     {
-                        GlobalSetting.ThumbnailBarWidth = Math.Min(128, sp1.Width);
-                        GlobalSetting.SetConfig("ThumbnailBarWidth", GlobalSetting.ThumbnailBarWidth.ToString(GlobalSetting.NumberFormat));
+                        Configs.ThumbnailBarWidth = (uint)Math.Min(128, sp1.Width);
                     }
 
-                    sp1.SplitterDistance = sp1.Width - GlobalSetting.ThumbnailBarWidth;
+                    sp1.SplitterDistance = sp1.Width - (int)Configs.ThumbnailBarWidth;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }
             else
             {
                 //Save thumbnail bar width when closing
-                if (!GlobalSetting.IsThumbnailHorizontal)
+                if (!Configs.IsThumbnailHorizontal)
                 {
-                    GlobalSetting.ThumbnailBarWidth = sp1.Width - sp1.SplitterDistance;
+                    Configs.ThumbnailBarWidth = (uint)(sp1.Width - sp1.SplitterDistance);
                 }
                 sp1.SplitterWidth = 1; // right-side splitter will 'flash' unless width reset
             }
-            mnuMainThumbnailBar.Checked = GlobalSetting.IsShowThumbnail;
+            mnuMainThumbnailBar.Checked = Configs.IsShowThumbnail;
             SelectCurrentThumbnail();
 
             if (!_isManuallyZoomed)
             {
-                ApplyZoomMode(GlobalSetting.ZoomMode); // Resize image to adapt when thumbbar turned off
+                ApplyZoomMode(Configs.ZoomMode); // Resize image to adapt when thumbbar turned off
             }
         }
 
         private void mnuMainCheckBackground_Click(object sender, EventArgs e)
         {
-            GlobalSetting.IsShowCheckerBoard = !GlobalSetting.IsShowCheckerBoard;
-            btnCheckedBackground.Checked = GlobalSetting.IsShowCheckerBoard;
+            Configs.IsShowCheckerBoard = !Configs.IsShowCheckerBoard;
+            btnCheckedBackground.Checked = Configs.IsShowCheckerBoard;
 
             if (btnCheckedBackground.Checked)
             {
                 //show
-                if (GlobalSetting.IsShowCheckerboardOnlyImageRegion)
+                if (Configs.IsShowCheckerboardOnlyImageRegion)
                 {
                     picMain.GridDisplayMode = ImageBoxGridDisplayMode.Image;
                 }
@@ -5224,7 +4929,7 @@ namespace ImageGlass
         {
             TopMost =
                 mnuMainAlwaysOnTop.Checked =
-                GlobalSetting.IsWindowAlwaysOnTop = !GlobalSetting.IsWindowAlwaysOnTop;
+                Configs.IsWindowAlwaysOnTop = !Configs.IsWindowAlwaysOnTop;
         }
 
 
@@ -5369,14 +5074,14 @@ namespace ImageGlass
             try
             {
                 // Alert user if there is a new version
-                if (GlobalSetting.IsNewVersionAvailable)
+                if (Configs.IsNewVersionAvailable)
                 {
-                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NewVersion"];
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NewVersion"];
                     mnuMainHelp.BackColor = mnuMainCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
                 }
                 else
                 {
-                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Settings.Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NoUpdate"];
+                    mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NoUpdate"];
                 }
 
 
@@ -5416,7 +5121,7 @@ namespace ImageGlass
                 }
 
                 // add hotkey to Exit menu
-                mnuMainExitApplication.ShortcutKeyDisplayString = GlobalSetting.IsPressESCToQuit ? "ESC" : "Alt+F4";
+                mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
 
                 // Get association App for editing
                 UpdateEditingAssocAppInfoForMenu();
