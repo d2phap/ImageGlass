@@ -34,18 +34,6 @@ namespace ImageGlass.Services.Configuration
 
 
 
-        #region Private Properties
-
-        /// <summary>
-        /// Gets, sets image list
-        /// </summary>
-        public static Factory ImageList { get; set; } = new Factory();
-
-
-        #endregion
-
-
-
         #region Public Properties
 
 

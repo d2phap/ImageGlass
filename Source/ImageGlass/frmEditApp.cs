@@ -155,7 +155,7 @@ namespace ImageGlass
         {
             var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
 
-            var fileSample = GlobalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
+            var fileSample = LocalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
             if (!File.Exists(fileSample))
             {
                 fileSample = @"C:\fake dir\sample photo.jpg";

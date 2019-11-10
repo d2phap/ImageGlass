@@ -2306,7 +2306,7 @@ namespace ImageGlass
 
             // ImageBoosterCachedCount
             Configs.ImageBoosterCachedCount = (uint)cmbImageBoosterCachedCount.SelectedIndex;
-            GlobalSetting.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
+            LocalSetting.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
 
 
             #region Color Management

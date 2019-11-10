@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Heart;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -38,6 +39,12 @@ namespace ImageGlass
         /// Gets, sets index of the viewing image
         /// </summary>
         public static int CurrentIndex { get; set; } = -1;
+
+
+        /// <summary>
+        /// Gets, sets image list
+        /// </summary>
+        public static Factory ImageList { get; set; } = new Factory();
 
 
         /// <summary>

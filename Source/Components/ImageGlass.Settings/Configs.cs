@@ -467,6 +467,19 @@ namespace ImageGlass.Settings
 
 
         #region Private methods
+
+        /// <summary>
+        /// Convert the given object to Enum type
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="value">Value</param>
+        /// <returns></returns>
+        private static T ParseEnum<T>(object value)
+        {
+            return (T)Enum.Parse(typeof(T), value.ToString(), true);
+        }
+
+
         /// <summary>
         /// Convert the given value to specific type
         /// </summary>
@@ -475,7 +488,16 @@ namespace ImageGlass.Settings
         /// <returns></returns>
         private static T ConvertType<T>(object value)
         {
-            return (T)Convert.ChangeType(value, typeof(T));
+            var type = typeof(T);
+
+            if (type.IsEnum)
+            {
+                return ParseEnum<T>(value);
+            }
+            else
+            {
+                return (T)Convert.ChangeType(value, type);
+            }
         }
 
 
@@ -515,7 +537,6 @@ namespace ImageGlass.Settings
                 Source.Add(key, value.ToString());
             }
         }
-
 
         #endregion
 
@@ -606,17 +627,17 @@ namespace ImageGlass.Settings
 
             #region Enum items
 
-            FrmMainWindowState = (FormWindowState)Get<int>(nameof(FrmMainWindowState), FrmMainWindowState);
-            FrmSettingsWindowState = (FormWindowState)Get<int>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
-            ImageLoadingOrder = (ImageOrderBy)Get<int>(nameof(ImageLoadingOrder), ImageLoadingOrder);
-            ImageLoadingOrderType = (ImageOrderType)Get<int>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
-            MouseWheelAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAction), MouseWheelAction);
-            MouseWheelCtrlAction = (MouseWheelActions)Get<int>(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
-            MouseWheelShiftAction = (MouseWheelActions)Get<int>(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
-            MouseWheelAltAction = (MouseWheelActions)Get<int>(nameof(MouseWheelAltAction), MouseWheelAltAction);
-            ZoomMode = (ZoomMode)Get<int>(nameof(ZoomMode), ZoomMode);
-            ZoomOptimizationMethod = (ZoomOptimizationMethods)Get<int>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
-            ToolbarPosition = (ToolbarPosition)Get<int>(nameof(ToolbarPosition), ToolbarPosition);
+            FrmMainWindowState = Get<FormWindowState>(nameof(FrmMainWindowState), FrmMainWindowState);
+            FrmSettingsWindowState = Get<FormWindowState>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            ImageLoadingOrder = Get<ImageOrderBy>(nameof(ImageLoadingOrder), ImageLoadingOrder);
+            ImageLoadingOrderType = Get<ImageOrderType>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+            MouseWheelAction = Get<MouseWheelActions>(nameof(MouseWheelAction), MouseWheelAction);
+            MouseWheelCtrlAction = Get<MouseWheelActions>(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+            MouseWheelShiftAction = Get<MouseWheelActions>(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+            MouseWheelAltAction = Get<MouseWheelActions>(nameof(MouseWheelAltAction), MouseWheelAltAction);
+            ZoomMode = Get<ZoomMode>(nameof(ZoomMode), ZoomMode);
+            ZoomOptimizationMethod = Get<ZoomOptimizationMethods>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+            ToolbarPosition = Get<ToolbarPosition>(nameof(ToolbarPosition), ToolbarPosition);
 
             #endregion
 
@@ -630,6 +651,7 @@ namespace ImageGlass.Settings
             KeyboardActions = Get<string>(nameof(KeyboardActions), KeyboardActions);
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
+            LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
 
             #endregion
 
@@ -821,6 +843,7 @@ namespace ImageGlass.Settings
             Set(nameof(ToolbarButtons), ToolbarButtons);
             Set(nameof(KeyboardActions), KeyboardActions);
             Set(nameof(AutoUpdate), AutoUpdate);
+            Set(nameof(LastSeenImagePath), LastSeenImagePath);
 
             #endregion
 
