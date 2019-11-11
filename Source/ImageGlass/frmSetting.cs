@@ -2037,7 +2037,6 @@ namespace ImageGlass
         #region TAB KEYBOARD
         private void LoadTabKeyboard()
         {
-            GlobalSetting.LoadKeyAssignments();
             var lang = Configs.Language.Items;
 
             cmbKeysLeftRight.Items.Clear();
@@ -2057,13 +2056,13 @@ namespace ImageGlass
             cmbKeysSpaceBack.Items.Add(lang[$"{Name}.KeyActions._PrevNextImage"]);
 
             // brute-forcing this. need better solution?
-            mapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
+            MapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
                 lang[$"{Name}.KeyActions._PrevNextImage"]);
-            mapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
+            MapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
                 lang[$"{Name}.KeyActions._PrevNextImage"]);
-            mapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
+            MapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
                 lang[$"{Name}.KeyActions._PanUpDown"]);
-            mapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
+            MapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
                 lang[$"{Name}.KeyActions._PauseSlideshow"]);
         }
 
@@ -2073,21 +2072,21 @@ namespace ImageGlass
         /// 
         /// If something wrong, sets the combobox to the provided default.
         /// </summary>
-        /// <param name="which">the key action to match</param>
+        /// <param name="keyCombo">the key action to match</param>
         /// <param name="control">the combobox to set selection in</param>
         /// <param name="defaultString">On misconfiguration, use this string</param>
         /// <returns></returns>
-        private void mapKeyConfigToComboSelection(KeyCombos which, ComboBox control, string defaultString)
+        private void MapKeyConfigToComboSelection(KeyCombos keyCombo, ComboBox control, string defaultString)
         {
             try
             {
                 var lang = Configs.Language.Items;
 
                 // Fetch the string from language based on the action value
-                var act = GlobalSetting.GetKeyAction(which);
+                var act = Configs.KeyComboActions[keyCombo];
                 var actionList = Enum.GetNames(typeof(AssignableActions));
                 var lookup = $"{Name}.KeyActions._{actionList[(int)act]}";
-                string val = lang[lookup];
+                var val = lang[lookup];
 
                 // select the appropriate entry in the combo. On misconfiguration,
                 // set to the provided default.
@@ -2111,11 +2110,10 @@ namespace ImageGlass
         private void SaveKeyboardSettings()
         {
             // Brute-forcing this. Better solution?
-            saveKeyConfigFromCombo(KeyCombos.LeftRight, cmbKeysLeftRight);
-            saveKeyConfigFromCombo(KeyCombos.PageUpDown, cmbKeysPgUpDown);
-            saveKeyConfigFromCombo(KeyCombos.UpDown, cmbKeysUpDown);
-            saveKeyConfigFromCombo(KeyCombos.SpaceBack, cmbKeysSpaceBack);
-            GlobalSetting.SaveKeyAssignments();
+            SaveKeyConfigFromCombo(KeyCombos.LeftRight, cmbKeysLeftRight);
+            SaveKeyConfigFromCombo(KeyCombos.PageUpDown, cmbKeysPgUpDown);
+            SaveKeyConfigFromCombo(KeyCombos.UpDown, cmbKeysUpDown);
+            SaveKeyConfigFromCombo(KeyCombos.SpaceBack, cmbKeysSpaceBack);
         }
 
         /// <summary>
@@ -2123,7 +2121,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="which"></param>
         /// <param name="control"></param>
-        private void saveKeyConfigFromCombo(KeyCombos which, ComboBox control)
+        private void SaveKeyConfigFromCombo(KeyCombos which, ComboBox control)
         {
             var selected = control.SelectedItem;
             if (selected == null)
@@ -2141,7 +2139,7 @@ namespace ImageGlass
 
                 if (val == selected.ToString())
                 {
-                    GlobalSetting.SetKeyAction(which, i);
+                    Configs.KeyComboActions[which] = (AssignableActions)i;
                     return;
                 }
             }
@@ -2155,11 +2153,8 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void btnKeyReset_Click(object sender, EventArgs e)
         {
-            GlobalSetting.SetKeyAction(KeyCombos.LeftRight, (int)AssignableActions.PrevNextImage);
-            GlobalSetting.SetKeyAction(KeyCombos.UpDown, (int)AssignableActions.PanUpDown);
-            GlobalSetting.SetKeyAction(KeyCombos.PageUpDown, (int)AssignableActions.PrevNextImage);
-            GlobalSetting.SetKeyAction(KeyCombos.SpaceBack, (int)AssignableActions.PauseSlideshow);
-            GlobalSetting.SaveKeyAssignments();
+            Configs.KeyComboActions = Constants.DefaultKeycomboActions;
+
             LoadTabKeyboard();
         }
 

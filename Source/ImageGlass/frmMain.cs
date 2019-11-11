@@ -1146,7 +1146,7 @@ namespace ImageGlass
             #region LEFT ARROW / PAGE UP
             if (!ignore && e.KeyValue == (int)Keys.Left && hasNoMods)
             {
-                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage)
                 {
                     NextPic(-1);
                 }
@@ -1154,7 +1154,7 @@ namespace ImageGlass
             }
             if (!ignore && e.KeyValue == (int)Keys.PageUp && hasNoMods)
             {
-                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
                 if (action == AssignableActions.PrevNextImage)
                 {
                     NextPic(-1);
@@ -1173,7 +1173,7 @@ namespace ImageGlass
             #region RIGHT ARROW / PAGE DOWN
             if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods)
             {
-                if (GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage)
                 {
                     NextPic(1);
                 }
@@ -1181,7 +1181,7 @@ namespace ImageGlass
             }
             if (!ignore && e.KeyValue == (int)Keys.PageDown && hasNoMods)
             {
-                var action = GlobalSetting.GetKeyAction(KeyCombos.PageUpDown);
+                var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
                 if (action == AssignableActions.PrevNextImage)
                 {
                     NextPic(1);
@@ -1200,7 +1200,7 @@ namespace ImageGlass
             #region UP ARROW
             if (!ignore && e.KeyValue == (int)Keys.Up && hasNoMods)
             {
-                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                if (Configs.KeyComboActions[KeyCombos.UpDown] == AssignableActions.ZoomInOut)
                 {
                     mnuMainZoomIn_Click(null, null);
                     e.Handled = true;
@@ -1214,7 +1214,7 @@ namespace ImageGlass
             #region DOWN ARROW
             if (!ignore && e.KeyValue == (int)Keys.Down && hasNoMods)
             {
-                if (GlobalSetting.GetKeyAction(KeyCombos.UpDown) == AssignableActions.ZoomInOut)
+                if (Configs.KeyComboActions[KeyCombos.UpDown] == AssignableActions.ZoomInOut)
                 {
                     mnuMainZoomOut_Click(null, null);
                     e.Handled = true;
@@ -1257,9 +1257,9 @@ namespace ImageGlass
                 // View previous image page
                 #region Ctrl + (previous)
                 if ((e.KeyValue == (int)Keys.Left
-                    && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                    && Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageUp
-                    && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
+                    && Configs.KeyComboActions[KeyCombos.PageUpDown] == AssignableActions.PrevNextImage)
                     )
                 {
                     mnuMainPrevPage_Click(null, null);
@@ -1271,9 +1271,9 @@ namespace ImageGlass
                 // View next image page
                 #region Ctrl + (next)
                 if ((e.KeyValue == (int)Keys.Right
-                    && GlobalSetting.GetKeyAction(KeyCombos.LeftRight) == AssignableActions.PrevNextImage)
+                    && Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage)
                     || (e.KeyValue == (int)Keys.PageDown
-                    && GlobalSetting.GetKeyAction(KeyCombos.PageUpDown) == AssignableActions.PrevNextImage)
+                    && Configs.KeyComboActions[KeyCombos.PageUpDown] == AssignableActions.PrevNextImage)
                     )
                 {
                     mnuMainNextPage_Click(null, null);
@@ -1329,7 +1329,7 @@ namespace ImageGlass
                 {
                     mnuMainSlideShowPause_Click(null, null);
                 }
-                else if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                else if (Configs.KeyComboActions[KeyCombos.SpaceBack] == AssignableActions.PrevNextImage)
                 {
                     NextPic(1);
                 }
@@ -1341,7 +1341,7 @@ namespace ImageGlass
             #region Backspace
             if (e.KeyCode == Keys.Back && no_mods)
             {
-                if (GlobalSetting.GetKeyAction(KeyCombos.SpaceBack) == AssignableActions.PrevNextImage)
+                if (Configs.KeyComboActions[KeyCombos.SpaceBack] == AssignableActions.PrevNextImage)
                 {
                     NextPic(-1);
                 }
@@ -2230,8 +2230,6 @@ namespace ImageGlass
                 LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                 frmMain_Activated(null, EventArgs.Empty);
 
-                GlobalSetting.LoadKeyAssignments();
-
 
 
                 // Load View Channels menu items
@@ -2386,8 +2384,6 @@ namespace ImageGlass
             // Save last seen image path
             Configs.LastSeenImagePath = LocalSetting.ImageList.GetFileName(LocalSetting.CurrentIndex);
 
-
-            GlobalSetting.SaveKeyAssignments();
         }
 
 

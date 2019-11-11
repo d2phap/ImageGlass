@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 
 namespace ImageGlass.Base
 {
@@ -40,6 +41,19 @@ namespace ImageGlass.Base
             };
         }
 
-        
+
+        /// <summary>
+        /// Gets the default set of keycombo actions
+        /// </summary>
+        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions
+        {
+            get => new Dictionary<KeyCombos, AssignableActions>
+                {
+                    { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
+                    { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
+                    { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
+                    { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
+                };
+        }
     }
 }

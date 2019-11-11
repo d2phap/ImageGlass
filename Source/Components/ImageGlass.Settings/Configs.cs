@@ -319,17 +319,6 @@ namespace ImageGlass.Settings
                 $"{(int)Base.ToolbarButtons.btnEdit}";
 
 
-
-        /// <summary>
-        /// User-selected action tied to key pairings.
-        /// E.g. Left/Right arrows: prev/next image
-        /// </summary>
-        public static string KeyboardActions { get; set; } = $"" +
-            $"{(int)KeyCombos.LeftRight},{(int)AssignableActions.PrevNextImage};" +
-            $"{(int)KeyCombos.UpDown},{(int)AssignableActions.PanUpDown};" +
-            $"{(int)KeyCombos.PageUpDown},{(int)AssignableActions.PrevNextImage};" +
-            $"{(int)KeyCombos.SpaceBack},{(int)AssignableActions.PauseSlideshow};";
-
         #endregion
 
 
@@ -351,6 +340,12 @@ namespace ImageGlass.Settings
         /// Gets, sets the list of supported image formats
         /// </summary>
         public static HashSet<string> AllFormats { get; set; } = new HashSet<string>();
+
+
+        /// <summary>
+        /// Gets, sets the list of keycombo actions
+        /// </summary>
+        public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
 
         #endregion
 
@@ -648,7 +643,6 @@ namespace ImageGlass.Settings
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
             ToolbarButtons = Get<string>(nameof(ToolbarButtons), ToolbarButtons);
-            KeyboardActions = Get<string>(nameof(KeyboardActions), KeyboardActions);
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
             LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
@@ -663,31 +657,16 @@ namespace ImageGlass.Settings
             var zoomLevelStr = Get<string>(nameof(ZoomLevels), "");
             var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
 
-            if (zoomLevels.Length > 0)
-            {
-                ZoomLevels = zoomLevels;
-            }
+            if (zoomLevels.Length > 0) ZoomLevels = zoomLevels;
 
             #endregion
 
 
-            #region ImageEditingAssociationList
+            #region EditApps
 
-            var editAssocStr = Get<string>(nameof(EditApps), "");
-            var editAssocList = editAssocStr.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var appStr = Get<String>(nameof(EditApps), "");
+            EditApps = GetEditApps(appStr);
 
-            if (editAssocList.Length > 0)
-            {
-                foreach (var configStr in editAssocList)
-                {
-                    try
-                    {
-                        var extAssoc = new EditApp(configStr);
-                        EditApps.Add(extAssoc);
-                    }
-                    catch (InvalidCastException) { }
-                }
-            }
             #endregion
 
 
@@ -695,6 +674,17 @@ namespace ImageGlass.Settings
 
             var formats = Get<string>(nameof(AllFormats), Constants.IMAGE_FORMATS);
             AllFormats = GetImageFormats(formats);
+
+            #endregion
+
+
+            #region KeyComboActions
+
+            var keyActionStr = Get<string>(nameof(KeyComboActions), "");
+            if (!string.IsNullOrEmpty(keyActionStr))
+            {
+                KeyComboActions = GetKeyComboActions(keyActionStr);
+            }
 
             #endregion
 
@@ -841,7 +831,6 @@ namespace ImageGlass.Settings
 
             Set(nameof(ColorProfile), ColorProfile);
             Set(nameof(ToolbarButtons), ToolbarButtons);
-            Set(nameof(KeyboardActions), KeyboardActions);
             Set(nameof(AutoUpdate), AutoUpdate);
             Set(nameof(LastSeenImagePath), LastSeenImagePath);
 
@@ -851,21 +840,9 @@ namespace ImageGlass.Settings
             #region Array items
 
             Set(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
-
-            #region EditApps
-
-            var appStr = new StringBuilder();
-            foreach (var item in EditApps)
-            {
-                appStr.Append($"[{item.ToString()}]");
-            }
-
-            Set(nameof(EditApps), appStr);
-
-            #endregion
-
-
+            Set(nameof(EditApps), GetEditApps(EditApps));
             Set(nameof(AllFormats), GetImageFormats(AllFormats));
+            Set(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
 
             #endregion
 
@@ -885,10 +862,12 @@ namespace ImageGlass.Settings
             Source.WriteUserConfigs();
         }
 
-        
+
 
 
         #region Config functions
+
+        #region EditApp
 
         /// <summary>
         /// Get ImageEditingAssociation from ImageEditingAssociationList
@@ -905,6 +884,54 @@ namespace ImageGlass.Settings
             return null;
         }
 
+
+        /// <summary>
+        /// Returns string from the given apps
+        /// </summary>
+        /// <param name="apps"></param>
+        /// <returns></returns>
+        public static List<EditApp> GetEditApps(string apps)
+        {
+            var appStr = apps.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var list = new List<EditApp>();
+
+            if (appStr.Length > 0)
+            {
+                foreach (var item in appStr)
+                {
+                    try
+                    {
+                        var extAssoc = new EditApp(item);
+                        list.Add(extAssoc);
+                    }
+                    catch (InvalidCastException) { }
+                }
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// Returns string from the given apps
+        /// </summary>
+        /// <param name="apps"></param>
+        /// <returns></returns>
+        public static string GetEditApps(List<EditApp> apps)
+        {
+            var appStr = new StringBuilder();
+            foreach (var item in apps)
+            {
+                appStr.Append($"[{item.ToString()}]");
+            }
+
+            return appStr.ToString();
+        }
+
+        #endregion
+
+
+        #region ImageFormats
 
         /// <summary>
         /// Returns distinc list of image formats
@@ -942,8 +969,69 @@ namespace ImageGlass.Settings
             return sb.ToString();
         }
 
+        #endregion
+
+
+        #region KeyComboActions
+
+        /// <summary>
+        /// Returns the keycombo actions from string
+        /// </summary>
+        /// <param name="keyActions">The input string</param>
+        /// <returns></returns>
+        public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions)
+        {
+            var pairs = keyActions.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var dic = new Dictionary<KeyCombos, AssignableActions>();
+
+            try
+            {
+                foreach (var pair in pairs)
+                {
+                    var parts = pair.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    var keyCombo = ParseEnum<KeyCombos>(parts[0]);
+                    var action = ParseEnum<AssignableActions>(parts[1]);
+
+                    dic.Add(keyCombo, action);
+                }
+            }
+            catch
+            {
+                // reset to default set on error
+                dic = Constants.DefaultKeycomboActions;
+            }
+
+            return dic;
+        }
+
+
+        /// <summary>
+        /// Returns the string from keycombo actions
+        /// </summary>
+        /// <param name="keyActions">The input keycombo actions</param>
+        /// <returns></returns>
+        public static string GetKeyComboActions(Dictionary<KeyCombos, AssignableActions> keyActions)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var key in keyActions.Keys)
+            {
+                sb.Append(key.ToString());
+                sb.Append(',');
+                sb.Append(keyActions[key].ToString());
+                sb.Append(';');
+            }
+
+            return sb.ToString();
+        }
 
         #endregion
+
+
+
+        #endregion
+
 
         #endregion
 
