@@ -24,7 +24,6 @@ using ImageGlass.Library.Comparer;
 using ImageGlass.Library.Image;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.Services;
-using ImageGlass.Services.Configuration;
 using ImageGlass.Services.InstanceManagement;
 using ImageGlass.Settings;
 using ImageGlass.UI;

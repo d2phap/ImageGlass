@@ -1,7 +1,9 @@
 ﻿
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Library.FileAssociations;
 using ImageGlass.UI;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -1028,6 +1030,30 @@ namespace ImageGlass.Settings
 
         #endregion
 
+
+        /// <summary>
+        /// Get the registered file extensions from registry
+        /// Ex: *.svg;*.png;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRegisteredExtensions()
+        {
+            var reg = new RegistryHelper()
+            {
+                BaseRegistryKey = Registry.LocalMachine,
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+
+            var extList = reg.GetValueNames();
+            var exts = new StringBuilder();
+
+            foreach (var ext in extList)
+            {
+                exts.Append($"*{ext};");
+            }
+
+            return exts.ToString();
+        }
 
 
         #endregion

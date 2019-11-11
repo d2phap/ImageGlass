@@ -64,8 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationFile.cs" />
-    <Compile Include="Configuration\GlobalSetting.cs" />
     <Compile Include="ExplorerSortOrder.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
@@ -96,6 +94,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
