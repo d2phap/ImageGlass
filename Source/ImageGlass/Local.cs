@@ -25,7 +25,7 @@ using System.Threading;
 
 namespace ImageGlass
 {
-    public static class LocalSetting
+    public static class Local
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;

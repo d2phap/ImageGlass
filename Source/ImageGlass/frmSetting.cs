@@ -168,7 +168,7 @@ namespace ImageGlass
             InitLanguagePack(); // Needs to be done before setting up the initial tab
 
             // Get the last view of tab --------------------------------------------------
-            tab1.SelectedIndex = LocalSetting.SettingsTabLastView;
+            tab1.SelectedIndex = Local.SettingsTabLastView;
             // KBR prevent loading tab config twice tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
 
             // Load configs
@@ -194,7 +194,7 @@ namespace ImageGlass
             Configs.FrmSettingsWindowState = WindowState;
 
             //Tabs State---------------------------------------------------------------------------
-            LocalSetting.SettingsTabLastView = tab1.SelectedIndex;
+            Local.SettingsTabLastView = tab1.SelectedIndex;
         }
 
 
@@ -1155,7 +1155,7 @@ namespace ImageGlass
             LoadExtensionList();
 
             // Request frmMain to update
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+            Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -1178,7 +1178,7 @@ namespace ImageGlass
                 LoadExtensionList();
 
                 // Request frmMain to update
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
             }
 
             f.Dispose();
@@ -1471,7 +1471,7 @@ namespace ImageGlass
             if (Configs.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
             {
                 Configs.ToolbarButtons = sb.ToString();
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
             }
         }
 
@@ -2016,7 +2016,7 @@ namespace ImageGlass
                         picBackgroundColor.BackColor = 
                         Configs.Theme.BackgroundColor;
 
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2214,7 +2214,7 @@ namespace ImageGlass
             if (Configs.IsShowCheckerboardOnlyImageRegion != newBool)
             {
                 Configs.IsShowCheckerboardOnlyImageRegion = newBool;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2225,7 +2225,7 @@ namespace ImageGlass
             if (Configs.IsScrollbarsVisible != newBool)
             {
                 Configs.IsScrollbarsVisible = newBool;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2236,7 +2236,7 @@ namespace ImageGlass
             if (Configs.BackgroundColor != newColor)
             {
                 Configs.BackgroundColor = picBackgroundColor.BackColor;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2255,11 +2255,11 @@ namespace ImageGlass
                 // Request frmMain to update the thumbnail bar
                 if (Configs.IsRecursiveLoading)
                 {
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
                 else
                 {
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE;
                 }
             }
             #endregion
@@ -2278,7 +2278,7 @@ namespace ImageGlass
                 if (Configs.ImageLoadingOrder != newOrder) //Only change when the new value selected  
                 {
                     Configs.ImageLoadingOrder = newOrder;
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
             }
 
@@ -2288,7 +2288,7 @@ namespace ImageGlass
                 if (Configs.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
                 {
                     Configs.ImageLoadingOrderType = newOrderType;
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
                 }
             }
 
@@ -2299,7 +2299,7 @@ namespace ImageGlass
 
             // ImageBoosterCachedCount
             Configs.ImageBoosterCachedCount = (uint)cmbImageBoosterCachedCount.SelectedIndex;
-            LocalSetting.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
+            Local.ImageList.MaxQueue = Configs.ImageBoosterCachedCount;
 
 
             #region Color Management
@@ -2346,7 +2346,7 @@ namespace ImageGlass
                 try
                 {
                     Configs.ZoomLevels = Helpers.StringToIntArray(newString, unsignedOnly: true, distinct: true);
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
                 }
                 catch (Exception ex)
                 {
@@ -2369,7 +2369,7 @@ namespace ImageGlass
             if (Configs.IsThumbnailHorizontal != newBool) // Only change when the new value selected  
             {
                 Configs.IsThumbnailHorizontal = newBool;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
             }
             #endregion
 
@@ -2381,7 +2381,7 @@ namespace ImageGlass
             if (Configs.IsShowThumbnailScrollbar != newBool) // Only change when the new value selected  
             {
                 Configs.IsShowThumbnailScrollbar = newBool;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
             }
             #endregion
 
@@ -2396,7 +2396,7 @@ namespace ImageGlass
             if (Configs.ThumbnailDimension != newUInt) // Only change when the new value selected
             {
                 Configs.ThumbnailDimension = newUInt;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
             }
             #endregion
 
@@ -2415,7 +2415,7 @@ namespace ImageGlass
             if (Configs.SlideShowInterval != newUInt)
             {
                 Configs.SlideShowInterval = newUInt;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2440,7 +2440,7 @@ namespace ImageGlass
                 if (Configs.Language.FileName.ToLower().CompareTo(newString) != 0)
                 {
                     Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
                 }
             }
             #endregion
@@ -2459,7 +2459,7 @@ namespace ImageGlass
                 if (Configs.ToolbarPosition != newPosition) // Only change when the new value selected  
                 {
                     Configs.ToolbarPosition = newPosition;
-                    LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                 }
             }
 
@@ -2472,7 +2472,7 @@ namespace ImageGlass
             if (Configs.IsCenterToolbar != newBool)
             {
                 Configs.IsCenterToolbar = newBool;
-                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
             }
             #endregion
 

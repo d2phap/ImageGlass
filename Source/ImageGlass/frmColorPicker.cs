@@ -237,9 +237,9 @@ namespace ImageGlass
 
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LocalSetting.IsColorPickerToolOpening = false;
+            Local.IsColorPickerToolOpening = false;
 
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
+            Local.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
         }
 
 

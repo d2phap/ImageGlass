@@ -184,9 +184,9 @@ namespace ImageGlass
 
         private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LocalSetting.IsPageNavToolOpenning = false;
+            Local.IsPageNavToolOpenning = false;
 
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+            Local.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 
