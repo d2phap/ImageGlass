@@ -1419,7 +1419,7 @@ namespace ImageGlass
                 case ZoomMode.LockZoomRatio:
                     btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
 
-                    //Enable Zoom Lock
+                    // Enable Zoom Lock
                     Configs.ZoomLockValue = picMain.Zoom;
                     break;
 
@@ -2193,8 +2193,6 @@ namespace ImageGlass
         /// </summary>
         private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true)
         {
-            string configValue = string.Empty;
-
 
             #region UI SETTINGS
             if (isLoadUI)
@@ -2204,14 +2202,12 @@ namespace ImageGlass
                 thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); 
                 ApplyTheme();
 
-                Application.DoEvents();
-
 
                 // Show checkerboard
                 Configs.IsShowCheckerBoard = !Configs.IsShowCheckerBoard;
                 mnuMainCheckBackground_Click(null, EventArgs.Empty);
 
-
+                // background color
                 picMain.BackColor = Configs.BackgroundColor;
 
 
@@ -2225,14 +2221,20 @@ namespace ImageGlass
                 mnuMainToolbar_Click(null, EventArgs.Empty);
 
 
+                Application.DoEvents();
+
+
+                // Load scrollbars visibility
+                if (Configs.IsScrollbarsVisible)
+                {
+                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
+                }
+
+
                 // Toolbar alignment and position
                 Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
                 frmMain_Activated(null, EventArgs.Empty);
-
-
-
-                // Load View Channels menu items
-                LoadViewChannelsMenuItems();
 
 
 
@@ -2272,29 +2274,17 @@ namespace ImageGlass
                 frmMain_Activated(null, null);
 
 
-
                 #region Load Zoom Mode
 
                 // Load and Active Zoom Mode
-                SelectUIZoomMode();
+                picMain.Zoom = Configs.ZoomLockValue;
 
+                SelectUIZoomMode();
 
                 // Load ZoomLevels
                 picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
 
                 #endregion
-
-
-                // Load scrollbars visibility
-                if (Configs.IsScrollbarsVisible)
-                {
-                    picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                    picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
-                }
-
-
-                // Load state of IsWindowAlwaysOnTop value 
-                this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
 
 
                 // Load Color picker configs
@@ -2320,12 +2310,7 @@ namespace ImageGlass
 
 
                 #region Get Last Seen Image Path & Welcome Image
-                var startUpImg = "";
-
-                if (Configs.IsOpenLastSeenImage)
-                {
-                    startUpImg = Configs.LastSeenImagePath;
-                }
+                var startUpImg = Configs.IsOpenLastSeenImage ? Configs.LastSeenImagePath : "";
 
                 if (!File.Exists(startUpImg) && Configs.IsShowWelcome)
                 {
@@ -2339,6 +2324,17 @@ namespace ImageGlass
                 }
                 #endregion
 
+
+                Task.Run(() =>
+                {
+                    // Load View Channels menu items
+                    LoadViewChannelsMenuItems();
+
+
+                    // Load state of IsWindowAlwaysOnTop value 
+                    this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
+
+                });
 
             }
             #endregion
@@ -2356,7 +2352,7 @@ namespace ImageGlass
                 // don't save Bound if in Full screen and SlideShow mode
                 if (!Configs.IsFullScreen && !Configs.IsPlaySlideShow)
                 {
-                    // Windows Bound--------------------------------------------------------------
+                    // Windows Bound-----------------------------------------------------------
                     Configs.FrmMainWindowsBound = this.Bounds;
                 }
             }
@@ -2623,7 +2619,6 @@ namespace ImageGlass
             //do nothing
             if (flags == MainFormForceUpdateAction.NONE) return;
 
-
             #region LANGUAGE
             if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
             {
@@ -2632,7 +2627,7 @@ namespace ImageGlass
                 #region Toolbar
                 btnBack.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainViewPrevious"];
                 btnNext.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainViewNext"];
-                
+
                 btnRotateLeft.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateCounterclockwise"];
                 btnRotateRight.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRotateClockwise"];
                 btnFlipHorz.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainFlipHorz"];
@@ -2651,7 +2646,7 @@ namespace ImageGlass
                 btnScaleToFit.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFit"];
                 btnScaleToFill.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainScaleToFill"];
                 btnZoomLock.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainLockZoomRatio"];
-                
+
                 btnOpen.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainOpenFile"];
                 btnRefresh.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainRefresh"];
                 btnGoto.ToolTipText = Settings.Configs.Language.Items[$"{Name}.mnuMainGoto"];
@@ -2665,7 +2660,7 @@ namespace ImageGlass
                 btnEdit.ToolTipText = string.Format(Settings.Configs.Language.Items[$"{Name}.mnuMainEditImage"], "");
                 #endregion
 
-                
+
                 #region Main menu
 
                 #region Menu File
@@ -2947,6 +2942,7 @@ namespace ImageGlass
 
 
             Local.ForceUpdateActions = MainFormForceUpdateAction.NONE;
+
         }
 
         private void frmMain_ResizeBegin(object sender, EventArgs e)
