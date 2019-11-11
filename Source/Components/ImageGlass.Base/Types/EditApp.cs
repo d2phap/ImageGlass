@@ -20,6 +20,9 @@ using System;
 
 namespace ImageGlass.Base
 {
+    /// <summary>
+    /// Contains the information of the editing associated app
+    /// </summary>
     public class EditApp
     {
         /// <summary>
@@ -50,7 +53,7 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Initial Image Editing Association
+        /// Initial Image Editing App
         /// </summary>
         public EditApp()
         {

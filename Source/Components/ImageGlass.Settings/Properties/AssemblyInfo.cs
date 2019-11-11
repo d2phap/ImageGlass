@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ImageGlass.Settings")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("ImageGlass settings provider")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass.Settings")]
-[assembly: AssemblyCopyright("Copyright © Duong Dieu Phap 2019")]
+[assembly: AssemblyCopyright("Copyright © 2019 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

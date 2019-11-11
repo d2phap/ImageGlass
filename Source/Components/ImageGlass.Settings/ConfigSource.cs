@@ -1,4 +1,23 @@
-﻿using ImageGlass.Base;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2019 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using ImageGlass.Base;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -6,8 +25,9 @@ using System.Xml;
 namespace ImageGlass.Settings
 {
     /// <summary>
-    /// Configuration Source File
+    /// A unified list of default/user/admin settings, provides read/write the settings to source file.
     /// </summary>
+    [Serializable]
     public class ConfigSource : Dictionary<string, string>
     {
 
@@ -161,6 +181,20 @@ namespace ImageGlass.Settings
 
         #region Public methods
 
+        public ConfigSource() { }
+
+
+        /// <summary>
+        /// Throws NotImplementedException exception. It's not used!
+        /// </summary>
+        /// <param name="serializationInfo"></param>
+        /// <param name="streamingContext"></param>
+        protected ConfigSource(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new NotImplementedException();
+        }
+
+
         /// <summary>
         /// Loads all config files: user, default, admin, then unify configs for user
         /// </summary>
@@ -202,7 +236,7 @@ namespace ImageGlass.Settings
         {
             WriteConfigFile(this, this.Filename);
         }
-        
+
 
         #endregion
 
