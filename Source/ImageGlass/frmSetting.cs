@@ -530,7 +530,7 @@ namespace ImageGlass
                 lblKeyboard.Tag = 1;
                 lblKeyboard.BackColor = M_COLOR_MENU_ACTIVE;
 
-                LoadTabKeyboard();
+                LoadTabKeyboard(Configs.KeyComboActions);
             }
 
         }
@@ -2035,7 +2035,7 @@ namespace ImageGlass
 
 
         #region TAB KEYBOARD
-        private void LoadTabKeyboard()
+        private void LoadTabKeyboard(Dictionary<KeyCombos, AssignableActions> source)
         {
             var lang = Configs.Language.Items;
 
@@ -2057,33 +2057,32 @@ namespace ImageGlass
 
             // brute-forcing this. need better solution?
             MapKeyConfigToComboSelection(KeyCombos.LeftRight, cmbKeysLeftRight,
-                lang[$"{Name}.KeyActions._PrevNextImage"]);
+                lang[$"{Name}.KeyActions._PrevNextImage"], source);
             MapKeyConfigToComboSelection(KeyCombos.PageUpDown, cmbKeysPgUpDown,
-                lang[$"{Name}.KeyActions._PrevNextImage"]);
+                lang[$"{Name}.KeyActions._PrevNextImage"], source);
             MapKeyConfigToComboSelection(KeyCombos.UpDown, cmbKeysUpDown,
-                lang[$"{Name}.KeyActions._PanUpDown"]);
+                lang[$"{Name}.KeyActions._PanUpDown"], source);
             MapKeyConfigToComboSelection(KeyCombos.SpaceBack, cmbKeysSpaceBack,
-                lang[$"{Name}.KeyActions._PauseSlideshow"]);
+                lang[$"{Name}.KeyActions._PauseSlideshow"], source);
         }
+
 
         /// <summary>
         /// Translates the config value for a key assignment to a selected
-        /// entry in a combobox.
-        /// 
-        /// If something wrong, sets the combobox to the provided default.
+        /// entry in a combobox. If something wrong, sets the combobox to the provided default.
         /// </summary>
         /// <param name="keyCombo">the key action to match</param>
         /// <param name="control">the combobox to set selection in</param>
         /// <param name="defaultString">On misconfiguration, use this string</param>
         /// <returns></returns>
-        private void MapKeyConfigToComboSelection(KeyCombos keyCombo, ComboBox control, string defaultString)
+        private void MapKeyConfigToComboSelection(KeyCombos keyCombo, ComboBox control, string defaultString, Dictionary<KeyCombos, AssignableActions> source)
         {
             try
             {
                 var lang = Configs.Language.Items;
 
                 // Fetch the string from language based on the action value
-                var act = Configs.KeyComboActions[keyCombo];
+                var act = source[keyCombo];
                 var actionList = Enum.GetNames(typeof(AssignableActions));
                 var lookup = $"{Name}.KeyActions._{actionList[(int)act]}";
                 var val = lang[lookup];
@@ -2104,6 +2103,7 @@ namespace ImageGlass
             }
         }
 
+
         /// <summary>
         /// Save the keyboard configuration settings to the config file
         /// </summary>
@@ -2119,9 +2119,9 @@ namespace ImageGlass
         /// <summary>
         /// For a given combobox, update the key config value in Configs
         /// </summary>
-        /// <param name="which"></param>
+        /// <param name="keyCombo"></param>
         /// <param name="control"></param>
-        private void SaveKeyConfigFromCombo(KeyCombos which, ComboBox control)
+        private void SaveKeyConfigFromCombo(KeyCombos keyCombo, ComboBox control)
         {
             var selected = control.SelectedItem;
             if (selected == null)
@@ -2139,12 +2139,13 @@ namespace ImageGlass
 
                 if (val == selected.ToString())
                 {
-                    Configs.KeyComboActions[which] = (AssignableActions)i;
+                    Configs.KeyComboActions[keyCombo] = (AssignableActions)i;
                     return;
                 }
             }
 
         }
+
 
         /// <summary>
         /// Reset all key actions to their "default" (IG V6.0) behavior
@@ -2153,9 +2154,7 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void btnKeyReset_Click(object sender, EventArgs e)
         {
-            Configs.KeyComboActions = Constants.DefaultKeycomboActions;
-
-            LoadTabKeyboard();
+            LoadTabKeyboard(Constants.DefaultKeycomboActions);
         }
 
         #endregion
