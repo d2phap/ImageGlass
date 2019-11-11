@@ -177,7 +177,7 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
                 (e.KeyCode == Keys.J && e.Control && e.Shift && !e.Alt)) // CTRL + SHIFT + J
             {
-                LocalSetting.IsShowPageNavOnStartup = false;
+                Configs.IsShowPageNavOnStartup = false;
                 this.Close();
             }
         }
@@ -192,7 +192,7 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowPageNavOnStartup = false;
+            Configs.IsShowPageNavOnStartup = false;
             this.Close();
         }
         #endregion

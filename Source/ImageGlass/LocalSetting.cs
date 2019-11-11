@@ -60,22 +60,10 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// ~Gets, sets value that indicates frmColorPicker tool will be open on startup
-        /// </summary>
-        public static bool IsShowColorPickerOnStartup { get; set; } = false;
-
-
-        /// <summary>
         /// Check if frmPageNav is opening.
         /// This is for toggle Page Navigation menu in frmMain
         /// </summary>
         public static bool IsPageNavToolOpenning { get; set; } = false;
-
-
-        /// <summary>
-        /// ~Gets, sets value that indicates frmPageNav tool will be open on startup
-        /// </summary>
-        public static bool IsShowPageNavOnStartup { get; set; } = false;
 
 
         /// <summary>

@@ -210,7 +210,7 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowColorPickerOnStartup = false;
+            Configs.IsShowColorPickerOnStartup = false;
             this.Close();
         }
 
@@ -228,7 +228,7 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
                 (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
             {
-                LocalSetting.IsShowColorPickerOnStartup = false;
+                Configs.IsShowColorPickerOnStartup = false;
                 this.Close();
             }
             #endregion

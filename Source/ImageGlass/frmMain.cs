@@ -2298,16 +2298,14 @@ namespace ImageGlass
 
 
                 // Load Color picker configs
-                LocalSetting.IsShowColorPickerOnStartup = Configs.IsShowColorPickerOnStartup;
-                if (LocalSetting.IsShowColorPickerOnStartup)
+                if (Configs.IsShowColorPickerOnStartup)
                 {
                     mnuMainColorPicker.PerformClick();
                 }
 
 
                 // Load Page navigation tool
-                LocalSetting.IsShowPageNavOnStartup = Configs.IsShowPageNavOnStartup;
-                if (LocalSetting.IsShowPageNavOnStartup)
+                if (Configs.IsShowPageNavOnStartup)
                 {
                     mnuMainPageNav.PerformClick();
                 }
@@ -4789,7 +4787,9 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowColorPickerOnStartup = LocalSetting.IsColorPickerToolOpening = mnuMainColorPicker.Checked;
+            Configs.IsShowColorPickerOnStartup = 
+                LocalSetting.IsColorPickerToolOpening = 
+                mnuMainColorPicker.Checked;
 
             // open Color Picker tool
             if (mnuMainColorPicker.Checked)
@@ -4824,7 +4824,9 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowPageNavOnStartup = LocalSetting.IsPageNavToolOpenning = mnuMainPageNav.Checked;
+            Configs.IsShowPageNavOnStartup = 
+                LocalSetting.IsPageNavToolOpenning = 
+                mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
             {
