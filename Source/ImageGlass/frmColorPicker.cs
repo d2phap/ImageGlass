@@ -248,7 +248,7 @@ namespace ImageGlass
         /// </summary>
         public void UpdateUI()
         {
-            SetColors(LocalSetting.Theme);
+            SetColors(Configs.Theme);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

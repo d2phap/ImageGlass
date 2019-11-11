@@ -55,7 +55,7 @@ namespace ImageGlass
 
             // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
-
+            
             // Update form with new DPI
             OnDpiChanged();
             Application.DoEvents();
@@ -1635,7 +1635,7 @@ namespace ImageGlass
             {
                 picMain.TextBackColor = Color.Transparent;
                 picMain.Font = Font;
-                picMain.ForeColor = LocalSetting.Theme.TextInfoColor;
+                picMain.ForeColor = Configs.Theme.TextInfoColor;
                 picMain.Text = string.Empty;
                 return;
             }
@@ -3418,11 +3418,11 @@ namespace ImageGlass
 
                     CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () =>
                     {
-                        picMain.Cursor = LocalSetting.Theme.PreviousArrowCursor ?? DefaultCursor;
+                        picMain.Cursor = Configs.Theme.PreviousArrowCursor ?? DefaultCursor;
 
                     }, onCursorRightAction: () =>
                     {
-                        picMain.Cursor = LocalSetting.Theme.NextArrowCursor ?? DefaultCursor;
+                        picMain.Cursor = Configs.Theme.NextArrowCursor ?? DefaultCursor;
 
                     }, onCursorCenterAction: () =>
                     {
@@ -4998,7 +4998,7 @@ namespace ImageGlass
                 return; // not a drop down item
             }
 
-            mnuItem.DropDown.BackColor = LocalSetting.Theme.MenuBackgroundColor;
+            mnuItem.DropDown.BackColor = Configs.Theme.MenuBackgroundColor;
 
             //get position of current menu item
             var pos = new Point(mnuItem.GetCurrentParent().Left, mnuItem.GetCurrentParent().Top);

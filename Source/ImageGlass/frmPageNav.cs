@@ -104,17 +104,17 @@ namespace ImageGlass
         {
             // Apply current theme ------------------------------------------------------
             OnDpiChanged();
-            SetColors(LocalSetting.Theme);
+            SetColors(Configs.Theme);
 
             // Remove white line under tool strip
-            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(LocalSetting.Theme.ToolbarBackgroundColor, LocalSetting.Theme.TextInfoColor);
+            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(Configs.Theme.ToolbarBackgroundColor, Configs.Theme.TextInfoColor);
 
-            toolPageNav.BackgroundImage = LocalSetting.Theme.ToolbarBackgroundImage.Image;
-            toolPageNav.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
+            toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.Alignment = ToolbarAlignment.CENTER;
 
             // Overflow button and Overflow dropdown
-            toolPageNav.OverflowButton.DropDown.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.OverflowButton.AutoSize = false;
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
@@ -132,7 +132,7 @@ namespace ImageGlass
             DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
 
             // Update toolbar icon according to the new size
-            LoadToolbarIcons(LocalSetting.Theme);
+            LoadToolbarIcons(Configs.Theme);
 
             // Update window size
             this.Width = toolPageNav.PreferredSize.Width;

@@ -579,7 +579,7 @@ namespace ImageGlass
 
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            picBackgroundColor.BackColor = LocalSetting.Theme.BackgroundColor;
+            picBackgroundColor.BackColor = Configs.Theme.BackgroundColor;
         }
 
 
@@ -1241,8 +1241,8 @@ namespace ImageGlass
             th.ApplyTheme(lvUsedButtons);
 
             // Apply ImageGlass theme to buttons list
-            lvAvailButtons.BackColor = lvUsedButtons.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
-            lvAvailButtons.ForeColor = lvUsedButtons.ForeColor = LocalSetting.Theme.TextInfoColor;
+            lvAvailButtons.BackColor = lvUsedButtons.BackColor = Configs.Theme.ToolbarBackgroundColor;
+            lvAvailButtons.ForeColor = lvUsedButtons.ForeColor = Configs.Theme.TextInfoColor;
 
 
             BuildToolbarImageList();
@@ -1826,7 +1826,7 @@ namespace ImageGlass
                         ImageKey = "_blank"
                     };
 
-                    if (LocalSetting.Theme.ConfigFilePath == th.ConfigFilePath)
+                    if (Configs.Theme.ConfigFilePath == th.ConfigFilePath)
                     {
                         lvi.Selected = true;
                         lvi.Checked = true;
@@ -2011,10 +2011,10 @@ namespace ImageGlass
 
                 if (th.IsValid)
                 {
-                    LocalSetting.Theme = th;
+                    Configs.Theme = th;
                     Configs.BackgroundColor = 
                         picBackgroundColor.BackColor = 
-                        LocalSetting.Theme.BackgroundColor;
+                        Configs.Theme.BackgroundColor;
 
                     LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
 
