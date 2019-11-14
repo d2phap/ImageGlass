@@ -3319,7 +3319,7 @@ namespace ImageGlass
                 case MouseButtons.Left:
                     if (Configs.IsShowNavigationButtons && !picMain.IsPanning)
                     {
-                        CheckCursorPositionOnViewer(e.Location, onCursorCenterAction: () =>
+                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
                         {
                             mnuMainViewPrevious_Click(null, null);
                         }, onCursorRightAction: () =>
