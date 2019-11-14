@@ -217,7 +217,10 @@ namespace ImageGlass.UI
         }
 
 
-        public void ReloadToolbarIcons()
+        /// <summary>
+        /// Reload the image icons to adapt DPI changes
+        /// </summary>
+        public void ReloadIcons()
         {
             ToolbarIcons.ViewPreviousImage.Refresh();
             ToolbarIcons.ViewNextImage.Refresh();
@@ -251,6 +254,20 @@ namespace ImageGlass.UI
             ToolbarIcons.Menu.Refresh();
             ToolbarIcons.ViewFirstImage.Refresh();
             ToolbarIcons.ViewLastImage.Refresh();
+
+
+            #region Arrow cursors (derived from toolbar)
+
+            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 2;
+            var prevImage = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
+            var icon = prevImage.Image.GetHicon();
+            PreviousArrowCursor = new Cursor(icon);
+
+            var nextImage = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight);
+            icon = nextImage.Image.GetHicon();
+            NextArrowCursor = new Cursor(icon);
+
+            #endregion
         }
 
 
@@ -263,7 +280,7 @@ namespace ImageGlass.UI
         /// <returns></returns>
         public bool LoadTheme(string themeFolderPath)
         {
-            string configFilePath = Path.Combine(themeFolderPath, "config.xml");
+            var configFilePath = Path.Combine(themeFolderPath, "config.xml");
 
             if (!File.Exists(configFilePath))
             {
@@ -273,11 +290,11 @@ namespace ImageGlass.UI
             this.ConfigFilePath = configFilePath;
             this.FolderName = Path.GetFileName(themeFolderPath); // get folder name
 
-            string dir = Path.GetDirectoryName(configFilePath);
-            XmlDocument doc = new XmlDocument();
+            var dir = Path.GetDirectoryName(configFilePath);
+            var doc = new XmlDocument();
             doc.Load(configFilePath);
 
-            XmlElement root = doc.DocumentElement;
+            var root = doc.DocumentElement;
             XmlElement nType = null;
             XmlElement n = null;
 
@@ -478,15 +495,14 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = Constants.TOOLBAR_ICON_HEIGHT * 3;
+            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 3;
             var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
-            IntPtr icon = prevImage.Image.GetHicon();
+            var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
 
             var nextImage = LoadThemeImage(dir, n, "next", arrowHeight);
             icon = nextImage.Image.GetHicon();
             NextArrowCursor = new Cursor(icon);
-
 
             #endregion
 

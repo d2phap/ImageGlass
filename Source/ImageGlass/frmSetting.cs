@@ -808,7 +808,7 @@ namespace ImageGlass
         private void LoadTabEditConfig()
         {
             chkSaveOnRotate.Checked = Configs.IsSaveAfterRotating;
-            chkSaveModifyDate.Checked = Configs.PreserveModifiedDate;
+            chkSaveModifyDate.Checked = Configs.IsPreserveModifiedDate;
 
             // Load image editing apps list
             LoadEditApps();
@@ -2399,7 +2399,7 @@ namespace ImageGlass
 
             #region Edit tab -----------------------------------------------
             Configs.IsSaveAfterRotating = chkSaveOnRotate.Checked;
-            Configs.PreserveModifiedDate = chkSaveModifyDate.Checked;
+            Configs.IsPreserveModifiedDate = chkSaveModifyDate.Checked;
             #endregion
 
 

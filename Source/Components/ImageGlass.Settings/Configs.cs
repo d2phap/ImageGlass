@@ -167,9 +167,9 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Setting to control whether the image's original modified date value is preserved on save
+        /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
         /// </summary>
-        public static bool PreserveModifiedDate { get; set; } = true;
+        public static bool IsPreserveModifiedDate { get; set; } = true;
 
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace ImageGlass.Settings
             IsConfirmationDelete = Get<bool>(nameof(IsConfirmationDelete), IsConfirmationDelete);
             IsScrollbarsVisible = Get<bool>(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
             IsSaveAfterRotating = Get<bool>(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-            PreserveModifiedDate = Get<bool>(nameof(PreserveModifiedDate), PreserveModifiedDate);
+            IsPreserveModifiedDate = Get<bool>(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
             IsNewVersionAvailable = Get<bool>(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
             IsDisplayBasenameOfImage = Get<bool>(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
             IsCenterToolbar = Get<bool>(nameof(IsCenterToolbar), IsCenterToolbar);
@@ -804,7 +804,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsConfirmationDelete), IsConfirmationDelete);
             Set(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
             Set(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-            Set(nameof(PreserveModifiedDate), PreserveModifiedDate);
+            Set(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
             Set(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
             Set(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
             Set(nameof(IsCenterToolbar), IsCenterToolbar);

@@ -1799,7 +1799,7 @@ namespace ImageGlass
                 Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
-                if (Configs.PreserveModifiedDate)
+                if (Configs.IsPreserveModifiedDate)
                 {
                     File.SetLastWriteTime(Local.ImageModifiedPath, lastWriteTime);
                 }
@@ -2127,7 +2127,7 @@ namespace ImageGlass
         {
             if (forceReloadIcon)
             {
-                Configs.Theme.ReloadToolbarIcons();
+                Configs.Theme.ReloadIcons();
             }
 
             var th = Configs.Theme;
@@ -2384,12 +2384,12 @@ namespace ImageGlass
         /// <param name="onlyShowViewer">Hide all layouts except main viewer</param>
         private void FullScreenMode(bool enabled = true, bool changeWindowState = true, bool onlyShowViewer = false)
         {
-            //full screen
+            // full screen
             if (enabled)
             {
                 SaveConfig();
 
-                //save last state of toolbar
+                // save last state of toolbar
                 if (onlyShowViewer)
                 {
                     _isShowToolbar = Configs.IsShowToolBar;
@@ -2403,14 +2403,14 @@ namespace ImageGlass
                     this.Bounds = Screen.FromControl(this).Bounds;
                 }
 
-                //Hide toolbar
+                // Hide toolbar
                 if (onlyShowViewer)
                 {
                     toolMain.Visible = false;
                     Configs.IsShowToolBar = false;
                     mnuMainToolbar.Checked = false;
 
-                    //hide thumbnail
+                    // hide thumbnail
                     Configs.IsShowThumbnail = true;
                     mnuMainThumbnailBar_Click(null, null);
                 }
@@ -2418,7 +2418,7 @@ namespace ImageGlass
                 Application.DoEvents();
 
 
-                //realign image
+                // realign image
                 if (!_isManuallyZoomed)
                 {
                     ApplyZoomMode(Configs.ZoomMode);
@@ -2426,7 +2426,7 @@ namespace ImageGlass
 
             }
 
-            //exit full screen
+            // exit full screen
             else
             {
                 //restore last state of toolbar
@@ -3192,15 +3192,15 @@ namespace ImageGlass
                 return;
             }
 
-            //Get index of deleted image
+            // Get index of deleted image
             int imgIndex = Local.ImageList.IndexOf(filename);
 
             if (imgIndex > -1)
             {
-                //delete image list
+                // delete image list
                 Local.ImageList.Remove(imgIndex);
 
-                //delete thumbnail list
+                // delete thumbnail list
                 thumbnailBar.Items.RemoveAt(imgIndex);
 
                 // change the viewing image to memory data mode
@@ -3252,6 +3252,7 @@ namespace ImageGlass
                     action = Configs.MouseWheelAction;
                     break;
             }
+
             switch (action)
             {
                 case MouseWheelActions.Zoom:
@@ -3266,12 +3267,12 @@ namespace ImageGlass
                 case MouseWheelActions.BrowseImages:
                     if (e.Delta < 0)
                     {
-                        //Next pic
+                        // Next pic
                         mnuMainViewNext_Click(null, null);
                     }
                     else
                     {
-                        //Previous pic
+                        // Previous pic
                         mnuMainViewPrevious_Click(null, null);
                     }
                     break;
@@ -3318,7 +3319,7 @@ namespace ImageGlass
                 case MouseButtons.Left:
                     if (Configs.IsShowNavigationButtons && !picMain.IsPanning)
                     {
-                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () =>
+                        CheckCursorPositionOnViewer(e.Location, onCursorCenterAction: () =>
                         {
                             mnuMainViewPrevious_Click(null, null);
                         }, onCursorRightAction: () =>
@@ -4606,8 +4607,7 @@ namespace ImageGlass
         {
             if (Local.ImageList.Length > 0)
             {
-                ImageInfo.DisplayFileProperties(Local.ImageList.GetFileName(Local.CurrentIndex),
-                                                Handle);
+                ImageInfo.DisplayFileProperties(Local.ImageList.GetFileName(Local.CurrentIndex), Handle);
             }
         }
 
@@ -4641,7 +4641,7 @@ namespace ImageGlass
 
         private void mnuMainClearClipboard_Click(object sender, EventArgs e)
         {
-            //clear copied files in clipboard
+            // clear copied files in clipboard
             if (Local.StringClipboard.Count > 0)
             {
                 Local.StringClipboard = new List<string>();
@@ -4654,14 +4654,13 @@ namespace ImageGlass
         private void mnuMainToolbar_Click(object sender, EventArgs e)
         {
             Configs.IsShowToolBar = !Configs.IsShowToolBar;
+
             if (Configs.IsShowToolBar)
             {
-                //Hien
                 toolMain.Visible = true;
             }
             else
             {
-                //An
                 toolMain.Visible = false;
             }
             mnuMainToolbar.Checked = Configs.IsShowToolBar;
@@ -4692,7 +4691,7 @@ namespace ImageGlass
                 }
                 var gap = (uint)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
 
-                //show
+                // show
                 var tb = new ThumbnailItemInfo(Configs.ThumbnailDimension, Configs.IsThumbnailHorizontal);
                 var minSize = tb.GetTotalDimension() + gap;
                 //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
@@ -4727,7 +4726,7 @@ namespace ImageGlass
             }
             else
             {
-                //Save thumbnail bar width when closing
+                // Save thumbnail bar width when closing
                 if (!Configs.IsThumbnailHorizontal)
                 {
                     Configs.ThumbnailBarWidth = (uint)(sp1.Width - sp1.SplitterDistance);
