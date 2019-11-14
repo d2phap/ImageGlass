@@ -1018,28 +1018,36 @@ namespace ImageGlass
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "ignewlang";
-
-            try
+            using (Process p = new Process())
             {
-                p.Start();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "ignewlang";
+
+                try
+                {
+                    p.Start();
+                }
+                catch
+                {
+                }
             }
-            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.Lang.FileName + "\"";
-
-            try
+            using (Process p = new Process())
             {
-                p.Start();
+                p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "igeditlang \"" + GlobalSetting.Lang.FileName + "\"";
+
+                try
+                {
+                    p.Start();
+                }
+                catch
+                {
+                }
             }
-            catch { }
         }
 
         private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1183,7 +1191,16 @@ namespace ImageGlass
 
                 p.StartInfo.FileName = GlobalSetting.StartUpDir("igtasks.exe");
                 p.StartInfo.Arguments = $"regassociations {extensions}";
-                p.Start();
+                try
+                {
+                    p.Start();
+                }
+                catch
+                {
+                    // Clicking 'Cancel' in the "User Account Control" dialog throws a
+                    // "User cancelled" exception. Just continue quietly in that case.
+                    return;
+                }
 
                 p.WaitForExit();
                 isError = p.ExitCode != 0;
