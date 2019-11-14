@@ -2401,8 +2401,14 @@ namespace ImageGlass
 
 
             // IsCenterImage
-            GlobalSetting.IsCenterImage = chkIsCenterImage.Checked;
-            GlobalSetting.SetConfig("IsCenterImage", GlobalSetting.IsCenterImage.ToString());
+            newBool = chkIsCenterImage.Checked;
+            if (GlobalSetting.IsCenterImage != newBool)
+            {
+                GlobalSetting.IsCenterImage = newBool;
+                GlobalSetting.SetConfig("IsCenterImage", GlobalSetting.IsCenterImage.ToString());
+
+                LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
 
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
