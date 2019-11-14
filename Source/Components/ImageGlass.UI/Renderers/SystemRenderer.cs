@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass.UI.Renderers
 {
-    public class SystemRenderer
+    public static class SystemRenderer
     {
         [DllImport("uxtheme.dll")]
         private static extern int SetWindowTheme(
@@ -37,7 +37,7 @@ namespace ImageGlass.UI.Renderers
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int ApplyTheme(Control control)
+        public static int ApplyTheme(Control control)
         {
             return ApplyTheme(control, "Explorer");
         }
@@ -48,7 +48,7 @@ namespace ImageGlass.UI.Renderers
         /// <param name="control"></param>
         /// <param name="theme"></param>
         /// <returns></returns>
-        public int ApplyTheme(Control control, string theme)
+        public static int ApplyTheme(Control control, string theme)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace ImageGlass.UI.Renderers
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int ClearTheme(Control control)
+        public static int ClearTheme(Control control)
         {
             return ApplyTheme(control, string.Empty);
         }

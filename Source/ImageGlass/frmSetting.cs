@@ -154,12 +154,6 @@ namespace ImageGlass
 
             // Load config
             // Windows Bound (Position + Size)-------------------------------------------
-            var rc = Configs.FrmSettingsWindowsBound;
-            if (!Helper.IsOnScreen(rc.Location))
-            {
-                rc.Location = new Point(280, 125);
-                Configs.FrmSettingsWindowsBound = rc;
-            }
             Bounds = Configs.FrmSettingsWindowsBound;
 
             // windows state--------------------------------------------------------------
@@ -169,7 +163,7 @@ namespace ImageGlass
 
             // Get the last view of tab --------------------------------------------------
             tab1.SelectedIndex = Local.SettingsTabLastView;
-            // KBR prevent loading tab config twice tab1_SelectedIndexChanged(tab1, null); //Load tab's configs
+
 
             // Load configs
             LoadTabGeneralConfig();
@@ -184,23 +178,23 @@ namespace ImageGlass
 
         private void frmSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Save config---------------------------------
+            // Save config---------------------------------
             if (WindowState == FormWindowState.Normal)
             {
-                //Windows Bound-------------------------------------------------------------------
+                // Windows Bound---------------------------------------------------
                 Configs.FrmSettingsWindowsBound = Bounds;
             }
 
             Configs.FrmSettingsWindowState = WindowState;
 
-            //Tabs State---------------------------------------------------------------------------
+            // Tabs State----------------------------------------------------------
             Local.SettingsTabLastView = tab1.SelectedIndex;
         }
 
 
         private void frmSetting_KeyDown(object sender, KeyEventArgs e)
         {
-            //close dialog
+            // close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
                 Close();
@@ -472,9 +466,6 @@ namespace ImageGlass
                 lblImage.BackColor = M_COLOR_MENU_ACTIVE;
 
                 LoadTabImageConfig();
-
-                SystemRenderer r = new SystemRenderer();
-                r.ApplyTheme(lvImageEditing);
             }
             else if (tab1.SelectedTab == tabEdit)
             {
@@ -488,13 +479,13 @@ namespace ImageGlass
                 lblFileAssociations.Tag = 1;
                 lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
 
+                lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
+
                 // Load image formats to the list
                 LoadExtensionList();
 
-                lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
-
-                SystemRenderer r = new SystemRenderer();
-                r.ApplyTheme(lvExtension);
+                
+                SystemRenderer.ApplyTheme(lvExtension);
             }
             else if (tab1.SelectedTab == tabLanguage)
             {
@@ -821,6 +812,8 @@ namespace ImageGlass
 
             // Load image editing apps list
             LoadEditApps();
+
+            SystemRenderer.ApplyTheme(lvImageEditing);
         }
 
 
@@ -885,54 +878,48 @@ namespace ImageGlass
             if (assoc == null)
                 return;
 
-            frmEditApp f = new frmEditApp()
+            using (var frm = new frmEditApp()
             {
                 FileExtension = assoc.Extension,
                 AppName = assoc.AppName,
                 AppPath = assoc.AppPath,
                 AppArguments = assoc.AppArguments,
                 TopMost = this.TopMost
-            };
-
-            if (f.ShowDialog() == DialogResult.OK)
+            })
             {
-                assoc.AppName = f.AppName;
-                assoc.AppPath = f.AppPath;
-                assoc.AppArguments = f.AppArguments;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    assoc.AppName = frm.AppName;
+                    assoc.AppPath = frm.AppPath;
+                    assoc.AppArguments = frm.AppArguments;
 
-                LoadEditApps();
+                    LoadEditApps();
+                }
             }
-
-            f.Dispose();
-
         }
 
         private void btnEditEditAllExt_Click(object sender, EventArgs e)
         {
-            frmEditApp f = new frmEditApp()
+            using (var frm = new frmEditApp()
             {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
-            };
-
-            if (f.ShowDialog() == DialogResult.OK)
+            })
             {
                 foreach (var assoc in Configs.EditApps)
                 {
-                    assoc.AppName = f.AppName;
-                    assoc.AppPath = f.AppPath;
-                    assoc.AppArguments = f.AppArguments;
+                    assoc.AppName = frm.AppName;
+                    assoc.AppPath = frm.AppPath;
+                    assoc.AppArguments = frm.AppArguments;
                 }
 
                 LoadEditApps();
             }
-
-            f.Dispose();
         }
 
         private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEditEditExt.Enabled = (lvImageEditing.SelectedItems.Count > 0);
+            btnEditEditExt.Enabled = lvImageEditing.SelectedItems.Count > 0;
         }
 
         #endregion
@@ -951,59 +938,47 @@ namespace ImageGlass
 
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
+            using (var p = new Process())
             {
-                using (var p = new Process())
-                {
-                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                    p.StartInfo.Arguments = "iginstalllang";
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "iginstalllang";
 
-                    try
-                    {
-                        p.Start();
-                    }
-                    catch { }
+                try
+                {
+                    p.Start();
                 }
+                catch { }
             }
-            catch { }
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
+            using (var p = new Process())
             {
-                using (var p = new Process())
-                {
-                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                    p.StartInfo.Arguments = "ignewlang";
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "ignewlang";
 
-                    try
-                    {
-                        p.Start();
-                    }
-                    catch { }
+                try
+                {
+                    p.Start();
                 }
+                catch { }
             }
-            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
+            using (var p = new Process())
             {
-                using (var p = new Process())
-                {
-                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                    p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
 
-                    try
-                    {
-                        p.Start();
-                    }
-                    catch { }
+                try
+                {
+                    p.Start();
                 }
+                catch { }
             }
-            catch { }
         }
 
         private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1020,11 +995,11 @@ namespace ImageGlass
             {
                 await Task.Run(() =>
                 {
-                    foreach (string f in Directory.GetFiles(langPath))
+                    foreach (var f in Directory.GetFiles(langPath))
                     {
                         if (Path.GetExtension(f).ToLower() == ".iglang")
                         {
-                            Language l = new Language(f);
+                            var l = new Language(f);
                             lstLanguages.Add(l);
                         }
                     }
@@ -1034,10 +1009,10 @@ namespace ImageGlass
                 // start from 1, the first item is already hardcoded
                 for (int i = 1; i < lstLanguages.Count; i++)
                 {
-                    int iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
-                    string curLang = Configs.Language.FileName;
+                    var iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
+                    var curLang = Configs.Language.FileName;
 
-                    //using current language pack
+                    // using current language pack
                     if (lstLanguages[i].FileName.CompareTo(curLang) == 0)
                     {
                         cmbLanguage.SelectedIndex = iLang;
@@ -1055,7 +1030,7 @@ namespace ImageGlass
         {
             lblLanguageWarning.Visible = false;
 
-            //check compatibility
+            // check compatibility
             var lang = new Language();
             if (lang.MinVersion.CompareTo(lstLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0)
             {
@@ -1102,7 +1077,7 @@ namespace ImageGlass
 
             try
             {
-                using (Process p = new Process())
+                using (var p = new Process())
                 {
                     var isError = true;
                     var formats = Configs.GetImageFormats(Configs.AllFormats);
@@ -1129,7 +1104,8 @@ namespace ImageGlass
 
         private void lnkOpenFileAssoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); // path to %windir%\system32\control.exe (ensures the correct control.exe)
+            // path to %windir%\system32\control.exe (ensures the correct control.exe)
+            var controlpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "control.exe"); 
 
             Process.Start(controlpath, "/name Microsoft.DefaultPrograms /page pageFileAssoc");
         }
@@ -1160,28 +1136,27 @@ namespace ImageGlass
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
         {
-            var f = new frmAddNewFormat()
+            using(var frm = new frmAddNewFormat()
             {
                 FileFormat = ".svg",
                 TopMost = this.TopMost
-            };
-
-            if (f.ShowDialog() == DialogResult.OK)
+            })
             {
-                // If the ext exist
-                if (Configs.AllFormats.Contains(f.FileFormat))
-                    return;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    // If the ext exist
+                    if (Configs.AllFormats.Contains(frm.FileFormat))
+                        return;
 
-                Configs.AllFormats.Add(f.FileFormat);
+                    Configs.AllFormats.Add(frm.FileFormat);
 
-                // update the list
-                LoadExtensionList();
+                    // update the list
+                    LoadExtensionList();
 
-                // Request frmMain to update
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    // Request frmMain to update
+                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                }
             }
-
-            f.Dispose();
         }
 
         private void btnRegisterExt_Click(object sender, EventArgs e)
@@ -1236,9 +1211,8 @@ namespace ImageGlass
             chkHorzCenterToolbarBtns.Checked = Configs.IsCenterToolbar;
 
             // Apply Windows System theme to listview
-            SystemRenderer th = new SystemRenderer();
-            th.ApplyTheme(lvAvailButtons);
-            th.ApplyTheme(lvUsedButtons);
+            SystemRenderer.ApplyTheme(lvAvailButtons);
+            SystemRenderer.ApplyTheme(lvUsedButtons);
 
             // Apply ImageGlass theme to buttons list
             lvAvailButtons.BackColor = lvUsedButtons.BackColor = Configs.Theme.ToolbarBackgroundColor;
@@ -1268,7 +1242,7 @@ namespace ImageGlass
             var iconHeight = ThemeImage.GetCorrectBaseIconHeight();
             _lstToolbarImg.ImageSize = new Size(iconHeight, iconHeight); // TODO empirically determined (can get from ImageGlass.Theme)
 
-            Type mainType = typeof(frmMain);
+            var mainType = typeof(frmMain);
             for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
             {
                 var fieldName = ((ToolbarButtons)i).ToString();
@@ -1297,7 +1271,7 @@ namespace ImageGlass
 
             lvUsedButtons.Items.Clear();
 
-            string currentSet = Configs.ToolbarButtons;
+            var currentSet = Configs.ToolbarButtons;
             var enumList = TranslateToolbarButtonsFromConfig(currentSet);
 
             _lstMasterUsed = new List<ListViewItem>(enumList.Count);
@@ -1332,7 +1306,7 @@ namespace ImageGlass
             lvAvailButtons.Items.Clear();
 
             // Build by adding each button NOT in the 'used' list
-            string currentSet = Configs.ToolbarButtons;
+            var currentSet = Configs.ToolbarButtons;
             var enumList = TranslateToolbarButtonsFromConfig(currentSet);
             for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
             {
@@ -1364,12 +1338,12 @@ namespace ImageGlass
 
 
             var fieldName = buttonType.ToString();
-            Type mainType = typeof(frmMain);
+            var mainType = typeof(frmMain);
 
             try
             {
                 var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
+                var val = info.GetValue(MainInstance) as ToolStripButton;
                 lvi.Text = lvi.ToolTipText = val.ToolTipText;
             }
             catch (Exception)
@@ -1388,11 +1362,12 @@ namespace ImageGlass
         /// <returns></returns>
         private ListViewItem BuildSeparatorItem()
         {
-            var lvi = new ListViewItem();
-            lvi.Text = _separatorText;
-            lvi.ToolTipText = _separatorText;
-            lvi.Tag = ToolbarButtons.Separator;
-            return lvi;
+            return new ListViewItem
+            {
+                Text = _separatorText,
+                ToolTipText = _separatorText,
+                Tag = ToolbarButtons.Separator
+            };
         }
 
 
@@ -1404,7 +1379,7 @@ namespace ImageGlass
         /// <returns></returns>
         private static List<ToolbarButtons> TranslateToolbarButtonsFromConfig(string configVal)
         {
-            List<ToolbarButtons> outVal = new List<ToolbarButtons>();
+            var outVal = new List<ToolbarButtons>();
             string[] splitvals = configVal.Split(new[] { ',' });
 
             foreach (var splitval in splitvals)
@@ -1453,12 +1428,12 @@ namespace ImageGlass
                 return;
 
             // Save the current set of 'used' buttons to the comma-separated list of integers.
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             bool first = true;
 
             foreach (ListViewItem item in lvUsedButtons.Items)
             {
-                string val = ((int)item.Tag).ToString();
+                var val = ((int)item.Tag).ToString();
 
                 if (!first)
                     sb.Append(",");
@@ -1773,8 +1748,7 @@ namespace ImageGlass
         {
             if (lvTheme.Items.Count == 0)
             {
-                SystemRenderer r = new SystemRenderer();
-                r.ApplyTheme(lvTheme);
+                SystemRenderer.ApplyTheme(lvTheme);
 
                 RefreshThemeList();
             }
