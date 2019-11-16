@@ -74,7 +74,7 @@ namespace ImageGlass.Base
         /// <returns></returns>
         public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
         {
-            var args = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var args = str.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
             foreach (var item in args)
@@ -104,7 +104,7 @@ namespace ImageGlass.Base
         /// <returns></returns>
         public static string IntArrayToString(int[] array)
         {
-            return string.Join(",", array);
+            return string.Join(";", array);
         }
 
 
@@ -133,7 +133,7 @@ namespace ImageGlass.Base
         /// <returns></returns>
         public static string RectToString(Rectangle rc)
         {
-            return rc.Left + "," + rc.Top + "," + rc.Width + "," + rc.Height;
+            return rc.Left + ";" + rc.Top + ";" + rc.Width + ";" + rc.Height;
         }
 
     }

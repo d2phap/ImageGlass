@@ -2085,17 +2085,15 @@ namespace ImageGlass
         {
             toolMain.Items.Clear();
 
-            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
-
             // Update size of toolbar
             var newBtnHeight = (int)Math.Floor(toolMain.Height * 0.8);
 
             // get correct icon height
             var hIcon = ThemeImage.GetCorrectBaseIconHeight();
 
-            foreach (var item in btnList)
+            foreach (var item in Configs.ToolbarButtons)
             {
-                if (item == ToolbarButtons.Separator)
+                if (item == ToolbarButton.Separator)
                 {
                     toolMain.Items.Add(new ToolStripSeparator
                     {
@@ -2885,6 +2883,8 @@ namespace ImageGlass
                 UpdateToolbarButtons();
                 toolMain.Items.Add(btnMenu);
                 toolMain.Items.Add(lblInfo);
+
+                toolMain.UpdateAlignment();
             }
             #endregion
 

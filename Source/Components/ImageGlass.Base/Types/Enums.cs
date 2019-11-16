@@ -114,7 +114,7 @@ namespace ImageGlass.Base
     ///
     /// The integer value of the enum is used for storing the config info.
     /// </summary>
-    public enum ToolbarButtons
+    public enum ToolbarButton
     {
         Separator = -1,
         btnBack = 0,

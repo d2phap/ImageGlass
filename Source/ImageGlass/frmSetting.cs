@@ -1255,9 +1255,9 @@ namespace ImageGlass
 
 
             var mainType = typeof(frmMain);
-            for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
+            for (int i = 0; i < (int)ToolbarButton.MAX; i++)
             {
-                var fieldName = ((ToolbarButtons)i).ToString();
+                var fieldName = ((ToolbarButton)i).ToString();
 
                 try
                 {
@@ -1281,20 +1281,19 @@ namespace ImageGlass
 
             lvUsedButtons.Items.Clear();
 
-            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
-            _lstMasterUsed = new List<ListViewItem>(btnList.Count);
+            _lstMasterUsed = new List<ListViewItem>(Configs.ToolbarButtons.Count);
 
-            for (int i = 0; i < btnList.Count; i++)
+            for (int i = 0; i < Configs.ToolbarButtons.Count; i++)
             {
                 ListViewItem lvi;
 
-                if (btnList[i] == ToolbarButtons.Separator)
+                if (Configs.ToolbarButtons[i] == ToolbarButton.Separator)
                 {
                     lvi = BuildSeparatorItem();
                 }
                 else
                 {
-                    lvi = BuildToolbarListItem(btnList[i]);
+                    lvi = BuildToolbarListItem(Configs.ToolbarButtons[i]);
                 }
 
                 _lstMasterUsed.Add(lvi);
@@ -1314,14 +1313,11 @@ namespace ImageGlass
 
             lvAvailButtons.Items.Clear();
 
-            // Build by adding each button NOT in the 'used' list
-            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
-
-            for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
+            for (int i = 0; i < (int)ToolbarButton.MAX; i++)
             {
-                if (!btnList.Contains((ToolbarButtons)i))
+                if (!Configs.ToolbarButtons.Contains((ToolbarButton)i))
                 {
-                    lvAvailButtons.Items.Add(BuildToolbarListItem((ToolbarButtons)i));
+                    lvAvailButtons.Items.Add(BuildToolbarListItem((ToolbarButton)i));
                 }
             }
 
@@ -1337,7 +1333,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="buttonType"></param>
         /// <returns></returns>
-        private ListViewItem BuildToolbarListItem(ToolbarButtons buttonType)
+        private ListViewItem BuildToolbarListItem(ToolbarButton buttonType)
         {
             var lvi = new ListViewItem
             {
@@ -1375,7 +1371,7 @@ namespace ImageGlass
             {
                 Text = _separatorText,
                 ToolTipText = _separatorText,
-                Tag = ToolbarButtons.Separator
+                Tag = ToolbarButton.Separator
             };
         }
 
@@ -1407,25 +1403,20 @@ namespace ImageGlass
             if (lvUsedButtons.Items.Count == 0 && lvAvailButtons.Items.Count == 0)
                 return;
 
-            // Save the current set of 'used' buttons to the comma-separated list of integers.
-            var sb = new StringBuilder();
-            bool first = true;
-
+            var list = new List<ToolbarButton>();
             foreach (ListViewItem item in lvUsedButtons.Items)
             {
-                var val = ((int)item.Tag).ToString();
-
-                if (!first)
-                    sb.Append(",");
-
-                first = false;
-                sb.Append(val);
+                var btn = Configs.ConvertType<ToolbarButton>(item.Tag.ToString());
+                list.Add(btn);
             }
 
-            //Only make change if any
-            if (Configs.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
+            var oldSet = Configs.GetToolbarButtons(Configs.ToolbarButtons);
+            var newSet = Configs.GetToolbarButtons(list);
+
+            // Only make change if any
+            if (newSet != oldSet)
             {
-                Configs.ToolbarButtons = sb.ToString();
+                Configs.ToolbarButtons = list;
                 Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
             }
         }
@@ -1480,7 +1471,7 @@ namespace ImageGlass
             for (int i = lvAvailButtons.SelectedItems.Count - 1; i >= 0; i--)
             {
                 var lvi = lvAvailButtons.SelectedItems[i];
-                if ((ToolbarButtons)lvi.Tag != ToolbarButtons.Separator)
+                if ((ToolbarButton)lvi.Tag != ToolbarButton.Separator)
                     lvAvailButtons.Items.Remove(lvi);
             }
 
@@ -1497,7 +1488,7 @@ namespace ImageGlass
             for (int i = 0; i < lvUsedButtons.SelectedItems.Count; i++)
             {
                 var lvi = lvUsedButtons.SelectedItems[i];
-                if ((ToolbarButtons)lvi.Tag != ToolbarButtons.Separator)
+                if ((ToolbarButton)lvi.Tag != ToolbarButton.Separator)
                     lvAvailButtons.Items.Add(lvi.Clone() as ListViewItem);
 
                 _lstMasterUsed.Remove(lvi);

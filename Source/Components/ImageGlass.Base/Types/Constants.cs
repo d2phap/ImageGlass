@@ -77,5 +77,45 @@ namespace ImageGlass.Base
                     { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
                 };
         }
+
+
+        /// <summary>
+        /// Gets the default set of toolbar buttons
+        /// </summary>
+        public static List<ToolbarButton> DefaultToolbarButtons
+        {
+            get => new List<ToolbarButton>
+            {
+                ToolbarButton.btnBack,
+                ToolbarButton.btnNext,
+                ToolbarButton.Separator,
+
+                ToolbarButton.btnRotateLeft,
+                ToolbarButton.btnRotateRight,
+                ToolbarButton.btnFlipHorz,
+                ToolbarButton.btnFlipVert,
+                ToolbarButton.Separator,
+
+                ToolbarButton.btnAutoZoom,
+                ToolbarButton.btnScaletoWidth,
+                ToolbarButton.btnScaletoHeight,
+                ToolbarButton.btnScaleToFit,
+                ToolbarButton.btnScaleToFill,
+                ToolbarButton.btnZoomLock,
+                ToolbarButton.Separator,
+
+                ToolbarButton.btnOpen,
+                ToolbarButton.btnRefresh,
+                ToolbarButton.btnGoto,
+                ToolbarButton.Separator,
+
+                ToolbarButton.btnThumb,
+                ToolbarButton.btnCheckedBackground,
+                ToolbarButton.btnFullScreen,
+                ToolbarButton.btnSlideShow,
+                ToolbarButton.btnDelete,
+                ToolbarButton.btnEdit,
+            };
+        }
     }
 }

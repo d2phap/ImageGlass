@@ -67,7 +67,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
         /// </summary>
-        public static bool IsCenterImage { get; set; } = false;
+        public static bool IsCenterImage { get; set; } = true;
 
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
         /// </summary>
-        public static bool IsUseFileExplorerSortOrder { get; set; } = false;
+        public static bool IsUseFileExplorerSortOrder { get; set; } = true;
 
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
-        public static uint ThumbnailDimension { get; set; } = 64;
+        public static uint ThumbnailDimension { get; set; } = 96;
 
 
         /// <summary>
@@ -307,41 +307,6 @@ namespace ImageGlass.Settings
         public static string LastSeenImagePath { get; set; } = "";
 
 
-        /// <summary>
-        /// The toolbar button configuration: contents and order.
-        /// </summary>
-        public static string ToolbarButtons { get; set; } = $"" +
-                $"{(int)Base.ToolbarButtons.btnBack}," +
-                $"{(int)Base.ToolbarButtons.btnNext}," +
-                $"{(int)Base.ToolbarButtons.Separator}," +
-
-                $"{(int)Base.ToolbarButtons.btnRotateLeft}," +
-                $"{(int)Base.ToolbarButtons.btnRotateRight}," +
-                $"{(int)Base.ToolbarButtons.btnFlipHorz}," +
-                $"{(int)Base.ToolbarButtons.btnFlipVert}," +
-                $"{(int)Base.ToolbarButtons.Separator}," +
-
-                $"{(int)Base.ToolbarButtons.btnAutoZoom}," +
-                $"{(int)Base.ToolbarButtons.btnScaletoWidth}," +
-                $"{(int)Base.ToolbarButtons.btnScaletoHeight}," +
-                $"{(int)Base.ToolbarButtons.btnScaleToFit}," +
-                $"{(int)Base.ToolbarButtons.btnScaleToFill}," +
-                $"{(int)Base.ToolbarButtons.btnZoomLock}," +
-                $"{(int)Base.ToolbarButtons.Separator}," +
-
-                $"{(int)Base.ToolbarButtons.btnOpen}," +
-                $"{(int)Base.ToolbarButtons.btnRefresh}," +
-                $"{(int)Base.ToolbarButtons.btnGoto}," +
-                $"{(int)Base.ToolbarButtons.Separator}," +
-
-                $"{(int)Base.ToolbarButtons.btnThumb}," +
-                $"{(int)Base.ToolbarButtons.btnCheckedBackground}," +
-                $"{(int)Base.ToolbarButtons.btnFullScreen}," +
-                $"{(int)Base.ToolbarButtons.btnSlideShow}," +
-                $"{(int)Base.ToolbarButtons.btnDelete}," +
-                $"{(int)Base.ToolbarButtons.btnEdit}";
-
-
         #endregion
 
 
@@ -369,6 +334,12 @@ namespace ImageGlass.Settings
         /// Gets, sets the list of keycombo actions
         /// </summary>
         public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
+
+
+        /// <summary>
+        /// Gets, sets the list of toolbar buttons
+        /// </summary>
+        public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
 
         #endregion
 
@@ -495,27 +466,6 @@ namespace ImageGlass.Settings
         private static T ParseEnum<T>(object value)
         {
             return (T)Enum.Parse(typeof(T), value.ToString(), true);
-        }
-
-
-        /// <summary>
-        /// Convert the given value to specific type
-        /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="value">Value</param>
-        /// <returns></returns>
-        private static T ConvertType<T>(object value)
-        {
-            var type = typeof(T);
-
-            if (type.IsEnum)
-            {
-                return ParseEnum<T>(value);
-            }
-            else
-            {
-                return (T)Convert.ChangeType(value, type);
-            }
         }
 
 
@@ -665,8 +615,6 @@ namespace ImageGlass.Settings
             ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
-            ToolbarButtons = Get<string>(nameof(ToolbarButtons), ToolbarButtons);
-
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
             LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
 
@@ -708,6 +656,15 @@ namespace ImageGlass.Settings
             {
                 KeyComboActions = GetKeyComboActions(keyActionStr);
             }
+
+            #endregion
+
+
+            #region ToolbarButtons
+
+            var buttonStr = Get<string>(nameof(ToolbarButtons), "");
+            var btnList = GetToolbarButtons(buttonStr);
+            if (btnList.Count > 0) ToolbarButtons = btnList;
 
             #endregion
 
@@ -866,6 +823,7 @@ namespace ImageGlass.Settings
             Set(nameof(EditApps), GetEditApps(EditApps));
             Set(nameof(AllFormats), GetImageFormats(AllFormats));
             Set(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
+            Set(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
 
             #endregion
 
@@ -886,6 +844,55 @@ namespace ImageGlass.Settings
         }
 
 
+
+        #region Helper functions
+
+        /// <summary>
+        /// Convert the given value to specific type
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="value">Value</param>
+        /// <returns></returns>
+        public static T ConvertType<T>(object value)
+        {
+            var type = typeof(T);
+
+            if (type.IsEnum)
+            {
+                return ParseEnum<T>(value);
+            }
+            else
+            {
+                return (T)Convert.ChangeType(value, type);
+            }
+        }
+
+
+        /// <summary>
+        /// Get the registered file extensions from registry
+        /// Ex: *.svg;*.png;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRegisteredExtensions()
+        {
+            var reg = new RegistryHelper()
+            {
+                BaseRegistryKey = Registry.LocalMachine,
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+            };
+
+            var extList = reg.GetValueNames();
+            var exts = new StringBuilder();
+
+            foreach (var ext in extList)
+            {
+                exts.Append($"*{ext};");
+            }
+
+            return exts.ToString();
+        }
+
+        #endregion
 
 
         #region Config functions
@@ -1000,7 +1007,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Returns the keycombo actions from string
         /// </summary>
-        /// <param name="keyActions">The input string</param>
+        /// <param name="keyActions">The input string. E.g. "combo1:action1;combo2:action2"</param>
         /// <returns></returns>
         public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions)
         {
@@ -1011,7 +1018,7 @@ namespace ImageGlass.Settings
             {
                 foreach (var pair in pairs)
                 {
-                    var parts = pair.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    var parts = pair.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
                     var keyCombo = ParseEnum<KeyCombos>(parts[0]);
                     var action = ParseEnum<AssignableActions>(parts[1]);
@@ -1041,7 +1048,7 @@ namespace ImageGlass.Settings
             foreach (var key in keyActions.Keys)
             {
                 sb.Append(key.ToString());
-                sb.Append(',');
+                sb.Append(':');
                 sb.Append(keyActions[key].ToString());
                 sb.Append(';');
             }
@@ -1059,16 +1066,16 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="buttons">The input string</param>
         /// <returns></returns>
-        public static List<ToolbarButtons> GetToolbarButtons(string buttons)
+        public static List<ToolbarButton> GetToolbarButtons(string buttons)
         {
-            var list = new List<ToolbarButtons>();
-            string[] splitvals = buttons.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var list = new List<ToolbarButton>();
+            string[] splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var item in splitvals)
             {
                 try
                 {
-                    var btn = ParseEnum<ToolbarButtons>(item);
+                    var btn = ParseEnum<ToolbarButton>(item);
                     list.Add(btn);
                 }
                 // ignore invalid values
@@ -1079,33 +1086,24 @@ namespace ImageGlass.Settings
         }
 
 
-        #endregion
-
-
-
         /// <summary>
-        /// Get the registered file extensions from registry
-        /// Ex: *.svg;*.png;
+        /// Returns string from toolbar buttons list
         /// </summary>
+        /// <param name="list">The input toolbar buttons</param>
         /// <returns></returns>
-        public static string GetRegisteredExtensions()
+        public static string GetToolbarButtons(List<ToolbarButton> list)
         {
-            var reg = new RegistryHelper()
+            var sb = new StringBuilder(list.Count);
+            foreach (var item in list)
             {
-                BaseRegistryKey = Registry.LocalMachine,
-                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
-            };
-
-            var extList = reg.GetValueNames();
-            var exts = new StringBuilder();
-
-            foreach (var ext in extList)
-            {
-                exts.Append($"*{ext};");
+                sb.Append($"{item.ToString()};");
             }
 
-            return exts.ToString();
+            return sb.ToString();
         }
+
+
+        #endregion
 
 
         #endregion

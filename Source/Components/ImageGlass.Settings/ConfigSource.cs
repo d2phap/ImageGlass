@@ -66,7 +66,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Config file version
         /// </summary>
-        public string Version { get; set; } = "4.0";
+        public string Version { get; set; } = "7.5";
 
         #endregion
 
