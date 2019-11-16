@@ -92,11 +92,7 @@ namespace ImageGlass.Settings
             }
             catch (Exception)
             {
-                // fix invalid XML file
-                WriteConfigFile(new Dictionary<string, string>(), filename);
-
-                // load again
-                doc.Load(filename);
+                return null;
             }
 
             return doc;
@@ -107,14 +103,22 @@ namespace ImageGlass.Settings
         /// Loads the given filename, returns all configs
         /// </summary>
         /// <returns></returns>
-        private Dictionary<string, string> LoadConfigFile(string filename, bool saveConfigInfo = false)
+        private Dictionary<string, string> LoadConfigFile(string filename, bool isUserConfigFile = false)
         {
+            var list = new Dictionary<string, string>();
             var doc = ReadXMLFile(filename);
+
+            // config file is invalid
+            if (doc == null)
+            {
+                this.IsCompatible = !isUserConfigFile;
+                return list;
+            }
 
             XmlElement root = doc.DocumentElement;// <ImageGlass>
             XmlElement nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
 
-            if (saveConfigInfo)
+            if (isUserConfigFile)
             {
                 // Get <Info> element
                 XmlElement nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
@@ -129,7 +133,6 @@ namespace ImageGlass.Settings
 
             // Get all config items
             XmlNodeList nItems = nContent.SelectNodes("Item");// <Item>
-            var configs = new Dictionary<string, string>();
 
             foreach (var item in nItems)
             {
@@ -137,18 +140,18 @@ namespace ImageGlass.Settings
                 string key = nItem.GetAttribute("key");
                 string value = nItem.GetAttribute("value").Replace("\\n", "\n");
 
-                if (configs.ContainsKey(key))
+                if (list.ContainsKey(key))
                 {
                     // override the existing key
-                    configs[key] = value;
+                    list[key] = value;
                 }
                 else
                 {
-                    configs.Add(key, value);
+                    list.Add(key, value);
                 }
             }
 
-            return configs;
+            return list;
         }
 
 
