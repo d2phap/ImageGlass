@@ -368,7 +368,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets image loading order
         /// </summary>
-        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Extension;// ImageOrderBy.Name;
+        public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
 
 
         /// <summary>
@@ -380,13 +380,13 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel
         /// </summary>
-        public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.ScrollVertically;
+        public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
 
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Ctrl key
         /// </summary>
-        public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.Zoom;
+        public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
 
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Alt key
         /// </summary>
-        public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.DoNothing;
+        public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
 
 
         /// <summary>
