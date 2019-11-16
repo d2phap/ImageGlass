@@ -1086,6 +1086,17 @@ namespace ImageGlass
                     p.StartInfo.Arguments = $"regassociations {formats}";
                     p.Start();
 
+	                try
+	                {
+	                    p.Start();
+	                }
+	                catch
+	                {
+	                    // Clicking 'Cancel' in the "User Account Control" dialog throws a
+	                    // "User cancelled" exception. Just continue quietly in that case.
+	                    return;
+	                }
+
                     p.WaitForExit();
                     isError = p.ExitCode != 0;
 
@@ -2239,9 +2250,17 @@ namespace ImageGlass
             #endregion
 
 
+
             Configs.IsShowingHiddenImages = chkShowHiddenImages.Checked;
             Configs.IsLoopBackViewer = chkLoopViewer.Checked;
-            Configs.IsCenterImage = chkIsCenterImage.Checked;
+
+            // IsCenterImage
+            newBool = chkIsCenterImage.Checked;
+            if (Configs.IsCenterImage != newBool)
+            {
+                Configs.IsCenterImage = newBool;
+                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+            }
 
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST

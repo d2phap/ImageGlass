@@ -2913,6 +2913,8 @@ namespace ImageGlass
                 // Update ZoomLevels
                 picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
 
+                ApplyZoomMode(GlobalSetting.ZoomMode);
+
                 #endregion
 
             }
