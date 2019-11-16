@@ -170,7 +170,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = App.AppVersion;
+                string version = App.Version;
 
                 Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
@@ -181,7 +181,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = App.AppVersion;
+                string version = App.Version;
 
                 Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
@@ -240,7 +240,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = App.AppVersion;
+                string version = App.Version;
 
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
             }

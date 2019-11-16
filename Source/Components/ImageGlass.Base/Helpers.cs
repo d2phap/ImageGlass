@@ -31,7 +31,9 @@ namespace ImageGlass.Base
     public static class Helpers
     {
         /// <summary>
-        /// Check if the given path (file or directory) is writable
+        /// Check if the given path (file or directory) is writable. 
+        /// Note**: This function does not handle the directory name that contains '.'
+        /// E.g. C:\dir\new.dir will be treated as a File!
         /// </summary>
         /// <param name="path">Full path of file or directory</param>
         /// <returns></returns>
@@ -40,22 +42,17 @@ namespace ImageGlass.Base
             try
             {
                 // If path is file
-                if (File.Exists(path))
+                if (Path.HasExtension(path))
                 {
                     using (File.OpenWrite(path)) { }
                 }
                 // if path is directory
-                else if (Directory.Exists(path))
+                else
                 {
                     var sampleFile = Path.Combine(path, "test_write_file.temp");
 
                     using (File.Create(sampleFile)) { }
                     File.Delete(sampleFile);
-                }
-                // path not found
-                else
-                {
-                    return false;
                 }
 
                 return true;

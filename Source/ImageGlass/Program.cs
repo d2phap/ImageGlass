@@ -59,8 +59,7 @@ namespace ImageGlass
         static void Main()
         {
             // Load user configs
-            Configs.Load();
-
+            Configs.Load(); 
 
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
@@ -73,6 +72,26 @@ namespace ImageGlass
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+
+            #region Check config file compatibility
+            if (!Configs.IsCompatible)
+            {
+                var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
+                var result = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Process.Start($"https://imageglass.org/docs/app-configs?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=incompatible_configs");
+                    }
+                    catch { }
+
+                    return;
+                }
+            }
+            #endregion
 
 
             #region Check First-launch Configs

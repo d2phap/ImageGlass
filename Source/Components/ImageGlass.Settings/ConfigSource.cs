@@ -70,7 +70,7 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets value indicates that config file is compatible with ImageGlass version or not
+        /// Gets, sets value indicates that the config file is compatible with this ImageGlass version or not
         /// </summary>
         public bool IsCompatible { get; set; } = true;
 

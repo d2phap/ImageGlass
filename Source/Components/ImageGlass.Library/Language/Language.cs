@@ -231,8 +231,11 @@ namespace ImageGlass.Library
         /// </summary>
         private void InitDefaultLanguageDictionary()
         {
+            Items.Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
+
+
             #region frmMain
-            
+
             #region Main menu
 
             #region File

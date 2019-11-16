@@ -43,6 +43,13 @@ namespace ImageGlass.Settings
         private static ConfigSource Source { get; set; } = new ConfigSource();
 
 
+        /// <summary>
+        /// Check if the config file is compatible with this ImageGlass version or not.
+        /// </summary>
+        public static bool IsCompatible { get => Source.IsCompatible; }
+
+
+
         #region Public configs
 
         #region Boolean items

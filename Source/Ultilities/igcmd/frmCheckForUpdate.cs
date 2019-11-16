@@ -133,9 +133,7 @@ namespace igcmd
         {
             try
             {
-                var version = App.AppVersion.Replace(".", "_");
-
-                Process.Start(up.Info.Decription + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(up.Info.Decription + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
             {
@@ -148,9 +146,7 @@ namespace igcmd
         {
             try
             {
-                var version = App.AppVersion.Replace(".", "_");
-
-                Process.Start(up.Info.Link.ToString() + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(up.Info.Link.ToString() + $"?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
             {

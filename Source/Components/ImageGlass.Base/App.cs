@@ -32,7 +32,7 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets the application version
         /// </summary>
-        public static string AppVersion { get => Application.ProductVersion; }
+        public static string Version { get => Application.ProductVersion; }
 
 
         /// <summary>

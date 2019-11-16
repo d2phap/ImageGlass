@@ -930,8 +930,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("https://imageglass.org/languages?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_languagepack");
+                Process.Start($"https://imageglass.org/languages?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_languagepack");
             }
             catch { }
         }
@@ -1757,8 +1756,7 @@ namespace ImageGlass
         {
             try
             {
-                string version = Application.ProductVersion.Replace(".", "_");
-                Process.Start("https://imageglass.org/themes?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_download_theme");
+                Process.Start($"https://imageglass.org/themes?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_download_theme");
             }
             catch { }
         }
