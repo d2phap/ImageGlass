@@ -16,14 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
+using ImageGlass.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms;
 
 namespace ImageGlass
 {
-    public partial class frmEditEditingAssocisation : Form
+    public partial class frmEditApp : Form
     {
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
@@ -31,22 +32,22 @@ namespace ImageGlass
         public string AppPath { get; set; }
         public string AppArguments { get; set; }
 
-        public frmEditEditingAssocisation()
+        public frmEditApp()
         {
             InitializeComponent();
 
-            lblFileExtension.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblFileExtension"];
-            lblAppName.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppName"];
-            lblAppPath.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppPath"];
-            lblAppArguments.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblAppArguments"];
-            lblPreviewLabel.Text = GlobalSetting.Lang.Items[$"{this.Name}.lblPreviewLabel"];
+            lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
+            lblAppName.Text = Configs.Language.Items[$"{this.Name}.lblAppName"];
+            lblAppPath.Text = Configs.Language.Items[$"{this.Name}.lblAppPath"];
+            lblAppArguments.Text = Configs.Language.Items[$"{this.Name}.lblAppArguments"];
+            lblPreviewLabel.Text = Configs.Language.Items[$"{this.Name}.lblPreviewLabel"];
 
-            btnReset.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnReset"];
-            btnOK.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.Lang.Items[$"{this.Name}.btnClose"];
+            btnReset.Text = Configs.Language.Items[$"{this.Name}.btnReset"];
+            btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
-        private void frmEditEditingAssocisation_Load(object sender, EventArgs e)
+        private void frmEditApp_Load(object sender, EventArgs e)
         {
             // Issue #543 Prevent usage of characters which cause problems for settings
             txtFileExtension.KeyPress += textBox_KeyPress;
@@ -114,7 +115,7 @@ namespace ImageGlass
             return false;
         }
 
-        private void frmEditEditingAssocisation_KeyDown(object sender, KeyEventArgs e)
+        private void frmEditApp_KeyDown(object sender, KeyEventArgs e)
         {
             //close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
@@ -124,7 +125,7 @@ namespace ImageGlass
             }
         }
 
-        private void frmEditEditingAssocisation_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmEditApp_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!_isAllowFormClosed)
             {
@@ -139,11 +140,11 @@ namespace ImageGlass
         {
             // Make certain the app arguments has the file substitution string
             var txt = txtAppArguments.Text.Trim();
-            if (txt.ToLower().Contains(ImageEditingAssociation.FileMacro))
+            if (txt.ToLower().Contains(EditApp.FileMacro))
                 return;
 
             //use double quotes as default
-            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{ImageEditingAssociation.FileMacro}\"";
+            txtAppArguments.Text += (txt.Length > 0 ? " " : "") + $"\"{EditApp.FileMacro}\"";
         }
 
         /// <summary>
@@ -153,14 +154,14 @@ namespace ImageGlass
         {
             var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
 
-            var fileSample = GlobalSetting.ImageList.GetFileName(GlobalSetting.CurrentIndex);
+            var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
             if (!File.Exists(fileSample))
             {
                 fileSample = @"C:\fake dir\sample photo.jpg";
             }
             
             // Something has changed; update the sample text
-            var cmd = $"{appPath} {txtAppArguments.Text.Replace(ImageEditingAssociation.FileMacro, fileSample)}";
+            var cmd = $"{appPath} {txtAppArguments.Text.Replace(EditApp.FileMacro, fileSample)}";
             txtCommandPreview.Text = cmd;
         }
 

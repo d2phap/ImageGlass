@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace ImageGlass.UI.Renderers
 {
-    public class SystemRenderer
+    public static class SystemRenderer
     {
         [DllImport("uxtheme.dll")]
-        public static extern int SetWindowTheme(
+        private static extern int SetWindowTheme(
             [In] IntPtr hwnd,
             [In, MarshalAs(UnmanagedType.LPWStr)] string pszSubAppName,
             [In, MarshalAs(UnmanagedType.LPWStr)] string pszSubIdList
@@ -36,7 +37,7 @@ namespace ImageGlass.UI.Renderers
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int ApplyTheme(System.Windows.Forms.Control control)
+        public static int ApplyTheme(Control control)
         {
             return ApplyTheme(control, "Explorer");
         }
@@ -47,7 +48,7 @@ namespace ImageGlass.UI.Renderers
         /// <param name="control"></param>
         /// <param name="theme"></param>
         /// <returns></returns>
-        public int ApplyTheme(System.Windows.Forms.Control control, string theme)
+        public static int ApplyTheme(Control control, string theme)
         {
             try
             {
@@ -72,7 +73,7 @@ namespace ImageGlass.UI.Renderers
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int ClearTheme(System.Windows.Forms.Control control)
+        public static int ClearTheme(Control control)
         {
             return ApplyTheme(control, string.Empty);
         }

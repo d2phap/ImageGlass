@@ -24,7 +24,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
+using ImageGlass.Base;
 
 namespace ImageGlass
 {
@@ -143,7 +144,7 @@ namespace ImageGlass
             panelColor.BackColor = color;
 
             //RGBA color -----------------------------------------------
-            if (GlobalSetting.IsColorPickerRGBA)
+            if (Configs.IsColorPickerRGBA)
             {
                 lblRGB.Text = "RGBA:";
                 txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, Math.Round(color.A / 255.0, 3));
@@ -155,10 +156,10 @@ namespace ImageGlass
             }
 
             //HEXA color -----------------------------------------------
-            if (GlobalSetting.IsColorPickerHEXA)
+            if (Configs.IsColorPickerHEXA)
             {
                 lblHEX.Text = "HEXA:";
-                txtHEX.Text = UI.Theme.ConvertColorToHEX(color);
+                txtHEX.Text = Theme.ConvertColorToHEX(color);
             }
             else
             {
@@ -172,7 +173,7 @@ namespace ImageGlass
 
             //HSLA color -----------------------------------------------
             var hsla = Theme.ConvertColorToHSLA(color);
-            if (GlobalSetting.IsColorPickerHSLA)
+            if (Configs.IsColorPickerHSLA)
             {
                 lblHSL.Text = "HSLA:";
                 txtHSL.Text = string.Format("{0}, {1}%, {2}%, {3}", hsla[0], hsla[1], hsla[2], hsla[3]);
@@ -209,7 +210,7 @@ namespace ImageGlass
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowColorPickerOnStartup = false;
+            Configs.IsShowColorPickerOnStartup = false;
             this.Close();
         }
 
@@ -227,7 +228,7 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) || //ESC 
                 (e.KeyCode == Keys.K && e.Control && e.Shift && !e.Alt))//CTRL + SHIFT + K
             {
-                LocalSetting.IsShowColorPickerOnStartup = false;
+                Configs.IsShowColorPickerOnStartup = false;
                 this.Close();
             }
             #endregion
@@ -236,9 +237,9 @@ namespace ImageGlass
 
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LocalSetting.IsColorPickerToolOpening = false;
+            Local.IsColorPickerToolOpening = false;
 
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
+            Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
         }
 
 
@@ -247,7 +248,7 @@ namespace ImageGlass
         /// </summary>
         public void UpdateUI()
         {
-            SetColors(LocalSetting.Theme);
+            SetColors(Configs.Theme);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)
@@ -255,7 +256,7 @@ namespace ImageGlass
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
+            var rc = Base.Helpers.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {
@@ -276,15 +277,15 @@ namespace ImageGlass
             lblHEX.Text = "HEX:";
             lblHSL.Text = "HSL:";
 
-            if (GlobalSetting.IsColorPickerRGBA)
+            if (Configs.IsColorPickerRGBA)
             {
                 lblRGB.Text = "RGBA:";
             }
-            if (GlobalSetting.IsColorPickerHEXA)
+            if (Configs.IsColorPickerHEXA)
             {
                 lblHEX.Text = "HEXA:";
             }
-            if (GlobalSetting.IsColorPickerHSLA)
+            if (Configs.IsColorPickerHSLA)
             {
                 lblHSL.Text = "HSLA:";
             }

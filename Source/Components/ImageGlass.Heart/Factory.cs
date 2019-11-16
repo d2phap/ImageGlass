@@ -110,7 +110,7 @@ namespace ImageGlass.Heart
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
-        public int MaxQueue { get; set; } = 1;
+        public uint MaxQueue { get; set; } = 1;
 
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);

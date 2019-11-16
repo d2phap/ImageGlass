@@ -231,15 +231,11 @@ namespace ImageGlass.Library
         /// </summary>
         private void InitDefaultLanguageDictionary()
         {
-
-            #region Common
-            Items.Add("_.ImageFormatGroup.Default", "Default formats"); // 4.0
-            Items.Add("_.ImageFormatGroup.Optional", "Optional formats"); // 4.0
-            #endregion
+            Items.Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
 
             #region frmMain
-            
+
             #region Main menu
 
             #region File
@@ -587,7 +583,6 @@ namespace ImageGlass.Library
 
 
             #region TAB File Associations
-            Items.Add("frmSetting.lblExtensionsGroupDescription", "*Optional formats will not be automatically pre-loaded into memory."); // 4.0
             Items.Add("frmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
 
@@ -686,6 +681,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
             Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
             Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v7.0
+            Items.Add("frmSetting.KeyActions._DoNothing", "Do nothing"); // v7.0
             #endregion
 
             #endregion
@@ -695,26 +691,26 @@ namespace ImageGlass.Library
 
             #region frmAddNewFormat
             Items.Add("frmAddNewFormat.lblFileExtension", "File extension"); // 4.0
-            Items.Add("frmAddNewFormat.lblFormatGroup", "Format group"); // 4.0
             Items.Add("frmAddNewFormat.btnOK", "OK"); // 4.0
             Items.Add("frmAddNewFormat.btnClose", "Close"); // 4.0
             #endregion
 
 
-            #region frmEditEditingAssocisation
-            Items.Add("frmEditEditingAssocisation.lblFileExtension", "File extension"); // 4.0
-            Items.Add("frmEditEditingAssocisation.lblAppName", "App name"); // 4.0
-            Items.Add("frmEditEditingAssocisation.lblAppPath", "App path"); // 4.0
-            Items.Add("frmEditEditingAssocisation.lblAppArguments", "App arguments"); // 4.0
-            Items.Add("frmEditEditingAssocisation.btnReset", "Reset"); // 4.0
-            Items.Add("frmEditEditingAssocisation.btnOK", "OK"); // 4.0
-            Items.Add("frmEditEditingAssocisation.btnClose", "Close"); // 4.0
-            Items.Add("frmEditEditingAssocisation.lblPreviewLabel", "Preview"); // 5.0
+            #region frmEditApp
+            Items.Add("frmEditApp.lblFileExtension", "File extension"); // 4.0
+            Items.Add("frmEditApp.lblAppName", "App name"); // 4.0
+            Items.Add("frmEditApp.lblAppPath", "App path"); // 4.0
+            Items.Add("frmEditApp.lblAppArguments", "App arguments"); // 4.0
+            Items.Add("frmEditApp.btnReset", "Reset"); // 4.0
+            Items.Add("frmEditApp.btnOK", "OK"); // 4.0
+            Items.Add("frmEditApp.btnClose", "Close"); // 4.0
+            Items.Add("frmEditApp.lblPreviewLabel", "Preview"); // 5.0
             #endregion
 
 
             #region frmFirstLaunch
             Items.Add("frmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
+            Items.Add("frmFirstLaunch._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
             Items.Add("frmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
             Items.Add("frmFirstLaunch.btnNextStep", "Next"); //v5.0
             Items.Add("frmFirstLaunch.btnNextStep._Done", "Done!"); //v5.0

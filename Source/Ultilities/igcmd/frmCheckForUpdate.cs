@@ -24,57 +24,32 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using ImageGlass.Services;
-using ImageGlass.Services.Configuration;
 using System.Text;
+using ImageGlass.Settings;
+using ImageGlass.Base;
 
 namespace igcmd
 {
     public partial class frmCheckForUpdate : Form
     {
+        private Update up = new Update();
+        private string UpdateInfoFile { get => App.ConfigDir(Dir.Temporary, "update.xml"); }
+
+
         public frmCheckForUpdate()
         {
             InitializeComponent();
         }
 
-        Update up = new Update();
-        string updateInfoFile = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
-
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            if (File.Exists(updateInfoFile))
-                File.Delete(updateInfoFile);
-            Application.Exit();
-        }
-
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
-
-            picStatus.Image = igcmd.Properties.Resources.loading;
-            Thread t = new Thread(new ThreadStart(CheckForUpdate))
-            {
-                Priority = ThreadPriority.BelowNormal,
-                IsBackground = true
-            };
-            t.Start();
-
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(GlobalSetting.StartUpDir("ImageGlass.exe"));
-
-            txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
-
-            //CheckForUpdate();
-
-        }
 
         private void CheckForUpdate()
         {
-            up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateInfoFile);
+            up = new Update(new Uri("https://imageglass.org/checkforupdate"), UpdateInfoFile);
+            Configs.IsNewVersionAvailable = false;
 
-            if (File.Exists(updateInfoFile))
+            if (File.Exists(UpdateInfoFile))
             {
-                File.Delete(updateInfoFile);
+                File.Delete(UpdateInfoFile);
             }
 
             StringBuilder sb = new StringBuilder();
@@ -97,7 +72,7 @@ namespace igcmd
                     $"Size: {up.Info.Size}\r\n" +
                     $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
 
-                if (up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")))
+                if (up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")))
                 {
                     if (up.Info.VersionType.ToLower() == "stable")
                     {
@@ -112,8 +87,7 @@ namespace igcmd
                     picStatus.Image = igcmd.Properties.Resources.warning;
                     btnDownload.Enabled = true;
 
-                    GlobalSetting.IsNewVersionAvailable = true;
-                    
+                    Configs.IsNewVersionAvailable = true;
                 }
                 else
                 {
@@ -121,25 +95,45 @@ namespace igcmd
                     lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
                     btnDownload.Enabled = false;
                     picStatus.Image = igcmd.Properties.Resources.ok;
-
-                    GlobalSetting.IsNewVersionAvailable = false;
                 }
 
-                GlobalSetting.SetConfig("IsNewVersionAvailable", GlobalSetting.IsNewVersionAvailable.ToString());
             }
 
             txtUpdates.Text += sb.ToString();
-
-            //save last update
-            GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("M/d/yyyy HH:mm:ss"));
         }
+
+
+
+        #region Form events
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory(App.ConfigDir(Dir.Temporary));
+
+            picStatus.Image = igcmd.Properties.Resources.loading;
+            var t = new Thread(new ThreadStart(CheckForUpdate))
+            {
+                Priority = ThreadPriority.BelowNormal,
+                IsBackground = true
+            };
+            t.Start();
+
+            var fv = FileVersionInfo.GetVersionInfo(App.StartUpDir("ImageGlass.exe"));
+
+            txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
+        }
+
+        private void frmCheckForUpdate_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (File.Exists(UpdateInfoFile))
+                File.Delete(UpdateInfoFile);
+        }
+
 
         private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
-                Process.Start(up.Info.Decription + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(up.Info.Decription + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
             {
@@ -147,17 +141,26 @@ namespace igcmd
             }
         }
 
+
         private void btnDownload_Click(object sender, EventArgs e)
         {
             try
             {
-                string version = GlobalSetting.GetConfig("AppVersion", "1.0").Replace(".", "_");
-                Process.Start(up.Info.Link.ToString() + "?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(up.Info.Link.ToString() + $"?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch
             {
                 MessageBox.Show("Check your Internet connection!");
             }
         }
+
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
+
     }
 }

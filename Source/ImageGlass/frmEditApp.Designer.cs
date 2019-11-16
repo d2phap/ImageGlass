@@ -1,6 +1,6 @@
 ﻿namespace ImageGlass
 {
-    partial class frmEditEditingAssocisation
+    partial class frmEditApp
     {
         /// <summary>
         /// Required designer variable.
@@ -241,14 +241,14 @@
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmEditEditingAssocisation";
+            this.Name = "frmEditApp";
             this.RightToLeftLayout = true;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditEditingAssocisation_FormClosing);
-            this.Load += new System.EventHandler(this.frmEditEditingAssocisation_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmEditEditingAssocisation_KeyDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditApp_FormClosing);
+            this.Load += new System.EventHandler(this.frmEditApp_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmEditApp_KeyDown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

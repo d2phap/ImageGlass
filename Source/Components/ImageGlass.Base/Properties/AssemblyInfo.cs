@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImageGlass.Settings")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ImageGlass.Base")]
+[assembly: AssemblyDescription("The base information of ImageGlass app")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ImageGlass.Settings")]
-[assembly: AssemblyCopyright("Copyright © Duong Dieu Phap 2019")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
+[assembly: AssemblyProduct("ImageGlass.Base")]
+[assembly: AssemblyCopyright("Copyright © 2019 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4bad780f-8071-4034-9020-ecc9f4352422")]
+[assembly: Guid("6cc96a70-6773-41b5-9fca-4f0ab6fad8ca")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,4 +32,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+//[assembly: AssemblyFileVersion("1.0.0.0")]

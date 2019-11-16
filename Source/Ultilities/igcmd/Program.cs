@@ -18,8 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Library.Image;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
@@ -27,7 +28,7 @@ namespace igcmd
 {
     static class Program
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
 
@@ -46,25 +47,25 @@ namespace igcmd
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+            // Load user configs
+            Configs.Load();
             
 
-            //Set desktop wallpaper
+            // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper")
             {
-                //Get image's path
+                // Get image's path
                 string imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2)
                 {
-                    //Get style
+                    // Get style
                     Enum.TryParse(args[2], out style);
                 }
 
-                //Apply changes and return exit code
+                // Apply changes and return exit code
                 return (int)DesktopWallapaper.Set(imgPath, style);
             }
             #endregion
@@ -73,14 +74,14 @@ namespace igcmd
             // check for update
             else if (topcmd == "igupdate")
             {
-                Core.CheckForUpdate();
+                return Core.CheckForUpdate() ? 1 : 0;
             }
 
 
             // auto check for update
             else if (topcmd == "igautoupdate")
             {
-                Core.AutoUpdate();
+                return Core.AutoUpdate() ? 1 : 0;
             }
 
 

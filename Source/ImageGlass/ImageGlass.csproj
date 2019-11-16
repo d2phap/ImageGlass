@@ -164,11 +164,11 @@
     <Compile Include="frmColorPicker.Designer.cs">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmEditEditingAssocisation.cs">
+    <Compile Include="frmEditApp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEditEditingAssocisation.Designer.cs">
-      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
+    <Compile Include="frmEditApp.Designer.cs">
+      <DependentUpon>frmEditApp.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -188,7 +188,7 @@
     <Compile Include="frmSetting.Designer.cs">
       <DependentUpon>frmSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="LocalSetting.cs" />
+    <Compile Include="Local.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmAbout.resx">
@@ -201,8 +201,8 @@
     <EmbeddedResource Include="frmColorPicker.resx">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEditEditingAssocisation.resx">
-      <DependentUpon>frmEditEditingAssocisation.cs</DependentUpon>
+    <EmbeddedResource Include="frmEditApp.resx">
+      <DependentUpon>frmEditApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
@@ -285,6 +285,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj">
+      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
+      <Name>ImageGlass.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.Heart\ImageGlass.Heart.csproj">
       <Project>{51493B09-7A0E-461F-BE18-A6CF629A8FAB}</Project>
       <Name>ImageGlass.Heart</Name>
@@ -304,6 +308,10 @@
     <ProjectReference Include="..\Components\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj">
+      <Project>{4bad780f-8071-4034-9020-ecc9f4352422}</Project>
+      <Name>ImageGlass.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj">
       <Project>{76486f88-aa16-4d7d-bbf6-0f1c604d5853}</Project>

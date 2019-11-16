@@ -20,7 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
+using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
 
@@ -103,35 +104,35 @@ namespace ImageGlass
         {
             // Apply current theme ------------------------------------------------------
             OnDpiChanged();
-            SetColors(LocalSetting.Theme);
+            SetColors(Configs.Theme);
 
             // Remove white line under tool strip
-            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(LocalSetting.Theme.ToolbarBackgroundColor, LocalSetting.Theme.TextInfoColor);
+            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(Configs.Theme.ToolbarBackgroundColor, Configs.Theme.TextInfoColor);
 
-            toolPageNav.BackgroundImage = LocalSetting.Theme.ToolbarBackgroundImage.Image;
-            toolPageNav.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
+            toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.Alignment = ToolbarAlignment.CENTER;
 
             // Overflow button and Overflow dropdown
-            toolPageNav.OverflowButton.DropDown.BackColor = LocalSetting.Theme.ToolbarBackgroundColor;
+            toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.OverflowButton.AutoSize = false;
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
             
-            btnNextPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainNextPage"];
-            btnPreviousPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainPrevPage"];
-            btnFirstPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainFirstPage"];
-            btnLastPage.ToolTipText = GlobalSetting.Lang.Items["frmMain.mnuMainLastPage"];
+            btnNextPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainNextPage"];
+            btnPreviousPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainPrevPage"];
+            btnFirstPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainFirstPage"];
+            btnLastPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainLastPage"];
 
         }
 
         private void OnDpiChanged()
         {
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolPageNav, (int)Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
 
             // Update toolbar icon according to the new size
-            LoadToolbarIcons(LocalSetting.Theme);
+            LoadToolbarIcons(Configs.Theme);
 
             // Update window size
             this.Width = toolPageNav.PreferredSize.Width;
@@ -155,7 +156,7 @@ namespace ImageGlass
 
             //Windows Bound (Position + Size)-------------------------------------------
             // TODO must be different from Color Picker
-            Rectangle rc = GlobalSetting.StringToRect("0,0,300,160");
+            Rectangle rc = Helpers.StringToRect("0,0,300,160");
 
             if (rc.X == 0 && rc.Y == 0)
             {
@@ -176,22 +177,22 @@ namespace ImageGlass
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
                 (e.KeyCode == Keys.J && e.Control && e.Shift && !e.Alt)) // CTRL + SHIFT + J
             {
-                LocalSetting.IsShowPageNavOnStartup = false;
+                Configs.IsShowPageNavOnStartup = false;
                 this.Close();
             }
         }
 
         private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LocalSetting.IsPageNavToolOpenning = false;
+            Local.IsPageNavToolOpenning = false;
 
-            LocalSetting.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+            Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            LocalSetting.IsShowPageNavOnStartup = false;
+            Configs.IsShowPageNavOnStartup = false;
             this.Close();
         }
         #endregion

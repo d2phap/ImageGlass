@@ -17,21 +17,41 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
+using ImageGlass.Heart;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
 namespace ImageGlass
 {
-    public static class LocalSetting
+    public static class Local
     {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
-        private static UI.Theme _theme;
 
 
         #region Auto Properties
+
+        /// <summary>
+        /// Gets, sets index of the viewing image
+        /// </summary>
+        public static int CurrentIndex { get; set; } = -1;
+
+
+        /// <summary>
+        /// Gets, sets image list
+        /// </summary>
+        public static Factory ImageList { get; set; } = new Factory();
+
+
+        /// <summary>
+        /// Gets, sets image error value
+        /// </summary>
+        public static Exception ImageError { get; set; } = null;
+
+
         /// <summary>
         /// Check if frmColorPicker is opening.
         /// This is for toggle Color Picker menu in frmMain
@@ -40,22 +60,10 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Gets, sets value that indicates frmColorPicker tool will be open on startup
-        /// </summary>
-        public static bool IsShowColorPickerOnStartup { get; set; } = false;
-
-
-        /// <summary>
         /// Check if frmPageNav is opening.
         /// This is for toggle Page Navigation menu in frmMain
         /// </summary>
         public static bool IsPageNavToolOpenning { get; set; } = false;
-
-
-        /// <summary>
-        /// Gets, sets value that indicates frmPageNav tool will be open on startup
-        /// </summary>
-        public static bool IsShowPageNavOnStartup { get; set; } = false;
 
 
         /// <summary>
@@ -73,7 +81,7 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets active value whenever hover on picturebox
         /// </summary>
-        public static MainFormForceUpdateAction ForceUpdateActions { get; set; } = MainFormForceUpdateAction.NONE;
+        public static ForceUpdateActions ForceUpdateActions { get; set; } = ForceUpdateActions.NONE;
 
 
         /// <summary>
@@ -162,16 +170,6 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
-        }
-
-
-        /// <summary>
-        /// Gets, sets current app theme
-        /// </summary>
-        public static UI.Theme Theme
-        {
-            get => LazyInitializer.EnsureInitialized(ref _theme, () => new UI.Theme());
-            set => _theme = value;
         }
 
 

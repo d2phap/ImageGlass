@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 
-namespace ImageGlass.Services.Configuration
+namespace ImageGlass.Base
 {
     /// <summary>
     /// The loading order list.
@@ -59,19 +59,6 @@ namespace ImageGlass.Services.Configuration
         ClearPixels = 2
     }
 
-    public enum ImageFormatGroup
-    {
-        Default = 0,
-        Optional = 1
-    }
-
-    public enum Constants
-    {
-        MENU_ICON_HEIGHT = 21,
-        TOOLBAR_ICON_HEIGHT = 20,
-        TOOLBAR_HEIGHT = 40,
-        VIEWER_GRID_SIZE = 8
-    }
 
     /// <summary>
     /// The list of mousewheel actions.
@@ -91,10 +78,10 @@ namespace ImageGlass.Services.Configuration
     /// Define the flags to tell frmMain update the UI
     /// </summary>
     [Flags]
-    public enum MainFormForceUpdateAction
+    public enum ForceUpdateActions
     {
         NONE = 0,
-        COLOR_PICKER_MENU = 1,
+        OTHER_SETTINGS = 1,
         THEME = 2,
         LANGUAGE = 4,
         THUMBNAIL_BAR = 8,
@@ -103,7 +90,7 @@ namespace ImageGlass.Services.Configuration
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
         IMAGE_LIST_NO_RECURSIVE = 256,
-        OTHER_SETTINGS = 512,
+        COLOR_PICKER_MENU = 512,
         PAGE_NAV_MENU = 1024
     }
 
@@ -127,7 +114,7 @@ namespace ImageGlass.Services.Configuration
     ///
     /// The integer value of the enum is used for storing the config info.
     /// </summary>
-    public enum ToolbarButtons
+    public enum ToolbarButton
     {
         Separator = -1,
         btnBack = 0,

@@ -20,9 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Windows.Forms;
+using ImageGlass.Base;
 using ImageGlass.Services;
-using ImageGlass.Services.Configuration;
-
+using ImageGlass.Settings;
 
 namespace igcmd
 {
@@ -32,15 +32,15 @@ namespace igcmd
         /// <summary>
         /// Check for update
         /// </summary>
-        public static void AutoUpdate()
+        public static bool AutoUpdate()
         {
             // Issue #520: intercept any possible exception and fail quietly
             try
             {
-                Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
+                Directory.CreateDirectory(App.ConfigDir(Dir.Temporary));
 
-                string updateXML = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
-                Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
+                var updateXML = App.ConfigDir(Dir.Temporary, "update.xml");
+                var up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
                 if (File.Exists(updateXML))
                 {
@@ -48,27 +48,30 @@ namespace igcmd
                 }
 
                 if (!up.IsError &&
-                    up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")) &&
+                    up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")) &&
                     up.Info.VersionType.ToLower() == "stable")
                 {
-                    frmCheckForUpdate f = new frmCheckForUpdate();
-                    f.ShowDialog();
+                    using (var f = new frmCheckForUpdate())
+                    {
+                        f.ShowDialog();
+                    }
                 }
             }
-            catch (Exception e)
-            {
-            }
+            catch { }
 
-            Application.Exit();
+
+            return Configs.IsNewVersionAvailable;
         }
 
 
         /// <summary>
         /// Check for update
         /// </summary>
-        public static void CheckForUpdate()
+        public static bool CheckForUpdate()
         {
             Application.Run(new frmCheckForUpdate());
+
+            return Configs.IsNewVersionAvailable;
         }
 
     }
