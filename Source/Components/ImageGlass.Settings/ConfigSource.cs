@@ -68,6 +68,12 @@ namespace ImageGlass.Settings
         /// </summary>
         public string Version { get; set; } = "7.5";
 
+
+        /// <summary>
+        /// Gets, sets value indicates that config file is compatible with ImageGlass version or not
+        /// </summary>
+        public bool IsCompatible { get; set; } = true;
+
         #endregion
 
 
@@ -101,12 +107,22 @@ namespace ImageGlass.Settings
         /// Loads the given filename, returns all configs
         /// </summary>
         /// <returns></returns>
-        private Dictionary<string, string> LoadConfigFile(string filename)
+        private Dictionary<string, string> LoadConfigFile(string filename, bool saveConfigInfo = false)
         {
             var doc = ReadXMLFile(filename);
 
             XmlElement root = doc.DocumentElement;// <ImageGlass>
             XmlElement nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
+
+            if (saveConfigInfo)
+            {
+                // Get <Info> element
+                XmlElement nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
+                var version = nInfo.GetAttribute("version");
+                this.IsCompatible = version == this.Version;
+                this.Version = this.IsCompatible ? version : this.Version;
+            }
+            
 
             // Get <Content> element
             XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];// <Content>
@@ -200,7 +216,7 @@ namespace ImageGlass.Settings
         /// </summary>
         public void LoadUserConfigs()
         {
-            var userConfigs = LoadConfigFile(this.Filename);
+            var userConfigs = LoadConfigFile(this.Filename, true);
             var defaultConfigs = LoadConfigFile(this.DefaultConfigFilename);
             this.AdminConfigs = LoadConfigFile(this.AdminConfigFilename);
 
