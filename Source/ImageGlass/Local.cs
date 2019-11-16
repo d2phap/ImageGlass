@@ -81,7 +81,7 @@ namespace ImageGlass
         /// <summary>
         /// Gets, sets active value whenever hover on picturebox
         /// </summary>
-        public static MainFormForceUpdateAction ForceUpdateActions { get; set; } = MainFormForceUpdateAction.NONE;
+        public static ForceUpdateActions ForceUpdateActions { get; set; } = ForceUpdateActions.NONE;
 
 
         /// <summary>

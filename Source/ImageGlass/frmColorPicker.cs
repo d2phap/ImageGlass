@@ -239,7 +239,7 @@ namespace ImageGlass
         {
             Local.IsColorPickerToolOpening = false;
 
-            Local.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
+            Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
         }
 
 

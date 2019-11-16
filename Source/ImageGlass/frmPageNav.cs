@@ -186,7 +186,7 @@ namespace ImageGlass
         {
             Local.IsPageNavToolOpenning = false;
 
-            Local.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+            Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 

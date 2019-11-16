@@ -38,6 +38,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -2021,6 +2022,7 @@ namespace ImageGlass
             }
         }
 
+
         private void MnuViewChannelsItem_Click(object sender, EventArgs e)
         {
             var mnu = (ToolStripMenuItem)sender;
@@ -2048,6 +2050,7 @@ namespace ImageGlass
             }
         }
 
+
         /// <summary>
         /// Handle page navigation event
         /// </summary>
@@ -2071,6 +2074,51 @@ namespace ImageGlass
                 case frmPageNav.NavEvent.PageLast:
                     mnuMainLastPage_Click(null, null);
                     break;
+            }
+        }
+
+
+        /// <summary>
+        /// Load toolbar configs and update the buttons
+        /// </summary>
+        private void UpdateToolbarButtons()
+        {
+            toolMain.Items.Clear();
+
+            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
+
+            // Update size of toolbar
+            var newBtnHeight = (int)Math.Floor(toolMain.Height * 0.8);
+
+            // get correct icon height
+            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
+
+            foreach (var item in btnList)
+            {
+                if (item == ToolbarButtons.Separator)
+                {
+                    toolMain.Items.Add(new ToolStripSeparator
+                    {
+                        AutoSize = false,
+                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
+                        Height = (int)(hIcon * 1.2)
+                    });
+                }
+                else
+                {
+                    try
+                    {
+                        var info = typeof(frmMain).GetField(item.ToString(), BindingFlags.Instance | BindingFlags.NonPublic);
+                        var btn = info.GetValue(this) as ToolStripItem;
+
+                        // update the item size
+                        btn.Size = new Size(newBtnHeight, newBtnHeight);
+
+                        // add item to toolbar
+                        toolMain.Items.Add(btn);
+                    }
+                    catch { }
+                }
             }
         }
 
@@ -2212,14 +2260,13 @@ namespace ImageGlass
 
 
                 // Load Toolbar buttons
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
                 frmMain_Activated(null, null);
 
 
                 // Load state of Toolbar 
                 Configs.IsShowToolBar = !Configs.IsShowToolBar;
                 mnuMainToolbar_Click(null, EventArgs.Empty);
-
 
                 Application.DoEvents();
 
@@ -2233,7 +2280,7 @@ namespace ImageGlass
 
 
                 // Toolbar alignment and position
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
                 frmMain_Activated(null, EventArgs.Empty);
 
 
@@ -2246,7 +2293,7 @@ namespace ImageGlass
 
 
                 // Load state of Thumbnail
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_BAR;
                 frmMain_Activated(null, EventArgs.Empty);
 
 
@@ -2270,7 +2317,7 @@ namespace ImageGlass
 
 
                 // force update language pack
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
                 frmMain_Activated(null, null);
 
 
@@ -2612,11 +2659,11 @@ namespace ImageGlass
         {
             var flags = Local.ForceUpdateActions;
 
-            //do nothing
-            if (flags == MainFormForceUpdateAction.NONE) return;
+            // do nothing
+            if (flags == ForceUpdateActions.NONE) return;
 
             #region LANGUAGE
-            if ((flags & MainFormForceUpdateAction.LANGUAGE) == MainFormForceUpdateAction.LANGUAGE)
+            if ((flags & ForceUpdateActions.LANGUAGE) == ForceUpdateActions.LANGUAGE)
             {
                 #region Update language strings
 
@@ -2785,7 +2832,7 @@ namespace ImageGlass
 
 
             #region THUMBNAIL_BAR or THUMBNAIL_ITEMS
-            if ((flags & MainFormForceUpdateAction.THUMBNAIL_BAR) == MainFormForceUpdateAction.THUMBNAIL_BAR || (flags & MainFormForceUpdateAction.THUMBNAIL_ITEMS) == MainFormForceUpdateAction.THUMBNAIL_ITEMS)
+            if ((flags & ForceUpdateActions.THUMBNAIL_BAR) == ForceUpdateActions.THUMBNAIL_BAR || (flags & ForceUpdateActions.THUMBNAIL_ITEMS) == ForceUpdateActions.THUMBNAIL_ITEMS)
             {
                 // Update thumbnail bar position
                 Configs.IsShowThumbnail = !Configs.IsShowThumbnail;
@@ -2798,7 +2845,7 @@ namespace ImageGlass
 
 
             #region THUMBNAIL_ITEMS
-            if ((flags & MainFormForceUpdateAction.THUMBNAIL_ITEMS) == MainFormForceUpdateAction.THUMBNAIL_ITEMS)
+            if ((flags & ForceUpdateActions.THUMBNAIL_ITEMS) == ForceUpdateActions.THUMBNAIL_ITEMS)
             {
                 //Update thumbnail image size
                 LoadThumbnails();
@@ -2807,7 +2854,7 @@ namespace ImageGlass
 
 
             #region COLOR_PICKER_MENU
-            if ((flags & MainFormForceUpdateAction.COLOR_PICKER_MENU) == MainFormForceUpdateAction.COLOR_PICKER_MENU)
+            if ((flags & ForceUpdateActions.COLOR_PICKER_MENU) == ForceUpdateActions.COLOR_PICKER_MENU)
             {
                 mnuMainColorPicker.Checked = Local.IsColorPickerToolOpening;
             }
@@ -2815,7 +2862,7 @@ namespace ImageGlass
 
 
             #region PAGE_NAV_MENU
-            if ((flags & MainFormForceUpdateAction.PAGE_NAV_MENU) == MainFormForceUpdateAction.PAGE_NAV_MENU)
+            if ((flags & ForceUpdateActions.PAGE_NAV_MENU) == ForceUpdateActions.PAGE_NAV_MENU)
             {
                 mnuMainPageNav.Checked = Local.IsPageNavToolOpenning;
             }
@@ -2823,7 +2870,7 @@ namespace ImageGlass
 
 
             #region THEME
-            if ((flags & MainFormForceUpdateAction.THEME) == MainFormForceUpdateAction.THEME)
+            if ((flags & ForceUpdateActions.THEME) == ForceUpdateActions.THEME)
             {
                 ApplyTheme();
                 Local.FColorPicker.UpdateUI();
@@ -2833,9 +2880,9 @@ namespace ImageGlass
 
 
             #region TOOLBAR
-            if ((flags & MainFormForceUpdateAction.TOOLBAR) == MainFormForceUpdateAction.TOOLBAR)
+            if ((flags & ForceUpdateActions.TOOLBAR) == ForceUpdateActions.TOOLBAR)
             {
-                frmSetting.UpdateToolbarButtons(toolMain, this);
+                UpdateToolbarButtons();
                 toolMain.Items.Add(btnMenu);
                 toolMain.Items.Add(lblInfo);
             }
@@ -2843,7 +2890,7 @@ namespace ImageGlass
 
 
             #region TOOLBAR_POSITION
-            if ((flags & MainFormForceUpdateAction.TOOLBAR_POSITION) == MainFormForceUpdateAction.TOOLBAR_POSITION)
+            if ((flags & ForceUpdateActions.TOOLBAR_POSITION) == ForceUpdateActions.TOOLBAR_POSITION)
             {
                 if (Configs.ToolbarPosition == ToolbarPosition.Top)
                 {
@@ -2863,7 +2910,7 @@ namespace ImageGlass
 
 
             #region IMAGE_LIST
-            if ((flags & MainFormForceUpdateAction.IMAGE_LIST) == MainFormForceUpdateAction.IMAGE_LIST)
+            if ((flags & ForceUpdateActions.IMAGE_LIST) == ForceUpdateActions.IMAGE_LIST)
             {
                 // update image list
                 MnuMainReloadImageList_Click(null, null);
@@ -2872,7 +2919,7 @@ namespace ImageGlass
 
 
             #region IMAGE_LIST_NO_RECURSIVE
-            if ((flags & MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE) == MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE)
+            if ((flags & ForceUpdateActions.IMAGE_LIST_NO_RECURSIVE) == ForceUpdateActions.IMAGE_LIST_NO_RECURSIVE)
             {
                 // update image list with the initial input path
                 PrepareLoading(new string[] { Local.InitialInputPath }, Local.ImageList.GetFileName(Local.CurrentIndex));
@@ -2881,7 +2928,7 @@ namespace ImageGlass
 
 
             #region OTHER_SETTINGS
-            if ((flags & MainFormForceUpdateAction.OTHER_SETTINGS) == MainFormForceUpdateAction.OTHER_SETTINGS)
+            if ((flags & ForceUpdateActions.OTHER_SETTINGS) == ForceUpdateActions.OTHER_SETTINGS)
             {
                 #region Update Other Settings
 
@@ -2939,7 +2986,7 @@ namespace ImageGlass
             #endregion
 
 
-            Local.ForceUpdateActions = MainFormForceUpdateAction.NONE;
+            Local.ForceUpdateActions = ForceUpdateActions.NONE;
 
         }
 
@@ -4793,7 +4840,7 @@ namespace ImageGlass
                 }
 
                 Local.FColorPicker.SetToolFormManager(_toolManager);
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.COLOR_PICKER_MENU;
+                Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
                 Local.FColorPicker.SetImageBox(picMain);
                 Local.FColorPicker.Show(this);
 
@@ -4832,7 +4879,7 @@ namespace ImageGlass
                 Local.FPageNav.SetToolFormManager(_toolManager);
                 // register page event handler
                 Local.FPageNav.NavEventHandler = PageNavigationEvent;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.PAGE_NAV_MENU;
+                Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
                 Local.FPageNav.Owner = this;
 
                 Local.FPageNav.Show(this);
@@ -4857,7 +4904,7 @@ namespace ImageGlass
                 Local.FSetting = new frmSetting();
             }
 
-            Local.ForceUpdateActions = MainFormForceUpdateAction.NONE;
+            Local.ForceUpdateActions = ForceUpdateActions.NONE;
             Local.FSetting.MainInstance = this;
             Local.FSetting.TopMost = this.TopMost;
             Local.FSetting.Show();

@@ -143,9 +143,9 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Is the thumbnail bar to be shown horizontal (down at the bottom) or vertical (on right side)?
+        /// Gets, sets the direction of thumbnail bar
         /// </summary>
-        public static bool IsThumbnailHorizontal { get; set; } = false;
+        public static bool IsThumbnailHorizontal { get; set; } = true;
 
 
         /// <summary>
@@ -1050,6 +1050,37 @@ namespace ImageGlass.Settings
         }
 
         #endregion
+
+
+        #region ToolbarButtons
+
+        /// <summary>
+        /// Returns list of toolbar buttons from string
+        /// </summary>
+        /// <param name="buttons">The input string</param>
+        /// <returns></returns>
+        public static List<ToolbarButtons> GetToolbarButtons(string buttons)
+        {
+            var list = new List<ToolbarButtons>();
+            string[] splitvals = buttons.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var item in splitvals)
+            {
+                try
+                {
+                    var btn = ParseEnum<ToolbarButtons>(item);
+                    list.Add(btn);
+                }
+                // ignore invalid values
+                catch { }
+            }
+
+            return list;
+        }
+
+
+        #endregion
+
 
 
         /// <summary>

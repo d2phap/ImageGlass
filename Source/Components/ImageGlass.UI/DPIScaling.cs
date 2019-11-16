@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ namespace ImageGlass.UI
     public static class DPIScaling
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
+        static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
 
         [DllImport("gdi32.dll")]
         static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
@@ -100,7 +100,7 @@ namespace ImageGlass.UI
         /// <returns></returns>
         public static double GetDPIScaleFactor()
         {
-            return (double)DPIScaling.CurrentDPI / DPI_DEFAULT;
+            return (double)CurrentDPI / DPI_DEFAULT;
         }
         
         /// <summary>
@@ -124,26 +124,29 @@ namespace ImageGlass.UI
         }
 
 
+        /// <summary>
+        /// Apply DPI scale factor and transform toolbar
+        /// </summary>
+        /// <param name="toolbar">The toolbar to update</param>
+        /// <param name="baseHeight">The base height of toolbar</param>
         public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight)
         {
             // Update size of toolbar
             toolbar.Height = TransformNumber(baseHeight);
 
             // Get new toolbar item height
-            int currentToolbarHeight = toolbar.Height;
-            int newToolBarItemHeight = int.Parse(Math.Floor((currentToolbarHeight * 0.8)).ToString());
+            int newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
 
-            // Update toolbar items size
-            // Tool bar buttons
+            // Update toolbar items size of Tool bar buttons
             foreach (var item in toolbar.Items.OfType<ToolStripButton>())
             {
-                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+                item.Size = new Size(newBtnHeight, newBtnHeight);
             }
 
-            // Tool bar menu buttons
+            // Update toolbar items size of Tool bar menu buttons
             foreach (var item in toolbar.Items.OfType<ToolStripDropDownButton>())
             {
-                item.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
+                item.Size = new Size(newBtnHeight, newBtnHeight);
             }
 
             // get correct icon height

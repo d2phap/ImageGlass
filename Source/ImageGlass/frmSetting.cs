@@ -1142,7 +1142,7 @@ namespace ImageGlass
             LoadExtensionList();
 
             // Request frmMain to update
-            Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+            Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e)
@@ -1165,7 +1165,7 @@ namespace ImageGlass
                     LoadExtensionList();
 
                     // Request frmMain to update
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
                 }
             }
         }
@@ -1218,7 +1218,6 @@ namespace ImageGlass
             }
 
             cmbToolbarPosition.SelectedIndex = (int)Configs.ToolbarPosition;
-
             chkHorzCenterToolbarBtns.Checked = Configs.IsCenterToolbar;
 
             // Apply Windows System theme to listview
@@ -1231,8 +1230,8 @@ namespace ImageGlass
 
 
             BuildToolbarImageList();
-            InitUsedList();
-            InitAvailList();
+            LoadUsedToolbarBtnsList();
+            LoadAvailableToolbarBtnsList();
             UpdateNavigationButtonsState();
         }
 
@@ -1247,11 +1246,13 @@ namespace ImageGlass
             if (_lstToolbarImg != null)
                 return;
 
-            _lstToolbarImg = new ImageList();
-            _lstToolbarImg.ColorDepth = ColorDepth.Depth32Bit; // max out image quality
-
             var iconHeight = ThemeImage.GetCorrectBaseIconHeight();
-            _lstToolbarImg.ImageSize = new Size(iconHeight, iconHeight); // TODO empirically determined (can get from ImageGlass.Theme)
+            _lstToolbarImg = new ImageList
+            {
+                ColorDepth = ColorDepth.Depth32Bit, // max out image quality
+                ImageSize = new Size(iconHeight, iconHeight)
+            };
+
 
             var mainType = typeof(frmMain);
             for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
@@ -1261,13 +1262,11 @@ namespace ImageGlass
                 try
                 {
                     var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                    ToolStripButton val = info.GetValue(MainInstance) as ToolStripButton;
-                    _lstToolbarImg.Images.Add(val.Image);
+
+                    var btn = info.GetValue(MainInstance) as ToolStripButton;
+                    _lstToolbarImg.Images.Add(btn.Image);
                 }
-                catch (Exception)
-                {
-                    // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
-                }
+                catch { }
             }
         }
 
@@ -1275,28 +1274,27 @@ namespace ImageGlass
         /// <summary>
         /// Build the list of "currently used" toolbar buttons
         /// </summary>
-        private void InitUsedList()
+        private void LoadUsedToolbarBtnsList()
         {
             lvUsedButtons.View = View.Tile;
             lvUsedButtons.LargeImageList = _lstToolbarImg;
 
             lvUsedButtons.Items.Clear();
 
-            var currentSet = Configs.ToolbarButtons;
-            var enumList = TranslateToolbarButtonsFromConfig(currentSet);
+            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
+            _lstMasterUsed = new List<ListViewItem>(btnList.Count);
 
-            _lstMasterUsed = new List<ListViewItem>(enumList.Count);
-            for (int i = 0; i < enumList.Count; i++)
+            for (int i = 0; i < btnList.Count; i++)
             {
                 ListViewItem lvi;
 
-                if (enumList[i] == ToolbarButtons.Separator)
+                if (btnList[i] == ToolbarButtons.Separator)
                 {
                     lvi = BuildSeparatorItem();
                 }
                 else
                 {
-                    lvi = BuildToolbarListItem(enumList[i]);
+                    lvi = BuildToolbarListItem(btnList[i]);
                 }
 
                 _lstMasterUsed.Add(lvi);
@@ -1309,7 +1307,7 @@ namespace ImageGlass
         /// <summary>
         /// Build the list of "not currently used" toolbar buttons
         /// </summary>
-        private void InitAvailList()
+        private void LoadAvailableToolbarBtnsList()
         {
             lvAvailButtons.View = View.Tile;
             lvAvailButtons.LargeImageList = _lstToolbarImg;
@@ -1317,11 +1315,11 @@ namespace ImageGlass
             lvAvailButtons.Items.Clear();
 
             // Build by adding each button NOT in the 'used' list
-            var currentSet = Configs.ToolbarButtons;
-            var enumList = TranslateToolbarButtonsFromConfig(currentSet);
+            var btnList = Configs.GetToolbarButtons(Configs.ToolbarButtons);
+
             for (int i = 0; i < (int)ToolbarButtons.MAX; i++)
             {
-                if (!enumList.Contains((ToolbarButtons)i))
+                if (!btnList.Contains((ToolbarButtons)i))
                 {
                     lvAvailButtons.Items.Add(BuildToolbarListItem((ToolbarButtons)i));
                 }
@@ -1341,7 +1339,7 @@ namespace ImageGlass
         /// <returns></returns>
         private ListViewItem BuildToolbarListItem(ToolbarButtons buttonType)
         {
-            ListViewItem lvi = new ListViewItem
+            var lvi = new ListViewItem
             {
                 ImageIndex = (int)buttonType,
                 Tag = buttonType
@@ -1354,12 +1352,12 @@ namespace ImageGlass
             try
             {
                 var info = mainType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-                var val = info.GetValue(MainInstance) as ToolStripButton;
-                lvi.Text = lvi.ToolTipText = val.ToolTipText;
+                var btn = info.GetValue(MainInstance) as ToolStripButton;
+
+                lvi.Text = lvi.ToolTipText = btn.ToolTipText;
             }
             catch (Exception)
             {
-                // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
                 return null;
             }
 
@@ -1381,35 +1379,6 @@ namespace ImageGlass
             };
         }
 
-
-        /// <summary>
-        /// The toolbar config string is stored as a comma-separated list of int values for convenience.
-        /// Here, we translate that string to a list of button enums.
-        /// </summary>
-        /// <param name="configVal"></param>
-        /// <returns></returns>
-        private static List<ToolbarButtons> TranslateToolbarButtonsFromConfig(string configVal)
-        {
-            var outVal = new List<ToolbarButtons>();
-            string[] splitvals = configVal.Split(new[] { ',' });
-
-            foreach (var splitval in splitvals)
-            {
-                if (int.TryParse(splitval, out int numVal))
-                {
-                    try
-                    {
-                        ToolbarButtons enumVal = (ToolbarButtons)numVal;
-                        outVal.Add(enumVal);
-                    }
-                    catch (Exception)
-                    {
-                        // when the enumeration value doesn't exist, don't add it!
-                    }
-                }
-            }
-            return outVal;
-        }
 
 
         /// <summary>
@@ -1457,7 +1426,7 @@ namespace ImageGlass
             if (Configs.ToolbarButtons.ToLower().CompareTo(sb.ToString().ToLower()) != 0)
             {
                 Configs.ToolbarButtons = sb.ToString();
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR;
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
             }
         }
 
@@ -1599,145 +1568,6 @@ namespace ImageGlass
 
         #endregion
 
-
-        #region PUBLIC METHODS used in [frmMain]
-        /// <summary>
-        /// This method is used by the main form to actually initialize the toolbar. 
-        /// The toolbar buttons setting is translated to a list of field NAMES from 
-        /// the frmMain class. The need of a separator is indicated by the magic string "_sep_".
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> LoadToolbarConfig()
-        {
-            var xlated = TranslateToolbarButtonsFromConfig(Configs.ToolbarButtons);
-            List<string> lstToolbarButtonNames = new List<string>();
-
-            foreach (var btnEnum in xlated)
-            {
-                switch (btnEnum)
-                {
-                    case ToolbarButtons.Separator:
-                        lstToolbarButtonNames.Add("_sep_");
-                        break;
-
-                    default:
-                        // enum name *must* match the field name in frmMain AND the resource name, e.g. "frmMain.btnBack"
-                        lstToolbarButtonNames.Add(btnEnum.ToString());
-                        break;
-                }
-            }
-
-            return lstToolbarButtonNames;
-        }
-
-
-        /// <summary>
-        /// Load toolbar configs and update the buttons
-        /// </summary>
-        /// <param name="toolMain"></param>
-        /// <param name="form"></param>
-        public static void UpdateToolbarButtons(ToolStrip toolMain, frmMain form)
-        {
-            toolMain.Items.Clear();
-
-            List<string> lstToolbarButtons = LoadToolbarConfig();
-            Type frmMainType = typeof(frmMain);
-
-            //Update size of toolbar
-            int newToolBarItemHeight = int.Parse(Math.Floor((toolMain.Height * 0.8)).ToString());
-
-            // get correct icon height
-            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
-
-            foreach (var btn in lstToolbarButtons)
-            {
-                if (btn == "_sep_")
-                {
-                    ToolStripSeparator sep = new ToolStripSeparator
-                    {
-                        AutoSize = false,
-                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
-                        Height = (int)(hIcon * 1.2)
-                    };
-
-                    toolMain.Items.Add(sep);
-                }
-                else
-                {
-                    try
-                    {
-                        var info = frmMainType.GetField(btn, BindingFlags.Instance | BindingFlags.NonPublic);
-                        var toolbarBtn = info.GetValue(form) as ToolStripItem;
-
-                        // update the item siE
-                        toolbarBtn.Size = new Size(newToolBarItemHeight, newToolBarItemHeight);
-
-                        // add item to toolbar
-                        toolMain.Items.Add(toolbarBtn);
-                    }
-                    catch (Exception)
-                    {
-                        // GetField may fail if someone renames a toolbar button w/o updating the customize toolbar logic
-                    }
-                }
-            }
-        }
-
-
-#if false
-
-        // The following code is disabled as it was an early attempt to provide toolbar buttons for
-        // rename, recycle, and edit. The menu images for those menu entries have been removed,
-        // so this code cannot be used until SVG images are provided in the theme for those functions.
-
-        private void MakeMenuButtons()
-        {
-            // These buttons were not part of the initial toolbar button set. Set up and initialize
-            // as if they were created via the designer.
-
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(frmMain));
-
-            string txt = Configs.LanguagePack.Items["frmMain.mnuMainMoveToRecycleBin"];
-            btnRecycleBin = new ToolStripButton();
-            MakeMenuButton(btnRecycleBin, "btnRecycleBin", txt);
-            btnRecycleBin.Image = ((Image)(resources.GetObject("mnuMainMoveToRecycleBin.Image")));
-            btnRecycleBin.Click += mnuMainMoveToRecycleBin_Click;
-
-            txt = Configs.LanguagePack.Items["frmMain.mnuMainRename"];
-            btnRename = new ToolStripButton();
-            MakeMenuButton(btnRename, "btnRename", txt);
-            btnRename.Image = ((Image)(resources.GetObject("mnuMainRename.Image")));
-            btnRename.Click += mnuMainRename_Click;
-
-            txt = Configs.LanguagePack.Items["frmMain.mnuMainEditImage"];
-            btnEditImage = new ToolStripButton();
-            MakeMenuButton(btnEditImage, "btnEditImage", txt);
-            btnEditImage.Image = ((Image)(resources.GetObject("mnuMainEditImage.Image")));
-            btnEditImage.Click += mnuMainEditImage_Click;
-        }
-
-        // NOTE: the field names here _must_ match the names in frmCustToolbar.cs/enum allBtns
-        private ToolStripButton btnRecycleBin;
-        private ToolStripButton btnRename;
-        private ToolStripButton btnEditImage;
-
-        private void MakeMenuButton(ToolStripButton btn, string name, string ttText)
-        {
-            btn.AutoSize = false;
-            btn.BackColor = Color.Transparent;
-            btn.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btn.ImageScaling = ToolStripItemImageScaling.None;
-            btn.ImageTransparentColor = Color.Magenta;
-            btn.Margin = new Padding(3, 0, 0, 0);
-            btn.Name = name;
-            btn.Size = new Size(28, 28);
-            btn.ToolTipText = ttText;
-        }
-
-#endif
-
-
-        #endregion
 
         #endregion
 
@@ -2001,7 +1831,7 @@ namespace ImageGlass
                         picBackgroundColor.BackColor = 
                         Configs.Theme.BackgroundColor;
 
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.THEME;
+                    Local.ForceUpdateActions |= ForceUpdateActions.THEME;
 
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2199,7 +2029,7 @@ namespace ImageGlass
             if (Configs.IsShowCheckerboardOnlyImageRegion != newBool)
             {
                 Configs.IsShowCheckerboardOnlyImageRegion = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2210,7 +2040,7 @@ namespace ImageGlass
             if (Configs.IsScrollbarsVisible != newBool)
             {
                 Configs.IsScrollbarsVisible = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2221,7 +2051,7 @@ namespace ImageGlass
             if (Configs.BackgroundColor != newColor)
             {
                 Configs.BackgroundColor = picBackgroundColor.BackColor;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2240,11 +2070,11 @@ namespace ImageGlass
                 // Request frmMain to update the thumbnail bar
                 if (Configs.IsRecursiveLoading)
                 {
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
                 }
                 else
                 {
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST_NO_RECURSIVE;
+                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST_NO_RECURSIVE;
                 }
             }
             #endregion
@@ -2259,7 +2089,7 @@ namespace ImageGlass
             if (Configs.IsCenterImage != newBool)
             {
                 Configs.IsCenterImage = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
 
 
@@ -2271,7 +2101,7 @@ namespace ImageGlass
                 if (Configs.ImageLoadingOrder != newOrder) //Only change when the new value selected  
                 {
                     Configs.ImageLoadingOrder = newOrder;
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
                 }
             }
 
@@ -2281,7 +2111,7 @@ namespace ImageGlass
                 if (Configs.ImageLoadingOrderType != newOrderType) //Only change when the new value selected  
                 {
                     Configs.ImageLoadingOrderType = newOrderType;
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.IMAGE_LIST;
+                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
                 }
             }
 
@@ -2339,7 +2169,7 @@ namespace ImageGlass
                 try
                 {
                     Configs.ZoomLevels = Helpers.StringToIntArray(newString, unsignedOnly: true, distinct: true);
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                    Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
                 }
                 catch (Exception ex)
                 {
@@ -2362,7 +2192,7 @@ namespace ImageGlass
             if (Configs.IsThumbnailHorizontal != newBool) // Only change when the new value selected  
             {
                 Configs.IsThumbnailHorizontal = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_BAR;
             }
             #endregion
 
@@ -2374,7 +2204,7 @@ namespace ImageGlass
             if (Configs.IsShowThumbnailScrollbar != newBool) // Only change when the new value selected  
             {
                 Configs.IsShowThumbnailScrollbar = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_BAR;
+                Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_BAR;
             }
             #endregion
 
@@ -2389,7 +2219,7 @@ namespace ImageGlass
             if (Configs.ThumbnailDimension != newUInt) // Only change when the new value selected
             {
                 Configs.ThumbnailDimension = newUInt;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.THUMBNAIL_ITEMS;
+                Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_ITEMS;
             }
             #endregion
 
@@ -2408,7 +2238,7 @@ namespace ImageGlass
             if (Configs.SlideShowInterval != newUInt)
             {
                 Configs.SlideShowInterval = newUInt;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.OTHER_SETTINGS;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
             #endregion
 
@@ -2433,7 +2263,7 @@ namespace ImageGlass
                 if (Configs.Language.FileName.ToLower().CompareTo(newString) != 0)
                 {
                     Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.LANGUAGE;
+                    Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
                 }
             }
             #endregion
@@ -2452,7 +2282,7 @@ namespace ImageGlass
                 if (Configs.ToolbarPosition != newPosition) // Only change when the new value selected  
                 {
                     Configs.ToolbarPosition = newPosition;
-                    Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                    Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
                 }
             }
 
@@ -2465,7 +2295,7 @@ namespace ImageGlass
             if (Configs.IsCenterToolbar != newBool)
             {
                 Configs.IsCenterToolbar = newBool;
-                Local.ForceUpdateActions |= MainFormForceUpdateAction.TOOLBAR_POSITION;
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
             }
             #endregion
 

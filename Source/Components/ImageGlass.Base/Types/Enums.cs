@@ -78,10 +78,10 @@ namespace ImageGlass.Base
     /// Define the flags to tell frmMain update the UI
     /// </summary>
     [Flags]
-    public enum MainFormForceUpdateAction
+    public enum ForceUpdateActions
     {
         NONE = 0,
-        COLOR_PICKER_MENU = 1,
+        OTHER_SETTINGS = 1,
         THEME = 2,
         LANGUAGE = 4,
         THUMBNAIL_BAR = 8,
@@ -90,7 +90,7 @@ namespace ImageGlass.Base
         TOOLBAR_POSITION = 64,
         IMAGE_LIST = 128,
         IMAGE_LIST_NO_RECURSIVE = 256,
-        OTHER_SETTINGS = 512,
+        COLOR_PICKER_MENU = 512,
         PAGE_NAV_MENU = 1024
     }
 
