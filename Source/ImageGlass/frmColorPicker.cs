@@ -256,7 +256,7 @@ namespace ImageGlass
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            var rc = Base.Helpers.StringToRect("0,0,300,160");
+            var rc = Base.Helpers.StringToRect("0;0;300;160");
 
             if (rc.X == 0 && rc.Y == 0)
             {
