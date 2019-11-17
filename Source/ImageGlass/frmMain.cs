@@ -2129,16 +2129,19 @@ namespace ImageGlass
         /// <summary>
         /// Apply ImageGlass theme
         /// </summary>
-        private void ApplyTheme()
+        private void ApplyTheme(bool changeBackground = false)
         {
             var th = Configs.Theme;
 
             // Remove white line under tool strip
             toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
 
-            // <main>
-            picMain.BackColor = th.BackgroundColor;
-            Configs.BackgroundColor = th.BackgroundColor;
+            if (changeBackground)
+            {
+                // User is changing theme. Override BackgroundColor setting.
+                picMain.BackColor = th.BackgroundColor;
+                Configs.BackgroundColor = th.BackgroundColor;
+            }
 
             picMain.GridColor = Color.FromArgb(15, 0, 0, 0);
             picMain.GridColorAlternate = Color.FromArgb(20, 255, 255, 255);
@@ -2870,7 +2873,7 @@ namespace ImageGlass
             #region THEME
             if ((flags & ForceUpdateActions.THEME) == ForceUpdateActions.THEME)
             {
-                ApplyTheme();
+                ApplyTheme(changeBackground:true);
                 Local.FColorPicker.UpdateUI();
                 Local.FPageNav.UpdateUI();
             }
