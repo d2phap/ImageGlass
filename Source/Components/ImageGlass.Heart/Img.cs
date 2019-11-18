@@ -103,8 +103,8 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
-        /// <param name="frameIndex">The index of image frame to display (if it's multipage)</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, int frameIndex = 0)
+        /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false)
         {
             // reset done status
             this.IsDone = false;
@@ -117,10 +117,11 @@ namespace ImageGlass.Heart
                 // load image data
                 this.Image = await Photo.LoadAsync(
                     filename: this.Filename,
-                    size,
-                    colorProfileName,
-                    isApplyColorProfileForAll,
-                    channel: channel
+                    size: size,
+                    colorProfileName: colorProfileName,
+                    isApplyColorProfileForAll: isApplyColorProfileForAll,
+                    channel: channel,
+                    useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
 
                 // Get frame count

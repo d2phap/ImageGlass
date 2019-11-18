@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -111,6 +110,12 @@ namespace ImageGlass.Heart
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
         public uint MaxQueue { get; set; } = 1;
+
+
+        /// <summary>
+        /// Gets, sests the value indicates that returns the embedded thumbnail if found.
+        /// </summary>
+        public bool UseEmbeddedThumbnail { get; set; } = false;
 
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
@@ -247,7 +252,8 @@ namespace ImageGlass.Heart
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
                             isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                            channel: this.Channels
+                            channel: this.Channels,
+                            useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                         );
                     }
                 }
@@ -296,7 +302,8 @@ namespace ImageGlass.Heart
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
                     isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                    channel: this.Channels
+                    channel: this.Channels,
+                    useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                 );
             }
             // get image data from cache

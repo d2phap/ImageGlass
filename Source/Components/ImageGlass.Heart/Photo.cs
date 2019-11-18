@@ -118,7 +118,7 @@ namespace ImageGlass.Heart
                 imgM.Quality = quality;
 
 
-                //Get Exif information
+                // Get Exif information
                 var profile = imgM.GetExifProfile();
 
                 // Use embedded thumbnails if specified
@@ -219,9 +219,11 @@ namespace ImageGlass.Heart
                 // windows limit of 260 characters. Workaround is to read the file bytes, but 
                 // that requires using the "long path name" prefix to succeed.
                 filename = Helpers.PrefixLongPath(filename);
-                var allBytes = File.ReadAllBytes(filename);
+                //var allBytes = File.ReadAllBytes(filename);
 
-                using (var imgM = new MagickImage(allBytes, settings))
+                // TODO: there is a bug of using bytes[]:
+                // https://github.com/dlemstra/Magick.NET/issues/538
+                using (var imgM = new MagickImage(filename, settings))
                 {
                     var checkRotation = ext != ".HEIC";
                     PreprocesMagickImage(imgM, checkRotation);
@@ -248,14 +250,23 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <param name="channel">MagickImage.Channel value</param>
+        /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1)
+        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
         {
             Bitmap bitmap = null;
 
             await Task.Run(() =>
             {
-                bitmap = Load(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false, channel: channel);
+                bitmap = Load(
+                    filename,
+                    size,
+                    colorProfileName,
+                    isApplyColorProfileForAll,
+                    quality,
+                    useEmbeddedThumbnail,
+                    channel: channel
+                );
             }).ConfigureAwait(false);
 
 
