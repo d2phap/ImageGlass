@@ -23,71 +23,38 @@ namespace ImageGlass.UI
 {
     public partial class frmDialogBox : Form
     {
-        private string _title = "";
-        private string _message = "";
-        private string _content = "";
-        private bool _isNumberOnly = false;
-
-        #region Properties
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                _title = value;
-                Text = _title;
-            }
-        }
-
-        public string Message
-        {
-            get { return _message; }
-            set { _message = value; }
-        }
-
         public string Content
         {
-            get
-            {
-                _content = txtValue.Text;
-                return _content;
-            }
-            set
-            {
-                _content = value;
-                txtValue.Text = _content;
-            }
+            get => txtValue.Text;
+            set => txtValue.Text = value;
         }
 
-        public bool IsNumberOnly
+        /// <summary>
+        /// Limit the number of characters the user can enter
+        /// </summary>
+        public int MaxLimit
         {
-            get { return _isNumberOnly; }
-            set { _isNumberOnly = value; }
+            set => txtValue.MaxLength = value;
         }
-        #endregion
 
-        public frmDialogBox()
-        {
-            InitializeComponent();
 
-            Title = "";
-            Message = "";
-            IsNumberOnly = false;
+        /// <summary>
+        /// Provide a character filter. Used either to 1) prevent non-numeric characters;
+        /// 2) prevent invalid filename characters. If not provided, any character will
+        /// be accepted.
+        /// </summary>
+        /// <returns>true if character is acceptable</returns>
+        public delegate bool KeyFilter(char key);
 
-            Text = _title;
-            lblMessage.Text = _message;
-        }
+        public KeyFilter Filter { get; set; } = null;
+
 
         public frmDialogBox(string title, string message)
         {
             InitializeComponent();
 
-            Title = title;
-            Message = message;
-            IsNumberOnly = false;
-
-            Text = _title;
-            lblMessage.Text = _message;
+            Text = title;
+            lblMessage.Text = message;
         }
 
         /// <summary>
@@ -107,13 +74,7 @@ namespace ImageGlass.UI
                     m.Result = (IntPtr)HTCAPTION;
             }
         }
-
         
-        private void lblClose_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
@@ -121,23 +82,12 @@ namespace ImageGlass.UI
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (IsNumberOnly)
-            {
-                if (char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back)
-                    return;
+            if (Filter == null) 
+                return;
+
+            bool accept = Filter(e.KeyChar);
+            if (!accept)
                 e.Handled = true;
-                /* KBR 20190302 With the exception of backspace, all these others are handled by the dialog at a higher level.
-                 * As a result, percent (%), single quote (') and period (.) would all pass the filter.
-                if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Tab ||
-                    e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)Keys.Left || e.KeyChar == (char)Keys.Right)
-                { }
-                else
-                {
-                    //Prevent input char
-                    e.Handled = true;
-                }
-                */
-            }
         }
 
         private void DialogBox_Load(object sender, EventArgs e)

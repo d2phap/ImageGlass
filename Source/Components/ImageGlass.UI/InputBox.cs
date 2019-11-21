@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2018 DUONG DIEU PHAP
+Copyright (C) 2019 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -16,44 +16,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ImageGlass.UI
 {
     public class InputBox
     {
-        private static string _message = string.Empty;
-
         /// <summary>
         /// Get, set the message user inputs
         /// </summary>
-        public static string Message
-        {
-            get { return InputBox._message; }
-            set { _message = value; }
-        }
+        public static string Message { get; private set; } = "";
 
         /// <summary>
-        /// Show input dialog box
+        /// Character filter for numbers: disallow non-numeric characters
         /// </summary>
-        /// <param name="title">Title</param>
-        /// <param name="message">Message</param>
+        /// <param name="keyval"></param>
         /// <returns></returns>
-        public static DialogResult ShowDiaLog(string title, string message)
+        private static bool NumberFilter(char keyval)
         {
-            return InputBox.ShowDiaLog(title, message, string.Empty, false);
+            return (char.IsDigit(keyval) || keyval == (char) Keys.Back);
         }
 
+
         /// <summary>
-        /// Show input dialog box
+        /// Character filter for filenames: disallow invalid filename characters
         /// </summary>
-        /// <param name="title">Title</param>
-        /// <param name="message">Message</param>
-        /// <param name="defaultValue">Default value</param>
+        /// <param name="keyval"></param>
         /// <returns></returns>
-        public static DialogResult ShowDiaLog(string title, string message, string defaultValue)
+        private static bool FilenameFilter(char keyval)
         {
-            return InputBox.ShowDiaLog(title, message, defaultValue, false);
+            var badChars = Path.GetInvalidFileNameChars();
+            bool invalid = badChars.Contains(keyval);
+            return !invalid || keyval == (char) Keys.Back;
         }
 
         /// <summary>
@@ -64,16 +61,27 @@ namespace ImageGlass.UI
         /// <param name="defaultValue">Default value</param>
         /// <param name="isNumberOnly">Number input</param>
         /// <param name="topMost">Set the form to top most</param>
+        /// <param name="isFilename">Filename input</param>
         /// <returns></returns>
-        public static DialogResult ShowDiaLog(string title, string message, string defaultValue, bool @isNumberOnly = false, bool @topMost = false)
+        public static DialogResult ShowDialog(string title, string message, string defaultValue, bool @isNumberOnly = false, bool @topMost = false, bool isFilename = false)
         {
             frmDialogBox f = new frmDialogBox(title, message)
             {
-                Title = title,
-                IsNumberOnly = isNumberOnly,
                 Content = defaultValue,
                 TopMost = topMost
             };
+
+            if (isNumberOnly)
+            {
+                f.Filter = NumberFilter;
+                f.MaxLimit = 10;
+            }
+
+            if (isFilename)
+            {
+                f.Filter = FilenameFilter;
+                f.MaxLimit = 256;
+            }
 
             if (f.ShowDialog() == DialogResult.OK)
             {

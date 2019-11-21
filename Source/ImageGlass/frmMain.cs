@@ -1567,7 +1567,7 @@ namespace ImageGlass
             //Show input box
             string str = null;
 
-            if (InputBox.ShowDiaLog(Configs.Language.Items[$"{Name}._RenameDialogText"], Configs.Language.Items[$"{Name}._RenameDialog"], newName, false) == DialogResult.OK)
+            if (InputBox.ShowDialog(Configs.Language.Items[$"{Name}._RenameDialogText"], Configs.Language.Items[$"{Name}._RenameDialog"], newName, false, this.TopMost, true) == DialogResult.OK)
             {
                 str = InputBox.Message;
             }
@@ -4066,7 +4066,7 @@ namespace ImageGlass
             // KBR 20190302 init to current index
             string s = (n + 1).ToString();
 
-            if (InputBox.ShowDiaLog("", Configs.Language.Items[$"{Name}._GotoDialogText"], "0", true, this.TopMost) == DialogResult.OK)
+            if (InputBox.ShowDialog("", Configs.Language.Items[$"{Name}._GotoDialogText"], s, true, this.TopMost) == DialogResult.OK)
             {
                 s = InputBox.Message;
             }
