@@ -250,6 +250,12 @@ namespace ImageGlass.Settings
         /// </summary>
         public static bool IsShowPageNavOnStartup { get; set; } = false;
 
+
+        /// <summary>
+        /// Gets, sets value specifying that "adjust window to image dimensions" is on
+        /// </summary>
+        public static bool IsAdjustWindowToImage { get; set; } = false;
+
         #endregion
 
 
@@ -564,6 +570,7 @@ namespace ImageGlass.Settings
             IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+            IsAdjustWindowToImage = Get<bool>(nameof(IsAdjustWindowToImage), IsAdjustWindowToImage);
 
             #endregion
 
@@ -781,6 +788,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+            Set(nameof(IsAdjustWindowToImage), IsAdjustWindowToImage);
 
             #endregion
 

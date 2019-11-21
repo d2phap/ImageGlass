@@ -777,8 +777,11 @@ namespace ImageGlass
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
                     {
-                        //reset zoom mode
-                        ApplyZoomMode(Configs.ZoomMode);
+                        if (Configs.IsAdjustWindowToImage)
+                            AdaptMainWindowToImage(); // NOTE: ApplyZoomMode side-effect
+                        else
+                            //reset zoom mode
+                            ApplyZoomMode(Configs.ZoomMode);
                     }
                 }
 
@@ -2379,6 +2382,11 @@ namespace ImageGlass
 
                 // Load state of IsWindowAlwaysOnTop value 
                 this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
+
+
+                // Load state of "adapt window to image" setting
+                mnuMainWindowAdaptImage.Checked = Configs.IsAdjustWindowToImage;
+                AdaptMainWindowToImage();
 
             }
             #endregion
@@ -4370,57 +4378,53 @@ namespace ImageGlass
             }
         }
 
+        /// <summary>
+        /// Adjust our window dimensions to fit the image size. Namely,
+        /// the window is sized so there is no "extra space" around the
+        /// image. If full-screen mode is ON and the toolbar is OFF, this
+        /// allows for a "borderless viewer" mode.
+        /// </summary>
+        private void AdaptMainWindowToImage()
+        {
+            if (!Configs.IsAdjustWindowToImage || picMain.Image == null)
+                return; // Nothing to do
+
+            WindowState = FormWindowState.Normal;
+
+            // First, adjust our main window to theoretically fit the entire
+            // picture.
+            Size = new Size(Width += picMain.Image.Width - picMain.Width,
+                Height += picMain.Image.Height - picMain.Height);
+
+            // Let the image viewer control figure out the zoom value for
+            // the full-size window
+            ApplyZoomMode(Configs.ZoomMode);
+
+            // Now that we have the new zoom value, adjust our main window
+            // to fit the *zoomed* image size
+            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
+            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
+
+            Size = new Size(Width += newW - picMain.Width,
+                            Height += newH - picMain.Height);
+
+            picMain.Bounds = new Rectangle(0, 0, newW, newH);
+        }
+
+
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
+            Configs.IsAdjustWindowToImage = !Configs.IsAdjustWindowToImage;
+            mnuMainWindowAdaptImage.Checked = Configs.IsAdjustWindowToImage;
+
             if (picMain.Image == null)
             {
                 return;
             }
-
-            Rectangle screen = Screen.FromControl(this).WorkingArea;
-            WindowState = FormWindowState.Normal;
-
-            // if image size is bigger than screen
-            if (picMain.Image.Width >= screen.Width || picMain.Height >= screen.Height)
-            {
-                Width = screen.Width;
-                Height = screen.Height;
-            }
+            if (Configs.IsAdjustWindowToImage)
+                AdaptMainWindowToImage();
             else
-            {
-                Size = new Size(Width += picMain.Image.Width - picMain.Width,
-                                Height += picMain.Image.Height - picMain.Height);
-
-                picMain.Bounds = new Rectangle(Point.Empty, picMain.Image.Size);
-            }
-
-            // reset zoom
-            ApplyZoomMode(Configs.ZoomMode);
-        }
-
-
-        private void mnuMainAutoZoom_Click(object sender, EventArgs e)
-        {
-            Configs.ZoomMode = ZoomMode.AutoZoom;
-
-            SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
-        }
-
-        private void mnuMainScaleToWidth_Click(object sender, EventArgs e)
-        {
-            Configs.ZoomMode = ZoomMode.ScaleToWidth;
-
-            SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
-        }
-
-        private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
-        {
-            Configs.ZoomMode = ZoomMode.ScaleToHeight;
-
-            SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+                ApplyZoomMode(Configs.ZoomMode);
         }
 
         private void mnuMainScaleToFit_Click(object sender, EventArgs e)
