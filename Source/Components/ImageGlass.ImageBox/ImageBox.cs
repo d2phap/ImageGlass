@@ -4670,7 +4670,8 @@ namespace ImageGlass
         ///   if set to <c>true</c> zoom in, otherwise zoom out.
         /// </param>
         /// <param name="cursorPosition">The cursor position.</param>
-        protected virtual void ProcessMouseZoom(bool isZoomIn, Point cursorPosition)
+        /// [IG_CHANGE] 20190816 Make this public so we can zoom in/out from a position via our event handlers
+        public virtual void ProcessMouseZoom(bool isZoomIn, Point cursorPosition)
         {
             PerformZoom(isZoomIn ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.User, true, cursorPosition);
         }

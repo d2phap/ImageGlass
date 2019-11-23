@@ -2545,6 +2545,8 @@ namespace ImageGlass
         #region Form events
         protected override void WndProc(ref Message m)
         {
+            bool handled = false;
+
             //Check if the received message is WM_SHOWME
             if (m.Msg == NativeMethods.WM_SHOWME)
             {
@@ -2588,11 +2590,51 @@ namespace ImageGlass
                     }
                 }
             }
+            else if (m.Msg == Touch.WM_GESTURENOTIFY) // Touch support
+            {
+                handled = Touch.AcceptTouch(this);
+            }
+            else if (m.Msg == Touch.WM_GESTURE) // Touch support
+            {
+                Touch.Action act;
+                handled = Touch.DecodeTouch(m, out act);
+
+                switch (act)
+                {
+                    case Touch.Action.Swipe_Left:
+                        NextPic(-1);
+                        break;
+                    case Touch.Action.Swipe_Right:
+                        NextPic(1);
+                        break;
+                    case Touch.Action.Rotate_CCW:
+                        mnuMainRotateCounterclockwise_Click(null, null);
+                        break;
+                    case Touch.Action.Rotate_CW:
+                        mnuMainRotateClockwise_Click(null, null);
+                        break;
+                    case Touch.Action.Zoom_In:
+                        for (int i = 0; i < Touch.ZoomFactor; i++)
+                            ZoomAtPosition(true, Touch.ZoomLocation);
+                        break;
+                    case Touch.Action.Zoom_Out:
+                        for (int i = 0; i < Touch.ZoomFactor; i++)
+                            ZoomAtPosition(false, Touch.ZoomLocation);
+                        break;
+                    case Touch.Action.Swipe_Up:
+                        btnZoomOut_Click(null, null);
+                        break;
+                    case Touch.Action.Swipe_Down:
+                        btnZoomIn_Click(null, null);
+                        break;
+                }
+            }
 
 
             base.WndProc(ref m);
+            if (handled)
+                m.Result = new IntPtr(1);
         }
-
 
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -3395,6 +3437,14 @@ namespace ImageGlass
 
 
         }
+
+
+        private void ZoomAtPosition(bool zoomIn, Point position)
+        {
+            // Zoom in/out to a specific position
+            picMain.ProcessMouseZoom(zoomIn, position);
+        }
+
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e)
         {

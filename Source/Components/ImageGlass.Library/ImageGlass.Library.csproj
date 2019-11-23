@@ -85,6 +85,7 @@
     <Compile Include="Comparer\StringLogicalComparer.cs" />
     <Compile Include="WinAPI\Shortcuts.cs" />
     <Compile Include="WinAPI\TimerAPI.cs" />
+    <Compile Include="WinAPI\Touch.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
