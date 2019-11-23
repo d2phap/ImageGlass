@@ -4427,6 +4427,31 @@ namespace ImageGlass
                 ApplyZoomMode(Configs.ZoomMode);
         }
 
+
+        private void mnuMainAutoZoom_Click(object sender, EventArgs e)
+        {
+            Configs.ZoomMode = ZoomMode.AutoZoom;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(Configs.ZoomMode);
+        }
+
+        private void mnuMainScaleToWidth_Click(object sender, EventArgs e)
+        {
+            Configs.ZoomMode = ZoomMode.ScaleToWidth;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(Configs.ZoomMode);
+        }
+
+        private void mnuMainScaleToHeight_Click(object sender, EventArgs e)
+        {
+            Configs.ZoomMode = ZoomMode.ScaleToHeight;
+
+            SelectUIZoomMode();
+            ApplyZoomMode(Configs.ZoomMode);
+        }
+
         private void mnuMainScaleToFit_Click(object sender, EventArgs e)
         {
             Configs.ZoomMode = ZoomMode.ScaleToFit;
