@@ -777,7 +777,7 @@ namespace ImageGlass
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
                     {
-                        if (Configs.IsAdjustWindowToImage)
+                        if (Configs.IsAdaptWindowToImage)
                             AdaptMainWindowToImage(); // NOTE: ApplyZoomMode side-effect
                         else
                             //reset zoom mode
@@ -1848,7 +1848,7 @@ namespace ImageGlass
                 mnuMainZoomIn.Image =
                 mnuMainViewNext.Image = 
                 mnuMainSlideShowStart.Image = 
-                mnuMainRotateCounterclockwise.Image = 
+                mnuMainRotateLeft.Image = 
 
                 mnuMainClearClipboard.Image = 
                 mnuMainToolbar.Image = 
@@ -2204,7 +2204,7 @@ namespace ImageGlass
             btnScaletoWidth.Image = th.ToolbarIcons.ScaleToWidth.Image;
             btnScaletoHeight.Image = th.ToolbarIcons.ScaleToHeight.Image;
             btnScaleToFill.Image = th.ToolbarIcons.ScaleToFill.Image;
-            btnWindowAutosize.Image = th.ToolbarIcons.AdjustWindowSize.Image;
+            btnWindowAdaptImage.Image = th.ToolbarIcons.AdjustWindowSize.Image;
 
             btnOpen.Image = th.ToolbarIcons.OpenFile.Image;
             btnRefresh.Image = th.ToolbarIcons.Refresh.Image;
@@ -2359,6 +2359,13 @@ namespace ImageGlass
                     mnuMainFullScreen.PerformClick();
                 }
 
+                // Load Auto-adapt Window To Image
+                if (Configs.IsAdaptWindowToImage)
+                {
+                    Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
+                    mnuMainWindowAdaptImage.PerformClick();
+                }
+
 
                 #region Get Last Seen Image Path & Welcome Image
                 var startUpImg = Configs.IsOpenLastSeenImage ? Configs.LastSeenImagePath : "";
@@ -2385,7 +2392,7 @@ namespace ImageGlass
 
 
                 // Load state of "adapt window to image" setting
-                mnuMainWindowAdaptImage.Checked = Configs.IsAdjustWindowToImage;
+                mnuMainWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
                 AdaptMainWindowToImage();
 
             }
@@ -2716,161 +2723,163 @@ namespace ImageGlass
             #region LANGUAGE
             if ((flags & ForceUpdateActions.LANGUAGE) == ForceUpdateActions.LANGUAGE)
             {
+                var lang = Configs.Language.Items;
+
                 #region Update language strings
 
                 #region Toolbar
-                btnBack.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainViewPrevious"];
-                btnNext.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainViewNext"];
+                btnBack.ToolTipText = lang[$"{Name}.mnuMainViewPrevious"];
+                btnNext.ToolTipText = lang[$"{Name}.mnuMainViewNext"];
 
-                btnRotateLeft.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainRotateCounterclockwise"];
-                btnRotateRight.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainRotateClockwise"];
-                btnFlipHorz.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainFlipHorz"];
-                btnFlipVert.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainFlipVert"];
-                btnDelete.ToolTipText = $"{Configs.Language.Items[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
+                btnRotateLeft.ToolTipText = lang[$"{Name}.mnuMainRotateLeft"];
+                btnRotateRight.ToolTipText = lang[$"{Name}.mnuMainRotateRight"];
+                btnFlipHorz.ToolTipText = lang[$"{Name}.mnuMainFlipHorz"];
+                btnFlipVert.ToolTipText = lang[$"{Name}.mnuMainFlipVert"];
+                btnDelete.ToolTipText = $"{lang[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
 
                 // Zoom
-                btnZoomIn.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainZoomIn"];
-                btnZoomOut.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainZoomOut"];
-                btnActualSize.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainActualSize"];
-                btnWindowAutosize.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainWindowAdaptImage"];
+                btnZoomIn.ToolTipText = lang[$"{Name}.mnuMainZoomIn"];
+                btnZoomOut.ToolTipText = lang[$"{Name}.mnuMainZoomOut"];
+                btnActualSize.ToolTipText = lang[$"{Name}.mnuMainActualSize"];
+                btnWindowAdaptImage.ToolTipText = lang[$"{Name}.mnuMainWindowAdaptImage"];
 
-                btnAutoZoom.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainAutoZoom"];
-                btnScaletoWidth.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainScaleToWidth"];
-                btnScaletoHeight.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainScaleToHeight"];
-                btnScaleToFit.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainScaleToFit"];
-                btnScaleToFill.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainScaleToFill"];
-                btnZoomLock.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainLockZoomRatio"];
+                btnAutoZoom.ToolTipText = lang[$"{Name}.mnuMainAutoZoom"];
+                btnScaletoWidth.ToolTipText = lang[$"{Name}.mnuMainScaleToWidth"];
+                btnScaletoHeight.ToolTipText = lang[$"{Name}.mnuMainScaleToHeight"];
+                btnScaleToFit.ToolTipText = lang[$"{Name}.mnuMainScaleToFit"];
+                btnScaleToFill.ToolTipText = lang[$"{Name}.mnuMainScaleToFill"];
+                btnZoomLock.ToolTipText = lang[$"{Name}.mnuMainLockZoomRatio"];
 
-                btnOpen.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainOpenFile"];
-                btnRefresh.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainRefresh"];
-                btnGoto.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainGoto"];
-                btnThumb.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainThumbnailBar"];
-                btnCheckedBackground.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainCheckBackground"];
-                btnFullScreen.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainFullScreen"];
-                btnSlideShow.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainSlideShowStart"];
-                btnConvert.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainSaveAs"];
-                btnPrintImage.ToolTipText = Configs.Language.Items[$"{Name}.mnuMainPrint"];
-                btnMenu.ToolTipText = Configs.Language.Items[$"{Name}.btnMenu"];
-                btnEdit.ToolTipText = string.Format(Configs.Language.Items[$"{Name}.mnuMainEditImage"], "");
+                btnOpen.ToolTipText = lang[$"{Name}.mnuMainOpenFile"];
+                btnRefresh.ToolTipText = lang[$"{Name}.mnuMainRefresh"];
+                btnGoto.ToolTipText = lang[$"{Name}.mnuMainGoto"];
+                btnThumb.ToolTipText = lang[$"{Name}.mnuMainThumbnailBar"];
+                btnCheckedBackground.ToolTipText = lang[$"{Name}.mnuMainCheckBackground"];
+                btnFullScreen.ToolTipText = lang[$"{Name}.mnuMainFullScreen"];
+                btnSlideShow.ToolTipText = lang[$"{Name}.mnuMainSlideShowStart"];
+                btnConvert.ToolTipText = lang[$"{Name}.mnuMainSaveAs"];
+                btnPrintImage.ToolTipText = lang[$"{Name}.mnuMainPrint"];
+                btnMenu.ToolTipText = lang[$"{Name}.btnMenu"];
+                btnEdit.ToolTipText = string.Format(lang[$"{Name}.mnuMainEditImage"], "");
                 #endregion
 
 
                 #region Main menu
 
                 #region Menu File
-                mnuMainFile.Text = Configs.Language.Items[$"{Name}.mnuMainFile"];
-                mnuMainOpenFile.Text = Configs.Language.Items[$"{Name}.mnuMainOpenFile"];
-                mnuMainOpenImageData.Text = Configs.Language.Items[$"{Name}.mnuMainOpenImageData"];
-                mnuMainNewWindow.Text = Configs.Language.Items[$"{Name}.mnuMainNewWindow"];
-                mnuMainSaveAs.Text = Configs.Language.Items[$"{Name}.mnuMainSaveAs"];
-                mnuMainRefresh.Text = Configs.Language.Items[$"{Name}.mnuMainRefresh"];
-                mnuMainReloadImage.Text = Configs.Language.Items[$"{Name}.mnuMainReloadImage"];
-                mnuMainReloadImageList.Text = Configs.Language.Items[$"{Name}.mnuMainReloadImageList"];
-                mnuMainEditImage.Text = Configs.Language.Items[$"{Name}.mnuMainEditImage"];
-                mnuMainPrint.Text = Configs.Language.Items[$"{Name}.mnuMainPrint"];
+                mnuMainFile.Text = lang[$"{Name}.{nameof(mnuMainFile)}"];
+                mnuMainOpenFile.Text = lang[$"{Name}.{nameof(mnuMainOpenFile)}"];
+                mnuMainOpenImageData.Text = lang[$"{Name}.{nameof(mnuMainOpenImageData)}"];
+                mnuMainNewWindow.Text = lang[$"{Name}.{nameof(mnuMainNewWindow)}"];
+                mnuMainSaveAs.Text = lang[$"{Name}.{nameof(mnuMainSaveAs)}"];
+                mnuMainRefresh.Text = lang[$"{Name}.{nameof(mnuMainRefresh)}"];
+                mnuMainReloadImage.Text = lang[$"{Name}.{nameof(mnuMainReloadImage)}"];
+                mnuMainReloadImageList.Text = lang[$"{Name}.{nameof(mnuMainReloadImageList)}"];
+                mnuMainEditImage.Text = lang[$"{Name}.{nameof(mnuMainEditImage)}"];
+                mnuMainPrint.Text = lang[$"{Name}.{nameof(mnuMainPrint)}"];
                 #endregion
 
 
                 #region Menu Navigation
-                mnuMainNavigation.Text = Configs.Language.Items[$"{Name}.mnuMainNavigation"];
-                mnuMainViewNext.Text = Configs.Language.Items[$"{Name}.mnuMainViewNext"];
-                mnuMainViewNext.ShortcutKeyDisplayString = Configs.Language.Items[$"{Name}.mnuMainViewNext.Shortcut"];
-                mnuMainViewPrevious.Text = Configs.Language.Items[$"{Name}.mnuMainViewPrevious"];
-                mnuMainViewPrevious.ShortcutKeyDisplayString = Configs.Language.Items[$"{Name}.mnuMainViewPrevious.Shortcut"];
+                mnuMainNavigation.Text = lang[$"{Name}.{nameof(mnuMainNavigation)}"];
+                mnuMainViewNext.Text = lang[$"{Name}.{nameof(mnuMainViewNext)}"];
+                mnuMainViewNext.ShortcutKeyDisplayString = lang[$"{Name}.{nameof(mnuMainViewNext)}.Shortcut"];
+                mnuMainViewPrevious.Text = lang[$"{Name}.{nameof(mnuMainViewPrevious)}"];
+                mnuMainViewPrevious.ShortcutKeyDisplayString = lang[$"{Name}.{nameof(mnuMainViewPrevious)}.Shortcut"];
 
-                mnuMainGoto.Text = Configs.Language.Items[$"{Name}.mnuMainGoto"];
-                mnuMainGotoFirst.Text = Configs.Language.Items[$"{Name}.mnuMainGotoFirst"];
-                mnuMainGotoLast.Text = Configs.Language.Items[$"{Name}.mnuMainGotoLast"];
+                mnuMainGoto.Text = lang[$"{Name}.{nameof(mnuMainGoto)}"];
+                mnuMainGotoFirst.Text = lang[$"{Name}.{nameof(mnuMainGotoFirst)}"];
+                mnuMainGotoLast.Text = lang[$"{Name}.{nameof(mnuMainGotoLast)}"];
 
-                mnuMainNextPage.Text = Configs.Language.Items[$"{Name}.mnuMainNextPage"];
-                mnuMainPrevPage.Text = Configs.Language.Items[$"{Name}.mnuMainPrevPage"];
-                mnuMainFirstPage.Text = Configs.Language.Items[$"{Name}.mnuMainFirstPage"];
-                mnuMainLastPage.Text = Configs.Language.Items[$"{Name}.mnuMainLastPage"];
+                mnuMainNextPage.Text = lang[$"{Name}.{nameof(mnuMainNextPage)}"];
+                mnuMainPrevPage.Text = lang[$"{Name}.{nameof(mnuMainPrevPage)}"];
+                mnuMainFirstPage.Text = lang[$"{Name}.{nameof(mnuMainFirstPage)}"];
+                mnuMainLastPage.Text = lang[$"{Name}.{nameof(mnuMainLastPage)}"];
                 #endregion
 
 
                 #region Menu Zoom
-                mnuMainZoom.Text = Configs.Language.Items[$"{Name}.mnuMainZoom"];
-                mnuMainZoomIn.Text = Configs.Language.Items[$"{Name}.mnuMainZoomIn"];
-                mnuMainZoomOut.Text = Configs.Language.Items[$"{Name}.mnuMainZoomOut"];
-                mnuMainScaleToFit.Text = Configs.Language.Items[$"{Name}.mnuMainScaleToFit"];
-                mnuMainScaleToFill.Text = Configs.Language.Items[$"{Name}.mnuMainScaleToFill"];
-                mnuMainActualSize.Text = Configs.Language.Items[$"{Name}.mnuMainActualSize"];
-                mnuMainLockZoomRatio.Text = Configs.Language.Items[$"{Name}.mnuMainLockZoomRatio"];
-                mnuMainAutoZoom.Text = Configs.Language.Items[$"{Name}.mnuMainAutoZoom"];
-                mnuMainScaleToWidth.Text = Configs.Language.Items[$"{Name}.mnuMainScaleToWidth"];
-                mnuMainScaleToHeight.Text = Configs.Language.Items[$"{Name}.mnuMainScaleToHeight"];
-                mnuMainWindowAdaptImage.Text = Configs.Language.Items[$"{Name}.mnuMainWindowAdaptImage"];
+                mnuMainZoom.Text = lang[$"{Name}.{nameof(mnuMainZoom)}"];
+                mnuMainZoomIn.Text = lang[$"{Name}.{nameof(mnuMainZoomIn)}"];
+                mnuMainZoomOut.Text = lang[$"{Name}.{nameof(mnuMainZoomOut)}"];
+                mnuMainScaleToFit.Text = lang[$"{Name}.{nameof(mnuMainScaleToFit)}"];
+                mnuMainScaleToFill.Text = lang[$"{Name}.{nameof(mnuMainScaleToFill)}"];
+                mnuMainActualSize.Text = lang[$"{Name}.{nameof(mnuMainActualSize)}"];
+                mnuMainLockZoomRatio.Text = lang[$"{Name}.{nameof(mnuMainLockZoomRatio)}"];
+                mnuMainAutoZoom.Text = lang[$"{Name}.{nameof(mnuMainAutoZoom)}"];
+                mnuMainScaleToWidth.Text = lang[$"{Name}.{nameof(mnuMainScaleToWidth)}"];
+                mnuMainScaleToHeight.Text = lang[$"{Name}.{nameof(mnuMainScaleToHeight)}"];
+                mnuMainWindowAdaptImage.Text = lang[$"{Name}.{nameof(mnuMainWindowAdaptImage)}"];
                 #endregion
 
 
                 #region Menu Image
-                mnuMainImage.Text = Configs.Language.Items[$"{Name}.mnuMainImage"];
-                mnuMainRotateCounterclockwise.Text = Configs.Language.Items[$"{Name}.mnuMainRotateCounterclockwise"];
-                mnuMainRotateClockwise.Text = Configs.Language.Items[$"{Name}.mnuMainRotateClockwise"];
-                mnuMainFlipHorz.Text = Configs.Language.Items[$"{Name}.mnuMainFlipHorz"];
-                mnuMainFlipVert.Text = Configs.Language.Items[$"{Name}.mnuMainFlipVert"];
+                mnuMainImage.Text = lang[$"{Name}.{nameof(mnuMainImage)}"];
+                mnuMainRotateLeft.Text = lang[$"{Name}.{nameof(mnuMainRotateLeft)}"];
+                mnuMainRotateRight.Text = lang[$"{Name}.{nameof(mnuMainRotateRight)}"];
+                mnuMainFlipHorz.Text = lang[$"{Name}.{nameof(mnuMainFlipHorz)}"];
+                mnuMainFlipVert.Text = lang[$"{Name}.{nameof(mnuMainFlipVert)}"];
 
-                mnuMainRename.Text = Configs.Language.Items[$"{Name}.mnuMainRename"];
-                mnuMainMoveToRecycleBin.Text = Configs.Language.Items[$"{Name}.mnuMainMoveToRecycleBin"];
-                mnuMainDeleteFromHardDisk.Text = Configs.Language.Items[$"{Name}.mnuMainDeleteFromHardDisk"];
-                mnuMainExtractPages.Text = Configs.Language.Items[$"{Name}.mnuMainExtractPages"];
-                mnuMainStartStopAnimating.Text = Configs.Language.Items[$"{Name}.mnuMainStartStopAnimating"];
-                mnuMainSetAsDesktop.Text = Configs.Language.Items[$"{Name}.mnuMainSetAsDesktop"];
-                mnuMainSetAsLockImage.Text = Configs.Language.Items[$"{Name}.mnuMainSetAsLockImage"];
-                mnuMainImageLocation.Text = Configs.Language.Items[$"{Name}.mnuMainImageLocation"];
-                mnuMainImageProperties.Text = Configs.Language.Items[$"{Name}.mnuMainImageProperties"];
-                mnuMainChannels.Text = Configs.Language.Items[$"{Name}.mnuMainChannels"];
+                mnuMainRename.Text = lang[$"{Name}.{nameof(mnuMainRename)}"];
+                mnuMainMoveToRecycleBin.Text = lang[$"{Name}.{nameof(mnuMainMoveToRecycleBin)}"];
+                mnuMainDeleteFromHardDisk.Text = lang[$"{Name}.{nameof(mnuMainDeleteFromHardDisk)}"];
+                mnuMainExtractPages.Text = lang[$"{Name}.{nameof(mnuMainExtractPages)}"];
+                mnuMainStartStopAnimating.Text = lang[$"{Name}.{nameof(mnuMainStartStopAnimating)}"];
+                mnuMainSetAsDesktop.Text = lang[$"{Name}.{nameof(mnuMainSetAsDesktop)}"];
+                mnuMainSetAsLockImage.Text = lang[$"{Name}.{nameof(mnuMainSetAsLockImage)}"];
+                mnuMainImageLocation.Text = lang[$"{Name}.{nameof(mnuMainImageLocation)}"];
+                mnuMainImageProperties.Text = lang[$"{Name}.{nameof(mnuMainImageProperties)}"];
+                mnuMainChannels.Text = lang[$"{Name}.{nameof(mnuMainChannels)}"];
                 LoadViewChannelsMenuItems(); // update Channels menu items
                 #endregion
 
 
                 #region Menu CLipboard
-                mnuMainClipboard.Text = Configs.Language.Items[$"{Name}.mnuMainClipboard"];
-                mnuMainCopy.Text = Configs.Language.Items[$"{Name}.mnuMainCopy"];
-                mnuMainCopyImageData.Text = Configs.Language.Items[$"{Name}.mnuMainCopyImageData"];
-                mnuMainCut.Text = Configs.Language.Items[$"{Name}.mnuMainCut"];
-                mnuMainCopyImagePath.Text = Configs.Language.Items[$"{Name}.mnuMainCopyImagePath"];
-                mnuMainClearClipboard.Text = Configs.Language.Items[$"{Name}.mnuMainClearClipboard"];
+                mnuMainClipboard.Text = lang[$"{Name}.{nameof(mnuMainClipboard)}"];
+                mnuMainCopy.Text = lang[$"{Name}.{nameof(mnuMainCopy)}"];
+                mnuMainCopyImageData.Text = lang[$"{Name}.{nameof(mnuMainCopyImageData)}"];
+                mnuMainCut.Text = lang[$"{Name}.{nameof(mnuMainCut)}"];
+                mnuMainCopyImagePath.Text = lang[$"{Name}.{nameof(mnuMainCopyImagePath)}"];
+                mnuMainClearClipboard.Text = lang[$"{Name}.{nameof(mnuMainClearClipboard)}"];
                 #endregion
 
 
                 #region Menu Slideshow
-                mnuMainSlideShow.Text = Configs.Language.Items[$"{Name}.mnuMainSlideShow"];
-                mnuMainSlideShowStart.Text = Configs.Language.Items[$"{Name}.mnuMainSlideShowStart"];
-                mnuMainSlideShowPause.Text = Configs.Language.Items[$"{Name}.mnuMainSlideShowPause"];
-                mnuMainSlideShowExit.Text = Configs.Language.Items[$"{Name}.mnuMainSlideShowExit"];
+                mnuMainSlideShow.Text = lang[$"{Name}.{nameof(mnuMainSlideShow)}"];
+                mnuMainSlideShowStart.Text = lang[$"{Name}.{nameof(mnuMainSlideShowStart)}"];
+                mnuMainSlideShowPause.Text = lang[$"{Name}.{nameof(mnuMainSlideShowPause)}"];
+                mnuMainSlideShowExit.Text = lang[$"{Name}.{nameof(mnuMainSlideShowExit)}"];
                 #endregion
 
 
                 #region Menu Layout
-                mnuMainLayout.Text = Configs.Language.Items[$"{Name}.mnuMainLayout"];
-                mnuMainToolbar.Text = Configs.Language.Items[$"{Name}.mnuMainToolbar"];
-                mnuMainThumbnailBar.Text = Configs.Language.Items[$"{Name}.mnuMainThumbnailBar"];
-                mnuMainCheckBackground.Text = Configs.Language.Items[$"{Name}.mnuMainCheckBackground"];
-                mnuMainAlwaysOnTop.Text = Configs.Language.Items[$"{Name}.mnuMainAlwaysOnTop"];
+                mnuMainLayout.Text = lang[$"{Name}.{nameof(mnuMainLayout)}"];
+                mnuMainToolbar.Text = lang[$"{Name}.{nameof(mnuMainToolbar)}"];
+                mnuMainThumbnailBar.Text = lang[$"{Name}.{nameof(mnuMainThumbnailBar)}"];
+                mnuMainCheckBackground.Text = lang[$"{Name}.{nameof(mnuMainCheckBackground)}"];
+                mnuMainAlwaysOnTop.Text = lang[$"{Name}.{nameof(mnuMainAlwaysOnTop)}"];
                 #endregion
 
 
                 #region Menu Tools
-                mnuMainTools.Text = Configs.Language.Items[$"{Name}.mnuMainTools"];
-                mnuMainColorPicker.Text = Configs.Language.Items[$"{Name}.mnuMainColorPicker"];
-                mnuMainPageNav.Text = Configs.Language.Items[$"{Name}.mnuMainPageNav"];
+                mnuMainTools.Text = lang[$"{Name}.{nameof(mnuMainTools)}"];
+                mnuMainColorPicker.Text = lang[$"{Name}.{nameof(mnuMainColorPicker)}"];
+                mnuMainPageNav.Text = lang[$"{Name}.{nameof(mnuMainPageNav)}"];
                 #endregion
 
 
                 #region Menu Help
-                mnuMainHelp.Text = Configs.Language.Items[$"{Name}.mnuMainHelp"];
-                mnuMainAbout.Text = Configs.Language.Items[$"{Name}.mnuMainAbout"];
-                mnuMainFirstLaunch.Text = Configs.Language.Items[$"{Name}.mnuMainFirstLaunch"];
-                mnuMainReportIssue.Text = Configs.Language.Items[$"{Name}.mnuMainReportIssue"];
+                mnuMainHelp.Text = lang[$"{Name}.{nameof(mnuMainHelp)}"];
+                mnuMainAbout.Text = lang[$"{Name}.{nameof(mnuMainAbout)}"];
+                mnuMainFirstLaunch.Text = lang[$"{Name}.{nameof(mnuMainFirstLaunch)}"];
+                mnuMainReportIssue.Text = lang[$"{Name}.{nameof(mnuMainReportIssue)}"];
                 #endregion
 
 
-                mnuMainFullScreen.Text = Configs.Language.Items[$"{Name}.mnuMainFullScreen"];
-                mnuMainShare.Text = Configs.Language.Items[$"{Name}.mnuMainShare"];
-                mnuMainSettings.Text = Configs.Language.Items[$"{Name}.mnuMainSettings"];
-                mnuMainExitApplication.Text = Configs.Language.Items[$"{Name}.mnuMainExitApplication"];
+                mnuMainFullScreen.Text = lang[$"{Name}.{nameof(mnuMainFullScreen)}"];
+                mnuMainShare.Text = lang[$"{Name}.{nameof(mnuMainShare)}"];
+                mnuMainSettings.Text = lang[$"{Name}.{nameof(mnuMainSettings)}"];
+                mnuMainExitApplication.Text = lang[$"{Name}.{nameof(mnuMainExitApplication)}"];
 
                 #endregion
 
@@ -3634,7 +3643,7 @@ namespace ImageGlass
             mnuMainScaleToHeight_Click(null, e);
         }
 
-        private void btnWindowAutosize_Click(object sender, EventArgs e)
+        private void btnWindowAdaptImage_Click(object sender, EventArgs e)
         {
             mnuMainWindowAdaptImage_Click(null, e);
         }
@@ -4436,7 +4445,7 @@ namespace ImageGlass
         /// </summary>
         private void AdaptMainWindowToImage()
         {
-            if (!Configs.IsAdjustWindowToImage || picMain.Image == null)
+            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
                 return; // Nothing to do
 
             WindowState = FormWindowState.Normal;
@@ -4468,16 +4477,19 @@ namespace ImageGlass
         }
 
 
+
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
-            Configs.IsAdjustWindowToImage = !Configs.IsAdjustWindowToImage;
-            mnuMainWindowAdaptImage.Checked = Configs.IsAdjustWindowToImage;
+            Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
+            mnuMainWindowAdaptImage.Checked = 
+                btnWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
 
             if (picMain.Image == null)
             {
                 return;
             }
-            if (Configs.IsAdjustWindowToImage)
+
+            if (Configs.IsAdaptWindowToImage)
                 AdaptMainWindowToImage();
             else
                 ApplyZoomMode(Configs.ZoomMode);

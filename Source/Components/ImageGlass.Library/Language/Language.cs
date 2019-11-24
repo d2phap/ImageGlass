@@ -295,8 +295,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v7.0
             Items.Add("frmMain.mnuMainChannels._Black", "Black"); //v7.0
             Items.Add("frmMain.mnuMainChannels._Alpha", "Alpha"); //v7.0
-            Items.Add("frmMain.mnuMainRotateCounterclockwise", "Rotate counterclockwise"); //v3.0
-            Items.Add("frmMain.mnuMainRotateClockwise", "Rotate clockwise"); //v3.0
+            Items.Add("frmMain.mnuMainRotateLeft", "Rotate left"); //v7.5
+            Items.Add("frmMain.mnuMainRotateRight", "Rotate right"); //v7.5
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
             Items.Add("frmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
             Items.Add("frmMain.mnuMainRename", "Rename image"); //v3.0
