@@ -39,7 +39,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -94,7 +93,9 @@ namespace ImageGlass
 
         private ToolFormManager _toolManager = new ToolFormManager();
 
-        private MovableForm _movableForm;
+        private MovableForm _movableForm = null;
+
+        private Icon _formIcon = null;
 
 
         // gets, sets the CancellationTokenSource of synchronious image loading task
@@ -4995,12 +4996,16 @@ namespace ImageGlass
         }
 
 
+        
         private void mnuFrameless_Click(object sender, EventArgs e)
         {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
 
             if (Configs.IsWindowFrameless)
             {
+                // TODO: No idea why the form icon disposed when toggling from Frameless to Sizable
+                // Hence, I need to backup it and restore later.
+                this._formIcon = (Icon)this.Icon.Clone();
                 this.FormBorderStyle = FormBorderStyle.None;
 
                 // In WindowAdaptToImage, we only need thin border for bos shadow
@@ -5018,15 +5023,18 @@ namespace ImageGlass
             }
             else
             {
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-                this.Padding = new Padding(0);
-
                 // Disable frameless movable
                 this._movableForm.Disable();
                 this._movableForm.Disable(picMain);
 
                 // Remove custom client border
                 FormBorder.Set(this.Handle, 0);
+
+                this.Padding = new Padding(0);
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+
+                this.Icon = (Icon)_formIcon.Clone();
+                _formIcon.Dispose();
             }
         }
 
