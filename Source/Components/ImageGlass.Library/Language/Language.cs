@@ -405,6 +405,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); // v6.0
 
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
+            Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
             #endregion
 
             #endregion

@@ -5002,14 +5002,19 @@ namespace ImageGlass
             if (Configs.IsWindowFrameless)
             {
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Padding = new Padding(2);
+
+                // In WindowAdaptToImage, we only need thin border for bos shadow
+                var border = Configs.IsAdaptWindowToImage ? 1 : 2;
+                this.Padding = new Padding(border);
 
                 // Draw client border for movable
-                FormBorder.Set(this.Handle, 2);
+                FormBorder.Set(this.Handle, border);
 
                 // Enable frameless movable
                 this._movableForm.Enable();
                 this._movableForm.Enable(picMain);
+
+                DisplayTextMessage(Configs.Language.Items[$"{Name}._Frameless"], 3000);
             }
             else
             {
