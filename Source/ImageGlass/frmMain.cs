@@ -2263,11 +2263,6 @@ namespace ImageGlass
                 picMain.BackColor = Configs.BackgroundColor;
 
 
-                // Load Toolbar buttons
-                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
-                frmMain_Activated(null, null);
-
-
                 // Load state of Toolbar 
                 Configs.IsShowToolBar = !Configs.IsShowToolBar;
                 mnuMainToolbar_Click(null, EventArgs.Empty);
@@ -2318,6 +2313,10 @@ namespace ImageGlass
 
                 // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowsBound;
+
+                // Load Toolbar buttons
+                // *** Need to trigger after 'this.Bounds'
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
 
 
                 // force update language pack
