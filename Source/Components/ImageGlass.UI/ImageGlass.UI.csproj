@@ -93,7 +93,6 @@
     <Compile Include="ToolStripToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MovableForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">

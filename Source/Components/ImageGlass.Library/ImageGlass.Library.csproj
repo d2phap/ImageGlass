@@ -83,6 +83,8 @@
     <Compile Include="Image\ImageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Comparer\StringLogicalComparer.cs" />
+    <Compile Include="WinAPI\FormBorder.cs" />
+    <Compile Include="WinAPI\MovableForm.cs" />
     <Compile Include="WinAPI\Shortcuts.cs" />
     <Compile Include="WinAPI\TimerAPI.cs" />
     <Compile Include="WinAPI\Touch.cs" />

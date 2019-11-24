@@ -65,10 +65,6 @@ namespace ImageGlass
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
 
-            this._movableForm = new MovableForm(this)
-            {
-                Key = Keys.ShiftKey | Keys.Shift
-            };
         }
 
 
@@ -2360,6 +2356,20 @@ namespace ImageGlass
                 // Windows state must be loaded after Windows Bound!
                 this.WindowState = Configs.FrmMainWindowState;
 
+
+                #region Load Frameless mode
+                this._movableForm = new MovableForm(this)
+                {
+                    Key = Keys.ShiftKey | Keys.Shift
+                };
+
+                if (Configs.IsWindowFrameless)
+                {
+                    Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+                    mnuFrameless.PerformClick();
+                }
+                #endregion
+
             }
             #endregion
 
@@ -2376,11 +2386,7 @@ namespace ImageGlass
                 this.Bounds = Configs.FrmMainWindowsBound;
 
                 
-                if (Configs.IsWindowFrameless)
-                {
-                    Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
-                    mnuFrameless.PerformClick();
-                }
+                
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2622,7 +2628,7 @@ namespace ImageGlass
 
         protected override void WndProc(ref Message m)
         {
-            bool handled = false;
+            bool touchHandled = false;
 
             //Check if the received message is WM_SHOWME
             if (m.Msg == NativeMethods.WM_SHOWME)
@@ -2669,11 +2675,11 @@ namespace ImageGlass
             }
             else if (m.Msg == Touch.WM_GESTURENOTIFY) // Touch support
             {
-                handled = Touch.AcceptTouch(this);
+                touchHandled = Touch.AcceptTouch(this);
             }
             else if (m.Msg == Touch.WM_GESTURE) // Touch support
             {
-                handled = Touch.DecodeTouch(m, out Touch.Action act);
+                touchHandled = Touch.DecodeTouch(m, out Touch.Action act);
 
                 switch (act)
                 {
@@ -2705,113 +2711,72 @@ namespace ImageGlass
                         break;
                 }
             }
+
+            // Window resizing
             else if (m.Msg == 0x0084 && Configs.IsWindowFrameless)
             {
-                // Trap WM_NCHITTEST
                 base.WndProc(ref m);
 
-                if ((int)m.Result == 0x01/*HTCLIENT*/)
+                if ((int)m.Result == 0x01) // HTCLIENT
                 {
                     var screenPoint = new Point(m.LParam.ToInt32());
                     var clientPoint = this.PointToClient(screenPoint);
 
+                    const int RESIZE_HANDLE_SIZE = 10;
+
                     if (clientPoint.Y <= RESIZE_HANDLE_SIZE)
                     {
                         if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                            m.Result = (IntPtr)13/*HTTOPLEFT*/ ;
+                            m.Result = (IntPtr)13; // HTTOPLEFT
                         else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                            m.Result = (IntPtr)12/*HTTOP*/ ;
+                            m.Result = (IntPtr)12; // HTTOP
                         else
-                            m.Result = (IntPtr)14/*HTTOPRIGHT*/ ;
+                            m.Result = (IntPtr)14; // HTTOPRIGHT
                     }
                     else if (clientPoint.Y <= (Size.Height - RESIZE_HANDLE_SIZE))
                     {
                         if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                            m.Result = (IntPtr)10/*HTLEFT*/ ;
+                            m.Result = (IntPtr)10; // HTLEFT
                         else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                            m.Result = (IntPtr)2/*HTCAPTION*/ ;
+                            m.Result = (IntPtr)2; // HTCAPTION
                         else
-                            m.Result = (IntPtr)11/*HTRIGHT*/ ;
+                            m.Result = (IntPtr)11; // HTRIGHT
                     }
                     else
                     {
                         if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                            m.Result = (IntPtr)16/*HTBOTTOMLEFT*/ ;
+                            m.Result = (IntPtr)16; // HTBOTTOMLEFT
                         else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                            m.Result = (IntPtr)15/*HTBOTTOM*/ ;
+                            m.Result = (IntPtr)15; // HTBOTTOM
                         else
-                            m.Result = (IntPtr)17/*HTBOTTOMRIGHT*/ ;
+                            m.Result = (IntPtr)17; // HTBOTTOMRIGHT
                     }
                 }
                 return;
             }
-            else if (m.Msg == 0x0085 && Configs.IsWindowFrameless) // box shadow
-            {
-                var v = 2;
-                DwmSetWindowAttribute(Handle, 2, ref v, 4);
-
-                var margins = new MARGINS()
-                {
-                    bottomHeight = 2,
-                    leftWidth = 2,
-                    rightWidth = 2,
-                    topHeight = 2
-                };
-
-                DwmExtendFrameIntoClientArea(Handle, ref margins);
-            }
-
 
             base.WndProc(ref m);
-            if (handled)
+
+            if (touchHandled)
                 m.Result = new IntPtr(1);
         }
 
-        const int RESIZE_HANDLE_SIZE = 50;
-        const int CS_DROPSHADOW = 0x20000;
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
-
-        public struct MARGINS // struct for box shadow
-        {
-            public int leftWidth;
-            public int rightWidth;
-            public int topHeight;
-            public int bottomHeight;
-        }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                var cp = base.CreateParams;
-                cp.Style |= CS_DROPSHADOW;
-                return cp;
-            }
-        }
-
-
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Load Other Configs
+            // Load Other Configs
             LoadConfig(isLoadUI: false, isLoadOthers: true);
 
-            //Trigger Mouse Wheel event
+            // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
 
-            //Try to use a faster image clock for animating GIFs
+            // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
-            //Load image from param
+            // Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
 
-            //Start thread to watching deleted files
+            // Start thread to watching deleted files
             System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
             {
                 Priority = System.Threading.ThreadPriority.BelowNormal,
@@ -2822,12 +2787,12 @@ namespace ImageGlass
 
         public void LoadFromParams(string[] args)
         {
-            //Load image from param
+            // Load image from param
             if (args.Length >= 2)
             {
                 for (int i = 1; i < args.Length; i++)
                 {
-                    //only read the path, exclude configs parameter which starts with "--"
+                    // only read the path, exclude configs parameter which starts with "--"
                     if (!args[i].StartsWith("--"))
                     {
                         PrepareLoading(args[i]);
@@ -5037,8 +5002,12 @@ namespace ImageGlass
             if (Configs.IsWindowFrameless)
             {
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Padding = new Padding(1);
+                this.Padding = new Padding(2);
 
+                // Draw client border for movable
+                FormBorder.Set(this.Handle, 2);
+
+                // Enable frameless movable
                 this._movableForm.Enable();
                 this._movableForm.Enable(picMain);
             }
@@ -5047,8 +5016,12 @@ namespace ImageGlass
                 this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.Padding = new Padding(0);
 
+                // Disable frameless movable
                 this._movableForm.Disable();
                 this._movableForm.Disable(picMain);
+
+                // Remove custom client border
+                FormBorder.Set(this.Handle, 0);
             }
         }
 
