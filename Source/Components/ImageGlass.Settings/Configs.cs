@@ -150,6 +150,12 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
+        /// Gets, sets value of frmMain's frameless mode.
+        /// </summary>
+        public static bool IsWindowFrameless { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets the direction of thumbnail bar
         /// </summary>
         public static bool IsThumbnailHorizontal { get; set; } = true;
@@ -553,7 +559,8 @@ namespace ImageGlass.Settings
             IsShowCheckerBoard = Get<bool>(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
             IsAllowMultiInstances = Get<bool>(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
             IsWindowAlwaysOnTop = Get<bool>(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
-            IsThumbnailHorizontal = Get<bool>(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
+            IsWindowFrameless = Get<bool>(nameof(IsWindowFrameless), IsWindowFrameless);
+            IsThumbnailHorizontal = Get<bool>(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);            
             IsConfirmationDelete = Get<bool>(nameof(IsConfirmationDelete), IsConfirmationDelete);
             IsScrollbarsVisible = Get<bool>(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
             IsSaveAfterRotating = Get<bool>(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
@@ -771,6 +778,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
             Set(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
             Set(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
+            Set(nameof(IsWindowFrameless), IsWindowFrameless);
             Set(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
             Set(nameof(IsConfirmationDelete), IsConfirmationDelete);
             Set(nameof(IsScrollbarsVisible), IsScrollbarsVisible);

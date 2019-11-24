@@ -39,6 +39,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -2314,6 +2315,13 @@ namespace ImageGlass
                 // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowsBound;
 
+                
+                if (Configs.IsWindowFrameless)
+                {
+                    Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+                    mnuFrameless.PerformClick();
+                }
+
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
                 Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
@@ -2549,6 +2557,41 @@ namespace ImageGlass
 
 
         #region Form events
+
+
+
+        #region Borderless form moving
+
+        private bool mouseDown; // moving windows is taking place
+        private Point lastLocation; // initial mouse position
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Clicks == 1 && e.Button == MouseButtons.Right)
+                mouseDown = true;
+
+            lastLocation = e.Location;
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!mouseDown) return; // not moving windows, ignore
+
+            Location = new Point((Location.X - lastLocation.X) + e.X,
+                    (Location.Y - lastLocation.Y) + e.Y);
+
+            Update();
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        #endregion
+
+
+
         protected override void WndProc(ref Message m)
         {
             bool handled = false;
@@ -2602,8 +2645,7 @@ namespace ImageGlass
             }
             else if (m.Msg == Touch.WM_GESTURE) // Touch support
             {
-                Touch.Action act;
-                handled = Touch.DecodeTouch(m, out act);
+                handled = Touch.DecodeTouch(m, out Touch.Action act);
 
                 switch (act)
                 {
@@ -2635,11 +2677,94 @@ namespace ImageGlass
                         break;
                 }
             }
+            else if (m.Msg == 0x0084 && Configs.IsWindowFrameless)
+            {
+                // Trap WM_NCHITTEST
+                base.WndProc(ref m);
+
+                if ((int)m.Result == 0x01/*HTCLIENT*/)
+                {
+                    var screenPoint = new Point(m.LParam.ToInt32());
+                    var clientPoint = this.PointToClient(screenPoint);
+
+                    if (clientPoint.Y <= RESIZE_HANDLE_SIZE)
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)13/*HTTOPLEFT*/ ;
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)12/*HTTOP*/ ;
+                        else
+                            m.Result = (IntPtr)14/*HTTOPRIGHT*/ ;
+                    }
+                    else if (clientPoint.Y <= (Size.Height - RESIZE_HANDLE_SIZE))
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)10/*HTLEFT*/ ;
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)2/*HTCAPTION*/ ;
+                        else
+                            m.Result = (IntPtr)11/*HTRIGHT*/ ;
+                    }
+                    else
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)16/*HTBOTTOMLEFT*/ ;
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)15/*HTBOTTOM*/ ;
+                        else
+                            m.Result = (IntPtr)17/*HTBOTTOMRIGHT*/ ;
+                    }
+                }
+                return;
+            }
+            else if (m.Msg == 0x0085 && Configs.IsWindowFrameless) // box shadow
+            {
+                var v = 2;
+                DwmSetWindowAttribute(Handle, 2, ref v, 4);
+
+                var margins = new MARGINS()
+                {
+                    bottomHeight = 2,
+                    leftWidth = 2,
+                    rightWidth = 2,
+                    topHeight = 2
+                };
+
+                DwmExtendFrameIntoClientArea(Handle, ref margins);
+            }
 
 
             base.WndProc(ref m);
             if (handled)
                 m.Result = new IntPtr(1);
+        }
+
+        const int RESIZE_HANDLE_SIZE = 50;
+        const int CS_DROPSHADOW = 0x20000;
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+
+        public struct MARGINS // struct for box shadow
+        {
+            public int leftWidth;
+            public int rightWidth;
+            public int topHeight;
+            public int bottomHeight;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.Style |= CS_DROPSHADOW;
+                return cp;
+            }
         }
 
 
@@ -4916,6 +5041,37 @@ namespace ImageGlass
             mnuMainCheckBackground.Checked = btnCheckedBackground.Checked;
         }
 
+
+        private void mnuFrameless_Click(object sender, EventArgs e)
+        {
+            Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+
+            if (Configs.IsWindowFrameless)
+            {
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.Padding = new Padding(2);
+                thumbnailBar.MouseDown += Form1_MouseDown;
+                thumbnailBar.MouseUp += Form1_MouseUp;
+                thumbnailBar.MouseMove += Form1_MouseMove;
+
+                picMain.MouseDown += Form1_MouseDown;
+                picMain.MouseUp += Form1_MouseUp;
+                picMain.MouseMove += Form1_MouseMove;
+            }
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.Padding = new Padding(0);
+                thumbnailBar.MouseDown -= Form1_MouseDown;
+                thumbnailBar.MouseUp -= Form1_MouseUp;
+                thumbnailBar.MouseMove -= Form1_MouseMove;
+
+                picMain.MouseDown -= Form1_MouseDown;
+                picMain.MouseUp -= Form1_MouseUp;
+                picMain.MouseMove -= Form1_MouseMove;
+            }
+        }
+
         private void mnuMainAlwaysOnTop_Click(object sender, EventArgs e)
         {
             TopMost =
@@ -5179,5 +5335,6 @@ namespace ImageGlass
 
 
         #endregion
+
     }
 }

@@ -59,6 +59,7 @@
             this.mnuMainZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainActualSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainWindowAdaptImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem27 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAutoZoom = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +107,7 @@
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainThumbnailBar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCheckBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFrameless = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
@@ -160,7 +162,6 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -220,7 +221,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 471);
+            this.mnuMain.Size = new System.Drawing.Size(258, 438);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -562,6 +563,11 @@
             this.mnuMainActualSize.Text = "&Actual size";
             this.mnuMainActualSize.Click += new System.EventHandler(this.mnuMainActualSize_Click);
             // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(599, 6);
+            // 
             // mnuMainWindowAdaptImage
             // 
             this.mnuMainWindowAdaptImage.ForeColor = System.Drawing.Color.Black;
@@ -701,22 +707,22 @@
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(437, 6);
             // 
-            // mnuMainRotateCounterclockwise
+            // mnuMainRotateLeft
             // 
             this.mnuMainRotateLeft.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRotateLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainRotateLeft.Name = "mnuMainRotateCounterclockwise";
+            this.mnuMainRotateLeft.Name = "mnuMainRotateLeft";
             this.mnuMainRotateLeft.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainRotateLeft.ShortcutKeyDisplayString = "Ctrl+,";
             this.mnuMainRotateLeft.Size = new System.Drawing.Size(440, 33);
             this.mnuMainRotateLeft.Text = "&Rotate Counterclockwise";
             this.mnuMainRotateLeft.Click += new System.EventHandler(this.mnuMainRotateCounterclockwise_Click);
             // 
-            // mnuMainRotateClockwise
+            // mnuMainRotateRight
             // 
             this.mnuMainRotateRight.ForeColor = System.Drawing.Color.Black;
             this.mnuMainRotateRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainRotateRight.Name = "mnuMainRotateClockwise";
+            this.mnuMainRotateRight.Name = "mnuMainRotateRight";
             this.mnuMainRotateRight.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainRotateRight.ShortcutKeyDisplayString = "Ctrl+.";
             this.mnuMainRotateRight.Size = new System.Drawing.Size(440, 33);
@@ -1035,6 +1041,7 @@
             this.mnuMainToolbar,
             this.mnuMainThumbnailBar,
             this.mnuMainCheckBackground,
+            this.mnuFrameless,
             this.toolStripMenuItem2,
             this.mnuMainAlwaysOnTop});
             this.mnuMainLayout.ForeColor = System.Drawing.Color.Black;
@@ -1088,6 +1095,20 @@
             this.mnuMainCheckBackground.Size = new System.Drawing.Size(336, 33);
             this.mnuMainCheckBackground.Text = "&Check background";
             this.mnuMainCheckBackground.Click += new System.EventHandler(this.mnuMainCheckBackground_Click);
+            // 
+            // mnuFrameless
+            // 
+            this.mnuFrameless.BackColor = System.Drawing.Color.Transparent;
+            this.mnuFrameless.CheckOnClick = true;
+            this.mnuFrameless.ForeColor = System.Drawing.Color.Black;
+            this.mnuFrameless.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuFrameless.Name = "mnuFrameless";
+            this.mnuFrameless.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuFrameless.ShortcutKeyDisplayString = "";
+            this.mnuFrameless.ShortcutKeys = System.Windows.Forms.Keys.F10;
+            this.mnuFrameless.Size = new System.Drawing.Size(336, 33);
+            this.mnuFrameless.Text = "[Frameless window]";
+            this.mnuFrameless.Click += new System.EventHandler(this.mnuFrameless_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -1520,7 +1541,7 @@
             this.btnActualSize.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnActualSize.Click += new System.EventHandler(this.btnActualSize_Click);
             // 
-            // btnWindowAutosize
+            // btnWindowAdaptImage
             // 
             this.btnWindowAdaptImage.AutoSize = false;
             this.btnWindowAdaptImage.BackColor = System.Drawing.Color.Transparent;
@@ -1529,7 +1550,7 @@
             this.btnWindowAdaptImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnWindowAdaptImage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnWindowAdaptImage.Margin = new System.Windows.Forms.Padding(0);
-            this.btnWindowAdaptImage.Name = "btnWindowAutosize";
+            this.btnWindowAdaptImage.Name = "btnWindowAdaptImage";
             this.btnWindowAdaptImage.Size = new System.Drawing.Size(33, 33);
             this.btnWindowAdaptImage.ToolTipText = "Adjust window to actual image dimensions (Ctrl + M)";
             this.btnWindowAdaptImage.Click += new System.EventHandler(this.btnWindowAdaptImage_Click);
@@ -1828,11 +1849,6 @@
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
             // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(599, 6);
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1846,7 +1862,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(91, 74);
+            this.MinimumSize = new System.Drawing.Size(10, 10);
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
             this.Text = "ImageGlass";
@@ -2011,6 +2027,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainLastPage;
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem mnuFrameless;
     }
 }
 
