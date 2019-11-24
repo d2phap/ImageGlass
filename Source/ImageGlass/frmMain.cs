@@ -64,6 +64,11 @@ namespace ImageGlass
 
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
+
+            this._movableForm = new MovableForm(this)
+            {
+                Key = Keys.ShiftKey | Keys.Shift
+            };
         }
 
 
@@ -91,6 +96,10 @@ namespace ImageGlass
         // gets, sets wheather the app is busy or not
         private bool _isAppBusy = false;
 
+        private ToolFormManager _toolManager = new ToolFormManager();
+
+        private MovableForm _movableForm;
+
 
         // gets, sets the CancellationTokenSource of synchronious image loading task
         private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
@@ -105,7 +114,7 @@ namespace ImageGlass
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
-        private ToolFormManager _toolManager = new ToolFormManager();
+        
         #endregion
 
 
@@ -2124,6 +2133,57 @@ namespace ImageGlass
             }
         }
 
+
+        /// <summary>
+        /// Adjust our window dimensions to fit the image size. Namely,
+        /// the window is sized so there is no "extra space" around the
+        /// image. If full-screen mode is ON and the toolbar is OFF, this
+        /// allows for a "borderless viewer" mode.
+        /// </summary>
+        private void AdaptMainWindowToImage()
+        {
+            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
+                return; // Nothing to do
+
+            WindowState = FormWindowState.Normal;
+
+            // get current screen
+            var screen = Screen.FromControl(this);
+
+
+            // First, adjust our main window to theoretically fit the entire
+            // picture, but not larger than desktop working area.
+            var fullW = Width + picMain.Image.Width - picMain.Width;
+            var fullH = Height + picMain.Image.Height - picMain.Height;
+
+
+            var maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
+            var maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
+
+            // Let the image viewer control figure out the zoom value for
+            // the full-size window
+            ApplyZoomMode(Configs.ZoomMode);
+
+            // Now that we have the new zoom value, adjust our main window
+            // to fit the *zoomed* image size
+            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
+            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
+
+
+            Size = new Size(Width += newW - picMain.Width,
+                            Height += newH - picMain.Height);
+
+            if (fullW > screen.WorkingArea.Width || fullH > screen.WorkingArea.Height)
+            {
+                App.CenterFormToScreen(this);
+            }
+
+            picMain.Bounds = new Rectangle(0, 0, newW, newH);
+        }
+
+
+
         #endregion
 
 
@@ -2557,38 +2617,6 @@ namespace ImageGlass
 
 
         #region Form events
-
-
-
-        #region Borderless form moving
-
-        private bool mouseDown; // moving windows is taking place
-        private Point lastLocation; // initial mouse position
-
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Clicks == 1 && e.Button == MouseButtons.Right)
-                mouseDown = true;
-
-            lastLocation = e.Location;
-        }
-
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!mouseDown) return; // not moving windows, ignore
-
-            Location = new Point((Location.X - lastLocation.X) + e.X,
-                    (Location.Y - lastLocation.Y) + e.Y);
-
-            Update();
-        }
-
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
-        {
-            mouseDown = false;
-        }
-
-        #endregion
 
 
 
@@ -4561,46 +4589,6 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        /// Adjust our window dimensions to fit the image size. Namely,
-        /// the window is sized so there is no "extra space" around the
-        /// image. If full-screen mode is ON and the toolbar is OFF, this
-        /// allows for a "borderless viewer" mode.
-        /// </summary>
-        private void AdaptMainWindowToImage()
-        {
-            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
-                return; // Nothing to do
-
-            WindowState = FormWindowState.Normal;
-
-            // get current screen
-            var screen = Screen.FromControl(this);
-
-
-            // First, adjust our main window to theoretically fit the entire
-            // picture, but not larger than desktop working area.
-            var maxWidth = Math.Min(Width + picMain.Image.Width - picMain.Width, screen.WorkingArea.Width);
-            var maxHeight = Math.Min(Height + picMain.Image.Height - picMain.Height, screen.WorkingArea.Height);
-            Size = new Size(Width = maxWidth, Height = maxHeight);
-
-            // Let the image viewer control figure out the zoom value for
-            // the full-size window
-            ApplyZoomMode(Configs.ZoomMode);
-
-            // Now that we have the new zoom value, adjust our main window
-            // to fit the *zoomed* image size
-            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
-            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
-
-
-            Size = new Size(Width += newW - picMain.Width,
-                            Height += newH - picMain.Height);
-
-            picMain.Bounds = new Rectangle(0, 0, newW, newH);
-        }
-
-
 
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
@@ -5049,26 +5037,18 @@ namespace ImageGlass
             if (Configs.IsWindowFrameless)
             {
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Padding = new Padding(2);
-                thumbnailBar.MouseDown += Form1_MouseDown;
-                thumbnailBar.MouseUp += Form1_MouseUp;
-                thumbnailBar.MouseMove += Form1_MouseMove;
+                this.Padding = new Padding(1);
 
-                picMain.MouseDown += Form1_MouseDown;
-                picMain.MouseUp += Form1_MouseUp;
-                picMain.MouseMove += Form1_MouseMove;
+                this._movableForm.Enable();
+                this._movableForm.Enable(picMain);
             }
             else
             {
                 this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.Padding = new Padding(0);
-                thumbnailBar.MouseDown -= Form1_MouseDown;
-                thumbnailBar.MouseUp -= Form1_MouseUp;
-                thumbnailBar.MouseMove -= Form1_MouseMove;
 
-                picMain.MouseDown -= Form1_MouseDown;
-                picMain.MouseUp -= Form1_MouseUp;
-                picMain.MouseMove -= Form1_MouseMove;
+                this._movableForm.Disable();
+                this._movableForm.Disable(picMain);
             }
         }
 
