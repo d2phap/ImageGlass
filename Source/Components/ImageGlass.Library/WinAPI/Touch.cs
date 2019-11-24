@@ -27,6 +27,7 @@ Author: Kevin Routley - August 2019
  * Windows 7 Sample: MTGestures
  ********************************************/
 
+using ImageGlass.Base;
 using System;
 using System.Drawing;
 using System.IO;
@@ -43,14 +44,14 @@ namespace ImageGlass.Library.WinAPI
         public enum Action
         {
             None,
-            Swipe_Left,
-            Swipe_Right,
-            Rotate_CCW,
-            Rotate_CW,
-            Zoom_In,
-            Zoom_Out,
-            Swipe_Up,
-            Swipe_Down,
+            SwipeLeft,
+            SwipeRight,
+            RotateCCW,
+            RotateCW,
+            ZoomIn,
+            ZoomOut,
+            SwipeUp,
+            SwipeDown,
         }
 
         #region P/Invoke functions
@@ -121,22 +122,23 @@ namespace ImageGlass.Library.WinAPI
         #region State
         private static GESTURECONFIG TouchConfig = new GESTURECONFIG
         {
-            dwID = 0, dwWant = 1, dwBlock=0
+            dwID = 0,
+            dwWant = 1,
+            dwBlock=0
         };
 
-        private static int ConfigSize = Marshal.SizeOf(new GESTURECONFIG());
+        private static readonly int ConfigSize = Marshal.SizeOf(new GESTURECONFIG());
 
         private static GESTUREINFO gi = new GESTUREINFO()
         {
             cbSize = Marshal.SizeOf(new GESTUREINFO())
         };
 
-        private static bool swipe = false;
-
-        private static Form who;
-
+        private static bool _isSwipe = false;
         private static Point _ptFirst = new Point();
         private static Point _ptSecond = new Point();
+
+        private static Form _touchForm;
         private static int _iArgs;
 
         #endregion
@@ -172,28 +174,11 @@ namespace ImageGlass.Library.WinAPI
         /// </summary>
         public static int ZoomFactor { get; private set; }
 
-        private static double ArgToRadians(Int64 arg)
+        private static double ArgToRadians(long arg)
         {
-            return ((((double)(arg) / 65535.0) * 4.0 * 3.14159265) - 2.0 * 3.14159265);
+            return ((arg / 65535.0) * 4.0 * Math.PI) - 2.0 * Math.PI;
         }
 
-        private static void logit(string msg)
-        {
-#if DEBUG
-            try
-            {
-                //var path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "gesture.log");
-                var path = @"E:\gesture.log";
-                using (TextWriter tw = new StreamWriter(path, append: true))
-                {
-                    tw.WriteLine(msg);
-                    tw.Flush();
-                    tw.Close();
-                }
-            }
-            catch { }
-#endif
-        }
 
 
         /// <summary>
@@ -204,8 +189,8 @@ namespace ImageGlass.Library.WinAPI
         /// <returns>false if something failed</returns>
         public static bool AcceptTouch(Form form)
         {
-            logit("WM_GESTURENOTIFY");
-            who = form;
+            App.LogIt("WM_GESTURENOTIFY");
+            _touchForm = form;
             return SetGestureConfig(form.Handle, 0, 1, ref TouchConfig, ConfigSize);
         }
 
@@ -232,14 +217,14 @@ namespace ImageGlass.Library.WinAPI
                 case GID_END:
                     // Empirically I found this is the 'best' way to handle 
                     // swipe end, instead of GF_END under GID_PAN.
-                    if (swipe)
+                    if (_isSwipe)
                     {
-                        swipe = false;
+                        _isSwipe = false;
                         _ptSecond.X = gi.ptsLocation.x;
                         _ptSecond.Y = gi.ptsLocation.y;
-                        _ptSecond = who.PointToClient(_ptSecond);
+                        _ptSecond = _touchForm.PointToClient(_ptSecond);
 
-                        logit(string.Format("PANNING.END ({0},{1})", _ptSecond.X, _ptSecond.Y));
+                        App.LogIt(string.Format("PANNING.END ({0},{1})", _ptSecond.X, _ptSecond.Y));
 
                         int dVert = (_ptSecond.Y - _ptFirst.Y);
                         int dHorz = (_ptSecond.X - _ptFirst.X);
@@ -247,16 +232,16 @@ namespace ImageGlass.Library.WinAPI
                         if (Math.Abs(dVert) > Math.Abs(dHorz))
                         {
                             if (dVert > 0)
-                                act = Action.Swipe_Down;
+                                act = Action.SwipeDown;
                             else
-                                act = Action.Swipe_Up;
+                                act = Action.SwipeUp;
                         }
                         else
                         {
                             if (dHorz > 0)
-                                act = Action.Swipe_Right;
+                                act = Action.SwipeRight;
                             else
-                                act = Action.Swipe_Left;
+                                act = Action.SwipeLeft;
                         }
                     }
                     break;
@@ -264,16 +249,16 @@ namespace ImageGlass.Library.WinAPI
                     switch (gi.dwFlags)
                     {
                         case GF_BEGIN:
-                            logit("GID_ROTATE.GF_BEG");
+                            App.LogIt("GID_ROTATE.GF_BEG");
                             break;
                         case GF_END:
                             double rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
-                            logit(string.Format("GID_ROTATE.GF_END ({0})", rads));
+                            App.LogIt(string.Format("GID_ROTATE.GF_END ({0})", rads));
 
                             if (rads > 0.0)
-                                act = Action.Rotate_CCW;
+                                act = Action.RotateCCW;
                             else
-                                act = Action.Rotate_CW;
+                                act = Action.RotateCW;
                             break;
                     }
                     break;
@@ -282,9 +267,9 @@ namespace ImageGlass.Library.WinAPI
                     {
                         _ptFirst.X = gi.ptsLocation.x;
                         _ptFirst.Y = gi.ptsLocation.y;
-                        _ptFirst = who.PointToClient(_ptFirst);
-                        logit(string.Format("GID_PAN.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y));
-                        swipe = true;
+                        _ptFirst = _touchForm.PointToClient(_ptFirst);
+                        App.LogIt(string.Format("GID_PAN.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y));
+                        _isSwipe = true;
                     }
                     break;
                 case GID_ZOOM:
@@ -293,16 +278,16 @@ namespace ImageGlass.Library.WinAPI
                         // The zoom center and factor are derived from the first and last data points
                         _ptFirst.X = gi.ptsLocation.x;
                         _ptFirst.Y = gi.ptsLocation.y;
-                        _ptFirst = who.PointToClient(_ptFirst);
+                        _ptFirst = _touchForm.PointToClient(_ptFirst);
                         _iArgs = (int)(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
 
-                        logit(string.Format("GID_ZOOM.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y));
+                        App.LogIt(string.Format("GID_ZOOM.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y));
                     }
                     if (gi.dwFlags == GF_END)
                     {
                         _ptSecond.X = gi.ptsLocation.x;
                         _ptSecond.Y = gi.ptsLocation.y;
-                        _ptSecond = who.PointToClient(_ptSecond);
+                        _ptSecond = _touchForm.PointToClient(_ptSecond);
 
                         // This is the center of the zoom
                         ZoomLocation = new Point((_ptFirst.X + _ptSecond.X)/2, 
@@ -311,25 +296,24 @@ namespace ImageGlass.Library.WinAPI
                         // This is the size of the spread/pinch. The direction 
                         // dictates whether this is a spread or a pinch; the
                         // size indicates the magnitude.
-                        var factor = (double)(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK) /
-                                     (double)(_iArgs);
+                        var factor = (double)(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK) / _iArgs;
 
                         if (factor < 1.0)  // pinch
                         {
-                            act = Action.Zoom_Out;
+                            act = Action.ZoomOut;
                             ZoomFactor = (int)(1.0 / factor);
                         }
                         else // zoom
                         {
-                            act = Action.Zoom_In;
+                            act = Action.ZoomIn;
                             ZoomFactor = (int)factor;
                         }
 
-                        logit($"GID_ZOOM.GF_END ({factor}:{ZoomFactor})");
+                        App.LogIt($"GID_ZOOM.GF_END ({factor}:{ZoomFactor})");
                     }
                     break;
                 default:
-                    logit("GID_?");
+                    App.LogIt("GID_?");
                     break;
             }
 

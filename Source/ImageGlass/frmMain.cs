@@ -2601,30 +2601,30 @@ namespace ImageGlass
 
                 switch (act)
                 {
-                    case Touch.Action.Swipe_Left:
+                    case Touch.Action.SwipeLeft:
                         NextPic(-1);
                         break;
-                    case Touch.Action.Swipe_Right:
+                    case Touch.Action.SwipeRight:
                         NextPic(1);
                         break;
-                    case Touch.Action.Rotate_CCW:
+                    case Touch.Action.RotateCCW:
                         mnuMainRotateCounterclockwise_Click(null, null);
                         break;
-                    case Touch.Action.Rotate_CW:
+                    case Touch.Action.RotateCW:
                         mnuMainRotateClockwise_Click(null, null);
                         break;
-                    case Touch.Action.Zoom_In:
+                    case Touch.Action.ZoomIn:
                         for (int i = 0; i < Touch.ZoomFactor; i++)
                             ZoomAtPosition(true, Touch.ZoomLocation);
                         break;
-                    case Touch.Action.Zoom_Out:
+                    case Touch.Action.ZoomOut:
                         for (int i = 0; i < Touch.ZoomFactor; i++)
                             ZoomAtPosition(false, Touch.ZoomLocation);
                         break;
-                    case Touch.Action.Swipe_Up:
+                    case Touch.Action.SwipeUp:
                         btnZoomOut_Click(null, null);
                         break;
-                    case Touch.Action.Swipe_Down:
+                    case Touch.Action.SwipeDown:
                         btnZoomIn_Click(null, null);
                         break;
                 }
@@ -4441,10 +4441,15 @@ namespace ImageGlass
 
             WindowState = FormWindowState.Normal;
 
+            // get current screen
+            var screen = Screen.FromControl(this);
+
+
             // First, adjust our main window to theoretically fit the entire
-            // picture.
-            Size = new Size(Width += picMain.Image.Width - picMain.Width,
-                Height += picMain.Image.Height - picMain.Height);
+            // picture, but not larger than desktop working area.
+            var maxWidth = Math.Min(Width + picMain.Image.Width - picMain.Width, screen.WorkingArea.Width);
+            var maxHeight = Math.Min(Height + picMain.Image.Height - picMain.Height, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
 
             // Let the image viewer control figure out the zoom value for
             // the full-size window
@@ -4454,6 +4459,7 @@ namespace ImageGlass
             // to fit the *zoomed* image size
             var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
             var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
+
 
             Size = new Size(Width += newW - picMain.Width,
                             Height += newH - picMain.Height);
