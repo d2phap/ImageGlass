@@ -5000,6 +5000,7 @@ namespace ImageGlass
         private void mnuFrameless_Click(object sender, EventArgs e)
         {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+            Control[] frameLessMovers = {picMain, toolMain, thumbnailBar};
 
             if (Configs.IsWindowFrameless)
             {
@@ -5017,7 +5018,7 @@ namespace ImageGlass
 
                 // Enable frameless movable
                 this._movableForm.Enable();
-                this._movableForm.Enable(picMain);
+                this._movableForm.Enable(frameLessMovers);
 
                 DisplayTextMessage(Configs.Language.Items[$"{Name}._Frameless"], 3000);
             }
@@ -5025,7 +5026,7 @@ namespace ImageGlass
             {
                 // Disable frameless movable
                 this._movableForm.Disable();
-                this._movableForm.Disable(picMain);
+                this._movableForm.Disable(frameLessMovers);
 
                 // Remove custom client border
                 FormBorder.Set(this.Handle, 0);
