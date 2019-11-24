@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI
+namespace ImageGlass.Library.WinAPI
 {
     /// <summary>
     /// Make the frameless form movable when dragging itself or its controls
