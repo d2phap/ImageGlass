@@ -356,8 +356,6 @@ namespace ImageGlass
                 var di = new DirectoryInfo(filePath);
                 filePath = di.FullName;
 
-                var filePathFixed = App.ToAbsolutePath(filePath);
-
                 Local.CurrentIndex = Local.ImageList.IndexOf(filePath);
 
 
