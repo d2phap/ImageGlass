@@ -357,7 +357,14 @@ namespace ImageGlass
             // Find the index of current image
             if (filePath.Length > 0)
             {
+
+                // this part of code fixes calls on legacy 8.3 filenames
+                // (for example opening files from IBM Notes)
+                var di = new DirectoryInfo(filePath);
+                filePath = di.FullName;
+
                 Local.CurrentIndex = Local.ImageList.IndexOf(filePath);
+
 
                 // KBR 20181009 Changing "include subfolder" setting could lose the "current" image.
                 // Prefer not to report said image is "corrupt", merely reset the index in that case.
