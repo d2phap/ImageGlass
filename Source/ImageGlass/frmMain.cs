@@ -349,7 +349,15 @@ namespace ImageGlass
             // Find the index of current image
             if (filePath.Length > 0)
             {
-                GlobalSetting.CurrentIndex = GlobalSetting.ImageList.IndexOf(filePath);
+                // this part of code fixes calls on legacy 8.3 
+                // filenames (for example opening files from IBM Notes)
+
+                DirectoryInfo di = new DirectoryInfo(filePath);
+                filePath = di.FullName;
+
+                // end of legacy 8.3 filenames fix
+
+                var filePathFixed = GlobalSetting.ToAbsolutePath(filePath);
 
                 // KBR 20181009 Changing "include subfolder" setting could lose the "current" image.
                 // Prefer not to report said image is "corrupt", merely reset the index in that case.
