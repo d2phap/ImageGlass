@@ -351,12 +351,12 @@ namespace ImageGlass
             if (filePath.Length > 0)
             {
 
-                // this part of code fixes calls on legacy 8.3 
-                // filenames (for example opening files from IBM Notes)
+                // this part of code fixes calls on legacy 8.3 filenames
+                // (for example opening files from IBM Notes)
                 var di = new DirectoryInfo(filePath);
                 filePath = di.FullName;
 
-                var filePathFixed = GlobalSetting.ToAbsolutePath(filePath);
+                var filePathFixed = App.ToAbsolutePath(filePath);
 
                 Local.CurrentIndex = Local.ImageList.IndexOf(filePath);
 
