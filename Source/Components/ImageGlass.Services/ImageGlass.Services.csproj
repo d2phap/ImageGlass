@@ -64,12 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationFile.cs" />
-    <Compile Include="Configuration\Dir.cs" />
-    <Compile Include="Configuration\Enums.cs" />
-    <Compile Include="Configuration\GlobalSetting.cs" />
-    <Compile Include="Configuration\ImageEditingAssociation.cs" />
-    <Compile Include="Configuration\ThumbnailItemInfo.cs" />
     <Compile Include="ExplorerSortOrder.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
@@ -79,6 +73,10 @@
     <Compile Include="InfoUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">
+      <Project>{6cc96a70-6773-41b5-9fca-4f0ab6fad8ca}</Project>
+      <Name>ImageGlass.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
       <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
       <Name>ImageGlass.Heart</Name>
@@ -96,6 +94,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

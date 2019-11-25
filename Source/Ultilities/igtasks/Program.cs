@@ -20,7 +20,7 @@ using System;
 using System.Windows.Forms;
 using igtasks;
 using ImageGlass.Library.Image;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 
 namespace adtasks
 {
@@ -49,8 +49,8 @@ namespace adtasks
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+            // Load user configs
+            Configs.Load();
 
             // Command
             string topcmd = args[0].ToLower().Trim();
@@ -92,8 +92,8 @@ namespace adtasks
             #region delassociations
             else if (topcmd == "delassociations")
             {
-                return Functions.DeleteRegistryAssociations(GlobalSetting.AllImageFormats, true);
-                
+                var formats = Configs.GetImageFormats(Configs.AllFormats);
+                return Functions.DeleteRegistryAssociations(formats, true);
             }
             #endregion
 

@@ -317,7 +317,11 @@ namespace ImageGlass.ImageListView
                 mItems.Clear();
 
                 mFocused = null;
-                lookUp.Clear();
+                
+                // [IG_CHANGE] clear does not deallocate memory
+                //lookUp.Clear();
+                lookUp = new Dictionary<Guid, ImageListViewItem>();
+
                 collectionModified = true;
 
                 if (mImageListView != null)

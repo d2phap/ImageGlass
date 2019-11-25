@@ -1,26 +1,13 @@
 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
  <!-- ImageGlass icons http://www.imageglass.org -->
-
- <g>
-  <title>background</title>
-  <rect x="-1" y="-1" width="2.873362" height="2.873362" id="canvas_background" fill="none"/>
-  <g id="canvasGrid" display="none">
-   <rect id="svg_2" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"/>
-  </g>
- </g>
  <g>
   <title>Layer 1</title>
-  <rect fill="none" width="20" height="20" id="svg_1" stroke="#fff" stroke-width="1.5" y="0" x="0"/>
-  <g id="svg_5"/>
-  <g id="svg_48">
-   <line fill="none" stroke-opacity="null" x1="11.508626" y1="5.546169" x2="17.38328" y2="5.546169" id="svg_21" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-270 14.445952415466309,5.546168804168702) " stroke="#fff"/>
-   <line fill="none" stroke-opacity="null" x1="13.700195" y1="3.743434" x2="17.15678" y2="3.743434" id="svg_22" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-315 15.42848587036133,3.7434339523315443) " stroke="#fff"/>
-   <line fill="none" stroke-opacity="null" x1="11.729965" y1="3.703423" x2="15.196876" y2="3.703423" id="svg_23" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-225 13.463419914245604,3.703423023223877) " stroke="#fff"/>
-  </g>
-  <g id="svg_52" transform="rotate(-180 14.444128036499025,14.57244873046875) ">
-   <line fill="none" stroke-opacity="null" x1="11.508626" y1="14.638027" x2="17.38328" y2="14.638027" id="svg_49" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-270 14.445952415466307,14.638026237487791) " stroke="#fff"/>
-   <line fill="none" stroke-opacity="null" x1="13.700195" y1="12.835292" x2="17.15678" y2="12.835292" id="svg_50" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-315 15.42848587036133,12.835291862487793) " stroke="#fff"/>
-   <line fill="none" stroke-opacity="null" x1="11.729965" y1="12.795281" x2="15.196876" y2="12.795281" id="svg_51" stroke-linejoin="null" stroke-linecap="null" stroke-width="0.7" transform="rotate(-225 13.463419914245605,12.795281410217287) " stroke="#fff"/>
+  <rect transform="rotate(-90 10.000000953674318,10.000001907348633) " fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x="1.875063" y="0.343823" width="16.249876" height="19.312356" id="svg_4" stroke-dasharray="2,2" stroke="#fff"/>
+  <rect stroke="#fff" transform="rotate(-90 10.000000000000002,10) " id="svg_1" height="12.351447" width="16.235752" y="3.824277" x="1.882124" stroke-width="0.7" fill="rgba(255,255,255,0.2)"/>
+  <path transform="rotate(-90 12.893791198730474,16.58620071411133) " id="svg_15" d="m12.893791,16.586201" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#fff"/>
+  <g stroke="null" id="svg_6">
+   <ellipse stroke="#fff" ry="0.99139" rx="1.093218" id="svg_13" cy="7.561718" cx="13.299218" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#fff" id="svg_19" d="m5.40762,13.429672c-0.309272,-0.64481 0.759123,-5.36573 2.558547,-5.06635c1.743177,0.27634 2.699117,3.91491 3.022446,3.89188c0.660724,-0.46058 0.857532,-1.10539 1.939993,-1.15145c1.026225,0.04606 1.757234,1.93443 1.715063,2.14169" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
   </g>
  </g>
 </svg>

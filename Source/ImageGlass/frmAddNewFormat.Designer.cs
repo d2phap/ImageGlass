@@ -33,8 +33,6 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblFileExtension = new System.Windows.Forms.Label();
             this.txtFileExtension = new System.Windows.Forms.TextBox();
-            this.lblFormatGroup = new System.Windows.Forms.Label();
-            this.cmbFormatGroup = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +42,7 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 203);
+            this.panel1.Location = new System.Drawing.Point(0, 123);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(457, 68);
             this.panel1.TabIndex = 15;
@@ -96,27 +94,6 @@
             this.txtFileExtension.TabIndex = 0;
             this.txtFileExtension.Text = ".svg";
             // 
-            // lblFormatGroup
-            // 
-            this.lblFormatGroup.AutoSize = true;
-            this.lblFormatGroup.Location = new System.Drawing.Point(13, 106);
-            this.lblFormatGroup.Name = "lblFormatGroup";
-            this.lblFormatGroup.Size = new System.Drawing.Size(123, 25);
-            this.lblFormatGroup.TabIndex = 18;
-            this.lblFormatGroup.Text = "Format group";
-            // 
-            // cmbFormatGroup
-            // 
-            this.cmbFormatGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbFormatGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFormatGroup.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cmbFormatGroup.FormattingEnabled = true;
-            this.cmbFormatGroup.Location = new System.Drawing.Point(18, 134);
-            this.cmbFormatGroup.Name = "cmbFormatGroup";
-            this.cmbFormatGroup.Size = new System.Drawing.Size(419, 33);
-            this.cmbFormatGroup.TabIndex = 1;
-            // 
             // frmAddNewFormat
             // 
             this.AcceptButton = this.btnOK;
@@ -125,9 +102,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(457, 271);
-            this.Controls.Add(this.cmbFormatGroup);
-            this.Controls.Add(this.lblFormatGroup);
+            this.ClientSize = new System.Drawing.Size(457, 191);
             this.Controls.Add(this.txtFileExtension);
             this.Controls.Add(this.lblFileExtension);
             this.Controls.Add(this.panel1);
@@ -156,7 +131,5 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblFileExtension;
         private System.Windows.Forms.TextBox txtFileExtension;
-        private System.Windows.Forms.Label lblFormatGroup;
-        private System.Windows.Forms.ComboBox cmbFormatGroup;
     }
 }

@@ -32,20 +32,23 @@ namespace ImageGlass.Library.Image
         private int _i;
         private string _filename;
         private string _desFolder;
+        private ExtractCallback _extractFinished;
 
+        public delegate void ExtractCallback();
 
         /// <summary>
         /// Extract all frames of animation
         /// </summary>
         /// <param name="animationFile">File name</param>
         /// <param name="destinationFolder">Output folder</param>
-        public void ExtractAllFrames(string animationFile, string destinationFolder)
+        public void ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback)
         {
             //initiate class
 
             _isAnimating = false;
             _filename = animationFile;
             _desFolder = destinationFolder;
+            _extractFinished = callback;
 
             Task.Run(() =>
             {
@@ -88,7 +91,10 @@ namespace ImageGlass.Library.Image
             {
                 _isAnimating = false;
                 ImageAnimator.StopAnimate(_img, null);
-                
+
+                // Issue #565 callback to let the user know the extract has finished
+                _extractFinished?.Invoke();
+                _extractFinished = null;
                 return;
             }
 

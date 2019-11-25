@@ -17,26 +17,29 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Windows.Forms;
-using System.Diagnostics;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
 using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Settings;
+using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
     static class Program
     {
-        private static string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        private static readonly string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
         // Issue #360: IG periodically searching for dismounted device
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll")]
         static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
@@ -53,52 +56,58 @@ namespace ImageGlass
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] argv)
+        static void Main()
         {
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
-
+            // Load user configs
+            Configs.Load(); 
 
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
-            ProfileOptimization.SetProfileRoot(GlobalSetting.ConfigDir());
+            ProfileOptimization.SetProfileRoot(App.ConfigDir());
             ProfileOptimization.StartProfile("igstartup.profile");
 
             // Issue #360: IG periodically searching for dismounted device
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
-
-            // Windows Vista or later
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                SetProcessDPIAware();
-            }
-            
-            Guid guid = new Guid(appGuid);
+            SetProcessDPIAware();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
 
-            // Save App version
-            GlobalSetting.SetConfig("AppVersion", Application.ProductVersion.ToString());
+
+            #region Check config file compatibility
+            if (!Configs.IsCompatible)
+            {
+                var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
+                var result = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Process.Start($"https://imageglass.org/docs/app-configs?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=incompatible_configs");
+                    }
+                    catch { }
+
+                    return;
+                }
+            }
+            #endregion
 
 
             #region Check First-launch Configs
-            var firstLaunchVersion = 0;
-
-            int.TryParse(GlobalSetting.GetConfig("FirstLaunchVersion", "0"), out firstLaunchVersion);
-
-            if (firstLaunchVersion < GlobalSetting.FIRST_LAUNCH_VERSION)
+            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION)
             {
-                Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = "firstlaunch";
-
-                try
+                using (var p = new Process())
                 {
-                    p.Start();
+                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    p.StartInfo.Arguments = "firstlaunch";
+
+                    try
+                    {
+                        p.Start();
+                    }
+                    catch { }
                 }
-                catch { }
 
                 Application.Exit();
                 return;
@@ -106,58 +115,43 @@ namespace ImageGlass
             #endregion
 
 
-            #region Auto update
-            string lastUpdateConfig = GlobalSetting.GetConfig("AutoUpdate", "7/26/1991 12:13:08 AM");
-
-            if (lastUpdateConfig != "0")
+            #region Auto check for update
+            if (Configs.AutoUpdate != "0")
             {
-                DateTime lastUpdate = DateTime.Now;
+                var lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParseExact(lastUpdateConfig, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
+                if (DateTime.TryParseExact(Configs.AutoUpdate, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
                 {
-                    //Check for update every 3 days
+                    // Check for update every 3 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
                     {
-                        RunCheckForUpdate();
+                        CheckForUpdate(useAutoCheck: true);
                     }
                 }
                 else
                 {
-                    RunCheckForUpdate();
+                    CheckForUpdate(useAutoCheck: true);
                 }
-            }
-
-            
-            void RunCheckForUpdate()
-            {
-                Process p = new Process();
-                p.StartInfo.FileName = GlobalSetting.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = "igautoupdate";
-                p.Start();
-
-                //save last update
-                GlobalSetting.SetConfig("AutoUpdate", DateTime.Now.ToString("M/d/yyyy HH:mm:ss"));
             }
             #endregion
 
 
             #region Multi instances
-            //get current config
-            GlobalSetting.IsAllowMultiInstances = bool.Parse(GlobalSetting.GetConfig("IsAllowMultiInstances", "true"));
-            
-            //check if allows multi instances
-            if (GlobalSetting.IsAllowMultiInstances)
+            // check if allows multi instances
+            if (Configs.IsAllowMultiInstances)
             {
                 Application.Run(formMain = new frmMain());
             }
             else
             {
-                //single instance is required
+                var guid = new Guid(appGuid);
+
+                // single instance is required
                 using (SingleInstance singleInstance = new SingleInstance(guid))
                 {
                     if (singleInstance.IsFirstInstance)
                     {
-                        singleInstance.ArgumentsReceived += SingleInstance_ArgumentsReceived;
+                        singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
                         singleInstance.ListenForArgumentsFromSuccessiveInstances();
 
                         Application.Run(formMain = new frmMain());
@@ -173,33 +167,62 @@ namespace ImageGlass
         }
 
 
-        private static void SingleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)
+        private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e)
         {
             if (formMain == null)
                 return;
 
-            Action<String[]> UpdateForm = arguments =>
+            Action<string[]> UpdateForm = arguments =>
             {
                 formMain.WindowState = FormWindowState.Normal;
                 formMain.LoadFromParams(arguments);
             };
 
-            // KBR 20181009 Attempt to run a 2d instance of IG when multi-instance turned off. Primary instance
+            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
             // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
             int realcount = 0;
             foreach (var arg in e.Args)
                 if (arg != null)
                     realcount++;
+
             string[] realargs = new string[realcount];
             Array.Copy(e.Args, realargs, realcount);
 
-            //Execute our delegate on the forms thread!
-            formMain.Invoke(UpdateForm, (Object)realargs); 
+            // Execute our delegate on the forms thread!
+            formMain.Invoke(UpdateForm, (object)realargs);
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
         }
+
+
+        /// <summary>
+        /// Check for updatae
+        /// </summary>
+        /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
+        public static void CheckForUpdate(bool useAutoCheck = false)
+        {
+            Task.Run(() =>
+            {
+                using (var p = new Process())
+                {
+                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
+                    p.Start();
+
+                    p.WaitForExit();
+
+                    // There is a newer version
+                    if (p.ExitCode == 1)
+                    {
+                        Configs.IsNewVersionAvailable = true;
+                    }
+
+                    // save last update
+                    Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
+                }
+            });
+        }
+
     }
-
-
 }

@@ -109,7 +109,13 @@ namespace ImageGlass.Heart
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
-        public int MaxQueue { get; set; } = 1;
+        public uint MaxQueue { get; set; } = 1;
+
+
+        /// <summary>
+        /// Gets, sests the value indicates that returns the embedded thumbnail if found.
+        /// </summary>
+        public bool UseEmbeddedThumbnail { get; set; } = false;
 
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
@@ -246,7 +252,8 @@ namespace ImageGlass.Heart
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
                             isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                            channel: this.Channels
+                            channel: this.Channels,
+                            useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                         );
                     }
                 }
@@ -284,8 +291,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
+        /// <param name="frameIndex">The index of image frame to display (if it's multi-frame)</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int frameIndex = 0)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -294,7 +302,8 @@ namespace ImageGlass.Heart
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
                     isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                    channel: this.Channels
+                    channel: this.Channels,
+                    useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                 );
             }
             // get image data from cache
@@ -306,18 +315,26 @@ namespace ImageGlass.Heart
 
 
             // wait until the image loading is done
-            while (!this.ImgList[index].IsDone)
+            if (ImgList.Count > 0)
             {
-                await Task.Delay(1);
+                while (!this.ImgList[index].IsDone)
+                {
+                    await Task.Delay(1);
+                }
             }
 
             // Trigger event OnFinishLoadingImage
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (this.ImgList[index].Error == null)
+            if (ImgList.Count > 0)
             {
-                return this.ImgList[index];
+                if (ImgList[index].Error == null)
+                {
+                    ImgList[index].SetActivePage(frameIndex);
+                }
+
+                return ImgList[index];
             }
 
             return null;
@@ -333,7 +350,7 @@ namespace ImageGlass.Heart
         {
             try
             {
-                if (this.ImgList[index] != null)
+                if (ImgList.Count > 0 && ImgList[index] != null)
                 {
                     return this.ImgList[index].Filename;
                 }
