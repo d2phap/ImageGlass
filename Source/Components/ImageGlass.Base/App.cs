@@ -113,5 +113,26 @@ namespace ImageGlass.Base
         }
 
 
+        /// <summary>
+        /// Write log in DEBUG mode
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void LogIt(string msg)
+        {
+#if DEBUG
+            try
+            {
+                var path = ConfigDir(Dir.Temporary, "iglog.log");
+                using (TextWriter tw = new StreamWriter(path, append: true))
+                {
+                    tw.WriteLine(msg);
+                    tw.Flush();
+                    tw.Close();
+                }
+            }
+            catch { }
+#endif
+        }
+
     }
 }

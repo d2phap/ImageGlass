@@ -218,7 +218,8 @@ namespace ImageGlass.Heart
                 // Issue #530: ImageMagick falls over if the file path is longer than the (old)
                 // windows limit of 260 characters. Workaround is to read the file bytes, but 
                 // that requires using the "long path name" prefix to succeed.
-                filename = Helpers.PrefixLongPath(filename);
+
+                //filename = Helpers.PrefixLongPath(filename);
                 //var allBytes = File.ReadAllBytes(filename);
 
                 // TODO: there is a bug of using bytes[]:

@@ -128,7 +128,7 @@ namespace ImageGlass.Base
         btnZoomLock = 8,
         btnScaletoWidth = 9,
         btnScaletoHeight = 10,
-        btnWindowAutosize = 11,
+        btnWindowAdaptImage = 11,
         btnOpen = 12,
         btnRefresh = 13,
         btnGoto = 14,
