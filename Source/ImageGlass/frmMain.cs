@@ -2632,16 +2632,29 @@ namespace ImageGlass
 
         #region Form events
 
+        
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // minimizable borderless form
+                const int WS_MINIMIZEBOX = 0x20000;
 
+                CreateParams cp = base.CreateParams;
+                cp.Style |= WS_MINIMIZEBOX;
+
+                return cp;
+            }
+        }
 
         protected override void WndProc(ref Message m)
         {
             bool touchHandled = false;
 
-            //Check if the received message is WM_SHOWME
+            // Check if the received message is WM_SHOWME
             if (m.Msg == NativeMethods.WM_SHOWME)
             {
-                //Set frmMain of the first instance to TopMost
+                // Set frmMain of the first instance to TopMost
                 if (WindowState == FormWindowState.Minimized)
                 {
                     WindowState = FormWindowState.Normal;
@@ -2653,17 +2666,20 @@ namespace ImageGlass
                 // set it back to whatever it was
                 TopMost = top;
             }
-            //This message is sent when the form is dragged to a different monitor i.e. when
-            //the bigger part of its are is on the new monitor. 
+
+            // This message is sent when the form is dragged to a different monitor i.e. when
+            // the bigger part of its are is on the new monitor. 
             else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
                 DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
                 OnDpiChanged();
             }
-            else if (m.Msg == 0x0112) // WM_SYSCOMMAND
+
+            // WM_SYSCOMMAND
+            else if (m.Msg == 0x0112)
             {
                 // When user clicks on MAXIMIZE button on title bar
-                if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
+                if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
                 {
                     // The window is being maximized
                     if (!_isManuallyZoomed)
@@ -2672,7 +2688,7 @@ namespace ImageGlass
                     }
                 }
                 // When user clicks on the RESTORE button on title bar
-                else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
+                else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
                 {
                     // The window is being restored
                     if (!_isManuallyZoomed)
@@ -2681,11 +2697,15 @@ namespace ImageGlass
                     }
                 }
             }
-            else if (m.Msg == Touch.WM_GESTURENOTIFY) // Touch support
+
+            // Touch support
+            else if (m.Msg == Touch.WM_GESTURENOTIFY)
             {
                 touchHandled = Touch.AcceptTouch(this);
             }
-            else if (m.Msg == Touch.WM_GESTURE) // Touch support
+
+            // Touch support
+            else if (m.Msg == Touch.WM_GESTURE)
             {
                 touchHandled = Touch.DecodeTouch(m, out Touch.Action act);
 
@@ -2762,6 +2782,13 @@ namespace ImageGlass
                 }
                 return;
             }
+
+            // State changed
+            else if (m.Msg == 0x0005) // WM_SIZE
+            {
+
+            }
+
 
             base.WndProc(ref m);
 
