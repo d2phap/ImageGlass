@@ -76,6 +76,12 @@ namespace ImageGlass
         // determine if the image is zoomed
         private bool _isManuallyZoomed = false;
 
+        // determine if window is frameless (fullscreen / slideshow)
+        private bool _isFrameless = false;
+
+        // determine if is WindowAdaptToImage (fullscreen / slideshow)
+        private bool _isWindowAdaptToImage = false;
+
         // determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
 
@@ -2520,6 +2526,8 @@ namespace ImageGlass
         }
 
 
+        
+
         /// <summary>
         /// Enter or Exit Full screen mode
         /// </summary>
@@ -2533,7 +2541,18 @@ namespace ImageGlass
             {
                 SaveConfig();
 
-                // save last state of toolbar
+                _isFrameless = Configs.IsWindowFrameless;
+                _isWindowAdaptToImage = Configs.IsAdaptWindowToImage;
+
+                // exit AdaptWindowToImage mode
+                Configs.IsAdaptWindowToImage = true;
+                mnuMainWindowAdaptImage_Click(null, null);
+
+                // exit frameless window
+                Configs.IsWindowFrameless = true;
+                mnuFrameless_Click(null, null);
+
+                // save last state of layout
                 if (onlyShowViewer)
                 {
                     _isShowToolbar = Configs.IsShowToolBar;
@@ -2559,6 +2578,7 @@ namespace ImageGlass
                     mnuMainThumbnailBar_Click(null, null);
                 }
 
+
                 Application.DoEvents();
 
 
@@ -2573,7 +2593,7 @@ namespace ImageGlass
             // exit full screen
             else
             {
-                //restore last state of toolbar
+                // restore last state of toolbar
                 if (onlyShowViewer)
                 {
                     Configs.IsShowToolBar = _isShowToolbar;
@@ -2587,14 +2607,24 @@ namespace ImageGlass
                 {
                     this.FormBorderStyle = FormBorderStyle.Sizable;
 
-                    //windows state
+                    // windows state
                     if (Configs.FrmMainWindowState != FormWindowState.Minimized)
                     {
                         this.WindowState = Configs.FrmMainWindowState;
                     }
 
-                    //Windows Bound (Position + Size)
+                    // Windows Bound (Position + Size)
                     this.Bounds = Configs.FrmMainWindowsBound;
+                }
+
+
+                // restore frameless state
+                Configs.IsWindowFrameless = _isFrameless;
+                if (Configs.IsWindowFrameless)
+                {
+                    // trigger frameless window
+                    Configs.IsWindowFrameless = false;
+                    mnuFrameless_Click(null, null);
                 }
 
 
@@ -2615,10 +2645,20 @@ namespace ImageGlass
                     }
                 }
 
+
+                // restore IsAdaptWindowToImage state
+                Configs.IsAdaptWindowToImage = _isWindowAdaptToImage;
+                if (Configs.IsAdaptWindowToImage)
+                {
+                    Configs.IsAdaptWindowToImage = false;
+                    mnuMainWindowAdaptImage_Click(null, null);
+                }
+
+
                 Application.DoEvents();
 
 
-                //realign image
+                // realign image
                 if (!_isManuallyZoomed)
                 {
                     ApplyZoomMode(Configs.ZoomMode);
@@ -5034,7 +5074,7 @@ namespace ImageGlass
         private void mnuFrameless_Click(object sender, EventArgs e)
         {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
-            Control[] frameLessMovers = {picMain, toolMain, thumbnailBar};
+            Control[] frameLessMovers = { picMain, toolMain, thumbnailBar };
 
             if (Configs.IsWindowFrameless)
             {
