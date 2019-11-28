@@ -32,6 +32,21 @@ namespace igcmd
         private static extern bool SetProcessDPIAware();
 
 
+        // Issue #360: IG periodically searching for dismounted device
+        [DllImport("kernel32.dll")]
+        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+
+        [Flags]
+        public enum ErrorModes : uint
+        {
+            SYSTEM_DEFAULT = 0x0,
+            SEM_FAILCRITICALERRORS = 0x0001,
+            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+            SEM_NOGPFAULTERRORBOX = 0x0002,
+            SEM_NOOPENFILEERRORBOX = 0x8000
+        }
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -39,6 +54,9 @@ namespace igcmd
         static int Main(string[] args)
         {
             string topcmd = args[0].ToLower().Trim();
+
+            // Issue #360: IG periodically searching for dismounted device
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
