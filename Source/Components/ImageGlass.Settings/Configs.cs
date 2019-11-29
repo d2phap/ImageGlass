@@ -116,7 +116,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
-        public static bool IsLoopBackSlideShow { get; set; } = false;
+        public static bool IsLoopBackSlideShow { get; set; } = true;
 
 
         /// <summary>
@@ -258,9 +258,16 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets value specifying that "adjust window to image dimensions" is on
+        /// Gets, sets value specifying that Window Fit mode is on
         /// </summary>
-        public static bool IsAdaptWindowToImage { get; set; } = false;
+        public static bool IsWindowFit { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value indicates the window should be always center in Window Fit mode
+        /// </summary>
+        public static bool IsCenterWindowFit { get; set; } = true;
+
 
         #endregion
 
@@ -577,7 +584,8 @@ namespace ImageGlass.Settings
             IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
-            IsAdaptWindowToImage = Get<bool>(nameof(IsAdaptWindowToImage), IsAdaptWindowToImage);
+            IsWindowFit = Get<bool>(nameof(IsWindowFit), IsWindowFit);
+            IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
 
             #endregion
 
@@ -796,7 +804,8 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
-            Set(nameof(IsAdaptWindowToImage), IsAdaptWindowToImage);
+            Set(nameof(IsWindowFit), IsWindowFit);
+            Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
 
             #endregion
 

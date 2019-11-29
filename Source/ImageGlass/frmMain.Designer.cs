@@ -60,8 +60,6 @@
             this.mnuMainZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainActualSize = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainWindowAdaptImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem27 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainAutoZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToWidth = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainScaleToHeight = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,7 +135,7 @@
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnActualSize = new System.Windows.Forms.ToolStripButton();
-            this.btnWindowAdaptImage = new System.Windows.Forms.ToolStripButton();
+            this.btnWindowFit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAutoZoom = new System.Windows.Forms.ToolStripButton();
             this.btnScaletoWidth = new System.Windows.Forms.ToolStripButton();
@@ -162,6 +160,7 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.mnuWindowFit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -208,8 +207,9 @@
             this.mnuMainImage,
             this.mnuMainClipboard,
             this.toolStripSeparator5,
-            this.mnuMainFullScreen,
+            this.mnuWindowFit,
             this.mnuFrameless,
+            this.mnuMainFullScreen,
             this.mnuMainSlideShow,
             this.mnuMainShare,
             this.toolStripSeparator9,
@@ -222,7 +222,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(281, 502);
+            this.mnuMain.Size = new System.Drawing.Size(258, 533);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -245,7 +245,7 @@
             this.mnuMainFile.Name = "mnuMainFile";
             this.mnuMainFile.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainFile.ShortcutKeyDisplayString = "";
-            this.mnuMainFile.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainFile.Size = new System.Drawing.Size(257, 31);
             this.mnuMainFile.Text = "[File]";
             this.mnuMainFile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.mnuMainFile.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -374,7 +374,7 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(254, 6);
             // 
             // mnuMainNavigation
             // 
@@ -394,7 +394,7 @@
             this.mnuMainNavigation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainNavigation.Name = "mnuMainNavigation";
             this.mnuMainNavigation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainNavigation.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainNavigation.Size = new System.Drawing.Size(257, 31);
             this.mnuMainNavigation.Text = "&Navigation";
             this.mnuMainNavigation.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -515,8 +515,6 @@
             this.mnuMainZoomOut,
             this.mnuMainActualSize,
             this.toolStripSeparator13,
-            this.mnuMainWindowAdaptImage,
-            this.toolStripMenuItem27,
             this.mnuMainAutoZoom,
             this.mnuMainScaleToWidth,
             this.mnuMainScaleToHeight,
@@ -528,7 +526,7 @@
             this.mnuMainZoom.Name = "mnuMainZoom";
             this.mnuMainZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoom.ShortcutKeyDisplayString = "";
-            this.mnuMainZoom.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainZoom.Size = new System.Drawing.Size(257, 31);
             this.mnuMainZoom.Text = "[Zoom]";
             this.mnuMainZoom.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -539,7 +537,7 @@
             this.mnuMainZoomIn.Name = "mnuMainZoomIn";
             this.mnuMainZoomIn.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomIn.ShortcutKeyDisplayString = "Ctrl+=";
-            this.mnuMainZoomIn.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainZoomIn.Size = new System.Drawing.Size(301, 33);
             this.mnuMainZoomIn.Text = "&Zoom in";
             this.mnuMainZoomIn.Click += new System.EventHandler(this.mnuMainZoomIn_Click);
             // 
@@ -550,7 +548,7 @@
             this.mnuMainZoomOut.Name = "mnuMainZoomOut";
             this.mnuMainZoomOut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomOut.ShortcutKeyDisplayString = "Ctrl+-";
-            this.mnuMainZoomOut.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainZoomOut.Size = new System.Drawing.Size(301, 33);
             this.mnuMainZoomOut.Text = "Zoo&m out";
             this.mnuMainZoomOut.Click += new System.EventHandler(this.mnuMainZoomOut_Click);
             // 
@@ -561,31 +559,14 @@
             this.mnuMainActualSize.Name = "mnuMainActualSize";
             this.mnuMainActualSize.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainActualSize.ShortcutKeyDisplayString = "Ctrl+0";
-            this.mnuMainActualSize.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainActualSize.Size = new System.Drawing.Size(301, 33);
             this.mnuMainActualSize.Text = "&Actual size";
             this.mnuMainActualSize.Click += new System.EventHandler(this.mnuMainActualSize_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(599, 6);
-            // 
-            // mnuMainWindowAdaptImage
-            // 
-            this.mnuMainWindowAdaptImage.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainWindowAdaptImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainWindowAdaptImage.Name = "mnuMainWindowAdaptImage";
-            this.mnuMainWindowAdaptImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainWindowAdaptImage.ShortcutKeyDisplayString = "Ctrl+M";
-            this.mnuMainWindowAdaptImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.mnuMainWindowAdaptImage.Size = new System.Drawing.Size(602, 33);
-            this.mnuMainWindowAdaptImage.Text = "Adjust &window to actual image dimensions (Ctrl + M)";
-            this.mnuMainWindowAdaptImage.Click += new System.EventHandler(this.mnuMainWindowAdaptImage_Click);
-            // 
-            // toolStripMenuItem27
-            // 
-            this.toolStripMenuItem27.Name = "toolStripMenuItem27";
-            this.toolStripMenuItem27.Size = new System.Drawing.Size(599, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(298, 6);
             // 
             // mnuMainAutoZoom
             // 
@@ -598,7 +579,7 @@
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "Ctrl+A";
             this.mnuMainAutoZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.mnuMainAutoZoom.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainAutoZoom.Size = new System.Drawing.Size(301, 33);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
             // 
@@ -611,7 +592,7 @@
             this.mnuMainScaleToWidth.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToWidth.ShortcutKeyDisplayString = "Ctrl+W";
             this.mnuMainScaleToWidth.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.mnuMainScaleToWidth.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainScaleToWidth.Size = new System.Drawing.Size(301, 33);
             this.mnuMainScaleToWidth.Text = "Scale to &Width";
             this.mnuMainScaleToWidth.Click += new System.EventHandler(this.mnuMainScaleToWidth_Click);
             // 
@@ -624,7 +605,7 @@
             this.mnuMainScaleToHeight.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToHeight.ShortcutKeyDisplayString = "Ctrl+H";
             this.mnuMainScaleToHeight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.mnuMainScaleToHeight.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainScaleToHeight.Size = new System.Drawing.Size(301, 33);
             this.mnuMainScaleToHeight.Text = "Scale to &Height";
             this.mnuMainScaleToHeight.Click += new System.EventHandler(this.mnuMainScaleToHeight_Click);
             // 
@@ -636,7 +617,7 @@
             this.mnuMainScaleToFit.Name = "mnuMainScaleToFit";
             this.mnuMainScaleToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToFit.ShortcutKeyDisplayString = "Ctrl+/";
-            this.mnuMainScaleToFit.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainScaleToFit.Size = new System.Drawing.Size(301, 33);
             this.mnuMainScaleToFit.Text = "Scale to &fit";
             this.mnuMainScaleToFit.Click += new System.EventHandler(this.mnuMainScaleToFit_Click);
             // 
@@ -649,7 +630,7 @@
             this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToFill.ShortcutKeyDisplayString = "Ctrl+D";
             this.mnuMainScaleToFill.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.mnuMainScaleToFill.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainScaleToFill.Size = new System.Drawing.Size(301, 33);
             this.mnuMainScaleToFill.Text = "Scale to fill";
             this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
             // 
@@ -661,7 +642,7 @@
             this.mnuMainLockZoomRatio.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLockZoomRatio.ShortcutKeyDisplayString = "Ctrl+L";
             this.mnuMainLockZoomRatio.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(602, 33);
+            this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(301, 33);
             this.mnuMainLockZoomRatio.Text = "&Lock zoom ratio";
             this.mnuMainLockZoomRatio.Click += new System.EventHandler(this.mnuMainLockZoomRatio_Click);
             // 
@@ -690,7 +671,7 @@
             this.mnuMainImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainImage.Name = "mnuMainImage";
             this.mnuMainImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainImage.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainImage.Size = new System.Drawing.Size(257, 31);
             this.mnuMainImage.Text = "[Image]";
             this.mnuMainImage.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -884,7 +865,7 @@
             this.mnuMainClipboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainClipboard.Name = "mnuMainClipboard";
             this.mnuMainClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainClipboard.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainClipboard.Size = new System.Drawing.Size(257, 31);
             this.mnuMainClipboard.Text = "&Clipboard";
             this.mnuMainClipboard.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -959,7 +940,7 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(254, 6);
             // 
             // mnuMainFullScreen
             // 
@@ -969,7 +950,7 @@
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";
             this.mnuMainFullScreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
-            this.mnuMainFullScreen.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainFullScreen.Size = new System.Drawing.Size(257, 31);
             this.mnuMainFullScreen.Text = "&Full screen";
             this.mnuMainFullScreen.Click += new System.EventHandler(this.mnuMainFullScreen_Click);
             // 
@@ -983,8 +964,8 @@
             this.mnuFrameless.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuFrameless.ShortcutKeyDisplayString = "F10";
             this.mnuFrameless.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mnuFrameless.Size = new System.Drawing.Size(280, 31);
-            this.mnuFrameless.Text = "[Frameless window]";
+            this.mnuFrameless.Size = new System.Drawing.Size(257, 31);
+            this.mnuFrameless.Text = "[Frameless]";
             this.mnuFrameless.Click += new System.EventHandler(this.mnuFrameless_Click);
             // 
             // mnuMainSlideShow
@@ -998,7 +979,7 @@
             this.mnuMainSlideShow.Name = "mnuMainSlideShow";
             this.mnuMainSlideShow.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainSlideShow.ShortcutKeyDisplayString = "";
-            this.mnuMainSlideShow.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainSlideShow.Size = new System.Drawing.Size(257, 31);
             this.mnuMainSlideShow.Text = "Sl&ideshow";
             this.mnuMainSlideShow.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1042,7 +1023,7 @@
             this.mnuMainShare.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainShare.Name = "mnuMainShare";
             this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainShare.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainShare.Size = new System.Drawing.Size(257, 31);
             this.mnuMainShare.Text = "S&hare ...";
             this.mnuMainShare.Visible = false;
             this.mnuMainShare.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
@@ -1050,7 +1031,7 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(254, 6);
             // 
             // mnuMainLayout
             // 
@@ -1064,7 +1045,7 @@
             this.mnuMainLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainLayout.Name = "mnuMainLayout";
             this.mnuMainLayout.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainLayout.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainLayout.Size = new System.Drawing.Size(257, 31);
             this.mnuMainLayout.Text = "&Layout";
             this.mnuMainLayout.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1139,7 +1120,7 @@
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
             this.mnuMainTools.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainTools.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainTools.Size = new System.Drawing.Size(257, 31);
             this.mnuMainTools.Text = "&Tools";
             this.mnuMainTools.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1174,7 +1155,7 @@
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(254, 6);
             // 
             // mnuMainSettings
             // 
@@ -1185,7 +1166,7 @@
             this.mnuMainSettings.ShortcutKeyDisplayString = "Ctrl+Shift+P";
             this.mnuMainSettings.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.P)));
-            this.mnuMainSettings.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainSettings.Size = new System.Drawing.Size(257, 31);
             this.mnuMainSettings.Text = "S&ettings";
             this.mnuMainSettings.Click += new System.EventHandler(this.mnuMainSettings_Click);
             // 
@@ -1200,7 +1181,7 @@
             this.mnuMainHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainHelp.Name = "mnuMainHelp";
             this.mnuMainHelp.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainHelp.Size = new System.Drawing.Size(280, 31);
+            this.mnuMainHelp.Size = new System.Drawing.Size(257, 31);
             this.mnuMainHelp.Text = "[Help]";
             this.mnuMainHelp.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
@@ -1246,12 +1227,12 @@
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(277, 6);
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(254, 6);
             // 
             // mnuMainExitApplication
             // 
             this.mnuMainExitApplication.Name = "mnuMainExitApplication";
-            this.mnuMainExitApplication.Size = new System.Drawing.Size(280, 32);
+            this.mnuMainExitApplication.Size = new System.Drawing.Size(257, 32);
             this.mnuMainExitApplication.Text = "Exit ImageGlass";
             this.mnuMainExitApplication.Click += new System.EventHandler(this.mnuMainExitApplication_Click);
             // 
@@ -1380,7 +1361,7 @@
             this.btnZoomIn,
             this.btnZoomOut,
             this.btnActualSize,
-            this.btnWindowAdaptImage,
+            this.btnWindowFit,
             this.toolStripSeparator4,
             this.btnAutoZoom,
             this.btnScaletoWidth,
@@ -1546,17 +1527,17 @@
             // 
             // btnWindowAdaptImage
             // 
-            this.btnWindowAdaptImage.AutoSize = false;
-            this.btnWindowAdaptImage.BackColor = System.Drawing.Color.Transparent;
-            this.btnWindowAdaptImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnWindowAdaptImage.Image = global::ImageGlass.Properties.Resources.info;
-            this.btnWindowAdaptImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnWindowAdaptImage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnWindowAdaptImage.Margin = new System.Windows.Forms.Padding(0);
-            this.btnWindowAdaptImage.Name = "btnWindowAdaptImage";
-            this.btnWindowAdaptImage.Size = new System.Drawing.Size(33, 33);
-            this.btnWindowAdaptImage.ToolTipText = "Adjust window to actual image dimensions (Ctrl + M)";
-            this.btnWindowAdaptImage.Click += new System.EventHandler(this.btnWindowAdaptImage_Click);
+            this.btnWindowFit.AutoSize = false;
+            this.btnWindowFit.BackColor = System.Drawing.Color.Transparent;
+            this.btnWindowFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnWindowFit.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnWindowFit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnWindowFit.Margin = new System.Windows.Forms.Padding(0);
+            this.btnWindowFit.Name = "btnWindowAdaptImage";
+            this.btnWindowFit.Size = new System.Drawing.Size(33, 33);
+            this.btnWindowFit.ToolTipText = "Adjust window to actual image dimensions (Ctrl + M)";
+            this.btnWindowFit.Click += new System.EventHandler(this.btnWindowFit_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1852,6 +1833,18 @@
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
             // 
+            // mnuWindowFit
+            // 
+            this.mnuWindowFit.ForeColor = System.Drawing.Color.Black;
+            this.mnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuWindowFit.Name = "mnuWindowFit";
+            this.mnuWindowFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuWindowFit.ShortcutKeyDisplayString = "F9";
+            this.mnuWindowFit.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.mnuWindowFit.Size = new System.Drawing.Size(257, 31);
+            this.mnuWindowFit.Text = "[Window fit]";
+            this.mnuWindowFit.Click += new System.EventHandler(this.mnuWindowFit_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1909,7 +1902,7 @@
         private System.Windows.Forms.ToolStripButton btnActualSize;
         private System.Windows.Forms.ToolStripButton btnScaletoWidth;
         private System.Windows.Forms.ToolStripButton btnScaletoHeight;
-        private System.Windows.Forms.ToolStripButton btnWindowAdaptImage;
+        private System.Windows.Forms.ToolStripButton btnWindowFit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnOpen;
         private System.Windows.Forms.ToolStripButton btnRefresh;
@@ -2011,8 +2004,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomIn;
         private System.Windows.Forms.ToolStripMenuItem mnuMainZoomOut;
         private System.Windows.Forms.ToolStripMenuItem mnuMainActualSize;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainWindowAdaptImage;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem27;
         private System.Windows.Forms.ToolStripMenuItem mnuMainAutoZoom;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToWidth;
         private System.Windows.Forms.ToolStripMenuItem mnuMainScaleToHeight;
@@ -2030,6 +2021,7 @@
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem mnuFrameless;
+        private System.Windows.Forms.ToolStripMenuItem mnuWindowFit;
     }
 }
 

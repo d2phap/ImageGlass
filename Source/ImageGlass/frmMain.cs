@@ -79,8 +79,8 @@ namespace ImageGlass
         // determine if window is frameless (fullscreen / slideshow)
         private bool _isFrameless = false;
 
-        // determine if is WindowAdaptToImage (fullscreen / slideshow)
-        private bool _isWindowAdaptToImage = false;
+        // determine if is WindowFit (fullscreen / slideshow)
+        private bool _isWindowFit = false;
 
         // determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
@@ -797,8 +797,8 @@ namespace ImageGlass
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
                     {
-                        if (Configs.IsAdaptWindowToImage)
-                            AdaptMainWindowToImage(); // NOTE: ApplyZoomMode side-effect
+                        if (Configs.IsWindowFit)
+                            WindowFitMode(); // NOTE: ApplyZoomMode side-effect
                         else
                             //reset zoom mode
                             ApplyZoomMode(Configs.ZoomMode);
@@ -2144,14 +2144,11 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Adjust our window dimensions to fit the image size. Namely,
-        /// the window is sized so there is no "extra space" around the
-        /// image. If full-screen mode is ON and the toolbar is OFF, this
-        /// allows for a "borderless viewer" mode.
+        /// Adjust our window dimensions to fit the image size.
         /// </summary>
-        private void AdaptMainWindowToImage()
+        private void WindowFitMode()
         {
-            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
+            if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
             WindowState = FormWindowState.Normal;
@@ -2183,7 +2180,10 @@ namespace ImageGlass
             Size = new Size(Width += newW - picMain.Width,
                             Height += newH - picMain.Height);
 
-            if (fullW > screen.WorkingArea.Width || fullH > screen.WorkingArea.Height)
+            // center window to screen
+            if (Configs.IsCenterWindowFit
+                || fullW > screen.WorkingArea.Width
+                || fullH > screen.WorkingArea.Height)
             {
                 App.CenterFormToScreen(this);
             }
@@ -2274,7 +2274,7 @@ namespace ImageGlass
             btnScaletoWidth.Image = th.ToolbarIcons.ScaleToWidth.Image;
             btnScaletoHeight.Image = th.ToolbarIcons.ScaleToHeight.Image;
             btnScaleToFill.Image = th.ToolbarIcons.ScaleToFill.Image;
-            btnWindowAdaptImage.Image = th.ToolbarIcons.AdjustWindowSize.Image;
+            btnWindowFit.Image = th.ToolbarIcons.AdjustWindowSize.Image;
 
             btnOpen.Image = th.ToolbarIcons.OpenFile.Image;
             btnRefresh.Image = th.ToolbarIcons.Refresh.Image;
@@ -2450,11 +2450,11 @@ namespace ImageGlass
                     mnuMainFullScreen.PerformClick();
                 }
 
-                // Load Auto-adapt Window To Image
-                if (Configs.IsAdaptWindowToImage)
+                // Load WindowFit mode
+                if (Configs.IsWindowFit)
                 {
-                    Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
-                    mnuMainWindowAdaptImage.PerformClick();
+                    Configs.IsWindowFit = !Configs.IsWindowFit;
+                    mnuWindowFit.PerformClick();
                 }
 
 
@@ -2482,9 +2482,9 @@ namespace ImageGlass
                 this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
 
 
-                // Load state of "adapt window to image" setting
-                mnuMainWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
-                AdaptMainWindowToImage();
+                // Load state of WindowFit mode setting
+                mnuWindowFit.Checked = Configs.IsWindowFit;
+                WindowFitMode();
 
             }
             #endregion
@@ -2546,11 +2546,11 @@ namespace ImageGlass
                 SaveConfig();
 
                 _isFrameless = Configs.IsWindowFrameless;
-                _isWindowAdaptToImage = Configs.IsAdaptWindowToImage;
+                _isWindowFit = Configs.IsWindowFit;
 
-                // exit AdaptWindowToImage mode
-                Configs.IsAdaptWindowToImage = true;
-                mnuMainWindowAdaptImage_Click(null, null);
+                // exit WindowFit mode
+                Configs.IsWindowFit = true;
+                mnuWindowFit_Click(null, null);
 
                 // exit frameless window
                 Configs.IsWindowFrameless = true;
@@ -2650,12 +2650,12 @@ namespace ImageGlass
                 }
 
 
-                // restore IsAdaptWindowToImage state
-                Configs.IsAdaptWindowToImage = _isWindowAdaptToImage;
-                if (Configs.IsAdaptWindowToImage)
+                // restore WindowFit mode state
+                Configs.IsWindowFit = _isWindowFit;
+                if (Configs.IsWindowFit)
                 {
-                    Configs.IsAdaptWindowToImage = false;
-                    mnuMainWindowAdaptImage_Click(null, null);
+                    Configs.IsWindowFit = false;
+                    mnuWindowFit_Click(null, null);
                 }
 
 
@@ -2966,7 +2966,7 @@ namespace ImageGlass
                 mnuMainAutoZoom.Text = lang[$"{Name}.{nameof(mnuMainAutoZoom)}"];
                 mnuMainScaleToWidth.Text = lang[$"{Name}.{nameof(mnuMainScaleToWidth)}"];
                 mnuMainScaleToHeight.Text = lang[$"{Name}.{nameof(mnuMainScaleToHeight)}"];
-                mnuMainWindowAdaptImage.Text = lang[$"{Name}.{nameof(mnuMainWindowAdaptImage)}"];
+                mnuWindowFit.Text = lang[$"{Name}.{nameof(mnuWindowFit)}"];
                 #endregion
 
 
@@ -3070,7 +3070,7 @@ namespace ImageGlass
                 btnZoomLock.ToolTipText = mnuMainLockZoomRatio.Text + $" ({mnuMainLockZoomRatio.ShortcutKeyDisplayString})";
 
                 // Window modes
-                btnWindowAdaptImage.ToolTipText = mnuMainWindowAdaptImage.Text + $" ({mnuMainWindowAdaptImage.ShortcutKeyDisplayString})";
+                btnWindowFit.ToolTipText = mnuWindowFit.Text + $" ({mnuWindowFit.ShortcutKeyDisplayString})";
                 btnFullScreen.ToolTipText = mnuMainFullScreen.Text + $" ({mnuMainFullScreen.ShortcutKeyDisplayString})";
                 btnSlideShow.ToolTipText = mnuMainSlideShowStart.Text + $" ({mnuMainSlideShowStart.ShortcutKeyDisplayString})";
 
@@ -3849,9 +3849,9 @@ namespace ImageGlass
             mnuMainScaleToHeight_Click(null, e);
         }
 
-        private void btnWindowAdaptImage_Click(object sender, EventArgs e)
+        private void btnWindowFit_Click(object sender, EventArgs e)
         {
-            mnuMainWindowAdaptImage_Click(null, e);
+            mnuWindowFit_Click(null, e);
         }
 
         private void btnGoto_Click(object sender, EventArgs e)
@@ -4646,19 +4646,19 @@ namespace ImageGlass
         }
 
 
-        private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
+        private void mnuWindowFit_Click(object sender, EventArgs e)
         {
-            Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
-            mnuMainWindowAdaptImage.Checked =
-                btnWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
+            Configs.IsWindowFit = !Configs.IsWindowFit;
+            mnuWindowFit.Checked =
+                btnWindowFit.Checked = Configs.IsWindowFit;
 
             if (picMain.Image == null)
             {
                 return;
             }
 
-            if (Configs.IsAdaptWindowToImage)
-                AdaptMainWindowToImage();
+            if (Configs.IsWindowFit)
+                WindowFitMode();
             else
                 ApplyZoomMode(Configs.ZoomMode);
         }
@@ -4985,7 +4985,8 @@ namespace ImageGlass
             // Issue #554 
             if (!_isManuallyZoomed)
             {
-                ApplyZoomMode(Configs.ZoomMode); // Resize image to adapt when toolbar turned off
+                // Resize image to adapt when toolbar turned off
+                ApplyZoomMode(Configs.ZoomMode); 
             }
 
         }
@@ -5055,7 +5056,8 @@ namespace ImageGlass
 
             if (!_isManuallyZoomed)
             {
-                ApplyZoomMode(Configs.ZoomMode); // Resize image to adapt when thumbbar turned off
+                // Resize image to adapt when thumbbar turned off
+                ApplyZoomMode(Configs.ZoomMode); 
             }
         }
 

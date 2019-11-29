@@ -109,12 +109,14 @@ namespace ImageGlass.Base
                 ToolbarButton.btnGoto,
                 ToolbarButton.Separator,
 
-                ToolbarButton.btnThumb,
-                ToolbarButton.btnCheckedBackground,
+                ToolbarButton.btnWindowFit,
                 ToolbarButton.btnFullScreen,
                 ToolbarButton.btnSlideShow,
+                ToolbarButton.Separator,
+
+                ToolbarButton.btnThumb,
+                ToolbarButton.btnCheckedBackground,
                 ToolbarButton.btnDelete,
-                ToolbarButton.btnEdit,
             };
         }
     }

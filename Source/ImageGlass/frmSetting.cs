@@ -260,6 +260,8 @@ namespace ImageGlass
             chkDisplayBasename.Text = lang[$"{Name}.chkDisplayBasename"];
             chkShowNavButtons.Text = lang[$"{Name}.chkShowNavButtons"];
             chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.chkShowCheckerboardOnlyImage"];
+            chkCenterWindowFit.Text = lang[$"{Name}.chkCenterWindowFit"];
+
             lblBackGroundColor.Text = lang[$"{Name}.lblBackGroundColor"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.lnkResetBackgroundColor"];
             #endregion
@@ -544,6 +546,7 @@ namespace ImageGlass
             chkDisplayBasename.Checked = Configs.IsDisplayBasenameOfImage;
             chkShowNavButtons.Checked = Configs.IsShowNavigationButtons;
             chkShowCheckerboardOnlyImage.Checked = Configs.IsShowCheckerboardOnlyImageRegion;
+            chkCenterWindowFit.Checked = Configs.IsCenterWindowFit;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
         }
 
@@ -2010,6 +2013,7 @@ namespace ImageGlass
             Configs.IsConfirmationDelete = chkConfirmationDelete.Checked;
             Configs.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
             Configs.IsShowNavigationButtons = chkShowNavButtons.Checked;
+            Configs.IsCenterWindowFit = chkCenterWindowFit.Checked;
 
 
             #region IsShowCheckerboardOnlyImageRegion: MainFormForceUpdateAction.OTHER_SETTINGS

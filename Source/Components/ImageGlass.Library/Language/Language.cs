@@ -282,7 +282,6 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainAutoZoom", "Auto zoom"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
-            Items.Add("frmMain.mnuMainWindowAdaptImage", "Adjust window to actual image dimensions"); //v3.0, updated 4.0
             #endregion
 
 
@@ -321,8 +320,9 @@ namespace ImageGlass.Library
             #endregion
 
 
+            Items.Add("frmMain.mnuWindowFit", "Window fit"); //v7.5
             Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
-            Items.Add("frmMain.mnuFrameless", "Frameless window"); //v7.5
+            Items.Add("frmMain.mnuFrameless", "Frameless"); //v7.5
 
 
             #region Slideshow
@@ -478,6 +478,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkDisplayBasename", "Display basename of the viewing image on title bar"); //v5.0
             Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
             Items.Add("frmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
+            Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion
