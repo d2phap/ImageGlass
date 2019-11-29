@@ -56,7 +56,7 @@ namespace ImageGlass
 
             // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
-            
+
             // Update form with new DPI
             OnDpiChanged();
             Application.DoEvents();
@@ -117,7 +117,7 @@ namespace ImageGlass
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
-        
+
         #endregion
 
 
@@ -138,7 +138,7 @@ namespace ImageGlass
                 // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because we set the
                 // drag effect to Move, which is _not_allowed_
                 // Drag file from DESKTOP to APP
-                if (Local.ImageList.IndexOf(filePath) == -1 && 
+                if (Local.ImageList.IndexOf(filePath) == -1 &&
                     (e.AllowedEffect & DragDropEffects.Move) != 0)
                 {
                     e.Effect = DragDropEffects.Move;
@@ -791,7 +791,7 @@ namespace ImageGlass
                     //Show image
                     picMain.Refresh();
                     picMain.Image = im;
-                    
+
                     im = null;
 
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
@@ -844,7 +844,7 @@ namespace ImageGlass
                 if (isbusy)
                     picMain.Cursor = Cursors.WaitCursor;
                 else
-                    ShowActiveCursor(); 
+                    ShowActiveCursor();
 
                 // Part of Issue #485 fix: failure to disable timer after image load meant message 
                 // could appear after image already loaded
@@ -1422,7 +1422,7 @@ namespace ImageGlass
                 btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
                 btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
                 btnZoomLock.Checked = mnuMainLockZoomRatio.Checked =
-                btnScaleToFit.Checked = mnuMainScaleToFit.Checked = 
+                btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
                 btnScaleToFill.Checked = mnuMainScaleToFill.Checked = false;
 
             switch (Configs.ZoomMode)
@@ -1525,7 +1525,7 @@ namespace ImageGlass
                 // auto center the image
                 picMain.CenterToImage();
             }
-            
+
 
             // Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
@@ -1863,17 +1863,17 @@ namespace ImageGlass
             #region change size of menu items
             int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
 
-            mnuMainOpenFile.Image = 
+            mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
-                mnuMainViewNext.Image = 
-                mnuMainSlideShowStart.Image = 
-                mnuMainRotateLeft.Image = 
+                mnuMainViewNext.Image =
+                mnuMainSlideShowStart.Image =
+                mnuMainRotateLeft.Image =
 
-                mnuMainClearClipboard.Image = 
-                mnuMainToolbar.Image = 
+                mnuMainClearClipboard.Image =
+                mnuMainToolbar.Image =
                 mnuMainColorPicker.Image =
-                mnuMainPageNav.Image = 
-                mnuMainAbout.Image = 
+                mnuMainPageNav.Image =
+                mnuMainAbout.Image =
                 mnuMainSettings.Image =
 
                 mnuMainExtractPages.Image =
@@ -2321,7 +2321,7 @@ namespace ImageGlass
             {
 
                 // ThumbnailBar Renderer must be done BEFORE loading theme
-                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); 
+                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer());
                 ApplyTheme();
 
 
@@ -2403,8 +2403,8 @@ namespace ImageGlass
                 // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowsBound;
 
-                
-                
+
+
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2530,7 +2530,7 @@ namespace ImageGlass
         }
 
 
-        
+
 
         /// <summary>
         /// Enter or Exit Full screen mode
@@ -2676,7 +2676,7 @@ namespace ImageGlass
 
         #region Form events
 
-        
+
         protected override CreateParams CreateParams
         {
             get
@@ -3058,16 +3058,16 @@ namespace ImageGlass
 
                 // Zooming
                 btnZoomIn.ToolTipText = mnuMainZoomIn.Text + $" ({mnuMainZoomIn.ShortcutKeyDisplayString})";
-                btnZoomOut.ToolTipText = mnuMainZoomOut.Text  + $" ({mnuMainZoomOut.ShortcutKeyDisplayString})";
-                btnActualSize.ToolTipText = mnuMainActualSize.Text  + $" ({mnuMainActualSize.ShortcutKeyDisplayString})";
+                btnZoomOut.ToolTipText = mnuMainZoomOut.Text + $" ({mnuMainZoomOut.ShortcutKeyDisplayString})";
+                btnActualSize.ToolTipText = mnuMainActualSize.Text + $" ({mnuMainActualSize.ShortcutKeyDisplayString})";
 
                 // Zoom modes
-                btnAutoZoom.ToolTipText = mnuMainAutoZoom.Text  + $" ({mnuMainAutoZoom.ShortcutKeyDisplayString})";
-                btnScaletoWidth.ToolTipText = mnuMainScaleToWidth.Text  + $" ({mnuMainScaleToWidth.ShortcutKeyDisplayString})";
-                btnScaletoHeight.ToolTipText = mnuMainScaleToHeight.Text  + $" ({mnuMainScaleToHeight.ShortcutKeyDisplayString})";
-                btnScaleToFit.ToolTipText = mnuMainScaleToFit.Text  + $" ({mnuMainScaleToFit.ShortcutKeyDisplayString})";
-                btnScaleToFill.ToolTipText = mnuMainScaleToFill.Text  + $" ({mnuMainScaleToFill.ShortcutKeyDisplayString})";
-                btnZoomLock.ToolTipText = mnuMainLockZoomRatio.Text  + $" ({mnuMainLockZoomRatio.ShortcutKeyDisplayString})";
+                btnAutoZoom.ToolTipText = mnuMainAutoZoom.Text + $" ({mnuMainAutoZoom.ShortcutKeyDisplayString})";
+                btnScaletoWidth.ToolTipText = mnuMainScaleToWidth.Text + $" ({mnuMainScaleToWidth.ShortcutKeyDisplayString})";
+                btnScaletoHeight.ToolTipText = mnuMainScaleToHeight.Text + $" ({mnuMainScaleToHeight.ShortcutKeyDisplayString})";
+                btnScaleToFit.ToolTipText = mnuMainScaleToFit.Text + $" ({mnuMainScaleToFit.ShortcutKeyDisplayString})";
+                btnScaleToFill.ToolTipText = mnuMainScaleToFill.Text + $" ({mnuMainScaleToFill.ShortcutKeyDisplayString})";
+                btnZoomLock.ToolTipText = mnuMainLockZoomRatio.Text + $" ({mnuMainLockZoomRatio.ShortcutKeyDisplayString})";
 
                 // Window modes
                 btnWindowAdaptImage.ToolTipText = mnuMainWindowAdaptImage.Text + $" ({mnuMainWindowAdaptImage.ShortcutKeyDisplayString})";
@@ -3138,7 +3138,7 @@ namespace ImageGlass
             #region THEME
             if ((flags & ForceUpdateActions.THEME) == ForceUpdateActions.THEME)
             {
-                ApplyTheme(changeBackground:true);
+                ApplyTheme(changeBackground: true);
                 Local.FColorPicker.UpdateUI();
                 Local.FPageNav.UpdateUI();
             }
@@ -3675,7 +3675,7 @@ namespace ImageGlass
                 mnuMainViewNext_Click(null, null);
                 return;
             }
-        
+
             void ToggleActualSize()
             {
                 if (picMain.Zoom < 100)
@@ -4649,7 +4649,7 @@ namespace ImageGlass
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
             Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
-            mnuMainWindowAdaptImage.Checked = 
+            mnuMainWindowAdaptImage.Checked =
                 btnWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
 
             if (picMain.Image == null)
@@ -5086,12 +5086,12 @@ namespace ImageGlass
         }
 
 
-        
+
         private void mnuFrameless_Click(object sender, EventArgs e)
         {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
             Control[] frameLessMovers = { picMain, toolMain, thumbnailBar };
-            
+
 
             if (Configs.IsWindowFrameless)
             {
@@ -5138,8 +5138,8 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            Configs.IsShowColorPickerOnStartup = 
-                Local.IsColorPickerToolOpening = 
+            Configs.IsShowColorPickerOnStartup =
+                Local.IsColorPickerToolOpening =
                 mnuMainColorPicker.Checked;
 
             // open Color Picker tool
@@ -5175,8 +5175,8 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
-            Configs.IsShowPageNavOnStartup = 
-                Local.IsPageNavToolOpenning = 
+            Configs.IsShowPageNavOnStartup =
+                Local.IsPageNavToolOpenning =
                 mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
@@ -5292,8 +5292,8 @@ namespace ImageGlass
                 }
 
 
-                mnuMainExtractPages.Enabled = 
-                    mnuMainStartStopAnimating.Enabled = 
+                mnuMainExtractPages.Enabled =
+                    mnuMainStartStopAnimating.Enabled =
                     mnuMainPrevPage.Enabled =
                     mnuMainNextPage.Enabled =
                     mnuMainFirstPage.Enabled =
@@ -5311,10 +5311,10 @@ namespace ImageGlass
 
                 if (frameCount > 1)
                 {
-                    mnuMainExtractPages.Enabled = 
-                        mnuMainStartStopAnimating.Enabled = 
+                    mnuMainExtractPages.Enabled =
+                        mnuMainStartStopAnimating.Enabled =
                         mnuMainPrevPage.Enabled =
-                        mnuMainNextPage.Enabled = 
+                        mnuMainNextPage.Enabled =
                         mnuMainFirstPage.Enabled =
                         mnuMainLastPage.Enabled = true;
                 }
