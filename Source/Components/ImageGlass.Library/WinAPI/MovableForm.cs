@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ImageGlass.Library.WinAPI
@@ -30,9 +32,9 @@ namespace ImageGlass.Library.WinAPI
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
 
@@ -57,6 +59,11 @@ namespace ImageGlass.Library.WinAPI
         /// Gets, sets the Key press for moving
         /// </summary>
         public Keys Key { get; set; } = Keys.None;
+
+        /// <summary>
+        /// Gets, sets the controls that do not require special Key holding to move
+        /// </summary>
+        public HashSet<string> FreeMoveControlNames { get; set; } = new HashSet<string>();
 
         #endregion
 
@@ -147,7 +154,16 @@ namespace ImageGlass.Library.WinAPI
 
         private void Event_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Clicks == 1 && e.Button == this.MouseButton && this.IsAllowMoving && _isKeyDown)
+            // check if 'sender' can move without keydown event
+            var control = (Control) sender;
+            var isFreeMove = this.FreeMoveControlNames.Count > 0
+                && this.FreeMoveControlNames.Contains(control.Name);
+            
+
+            if (e.Clicks == 1
+                && e.Button == this.MouseButton 
+                && this.IsAllowMoving 
+                && (_isKeyDown || isFreeMove))
             {
                 ReleaseCapture();
                 SendMessage(_form.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);

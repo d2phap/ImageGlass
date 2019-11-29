@@ -2374,7 +2374,12 @@ namespace ImageGlass
                 #region Load Frameless mode
                 this._movableForm = new MovableForm(this)
                 {
-                    Key = Keys.ShiftKey | Keys.Shift
+                    Key = Keys.ShiftKey | Keys.Shift,
+                    FreeMoveControlNames = new HashSet<string>()
+                    {
+                        nameof(toolMain),
+                        nameof(thumbnailBar),
+                    },
                 };
 
                 if (Configs.IsWindowFrameless)
@@ -5075,20 +5080,19 @@ namespace ImageGlass
         {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
             Control[] frameLessMovers = { picMain, toolMain, thumbnailBar };
+            
 
             if (Configs.IsWindowFrameless)
             {
-                // TODO: No idea why the form icon disposed when toggling from Frameless to Sizable
+                // Note: No idea why the form icon disposed when toggling from Frameless to Sizable
                 // Hence, I need to backup it and restore later.
                 this._formIcon = (Icon)this.Icon.Clone();
                 this.FormBorderStyle = FormBorderStyle.None;
 
-                // In WindowAdaptToImage, we only need thin border for bos shadow
-                var border = Configs.IsAdaptWindowToImage ? 1 : 2;
-                this.Padding = new Padding(border);
+                this.Padding = new Padding(2);
 
                 // Draw client border for movable
-                FormBorder.Set(this.Handle, border);
+                FormBorder.Set(this.Handle, 2);
 
                 // Enable frameless movable
                 this._movableForm.Enable();
