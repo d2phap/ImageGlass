@@ -56,13 +56,14 @@ namespace ImageGlass
 
             // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
-            
+
             // Update form with new DPI
             OnDpiChanged();
             Application.DoEvents();
 
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
+
         }
 
 
@@ -74,6 +75,12 @@ namespace ImageGlass
 
         // determine if the image is zoomed
         private bool _isManuallyZoomed = false;
+
+        // determine if window is frameless (fullscreen / slideshow)
+        private bool _isFrameless = false;
+
+        // determine if is WindowAdaptToImage (fullscreen / slideshow)
+        private bool _isWindowAdaptToImage = false;
 
         // determine if toolbar is shown (fullscreen / slideshow)
         private bool _isShowToolbar = true;
@@ -90,6 +97,12 @@ namespace ImageGlass
         // gets, sets wheather the app is busy or not
         private bool _isAppBusy = false;
 
+        private ToolFormManager _toolManager = new ToolFormManager();
+
+        private MovableForm _movableForm = null;
+
+        private Icon _formIcon = null;
+
 
         // gets, sets the CancellationTokenSource of synchronious image loading task
         private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
@@ -104,7 +117,7 @@ namespace ImageGlass
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
-        private ToolFormManager _toolManager = new ToolFormManager();
+
         #endregion
 
 
@@ -125,7 +138,7 @@ namespace ImageGlass
                 // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because we set the
                 // drag effect to Move, which is _not_allowed_
                 // Drag file from DESKTOP to APP
-                if (Local.ImageList.IndexOf(filePath) == -1 && 
+                if (Local.ImageList.IndexOf(filePath) == -1 &&
                     (e.AllowedEffect & DragDropEffects.Move) != 0)
                 {
                     e.Effect = DragDropEffects.Move;
@@ -778,7 +791,7 @@ namespace ImageGlass
                     //Show image
                     picMain.Refresh();
                     picMain.Image = im;
-                    
+
                     im = null;
 
                     //Reset the zoom mode if isKeepZoomRatio = FALSE
@@ -831,7 +844,7 @@ namespace ImageGlass
                 if (isbusy)
                     picMain.Cursor = Cursors.WaitCursor;
                 else
-                    ShowActiveCursor(); 
+                    ShowActiveCursor();
 
                 // Part of Issue #485 fix: failure to disable timer after image load meant message 
                 // could appear after image already loaded
@@ -970,7 +983,7 @@ namespace ImageGlass
 
         #region Key event
 
-        //Full screen--------------------------------------------------------------------
+        // Full screen--------------------------------------------------------------------
         // Alt+Enter is a system shortcut. If we attempt to handle it as a "normal" key,
         // Windows 10 issues an obnoxious sound. Issue #555.
         protected override bool ProcessCmdKey(ref Message message, Keys keys)
@@ -1370,7 +1383,7 @@ namespace ImageGlass
         /// </summary>
         private void UpdateEditAppInfoForMenu()
         {
-            string appName = "";
+            var appName = "";
             mnuMainEditImage.Image = null;
 
             // Temporary memory data
@@ -1378,17 +1391,16 @@ namespace ImageGlass
             {
                 // Find file format
                 var ext = Path.GetExtension(Local.ImageList.GetFileName(Local.CurrentIndex)).ToLower();
-                var assoc = Configs.GetEditApp(ext);
+                var app = Configs.GetEditApp(ext);
 
-                // Get App assoc info
-                if (assoc != null && File.Exists(assoc.AppPath))
+                // Get EditApp info
+                if (app != null && File.Exists(app.AppPath))
                 {
-                    appName = $"({assoc.AppName})";
+                    appName = $"({app.AppName})";
 
                     // Update icon
-                    var ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
-                    var scaleFactor = DPIScaling.GetDPIScaleFactor();
-                    var iconWidth = (int)(Constants.MENU_ICON_HEIGHT * scaleFactor);
+                    var ico = Icon.ExtractAssociatedIcon(app.AppPath);
+                    var iconWidth = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -1410,7 +1422,7 @@ namespace ImageGlass
                 btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked =
                 btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked =
                 btnZoomLock.Checked = mnuMainLockZoomRatio.Checked =
-                btnScaleToFit.Checked = mnuMainScaleToFit.Checked = 
+                btnScaleToFit.Checked = mnuMainScaleToFit.Checked =
                 btnScaleToFill.Checked = mnuMainScaleToFill.Checked = false;
 
             switch (Configs.ZoomMode)
@@ -1513,7 +1525,7 @@ namespace ImageGlass
                 // auto center the image
                 picMain.CenterToImage();
             }
-            
+
 
             // Tell the app that it's not zoomed by user
             _isManuallyZoomed = false;
@@ -1851,17 +1863,17 @@ namespace ImageGlass
             #region change size of menu items
             int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
 
-            mnuMainOpenFile.Image = 
+            mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
-                mnuMainViewNext.Image = 
-                mnuMainSlideShowStart.Image = 
-                mnuMainRotateLeft.Image = 
+                mnuMainViewNext.Image =
+                mnuMainSlideShowStart.Image =
+                mnuMainRotateLeft.Image =
 
-                mnuMainClearClipboard.Image = 
-                mnuMainToolbar.Image = 
+                mnuMainClearClipboard.Image =
+                mnuMainToolbar.Image =
                 mnuMainColorPicker.Image =
-                mnuMainPageNav.Image = 
-                mnuMainAbout.Image = 
+                mnuMainPageNav.Image =
+                mnuMainAbout.Image =
                 mnuMainSettings.Image =
 
                 mnuMainExtractPages.Image =
@@ -2130,6 +2142,57 @@ namespace ImageGlass
             }
         }
 
+
+        /// <summary>
+        /// Adjust our window dimensions to fit the image size. Namely,
+        /// the window is sized so there is no "extra space" around the
+        /// image. If full-screen mode is ON and the toolbar is OFF, this
+        /// allows for a "borderless viewer" mode.
+        /// </summary>
+        private void AdaptMainWindowToImage()
+        {
+            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
+                return; // Nothing to do
+
+            WindowState = FormWindowState.Normal;
+
+            // get current screen
+            var screen = Screen.FromControl(this);
+
+
+            // First, adjust our main window to theoretically fit the entire
+            // picture, but not larger than desktop working area.
+            var fullW = Width + picMain.Image.Width - picMain.Width;
+            var fullH = Height + picMain.Image.Height - picMain.Height;
+
+
+            var maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
+            var maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
+
+            // Let the image viewer control figure out the zoom value for
+            // the full-size window
+            ApplyZoomMode(Configs.ZoomMode);
+
+            // Now that we have the new zoom value, adjust our main window
+            // to fit the *zoomed* image size
+            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
+            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
+
+
+            Size = new Size(Width += newW - picMain.Width,
+                            Height += newH - picMain.Height);
+
+            if (fullW > screen.WorkingArea.Width || fullH > screen.WorkingArea.Height)
+            {
+                App.CenterFormToScreen(this);
+            }
+
+            picMain.Bounds = new Rectangle(0, 0, newW, newH);
+        }
+
+
+
         #endregion
 
 
@@ -2258,7 +2321,7 @@ namespace ImageGlass
             {
 
                 // ThumbnailBar Renderer must be done BEFORE loading theme
-                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer()); 
+                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer());
                 ApplyTheme();
 
 
@@ -2306,6 +2369,25 @@ namespace ImageGlass
                 // Windows state must be loaded after Windows Bound!
                 this.WindowState = Configs.FrmMainWindowState;
 
+
+                #region Load Frameless mode
+                this._movableForm = new MovableForm(this)
+                {
+                    Key = Keys.ShiftKey | Keys.Shift,
+                    FreeMoveControlNames = new HashSet<string>()
+                    {
+                        nameof(toolMain),
+                        nameof(thumbnailBar),
+                    },
+                };
+
+                if (Configs.IsWindowFrameless)
+                {
+                    Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+                    mnuFrameless.PerformClick();
+                }
+                #endregion
+
             }
             #endregion
 
@@ -2320,6 +2402,9 @@ namespace ImageGlass
 
                 // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowsBound;
+
+
+
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2445,6 +2530,8 @@ namespace ImageGlass
         }
 
 
+
+
         /// <summary>
         /// Enter or Exit Full screen mode
         /// </summary>
@@ -2458,7 +2545,18 @@ namespace ImageGlass
             {
                 SaveConfig();
 
-                // save last state of toolbar
+                _isFrameless = Configs.IsWindowFrameless;
+                _isWindowAdaptToImage = Configs.IsAdaptWindowToImage;
+
+                // exit AdaptWindowToImage mode
+                Configs.IsAdaptWindowToImage = true;
+                mnuMainWindowAdaptImage_Click(null, null);
+
+                // exit frameless window
+                Configs.IsWindowFrameless = true;
+                mnuFrameless_Click(null, null);
+
+                // save last state of layout
                 if (onlyShowViewer)
                 {
                     _isShowToolbar = Configs.IsShowToolBar;
@@ -2484,6 +2582,7 @@ namespace ImageGlass
                     mnuMainThumbnailBar_Click(null, null);
                 }
 
+
                 Application.DoEvents();
 
 
@@ -2498,7 +2597,7 @@ namespace ImageGlass
             // exit full screen
             else
             {
-                //restore last state of toolbar
+                // restore last state of toolbar
                 if (onlyShowViewer)
                 {
                     Configs.IsShowToolBar = _isShowToolbar;
@@ -2512,14 +2611,24 @@ namespace ImageGlass
                 {
                     this.FormBorderStyle = FormBorderStyle.Sizable;
 
-                    //windows state
+                    // windows state
                     if (Configs.FrmMainWindowState != FormWindowState.Minimized)
                     {
                         this.WindowState = Configs.FrmMainWindowState;
                     }
 
-                    //Windows Bound (Position + Size)
+                    // Windows Bound (Position + Size)
                     this.Bounds = Configs.FrmMainWindowsBound;
+                }
+
+
+                // restore frameless state
+                Configs.IsWindowFrameless = _isFrameless;
+                if (Configs.IsWindowFrameless)
+                {
+                    // trigger frameless window
+                    Configs.IsWindowFrameless = false;
+                    mnuFrameless_Click(null, null);
                 }
 
 
@@ -2540,10 +2649,20 @@ namespace ImageGlass
                     }
                 }
 
+
+                // restore IsAdaptWindowToImage state
+                Configs.IsAdaptWindowToImage = _isWindowAdaptToImage;
+                if (Configs.IsAdaptWindowToImage)
+                {
+                    Configs.IsAdaptWindowToImage = false;
+                    mnuMainWindowAdaptImage_Click(null, null);
+                }
+
+
                 Application.DoEvents();
 
 
-                //realign image
+                // realign image
                 if (!_isManuallyZoomed)
                 {
                     ApplyZoomMode(Configs.ZoomMode);
@@ -2556,14 +2675,30 @@ namespace ImageGlass
 
 
         #region Form events
+
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // minimizable borderless form
+                const int WS_MINIMIZEBOX = 0x20000;
+
+                CreateParams cp = base.CreateParams;
+                cp.Style |= WS_MINIMIZEBOX;
+
+                return cp;
+            }
+        }
+
         protected override void WndProc(ref Message m)
         {
-            bool handled = false;
+            bool touchHandled = false;
 
-            //Check if the received message is WM_SHOWME
+            // Check if the received message is WM_SHOWME
             if (m.Msg == NativeMethods.WM_SHOWME)
             {
-                //Set frmMain of the first instance to TopMost
+                // Set frmMain of the first instance to TopMost
                 if (WindowState == FormWindowState.Minimized)
                 {
                     WindowState = FormWindowState.Normal;
@@ -2575,17 +2710,20 @@ namespace ImageGlass
                 // set it back to whatever it was
                 TopMost = top;
             }
-            //This message is sent when the form is dragged to a different monitor i.e. when
-            //the bigger part of its are is on the new monitor. 
+
+            // This message is sent when the form is dragged to a different monitor i.e. when
+            // the bigger part of its are is on the new monitor. 
             else if (m.Msg == DPIScaling.WM_DPICHANGED)
             {
                 DPIScaling.CurrentDPI = DPIScaling.LOWORD((int)m.WParam);
                 OnDpiChanged();
             }
-            else if (m.Msg == 0x0112) // WM_SYSCOMMAND
+
+            // WM_SYSCOMMAND
+            else if (m.Msg == 0x0112)
             {
                 // When user clicks on MAXIMIZE button on title bar
-                if (m.WParam == new IntPtr(0xF030)) // Maximize event - SC_MAXIMIZE from Winuser.h
+                if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
                 {
                     // The window is being maximized
                     if (!_isManuallyZoomed)
@@ -2594,7 +2732,7 @@ namespace ImageGlass
                     }
                 }
                 // When user clicks on the RESTORE button on title bar
-                else if (m.WParam == new IntPtr(0xF120)) // Restore event - SC_RESTORE from Winuser.h
+                else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
                 {
                     // The window is being restored
                     if (!_isManuallyZoomed)
@@ -2603,14 +2741,17 @@ namespace ImageGlass
                     }
                 }
             }
-            else if (m.Msg == Touch.WM_GESTURENOTIFY) // Touch support
+
+            // Touch support
+            else if (m.Msg == Touch.WM_GESTURENOTIFY)
             {
-                handled = Touch.AcceptTouch(this);
+                touchHandled = Touch.AcceptTouch(this);
             }
-            else if (m.Msg == Touch.WM_GESTURE) // Touch support
+
+            // Touch support
+            else if (m.Msg == Touch.WM_GESTURE)
             {
-                Touch.Action act;
-                handled = Touch.DecodeTouch(m, out act);
+                touchHandled = Touch.DecodeTouch(m, out Touch.Action act);
 
                 switch (act)
                 {
@@ -2643,29 +2784,78 @@ namespace ImageGlass
                 }
             }
 
+            // Window resizing
+            else if (m.Msg == 0x0084 && Configs.IsWindowFrameless)
+            {
+                base.WndProc(ref m);
+
+                if ((int)m.Result == 0x01) // HTCLIENT
+                {
+                    var screenPoint = new Point(m.LParam.ToInt32());
+                    var clientPoint = this.PointToClient(screenPoint);
+
+                    const int RESIZE_HANDLE_SIZE = 10;
+
+                    if (clientPoint.Y <= RESIZE_HANDLE_SIZE)
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)13; // HTTOPLEFT
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)12; // HTTOP
+                        else
+                            m.Result = (IntPtr)14; // HTTOPRIGHT
+                    }
+                    else if (clientPoint.Y <= (Size.Height - RESIZE_HANDLE_SIZE))
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)10; // HTLEFT
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)2; // HTCAPTION
+                        else
+                            m.Result = (IntPtr)11; // HTRIGHT
+                    }
+                    else
+                    {
+                        if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                            m.Result = (IntPtr)16; // HTBOTTOMLEFT
+                        else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                            m.Result = (IntPtr)15; // HTBOTTOM
+                        else
+                            m.Result = (IntPtr)17; // HTBOTTOMRIGHT
+                    }
+                }
+                return;
+            }
+
+            // State changed
+            else if (m.Msg == 0x0005) // WM_SIZE
+            {
+
+            }
+
 
             base.WndProc(ref m);
-            if (handled)
+
+            if (touchHandled)
                 m.Result = new IntPtr(1);
         }
 
-
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Load Other Configs
+            // Load Other Configs
             LoadConfig(isLoadUI: false, isLoadOthers: true);
 
-            //Trigger Mouse Wheel event
+            // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
 
-            //Try to use a faster image clock for animating GIFs
+            // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
-            //Load image from param
+            // Load image from param
             LoadFromParams(Environment.GetCommandLineArgs());
 
-            //Start thread to watching deleted files
+            // Start thread to watching deleted files
             System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
             {
                 Priority = System.Threading.ThreadPriority.BelowNormal,
@@ -2676,12 +2866,12 @@ namespace ImageGlass
 
         public void LoadFromParams(string[] args)
         {
-            //Load image from param
+            // Load image from param
             if (args.Length >= 2)
             {
                 for (int i = 1; i < args.Length; i++)
                 {
-                    //only read the path, exclude configs parameter which starts with "--"
+                    // only read the path, exclude configs parameter which starts with "--"
                     if (!args[i].StartsWith("--"))
                     {
                         PrepareLoading(args[i]);
@@ -2715,9 +2905,6 @@ namespace ImageGlass
             catch { }
         }
 
-        private void frmMain_Deactivate(object sender, EventArgs e)
-        {
-        }
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
@@ -2732,42 +2919,6 @@ namespace ImageGlass
                 var lang = Configs.Language.Items;
 
                 #region Update language strings
-
-                #region Toolbar
-                btnBack.ToolTipText = lang[$"{Name}.mnuMainViewPrevious"];
-                btnNext.ToolTipText = lang[$"{Name}.mnuMainViewNext"];
-
-                btnRotateLeft.ToolTipText = lang[$"{Name}.mnuMainRotateLeft"];
-                btnRotateRight.ToolTipText = lang[$"{Name}.mnuMainRotateRight"];
-                btnFlipHorz.ToolTipText = lang[$"{Name}.mnuMainFlipHorz"];
-                btnFlipVert.ToolTipText = lang[$"{Name}.mnuMainFlipVert"];
-                btnDelete.ToolTipText = $"{lang[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
-
-                // Zoom
-                btnZoomIn.ToolTipText = lang[$"{Name}.mnuMainZoomIn"];
-                btnZoomOut.ToolTipText = lang[$"{Name}.mnuMainZoomOut"];
-                btnActualSize.ToolTipText = lang[$"{Name}.mnuMainActualSize"];
-                btnWindowAdaptImage.ToolTipText = lang[$"{Name}.mnuMainWindowAdaptImage"];
-
-                btnAutoZoom.ToolTipText = lang[$"{Name}.mnuMainAutoZoom"];
-                btnScaletoWidth.ToolTipText = lang[$"{Name}.mnuMainScaleToWidth"];
-                btnScaletoHeight.ToolTipText = lang[$"{Name}.mnuMainScaleToHeight"];
-                btnScaleToFit.ToolTipText = lang[$"{Name}.mnuMainScaleToFit"];
-                btnScaleToFill.ToolTipText = lang[$"{Name}.mnuMainScaleToFill"];
-                btnZoomLock.ToolTipText = lang[$"{Name}.mnuMainLockZoomRatio"];
-
-                btnOpen.ToolTipText = lang[$"{Name}.mnuMainOpenFile"];
-                btnRefresh.ToolTipText = lang[$"{Name}.mnuMainRefresh"];
-                btnGoto.ToolTipText = lang[$"{Name}.mnuMainGoto"];
-                btnThumb.ToolTipText = lang[$"{Name}.mnuMainThumbnailBar"];
-                btnCheckedBackground.ToolTipText = lang[$"{Name}.mnuMainCheckBackground"];
-                btnFullScreen.ToolTipText = lang[$"{Name}.mnuMainFullScreen"];
-                btnSlideShow.ToolTipText = lang[$"{Name}.mnuMainSlideShowStart"];
-                btnConvert.ToolTipText = lang[$"{Name}.mnuMainSaveAs"];
-                btnPrintImage.ToolTipText = lang[$"{Name}.mnuMainPrint"];
-                btnMenu.ToolTipText = lang[$"{Name}.btnMenu"];
-                btnEdit.ToolTipText = string.Format(lang[$"{Name}.mnuMainEditImage"], "");
-                #endregion
 
 
                 #region Main menu
@@ -2883,11 +3034,60 @@ namespace ImageGlass
 
 
                 mnuMainFullScreen.Text = lang[$"{Name}.{nameof(mnuMainFullScreen)}"];
+                mnuFrameless.Text = lang[$"{Name}.{nameof(mnuFrameless)}"];
                 mnuMainShare.Text = lang[$"{Name}.{nameof(mnuMainShare)}"];
+
                 mnuMainSettings.Text = lang[$"{Name}.{nameof(mnuMainSettings)}"];
                 mnuMainExitApplication.Text = lang[$"{Name}.{nameof(mnuMainExitApplication)}"];
 
                 #endregion
+
+
+
+                #region Toolbar
+                btnBack.ToolTipText = mnuMainViewPrevious.Text + $" ({mnuMainViewPrevious.ShortcutKeyDisplayString})";
+                btnNext.ToolTipText = mnuMainViewNext.Text + $" ({mnuMainViewNext.ShortcutKeyDisplayString})";
+
+                // Edit
+                btnRotateLeft.ToolTipText = mnuMainRotateLeft.Text + $" ({mnuMainRotateLeft.ShortcutKeyDisplayString})";
+                btnRotateRight.ToolTipText = mnuMainRotateRight.Text + $" ({mnuMainRotateRight.ShortcutKeyDisplayString})";
+                btnFlipHorz.ToolTipText = mnuMainFlipHorz.Text + $" ({mnuMainFlipHorz.ShortcutKeyDisplayString})";
+                btnFlipVert.ToolTipText = mnuMainFlipVert.Text + $" ({mnuMainFlipVert.ShortcutKeyDisplayString})";
+                btnDelete.ToolTipText = mnuMainMoveToRecycleBin.Text + $" ({mnuMainMoveToRecycleBin.ShortcutKeyDisplayString})";
+                btnEdit.ToolTipText = string.Format(mnuMainEditImage.Text, "") + $" ({mnuMainEditImage.ShortcutKeyDisplayString})";
+
+                // Zooming
+                btnZoomIn.ToolTipText = mnuMainZoomIn.Text + $" ({mnuMainZoomIn.ShortcutKeyDisplayString})";
+                btnZoomOut.ToolTipText = mnuMainZoomOut.Text + $" ({mnuMainZoomOut.ShortcutKeyDisplayString})";
+                btnActualSize.ToolTipText = mnuMainActualSize.Text + $" ({mnuMainActualSize.ShortcutKeyDisplayString})";
+
+                // Zoom modes
+                btnAutoZoom.ToolTipText = mnuMainAutoZoom.Text + $" ({mnuMainAutoZoom.ShortcutKeyDisplayString})";
+                btnScaletoWidth.ToolTipText = mnuMainScaleToWidth.Text + $" ({mnuMainScaleToWidth.ShortcutKeyDisplayString})";
+                btnScaletoHeight.ToolTipText = mnuMainScaleToHeight.Text + $" ({mnuMainScaleToHeight.ShortcutKeyDisplayString})";
+                btnScaleToFit.ToolTipText = mnuMainScaleToFit.Text + $" ({mnuMainScaleToFit.ShortcutKeyDisplayString})";
+                btnScaleToFill.ToolTipText = mnuMainScaleToFill.Text + $" ({mnuMainScaleToFill.ShortcutKeyDisplayString})";
+                btnZoomLock.ToolTipText = mnuMainLockZoomRatio.Text + $" ({mnuMainLockZoomRatio.ShortcutKeyDisplayString})";
+
+                // Window modes
+                btnWindowAdaptImage.ToolTipText = mnuMainWindowAdaptImage.Text + $" ({mnuMainWindowAdaptImage.ShortcutKeyDisplayString})";
+                btnFullScreen.ToolTipText = mnuMainFullScreen.Text + $" ({mnuMainFullScreen.ShortcutKeyDisplayString})";
+                btnSlideShow.ToolTipText = mnuMainSlideShowStart.Text + $" ({mnuMainSlideShowStart.ShortcutKeyDisplayString})";
+
+                // File
+                btnOpen.ToolTipText = mnuMainOpenFile.Text + $" ({mnuMainOpenFile.ShortcutKeyDisplayString})";
+                btnRefresh.ToolTipText = mnuMainRefresh.Text + $" ({mnuMainRefresh.ShortcutKeyDisplayString})";
+                btnGoto.ToolTipText = mnuMainGoto.Text + $" ({mnuMainGoto.ShortcutKeyDisplayString})";
+
+                // Layout
+                btnThumb.ToolTipText = mnuMainThumbnailBar.Text + $" ({mnuMainThumbnailBar.ShortcutKeyDisplayString})";
+                btnCheckedBackground.ToolTipText = mnuMainCheckBackground.Text + $" ({mnuMainCheckBackground.ShortcutKeyDisplayString})";
+                btnConvert.ToolTipText = mnuMainSaveAs.Text + $" ({mnuMainSaveAs.ShortcutKeyDisplayString})";
+                btnPrintImage.ToolTipText = mnuMainPrint.Text + $" ({mnuMainPrint.ShortcutKeyDisplayString})";
+                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"];
+
+                #endregion
+
 
                 #endregion
 
@@ -2938,7 +3138,7 @@ namespace ImageGlass
             #region THEME
             if ((flags & ForceUpdateActions.THEME) == ForceUpdateActions.THEME)
             {
-                ApplyTheme(changeBackground:true);
+                ApplyTheme(changeBackground: true);
                 Local.FColorPicker.UpdateUI();
                 Local.FPageNav.UpdateUI();
             }
@@ -3475,7 +3675,7 @@ namespace ImageGlass
                 mnuMainViewNext_Click(null, null);
                 return;
             }
-        
+
             void ToggleActualSize()
             {
                 if (picMain.Zoom < 100)
@@ -3746,7 +3946,7 @@ namespace ImageGlass
             mnuContext.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
 
 
-            //Get Editing Assoc App info
+            // Get Edit App info
             if (!isImageError)
             {
                 if (!Local.IsTempMemoryData)
@@ -4074,28 +4274,30 @@ namespace ImageGlass
                 // Get extension
                 var ext = Path.GetExtension(filename).ToLower();
 
-                // Get association App for editing
-                var assoc = Configs.GetEditApp(ext);
+                // Get EditApp for editing
+                var app = Configs.GetEditApp(ext);
 
-                if (assoc != null && File.Exists(assoc.AppPath))
+                if (app != null && File.Exists(app.AppPath))
                 {
                     // Open configured app for editing
-                    Process p = new Process();
-                    p.StartInfo.FileName = assoc.AppPath;
-
-                    //Build the arguments
-                    var args = assoc.AppArguments.Replace(EditApp.FileMacro, filename);
-                    p.StartInfo.Arguments = $"{args}";
-
-                    //show error dialog
-                    p.StartInfo.ErrorDialog = true;
-
-                    try
+                    using (var p = new Process())
                     {
-                        p.Start();
+                        p.StartInfo.FileName = app.AppPath;
+
+                        // Build the arguments
+                        var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
+                        p.StartInfo.Arguments = $"{args}";
+
+                        // show error dialog
+                        p.StartInfo.ErrorDialog = true;
+
+                        try
+                        {
+                            p.Start();
+                        }
+                        catch (Exception)
+                        { }
                     }
-                    catch (Exception)
-                    { }
                 }
                 else // Edit by default associated app
                 {
@@ -4105,7 +4307,7 @@ namespace ImageGlass
 
             void EditByDefaultApp()
             {
-                using(var p = new Process())
+                using (var p = new Process())
                 {
                     p.StartInfo.FileName = filename;
                     p.StartInfo.Verb = "edit";
@@ -4443,51 +4645,11 @@ namespace ImageGlass
             }
         }
 
-        /// <summary>
-        /// Adjust our window dimensions to fit the image size. Namely,
-        /// the window is sized so there is no "extra space" around the
-        /// image. If full-screen mode is ON and the toolbar is OFF, this
-        /// allows for a "borderless viewer" mode.
-        /// </summary>
-        private void AdaptMainWindowToImage()
-        {
-            if (!Configs.IsAdaptWindowToImage || picMain.Image == null)
-                return; // Nothing to do
-
-            WindowState = FormWindowState.Normal;
-
-            // get current screen
-            var screen = Screen.FromControl(this);
-
-
-            // First, adjust our main window to theoretically fit the entire
-            // picture, but not larger than desktop working area.
-            var maxWidth = Math.Min(Width + picMain.Image.Width - picMain.Width, screen.WorkingArea.Width);
-            var maxHeight = Math.Min(Height + picMain.Image.Height - picMain.Height, screen.WorkingArea.Height);
-            Size = new Size(Width = maxWidth, Height = maxHeight);
-
-            // Let the image viewer control figure out the zoom value for
-            // the full-size window
-            ApplyZoomMode(Configs.ZoomMode);
-
-            // Now that we have the new zoom value, adjust our main window
-            // to fit the *zoomed* image size
-            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
-            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
-
-
-            Size = new Size(Width += newW - picMain.Width,
-                            Height += newH - picMain.Height);
-
-            picMain.Bounds = new Rectangle(0, 0, newW, newH);
-        }
-
-
 
         private void mnuMainWindowAdaptImage_Click(object sender, EventArgs e)
         {
             Configs.IsAdaptWindowToImage = !Configs.IsAdaptWindowToImage;
-            mnuMainWindowAdaptImage.Checked = 
+            mnuMainWindowAdaptImage.Checked =
                 btnWindowAdaptImage.Checked = Configs.IsAdaptWindowToImage;
 
             if (picMain.Image == null)
@@ -4923,6 +5085,53 @@ namespace ImageGlass
             mnuMainCheckBackground.Checked = btnCheckedBackground.Checked;
         }
 
+
+
+        private void mnuFrameless_Click(object sender, EventArgs e)
+        {
+            Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
+            Control[] frameLessMovers = { picMain, toolMain, thumbnailBar };
+
+
+            if (Configs.IsWindowFrameless)
+            {
+                // Note: No idea why the form icon disposed when toggling from Frameless to Sizable
+                // Hence, I need to backup it and restore later.
+                this._formIcon = (Icon)this.Icon.Clone();
+                this.FormBorderStyle = FormBorderStyle.None;
+
+                this.Padding = new Padding(2);
+
+                // Draw client border for movable
+                FormBorder.Set(this.Handle, 2);
+
+                // Enable frameless movable
+                this._movableForm.Enable();
+                this._movableForm.Enable(frameLessMovers);
+
+                DisplayTextMessage(Configs.Language.Items[$"{Name}._Frameless"], 3000);
+            }
+            else
+            {
+                // Disable frameless movable
+                this._movableForm.Disable();
+                this._movableForm.Disable(frameLessMovers);
+
+                // Remove custom client border
+                FormBorder.Set(this.Handle, 0);
+
+                this.Padding = new Padding(0);
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+
+                // restore form icon
+                if (_formIcon != null)
+                {
+                    this.Icon = (Icon)_formIcon.Clone();
+                    _formIcon.Dispose();
+                }
+            }
+        }
+
         private void mnuMainAlwaysOnTop_Click(object sender, EventArgs e)
         {
             TopMost =
@@ -4933,8 +5142,8 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            Configs.IsShowColorPickerOnStartup = 
-                Local.IsColorPickerToolOpening = 
+            Configs.IsShowColorPickerOnStartup =
+                Local.IsColorPickerToolOpening =
                 mnuMainColorPicker.Checked;
 
             // open Color Picker tool
@@ -4970,8 +5179,8 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void mnuMainPageNav_Click(object sender, EventArgs e)
         {
-            Configs.IsShowPageNavOnStartup = 
-                Local.IsPageNavToolOpenning = 
+            Configs.IsShowPageNavOnStartup =
+                Local.IsPageNavToolOpenning =
                 mnuMainPageNav.Checked;
 
             if (mnuMainPageNav.Checked)
@@ -5087,8 +5296,8 @@ namespace ImageGlass
                 }
 
 
-                mnuMainExtractPages.Enabled = 
-                    mnuMainStartStopAnimating.Enabled = 
+                mnuMainExtractPages.Enabled =
+                    mnuMainStartStopAnimating.Enabled =
                     mnuMainPrevPage.Enabled =
                     mnuMainNextPage.Enabled =
                     mnuMainFirstPage.Enabled =
@@ -5106,10 +5315,10 @@ namespace ImageGlass
 
                 if (frameCount > 1)
                 {
-                    mnuMainExtractPages.Enabled = 
-                        mnuMainStartStopAnimating.Enabled = 
+                    mnuMainExtractPages.Enabled =
+                        mnuMainStartStopAnimating.Enabled =
                         mnuMainPrevPage.Enabled =
-                        mnuMainNextPage.Enabled = 
+                        mnuMainNextPage.Enabled =
                         mnuMainFirstPage.Enabled =
                         mnuMainLastPage.Enabled = true;
                 }
@@ -5125,7 +5334,7 @@ namespace ImageGlass
                 // add hotkey to Exit menu
                 mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
 
-                // Get association App for editing
+                // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
 
             }
@@ -5186,5 +5395,6 @@ namespace ImageGlass
 
 
         #endregion
+
     }
 }

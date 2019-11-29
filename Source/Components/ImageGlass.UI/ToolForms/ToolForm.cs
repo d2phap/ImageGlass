@@ -87,13 +87,13 @@ namespace ImageGlass.UI.ToolForms
         );
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
+        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmIsCompositionEnabled(ref int pfEnabled);
+        private static extern int DwmIsCompositionEnabled(ref int pfEnabled);
 
         public const int CS_DROPSHADOW = 0x00020000;
         public const int WM_NCPAINT = 0x0085;

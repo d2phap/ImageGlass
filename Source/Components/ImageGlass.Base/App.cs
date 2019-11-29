@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -110,6 +111,25 @@ namespace ImageGlass.Base
             path = Environment.ExpandEnvironmentVariables(path);
 
             return path;
+        }
+
+
+        /// <summary>
+        /// Center the given form to the current screen.
+        /// Note***: The method Form.CenterToScreen() contains a bug: 
+        /// https://stackoverflow.com/a/6837499/2856887
+        /// </summary>
+        /// <param name="form">The form to center</param>
+        public static void CenterFormToScreen(Form form)
+        {
+            var screen = Screen.FromControl(form);
+
+            var workingArea = screen.WorkingArea;
+            form.Location = new Point()
+            {
+                X = Math.Max(workingArea.X, workingArea.X + (workingArea.Width - form.Width) / 2),
+                Y = Math.Max(workingArea.Y, workingArea.Y + (workingArea.Height - form.Height) / 2)
+            };
         }
 
 
