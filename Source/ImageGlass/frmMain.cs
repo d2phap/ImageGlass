@@ -5123,8 +5123,12 @@ namespace ImageGlass
                 this.Padding = new Padding(0);
                 this.FormBorderStyle = FormBorderStyle.Sizable;
 
-                this.Icon = (Icon)_formIcon.Clone();
-                _formIcon.Dispose();
+                // restore form icon
+                if (_formIcon != null)
+                {
+                    this.Icon = (Icon)_formIcon.Clone();
+                    _formIcon.Dispose();
+                }
             }
         }
 
