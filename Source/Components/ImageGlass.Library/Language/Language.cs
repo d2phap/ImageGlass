@@ -322,6 +322,7 @@ namespace ImageGlass.Library
 
 
             Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
+            Items.Add("frmMain.mnuFrameless", "Frameless window"); //v7.5
 
 
             #region Slideshow

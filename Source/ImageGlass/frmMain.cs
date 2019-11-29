@@ -983,7 +983,7 @@ namespace ImageGlass
 
         #region Key event
 
-        //Full screen--------------------------------------------------------------------
+        // Full screen--------------------------------------------------------------------
         // Alt+Enter is a system shortcut. If we attempt to handle it as a "normal" key,
         // Windows 10 issues an obnoxious sound. Issue #555.
         protected override bool ProcessCmdKey(ref Message message, Keys keys)
@@ -1383,7 +1383,7 @@ namespace ImageGlass
         /// </summary>
         private void UpdateEditAppInfoForMenu()
         {
-            string appName = "";
+            var appName = "";
             mnuMainEditImage.Image = null;
 
             // Temporary memory data
@@ -1391,17 +1391,16 @@ namespace ImageGlass
             {
                 // Find file format
                 var ext = Path.GetExtension(Local.ImageList.GetFileName(Local.CurrentIndex)).ToLower();
-                var assoc = Configs.GetEditApp(ext);
+                var app = Configs.GetEditApp(ext);
 
-                // Get App assoc info
-                if (assoc != null && File.Exists(assoc.AppPath))
+                // Get EditApp info
+                if (app != null && File.Exists(app.AppPath))
                 {
-                    appName = $"({assoc.AppName})";
+                    appName = $"({app.AppName})";
 
                     // Update icon
-                    var ico = Icon.ExtractAssociatedIcon(assoc.AppPath);
-                    var scaleFactor = DPIScaling.GetDPIScaleFactor();
-                    var iconWidth = (int)(Constants.MENU_ICON_HEIGHT * scaleFactor);
+                    var ico = Icon.ExtractAssociatedIcon(app.AppPath);
+                    var iconWidth = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -2906,9 +2905,6 @@ namespace ImageGlass
             catch { }
         }
 
-        private void frmMain_Deactivate(object sender, EventArgs e)
-        {
-        }
 
         private void frmMain_Activated(object sender, EventArgs e)
         {
@@ -2923,42 +2919,6 @@ namespace ImageGlass
                 var lang = Configs.Language.Items;
 
                 #region Update language strings
-
-                #region Toolbar
-                btnBack.ToolTipText = lang[$"{Name}.mnuMainViewPrevious"];
-                btnNext.ToolTipText = lang[$"{Name}.mnuMainViewNext"];
-
-                btnRotateLeft.ToolTipText = lang[$"{Name}.mnuMainRotateLeft"];
-                btnRotateRight.ToolTipText = lang[$"{Name}.mnuMainRotateRight"];
-                btnFlipHorz.ToolTipText = lang[$"{Name}.mnuMainFlipHorz"];
-                btnFlipVert.ToolTipText = lang[$"{Name}.mnuMainFlipVert"];
-                btnDelete.ToolTipText = $"{lang[$"{Name}.mnuMainMoveToRecycleBin"]} ({mnuMainMoveToRecycleBin.ShortcutKeys.ToString()})";
-
-                // Zoom
-                btnZoomIn.ToolTipText = lang[$"{Name}.mnuMainZoomIn"];
-                btnZoomOut.ToolTipText = lang[$"{Name}.mnuMainZoomOut"];
-                btnActualSize.ToolTipText = lang[$"{Name}.mnuMainActualSize"];
-                btnWindowAdaptImage.ToolTipText = lang[$"{Name}.mnuMainWindowAdaptImage"];
-
-                btnAutoZoom.ToolTipText = lang[$"{Name}.mnuMainAutoZoom"];
-                btnScaletoWidth.ToolTipText = lang[$"{Name}.mnuMainScaleToWidth"];
-                btnScaletoHeight.ToolTipText = lang[$"{Name}.mnuMainScaleToHeight"];
-                btnScaleToFit.ToolTipText = lang[$"{Name}.mnuMainScaleToFit"];
-                btnScaleToFill.ToolTipText = lang[$"{Name}.mnuMainScaleToFill"];
-                btnZoomLock.ToolTipText = lang[$"{Name}.mnuMainLockZoomRatio"];
-
-                btnOpen.ToolTipText = lang[$"{Name}.mnuMainOpenFile"];
-                btnRefresh.ToolTipText = lang[$"{Name}.mnuMainRefresh"];
-                btnGoto.ToolTipText = lang[$"{Name}.mnuMainGoto"];
-                btnThumb.ToolTipText = lang[$"{Name}.mnuMainThumbnailBar"];
-                btnCheckedBackground.ToolTipText = lang[$"{Name}.mnuMainCheckBackground"];
-                btnFullScreen.ToolTipText = lang[$"{Name}.mnuMainFullScreen"];
-                btnSlideShow.ToolTipText = lang[$"{Name}.mnuMainSlideShowStart"];
-                btnConvert.ToolTipText = lang[$"{Name}.mnuMainSaveAs"];
-                btnPrintImage.ToolTipText = lang[$"{Name}.mnuMainPrint"];
-                btnMenu.ToolTipText = lang[$"{Name}.btnMenu"];
-                btnEdit.ToolTipText = string.Format(lang[$"{Name}.mnuMainEditImage"], "");
-                #endregion
 
 
                 #region Main menu
@@ -3074,11 +3034,60 @@ namespace ImageGlass
 
 
                 mnuMainFullScreen.Text = lang[$"{Name}.{nameof(mnuMainFullScreen)}"];
+                mnuFrameless.Text = lang[$"{Name}.{nameof(mnuFrameless)}"];
                 mnuMainShare.Text = lang[$"{Name}.{nameof(mnuMainShare)}"];
+
                 mnuMainSettings.Text = lang[$"{Name}.{nameof(mnuMainSettings)}"];
                 mnuMainExitApplication.Text = lang[$"{Name}.{nameof(mnuMainExitApplication)}"];
 
                 #endregion
+
+
+
+                #region Toolbar
+                btnBack.ToolTipText = mnuMainViewPrevious.Text + $" ({mnuMainViewPrevious.ShortcutKeyDisplayString})";
+                btnNext.ToolTipText = mnuMainViewNext.Text + $" ({mnuMainViewNext.ShortcutKeyDisplayString})";
+
+                // Edit
+                btnRotateLeft.ToolTipText = mnuMainRotateLeft.Text + $" ({mnuMainRotateLeft.ShortcutKeyDisplayString})";
+                btnRotateRight.ToolTipText = mnuMainRotateRight.Text + $" ({mnuMainRotateRight.ShortcutKeyDisplayString})";
+                btnFlipHorz.ToolTipText = mnuMainFlipHorz.Text + $" ({mnuMainFlipHorz.ShortcutKeyDisplayString})";
+                btnFlipVert.ToolTipText = mnuMainFlipVert.Text + $" ({mnuMainFlipVert.ShortcutKeyDisplayString})";
+                btnDelete.ToolTipText = mnuMainMoveToRecycleBin.Text + $" ({mnuMainMoveToRecycleBin.ShortcutKeyDisplayString})";
+                btnEdit.ToolTipText = string.Format(mnuMainEditImage.Text, "") + $" ({mnuMainEditImage.ShortcutKeyDisplayString})";
+
+                // Zooming
+                btnZoomIn.ToolTipText = mnuMainZoomIn.Text + $" ({mnuMainZoomIn.ShortcutKeyDisplayString})";
+                btnZoomOut.ToolTipText = mnuMainZoomOut.Text  + $" ({mnuMainZoomOut.ShortcutKeyDisplayString})";
+                btnActualSize.ToolTipText = mnuMainActualSize.Text  + $" ({mnuMainActualSize.ShortcutKeyDisplayString})";
+
+                // Zoom modes
+                btnAutoZoom.ToolTipText = mnuMainAutoZoom.Text  + $" ({mnuMainAutoZoom.ShortcutKeyDisplayString})";
+                btnScaletoWidth.ToolTipText = mnuMainScaleToWidth.Text  + $" ({mnuMainScaleToWidth.ShortcutKeyDisplayString})";
+                btnScaletoHeight.ToolTipText = mnuMainScaleToHeight.Text  + $" ({mnuMainScaleToHeight.ShortcutKeyDisplayString})";
+                btnScaleToFit.ToolTipText = mnuMainScaleToFit.Text  + $" ({mnuMainScaleToFit.ShortcutKeyDisplayString})";
+                btnScaleToFill.ToolTipText = mnuMainScaleToFill.Text  + $" ({mnuMainScaleToFill.ShortcutKeyDisplayString})";
+                btnZoomLock.ToolTipText = mnuMainLockZoomRatio.Text  + $" ({mnuMainLockZoomRatio.ShortcutKeyDisplayString})";
+
+                // Window modes
+                btnWindowAdaptImage.ToolTipText = mnuMainWindowAdaptImage.Text + $" ({mnuMainWindowAdaptImage.ShortcutKeyDisplayString})";
+                btnFullScreen.ToolTipText = mnuMainFullScreen.Text + $" ({mnuMainFullScreen.ShortcutKeyDisplayString})";
+                btnSlideShow.ToolTipText = mnuMainSlideShowStart.Text + $" ({mnuMainSlideShowStart.ShortcutKeyDisplayString})";
+
+                // File
+                btnOpen.ToolTipText = mnuMainOpenFile.Text + $" ({mnuMainOpenFile.ShortcutKeyDisplayString})";
+                btnRefresh.ToolTipText = mnuMainRefresh.Text + $" ({mnuMainRefresh.ShortcutKeyDisplayString})";
+                btnGoto.ToolTipText = mnuMainGoto.Text + $" ({mnuMainGoto.ShortcutKeyDisplayString})";
+
+                // Layout
+                btnThumb.ToolTipText = mnuMainThumbnailBar.Text + $" ({mnuMainThumbnailBar.ShortcutKeyDisplayString})";
+                btnCheckedBackground.ToolTipText = mnuMainCheckBackground.Text + $" ({mnuMainCheckBackground.ShortcutKeyDisplayString})";
+                btnConvert.ToolTipText = mnuMainSaveAs.Text + $" ({mnuMainSaveAs.ShortcutKeyDisplayString})";
+                btnPrintImage.ToolTipText = mnuMainPrint.Text + $" ({mnuMainPrint.ShortcutKeyDisplayString})";
+                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"];
+
+                #endregion
+
 
                 #endregion
 
@@ -3937,7 +3946,7 @@ namespace ImageGlass
             mnuContext.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
 
 
-            //Get Editing Assoc App info
+            // Get Edit App info
             if (!isImageError)
             {
                 if (!Local.IsTempMemoryData)
@@ -4265,28 +4274,30 @@ namespace ImageGlass
                 // Get extension
                 var ext = Path.GetExtension(filename).ToLower();
 
-                // Get association App for editing
-                var assoc = Configs.GetEditApp(ext);
+                // Get EditApp for editing
+                var app = Configs.GetEditApp(ext);
 
-                if (assoc != null && File.Exists(assoc.AppPath))
+                if (app != null && File.Exists(app.AppPath))
                 {
                     // Open configured app for editing
-                    Process p = new Process();
-                    p.StartInfo.FileName = assoc.AppPath;
-
-                    //Build the arguments
-                    var args = assoc.AppArguments.Replace(EditApp.FileMacro, filename);
-                    p.StartInfo.Arguments = $"{args}";
-
-                    //show error dialog
-                    p.StartInfo.ErrorDialog = true;
-
-                    try
+                    using (var p = new Process())
                     {
-                        p.Start();
+                        p.StartInfo.FileName = app.AppPath;
+
+                        // Build the arguments
+                        var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
+                        p.StartInfo.Arguments = $"{args}";
+
+                        // show error dialog
+                        p.StartInfo.ErrorDialog = true;
+
+                        try
+                        {
+                            p.Start();
+                        }
+                        catch (Exception)
+                        { }
                     }
-                    catch (Exception)
-                    { }
                 }
                 else // Edit by default associated app
                 {
@@ -4296,7 +4307,7 @@ namespace ImageGlass
 
             void EditByDefaultApp()
             {
-                using(var p = new Process())
+                using (var p = new Process())
                 {
                     p.StartInfo.FileName = filename;
                     p.StartInfo.Verb = "edit";
@@ -5319,7 +5330,7 @@ namespace ImageGlass
                 // add hotkey to Exit menu
                 mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
 
-                // Get association App for editing
+                // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
 
             }
