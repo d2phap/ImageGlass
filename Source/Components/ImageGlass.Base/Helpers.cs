@@ -49,15 +49,28 @@ namespace ImageGlass.Base
                 // if path is directory
                 else
                 {
+                    var isDirExist = Directory.Exists(path);
+
+                    if (!isDirExist)
+                    {
+                       Directory.CreateDirectory(path);
+                    }
+                    
+                    
                     var sampleFile = Path.Combine(path, "test_write_file.temp");
 
                     using (File.Create(sampleFile)) { }
                     File.Delete(sampleFile);
+
+                    if (!isDirExist)
+                    {
+                        Directory.Delete(path, true);
+                    }
                 }
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }

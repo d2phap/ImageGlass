@@ -1677,14 +1677,18 @@ namespace ImageGlass
                 btnThemeUninstall.Enabled = true;
 
                 string themeName = lvTheme.SelectedItems[0].Tag.ToString();
+                Theme th;
                 if (themeName == "default")
                 {
                     //btnThemeSaveAs.Enabled = false;
                     btnThemeUninstall.Enabled = false;
+                    th = new Theme();
                 }
-
-
-                var th = new Theme(App.ConfigDir(Dir.Themes, themeName));
+                else
+                {
+                    th = new Theme(App.ConfigDir(Dir.Themes, themeName));
+                }
+                
                 picPreview.BackgroundImage = th.PreviewImage.Image;
 
                 txtThemeInfo.Text =

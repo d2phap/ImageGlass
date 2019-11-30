@@ -289,7 +289,7 @@ namespace igcmd
         private void LoadThemeList()
         {
             //add default theme
-            var defaultTheme = new Theme(App.StartUpDir(@"DefaultTheme\config.xml"));
+            var defaultTheme = new Theme(App.StartUpDir(Dir.DefaultTheme));
             _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
             cmbTheme.Items.Add(defaultTheme.Name);
@@ -394,6 +394,7 @@ namespace igcmd
         {
             Configs.Language = this._lang;
             Configs.Theme = this._theme;
+            Configs.BackgroundColor = this._theme.BackgroundColor;
 
 
             if (_layout == LayoutMode.Designer)

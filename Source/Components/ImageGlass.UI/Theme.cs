@@ -284,7 +284,7 @@ namespace ImageGlass.UI
 
             if (!File.Exists(configFilePath))
             {
-                configFilePath = App.StartUpDir("DefaultTheme", "config.xml");
+                configFilePath = App.StartUpDir(Dir.DefaultTheme, "config.xml");
             }
 
             this.ConfigFilePath = configFilePath;
