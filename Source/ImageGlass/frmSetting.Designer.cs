@@ -242,14 +242,14 @@ namespace ImageGlass
             this.lblLanguage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblLanguage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblFileTypeAssociations
+            // lblFileTypeAssoc
             // 
             this.lblFileTypeAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFileTypeAssoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.lblFileTypeAssoc.Location = new System.Drawing.Point(0, 150);
             this.lblFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
-            this.lblFileTypeAssoc.Name = "lblFileTypeAssociations";
+            this.lblFileTypeAssoc.Name = "lblFileTypeAssoc";
             this.lblFileTypeAssoc.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblFileTypeAssoc.Size = new System.Drawing.Size(254, 50);
             this.lblFileTypeAssoc.TabIndex = 4;

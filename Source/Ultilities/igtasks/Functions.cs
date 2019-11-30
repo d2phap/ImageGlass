@@ -165,7 +165,7 @@ namespace igtasks
         {
             DeleteRegistryAssociations(extensions);
 
-            RegistryHelper reg = new RegistryHelper
+            var reg = new RegistryHelper
             {
                 ShowError = true,
                 BaseRegistryKey = Registry.LocalMachine,
@@ -209,27 +209,34 @@ namespace igtasks
                     return 1;
                 }
 
-                // Config the File Associations - Icon
+                // File type description: ImageGlass JPG File
+                reg.SubKey = @"SOFTWARE\Classes\" + keyname;
+                if (!reg.Write("", $"ImageGlass {ext.Substring(1).ToUpper()} File"))
+                {
+                    return 1;
+                }
+
+                // File type icon
                 var iconPath = App.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
                 if (!File.Exists(iconPath))
                 {
                     iconPath = App.IGExePath;
                 }
-
+                
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
                 if (!reg.Write("", $"\"{iconPath}\", 0"))
                 {
                     return 1;
                 }
 
-                // Config the File Associations - Friendly App Name
+                // Friendly App Name
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
                 if (!reg.Write("FriendlyAppName", "ImageGlass"))
                 {
                     return 1;
                 }
 
-                // Config the File Associations - Command
+                // Execute command
                 reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
                 if (!reg.Write("", $"\"{App.IGExePath}\" \"%1\""))
                 {
