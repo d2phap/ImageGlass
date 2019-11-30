@@ -438,7 +438,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblGeneral", "General");
             Items.Add("frmSetting.lblImage", "Image"); //v4.0
             Items.Add("frmSetting.lblEdit", "Edit"); //v6.0
-            Items.Add("frmSetting.lblFileAssociations", "File Associations"); //v2.0 final
+            Items.Add("frmSetting.lblFileTypeAssoc", "File Type Associations"); //v2.0 final
             Items.Add("frmSetting.lblToolbar", "Toolbar"); //v5.0
             Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
             Items.Add("frmSetting.lblLanguage", "Language");
@@ -587,7 +587,7 @@ namespace ImageGlass.Library
 
             #region TAB File Associations
             Items.Add("frmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
-            Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Associations"); // 4.0
+            Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
 
             Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
             Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer"); // 4.0, updated v5.0
@@ -605,14 +605,14 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
 
             // V5.0
-            Items.Add("frmSetting.txtSeparator", "Separator"); // i.e. 'toolbar separator'
-            Items.Add("frmSetting.lblToolbarTT", "Configure toolbar buttons"); // tooltip
+            Items.Add("frmSetting._separator", "Separator"); // i.e. 'toolbar separator'
+            Items.Add("frmSetting.lblToolbar._Tooltip", "Configure toolbar buttons"); // tooltip
             Items.Add("frmSetting.lblUsedBtns", "Current Buttons:");
             Items.Add("frmSetting.lblAvailBtns", "Available Buttons:");
-            Items.Add("frmSetting.btnMoveDownTT", "Move selected button down"); // tooltip
-            Items.Add("frmSetting.btnMoveLeftTT", "Remove selected button(s) from the toolbar"); // tooltip
-            Items.Add("frmSetting.btnMoveRightTT", "Add selected button(s) to the toolbar"); // tooltip
-            Items.Add("frmSetting.btnMoveUpTT", "Move selected button up"); // tooltip
+            Items.Add("frmSetting.btnMoveDown._Tooltip", "Move selected button down"); // tooltip
+            Items.Add("frmSetting.btnMoveLeft._Tooltip", "Remove selected button(s) from the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveRight._Tooltip", "Add selected button(s) to the toolbar"); // tooltip
+            Items.Add("frmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
 
             Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
             #endregion

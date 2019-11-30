@@ -36,7 +36,7 @@ namespace ImageGlass
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
             this.lblLanguage = new System.Windows.Forms.Label();
-            this.lblFileAssociations = new System.Windows.Forms.Label();
+            this.lblFileTypeAssoc = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.picBackgroundColor = new System.Windows.Forms.PictureBox();
@@ -49,7 +49,7 @@ namespace ImageGlass
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
-            this.tabFileAssociation = new System.Windows.Forms.TabPage();
+            this.tabFileTypeAssoc = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnRegisterExt = new System.Windows.Forms.Button();
             this.btnResetExt = new System.Windows.Forms.Button();
@@ -60,6 +60,7 @@ namespace ImageGlass
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkCenterWindowFit = new System.Windows.Forms.CheckBox();
             this.chkShowCheckerboardOnlyImage = new System.Windows.Forms.CheckBox();
             this.chkShowNavButtons = new System.Windows.Forms.CheckBox();
             this.chkLastSeenImage = new System.Windows.Forms.CheckBox();
@@ -190,10 +191,9 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkCenterWindowFit = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
-            this.tabFileAssociation.SuspendLayout();
+            this.tabFileTypeAssoc.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tab1.SuspendLayout();
@@ -242,25 +242,25 @@ namespace ImageGlass
             this.lblLanguage.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblLanguage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblFileAssociations
+            // lblFileTypeAssociations
             // 
-            this.lblFileAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblFileTypeAssoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFileAssociations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblFileAssociations.Location = new System.Drawing.Point(0, 150);
-            this.lblFileAssociations.Margin = new System.Windows.Forms.Padding(0);
-            this.lblFileAssociations.Name = "lblFileAssociations";
-            this.lblFileAssociations.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblFileAssociations.Size = new System.Drawing.Size(254, 50);
-            this.lblFileAssociations.TabIndex = 4;
-            this.lblFileAssociations.Tag = "0";
-            this.lblFileAssociations.Text = "File Associations";
-            this.lblFileAssociations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblFileAssociations.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblFileAssociations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblFileAssociations.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblFileAssociations.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblFileAssociations.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            this.lblFileTypeAssoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblFileTypeAssoc.Location = new System.Drawing.Point(0, 150);
+            this.lblFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblFileTypeAssoc.Name = "lblFileTypeAssociations";
+            this.lblFileTypeAssoc.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblFileTypeAssoc.Size = new System.Drawing.Size(254, 50);
+            this.lblFileTypeAssoc.TabIndex = 4;
+            this.lblFileTypeAssoc.Tag = "0";
+            this.lblFileTypeAssoc.Text = "[File Type Associations]";
+            this.lblFileTypeAssoc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblFileTypeAssoc.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblFileTypeAssoc.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblFileTypeAssoc.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblFileTypeAssoc.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblFileTypeAssoc.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblGeneral
             // 
@@ -435,17 +435,17 @@ namespace ImageGlass
             // 
             // tabFileAssociation
             // 
-            this.tabFileAssociation.BackColor = System.Drawing.Color.White;
-            this.tabFileAssociation.Controls.Add(this.panel2);
-            this.tabFileAssociation.Controls.Add(this.lvExtension);
-            this.tabFileAssociation.Controls.Add(this.lblSupportedExtension);
-            this.tabFileAssociation.Controls.Add(this.lnkOpenFileAssoc);
-            this.tabFileAssociation.Location = new System.Drawing.Point(4, 37);
-            this.tabFileAssociation.Margin = new System.Windows.Forms.Padding(0);
-            this.tabFileAssociation.Name = "tabFileAssociation";
-            this.tabFileAssociation.Size = new System.Drawing.Size(799, 583);
-            this.tabFileAssociation.TabIndex = 1;
-            this.tabFileAssociation.Text = "file association";
+            this.tabFileTypeAssoc.BackColor = System.Drawing.Color.White;
+            this.tabFileTypeAssoc.Controls.Add(this.panel2);
+            this.tabFileTypeAssoc.Controls.Add(this.lvExtension);
+            this.tabFileTypeAssoc.Controls.Add(this.lblSupportedExtension);
+            this.tabFileTypeAssoc.Controls.Add(this.lnkOpenFileAssoc);
+            this.tabFileTypeAssoc.Location = new System.Drawing.Point(4, 37);
+            this.tabFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
+            this.tabFileTypeAssoc.Name = "tabFileAssociation";
+            this.tabFileTypeAssoc.Size = new System.Drawing.Size(799, 583);
+            this.tabFileTypeAssoc.TabIndex = 1;
+            this.tabFileTypeAssoc.Text = "file association";
             // 
             // panel2
             // 
@@ -597,6 +597,18 @@ namespace ImageGlass
             this.tabGeneral.Size = new System.Drawing.Size(799, 583);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
+            // 
+            // chkCenterWindowFit
+            // 
+            this.chkCenterWindowFit.AutoSize = true;
+            this.chkCenterWindowFit.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkCenterWindowFit.Location = new System.Drawing.Point(45, 612);
+            this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(2);
+            this.chkCenterWindowFit.Name = "chkCenterWindowFit";
+            this.chkCenterWindowFit.Size = new System.Drawing.Size(415, 30);
+            this.chkCenterWindowFit.TabIndex = 47;
+            this.chkCenterWindowFit.Text = "[Auto center the window in Window Fit mode]";
+            this.chkCenterWindowFit.UseVisualStyleBackColor = true;
             // 
             // chkShowCheckerboardOnlyImage
             // 
@@ -814,7 +826,7 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabGeneral);
             this.tab1.Controls.Add(this.tabImage);
             this.tab1.Controls.Add(this.tabEdit);
-            this.tab1.Controls.Add(this.tabFileAssociation);
+            this.tab1.Controls.Add(this.tabFileTypeAssoc);
             this.tab1.Controls.Add(this.tabToolbar);
             this.tab1.Controls.Add(this.tabColorPicker);
             this.tab1.Controls.Add(this.tabKeyboard);
@@ -2128,7 +2140,7 @@ namespace ImageGlass
             this.tableLayoutPanel1.Controls.Add(this.lblToolbar, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.lblColorPicker, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblEdit, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblFileAssociations, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblFileTypeAssoc, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.lblKeyboard, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.lblTheme, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.lblLanguage, 0, 9);
@@ -2342,18 +2354,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // chkWindowFit
-            // 
-            this.chkCenterWindowFit.AutoSize = true;
-            this.chkCenterWindowFit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkCenterWindowFit.Location = new System.Drawing.Point(45, 612);
-            this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(2);
-            this.chkCenterWindowFit.Name = "chkWindowFit";
-            this.chkCenterWindowFit.Size = new System.Drawing.Size(415, 30);
-            this.chkCenterWindowFit.TabIndex = 47;
-            this.chkCenterWindowFit.Text = "[Auto center the window in Window Fit mode]";
-            this.chkCenterWindowFit.UseVisualStyleBackColor = true;
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2376,8 +2376,8 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
-            this.tabFileAssociation.ResumeLayout(false);
-            this.tabFileAssociation.PerformLayout();
+            this.tabFileTypeAssoc.ResumeLayout(false);
+            this.tabFileTypeAssoc.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabGeneral.ResumeLayout(false);
@@ -2418,7 +2418,7 @@ namespace ImageGlass
 
         private System.Windows.Forms.ImageList imglTheme;
         private System.Windows.Forms.Label lblLanguage;
-        private System.Windows.Forms.Label lblFileAssociations;
+        private System.Windows.Forms.Label lblFileTypeAssoc;
         private System.Windows.Forms.Label lblGeneral;
         private System.Windows.Forms.ToolTip tip1;
         private System.Windows.Forms.TabPage tabLanguage;
@@ -2428,7 +2428,7 @@ namespace ImageGlass
         private System.Windows.Forms.LinkLabel lnkGetMoreLanguage;
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguageText;
-        private System.Windows.Forms.TabPage tabFileAssociation;
+        private System.Windows.Forms.TabPage tabFileTypeAssoc;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.CheckBox chkShowToolBar;
         private System.Windows.Forms.PictureBox picBackgroundColor;

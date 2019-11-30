@@ -29,7 +29,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -224,168 +223,168 @@ namespace ImageGlass
 
 
             #region Tabs label
-            lblGeneral.Text = lang[$"{Name}.lblGeneral"];
-            lblImage.Text = lang[$"{Name}.lblImage"];
-            lblEdit.Text = lang[$"{Name}.lblEdit"];
-            lblFileAssociations.Text = lang[$"{Name}.lblFileAssociations"];
-            lblLanguage.Text = lang[$"{Name}.lblLanguage"];
-            lblToolbar.Text = lang[$"{Name}.lblToolbar"];
-            lblColorPicker.Text = lang[$"{Name}.lblColorPicker"];
-            lblTheme.Text = lang[$"{Name}.lblTheme"];
-            lblKeyboard.Text = lang[$"{Name}.lblKeyboard"];
+            lblGeneral.Text = lang[$"{Name}.{nameof(lblGeneral)}"];
+            lblImage.Text = lang[$"{Name}.{nameof(lblImage)}"];
+            lblEdit.Text = lang[$"{Name}.{nameof(lblEdit)}"];
+            lblFileTypeAssoc.Text = lang[$"{Name}.{nameof(lblFileTypeAssoc)}"];
+            lblLanguage.Text = lang[$"{Name}.{nameof(lblLanguage)}"];
+            lblToolbar.Text = lang[$"{Name}.{nameof(lblToolbar)}"];
+            lblColorPicker.Text = lang[$"{Name}.{nameof(lblColorPicker)}"];
+            lblTheme.Text = lang[$"{Name}.{nameof(lblTheme)}"];
+            lblKeyboard.Text = lang[$"{Name}.{nameof(lblKeyboard)}"];
 
-            btnSave.Text = lang[$"{Name}.btnSave"];
-            btnCancel.Text = lang[$"{Name}.btnCancel"];
-            btnApply.Text = lang[$"{Name}.btnApply"];
+            btnSave.Text = lang[$"{Name}.{nameof(btnSave)}"];
+            btnCancel.Text = lang[$"{Name}.{nameof(btnCancel)}"];
+            btnApply.Text = lang[$"{Name}.{nameof(btnApply)}"];
             #endregion
 
 
             #region GENERAL TAB
-            lblHeadStartup.Text = lang[$"{Name}.lblHeadStartup"];//
-            chkWelcomePicture.Text = lang[$"{Name}.chkWelcomePicture"];
-            chkLastSeenImage.Text = lang[$"{Name}.chkLastSeenImage"];
-            chkShowToolBar.Text = lang[$"{Name}.chkShowToolBar"];
-            chkAllowMultiInstances.Text = lang[$"{Name}.chkAllowMultiInstances"];
+            lblHeadStartup.Text = lang[$"{Name}.{nameof(lblHeadStartup)}"];//
+            chkWelcomePicture.Text = lang[$"{Name}.{nameof(chkWelcomePicture)}"];
+            chkLastSeenImage.Text = lang[$"{Name}.{nameof(chkLastSeenImage)}"];
+            chkShowToolBar.Text = lang[$"{Name}.{nameof(chkShowToolBar)}"];
+            chkAllowMultiInstances.Text = lang[$"{Name}.{nameof(chkAllowMultiInstances)}"];
 
 
-            lblHeadConfigDir.Text = lang[$"{Name}.lblHeadConfigDir"];//
+            lblHeadConfigDir.Text = lang[$"{Name}.{nameof(lblHeadConfigDir)}"];//
             lnkConfigDir.Text = App.ConfigDir();
 
 
-            lblHeadOthers.Text = lang[$"{Name}.lblHeadOthers"];//
-            chkAutoUpdate.Text = lang[$"{Name}.chkAutoUpdate"];
-            chkESCToQuit.Text = lang[$"{Name}.chkESCToQuit"];
-            chkConfirmationDelete.Text = lang[$"{Name}.chkConfirmationDelete"];
-            chkShowScrollbar.Text = lang[$"{Name}.chkShowScrollbar"];
-            chkDisplayBasename.Text = lang[$"{Name}.chkDisplayBasename"];
-            chkShowNavButtons.Text = lang[$"{Name}.chkShowNavButtons"];
-            chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.chkShowCheckerboardOnlyImage"];
-            chkCenterWindowFit.Text = lang[$"{Name}.chkCenterWindowFit"];
+            lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];//
+            chkAutoUpdate.Text = lang[$"{Name}.{nameof(chkAutoUpdate)}"];
+            chkESCToQuit.Text = lang[$"{Name}.{nameof(chkESCToQuit)}"];
+            chkConfirmationDelete.Text = lang[$"{Name}.{nameof(chkConfirmationDelete)}"];
+            chkShowScrollbar.Text = lang[$"{Name}.{nameof(chkShowScrollbar)}"];
+            chkDisplayBasename.Text = lang[$"{Name}.{nameof(chkDisplayBasename)}"];
+            chkShowNavButtons.Text = lang[$"{Name}.{nameof(chkShowNavButtons)}"];
+            chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.{nameof(chkShowCheckerboardOnlyImage)}"];
+            chkCenterWindowFit.Text = lang[$"{Name}.{nameof(chkCenterWindowFit)}"];
 
-            lblBackGroundColor.Text = lang[$"{Name}.lblBackGroundColor"];
-            lnkResetBackgroundColor.Text = lang[$"{Name}.lnkResetBackgroundColor"];
+            lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
+            lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
             #endregion
 
 
             #region IMAGE TAB
-            lblHeadImageLoading.Text = lang[$"{Name}.lblHeadImageLoading"];//
-            chkFindChildFolder.Text = lang[$"{Name}.chkFindChildFolder"];
-            chkShowHiddenImages.Text = lang[$"{Name}.chkShowHiddenImages"];
-            chkLoopViewer.Text = lang[$"{Name}.chkLoopViewer"];
-            chkIsCenterImage.Text = lang[$"{Name}.chkIsCenterImage"];
-            lblImageLoadingOrder.Text = lang[$"{Name}.lblImageLoadingOrder"];
-            chkUseFileExplorerSortOrder.Text = lang[$"{Name}.chkUseFileExplorerSortOrder"];
-            lblImageBoosterCachedCount.Text = lang[$"{Name}.lblImageBoosterCachedCount"];
+            lblHeadImageLoading.Text = lang[$"{Name}.{nameof(lblHeadImageLoading)}"];//
+            chkFindChildFolder.Text = lang[$"{Name}.{nameof(chkFindChildFolder)}"];
+            chkShowHiddenImages.Text = lang[$"{Name}.{nameof(chkShowHiddenImages)}"];
+            chkLoopViewer.Text = lang[$"{Name}.{nameof(chkLoopViewer)}"];
+            chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
+            lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
+            chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
+            lblImageBoosterCachedCount.Text = lang[$"{Name}.{nameof(lblImageBoosterCachedCount)}"];
 
-            lblColorManagement.Text = lang[$"{Name}.lblColorManagement"];//
-            chkApplyColorProfile.Text = lang[$"{Name}.chkApplyColorProfile"];
-            lblColorProfile.Text = lang[$"{Name}.lblColorProfile"];
-            lnkColorProfileBrowse.Text = lang[$"{Name}.lnkColorProfileBrowse"];
+            lblColorManagement.Text = lang[$"{Name}.{nameof(lblColorManagement)}"];//
+            chkApplyColorProfile.Text = lang[$"{Name}.{nameof(chkApplyColorProfile)}"];
+            lblColorProfile.Text = lang[$"{Name}.{nameof(lblColorProfile)}"];
+            lnkColorProfileBrowse.Text = lang[$"{Name}.{nameof(lnkColorProfileBrowse)}"];
 
-            lblHeadMouseWheelActions.Text = lang[$"{Name}.lblHeadMouseWheelActions"];
-            lblMouseWheel.Text = lang[$"{Name}.lblMouseWheel"];
-            lblMouseWheelAlt.Text = lang[$"{Name}.lblMouseWheelAlt"];
-            lblMouseWheelCtrl.Text = lang[$"{Name}.lblMouseWheelCtrl"];
-            lblMouseWheelShift.Text = lang[$"{Name}.lblMouseWheelShift"];
+            lblHeadMouseWheelActions.Text = lang[$"{Name}.{nameof(lblHeadMouseWheelActions)}"];
+            lblMouseWheel.Text = lang[$"{Name}.{nameof(lblMouseWheel)}"];
+            lblMouseWheelAlt.Text = lang[$"{Name}.{nameof(lblMouseWheelAlt)}"];
+            lblMouseWheelCtrl.Text = lang[$"{Name}.{nameof(lblMouseWheelCtrl)}"];
+            lblMouseWheelShift.Text = lang[$"{Name}.{nameof(lblMouseWheelShift)}"];
 
-            lblHeadZooming.Text = lang[$"{Name}.lblHeadZooming"];//
-            lblGeneral_ZoomOptimization.Text = lang[$"{Name}.lblGeneral_ZoomOptimization"];
-            lblZoomLevels.Text = lang[$"{Name}.lblZoomLevels"];
+            lblHeadZooming.Text = lang[$"{Name}.{nameof(lblHeadZooming)}"];//
+            lblGeneral_ZoomOptimization.Text = lang[$"{Name}.{nameof(lblGeneral_ZoomOptimization)}"];
+            lblZoomLevels.Text = lang[$"{Name}.{nameof(lblZoomLevels)}"];
 
-            lblHeadThumbnailBar.Text = lang[$"{Name}.lblHeadThumbnailBar"];//
-            chkThumbnailVertical.Text = lang[$"{Name}.chkThumbnailVertical"];
-            chkShowThumbnailScrollbar.Text = lang[$"{Name}.chkShowThumbnailScrollbar"];
-            lblGeneral_ThumbnailSize.Text = lang[$"{Name}.lblGeneral_ThumbnailSize"];
+            lblHeadThumbnailBar.Text = lang[$"{Name}.{nameof(lblHeadThumbnailBar)}"];//
+            chkThumbnailVertical.Text = lang[$"{Name}.{nameof(chkThumbnailVertical)}"];
+            chkShowThumbnailScrollbar.Text = lang[$"{Name}.{nameof(chkShowThumbnailScrollbar)}"];
+            lblGeneral_ThumbnailSize.Text = lang[$"{Name}.{nameof(lblGeneral_ThumbnailSize)}"];
 
-            lblHeadSlideshow.Text = lang[$"{Name}.lblHeadSlideshow"];//
-            chkLoopSlideshow.Text = lang[$"{Name}.chkLoopSlideshow"];
-            lblSlideshowInterval.Text = string.Format(lang[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            lblHeadSlideshow.Text = lang[$"{Name}.{nameof(lblHeadSlideshow)}"];//
+            chkLoopSlideshow.Text = lang[$"{Name}.{nameof(chkLoopSlideshow)}"];
+            lblSlideshowInterval.Text = string.Format(lang[$"{Name}.{nameof(lblSlideshowInterval)}"], barInterval.Value);
 
             #endregion
 
 
             #region EDIT TAB
-            chkSaveOnRotate.Text = lang[$"{Name}.chkSaveOnRotate"];
-            chkSaveModifyDate.Text = lang[$"{Name}.chkSaveModifyDate"];
-            lblSelectAppForEdit.Text = lang[$"{Name}.lblSelectAppForEdit"];
-            btnEditEditExt.Text = lang[$"{Name}.btnEditEditExt"];
-            btnEditResetExt.Text = lang[$"{Name}.btnEditResetExt"];
-            btnEditEditAllExt.Text = lang[$"{Name}.btnEditEditAllExt"];
-            clnFileExtension.Text = lang[$"{Name}.lvImageEditing.clnFileExtension"];
-            clnAppName.Text = lang[$"{Name}.lvImageEditing.clnAppName"];
-            clnAppPath.Text = lang[$"{Name}.lvImageEditing.clnAppPath"];
-            clnAppArguments.Text = lang[$"{Name}.lvImageEditing.clnAppArguments"];
+            chkSaveOnRotate.Text = lang[$"{Name}.{nameof(chkSaveOnRotate)}"];
+            chkSaveModifyDate.Text = lang[$"{Name}.{nameof(chkSaveModifyDate)}"];
+            lblSelectAppForEdit.Text = lang[$"{Name}.{nameof(lblSelectAppForEdit)}"];
+            btnEditEditExt.Text = lang[$"{Name}.{nameof(btnEditEditExt)}"];
+            btnEditResetExt.Text = lang[$"{Name}.{nameof(btnEditResetExt)}"];
+            btnEditEditAllExt.Text = lang[$"{Name}.{nameof(btnEditEditAllExt)}"];
+            clnFileExtension.Text = lang[$"{Name}.{nameof(lvImageEditing)}.clnFileExtension"];
+            clnAppName.Text = lang[$"{Name}.{nameof(lvImageEditing)}.clnAppName"];
+            clnAppPath.Text = lang[$"{Name}.{nameof(lvImageEditing)}.clnAppPath"];
+            clnAppArguments.Text = lang[$"{Name}.{nameof(lvImageEditing)}.clnAppArguments"];
             #endregion
 
 
-            #region FILE ASSOCIATION TAB
+            #region FILE TYPE ASSOCIATION TAB
 
-            lblSupportedExtension.Text = string.Format(lang[$"{Name}.lblSupportedExtension"], Configs.AllFormats.Count);
-            lnkOpenFileAssoc.Text = lang[$"{Name}.lnkOpenFileAssoc"];
-            btnAddNewExt.Text = lang[$"{Name}.btnAddNewExt"];
-            btnDeleteExt.Text = lang[$"{Name}.btnDeleteExt"];
-            btnRegisterExt.Text = lang[$"{Name}.btnRegisterExt"];
-            btnResetExt.Text = lang[$"{Name}.btnResetExt"];
+            lblSupportedExtension.Text = string.Format(lang[$"{Name}.{nameof(lblSupportedExtension)}"], Configs.AllFormats.Count);
+            lnkOpenFileAssoc.Text = lang[$"{Name}.{nameof(lnkOpenFileAssoc)}"];
+            btnAddNewExt.Text = lang[$"{Name}.{nameof(btnAddNewExt)}"];
+            btnDeleteExt.Text = lang[$"{Name}.{nameof(btnDeleteExt)}"];
+            btnRegisterExt.Text = lang[$"{Name}.{nameof(btnRegisterExt)}"];
+            btnResetExt.Text = lang[$"{Name}.{nameof(btnResetExt)}"];
             #endregion
 
 
             #region LANGUAGE TAB
-            lblLanguageText.Text = lang[$"{Name}.lblLanguageText"];
-            lnkRefresh.Text = lang[$"{Name}.lnkRefresh"];
-            lblLanguageWarning.Text = string.Format(lang[$"{Name}.lblLanguageWarning"], "ImageGlass " + Application.ProductVersion);
-            lnkInstallLanguage.Text = lang[$"{Name}.lnkInstallLanguage"];
-            lnkCreateNew.Text = lang[$"{Name}.lnkCreateNew"];
-            lnkEdit.Text = lang[$"{Name}.lnkEdit"];
-            lnkGetMoreLanguage.Text = lang[$"{Name}.lnkGetMoreLanguage"];
+            lblLanguageText.Text = lang[$"{Name}.{nameof(lblLanguageText)}"];
+            lnkRefresh.Text = lang[$"{Name}.{nameof(lnkRefresh)}"];
+            lblLanguageWarning.Text = string.Format(lang[$"{Name}.{nameof(lblLanguageWarning)}"], "ImageGlass " + Application.ProductVersion);
+            lnkInstallLanguage.Text = lang[$"{Name}.{nameof(lnkInstallLanguage)}"];
+            lnkCreateNew.Text = lang[$"{Name}.{nameof(lnkCreateNew)}"];
+            lnkEdit.Text = lang[$"{Name}.{nameof(lnkEdit)}"];
+            lnkGetMoreLanguage.Text = lang[$"{Name}.{nameof(lnkGetMoreLanguage)}"];
             #endregion
 
 
             #region TOOLBAR TAB
-            lblToolbarPosition.Text = lang[$"{Name}.lblToolbarPosition"];
-            chkHorzCenterToolbarBtns.Text = lang[$"{Name}.chkHorzCenterToolbarBtns"];
+            lblToolbarPosition.Text = lang[$"{Name}.{nameof(lblToolbarPosition)}"];
+            chkHorzCenterToolbarBtns.Text = lang[$"{Name}.{nameof(chkHorzCenterToolbarBtns)}"];
 
-            _separatorText = lang[$"{Name}.txtSeparator"];
-            lblUsedBtns.Text = lang[$"{Name}.lblUsedBtns"];
-            lblAvailBtns.Text = lang[$"{Name}.lblAvailBtns"];
+            _separatorText = lang[$"{Name}._separator"];
+            lblUsedBtns.Text = lang[$"{Name}.{nameof(lblUsedBtns)}"];
+            lblAvailBtns.Text = lang[$"{Name}.{nameof(lblAvailBtns)}"];
 
-            tip1.SetToolTip(lblToolbar, lang[$"{Name}.lblToolbarTT"]);
-            tip1.SetToolTip(btnMoveUp, lang[$"{Name}.btnMoveUpTT"]);
-            tip1.SetToolTip(btnMoveDown, lang[$"{Name}.btnMoveDownTT"]);
-            tip1.SetToolTip(btnMoveLeft, lang[$"{Name}.btnMoveLeftTT"]);
-            tip1.SetToolTip(btnMoveRight, lang[$"{Name}.btnMoveRightTT"]);
+            tip1.SetToolTip(lblToolbar, lang[$"{Name}.{nameof(lblToolbar)}._Tooltip"]);
+            tip1.SetToolTip(btnMoveUp, lang[$"{Name}.{nameof(btnMoveUp)}._Tooltip"]);
+            tip1.SetToolTip(btnMoveDown, lang[$"{Name}.{nameof(btnMoveDown)}._Tooltip"]);
+            tip1.SetToolTip(btnMoveLeft, lang[$"{Name}.{nameof(btnMoveLeft)}._Tooltip"]);
+            tip1.SetToolTip(btnMoveRight, lang[$"{Name}.{nameof(btnMoveRight)}._Tooltip"]);
             #endregion
 
 
             #region COLOR PICKER TAB
-            lblColorCodeFormat.Text = lang[$"{Name}.lblColorCodeFormat"];
-            chkColorUseRGBA.Text = lang[$"{Name}.chkColorUseRGBA"];
-            chkColorUseHEXA.Text = lang[$"{Name}.chkColorUseHEXA"];
-            chkColorUseHSLA.Text = lang[$"{Name}.chkColorUseHSLA"];
+            lblColorCodeFormat.Text = lang[$"{Name}.{nameof(lblColorCodeFormat)}"];
+            chkColorUseRGBA.Text = lang[$"{Name}.{nameof(chkColorUseRGBA)}"];
+            chkColorUseHEXA.Text = lang[$"{Name}.{nameof(chkColorUseHEXA)}"];
+            chkColorUseHSLA.Text = lang[$"{Name}.{nameof(chkColorUseHSLA)}"];
             #endregion
 
 
             #region THEME TAB
-            lblInstalledThemes.Text = string.Format(lang[$"{this.Name}.lblInstalledThemes"], "");
-            lnkThemeDownload.Text = lang[$"{this.Name}.lnkThemeDownload"];
+            lblInstalledThemes.Text = string.Format(lang[$"{this.Name}.{nameof(lblInstalledThemes)}"], "");
+            lnkThemeDownload.Text = lang[$"{this.Name}.{nameof(lnkThemeDownload)}"];
 
-            btnThemeRefresh.Text = lang[$"{this.Name}.btnThemeRefresh"];
-            btnThemeInstall.Text = lang[$"{this.Name}.btnThemeInstall"];
-            btnThemeUninstall.Text = lang[$"{this.Name}.btnThemeUninstall"];
-            btnThemeSaveAs.Text = lang[$"{this.Name}.btnThemeSaveAs"];
-            btnThemeFolderOpen.Text = lang[$"{this.Name}.btnThemeFolderOpen"];
+            btnThemeRefresh.Text = lang[$"{this.Name}.{nameof(btnThemeRefresh)}"];
+            btnThemeInstall.Text = lang[$"{this.Name}.{nameof(btnThemeInstall)}"];
+            btnThemeUninstall.Text = lang[$"{this.Name}.{nameof(btnThemeUninstall)}"];
+            btnThemeSaveAs.Text = lang[$"{this.Name}.{nameof(btnThemeSaveAs)}"];
+            btnThemeFolderOpen.Text = lang[$"{this.Name}.{nameof(btnThemeFolderOpen)}"];
 
-            btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
-            btnThemeApply.Text = lang[$"{this.Name}.btnThemeApply"];
+            btnThemeEdit.Text = lang[$"{this.Name}.{nameof(btnThemeEdit)}._Edit"];
+            btnThemeApply.Text = lang[$"{this.Name}.{nameof(btnThemeApply)}"];
 
             #endregion
 
 
             #region KEYBOARD TAB
-            btnKeyReset.Text = lang[$"{Name}.btnKeyReset"];
-            lblKeysSpaceBack.Text = lang[$"{Name}.lblKeysSpaceBack"];
-            lblKeysPageUpDown.Text = lang[$"{Name}.lblKeysPageUpDown"];
-            lblKeysUpDown.Text = lang[$"{Name}.lblKeysUpDown"];
-            lblKeysLeftRight.Text = lang[$"{Name}.lblKeysLeftRight"];
+            btnKeyReset.Text = lang[$"{Name}.{nameof(btnKeyReset)}"];
+            lblKeysSpaceBack.Text = lang[$"{Name}.{nameof(lblKeysSpaceBack)}"];
+            lblKeysPageUpDown.Text = lang[$"{Name}.{nameof(lblKeysPageUpDown)}"];
+            lblKeysUpDown.Text = lang[$"{Name}.{nameof(lblKeysUpDown)}"];
+            lblKeysLeftRight.Text = lang[$"{Name}.{nameof(lblKeysLeftRight)}"];
             #endregion
 
 
@@ -411,8 +410,8 @@ namespace ImageGlass
                 case "lblEdit":
                     tab1.SelectedTab = tabEdit;
                     break;
-                case "lblFileAssociations":
-                    tab1.SelectedTab = tabFileAssociation;
+                case "lblFileTypeAssoc":
+                    tab1.SelectedTab = tabFileTypeAssoc;
                     break;
                 case "lblLanguage":
                     tab1.SelectedTab = tabLanguage;
@@ -438,7 +437,7 @@ namespace ImageGlass
             lblGeneral.Tag =
             lblImage.Tag =
             lblEdit.Tag =
-            lblFileAssociations.Tag =
+            lblFileTypeAssoc.Tag =
             lblLanguage.Tag =
             lblToolbar.Tag =
             lblColorPicker.Tag =
@@ -448,7 +447,7 @@ namespace ImageGlass
             lblGeneral.BackColor =
             lblImage.BackColor =
             lblEdit.BackColor =
-            lblFileAssociations.BackColor =
+            lblFileTypeAssoc.BackColor =
             lblLanguage.BackColor =
             lblToolbar.BackColor =
             lblColorPicker.BackColor =
@@ -476,10 +475,10 @@ namespace ImageGlass
 
                 LoadTabEditConfig();
             }
-            else if (tab1.SelectedTab == tabFileAssociation)
+            else if (tab1.SelectedTab == tabFileTypeAssoc)
             {
-                lblFileAssociations.Tag = 1;
-                lblFileAssociations.BackColor = M_COLOR_MENU_ACTIVE;
+                lblFileTypeAssoc.Tag = 1;
+                lblFileTypeAssoc.BackColor = M_COLOR_MENU_ACTIVE;
 
                 lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
 
