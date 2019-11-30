@@ -398,34 +398,35 @@ namespace ImageGlass
         /// <param name="e"></param>
         private void lblMenu_Click(object sender, EventArgs e)
         {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
+
             switch (lbl.Name)
             {
-                case "lblGeneral":
+                case nameof(lblGeneral):
                     tab1.SelectedTab = tabGeneral;
                     break;
-                case "lblImage":
+                case nameof(lblImage):
                     tab1.SelectedTab = tabImage;
                     break;
-                case "lblEdit":
+                case nameof(lblEdit):
                     tab1.SelectedTab = tabEdit;
                     break;
-                case "lblFileTypeAssoc":
+                case nameof(lblFileTypeAssoc):
                     tab1.SelectedTab = tabFileTypeAssoc;
                     break;
-                case "lblLanguage":
+                case nameof(lblLanguage):
                     tab1.SelectedTab = tabLanguage;
                     break;
-                case "lblToolbar":
+                case nameof(lblToolbar):
                     tab1.SelectedTab = tabToolbar;
                     break;
-                case "lblColorPicker":
+                case nameof(lblColorPicker):
                     tab1.SelectedTab = tabColorPicker;
                     break;
-                case "lblTheme":
+                case nameof(lblTheme):
                     tab1.SelectedTab = tabTheme;
                     break;
-                case "lblKeyboard":
+                case nameof(lblKeyboard):
                     tab1.SelectedTab = tabKeyboard;
                     break;
             }
