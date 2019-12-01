@@ -43,5 +43,13 @@ namespace ImageGlass.Base
         /// Gets the temporary folder name
         /// </summary>
         public static string Temporary { get; } = "Temp";
+
+#if DEBUG
+        /// <summary>
+        /// Logging should not be to the temporary folder, as it is deleted on shutdown
+        /// </summary>
+        public static string Log { get; } = "Log";
+#endif
+
     }
 }

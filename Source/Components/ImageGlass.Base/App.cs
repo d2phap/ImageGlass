@@ -142,7 +142,13 @@ namespace ImageGlass.Base
 #if DEBUG
             try
             {
-                var path = ConfigDir(Dir.Temporary, "iglog.log");
+                var tempDir = App.ConfigDir(Dir.Log);
+                if (!Directory.Exists(tempDir))
+                {
+                    Directory.CreateDirectory(tempDir);
+                }
+                var path = Path.Combine(tempDir, "iglog.log");
+
                 using (TextWriter tw = new StreamWriter(path, append: true))
                 {
                     tw.WriteLine(msg);
