@@ -58,6 +58,10 @@ namespace ImageGlass
         [STAThread]
         static void Main()
         {
+            // Issue #360: IG periodically searching for dismounted device
+            // This _must_ be executed first!
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+
             // Load user configs
             Configs.Load(); 
 
@@ -66,8 +70,6 @@ namespace ImageGlass
             ProfileOptimization.SetProfileRoot(App.ConfigDir());
             ProfileOptimization.StartProfile("igstartup.profile");
 
-            // Issue #360: IG periodically searching for dismounted device
-            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
             SetProcessDPIAware();
 
             Application.EnableVisualStyles();

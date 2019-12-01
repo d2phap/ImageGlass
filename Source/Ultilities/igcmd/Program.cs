@@ -53,10 +53,11 @@ namespace igcmd
         [STAThread]
         static int Main(string[] args)
         {
-            string topcmd = args[0].ToLower().Trim();
-
             // Issue #360: IG periodically searching for dismounted device
+            // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+
+            string topcmd = args[0].ToLower().Trim();
 
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
