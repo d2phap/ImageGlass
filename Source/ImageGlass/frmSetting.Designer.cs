@@ -191,6 +191,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.chkShowToast = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileTypeAssoc.SuspendLayout();
@@ -287,7 +288,7 @@ namespace ImageGlass
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(45, 709);
+            this.picBackgroundColor.Location = new System.Drawing.Point(45, 740);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -433,7 +434,7 @@ namespace ImageGlass
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
-            // tabFileAssociation
+            // tabFileTypeAssoc
             // 
             this.tabFileTypeAssoc.BackColor = System.Drawing.Color.White;
             this.tabFileTypeAssoc.Controls.Add(this.panel2);
@@ -442,7 +443,7 @@ namespace ImageGlass
             this.tabFileTypeAssoc.Controls.Add(this.lnkOpenFileAssoc);
             this.tabFileTypeAssoc.Location = new System.Drawing.Point(4, 37);
             this.tabFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
-            this.tabFileTypeAssoc.Name = "tabFileAssociation";
+            this.tabFileTypeAssoc.Name = "tabFileTypeAssoc";
             this.tabFileTypeAssoc.Size = new System.Drawing.Size(799, 583);
             this.tabFileTypeAssoc.TabIndex = 1;
             this.tabFileTypeAssoc.Text = "file association";
@@ -571,6 +572,7 @@ namespace ImageGlass
             // 
             this.tabGeneral.AutoScroll = true;
             this.tabGeneral.BackColor = System.Drawing.Color.White;
+            this.tabGeneral.Controls.Add(this.chkShowToast);
             this.tabGeneral.Controls.Add(this.chkCenterWindowFit);
             this.tabGeneral.Controls.Add(this.chkShowCheckerboardOnlyImage);
             this.tabGeneral.Controls.Add(this.chkShowNavButtons);
@@ -691,7 +693,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 717);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 748);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
             this.lnkResetBackgroundColor.TabIndex = 15;
@@ -732,7 +734,7 @@ namespace ImageGlass
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(272, 797);
+            this.panel1.Location = new System.Drawing.Point(272, 828);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -789,7 +791,7 @@ namespace ImageGlass
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 683);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 714);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -2354,6 +2356,18 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
+            // chkShowToast
+            // 
+            this.chkShowToast.AutoSize = true;
+            this.chkShowToast.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowToast.Location = new System.Drawing.Point(45, 646);
+            this.chkShowToast.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowToast.Name = "chkShowToast";
+            this.chkShowToast.Size = new System.Drawing.Size(224, 30);
+            this.chkShowToast.TabIndex = 48;
+            this.chkShowToast.Text = "[Show toast message]";
+            this.chkShowToast.UseVisualStyleBackColor = true;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2574,5 +2588,6 @@ namespace ImageGlass
         private System.Windows.Forms.ComboBox cmbImageBoosterCachedCount;
         private System.Windows.Forms.CheckBox chkIsCenterImage;
         private System.Windows.Forms.CheckBox chkCenterWindowFit;
+        private System.Windows.Forms.CheckBox chkShowToast;
     }
 }

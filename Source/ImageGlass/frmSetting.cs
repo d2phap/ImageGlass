@@ -260,6 +260,7 @@ namespace ImageGlass
             chkShowNavButtons.Text = lang[$"{Name}.{nameof(chkShowNavButtons)}"];
             chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.{nameof(chkShowCheckerboardOnlyImage)}"];
             chkCenterWindowFit.Text = lang[$"{Name}.{nameof(chkCenterWindowFit)}"];
+            chkShowToast.Text = lang[$"{Name}.{nameof(chkShowToast)}"];
 
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
@@ -547,6 +548,7 @@ namespace ImageGlass
             chkShowNavButtons.Checked = Configs.IsShowNavigationButtons;
             chkShowCheckerboardOnlyImage.Checked = Configs.IsShowCheckerboardOnlyImageRegion;
             chkCenterWindowFit.Checked = Configs.IsCenterWindowFit;
+            chkShowToast.Checked = Configs.IsShowToast;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
         }
 
@@ -559,7 +561,7 @@ namespace ImageGlass
 
         private void picBackgroundColor_Click(object sender, EventArgs e)
         {
-            ColorDialog c = new ColorDialog()
+            var c = new ColorDialog()
             {
                 AllowFullOpen = true
             };
@@ -2018,6 +2020,7 @@ namespace ImageGlass
             Configs.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
             Configs.IsShowNavigationButtons = chkShowNavButtons.Checked;
             Configs.IsCenterWindowFit = chkCenterWindowFit.Checked;
+            Configs.IsShowToast = chkShowToast.Checked;
 
 
             #region IsShowCheckerboardOnlyImageRegion: MainFormForceUpdateAction.OTHER_SETTINGS

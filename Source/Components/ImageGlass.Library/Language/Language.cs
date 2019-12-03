@@ -479,6 +479,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
             Items.Add("frmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
             Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
+            Items.Add("frmSetting.chkShowToast", "Show toast message"); //v7.5
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion

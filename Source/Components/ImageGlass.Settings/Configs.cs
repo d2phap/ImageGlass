@@ -269,6 +269,12 @@ namespace ImageGlass.Settings
         public static bool IsCenterWindowFit { get; set; } = true;
 
 
+        /// <summary>
+        /// Gets, sets value indicates that toast message will show
+        /// </summary>
+        public static bool IsShowToast { get; set; } = true;
+
+
         #endregion
 
 
@@ -586,6 +592,7 @@ namespace ImageGlass.Settings
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
             IsWindowFit = Get<bool>(nameof(IsWindowFit), IsWindowFit);
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
+            IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
 
             #endregion
 
@@ -806,6 +813,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
             Set(nameof(IsWindowFit), IsWindowFit);
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
+            Set(nameof(IsShowToast), IsShowToast);
 
             #endregion
 

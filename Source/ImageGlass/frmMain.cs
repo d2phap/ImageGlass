@@ -444,7 +444,7 @@ namespace ImageGlass
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
             //clear text when finishing
-            DisplayTextMessage("", 0);
+            ShowToastMsg("", 0);
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace ImageGlass
             //Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -722,14 +722,14 @@ namespace ImageGlass
                 //Reach end of list
                 if (tempIndex >= Local.ImageList.Length)
                 {
-                    DisplayTextMessage(Configs.Language.Items[$"{Name}._LastItemOfList"], 1000);
+                    ShowToastMsg(Configs.Language.Items[$"{Name}._LastItemOfList"], 1000);
                     return;
                 }
 
                 //Reach the first item of list
                 if (tempIndex < 0)
                 {
-                    DisplayTextMessage(Configs.Language.Items[$"{Name}._FirstItemOfList"], 1000);
+                    ShowToastMsg(Configs.Language.Items[$"{Name}._FirstItemOfList"], 1000);
                     return;
                 }
             }
@@ -1634,7 +1634,7 @@ namespace ImageGlass
 
             if (_isAppBusy)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{this.Name}._Loading"], 10000);
+                ShowToastMsg(Configs.Language.Items[$"{this.Name}._Loading"], 10000);
             }
 
             timer.Dispose();
@@ -1642,15 +1642,17 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Display a message on picture box
+        /// Display a toast message on picture box
         /// </summary>
         /// <param name="msg">Message</param>
         /// <param name="duration">Duration (milisecond)</param>
-        private void DisplayTextMessage(string msg, int duration)
+        private void ShowToastMsg(string msg, int duration)
         {
+            if (!Configs.IsShowToast) return;
+
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action<string, int>(DisplayTextMessage), msg, duration);
+                this.Invoke(new Action<string, int>(ShowToastMsg), msg, duration);
                 return;
             }
 
@@ -1663,33 +1665,33 @@ namespace ImageGlass
                 return;
             }
 
-            Timer tmsg = new Timer
+            var timToast = new Timer
             {
-                Enabled = false
+                Enabled = false,
+                Interval = duration, // display in xxx miliseconds
             };
-            tmsg.Tick += tmsg_Tick;
-            tmsg.Interval = duration; //display in xxx mili seconds
+            timToast.Tick += TimerToast_Tick;
 
             picMain.TextBackColor = Color.Black;
             picMain.Font = new Font(Font.FontFamily, 12);
             picMain.ForeColor = Color.White;
             picMain.Text = msg;
 
-            //Start timer
-            tmsg.Enabled = true;
-            tmsg.Start();
+            // Start timer
+            timToast.Enabled = true;
+            timToast.Start();
         }
 
 
         /// <summary>
         /// Timer Tick event: to display the message
         /// </summary>
-        private void tmsg_Tick(object sender, EventArgs e)
+        private void TimerToast_Tick(object sender, EventArgs e)
         {
-            Timer tmsg = (Timer)sender;
-            tmsg.Stop();
-            tmsg.Tick -= tmsg_Tick;
-            tmsg.Dispose();
+            var timToast = (Timer)sender;
+            timToast.Stop();
+            timToast.Tick -= TimerToast_Tick;
+            timToast.Dispose();
 
             picMain.TextBackColor = Color.Transparent;
             picMain.Font = Font;
@@ -1742,7 +1744,7 @@ namespace ImageGlass
             Clipboard.Clear();
             Clipboard.SetFileDropList(fileDropList);
 
-            DisplayTextMessage(
+            ShowToastMsg(
                 string.Format(Configs.Language.Items[$"{Name}._CopyFileText"],
                 Local.StringClipboard.Count), 1000);
         }
@@ -1802,7 +1804,7 @@ namespace ImageGlass
             Clipboard.Clear();
             Clipboard.SetDataObject(data, true);
 
-            DisplayTextMessage(
+            ShowToastMsg(
                 string.Format(Configs.Language.Items[$"{Name}._CutFileText"],
                 Local.StringClipboard.Count), 1000);
         }
@@ -2518,7 +2520,7 @@ namespace ImageGlass
             // Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
                 ImageSaveChange();
@@ -3526,7 +3528,7 @@ namespace ImageGlass
                     Local.ImageError = new Exception("File not found.");
                     Local.IsTempMemoryData = true;
 
-                    DisplayTextMessage(Configs.Language.Items[$"{Name}._ImageNotExist"], 1300);
+                    ShowToastMsg(Configs.Language.Items[$"{Name}._ImageNotExist"], 1300);
 
                     if (_queueListForDeleting.Count == 0)
                     {
@@ -4044,7 +4046,7 @@ namespace ImageGlass
         {
             if (!Configs.IsAllowMultiInstances)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}.mnuMainNewWindow._Error"], 2000);
 
                 return;
             }
@@ -4228,7 +4230,7 @@ namespace ImageGlass
                 //display successful msg
                 if (File.Exists(s.FileName))
                 {
-                    DisplayTextMessage(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], s.FileName), 2000);
+                    ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], s.FileName), 2000);
                 }
             }
 
@@ -4409,7 +4411,7 @@ namespace ImageGlass
 
                 FullScreenMode(enabled: true);
 
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._FullScreenMessage"]
+                ShowToastMsg(Configs.Language.Items[$"{Name}._FullScreenMessage"]
                     , 2000);
             }
             // exit full screen
@@ -4444,7 +4446,7 @@ namespace ImageGlass
 
                 Configs.IsPlaySlideShow = true;
 
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
             }
             //performing
             else
@@ -4460,13 +4462,13 @@ namespace ImageGlass
             {
                 timSlideShow.Enabled = false;
 
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else
             {
                 timSlideShow.Enabled = true;
 
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
             }
         }
 
@@ -4519,7 +4521,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4544,7 +4546,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4569,7 +4571,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4592,7 +4594,7 @@ namespace ImageGlass
 
             if (picMain.CanAnimate)
             {
-                DisplayTextMessage(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4801,7 +4803,7 @@ namespace ImageGlass
                     var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
                     await img.SaveImagePages(fb.SelectedPath);
 
-                    DisplayTextMessage(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
+                    ShowToastMsg(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
                 }
             }
         }
@@ -4861,7 +4863,7 @@ namespace ImageGlass
                 else
                 {
                     var msg = Configs.Language.Items[$"{Name}._SetBackground_Success"];
-                    DisplayTextMessage(msg, 2000);
+                    ShowToastMsg(msg, 2000);
                 }
             });
         }
@@ -4906,7 +4908,7 @@ namespace ImageGlass
             else
             {
                 var msg = Configs.Language.Items[$"{Name}._SetLockImage_Success"];
-                DisplayTextMessage(msg, 2000);
+                ShowToastMsg(msg, 2000);
             }
         }
 
@@ -4943,7 +4945,7 @@ namespace ImageGlass
             if (picMain.Image != null)
             {
                 Clipboard.SetImage(picMain.Image);
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }
 
@@ -4963,7 +4965,7 @@ namespace ImageGlass
             {
                 Local.StringClipboard = new List<string>();
                 Clipboard.Clear();
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._ClearClipboard"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._ClearClipboard"], 1000);
             }
         }
 
@@ -5111,7 +5113,7 @@ namespace ImageGlass
                 this._movableForm.Enable();
                 this._movableForm.Enable(frameLessMovers);
 
-                DisplayTextMessage(Configs.Language.Items[$"{Name}._Frameless"], 3000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._Frameless"], 3000);
             }
             else
             {
