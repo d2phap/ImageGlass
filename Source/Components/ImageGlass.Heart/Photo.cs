@@ -39,8 +39,8 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
-        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <param name="channel">MagickImage.Channel value</param>
+        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns>Bitmap</returns>
         public static Bitmap Load(
             string filename,
@@ -48,8 +48,8 @@ namespace ImageGlass.Heart
             string colorProfileName = "sRGB",
             bool isApplyColorProfileForAll = false,
             int quality = 100,
-            bool useEmbeddedThumbnails = false,
-            int channel = -1
+            int channel = -1,
+            bool useEmbeddedThumbnails = false
         )
         {
             Bitmap bitmap = null;
@@ -265,8 +265,8 @@ namespace ImageGlass.Heart
                     colorProfileName,
                     isApplyColorProfileForAll,
                     quality,
-                    useEmbeddedThumbnail,
-                    channel: channel
+                    channel: channel,
+                    useEmbeddedThumbnail
                 );
             }).ConfigureAwait(false);
 

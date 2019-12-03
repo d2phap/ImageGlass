@@ -215,6 +215,7 @@ namespace ImageGlass.Heart
                 }
             }
 
+
             // update new index of free list
             this.FreeList.Clear();
             this.FreeList.AddRange(list);

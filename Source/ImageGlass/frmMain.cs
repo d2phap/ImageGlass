@@ -788,9 +788,9 @@ namespace ImageGlass
 
                 if (!token.Token.IsCancellationRequested)
                 {
-                    //Show image
-                    picMain.Refresh();
-                    picMain.Image = im;
+                    // Need to clone to display different image page
+                    picMain.Image = (Bitmap)im.Clone();
+
 
                     im = null;
 
