@@ -138,6 +138,12 @@ namespace ImageGlass
         /// </summary>
         public static int CurrentPageIndex { get; set; } = 0;
 
+
+        /// <summary>
+        /// Saves the total pages number of the viewing image
+        /// </summary>
+        public static int CurrentPageCount { get; set; } = 0;
+
         #endregion
 
 

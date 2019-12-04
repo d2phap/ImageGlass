@@ -54,15 +54,15 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Gets, sets number of image frames
+        /// Gets, sets number of image pages
         /// </summary>
-        public int FrameCount { get; private set; } = 0;
+        public int PageCount { get; private set; } = 0;
 
 
         /// <summary>
-        /// Gets, sets the active frame index
+        /// Gets, sets the active page index
         /// </summary>
-        public int ActiveFrameIndex { get; private set; } = 0;
+        public int ActivePageIndex { get; private set; } = 0;
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace ImageGlass.Heart
         {
             this.IsDone = false;
             this.Error = null;
-            this.FrameCount = 0;
+            this.PageCount = 0;
 
             if (this.Image != null)
             {
@@ -124,9 +124,9 @@ namespace ImageGlass.Heart
                     useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
 
-                // Get frame count
-                FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-                this.FrameCount = this.Image.GetFrameCount(dim);
+                // Get page count
+                var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+                this.PageCount = this.Image.GetFrameCount(dim);
             }
             catch (Exception ex)
             {
@@ -159,18 +159,18 @@ namespace ImageGlass.Heart
         public void SetActivePage(int index)
         {
             // Check if page index is greater than upper limit
-            if (index >= this.FrameCount)
+            if (index >= this.PageCount)
                 index = 0;
 
             // Check if page index is less than lower limit
             if (index < 0)
-                index = this.FrameCount - 1;
+                index = this.PageCount - 1;
 
-            this.ActiveFrameIndex = index;
+            this.ActivePageIndex = index;
 
             // Set active page index
             FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-            this.Image.SelectActiveFrame(dim, this.ActiveFrameIndex);
+            this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
         }
 
 

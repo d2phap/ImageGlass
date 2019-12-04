@@ -665,7 +665,7 @@ namespace ImageGlass
                 picMain.StopAnimating();
             }
 
-            //Save previous image if it was modified
+            // Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating)
             {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
@@ -673,10 +673,10 @@ namespace ImageGlass
                 Application.DoEvents();
                 ImageSaveChange();
 
-                //remove the old image data from cache
+                // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
 
-                //update thumbnail
+                // update thumbnail
                 thumbnailBar.Items[Local.CurrentIndex].Update();
             }
             else
@@ -749,7 +749,7 @@ namespace ImageGlass
             #endregion
 
 
-            //Select thumbnail item
+            // Select thumbnail item
             SelectCurrentThumbnail();
 
 
@@ -757,7 +757,7 @@ namespace ImageGlass
             UpdateStatusBar();
 
 
-            //The image data will load
+            // The image data will load
             Bitmap im = null;
 
             try
@@ -774,15 +774,17 @@ namespace ImageGlass
                 var bmpImg = await Local.ImageList.GetImgAsync(
                     Local.CurrentIndex,
                     isSkipCache: isSkipCache,
-                    frameIndex: pageIndex
+                    pageIndex: pageIndex
                    );
                 im = bmpImg.Image;
 
                 // Update current frame index
-                Local.CurrentPageIndex = bmpImg.ActiveFrameIndex;
+                Local.CurrentPageIndex = bmpImg.ActivePageIndex;
+                Local.CurrentPageCount = bmpImg.PageCount;
 
 
-                SetAppBusy(false); // KBR Issue #485: need to clear busy state ASAP so 'Loading...' message doesn't appear after image already loaded
+                // clear busy state
+                SetAppBusy(false);
 
                 Local.ImageError = bmpImg.Error;
 
@@ -809,29 +811,30 @@ namespace ImageGlass
             catch (Exception ex)
             {
                 Local.ImageError = ex;
+            }
+
+
+            // image error
+            if (Local.ImageError != null)
+            {
                 SetAppBusy(false); // make sure busy state is off if exception during image load
 
                 picMain.Image = null;
                 Local.ImageModifiedPath = "";
+                Local.CurrentPageIndex = 0;
+                Local.CurrentPageCount = 0;
 
                 if (!File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex)))
                 {
                     Local.ImageList.Unload(Local.CurrentIndex);
                 }
-            }
 
-
-            if (Local.ImageError != null)
-            {
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
-
-                picMain.Image = null;
-                Local.ImageModifiedPath = "";
             }
 
             _isDraggingImage = false;
 
-            //Collect system garbage
+            // Collect system garbage
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -914,10 +917,10 @@ namespace ImageGlass
 
                 filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
-                // when there is a problem with a file, don't try to show some info
+                // when there is a problem with a file, don't try to show more info
                 bool isShowMoreData = File.Exists(filename);
 
-                indexTotal = $"{(Local.CurrentIndex + 1)}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Text"]}";
+                indexTotal = $"{(Local.CurrentIndex + 1)}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
 
                 if (isShowMoreData)
                 {
@@ -939,13 +942,13 @@ namespace ImageGlass
 
                     var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
                     var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
-
                     var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
 
                     filename = Helper.ShortenPath(filename, maxLength);
                 }
 
 
+                // image error
                 if (Local.ImageError != null)
                 {
                     if (!isShowMoreData) // size and date not available
@@ -957,6 +960,12 @@ namespace ImageGlass
                 {
                     zoom = $"{picMain.Zoom.ToString("F2")}%";
 
+                    // pages information
+                    if (Local.CurrentPageCount > 1)
+                    {
+                        pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount} {Configs.Language.Items[$"{Name}._Pages"]}";
+                    }
+
                     if (picMain.Image != null)
                     {
                         try
@@ -966,11 +975,11 @@ namespace ImageGlass
                         catch { }
 
 
-                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}  - {appName}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {pageInfo}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                     else
                     {
-                        this.Text = $"{filename}  |  {indexTotal}  |  {zoom}  |  {fileSize}  |  {fileDate}  - {appName}";
+                        this.Text = $"{filename}  |  {indexTotal}  |  {pageInfo}    {zoom}  |  {fileSize}  |  {fileDate}  - {appName}";
                     }
                 }
             }
@@ -3967,10 +3976,10 @@ namespace ImageGlass
                 {
                     var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
 
-                    if (imgData.FrameCount > 1)
+                    if (imgData.PageCount > 1)
                     {
                         var mnu1 = Library.Menu.Clone(mnuMainExtractPages);
-                        mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.FrameCount);
+                        mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.PageCount);
                         mnu1.Enabled = true;
 
                         var mnu2 = Library.Menu.Clone(mnuMainStartStopAnimating);
@@ -4396,7 +4405,7 @@ namespace ImageGlass
         {
             var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
 
-            Local.CurrentPageIndex = img.FrameCount - 1;
+            Local.CurrentPageIndex = img.PageCount - 1;
             NextPic(0, pageIndex: Local.CurrentPageIndex);
         }
 
@@ -5314,7 +5323,7 @@ namespace ImageGlass
                 if (Local.CurrentIndex >= 0)
                 {
                     var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
-                    frameCount = imgData?.FrameCount ?? 0;
+                    frameCount = imgData?.PageCount ?? 0;
                 }
 
                 if (frameCount > 1)

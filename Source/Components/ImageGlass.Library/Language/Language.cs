@@ -376,7 +376,8 @@ namespace ImageGlass.Library
             Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); // v3.0
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
-            Items.Add("frmMain._Text", "file(s)");
+            Items.Add("frmMain._Files", "file(s)"); // v7.5
+            Items.Add("frmMain._Pages", "pages"); // v7.5
             Items.Add("frmMain._ImageData", "Image data"); // v5.0
             Items.Add("frmMain._RenameDialogText", "Rename"); // v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");

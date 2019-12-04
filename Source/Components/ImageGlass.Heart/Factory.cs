@@ -292,9 +292,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
-        /// <param name="frameIndex">The index of image frame to display (if it's multi-frame)</param>
+        /// <param name="pageIndex">The index of image page to display (if it's multi-page)</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int frameIndex = 0)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = 0)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -332,7 +332,7 @@ namespace ImageGlass.Heart
             {
                 if (ImgList[index].Error == null)
                 {
-                    ImgList[index].SetActivePage(frameIndex);
+                    ImgList[index].SetActivePage(pageIndex);
                 }
 
                 return ImgList[index];
@@ -377,6 +377,7 @@ namespace ImageGlass.Heart
                 this.ImgList[index].Filename = filename;
             }
         }
+
 
 
         /// <summary>
