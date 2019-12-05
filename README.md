@@ -1,9 +1,11 @@
 ImageGlass - A lightweight, versatile image viewer.
 ===
 
-[![Backers on Open Collective](https://opencollective.com/imageglass/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/imageglass/sponsors/badge.svg)](#sponsors) [![Website](https://img.shields.io/badge/www-imageglass.org-0099BC.svg?maxAge=3600)](http://www.imageglass.org)
+
+[![Website](https://img.shields.io/badge/www-imageglass.org-0099BC.svg?maxAge=3600)](https://imageglass.org)
 [![GPL Licence](https://img.shields.io/badge/license-GPLv3-green.svg?maxAge=3600)](https://github.com/d2phap/ImageGlass/blob/master/LICENSE)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/imageglass/localized.svg)](https://crowdin.com/project/imageglass)
+
 
 
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment. 
@@ -11,18 +13,17 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 ## Download & Screen shots
+[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.0.7.26%20downloads&style=for-the-badge)](https://imageglass.org/download)
+
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
 <img src="https://imageglass.org/upload/photo/release/7.0_1.jpg" alt="ImageGlass 7.0.7.26" width="640">
 </a><br/>
 
-<a href="https://www.imageglass.org/download" target="_blank" title="Download the latest version">
-<img src="https://img.shields.io/badge/Download-ImageGlass%207.0.7.26-009be1.svg?maxAge=3600" height="30" alt="ImageGlass 7.0.7.26">
-</a>
-
 
 ## Development
-![Visual Studio 2017](https://img.shields.io/badge/IDE-Visual%20Studio%202017-964ad4.svg?maxAge=3600)
+![Visual Studio 2019](https://img.shields.io/badge/IDE-Visual%20Studio%202019-964ad4.svg?maxAge=3600)
 ![.NET Framework 4.7.1](https://img.shields.io/badge/.NET-Framework%204.7.1-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
@@ -32,21 +33,22 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 
-## Documentation
+## Documentations
 
-[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/docs/features)
-[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/documentation/supported-formats)
-[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](https://www.imageglass.org/docs/ui-shortcuts-reference)
+[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/features)
+[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/supported-formats)
+[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/ui-shortcuts-reference)
+[![Command line utilities](https://img.shields.io/badge/docs-Command%20lines%20Utils-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/command-line-utilities)
 
 
 For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
 
-For more information about ImageGlass, go to [Documentation](https://www.imageglass.org/docs)
+For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
 
 
 
-## Donate
+## Donation
 ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and finance help!
