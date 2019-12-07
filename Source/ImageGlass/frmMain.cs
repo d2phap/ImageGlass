@@ -71,7 +71,7 @@ namespace ImageGlass
         #region Local variables
 
         // window size value before resizing
-        private Size _windowSize = new Size(1000, 800);
+        private Size _windowSize = new Size(1200, 800);
 
         // determine if the image is zoomed
         private bool _isManuallyZoomed = false;
@@ -443,7 +443,7 @@ namespace ImageGlass
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e)
         {
-            //clear text when finishing
+            // clear text when finishing
             ShowToastMsg("", 0);
         }
 
@@ -1400,6 +1400,55 @@ namespace ImageGlass
         #region Private functions
 
         /// <summary>
+        /// Handle the event when Dpi changed
+        /// </summary>
+        private void OnDpiChanged()
+        {
+            // Change grid cell size
+            picMain.GridCellSize = DPIScaling.TransformNumber(Constants.VIEWER_GRID_SIZE);
+
+
+            #region change size of toolbar
+            // Update size of toolbar
+            DPIScaling.TransformToolbar(ref toolMain, Constants.TOOLBAR_HEIGHT);
+
+            // Update toolbar icon according to the new size
+            LoadToolbarIcons(forceReloadIcon: true);
+
+            #endregion
+
+
+            #region change size of menu items
+            int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
+
+            mnuMainOpenFile.Image =
+                mnuMainZoomIn.Image =
+                mnuMainViewNext.Image =
+                mnuMainSlideShowStart.Image =
+                mnuMainRotateLeft.Image =
+
+                mnuMainClearClipboard.Image =
+                mnuMainToolbar.Image =
+                mnuMainColorPicker.Image =
+                mnuMainPageNav.Image =
+                mnuMainAbout.Image =
+                mnuMainSettings.Image =
+
+                mnuMainExtractPages.Image =
+
+                new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            if (mnuMainChannels.DropDownItems.Count > 0)
+            {
+                mnuMainChannels.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            }
+
+            #endregion
+
+        }
+
+
+        /// <summary>
         /// Update edit app info and icon for Edit Image menu
         /// </summary>
         private void UpdateEditAppInfoForMenu()
@@ -1602,12 +1651,12 @@ namespace ImageGlass
 
             // Extract the various bits of the image path
             var filepath = Local.ImageList.GetFileName(Local.CurrentIndex);
-            string currentFolder = Path.GetDirectoryName(filepath);
-            string oldName = Path.GetFileName(filepath);
-            string ext = Path.GetExtension(filepath);
-            string newName = Path.GetFileNameWithoutExtension(filepath);
+            var currentFolder = Path.GetDirectoryName(filepath);
+            var oldName = Path.GetFileName(filepath);
+            var ext = Path.GetExtension(filepath);
+            var newName = Path.GetFileNameWithoutExtension(filepath);
 
-            //Show input box
+            // Show input box
             string str = null;
 
             if (InputBox.ShowDialog(Configs.Language.Items[$"{Name}._RenameDialogText"], Configs.Language.Items[$"{Name}._RenameDialog"], newName, false, this.TopMost, true) == DialogResult.OK)
@@ -1622,7 +1671,7 @@ namespace ImageGlass
 
             newName = str + ext;
 
-            //duplicated name
+            // duplicated name
             if (oldName == newName)
             {
                 return;
@@ -1631,7 +1680,7 @@ namespace ImageGlass
             try
             {
                 string newFilePath = Path.Combine(currentFolder, newName);
-                //Rename file
+                // Rename file
                 ImageInfo.RenameFile(filepath, newFilePath);
             }
             catch (Exception ex)
@@ -1726,7 +1775,7 @@ namespace ImageGlass
         /// </summary>
         private void CopyMultiFiles()
         {
-            //get filename
+            // get filename
             string filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             try
@@ -1752,10 +1801,10 @@ namespace ImageGlass
             }
 
 
-            //exit if duplicated filename
+            // exit if duplicated filename
             if (Local.StringClipboard.IndexOf(filename) == -1)
             {
-                //add filename to clipboard
+                // add filename to clipboard
                 Local.StringClipboard.Add(filename);
             }
 
@@ -1776,7 +1825,7 @@ namespace ImageGlass
         /// </summary>
         private void CutMultiFiles()
         {
-            //get filename
+            // get filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             try
@@ -1789,7 +1838,7 @@ namespace ImageGlass
             catch { return; }
 
 
-            //update the list
+            // update the list
             var fileList = new List<string>();
             fileList.AddRange(Local.StringClipboard);
 
@@ -1802,10 +1851,10 @@ namespace ImageGlass
             }
 
 
-            //exit if duplicated filename
+            // exit if duplicated filename
             if (Local.StringClipboard.IndexOf(filename) == -1)
             {
-                //add filename to clipboard
+                // add filename to clipboard
                 Local.StringClipboard.Add(filename);
             }
 
@@ -1861,55 +1910,6 @@ namespace ImageGlass
             }
 
             Local.ImageModifiedPath = "";
-        }
-
-
-        /// <summary>
-        /// Handle the event when Dpi changed
-        /// </summary>
-        private void OnDpiChanged()
-        {
-            //Change grid cell size
-            picMain.GridCellSize = DPIScaling.TransformNumber(Constants.VIEWER_GRID_SIZE);
-
-
-            #region change size of toolbar
-            // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolMain, Constants.TOOLBAR_HEIGHT);
-
-            // Update toolbar icon according to the new size
-            LoadToolbarIcons(forceReloadIcon: true);
-
-            #endregion
-
-
-            #region change size of menu items
-            int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
-
-            mnuMainOpenFile.Image =
-                mnuMainZoomIn.Image =
-                mnuMainViewNext.Image =
-                mnuMainSlideShowStart.Image =
-                mnuMainRotateLeft.Image =
-
-                mnuMainClearClipboard.Image =
-                mnuMainToolbar.Image =
-                mnuMainColorPicker.Image =
-                mnuMainPageNav.Image =
-                mnuMainAbout.Image =
-                mnuMainSettings.Image =
-
-                mnuMainExtractPages.Image =
-
-                new Bitmap(newMenuIconHeight, newMenuIconHeight);
-
-            if (mnuMainChannels.DropDownItems.Count > 0)
-            {
-                mnuMainChannels.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-            }
-
-            #endregion
-
         }
 
 
@@ -2215,6 +2215,94 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Show or hide Color picker tool
+        /// </summary>
+        /// <param name="show"></param>
+        private void ShowColorPickerTool(bool show = true)
+        {
+            Local.IsColorPickerToolOpening =
+                mnuMainColorPicker.Checked = show;
+
+            // open Color Picker tool
+            if (show)
+            {
+                if (Local.FColorPicker.IsDisposed)
+                {
+                    Local.FColorPicker = new frmColorPicker();
+                    Local.FColorPicker.SetImageBox(picMain);
+                }
+
+                Local.FColorPicker.SetToolFormManager(_toolManager);
+                Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
+
+
+                if (!Local.FColorPicker.Visible)
+                {
+                    Local.FColorPicker.Show(this);
+                }
+
+                this.Activate();
+            }
+            else
+            {
+                if (Local.FColorPicker != null)
+                {
+                    // Close Color picker tool
+                    Local.FColorPicker.Close();
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Show or hide Page naviagtion tool
+        /// </summary>
+        /// <param name="show"></param>
+        private void ShowPageNavTool(bool show = true)
+        {
+            Local.IsPageNavToolOpenning =
+                mnuMainPageNav.Checked = show;
+
+            if (!Configs.IsShowPageNavAuto)
+            {
+                Configs.IsShowPageNavOnStartup = show;
+            }
+
+            if (show)
+            {
+                // Open the page navigation tool
+                if (Local.FPageNav == null || Local.FPageNav.IsDisposed)
+                {
+                    Local.FPageNav = new frmPageNav();
+                    Local.FPageNav.SetToolFormManager(_toolManager);
+                    Local.FPageNav.Owner = this;
+                }
+
+                // register page event handler
+                Local.FPageNav.NavEventHandler = PageNavigationEvent;
+                Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
+
+
+                if (!Local.FPageNav.Visible)
+                {
+                    Local.FPageNav.Show(this);
+                }
+
+                this.Activate();
+            }
+            else
+            {
+                if (Local.FPageNav != null)
+                {
+                    // Close the page navigation tool
+                    Local.FPageNav.Close();
+                    Local.FPageNav.NavEventHandler = null;
+                }
+            }
+        }
+
 
         #endregion
 
@@ -2454,7 +2542,7 @@ namespace ImageGlass
                 // Load Color picker configs
                 if (Configs.IsShowColorPickerOnStartup)
                 {
-                    mnuMainColorPicker.PerformClick();
+                    ShowColorPickerTool();
                 }
 
 
@@ -3303,8 +3391,11 @@ namespace ImageGlass
 
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e)
         {
-            Local.CurrentIndex = e.Item.Index;
-            NextPic(0);
+            if (e.Buttons == MouseButtons.Left)
+            {
+                Local.CurrentIndex = e.Item.Index;
+                NextPic(0);
+            }
         }
 
         private void timSlideShow_Tick(object sender, EventArgs e)
@@ -5029,28 +5120,24 @@ namespace ImageGlass
                 {
                     hScrollHeight = SystemInformation.HorizontalScrollBarHeight;
                 }
+
                 var gap = (uint)((hScrollHeight * scaleFactor) + (25 / scaleFactor * 1.05));
+                var thumbItem = new ThumbnailItemInfo(Configs.ThumbnailDimension, Configs.IsThumbnailHorizontal);
+                var minSize = thumbItem.GetTotalDimension() + gap;
 
-                // show
-                var tb = new ThumbnailItemInfo(Configs.ThumbnailDimension, Configs.IsThumbnailHorizontal);
-                var minSize = tb.GetTotalDimension() + gap;
-                //sp1.Panel2MinSize = tb.GetTotalDimension() + gap;
-
-
-                int splitterDistance = Math.Abs(sp1.Height - (int)minSize);
 
                 if (Configs.IsThumbnailHorizontal)
                 {
                     // BOTTOM
                     sp1.SplitterWidth = 1;
                     sp1.Orientation = Orientation.Horizontal;
-                    sp1.SplitterDistance = splitterDistance;
+                    sp1.SplitterDistance = Math.Abs(sp1.Height - (int)minSize);
                     thumbnailBar.View = ImageListView.View.Gallery;
                 }
                 else
                 {
                     // RIGHT
-                    sp1.IsSplitterFixed = false; //Allow user to resize
+                    sp1.IsSplitterFixed = false; // Allow user to resize
                     sp1.SplitterWidth = (int)Math.Ceiling(3 * scaleFactor);
                     sp1.Orientation = Orientation.Vertical;
 
@@ -5060,7 +5147,7 @@ namespace ImageGlass
                         Configs.ThumbnailBarWidth = (uint)Math.Min(128, sp1.Width);
                     }
 
-                    sp1.SplitterDistance = sp1.Width - (int)Configs.ThumbnailBarWidth;
+                    sp1.SplitterDistance = sp1.Width - (int)minSize;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }
@@ -5166,78 +5253,9 @@ namespace ImageGlass
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e)
         {
-            Configs.IsShowColorPickerOnStartup =
-                Local.IsColorPickerToolOpening =
-                mnuMainColorPicker.Checked;
+            Configs.IsShowColorPickerOnStartup = mnuMainColorPicker.Checked;
 
-            // open Color Picker tool
-            if (mnuMainColorPicker.Checked)
-            {
-                if (Local.FColorPicker.IsDisposed)
-                {
-                    Local.FColorPicker = new frmColorPicker();
-                }
-
-                Local.FColorPicker.SetToolFormManager(_toolManager);
-                Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
-                Local.FColorPicker.SetImageBox(picMain);
-                Local.FColorPicker.Show(this);
-
-                this.Activate();
-            }
-            // Close Color picker tool
-            else
-            {
-                if (Local.FColorPicker != null)
-                {
-                    Local.FColorPicker.Close();
-                }
-            }
-        }
-
-
-        
-        private void ShowPageNavTool(bool show = true)
-        {
-            Local.IsPageNavToolOpenning = 
-                mnuMainPageNav.Checked = show;
-
-            if (!Configs.IsShowPageNavAuto)
-            {
-                Configs.IsShowPageNavOnStartup = show;
-            }
-
-            if (show)
-            {
-                // Open the page navigation tool
-                if (Local.FPageNav == null || Local.FPageNav.IsDisposed)
-                {
-                    Local.FPageNav = new frmPageNav();
-                    Local.FPageNav.SetToolFormManager(_toolManager);
-                    Local.FPageNav.Owner = this;
-                }
-
-                // register page event handler
-                Local.FPageNav.NavEventHandler = PageNavigationEvent;
-                Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
-                
-
-                if (!Local.FPageNav.Visible)
-                {
-                    Local.FPageNav.Show(this);
-                }
-                
-                this.Activate();
-            }
-            else
-            {
-                if (Local.FPageNav != null)
-                {
-                    // Close the page navigation tool
-                    Local.FPageNav.Close();
-                    Local.FPageNav.NavEventHandler = null;
-                }
-            }
+            ShowColorPickerTool(mnuMainColorPicker.Checked);
         }
 
 

@@ -101,7 +101,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;ERRORMODE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
