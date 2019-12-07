@@ -348,7 +348,7 @@ namespace ImageGlass.UI.ToolForms
             Activated += this.ToolForm_Activated;
             Deactivate += this.ToolForm_Deactivate;
 
-            this.Opacity = 0.8;
+            this.Opacity = 0.85;
         }
 
         private void ToolForm_Activated(object sender, EventArgs e)
@@ -358,7 +358,7 @@ namespace ImageGlass.UI.ToolForms
 
         private void ToolForm_Deactivate(object sender, EventArgs e)
         {
-            this.Opacity = 0.8;
+            this.Opacity = 0.85;
         }
     }
 }

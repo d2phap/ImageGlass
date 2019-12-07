@@ -249,6 +249,9 @@ namespace ImageGlass
         public void UpdateUI()
         {
             SetColors(Configs.Theme);
+
+            btnSnapTo.FlatAppearance.MouseOverBackColor = Theme.LightenColor(Configs.Theme.BackgroundColor, 0.1f);
+            btnSnapTo.FlatAppearance.MouseDownBackColor = Theme.DarkenColor(Configs.Theme.BackgroundColor, 0.1f);
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

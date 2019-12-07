@@ -71,8 +71,8 @@
             this.btnSnapTo.AutoSize = true;
             this.btnSnapTo.BackColor = System.Drawing.Color.Teal;
             this.btnSnapTo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.btnSnapTo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(62)))), ((int)(((byte)(74)))));
-            this.btnSnapTo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnSnapTo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSnapTo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSnapTo.ForeColor = System.Drawing.Color.White;
             this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;

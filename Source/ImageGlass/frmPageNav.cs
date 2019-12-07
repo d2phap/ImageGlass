@@ -124,6 +124,8 @@ namespace ImageGlass
             btnFirstPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainFirstPage"];
             btnLastPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainLastPage"];
 
+            btnSnapTo.FlatAppearance.MouseOverBackColor = Theme.LightenColor(Configs.Theme.BackgroundColor, 0.1f);
+            btnSnapTo.FlatAppearance.MouseDownBackColor = Theme.DarkenColor(Configs.Theme.BackgroundColor, 0.1f);
         }
 
 
