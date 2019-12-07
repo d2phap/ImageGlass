@@ -60,6 +60,7 @@ namespace ImageGlass
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkShowToast = new System.Windows.Forms.CheckBox();
             this.chkCenterWindowFit = new System.Windows.Forms.CheckBox();
             this.chkShowCheckerboardOnlyImage = new System.Windows.Forms.CheckBox();
             this.chkShowNavButtons = new System.Windows.Forms.CheckBox();
@@ -147,9 +148,9 @@ namespace ImageGlass
             this.cmbToolbarPosition = new System.Windows.Forms.ComboBox();
             this.lblToolbarPosition = new System.Windows.Forms.Label();
             this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
-            this.tabColorPicker = new System.Windows.Forms.TabPage();
+            this.tabTools = new System.Windows.Forms.TabPage();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
-            this.lblColorCodeFormat = new System.Windows.Forms.Label();
+            this.lblColorPicker = new System.Windows.Forms.Label();
             this.chkColorUseHEXA = new System.Windows.Forms.CheckBox();
             this.chkColorUseRGBA = new System.Windows.Forms.CheckBox();
             this.tabKeyboard = new System.Windows.Forms.TabPage();
@@ -182,7 +183,7 @@ namespace ImageGlass
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblImage = new System.Windows.Forms.Label();
             this.lblToolbar = new System.Windows.Forms.Label();
-            this.lblColorPicker = new System.Windows.Forms.Label();
+            this.lblTools = new System.Windows.Forms.Label();
             this.lblEdit = new System.Windows.Forms.Label();
             this.lblKeyboard = new System.Windows.Forms.Label();
             this.lblTheme = new System.Windows.Forms.Label();
@@ -191,7 +192,8 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkShowToast = new System.Windows.Forms.CheckBox();
+            this.lblPageNav = new System.Windows.Forms.Label();
+            this.chkShowPageNavAuto = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileTypeAssoc.SuspendLayout();
@@ -203,7 +205,7 @@ namespace ImageGlass
             this.tabEdit.SuspendLayout();
             this.tabToolbar.SuspendLayout();
             this.panel5.SuspendLayout();
-            this.tabColorPicker.SuspendLayout();
+            this.tabTools.SuspendLayout();
             this.tabKeyboard.SuspendLayout();
             this.tabTheme.SuspendLayout();
             this.panelThemeActions.SuspendLayout();
@@ -600,6 +602,18 @@ namespace ImageGlass
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             // 
+            // chkShowToast
+            // 
+            this.chkShowToast.AutoSize = true;
+            this.chkShowToast.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowToast.Location = new System.Drawing.Point(45, 646);
+            this.chkShowToast.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowToast.Name = "chkShowToast";
+            this.chkShowToast.Size = new System.Drawing.Size(224, 30);
+            this.chkShowToast.TabIndex = 48;
+            this.chkShowToast.Text = "[Show toast message]";
+            this.chkShowToast.UseVisualStyleBackColor = true;
+            // 
             // chkCenterWindowFit
             // 
             this.chkCenterWindowFit.AutoSize = true;
@@ -830,7 +844,7 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabEdit);
             this.tab1.Controls.Add(this.tabFileTypeAssoc);
             this.tab1.Controls.Add(this.tabToolbar);
-            this.tab1.Controls.Add(this.tabColorPicker);
+            this.tab1.Controls.Add(this.tabTools);
             this.tab1.Controls.Add(this.tabKeyboard);
             this.tab1.Controls.Add(this.tabTheme);
             this.tab1.Controls.Add(this.tabLanguage);
@@ -1719,20 +1733,22 @@ namespace ImageGlass
             this.chkHorzCenterToolbarBtns.Text = "[Center toolbar buttons horizontally in window]";
             this.chkHorzCenterToolbarBtns.UseVisualStyleBackColor = true;
             // 
-            // tabColorPicker
+            // tabTools
             // 
-            this.tabColorPicker.AutoScroll = true;
-            this.tabColorPicker.BackColor = System.Drawing.Color.White;
-            this.tabColorPicker.Controls.Add(this.chkColorUseHSLA);
-            this.tabColorPicker.Controls.Add(this.lblColorCodeFormat);
-            this.tabColorPicker.Controls.Add(this.chkColorUseHEXA);
-            this.tabColorPicker.Controls.Add(this.chkColorUseRGBA);
-            this.tabColorPicker.Location = new System.Drawing.Point(4, 37);
-            this.tabColorPicker.Margin = new System.Windows.Forms.Padding(0);
-            this.tabColorPicker.Name = "tabColorPicker";
-            this.tabColorPicker.Size = new System.Drawing.Size(799, 583);
-            this.tabColorPicker.TabIndex = 5;
-            this.tabColorPicker.Text = "color picker";
+            this.tabTools.AutoScroll = true;
+            this.tabTools.BackColor = System.Drawing.Color.White;
+            this.tabTools.Controls.Add(this.lblPageNav);
+            this.tabTools.Controls.Add(this.chkShowPageNavAuto);
+            this.tabTools.Controls.Add(this.chkColorUseHSLA);
+            this.tabTools.Controls.Add(this.lblColorPicker);
+            this.tabTools.Controls.Add(this.chkColorUseHEXA);
+            this.tabTools.Controls.Add(this.chkColorUseRGBA);
+            this.tabTools.Location = new System.Drawing.Point(4, 37);
+            this.tabTools.Margin = new System.Windows.Forms.Padding(0);
+            this.tabTools.Name = "tabTools";
+            this.tabTools.Size = new System.Drawing.Size(799, 583);
+            this.tabTools.TabIndex = 5;
+            this.tabTools.Text = "tools";
             // 
             // chkColorUseHSLA
             // 
@@ -1746,15 +1762,15 @@ namespace ImageGlass
             this.chkColorUseHSLA.Text = "Use HSLA format";
             this.chkColorUseHSLA.UseVisualStyleBackColor = true;
             // 
-            // lblColorCodeFormat
+            // lblColorPicker
             // 
-            this.lblColorCodeFormat.AutoSize = true;
-            this.lblColorCodeFormat.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorCodeFormat.Location = new System.Drawing.Point(22, 20);
-            this.lblColorCodeFormat.Name = "lblColorCodeFormat";
-            this.lblColorCodeFormat.Size = new System.Drawing.Size(166, 25);
-            this.lblColorCodeFormat.TabIndex = 47;
-            this.lblColorCodeFormat.Text = "Color code format";
+            this.lblColorPicker.AutoSize = true;
+            this.lblColorPicker.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColorPicker.Location = new System.Drawing.Point(22, 20);
+            this.lblColorPicker.Name = "lblColorPicker";
+            this.lblColorPicker.Size = new System.Drawing.Size(128, 25);
+            this.lblColorPicker.TabIndex = 47;
+            this.lblColorPicker.Text = "[Color picker]";
             // 
             // chkColorUseHEXA
             // 
@@ -2140,7 +2156,7 @@ namespace ImageGlass
             this.tableLayoutPanel1.Controls.Add(this.lblGeneral, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblImage, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblToolbar, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.lblColorPicker, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.lblTools, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblEdit, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblFileTypeAssoc, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.lblKeyboard, 0, 7);
@@ -2204,25 +2220,25 @@ namespace ImageGlass
             this.lblToolbar.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblToolbar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
-            // lblColorPicker
+            // lblTools
             // 
-            this.lblColorPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblTools.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblColorPicker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.lblColorPicker.Location = new System.Drawing.Point(0, 250);
-            this.lblColorPicker.Margin = new System.Windows.Forms.Padding(0);
-            this.lblColorPicker.Name = "lblColorPicker";
-            this.lblColorPicker.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
-            this.lblColorPicker.Size = new System.Drawing.Size(254, 50);
-            this.lblColorPicker.TabIndex = 6;
-            this.lblColorPicker.Tag = "0";
-            this.lblColorPicker.Text = "Color Picker";
-            this.lblColorPicker.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblColorPicker.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblColorPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblColorPicker.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblColorPicker.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblColorPicker.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            this.lblTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.lblTools.Location = new System.Drawing.Point(0, 250);
+            this.lblTools.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTools.Name = "lblTools";
+            this.lblTools.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
+            this.lblTools.Size = new System.Drawing.Size(254, 50);
+            this.lblTools.TabIndex = 6;
+            this.lblTools.Tag = "0";
+            this.lblTools.Text = "[Tools]";
+            this.lblTools.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTools.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblTools.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblTools.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblTools.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblTools.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblEdit
             // 
@@ -2356,17 +2372,27 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
-            // chkShowToast
+            // lblPageNav
             // 
-            this.chkShowToast.AutoSize = true;
-            this.chkShowToast.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowToast.Location = new System.Drawing.Point(45, 646);
-            this.chkShowToast.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowToast.Name = "chkShowToast";
-            this.chkShowToast.Size = new System.Drawing.Size(224, 30);
-            this.chkShowToast.TabIndex = 48;
-            this.chkShowToast.Text = "[Show toast message]";
-            this.chkShowToast.UseVisualStyleBackColor = true;
+            this.lblPageNav.AutoSize = true;
+            this.lblPageNav.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPageNav.Location = new System.Drawing.Point(22, 200);
+            this.lblPageNav.Name = "lblPageNav";
+            this.lblPageNav.Size = new System.Drawing.Size(164, 25);
+            this.lblPageNav.TabIndex = 58;
+            this.lblPageNav.Text = "[Page navigation]";
+            // 
+            // chkShowPageNavAuto
+            // 
+            this.chkShowPageNavAuto.AutoSize = true;
+            this.chkShowPageNavAuto.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowPageNavAuto.Location = new System.Drawing.Point(45, 232);
+            this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
+            this.chkShowPageNavAuto.Size = new System.Drawing.Size(490, 30);
+            this.chkShowPageNavAuto.TabIndex = 59;
+            this.chkShowPageNavAuto.Text = "[Auto-show Page navigation tool for multi-page image]";
+            this.chkShowPageNavAuto.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
@@ -2406,8 +2432,8 @@ namespace ImageGlass
             this.tabToolbar.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            this.tabColorPicker.ResumeLayout(false);
-            this.tabColorPicker.PerformLayout();
+            this.tabTools.ResumeLayout(false);
+            this.tabTools.PerformLayout();
             this.tabKeyboard.ResumeLayout(false);
             this.tabKeyboard.PerformLayout();
             this.tabTheme.ResumeLayout(false);
@@ -2519,9 +2545,9 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblUsedBtns;
         private System.Windows.Forms.Label lblAvailBtns;
         private System.Windows.Forms.Label lblToolbar;
+        private System.Windows.Forms.Label lblTools;
+        private System.Windows.Forms.TabPage tabTools;
         private System.Windows.Forms.Label lblColorPicker;
-        private System.Windows.Forms.TabPage tabColorPicker;
-        private System.Windows.Forms.Label lblColorCodeFormat;
         private System.Windows.Forms.CheckBox chkColorUseHEXA;
         private System.Windows.Forms.CheckBox chkColorUseRGBA;
         private System.Windows.Forms.CheckBox chkColorUseHSLA;
@@ -2589,5 +2615,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkIsCenterImage;
         private System.Windows.Forms.CheckBox chkCenterWindowFit;
         private System.Windows.Forms.CheckBox chkShowToast;
+        private System.Windows.Forms.Label lblPageNav;
+        private System.Windows.Forms.CheckBox chkShowPageNavAuto;
     }
 }

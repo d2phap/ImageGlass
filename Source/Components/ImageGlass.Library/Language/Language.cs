@@ -441,7 +441,6 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblEdit", "Edit"); //v6.0
             Items.Add("frmSetting.lblFileTypeAssoc", "File Type Associations"); //v2.0 final
             Items.Add("frmSetting.lblToolbar", "Toolbar"); //v5.0
-            Items.Add("frmSetting.lblColorPicker", "Color Picker"); //v5.0
             Items.Add("frmSetting.lblLanguage", "Language");
             Items.Add("frmSetting.lblTheme", "Theme"); //v5.0
             Items.Add("frmSetting.lblKeyboard", "Keyboard"); // v7.0
@@ -620,12 +619,13 @@ namespace ImageGlass.Library
             #endregion
 
 
-            #region TAB Color Picker
-            Items.Add("frmSetting.lblColorCodeFormat", "Color code format"); //v5.0
+            #region TAB Tools
             Items.Add("frmSetting.chkColorUseRGBA", "Use RGBA format"); //v5.0
             Items.Add("frmSetting.chkColorUseHEXA", "Use HEX with alpha format"); //v5.0
             Items.Add("frmSetting.chkColorUseHSLA", "Use HSLA format"); //v5.0
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
+
+            Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
             #endregion
 
 

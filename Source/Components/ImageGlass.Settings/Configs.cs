@@ -258,6 +258,12 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
+        /// Gets, sets value that indicates page navigation tool auto-show on the multiple pages image
+        /// </summary>
+        public static bool IsShowPageNavAuto { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets value specifying that Window Fit mode is on
         /// </summary>
         public static bool IsWindowFit { get; set; } = false;
@@ -590,6 +596,7 @@ namespace ImageGlass.Settings
             IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+            IsShowPageNavAuto = Get<bool>(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
             IsWindowFit = Get<bool>(nameof(IsWindowFit), IsWindowFit);
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
@@ -811,6 +818,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+            Set(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
             Set(nameof(IsWindowFit), IsWindowFit);
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
             Set(nameof(IsShowToast), IsShowToast);

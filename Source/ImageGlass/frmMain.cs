@@ -796,13 +796,13 @@ namespace ImageGlass
 
                     im = null;
 
-                    //Reset the zoom mode if isKeepZoomRatio = FALSE
+                    // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
                     {
                         if (Configs.IsWindowFit)
-                            WindowFitMode(); // NOTE: ApplyZoomMode side-effect
+                            WindowFitMode();
                         else
-                            //reset zoom mode
+                            // reset zoom mode
                             ApplyZoomMode(Configs.ZoomMode);
                     }
                 }
@@ -833,6 +833,18 @@ namespace ImageGlass
             }
 
             _isDraggingImage = false;
+
+
+            // auto-show Page Nav tool
+            if (Local.CurrentPageCount > 1 && Configs.IsShowPageNavAuto)
+            {
+                ShowPageNavTool(true);
+            }
+            // hide the Page Nav tool
+            else if (!Configs.IsShowPageNavOnStartup)
+            {
+                ShowPageNavTool(false);
+            }
 
             // Collect system garbage
             GC.Collect();
@@ -2416,7 +2428,6 @@ namespace ImageGlass
 
 
 
-
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
                 Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR;
@@ -2450,7 +2461,7 @@ namespace ImageGlass
                 // Load Page navigation tool
                 if (Configs.IsShowPageNavOnStartup)
                 {
-                    mnuMainPageNav.PerformClick();
+                    ShowPageNavTool();
                 }
 
 
@@ -5185,32 +5196,37 @@ namespace ImageGlass
         }
 
 
-        /// <summary>
-        /// Manage the Page Navigation Tool.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mnuMainPageNav_Click(object sender, EventArgs e)
+        
+        private void ShowPageNavTool(bool show = true)
         {
-            Configs.IsShowPageNavOnStartup =
-                Local.IsPageNavToolOpenning =
-                mnuMainPageNav.Checked;
+            Local.IsPageNavToolOpenning = 
+                mnuMainPageNav.Checked = show;
 
-            if (mnuMainPageNav.Checked)
+            if (!Configs.IsShowPageNavAuto)
+            {
+                Configs.IsShowPageNavOnStartup = show;
+            }
+
+            if (show)
             {
                 // Open the page navigation tool
                 if (Local.FPageNav == null || Local.FPageNav.IsDisposed)
                 {
                     Local.FPageNav = new frmPageNav();
+                    Local.FPageNav.SetToolFormManager(_toolManager);
+                    Local.FPageNav.Owner = this;
                 }
 
-                Local.FPageNav.SetToolFormManager(_toolManager);
                 // register page event handler
                 Local.FPageNav.NavEventHandler = PageNavigationEvent;
                 Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
-                Local.FPageNav.Owner = this;
+                
 
-                Local.FPageNav.Show(this);
+                if (!Local.FPageNav.Visible)
+                {
+                    Local.FPageNav.Show(this);
+                }
+                
                 this.Activate();
             }
             else
@@ -5222,6 +5238,14 @@ namespace ImageGlass
                     Local.FPageNav.NavEventHandler = null;
                 }
             }
+        }
+
+
+        private void mnuMainPageNav_Click(object sender, EventArgs e)
+        {
+            Configs.IsShowPageNavOnStartup = mnuMainPageNav.Checked;
+
+            ShowPageNavTool(mnuMainPageNav.Checked);
         }
 
 

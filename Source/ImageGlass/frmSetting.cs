@@ -168,7 +168,7 @@ namespace ImageGlass
             LoadTabGeneralConfig();
             LoadTabImageConfig();
             LoadTabEditConfig();
-            LoadTabColorPicker();
+            LoadTabTools();
 
             // to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
@@ -229,7 +229,7 @@ namespace ImageGlass
             lblFileTypeAssoc.Text = lang[$"{Name}.{nameof(lblFileTypeAssoc)}"];
             lblLanguage.Text = lang[$"{Name}.{nameof(lblLanguage)}"];
             lblToolbar.Text = lang[$"{Name}.{nameof(lblToolbar)}"];
-            lblColorPicker.Text = lang[$"{Name}.{nameof(lblColorPicker)}"];
+            lblTools.Text = lang["frmMain.mnuMainTools"];
             lblTheme.Text = lang[$"{Name}.{nameof(lblTheme)}"];
             lblKeyboard.Text = lang[$"{Name}.{nameof(lblKeyboard)}"];
 
@@ -356,11 +356,14 @@ namespace ImageGlass
             #endregion
 
 
-            #region COLOR PICKER TAB
-            lblColorCodeFormat.Text = lang[$"{Name}.{nameof(lblColorCodeFormat)}"];
+            #region TOOLS TAB
+            lblColorPicker.Text = lang[$"{nameof(frmMain)}.mnuMainColorPicker"];
             chkColorUseRGBA.Text = lang[$"{Name}.{nameof(chkColorUseRGBA)}"];
             chkColorUseHEXA.Text = lang[$"{Name}.{nameof(chkColorUseHEXA)}"];
             chkColorUseHSLA.Text = lang[$"{Name}.{nameof(chkColorUseHSLA)}"];
+
+            lblPageNav.Text = lang[$"{nameof(frmMain)}.mnuMainPageNav"];
+            chkShowPageNavAuto.Text = lang[$"{Name}.{nameof(chkShowPageNavAuto)}"];
             #endregion
 
 
@@ -421,8 +424,8 @@ namespace ImageGlass
                 case nameof(lblToolbar):
                     tab1.SelectedTab = tabToolbar;
                     break;
-                case nameof(lblColorPicker):
-                    tab1.SelectedTab = tabColorPicker;
+                case nameof(lblTools):
+                    tab1.SelectedTab = tabTools;
                     break;
                 case nameof(lblTheme):
                     tab1.SelectedTab = tabTheme;
@@ -442,7 +445,7 @@ namespace ImageGlass
             lblFileTypeAssoc.Tag =
             lblLanguage.Tag =
             lblToolbar.Tag =
-            lblColorPicker.Tag =
+            lblTools.Tag =
             lblTheme.Tag =
             lblKeyboard.Tag = 0;
 
@@ -452,7 +455,7 @@ namespace ImageGlass
             lblFileTypeAssoc.BackColor =
             lblLanguage.BackColor =
             lblToolbar.BackColor =
-            lblColorPicker.BackColor =
+            lblTools.BackColor =
             lblTheme.BackColor =
             lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
@@ -504,12 +507,12 @@ namespace ImageGlass
 
                 LoadTabToolbar();
             }
-            else if (tab1.SelectedTab == tabColorPicker)
+            else if (tab1.SelectedTab == tabTools)
             {
-                lblColorPicker.Tag = 1;
-                lblColorPicker.BackColor = M_COLOR_MENU_ACTIVE;
+                lblTools.Tag = 1;
+                lblTools.BackColor = M_COLOR_MENU_ACTIVE;
 
-                LoadTabColorPicker();
+                LoadTabTools();
             }
             else if (tab1.SelectedTab == tabTheme)
             {
@@ -1567,12 +1570,14 @@ namespace ImageGlass
         #endregion
 
 
-        #region TAB COLOR PICKER
-        private void LoadTabColorPicker()
+        #region TAB TOOLS
+        private void LoadTabTools()
         {
             chkColorUseRGBA.Checked = Configs.IsColorPickerRGBA;
             chkColorUseHEXA.Checked = Configs.IsColorPickerHEXA;
             chkColorUseHSLA.Checked = Configs.IsColorPickerHSLA;
+
+            chkShowPageNavAuto.Checked = Configs.IsShowPageNavAuto;
         }
 
 
@@ -2304,11 +2309,12 @@ namespace ImageGlass
             #endregion
 
 
-            #region Color Picker tab ---------------------------------------
+            #region Tools tab ---------------------------------------
             Configs.IsColorPickerRGBA = chkColorUseRGBA.Checked;
             Configs.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
 
+            Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             #endregion
 
 
