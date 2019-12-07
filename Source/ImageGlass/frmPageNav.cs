@@ -119,12 +119,13 @@ namespace ImageGlass
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
 
             
-            btnNextPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainNextPage"];
-            btnPreviousPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainPrevPage"];
-            btnFirstPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainFirstPage"];
-            btnLastPage.ToolTipText = Configs.Language.Items["frmMain.mnuMainLastPage"];
+            btnNextPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainNextPage"];
+            btnPreviousPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainPrevPage"];
+            btnFirstPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainFirstPage"];
+            btnLastPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainLastPage"];
 
         }
+
 
         private void OnDpiChanged()
         {
@@ -136,8 +137,9 @@ namespace ImageGlass
 
             // Update window size
             this.Width = toolPageNav.PreferredSize.Width;
-            this.Height = toolPageNav.PreferredSize.Height + btnClose.Height + 30;
+            this.Height = toolPageNav.PreferredSize.Height + lblPageInfo.Height + btnClose.Height + 30;
         }
+
 
         private void LoadToolbarIcons(Theme th)
         {

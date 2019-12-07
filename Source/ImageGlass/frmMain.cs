@@ -889,6 +889,8 @@ namespace ImageGlass
         private void UpdateStatusBar()
         {
             string appName = Application.ProductName;
+            const string SEP = "  |  ";
+
             string indexTotal = string.Empty;
             string filename = string.Empty;
             string zoom = string.Empty;
@@ -963,21 +965,33 @@ namespace ImageGlass
                 // image error
                 if (Local.ImageError != null)
                 {
+                    Local.FPageNav.lblPageInfo.Text = "";
+
+
                     if (!isShowMoreData) // size and date not available
-                        this.Text = $"{filename}  |  {indexTotal}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}  - {appName}";
                     else
-                        this.Text = $"{filename}  |  {indexTotal}  |  {fileSize}  |  {fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
                 }
                 else
                 {
                     zoom = $"{picMain.Zoom.ToString("F2")}%";
 
                     // pages information
+                    pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount}";
+                    Local.FPageNav.lblPageInfo.Text = pageInfo;
+
                     if (Local.CurrentPageCount > 1)
                     {
-                        pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount} {Configs.Language.Items[$"{Name}._Pages"]}";
+                        pageInfo = $"{pageInfo} {Configs.Language.Items[$"{Name}._Pages"]}{SEP}";
                     }
+                    else
+                    {
+                        pageInfo = "";
+                    }                    
 
+
+                    // image info
                     if (picMain.Image != null)
                     {
                         try
@@ -987,11 +1001,11 @@ namespace ImageGlass
                         catch { }
 
 
-                        this.Text = $"{filename}  |  {indexTotal}  |  {pageInfo}  |  {zoom}  |  {imgSize}  |  {fileSize}  |  {fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
                     }
                     else
                     {
-                        this.Text = $"{filename}  |  {indexTotal}  |  {pageInfo}    {zoom}  |  {fileSize}  |  {fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
                     }
                 }
             }
@@ -2230,12 +2244,12 @@ namespace ImageGlass
                 if (Local.FColorPicker.IsDisposed)
                 {
                     Local.FColorPicker = new frmColorPicker();
-                    Local.FColorPicker.SetImageBox(picMain);
                 }
 
                 Local.FColorPicker.SetToolFormManager(_toolManager);
+                Local.FColorPicker.Owner = this;
                 Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
-
+                Local.FColorPicker.SetImageBox(picMain);
 
                 if (!Local.FColorPicker.Visible)
                 {
@@ -2276,14 +2290,13 @@ namespace ImageGlass
                 if (Local.FPageNav == null || Local.FPageNav.IsDisposed)
                 {
                     Local.FPageNav = new frmPageNav();
-                    Local.FPageNav.SetToolFormManager(_toolManager);
-                    Local.FPageNav.Owner = this;
                 }
 
                 // register page event handler
                 Local.FPageNav.NavEventHandler = PageNavigationEvent;
                 Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
-
+                Local.FPageNav.SetToolFormManager(_toolManager);
+                Local.FPageNav.Owner = this;
 
                 if (!Local.FPageNav.Visible)
                 {

@@ -339,5 +339,26 @@ namespace ImageGlass.UI.ToolForms
                 }
             }
         }
+
+
+
+
+        public ToolForm()
+        {
+            Activated += this.ToolForm_Activated;
+            Deactivate += this.ToolForm_Deactivate;
+
+            this.Opacity = 0.8;
+        }
+
+        private void ToolForm_Activated(object sender, EventArgs e)
+        {
+            this.Opacity = 1;
+        }
+
+        private void ToolForm_Deactivate(object sender, EventArgs e)
+        {
+            this.Opacity = 0.8;
+        }
     }
 }

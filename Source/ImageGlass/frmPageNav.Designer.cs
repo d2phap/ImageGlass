@@ -37,6 +37,7 @@
             this.btnPreviousPage = new System.Windows.Forms.ToolStripButton();
             this.btnNextPage = new System.Windows.Forms.ToolStripButton();
             this.btnLastPage = new System.Windows.Forms.ToolStripButton();
+            this.lblPageInfo = new System.Windows.Forms.Label();
             this.toolPageNav.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,6 +86,7 @@
             // 
             // toolPageNav
             // 
+            this.toolPageNav.Alignment = ImageGlass.UI.ToolbarAlignment.LEFT;
             this.toolPageNav.AllowMerge = false;
             this.toolPageNav.AutoSize = false;
             this.toolPageNav.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
@@ -96,7 +98,7 @@
             this.btnPreviousPage,
             this.btnNextPage,
             this.btnLastPage});
-            this.toolPageNav.Location = new System.Drawing.Point(0, 55);
+            this.toolPageNav.Location = new System.Drawing.Point(0, 125);
             this.toolPageNav.Name = "toolPageNav";
             this.toolPageNav.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolPageNav.ShowItemToolTips = false;
@@ -111,7 +113,7 @@
             this.btnFirstPage.Image = global::ImageGlass.Properties.Resources.info;
             this.btnFirstPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnFirstPage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFirstPage.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnFirstPage.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnFirstPage.Name = "btnFirstPage";
             this.btnFirstPage.Size = new System.Drawing.Size(33, 33);
             this.btnFirstPage.ToolTipText = "Go to previous image (Left arrow / PageUp)";
@@ -124,7 +126,7 @@
             this.btnPreviousPage.Image = global::ImageGlass.Properties.Resources.info;
             this.btnPreviousPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnPreviousPage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPreviousPage.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPreviousPage.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnPreviousPage.Name = "btnPreviousPage";
             this.btnPreviousPage.Size = new System.Drawing.Size(33, 33);
             this.btnPreviousPage.ToolTipText = "Go to next image (Right arrow / PageDown)";
@@ -137,7 +139,7 @@
             this.btnNextPage.Image = global::ImageGlass.Properties.Resources.info;
             this.btnNextPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnNextPage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNextPage.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNextPage.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnNextPage.Name = "btnNextPage";
             this.btnNextPage.Size = new System.Drawing.Size(33, 33);
             this.btnNextPage.ToolTipText = "Print image (Ctrl + P)";
@@ -150,18 +152,29 @@
             this.btnLastPage.Image = global::ImageGlass.Properties.Resources.info;
             this.btnLastPage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnLastPage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLastPage.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLastPage.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.btnLastPage.Name = "btnLastPage";
             this.btnLastPage.Size = new System.Drawing.Size(33, 33);
             this.btnLastPage.ToolTipText = "Send to recycle bin";
+            // 
+            // lblPageInfo
+            // 
+            this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 13F);
+            this.lblPageInfo.Location = new System.Drawing.Point(12, 61);
+            this.lblPageInfo.Name = "lblPageInfo";
+            this.lblPageInfo.Size = new System.Drawing.Size(292, 47);
+            this.lblPageInfo.TabIndex = 9;
+            this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmPageNav
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(316, 120);
+            this.ClientSize = new System.Drawing.Size(316, 190);
             this.Controls.Add(this.toolPageNav);
+            this.Controls.Add(this.lblPageInfo);
             this.Controls.Add(this.btnSnapTo);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -195,5 +208,6 @@
         private System.Windows.Forms.ToolStripButton btnPreviousPage;
         private System.Windows.Forms.ToolStripButton btnNextPage;
         private System.Windows.Forms.ToolStripButton btnLastPage;
+        public System.Windows.Forms.Label lblPageInfo;
     }
 }
