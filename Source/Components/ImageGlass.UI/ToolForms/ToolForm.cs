@@ -358,7 +358,11 @@ namespace ImageGlass.UI.ToolForms
 
         private void ToolForm_Deactivate(object sender, EventArgs e)
         {
-            this.Opacity = 0.85;
+            try
+            {
+                this.Opacity = 0.85;
+            }
+            catch { }
         }
     }
 }

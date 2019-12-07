@@ -3890,7 +3890,10 @@ namespace ImageGlass
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             // User has moved the thumbnail splitter bar. Update image size.
-            ApplyZoomMode(Configs.ZoomMode);
+            if (!_isManuallyZoomed)
+            {
+                ApplyZoomMode(Configs.ZoomMode);
+            }
         }
 
 
