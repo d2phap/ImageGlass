@@ -1035,11 +1035,6 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            // this.Text = e.KeyValue.ToString();
-
-            bool hasNoMods = !e.Control && !e.Shift && !e.Alt;
-            bool ignore = _isAppBusy || _isWindowsKeyPressed;
-
 
             #region Register MAIN MENU shortcuts
             bool checkMenuShortcut(ToolStripMenuItem mnu)
@@ -1080,6 +1075,13 @@ namespace ImageGlass
                 _isWindowsKeyPressed = true;
             }
             #endregion
+
+
+            // KBR 20191210 Fix observed issue: when using WIN+down-arrow to minimize in
+            // frameless mode, the first key code after restore would be ignored. Moved
+            // these lines to _after_ WIN logo key check is complete.
+            bool hasNoMods = !e.Control && !e.Shift && !e.Alt;
+            bool ignore = _isAppBusy || _isWindowsKeyPressed;
 
 
             // Show main menu
@@ -2832,6 +2834,7 @@ namespace ImageGlass
                 TopMost = true;
                 // set it back to whatever it was
                 TopMost = top;
+Console.WriteLine("ShowMe");
             }
 
             // This message is sent when the form is dragged to a different monitor i.e. when
