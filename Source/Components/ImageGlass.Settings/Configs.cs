@@ -721,10 +721,9 @@ namespace ImageGlass.Settings
             if (!string.IsNullOrEmpty(boundStr))
             {
                 var rc = Helpers.StringToRect(boundStr);
-
-                if (!Helper.IsOnScreen(rc.Location))
+                if (!Helper.IsAnyPartOnScreen(rc))
                 {
-                    rc.Location = new Point(280, 125);
+                    rc = new Rectangle(280, 125, 1000, 800);
                 }
 
                 FrmMainWindowsBound = rc;
