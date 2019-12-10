@@ -914,14 +914,17 @@ namespace ImageGlass
                 TopMost = this.TopMost
             })
             {
-                foreach (var assoc in Configs.EditApps)
+                if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    assoc.AppName = frm.AppName;
-                    assoc.AppPath = frm.AppPath;
-                    assoc.AppArguments = frm.AppArguments;
-                }
+                    foreach (var assoc in Configs.EditApps)
+                    {
+                        assoc.AppName = frm.AppName;
+                        assoc.AppPath = frm.AppPath;
+                        assoc.AppArguments = frm.AppArguments;
+                    }
 
-                LoadEditApps();
+                    LoadEditApps();
+                }
             }
         }
 
