@@ -70,12 +70,20 @@ namespace ImageGlass.ImageListView
         // Concurrent dictionary used for parallelism
         private readonly ConcurrentDictionary<char[], string> _stringCache;
 
+        /// <summary>
+        /// Create a basic string cache.
+        /// </summary>
         public StringCache()
         {
             //int numProcs = Environment.ProcessorCount; 
             _stringCache = new ConcurrentDictionary<char[], string>(new TagComparer());
         }
 
+        /// <summary>
+        /// Fetch or add a string from the cache
+        /// </summary>
+        /// <param name="inval">input string to be cached</param>
+        /// <returns>the string from the cache</returns>
         public string GetFromCache(string inval)
         {
             return GetFromCache(inval.ToCharArray());
@@ -89,13 +97,6 @@ namespace ImageGlass.ImageListView
                 _stringCache.TryAdd(inval, outval);
             }
             return outval;
-        }
-
-        public string GetFromCache(char[] value, int index, int len)
-        {
-            char[] tmp = new char[len];
-            Array.Copy(value, index, tmp, 0, len);
-            return GetFromCache(tmp);
         }
     }
 }
