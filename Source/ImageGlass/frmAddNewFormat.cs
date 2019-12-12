@@ -54,7 +54,10 @@ namespace ImageGlass
                 return;
             }
 
-            FileFormat = $"*{FileFormat};"; // standalize extension string
+            // KBR 20191212 doing this causes the extension to be shown as (e.g.) "*.foo;" in the dialog,
+            // and as (initially) saved to the config file. Seems to serve no purpose.
+            //FileFormat = $"*{FileFormat};"; // standalize extension string
+
             DialogResult = DialogResult.OK;
             _isAllowFormClosed = true;
         }
