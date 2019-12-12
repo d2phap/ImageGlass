@@ -1746,7 +1746,7 @@ namespace ImageGlass
             {
                 picMain.TextBackColor = Color.Transparent;
                 picMain.Font = Font;
-                picMain.ForeColor = Configs.Theme.TextInfoColor;
+                picMain.ForeColor = Theme.InvertBlackAndWhiteColor(Configs.BackgroundColor);
                 picMain.Text = string.Empty;
                 return;
             }
