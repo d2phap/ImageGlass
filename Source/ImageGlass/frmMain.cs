@@ -830,6 +830,7 @@ namespace ImageGlass
                 }
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
+                UpdateStatusBar();
             }
 
             _isDraggingImage = false;
