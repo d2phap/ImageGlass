@@ -2191,6 +2191,15 @@ namespace ImageGlass
             if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
+
+            // If the user selects "Display view scrollbars" setting, the imageviewer will
+            // try to take them into account [especially for tall images]. Override said
+            // setting in this mode.
+            var oldScrollSetting = picMain.HorizontalScrollBarStyle;
+            picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+            picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
+
+
             WindowState = FormWindowState.Normal;
 
             // get current screen
@@ -2229,6 +2238,10 @@ namespace ImageGlass
             }
 
             picMain.Bounds = new Rectangle(0, 0, newW, newH);
+
+            // Restore the user's "Display viewer scrollbars" setting.
+            picMain.HorizontalScrollBarStyle = oldScrollSetting;
+            picMain.VerticalScrollBarStyle = oldScrollSetting;
         }
 
 
