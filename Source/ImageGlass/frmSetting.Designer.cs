@@ -149,6 +149,8 @@ namespace ImageGlass
             this.lblToolbarPosition = new System.Windows.Forms.Label();
             this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
             this.tabTools = new System.Windows.Forms.TabPage();
+            this.lblPageNav = new System.Windows.Forms.Label();
+            this.chkShowPageNavAuto = new System.Windows.Forms.CheckBox();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
             this.lblColorPicker = new System.Windows.Forms.Label();
             this.chkColorUseHEXA = new System.Windows.Forms.CheckBox();
@@ -192,8 +194,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.lblPageNav = new System.Windows.Forms.Label();
-            this.chkShowPageNavAuto = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileTypeAssoc.SuspendLayout();
@@ -1374,7 +1374,7 @@ namespace ImageGlass
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
             this.barInterval.Location = new System.Drawing.Point(46, 1701);
             this.barInterval.Margin = new System.Windows.Forms.Padding(2);
-            this.barInterval.Maximum = 60;
+            this.barInterval.Maximum = 600;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(292, 69);
@@ -1749,6 +1749,28 @@ namespace ImageGlass
             this.tabTools.Size = new System.Drawing.Size(799, 583);
             this.tabTools.TabIndex = 5;
             this.tabTools.Text = "tools";
+            // 
+            // lblPageNav
+            // 
+            this.lblPageNav.AutoSize = true;
+            this.lblPageNav.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPageNav.Location = new System.Drawing.Point(22, 200);
+            this.lblPageNav.Name = "lblPageNav";
+            this.lblPageNav.Size = new System.Drawing.Size(164, 25);
+            this.lblPageNav.TabIndex = 58;
+            this.lblPageNav.Text = "[Page navigation]";
+            // 
+            // chkShowPageNavAuto
+            // 
+            this.chkShowPageNavAuto.AutoSize = true;
+            this.chkShowPageNavAuto.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowPageNavAuto.Location = new System.Drawing.Point(45, 232);
+            this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
+            this.chkShowPageNavAuto.Size = new System.Drawing.Size(490, 30);
+            this.chkShowPageNavAuto.TabIndex = 59;
+            this.chkShowPageNavAuto.Text = "[Auto-show Page navigation tool for multi-page image]";
+            this.chkShowPageNavAuto.UseVisualStyleBackColor = true;
             // 
             // chkColorUseHSLA
             // 
@@ -2371,28 +2393,6 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
-            // 
-            // lblPageNav
-            // 
-            this.lblPageNav.AutoSize = true;
-            this.lblPageNav.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPageNav.Location = new System.Drawing.Point(22, 200);
-            this.lblPageNav.Name = "lblPageNav";
-            this.lblPageNav.Size = new System.Drawing.Size(164, 25);
-            this.lblPageNav.TabIndex = 58;
-            this.lblPageNav.Text = "[Page navigation]";
-            // 
-            // chkShowPageNavAuto
-            // 
-            this.chkShowPageNavAuto.AutoSize = true;
-            this.chkShowPageNavAuto.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowPageNavAuto.Location = new System.Drawing.Point(45, 232);
-            this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
-            this.chkShowPageNavAuto.Size = new System.Drawing.Size(490, 30);
-            this.chkShowPageNavAuto.TabIndex = 59;
-            this.chkShowPageNavAuto.Text = "[Auto-show Page navigation tool for multi-page image]";
-            this.chkShowPageNavAuto.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 

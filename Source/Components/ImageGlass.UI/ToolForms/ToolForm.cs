@@ -337,9 +337,11 @@ namespace ImageGlass.UI.ToolForms
                     control.MouseUp += Form1_MouseUp;
                     control.MouseMove += Form1_MouseMove;
                 }
+
+                control.MouseEnter += this.ToolForm_MouseEnter;
+                control.MouseLeave += this.ToolForm_MouseLeave;
             }
         }
-
 
 
 
@@ -347,8 +349,27 @@ namespace ImageGlass.UI.ToolForms
         {
             Activated += this.ToolForm_Activated;
             Deactivate += this.ToolForm_Deactivate;
+            MouseEnter += this.ToolForm_MouseEnter;
+            MouseLeave += this.ToolForm_MouseLeave;
 
             this.Opacity = 0.85;
+        }
+
+        private void ToolForm_MouseLeave(object sender, EventArgs e)
+        {
+            if (ActiveForm != this)
+            {
+                try
+                {
+                    this.Opacity = 0.85;
+                }
+                catch { }
+            }
+        }
+
+        private void ToolForm_MouseEnter(object sender, EventArgs e)
+        {
+            this.Opacity = 1;
         }
 
         private void ToolForm_Activated(object sender, EventArgs e)
