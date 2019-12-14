@@ -194,6 +194,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.chkShowSlideshowCountdown = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileTypeAssoc.SuspendLayout();
@@ -863,6 +864,7 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.chkShowSlideshowCountdown);
             this.tabImage.Controls.Add(this.chkIsCenterImage);
             this.tabImage.Controls.Add(this.lblImageBoosterCachedCount);
             this.tabImage.Controls.Add(this.cmbImageBoosterCachedCount);
@@ -1192,7 +1194,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1768);
+            this.panel3.Location = new System.Drawing.Point(27, 1814);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -1372,12 +1374,12 @@ namespace ImageGlass
             // barInterval
             // 
             this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(46, 1701);
+            this.barInterval.Location = new System.Drawing.Point(46, 1747);
             this.barInterval.Margin = new System.Windows.Forms.Padding(2);
             this.barInterval.Maximum = 600;
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
-            this.barInterval.Size = new System.Drawing.Size(292, 69);
+            this.barInterval.Size = new System.Drawing.Size(599, 69);
             this.barInterval.TabIndex = 34;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 38;
@@ -1386,12 +1388,12 @@ namespace ImageGlass
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1666);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1712);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
-            this.lblSlideshowInterval.Size = new System.Drawing.Size(248, 25);
+            this.lblSlideshowInterval.Size = new System.Drawing.Size(217, 25);
             this.lblSlideshowInterval.TabIndex = 24;
-            this.lblSlideshowInterval.Text = "Slide show interval: 5 seconds";
+            this.lblSlideshowInterval.Text = "[Slideshow interval: 00:03]";
             // 
             // chkFindChildFolder
             // 
@@ -2394,6 +2396,18 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
             // 
+            // chkShowSlideshowCountdown
+            // 
+            this.chkShowSlideshowCountdown.AutoSize = true;
+            this.chkShowSlideshowCountdown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowSlideshowCountdown.Location = new System.Drawing.Point(45, 1651);
+            this.chkShowSlideshowCountdown.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowSlideshowCountdown.Name = "chkShowSlideshowCountdown";
+            this.chkShowSlideshowCountdown.Size = new System.Drawing.Size(245, 30);
+            this.chkShowSlideshowCountdown.TabIndex = 65;
+            this.chkShowSlideshowCountdown.Text = "[Show countdown timer]";
+            this.chkShowSlideshowCountdown.UseVisualStyleBackColor = true;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2617,5 +2631,6 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkShowToast;
         private System.Windows.Forms.Label lblPageNav;
         private System.Windows.Forms.CheckBox chkShowPageNavAuto;
+        private System.Windows.Forms.CheckBox chkShowSlideshowCountdown;
     }
 }

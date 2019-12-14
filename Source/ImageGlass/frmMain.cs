@@ -714,13 +714,13 @@ namespace ImageGlass
 
 
             // Issue #609: do not auto-reactivate slideshow if disabled
-            if (Configs.IsPlaySlideShow && timSlideShow.Enabled)
+            if (Configs.IsSlideshow && timSlideShow.Enabled)
             {
                 timSlideShow.Enabled = false;
                 timSlideShow.Enabled = true;
             }
 
-            if (!Configs.IsPlaySlideShow && !Configs.IsLoopBackViewer)
+            if (!Configs.IsSlideshow && !Configs.IsLoopBackViewer)
             {
                 //Reach end of list
                 if (tempIndex >= Local.ImageList.Length)
@@ -1195,7 +1195,7 @@ namespace ImageGlass
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
                 //exit slideshow
-                if (Configs.IsPlaySlideShow)
+                if (Configs.IsSlideshow)
                 {
                     mnuMainSlideShowExit_Click(null, null);
                 }
@@ -1392,7 +1392,7 @@ namespace ImageGlass
             bool no_mods = !e.Control && !e.Shift && !e.Alt;
             if (e.KeyCode == Keys.Space && no_mods)
             {
-                if (Configs.IsPlaySlideShow) // Space always pauses slideshow if playing
+                if (Configs.IsSlideshow) // Space always pauses slideshow if playing
                 {
                     mnuMainSlideShowPause_Click(null, null);
                 }
@@ -2645,7 +2645,7 @@ namespace ImageGlass
             if (WindowState == FormWindowState.Normal)
             {
                 // don't save Bound if in Full screen and SlideShow mode
-                if (!Configs.IsFullScreen && !Configs.IsPlaySlideShow)
+                if (!Configs.IsFullScreen && !Configs.IsSlideshow)
                 {
                     // Windows Bound-----------------------------------------------------------
                     Configs.FrmMainWindowsBound = this.Bounds;
@@ -3449,7 +3449,7 @@ Console.WriteLine("ShowMe");
                 if (Local.CurrentIndex == Local.ImageList.Length - 1)
                 {
                     // loop the list
-                    if (!Configs.IsLoopBackSlideShow)
+                    if (!Configs.IsLoopBackSlideshow)
                     {
                         mnuMainSlideShowPause_Click(null, null);
                         return;
@@ -4138,7 +4138,7 @@ Console.WriteLine("ShowMe");
             //clear current items
             mnuContext.Items.Clear();
 
-            if (Configs.IsPlaySlideShow && !isImageError)
+            if (Configs.IsSlideshow && !isImageError)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
@@ -4636,7 +4636,7 @@ Console.WriteLine("ShowMe");
             }
 
             //not performing
-            if (!Configs.IsPlaySlideShow)
+            if (!Configs.IsSlideshow)
             {
                 picMain.BackColor = Color.Black;
 
@@ -4646,7 +4646,7 @@ Console.WriteLine("ShowMe");
                 //perform slideshow
                 timSlideShow.Enabled = true;
 
-                Configs.IsPlaySlideShow = true;
+                Configs.IsSlideshow = true;
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
             }
@@ -4679,7 +4679,7 @@ Console.WriteLine("ShowMe");
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e)
         {
             timSlideShow.Enabled = false;
-            Configs.IsPlaySlideShow = false;
+            Configs.IsSlideshow = false;
 
             picMain.BackColor = Configs.BackgroundColor;
 

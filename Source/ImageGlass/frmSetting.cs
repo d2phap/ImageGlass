@@ -299,6 +299,7 @@ namespace ImageGlass
 
             lblHeadSlideshow.Text = lang[$"{Name}.{nameof(lblHeadSlideshow)}"];//
             chkLoopSlideshow.Text = lang[$"{Name}.{nameof(chkLoopSlideshow)}"];
+            chkShowSlideshowCountdown.Text = lang[$"{Name}.{nameof(chkShowSlideshowCountdown)}"];
             lblSlideshowInterval.Text = string.Format(lang[$"{Name}.{nameof(lblSlideshowInterval)}"], barInterval.Value);
 
             #endregion
@@ -748,18 +749,23 @@ namespace ImageGlass
             cmbThumbnailDimension.SelectedItem = Configs.ThumbnailDimension.ToString();
 
             // Set value of chkLoopSlideshow --------------------------------------------------
-            chkLoopSlideshow.Checked = Configs.IsLoopBackSlideShow;
+            chkLoopSlideshow.Checked = Configs.IsLoopBackSlideshow;
+            chkShowSlideshowCountdown.Checked = Configs.IsShowSlideshowCountdown;
 
             // Set value of barInterval
             barInterval.Value = (int)Configs.SlideShowInterval;
-            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+
+            var time = TimeSpan.FromSeconds(barInterval.Value).ToString("mm':'ss");
+            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], time);
 
         }
 
 
         private void barInterval_Scroll(object sender, EventArgs e)
         {
-            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], barInterval.Value);
+            var time = TimeSpan.FromSeconds(barInterval.Value).ToString("mm':'ss");
+
+            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], time);
         }
 
 
@@ -2234,8 +2240,9 @@ namespace ImageGlass
             #endregion
 
 
-            // IsLoopBackSlideShow
-            Configs.IsLoopBackSlideShow = chkLoopSlideshow.Checked;
+            // slideshow
+            Configs.IsLoopBackSlideshow = chkLoopSlideshow.Checked;
+            Configs.IsShowSlideshowCountdown = chkShowSlideshowCountdown.Checked;
 
 
             #region SlideShowInterval: MainFormForceUpdateAction.OTHER_SETTINGS

@@ -559,9 +559,10 @@ namespace ImageGlass.Library
 
 
             #region Slideshow
-            Items.Add("frmSetting.lblHeadSlideshow", "Slideshow"); //v4.0
-            Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); //v2.0 final
-            Items.Add("frmSetting.lblSlideshowInterval", "Slide show interval: {0} seconds");
+            Items.Add("frmSetting.lblHeadSlideshow", "Slideshow"); // v4.0
+            Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); // v2.0 final
+            Items.Add("frmSetting.chkShowSlideshowCountdown", "Show slideshow countdown"); // v7.5
+            Items.Add("frmSetting.lblSlideshowInterval", "Slideshow interval: {0}");
             #endregion
 
             

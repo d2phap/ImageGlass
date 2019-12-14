@@ -56,7 +56,13 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets value of slideshow state
         /// </summary>
-        public static bool IsPlaySlideShow { get; set; } = false;
+        public static bool IsSlideshow { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value if the countdown timer is shown or not
+        /// </summary>
+        public static bool IsShowSlideshowCountdown { get; set; } = true;
 
 
         /// <summary>
@@ -116,7 +122,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
-        public static bool IsLoopBackSlideShow { get; set; } = true;
+        public static bool IsLoopBackSlideshow { get; set; } = true;
 
 
         /// <summary>
@@ -562,7 +568,8 @@ namespace ImageGlass.Settings
             // load configs to public properties
             #region Boolean items
 
-            IsPlaySlideShow = Get<bool>(nameof(IsPlaySlideShow), IsPlaySlideShow);
+            IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
+            IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
             IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
             IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
@@ -572,7 +579,7 @@ namespace ImageGlass.Settings
             IsShowWelcome = Get<bool>(nameof(IsShowWelcome), IsShowWelcome);
             IsShowToolBar = Get<bool>(nameof(IsShowToolBar), IsShowToolBar);
             IsShowThumbnailScrollbar = Get<bool>(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
-            IsLoopBackSlideShow = Get<bool>(nameof(IsLoopBackSlideShow), IsLoopBackSlideShow);
+            IsLoopBackSlideshow = Get<bool>(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
             IsLoopBackViewer = Get<bool>(nameof(IsLoopBackViewer), IsLoopBackViewer);
             IsPressESCToQuit = Get<bool>(nameof(IsPressESCToQuit), IsPressESCToQuit);
             IsShowCheckerBoard = Get<bool>(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
@@ -783,7 +790,8 @@ namespace ImageGlass.Settings
             // save public properties to configs
             #region Boolean items
 
-            Set(nameof(IsPlaySlideShow), IsPlaySlideShow);
+            Set(nameof(IsSlideshow), IsSlideshow);
+            Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             Set(nameof(IsFullScreen), IsFullScreen);
             Set(nameof(IsShowThumbnail), IsShowThumbnail);
             Set(nameof(IsCenterImage), IsCenterImage);
@@ -793,7 +801,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsShowWelcome), IsShowWelcome);
             Set(nameof(IsShowToolBar), IsShowToolBar);
             Set(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
-            Set(nameof(IsLoopBackSlideShow), IsLoopBackSlideShow);
+            Set(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
             Set(nameof(IsLoopBackViewer), IsLoopBackViewer);
             Set(nameof(IsPressESCToQuit), IsPressESCToQuit);
             Set(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
