@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -234,6 +235,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Start ImageBooster thread
         /// </summary>
+        [SuppressMessage("Await.Warning", "CS4014:Await.Warning")]
         public async void StartImageBooster()
         {
             while (this.IsRunWorker)
@@ -249,7 +251,7 @@ namespace ImageGlass.Heart
                     if (!img.IsDone)
                     {
                         // start loading image file
-                        _ = img.LoadAsync(
+                        img.LoadAsync(
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
                             isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
