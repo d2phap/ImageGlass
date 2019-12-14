@@ -94,8 +94,9 @@
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuMainFullScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuWindowFit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFrameless = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSlideShow = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSlideShowStart = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSlideShowPause = new System.Windows.Forms.ToolStripMenuItem();
@@ -160,7 +161,6 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.mnuWindowFit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -192,7 +192,7 @@
             // 
             // timSlideShow
             // 
-            this.timSlideShow.Interval = 2000;
+            this.timSlideShow.Interval = 1000;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
             // 
             // mnuMain
@@ -222,7 +222,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 533);
+            this.mnuMain.Size = new System.Drawing.Size(258, 500);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -942,17 +942,17 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(254, 6);
             // 
-            // mnuMainFullScreen
+            // mnuWindowFit
             // 
-            this.mnuMainFullScreen.CheckOnClick = true;
-            this.mnuMainFullScreen.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainFullScreen.Name = "mnuMainFullScreen";
-            this.mnuMainFullScreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
-            this.mnuMainFullScreen.Size = new System.Drawing.Size(257, 31);
-            this.mnuMainFullScreen.Text = "&Full screen";
-            this.mnuMainFullScreen.Click += new System.EventHandler(this.mnuMainFullScreen_Click);
+            this.mnuWindowFit.ForeColor = System.Drawing.Color.Black;
+            this.mnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuWindowFit.Name = "mnuWindowFit";
+            this.mnuWindowFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuWindowFit.ShortcutKeyDisplayString = "F9";
+            this.mnuWindowFit.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.mnuWindowFit.Size = new System.Drawing.Size(257, 31);
+            this.mnuWindowFit.Text = "[Window fit]";
+            this.mnuWindowFit.Click += new System.EventHandler(this.mnuWindowFit_Click);
             // 
             // mnuFrameless
             // 
@@ -967,6 +967,18 @@
             this.mnuFrameless.Size = new System.Drawing.Size(257, 31);
             this.mnuFrameless.Text = "[Frameless]";
             this.mnuFrameless.Click += new System.EventHandler(this.mnuFrameless_Click);
+            // 
+            // mnuMainFullScreen
+            // 
+            this.mnuMainFullScreen.CheckOnClick = true;
+            this.mnuMainFullScreen.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainFullScreen.Name = "mnuMainFullScreen";
+            this.mnuMainFullScreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
+            this.mnuMainFullScreen.Size = new System.Drawing.Size(257, 31);
+            this.mnuMainFullScreen.Text = "&Full screen";
+            this.mnuMainFullScreen.Click += new System.EventHandler(this.mnuMainFullScreen_Click);
             // 
             // mnuMainSlideShow
             // 
@@ -1313,6 +1325,7 @@
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
+            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.PicMain_Paint);
             this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
             this.picMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDoubleClick);
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
@@ -1525,7 +1538,7 @@
             this.btnActualSize.ToolTipText = "Actual size (Ctrl + 0)";
             this.btnActualSize.Click += new System.EventHandler(this.btnActualSize_Click);
             // 
-            // btnWindowAdaptImage
+            // btnWindowFit
             // 
             this.btnWindowFit.AutoSize = false;
             this.btnWindowFit.BackColor = System.Drawing.Color.Transparent;
@@ -1534,7 +1547,7 @@
             this.btnWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnWindowFit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnWindowFit.Margin = new System.Windows.Forms.Padding(0);
-            this.btnWindowFit.Name = "btnWindowAdaptImage";
+            this.btnWindowFit.Name = "btnWindowFit";
             this.btnWindowFit.Size = new System.Drawing.Size(33, 33);
             this.btnWindowFit.ToolTipText = "Adjust window to actual image dimensions (Ctrl + M)";
             this.btnWindowFit.Click += new System.EventHandler(this.btnWindowFit_Click);
@@ -1832,18 +1845,6 @@
             this.btnScaleToFill.Tag = "";
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
-            // 
-            // mnuWindowFit
-            // 
-            this.mnuWindowFit.ForeColor = System.Drawing.Color.Black;
-            this.mnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuWindowFit.Name = "mnuWindowFit";
-            this.mnuWindowFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuWindowFit.ShortcutKeyDisplayString = "F9";
-            this.mnuWindowFit.ShortcutKeys = System.Windows.Forms.Keys.F9;
-            this.mnuWindowFit.Size = new System.Drawing.Size(257, 31);
-            this.mnuWindowFit.Text = "[Window fit]";
-            this.mnuWindowFit.Click += new System.EventHandler(this.mnuWindowFit_Click);
             // 
             // frmMain
             // 

@@ -97,6 +97,9 @@ namespace ImageGlass
         // gets, sets wheather the app is busy or not
         private bool _isAppBusy = false;
 
+        // slideshow countdown interval
+        private uint _slideshowCountdown = 5;
+
         private ToolFormManager _toolManager = new ToolFormManager();
 
         private MovableForm _movableForm = null;
@@ -834,6 +837,9 @@ namespace ImageGlass
             }
 
             _isDraggingImage = false;
+
+            // reset countdown timer value
+            _slideshowCountdown = Configs.SlideShowInterval;
 
 
             // auto-show Page Nav tool
@@ -3340,7 +3346,7 @@ Console.WriteLine("ShowMe");
             {
                 #region Update Other Settings
 
-                //Update scrollbars visibility
+                // Update scrollbars visibility
                 if (Configs.IsScrollbarsVisible)
                 {
                     picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Auto;
@@ -3359,11 +3365,13 @@ Console.WriteLine("ShowMe");
                     mnuMainCheckBackground_Click(null, null);
                 }
 
-                //Update background---------------------
+                // Update background
                 picMain.BackColor = Configs.BackgroundColor;
 
-                //Update slideshow interval value of timer
-                timSlideShow.Interval = (int)Configs.SlideShowInterval * 1000;
+
+                // update slideshow countdown
+                _slideshowCountdown = Configs.SlideShowInterval;
+
 
                 // Update ZoomLevels
                 picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
@@ -3428,22 +3436,72 @@ Console.WriteLine("ShowMe");
             }
         }
 
+
         private void timSlideShow_Tick(object sender, EventArgs e)
         {
-            // KBR 20190302 perform this check first: if user hits 'End' during slideshow,
-            // the slideshow would start over at beginning, even if IsLoopBackSlideShow was false
-            //stop playing slideshow at last image
-            if (Local.CurrentIndex == Local.ImageList.Length - 1)
+            if (_slideshowCountdown > 1)
             {
-                if (!Configs.IsLoopBackSlideShow)
+                _slideshowCountdown--;
+            }
+            else
+            {
+                // end of image list
+                if (Local.CurrentIndex == Local.ImageList.Length - 1)
                 {
-                    mnuMainSlideShowPause_Click(null, null);
-                    return;
+                    // loop the list
+                    if (!Configs.IsLoopBackSlideShow)
+                    {
+                        mnuMainSlideShowPause_Click(null, null);
+                        return;
+                    }
                 }
+
+                NextPic(1);
+                _slideshowCountdown = Configs.SlideShowInterval;
             }
 
-            NextPic(1);
+            
+            // update the countdown text
+            picMain.Invalidate();
+        }
 
+
+        private void PicMain_Paint(object sender, PaintEventArgs e)
+        {
+            if (!timSlideShow.Enabled)
+            {
+                return;
+            }
+
+            // draw countdown text ----------------------------------------------
+            var gap = DPIScaling.TransformNumber(20);
+            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
+
+
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            using (var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor))))
+            {
+                var font = new Font(this.Font.FontFamily, 30f);
+                var fontSize = e.Graphics.MeasureString(text, font);
+
+                // calculate background size
+                var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
+                var bgX = picMain.Width - bgSize.Width - gap;
+                var bgY = picMain.Height - bgSize.Height - gap;
+
+                // calculate text size
+                var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
+                var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+
+                // draw background
+                using (var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor)))
+                {
+                    e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+                }
+
+                // draw countdown text
+                e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+            }
         }
 
 
@@ -4601,15 +4659,17 @@ Console.WriteLine("ShowMe");
 
         private void mnuMainSlideShowPause_Click(object sender, EventArgs e)
         {
-            //performing
+            // performing
             if (timSlideShow.Enabled)
             {
+                //_slideshowCountdown = Configs.SlideShowInterval;
                 timSlideShow.Enabled = false;
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else
             {
+                //_slideshowCountdown = 0;
                 timSlideShow.Enabled = true;
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
@@ -5484,5 +5544,6 @@ Console.WriteLine("ShowMe");
 
         #endregion
 
+        
     }
 }
