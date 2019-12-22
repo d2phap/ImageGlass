@@ -1805,7 +1805,7 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(33, 33);
             this.btnDelete.ToolTipText = "Send to recycle bin";
-            this.btnDelete.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnMenu
             // 
