@@ -2848,13 +2848,10 @@ namespace ImageGlass
                 {
                     WindowState = FormWindowState.Normal;
                 }
-                // get our current "TopMost" value (ours will always be false though)
-                bool top = TopMost;
-                // make our form jump to the top of everything
-                TopMost = true;
-                // set it back to whatever it was
-                TopMost = top;
-Console.WriteLine("ShowMe");
+
+                // Issue #620: using TopMost/Focus doesn't give focus
+                BringToFront();
+                Activate();
             }
 
             // This message is sent when the form is dragged to a different monitor i.e. when
