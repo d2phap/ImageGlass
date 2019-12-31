@@ -235,7 +235,6 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Start ImageBooster thread
         /// </summary>
-        [SuppressMessage("Await.Warning", "CS4014:Await.Warning")]
         public async void StartImageBooster()
         {
             while (this.IsRunWorker)
@@ -251,7 +250,7 @@ namespace ImageGlass.Heart
                     if (!img.IsDone)
                     {
                         // start loading image file
-                        img.LoadAsync(
+                        await img.LoadAsync(
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
                             isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
