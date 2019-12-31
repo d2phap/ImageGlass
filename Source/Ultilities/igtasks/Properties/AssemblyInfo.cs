@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("adtasks - ImageGlass administrator's tasks")]
-[assembly: AssemblyCopyright("Copyright © 2014-2019 Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2014-2020 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 
