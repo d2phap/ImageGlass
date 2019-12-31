@@ -82,6 +82,7 @@ namespace ImageGlass
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.chkShowSlideshowCountdown = new System.Windows.Forms.CheckBox();
             this.chkIsCenterImage = new System.Windows.Forms.CheckBox();
             this.lblImageBoosterCachedCount = new System.Windows.Forms.Label();
             this.cmbImageBoosterCachedCount = new System.Windows.Forms.ComboBox();
@@ -194,7 +195,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkShowSlideshowCountdown = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabLanguage.SuspendLayout();
             this.tabFileTypeAssoc.SuspendLayout();
@@ -236,7 +236,7 @@ namespace ImageGlass
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblLanguage.Size = new System.Drawing.Size(254, 50);
-            this.lblLanguage.TabIndex = 7;
+            this.lblLanguage.TabIndex = 9;
             this.lblLanguage.Tag = "0";
             this.lblLanguage.Text = "Language";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -611,7 +611,7 @@ namespace ImageGlass
             this.chkShowToast.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToast.Name = "chkShowToast";
             this.chkShowToast.Size = new System.Drawing.Size(224, 30);
-            this.chkShowToast.TabIndex = 48;
+            this.chkShowToast.TabIndex = 16;
             this.chkShowToast.Text = "[Show toast message]";
             this.chkShowToast.UseVisualStyleBackColor = true;
             // 
@@ -623,7 +623,7 @@ namespace ImageGlass
             this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(2);
             this.chkCenterWindowFit.Name = "chkCenterWindowFit";
             this.chkCenterWindowFit.Size = new System.Drawing.Size(415, 30);
-            this.chkCenterWindowFit.TabIndex = 47;
+            this.chkCenterWindowFit.TabIndex = 15;
             this.chkCenterWindowFit.Text = "[Auto center the window in Window Fit mode]";
             this.chkCenterWindowFit.UseVisualStyleBackColor = true;
             // 
@@ -711,7 +711,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 748);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
-            this.lnkResetBackgroundColor.TabIndex = 15;
+            this.lnkResetBackgroundColor.TabIndex = 17;
             this.lnkResetBackgroundColor.TabStop = true;
             this.lnkResetBackgroundColor.Text = "Reset";
             this.lnkResetBackgroundColor.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
@@ -912,6 +912,18 @@ namespace ImageGlass
             this.tabImage.Size = new System.Drawing.Size(799, 583);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // chkShowSlideshowCountdown
+            // 
+            this.chkShowSlideshowCountdown.AutoSize = true;
+            this.chkShowSlideshowCountdown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowSlideshowCountdown.Location = new System.Drawing.Point(45, 1651);
+            this.chkShowSlideshowCountdown.Margin = new System.Windows.Forms.Padding(2);
+            this.chkShowSlideshowCountdown.Name = "chkShowSlideshowCountdown";
+            this.chkShowSlideshowCountdown.Size = new System.Drawing.Size(245, 30);
+            this.chkShowSlideshowCountdown.TabIndex = 38;
+            this.chkShowSlideshowCountdown.Text = "[Show countdown timer]";
+            this.chkShowSlideshowCountdown.UseVisualStyleBackColor = true;
             // 
             // chkIsCenterImage
             // 
@@ -1338,7 +1350,7 @@ namespace ImageGlass
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(2);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(630, 30);
-            this.chkLoopSlideshow.TabIndex = 33;
+            this.chkLoopSlideshow.TabIndex = 37;
             this.chkLoopSlideshow.Text = "[Loop back slideshow to the first image when reaching the end of the list]";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             // 
@@ -1380,7 +1392,7 @@ namespace ImageGlass
             this.barInterval.Minimum = 1;
             this.barInterval.Name = "barInterval";
             this.barInterval.Size = new System.Drawing.Size(599, 69);
-            this.barInterval.TabIndex = 34;
+            this.barInterval.TabIndex = 39;
             this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
             this.barInterval.Value = 38;
             this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
@@ -1770,7 +1782,7 @@ namespace ImageGlass
             this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
             this.chkShowPageNavAuto.Size = new System.Drawing.Size(490, 30);
-            this.chkShowPageNavAuto.TabIndex = 59;
+            this.chkShowPageNavAuto.TabIndex = 58;
             this.chkShowPageNavAuto.Text = "[Auto-show Page navigation tool for multi-page image]";
             this.chkShowPageNavAuto.UseVisualStyleBackColor = true;
             // 
@@ -2294,7 +2306,7 @@ namespace ImageGlass
             this.lblKeyboard.Name = "lblKeyboard";
             this.lblKeyboard.Padding = new System.Windows.Forms.Padding(14, 0, 14, 0);
             this.lblKeyboard.Size = new System.Drawing.Size(254, 50);
-            this.lblKeyboard.TabIndex = 9;
+            this.lblKeyboard.TabIndex = 7;
             this.lblKeyboard.Tag = "0";
             this.lblKeyboard.Text = "[Keyboard]";
             this.lblKeyboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2395,18 +2407,6 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1068, 72);
             this.panel4.TabIndex = 18;
-            // 
-            // chkShowSlideshowCountdown
-            // 
-            this.chkShowSlideshowCountdown.AutoSize = true;
-            this.chkShowSlideshowCountdown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowSlideshowCountdown.Location = new System.Drawing.Point(45, 1651);
-            this.chkShowSlideshowCountdown.Margin = new System.Windows.Forms.Padding(2);
-            this.chkShowSlideshowCountdown.Name = "chkShowSlideshowCountdown";
-            this.chkShowSlideshowCountdown.Size = new System.Drawing.Size(245, 30);
-            this.chkShowSlideshowCountdown.TabIndex = 65;
-            this.chkShowSlideshowCountdown.Text = "[Show countdown timer]";
-            this.chkShowSlideshowCountdown.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
