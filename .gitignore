@@ -11,6 +11,7 @@
 [Dd]ebug/
 [Rr]elease/
 x64/
+x86/
 build/
 [Bb]in/
 [Oo]bj/
@@ -154,23 +155,16 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # Mac desktop service store files
-.DS_Store
 *.cache
-*.cache
-*.cache
-Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-Source/.vs/ImageGlass.sqlite
-*.cache
-*.cache
-*.sqlite
-.vs/VSWorkspaceState.json
-Setup/ImageGlass_4.0.4.15.exe
-Setup/ImageGlass_4.1.7.26.exe
-/Source/.vs/ImageGlass/v15/Server/sqlite3
 *.ide
-*.lock
 *.ide-shm
 *.ide-wal
-*.ide
+*.lock
+*.sqlite
+.DS_Store
+.vs/VSWorkspaceState.json
+/Source/.vs/ImageGlass/v15/Server/sqlite3
+Setup/*.zip
+Source/.vs/ImageGlass.sqlite
+Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 
-Setup/
