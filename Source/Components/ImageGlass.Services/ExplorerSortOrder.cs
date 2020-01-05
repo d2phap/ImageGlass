@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
 
 namespace ImageGlass.Services
 {
@@ -46,10 +46,10 @@ namespace ImageGlass.Services
         };
 
         [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder32(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref Int32 isAscending);
+        private static extern int GetExplorerSortOrder32(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
 
         [DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        public static extern int GetExplorerSortOrder64(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref Int32 isAscending);
+        private static extern int GetExplorerSortOrder64(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
 
         /// <summary>
         /// Determines the sorting order of a Windows Explorer window which matches
@@ -71,9 +71,9 @@ namespace ImageGlass.Services
 
             try
             {
-                string folderPath = Path.GetDirectoryName(fullPath);
+                var folderPath = Path.GetDirectoryName(fullPath);
 
-                StringBuilder sb = new StringBuilder(200); // arbitrary length should fit any
+                var sb = new StringBuilder(200); // arbitrary length should fit any
                 int explorerSortResult;
                 int ascend = -1;
 
@@ -93,7 +93,7 @@ namespace ImageGlass.Services
 
                 // Success! Attempt to translate the Explorer column to our supported
                 // sort order values.
-                string column = sb.ToString();
+                var column = sb.ToString();
                 if (SortTranslation.ContainsKey(column))
                 {
                     loadOrder = SortTranslation[column];

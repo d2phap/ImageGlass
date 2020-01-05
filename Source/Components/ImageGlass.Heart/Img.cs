@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -54,9 +54,15 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// Gets, sets number if image frames
+        /// Gets, sets number of image pages
         /// </summary>
-        public int FrameCount { get; private set; } = 0;
+        public int PageCount { get; private set; } = 0;
+
+
+        /// <summary>
+        /// Gets, sets the active page index
+        /// </summary>
+        public int ActivePageIndex { get; private set; } = 0;
 
         #endregion
 
@@ -81,7 +87,7 @@ namespace ImageGlass.Heart
         {
             this.IsDone = false;
             this.Error = null;
-            this.FrameCount = 0;
+            this.PageCount = 0;
 
             if (this.Image != null)
             {
@@ -97,7 +103,8 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1)
+        /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false)
         {
             // reset done status
             this.IsDone = false;
@@ -110,15 +117,16 @@ namespace ImageGlass.Heart
                 // load image data
                 this.Image = await Photo.LoadAsync(
                     filename: this.Filename,
-                    size,
-                    colorProfileName,
-                    isApplyColorProfileForAll,
-                    channel: channel
+                    size: size,
+                    colorProfileName: colorProfileName,
+                    isApplyColorProfileForAll: isApplyColorProfileForAll,
+                    channel: channel,
+                    useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
 
-                // Get frame count
-                FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-                this.FrameCount = this.Image.GetFrameCount(dim);
+                // Get page count
+                var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+                this.PageCount = this.Image.GetFrameCount(dim);
             }
             catch (Exception ex)
             {
@@ -141,6 +149,39 @@ namespace ImageGlass.Heart
         public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
         {
             return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
+        }
+
+
+        /// <summary>
+        /// Sets active page index
+        /// </summary>
+        /// <param name="index">Page index</param>
+        public void SetActivePage(int index)
+        {
+            // Check if page index is greater than upper limit
+            if (index >= this.PageCount)
+                index = 0;
+
+            // Check if page index is less than lower limit
+            if (index < 0)
+                index = this.PageCount - 1;
+
+            this.ActivePageIndex = index;
+
+            // Set active page index
+            FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+            this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
+        }
+
+
+        /// <summary>
+        /// Save image pages to files
+        /// </summary>
+        /// <param name="destFolder">The destination folder to save to</param>
+        /// <returns></returns>
+        public async Task SaveImagePages(string destFolder)
+        {
+            await Photo.SaveImagePagesAsync(this.Filename, destFolder);
         }
 
         #endregion

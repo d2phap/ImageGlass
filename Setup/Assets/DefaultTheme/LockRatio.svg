@@ -1,0 +1,23 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_4" height="19.312356" width="19.249877" y="0.343822" x="0.375062" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" transform="rotate(-90 10.000000000000002,10) " stroke="#fff"/>
+  <path stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" opacity="0.5" d="m3.4138,12.89379" id="svg_15"/>
+  <g stroke="null" transform="matrix(0.35188784313774735,0,0,0.35315617682901945,1.2670821496154747,1.3955994762519355) " id="svg_24">
+   <rect stroke="null" x="30.603028" y="27.735015" width="22" height="22" id="svg_22" fill="none"/>
+   <g stroke="null" id="svg_20" display="none">
+    <rect stroke="null" width="20" height="20" x="31.603028" y="28.735015" stroke-width="0" fill="url(#gridpattern)" id="svg_21"/>
+   </g>
+  </g>
+  <g stroke="null" transform="matrix(0.5132679861951045,0,0,0.5151179934978228,-5.920325717120704,-5.810334297332091) " id="svg_25">
+   <rect stroke="#fff" fill="none" stroke-width="1.6" stroke-opacity="null" fill-opacity="null" x="29.367116" y="31.655735" width="14.748855" height="11.324199" id="svg_18"/>
+   <path stroke="#fff" fill="none" stroke-width="1.6" stroke-opacity="null" fill-opacity="null" d="m32.837433,23.040664l3.90411,0l0,0c2.15618,0 3.90411,2.03414 3.90411,4.54338c0,2.50924 -1.74793,4.54338 -3.90411,4.54338l-3.90411,0" id="svg_17" transform="rotate(-90 36.74154281616211,27.584035873413082) "/>
+   <ellipse stroke="#fff" fill="#fff" stroke-width="1.6" stroke-opacity="null" cx="36.741543" cy="36.04683" id="svg_16" rx="1.347032" ry="1.347032"/>
+   <rect stroke="#fff" fill="#fff" stroke-width="1.6" stroke-opacity="null" x="36.421908" y="37.850483" width="0.639269" height="1.689497" id="svg_14"/>
+  </g>
+  <g stroke="null" id="svg_27">
+   <rect stroke="#fff" fill="rgba(255,255,255,0.2)" stroke-width="0" x="2.882124" y="3.219032" width="14.235752" height="13.561935" id="svg_1"/>
+  </g>
+ </g>
+</svg>

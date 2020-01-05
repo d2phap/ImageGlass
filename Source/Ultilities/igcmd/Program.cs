@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Library.Image;
-using ImageGlass.Services.Configuration;
+using ImageGlass.Settings;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
@@ -27,8 +28,23 @@ namespace igcmd
 {
     static class Program
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
+
+
+        // Issue #360: IG periodically searching for dismounted device
+        [DllImport("kernel32.dll")]
+        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+
+        [Flags]
+        public enum ErrorModes : uint
+        {
+            SYSTEM_DEFAULT = 0x0,
+            SEM_FAILCRITICALERRORS = 0x0001,
+            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+            SEM_NOGPFAULTERRORBOX = 0x0002,
+            SEM_NOOPENFILEERRORBOX = 0x8000
+        }
 
 
         /// <summary>
@@ -37,6 +53,10 @@ namespace igcmd
         [STAThread]
         static int Main(string[] args)
         {
+            // Issue #360: IG periodically searching for dismounted device
+            // This _must_ be executed first!
+            SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
+
             string topcmd = args[0].ToLower().Trim();
 
             // Windows Vista or later
@@ -46,25 +66,25 @@ namespace igcmd
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Check if the start up directory writable
-            GlobalSetting.IsStartUpDirWritable = GlobalSetting.CheckStartUpDirWritable();
+            // Load user configs
+            Configs.Load();
             
 
-            //Set desktop wallpaper
+            // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper")
             {
-                //Get image's path
+                // Get image's path
                 string imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2)
                 {
-                    //Get style
+                    // Get style
                     Enum.TryParse(args[2], out style);
                 }
 
-                //Apply changes and return exit code
+                // Apply changes and return exit code
                 return (int)DesktopWallapaper.Set(imgPath, style);
             }
             #endregion
@@ -73,14 +93,14 @@ namespace igcmd
             // check for update
             else if (topcmd == "igupdate")
             {
-                Core.CheckForUpdate();
+                return Core.CheckForUpdate() ? 1 : 0;
             }
 
 
             // auto check for update
             else if (topcmd == "igautoupdate")
             {
-                Core.AutoUpdate();
+                return Core.AutoUpdate() ? 1 : 0;
             }
 
 

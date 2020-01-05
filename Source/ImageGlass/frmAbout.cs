@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
+using ImageGlass.Settings;
 using System;
-using System.Drawing;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.Drawing;
 using System.IO;
-using ImageGlass.Services.Configuration;
+using System.Windows.Forms;
 
 namespace ImageGlass
 {
@@ -107,17 +108,17 @@ namespace ImageGlass
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            //Remove tabs header
+            // Remove tabs header
             tab1.Appearance = TabAppearance.FlatButtons;
             tab1.ItemSize = new Size(0, 1);
             tab1.SizeMode = TabSizeMode.Fixed;
 
-            //this.RightToLeft = GlobalSetting.LangPack.IsRightToLeftLayout;
+            // this.RightToLeft = Configs.Language.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
-            lblVersion.Text = String.Format(GlobalSetting.LangPack.Items["frmAbout.lblVersion"], Application.ProductVersion) + (GlobalSetting.IsStartUpDirWritable ? " " + GlobalSetting.LangPack.Items["frmAbout._PortableText"] : "");
+            lblVersion.Text = String.Format(Configs.Language.Items["frmAbout.lblVersion"], Application.ProductVersion) + (App.IsPortable ? " " + Configs.Language.Items["frmAbout._PortableText"] : "");
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
-            //Load item component
+            // Load item component
             txtComponents.Text = "";
             foreach (string f in Directory.GetFiles(Application.StartupPath))
             {
@@ -133,15 +134,15 @@ namespace ImageGlass
                 }
             }
 
-            //Load language:
-            lblSlogant.Text = GlobalSetting.LangPack.Items["frmAbout.lblSlogant"];
-            lblInfo.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfo"];
-            lblComponent.Text = GlobalSetting.LangPack.Items["frmAbout.lblComponent"];
-            lblReferences.Text = GlobalSetting.LangPack.Items["frmAbout.lblReferences"];
-            lblInfoContact.Text = GlobalSetting.LangPack.Items["frmAbout.lblInfoContact"];
-            lblSoftwareUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lblSoftwareUpdate"];
-            lnkCheckUpdate.Text = GlobalSetting.LangPack.Items["frmAbout.lnkCheckUpdate"];
-            Text = GlobalSetting.LangPack.Items["frmAbout._Text"];
+            // Load language:
+            this.Text = Configs.Language.Items["frmAbout._Text"];
+            lblSlogant.Text = Configs.Language.Items["frmAbout.lblSlogant"];
+            lblInfo.Text = Configs.Language.Items["frmAbout.lblInfo"];
+            lblComponent.Text = Configs.Language.Items["frmAbout.lblComponent"];
+            lblReferences.Text = Configs.Language.Items["frmAbout.lblReferences"];
+            lblInfoContact.Text = Configs.Language.Items["frmAbout.lblInfoContact"];
+            lblSoftwareUpdate.Text = Configs.Language.Items["frmAbout.lblSoftwareUpdate"];
+            lnkCheckUpdate.Text = Configs.Language.Items["frmAbout.lnkCheckUpdate"];
             
         }
 
@@ -169,7 +170,8 @@ namespace ImageGlass
         {
             try
             {
-                string version = Application.ProductVersion.Replace(".", "_");
+                string version = App.Version;
+
                 Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
             catch { }
@@ -179,7 +181,8 @@ namespace ImageGlass
         {
             try
             {
-                string version = Application.ProductVersion.Replace(".", "_");
+                string version = App.Version;
+
                 Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
             catch { }
@@ -196,10 +199,7 @@ namespace ImageGlass
 
         private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(Application.StartupPath, "igcmd.exe");
-            p.StartInfo.Arguments = "igupdate";
-            p.Start();
+            Program.CheckForUpdate();
         }
         #endregion
 
@@ -240,7 +240,8 @@ namespace ImageGlass
         {
             try
             {
-                string version = Application.ProductVersion.Replace(".", "_");
+                string version = App.Version;
+
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Services.Configuration;
+using ImageGlass.Base;
+using ImageGlass.Settings;
 using System;
 using System.Windows.Forms;
 
@@ -27,21 +28,14 @@ namespace ImageGlass
     {
         private bool _isAllowFormClosed = false;
         public string FileFormat { get; set; }
-        public ImageFormatGroup FormatGroup { get; set; }
 
         public frmAddNewFormat()
         {
             InitializeComponent();
-
-            // Add group items
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Default"]);
-            cmbFormatGroup.Items.Add(GlobalSetting.LangPack.Items["_.ImageFormatGroup.Optional"]);
-            cmbFormatGroup.SelectedIndex = 0;
             
-            lblFileExtension.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFileExtension"];
-            lblFormatGroup.Text = GlobalSetting.LangPack.Items[$"{this.Name}.lblFormatGroup"];
-            btnOK.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnOK"];
-            btnClose.Text = GlobalSetting.LangPack.Items[$"{this.Name}.btnClose"];
+            lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
+            btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
+            btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -53,15 +47,17 @@ namespace ImageGlass
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileFormat = txtFileExtension.Text.ToLower().Trim();
-            FormatGroup = (ImageFormatGroup)cmbFormatGroup.SelectedIndex;
 
-            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || GlobalSetting.AllImageFormats.Contains(FileFormat))
+            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllFormats.Contains(FileFormat))
             {
                 txtFileExtension.Focus();
                 return;
             }
 
-            FileFormat = $"*{FileFormat};"; //standalize extension string
+            // KBR 20191212 doing this causes the extension to be shown as (e.g.) "*.foo;" in the dialog,
+            // and as (initially) saved to the config file. Seems to serve no purpose.
+            //FileFormat = $"*{FileFormat};"; // standalize extension string
+
             DialogResult = DialogResult.OK;
             _isAllowFormClosed = true;
         }
@@ -69,7 +65,6 @@ namespace ImageGlass
         private void frmAddNewFormat_Load(object sender, EventArgs e)
         {
             txtFileExtension.Text = this.FileFormat;
-            cmbFormatGroup.SelectedIndex = (int) this.FormatGroup;
 
             txtFileExtension.Focus();
         }
@@ -82,7 +77,7 @@ namespace ImageGlass
 
         private void frmAddNewFormat_KeyDown(object sender, KeyEventArgs e)
         {
-            //close dialog
+            // close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
             {
                 DialogResult = DialogResult.Cancel;

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -109,7 +110,13 @@ namespace ImageGlass.Heart
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
-        public int MaxQueue { get; set; } = 1;
+        public uint MaxQueue { get; set; } = 1;
+
+
+        /// <summary>
+        /// Gets, sests the value indicates that returns the embedded thumbnail if found.
+        /// </summary>
+        public bool UseEmbeddedThumbnail { get; set; } = false;
 
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
@@ -209,6 +216,7 @@ namespace ImageGlass.Heart
                 }
             }
 
+
             // update new index of free list
             this.FreeList.Clear();
             this.FreeList.AddRange(list);
@@ -242,11 +250,12 @@ namespace ImageGlass.Heart
                     if (!img.IsDone)
                     {
                         // start loading image file
-                        _ = img.LoadAsync(
+                        await img.LoadAsync(
                             size: this.ImgSize,
                             colorProfileName: this.ColorProfileName,
                             isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                            channel: this.Channels
+                            channel: this.Channels,
+                            useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                         );
                     }
                 }
@@ -284,8 +293,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
+        /// <param name="pageIndex">The index of image page to display (if it's multi-page)</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false)
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = 0)
         {
             // reload fresh new image data
             if (isSkipCache)
@@ -294,7 +304,8 @@ namespace ImageGlass.Heart
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
                     isApplyColorProfileForAll: this.IsApplyColorProfileForAll,
-                    channel: this.Channels
+                    channel: this.Channels,
+                    useEmbeddedThumbnail: this.UseEmbeddedThumbnail
                 );
             }
             // get image data from cache
@@ -306,18 +317,26 @@ namespace ImageGlass.Heart
 
 
             // wait until the image loading is done
-            while (!this.ImgList[index].IsDone)
+            if (ImgList.Count > 0)
             {
-                await Task.Delay(1);
+                while (!this.ImgList[index].IsDone)
+                {
+                    await Task.Delay(1);
+                }
             }
 
             // Trigger event OnFinishLoadingImage
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (this.ImgList[index].Error == null)
+            if (ImgList.Count > 0)
             {
-                return this.ImgList[index];
+                if (ImgList[index].Error == null)
+                {
+                    ImgList[index].SetActivePage(pageIndex);
+                }
+
+                return ImgList[index];
             }
 
             return null;
@@ -333,7 +352,7 @@ namespace ImageGlass.Heart
         {
             try
             {
-                if (this.ImgList[index] != null)
+                if (ImgList.Count > 0 && ImgList[index] != null)
                 {
                     return this.ImgList[index].Filename;
                 }
@@ -359,6 +378,7 @@ namespace ImageGlass.Heart
                 this.ImgList[index].Filename = filename;
             }
         }
+
 
 
         /// <summary>

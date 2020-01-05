@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2017 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,25 @@ namespace ImageGlass.Library
             return false;
         }
 
+        /// <summary>
+        /// Is the form's rectangle _anywhere_ on screen. Allows the form to
+        /// be off the edge of the screen, which is legit.
+        /// </summary>
+        /// <param name="bounds"></param>
+        /// <returns></returns>
+        public static bool IsAnyPartOnScreen(Rectangle bounds)
+        {
+            Screen[] screens = Screen.AllScreens;
+            foreach (Screen screen in screens)
+            {
+                if (screen.WorkingArea.IntersectsWith(bounds))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
         static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);

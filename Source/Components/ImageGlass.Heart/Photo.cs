@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 using System.Linq;
-using System;
 
 namespace ImageGlass.Heart
 {
-    public class Photo
+    public static class Photo
     {
 
         #region Load image / thumbnail
@@ -39,8 +39,8 @@ namespace ImageGlass.Heart
         /// <param name="colorProfileName">Name or Full path of color profile</param>
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
-        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <param name="channel">MagickImage.Channel value</param>
+        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns>Bitmap</returns>
         public static Bitmap Load(
             string filename,
@@ -48,8 +48,8 @@ namespace ImageGlass.Heart
             string colorProfileName = "sRGB",
             bool isApplyColorProfileForAll = false,
             int quality = 100,
-            bool useEmbeddedThumbnails = false,
-            int channel = -1
+            int channel = -1,
+            bool useEmbeddedThumbnails = false
         )
         {
             Bitmap bitmap = null;
@@ -86,58 +86,24 @@ namespace ImageGlass.Heart
                     break;
 
                 case ".ICO":
-                    using (var imgColl = new MagickImageCollection(filename, settings))
+                case ".TIF":
+                case ".WEBP":
+                    try
                     {
-                        if (imgColl.Count > 0)
+                        using (var imgColl = new MagickImageCollection(filename, settings))
                         {
-                            // Get the biggest image in the collection
-                            using (var imgM = imgColl.OrderByDescending(frame => frame.Width).First())
-                            {
-                                using (var channelImgM = ApplyColorChannel((MagickImage)imgM))
-                                {
-                                    bitmap = channelImgM.ToBitmap();
-                                }
-                            }
+                            bitmap = imgColl.ToBitmap();
                         }
                     }
-                    break;
-
-                case ".TIF":
-                    using (var imgColl = new MagickImageCollection(filename, settings))
+                    catch
                     {
-                        bitmap = imgColl.ToBitmap();
+                        // Issue #637: MagickImageCollection falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
                     }
                     break;
 
                 default:
-
-                    // Issue #530: ImageMagick falls over if the file path is longer than the (old)
-                    // windows limit of 260 characters. Workaround is to read the file bytes, but 
-                    // that requires using the "long path name" prefix to succeed.
-                    if (filename.Length > 255)
-                    {
-                        filename = Helpers.PrefixLongPath(filename);
-                        var allbytes = File.ReadAllBytes(filename);
-                        using (var imgM = new MagickImage(allbytes, settings))
-                        {
-                            PreprocesMagickImage(imgM);
-                            using (var channelImgM = ApplyColorChannel(imgM))
-                            {
-                                bitmap = channelImgM.ToBitmap();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (var imgM = new MagickImage(filename, settings))
-                        {
-                            PreprocesMagickImage(imgM);
-                            using (var channelImgM = ApplyColorChannel(imgM))
-                            {
-                                bitmap = channelImgM.ToBitmap();
-                            }
-                        }
-                    }
+                    ReadWithMagickImage();
 
                     break;
             }
@@ -147,33 +113,37 @@ namespace ImageGlass.Heart
             #region Internal Functions 
 
             // Preprocess magick image
-            void PreprocesMagickImage(MagickImage imgM)
+            void PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
             {
                 imgM.Quality = quality;
 
 
-                //Get Exif information
+                // Get Exif information
                 var profile = imgM.GetExifProfile();
 
                 // Use embedded thumbnails if specified
                 if (profile != null && useEmbeddedThumbnails)
                 {
                     // Fetch the embedded thumbnail
-                    bitmap = profile.CreateThumbnail().ToBitmap();
+                    var thumbM = profile.CreateThumbnail();
+                    if (thumbM != null)
+                    {
+                        bitmap = thumbM.ToBitmap();
+                    }
                 }
 
 
                 // Revert to source image if an embedded thumbnail with required size was not found.
                 if (bitmap == null)
                 {
-                    if (profile != null)
+                    if (profile != null && checkRotation)
                     {
-                        // Get Orieantation Flag
-                        var exifTag = profile.GetValue(ExifTag.Orientation);
+                        // Get Orientation Flag
+                        var exifRotationTag = profile.GetValue(ExifTag.Orientation);
 
-                        if (exifTag != null)
+                        if (exifRotationTag != null)
                         {
-                            if (int.TryParse(exifTag.Value.ToString(), out var orientationFlag))
+                            if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
                             {
                                 var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
                                 if (orientationDegree != 0)
@@ -182,7 +152,6 @@ namespace ImageGlass.Heart
                                     imgM.Rotate(orientationDegree);
                                 }
                             }
-
                         }
                     }
 
@@ -242,6 +211,30 @@ namespace ImageGlass.Heart
 
                 return imgM;
             }
+
+
+            void ReadWithMagickImage()
+            {
+                // Issue #530: ImageMagick falls over if the file path is longer than the (old)
+                // windows limit of 260 characters. Workaround is to read the file bytes, but 
+                // that requires using the "long path name" prefix to succeed.
+
+                //filename = Helpers.PrefixLongPath(filename);
+                //var allBytes = File.ReadAllBytes(filename);
+
+                // TODO: there is a bug of using bytes[]:
+                // https://github.com/dlemstra/Magick.NET/issues/538
+                using (var imgM = new MagickImage(filename, settings))
+                {
+                    var checkRotation = ext != ".HEIC";
+                    PreprocesMagickImage(imgM, checkRotation);
+
+                    using (var channelImgM = ApplyColorChannel(imgM))
+                    {
+                        bitmap = channelImgM.ToBitmap();
+                    }
+                }
+            }
             #endregion
 
 
@@ -258,14 +251,23 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <param name="channel">MagickImage.Channel value</param>
+        /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1)
+        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
         {
             Bitmap bitmap = null;
 
             await Task.Run(() =>
             {
-                bitmap = Load(filename, size, colorProfileName, isApplyColorProfileForAll, quality, useEmbeddedThumbnails: false, channel: channel);
+                bitmap = Load(
+                    filename,
+                    size,
+                    colorProfileName,
+                    isApplyColorProfileForAll,
+                    quality,
+                    channel: channel,
+                    useEmbeddedThumbnail
+                );
             }).ConfigureAwait(false);
 
 
@@ -363,6 +365,42 @@ namespace ImageGlass.Heart
                 }
             }
         }
+
+
+        /// <summary>
+        /// Save image pages to files
+        /// </summary>
+        /// <param name="filename">The full path of source file</param>
+        /// <param name="destFileName">The destination folder to save to</param>
+        public static async Task SaveImagePagesAsync(string filename, string destFolder)
+        {
+            await Task.Run(() =>
+            {
+                // create dirs unless it does not exist
+                Directory.CreateDirectory(destFolder);
+
+                using (var imgColl = new MagickImageCollection(filename))
+                {
+                    var index = 0;
+                    foreach (var imgM in imgColl)
+                    {
+                        index++;
+                        imgM.Quality = 100;
+
+                        try
+                        {
+                            var newFilename = Path.GetFileNameWithoutExtension(filename) + " - " +
+                    index.ToString($"D{imgColl.Count.ToString().Length}") + ".png";
+                            var destFilePath = Path.Combine(destFolder, newFilename);
+
+                            imgM.Write(destFilePath, MagickFormat.Png);
+                        }
+                        catch { }
+                    }
+                }
+            });
+        }
+
 
         #endregion
 
