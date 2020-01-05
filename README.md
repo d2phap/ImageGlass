@@ -14,11 +14,11 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 ## Download & Screen shots
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.0.7.26%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.5.1.1%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/7.0_1.jpg" alt="ImageGlass 7.0.7.26" width="640">
+<img src="https://imageglass.org/upload/photo/release/7.5_1.jpg" alt="ImageGlass 7.5.1.1" width="640">
 </a><br/>
 
 
@@ -33,11 +33,12 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 
-## Documentations
+## Docs
 
 [![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/features)
 [![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/supported-formats)
 [![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/ui-shortcuts-reference)
+[![App configuration](https://img.shields.io/badge/docs-App%20configuration-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/app-configs)
 [![Command line utilities](https://img.shields.io/badge/docs-Command%20lines%20Utils-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/command-line-utilities)
 
 
@@ -58,8 +59,8 @@ Thanks for your gratitude and finance help!
 </a>
 
 
-<a href="https://www.patreon.com/bePatron?u=6414896" target="_blank" title="Buy me a beer?">
-<img src="https://img.shields.io/badge/Patron-patron.com%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+<a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
+<img src="https://img.shields.io/badge/Github-github.com%2Fsponsor%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Become a sponsor">
 </a>
 
 
