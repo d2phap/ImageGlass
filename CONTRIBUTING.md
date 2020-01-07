@@ -10,6 +10,7 @@ We welcome any type of contribution, not only code. You can help with
 - **Community**: presenting the project at meetups, organizing a dedicated meetup for the local community, ...
 - **Code**: take a look at the [open issues](https://github.com/d2phap/ImageGlass/issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
 - **Money**: we welcome financial contributions in full transparency on our [Open Collective](https://opencollective.com/imageglass) or [Paypal](https://www.paypal.me/d2phap).
+- **Translation**: because we want our software to be accessible by anyone, even if they don't speak English. We have a [Crowdin page](https://crowdin.com/project/imageglass/invite) to make the translation of Image Glass easier.
 
 
 ## Submitting code
