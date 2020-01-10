@@ -226,6 +226,20 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
+        // IG_CHANGE : provide the ability to control the metadata caching
+        [Category("Behavior"), Description("Controls metadata caching")]
+        public bool MetadataCacheEnabled
+        {
+            set
+            {
+                if (value) 
+                    metadataCache.Resume();
+                else 
+                    metadataCache.Pause();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB).
         /// </summary>

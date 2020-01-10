@@ -1343,6 +1343,7 @@
             this.thumbnailBar.EnableKeyNavigation = false;
             this.thumbnailBar.GroupHeaderFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Location = new System.Drawing.Point(0, 0);
+            this.thumbnailBar.MetadataCacheEnabled = false;
             this.thumbnailBar.MultiSelect = false;
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
