@@ -26,10 +26,46 @@ using System.Linq;
 namespace ImageGlass.Base
 {
     /// <summary>
-    /// The helper functions used globaly
+    /// The helper functions used globally
     /// </summary>
     public static class Helpers
     {
+        /// <summary>
+        /// Determine if a path to a folder is writable. This function assumes
+        /// that the path is a directory and not a file. This function accepts
+        /// a path of any format, unlike CheckPathWritable.
+        /// </summary>
+        /// <param name="path">the path to a folder</param>
+        /// <returns>true if folder is writable</returns>
+        public static bool CheckFolderWritable(string path)
+        {
+            try
+            {
+                var isDirExist = Directory.Exists(path);
+
+                if (!isDirExist)
+                {
+                    Directory.CreateDirectory(path);
+                }
+                    
+                var sampleFile = Path.Combine(path, "test_write_file.temp");
+
+                using (File.Create(sampleFile)) { }
+                File.Delete(sampleFile);
+
+                if (!isDirExist)
+                {
+                    Directory.Delete(path, true);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Check if the given path (file or directory) is writable. 
         /// Note**: This function does not handle the directory name that contains '.'
@@ -49,28 +85,12 @@ namespace ImageGlass.Base
                 // if path is directory
                 else
                 {
-                    var isDirExist = Directory.Exists(path);
-
-                    if (!isDirExist)
-                    {
-                       Directory.CreateDirectory(path);
-                    }
-                    
-                    
-                    var sampleFile = Path.Combine(path, "test_write_file.temp");
-
-                    using (File.Create(sampleFile)) { }
-                    File.Delete(sampleFile);
-
-                    if (!isDirExist)
-                    {
-                        Directory.Delete(path, true);
-                    }
+                    return CheckFolderWritable(path);
                 }
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
