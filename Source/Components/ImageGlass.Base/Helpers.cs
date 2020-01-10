@@ -98,18 +98,23 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert string to int array
+        /// Convert string to int array, where numbers are separated by semicolons
         /// </summary>
-        /// <param name="str">Input string. E.g. "12, -40, 50"</param>
+        /// <param name="str">Input string. E.g. "12; -40; 50"</param>
+        /// <param name="unsignedOnly">whether negative numbers are allowed</param>
+        /// <param name="distinct">whether repitition of values is allowed</param>
         /// <returns></returns>
         public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
         {
-            var args = str.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var args = str.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
             foreach (var item in args)
             {
-                var num = int.Parse(item, Constants.NumberFormat);
+                // Issue #677 : don't throw exception if we encounter invalid number, e.g. the comma-separated zoom values from pre-V7.5
+                if (!int.TryParse(item, System.Globalization.NumberStyles.Integer, Constants.NumberFormat, out var num))
+                    continue;
+
                 if (unsignedOnly && num < 0)
                 {
                     continue;
@@ -128,7 +133,7 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert int array to string
+        /// Convert int array to semi-colon delimited string
         /// </summary>
         /// <param name="array">Input int array</param>
         /// <returns></returns>
@@ -139,15 +144,16 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert string to Rectangle
+        /// Convert string to Rectangle - input string must have four integer values
+        /// (Left;Top;Width;Height)
         /// </summary>
-        /// <param name="str">Input string. E.g. "12, 40, 50"</param>
+        /// <param name="str">Input string. E.g. "12; 40; 50; 60"</param>
         /// <returns></returns>
         public static Rectangle StringToRect(string str)
         {
             var args = StringToIntArray(str);
 
-            if (args.Count() == 4)
+            if (args.Length == 4)
             {
                 return new Rectangle(args[0], args[1], args[2], args[3]);
             }
