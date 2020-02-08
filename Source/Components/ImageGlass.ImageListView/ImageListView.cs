@@ -829,7 +829,7 @@ namespace ImageGlass.ImageListView
                     int current = layoutManager.FirstPartiallyVisible;
                     mView = value;
                     Refresh();
-                    EnsureVisible(current);
+                    ScrollToIndex(current);
                 }
             }
         }
@@ -1441,6 +1441,58 @@ namespace ImageGlass.ImageListView
                 hitInfo = new HitInfo(itemIndex, subItemIndex, checkBoxHit);
             }
         }
+
+
+        /// <summary>
+        /// Scrolls horizontal scrollbar by delta. Checks that scrolling is within
+        /// allowed range. Calls Refresh() if scrolling position was changed.
+        /// </summary>
+        /// <param name="delta">Delta to move scrolling.</param>
+        /// <returns>true if scroll position was changed; false otherwise</returns>
+        private bool ScrollHorizontalDelta(int delta)
+        {
+            int newXOffset = mViewOffset.X - delta;
+            if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
+                newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
+            if (newXOffset < hScrollBar.Minimum)
+                newXOffset = hScrollBar.Minimum;
+            if (newXOffset == mViewOffset.X)
+                return false;
+            mViewOffset.X = newXOffset;
+            mViewOffset.Y = 0;
+            hScrollBar.Value = newXOffset;
+            vScrollBar.Value = 0;
+
+            Refresh();
+            return true;
+        }
+
+
+        /// <summary>
+        /// Scrolls vertical scrollbar by delta. Checks that scrolling is within
+        /// allowed range. Calls Refresh() if scrolling position was changed.
+        /// </summary>
+        /// <param name="delta">Delta to move scrolling.</param>
+        /// <returns>true if scroll position was changed; false otherwise</returns>
+        private bool ScrollVerticalDelta(int delta)
+        {
+            int newYOffset = mViewOffset.Y - delta;
+            if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
+                newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
+            if (newYOffset < vScrollBar.Minimum)
+                newYOffset = vScrollBar.Minimum;
+            if (newYOffset == mViewOffset.Y)
+                return false;
+            mViewOffset.X = 0;
+            mViewOffset.Y = newYOffset;
+            hScrollBar.Value = 0;
+            vScrollBar.Value = newYOffset;
+
+            Refresh();
+            return true;
+        }
+
+
         /// <summary>
         /// Scrolls the image list view to ensure that the item with the specified 
         /// index is visible on the screen.
@@ -1461,36 +1513,46 @@ namespace ImageGlass.ImageListView
             // Scroll to item
             if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
             {
-                int delta = 0;
-                delta = bounds.Left - itemBounds.Left;
-                int newXOffset = mViewOffset.X - delta;
-                if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
-                    newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
-                if (newXOffset < hScrollBar.Minimum)
-                    newXOffset = hScrollBar.Minimum;
-                mViewOffset.X = newXOffset;
-                mViewOffset.Y = 0;
-                hScrollBar.Value = newXOffset;
-                vScrollBar.Value = 0;
+                int delta = bounds.Left - itemBounds.Left;
+                return ScrollHorizontalDelta(delta);
             }
             else
             {
-                int delta = 0;
-                delta = bounds.Top - itemBounds.Top;
-                int newYOffset = mViewOffset.Y - delta;
-                if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
-                    newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
-                if (newYOffset < vScrollBar.Minimum)
-                    newYOffset = vScrollBar.Minimum;
-                mViewOffset.X = 0;
-                mViewOffset.Y = newYOffset;
-                hScrollBar.Value = 0;
-                vScrollBar.Value = newYOffset;
+                int delta = bounds.Top - itemBounds.Top;
+                return ScrollVerticalDelta(delta);
             }
-
-            Refresh();
-            return true;
         }
+
+
+        /// <summary>
+        /// Scrolls the image list view to place the item with the specified
+        /// index as close to the center of the visible area as possible.
+        /// </summary>
+        /// <param name="itemIndex">The index of the item to scroll to.</param>
+        /// <returns>true if the scroll position was changed; otherwise false 
+        /// (item is already centered or the image list view is empty).</returns>
+        public bool ScrollToIndex(int itemIndex)
+        {
+            if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
+                return false;
+
+            Rectangle bounds = layoutManager.ItemAreaBounds;
+            Rectangle itemBounds = layoutManager.GetItemBounds(itemIndex);
+
+            // Align center of the element with center of visible area.
+            if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
+            {
+                int delta = (bounds.Left + bounds.Right) / 2 - (itemBounds.Left + itemBounds.Right) / 2;
+                return ScrollHorizontalDelta(delta);
+            }
+            else
+            {
+                int delta = (bounds.Bottom + bounds.Top) / 2 - (itemBounds.Bottom + itemBounds.Top) / 2;
+                return ScrollVerticalDelta(delta);
+            }
+        }
+
+
         /// <summary>
         /// Determines whether the specified item is visible on the screen.
         /// </summary>
@@ -2016,7 +2078,7 @@ namespace ImageGlass.ImageListView
                     index++;
             }
 
-            EnsureVisible(firstItemIndex);
+            ScrollToIndex(firstItemIndex);
             OnSelectionChangedInternal();
             
         }

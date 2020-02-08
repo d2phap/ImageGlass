@@ -806,7 +806,7 @@ namespace ImageGlass.ImageListView
                             mImageListView.OnSelectionChangedInternal();
                         }
                         mImageListView.Items.FocusedItem = mImageListView.Items[newindex];
-                        mImageListView.EnsureVisible(newindex);
+                        mImageListView.ScrollToIndex(newindex);
                         mImageListView.Refresh();
                     }
                 }

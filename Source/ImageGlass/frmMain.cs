@@ -463,7 +463,7 @@ namespace ImageGlass
                 {
                     thumbnailBar.Items[Local.CurrentIndex].Selected = true;
                     thumbnailBar.Items[Local.CurrentIndex].Focused = true;
-                    thumbnailBar.EnsureVisible(Local.CurrentIndex);
+                    thumbnailBar.ScrollToIndex(Local.CurrentIndex);
                 }
                 catch (Exception) { }
             }
