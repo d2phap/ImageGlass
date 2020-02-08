@@ -361,10 +361,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
+    <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build $(ConfigurationName) /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>resources.bat</PostBuildEvent>
+    <PostBuildEvent>resources.bat $(SolutionDir)</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
