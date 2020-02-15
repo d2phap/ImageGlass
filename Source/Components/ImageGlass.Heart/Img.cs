@@ -69,12 +69,42 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
-        /// The Img class contain image data
+        /// The Img class contain image data. Contruct non-initialized object with file name.
         /// </summary>
         /// <param name="filename">Image filename</param>
         public Img(string filename)
         {
             this.Filename = filename;
+        }
+
+
+        /// <summary>
+        /// The Img class contain image data. Contruct initialized object from existing image.
+        /// </summary>
+        /// <param name="image">Image to use</param>
+        public Img(Bitmap image)
+        {
+            this.Image = image;
+            var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+            this.PageCount = this.Image.GetFrameCount(dim);
+            this.IsDone = true;
+        }
+
+
+        /// <summary>
+        /// Create a clone of current object.
+        /// </summary>
+        /// <returns>New object.</returns>
+        public Img Clone()
+        {
+            Img result = new Img(this.Filename);
+            result.Error = this.Error;
+            result.IsDone = this.IsDone;
+            result.Filename = this.Filename;
+            result.Image = (Bitmap)this.Image.Clone();
+            result.PageCount = this.PageCount;
+            result.ActivePageIndex = this.ActivePageIndex;
+            return result;
         }
 
 
@@ -182,6 +212,35 @@ namespace ImageGlass.Heart
         public async Task SaveImagePages(string destFolder)
         {
             await Photo.SaveImagePagesAsync(this.Filename, destFolder);
+        }
+
+
+        /// <summary>
+        /// Flip (mirror) the image.
+        /// </summary>
+        /// <param name="isHorizontal">If true, image is flipped horizontally; vertically otherwise.</param>
+        public async Task Flip(bool isHorizontal)
+        {
+            if (Image == null)
+            {
+                return;
+            }
+
+            Image = await Heart.Photo.Flip(new Bitmap(Image), isHorizontal);
+        }
+
+        /// <summary>
+        /// Rotate the image.
+        /// </summary>
+        /// <param name="degrees">Degrees to rotate</param>
+        public async Task Rotate(int degrees)
+        {
+            if (Image == null)
+            {
+                return;
+            }
+
+            Image = await Heart.Photo.RotateImage(new Bitmap(Image), degrees);
         }
 
         #endregion
