@@ -405,7 +405,7 @@ namespace ImageGlass
                 this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"];
-                picMain.Image = null;
+                SetMainImage(null);
 
                 return;
             }
@@ -700,7 +700,7 @@ namespace ImageGlass
                 Text = Application.ProductName;
 
                 Local.ImageError = new Exception("File not found.");
-                picMain.Image = null;
+                SetMainImage(null);
                 Local.ImageModifiedPath = "";
 
                 return;
@@ -760,9 +760,6 @@ namespace ImageGlass
             UpdateStatusBar();
 
 
-            // The image data will load
-            Bitmap im = null;
-
             try
             {
                 // apply Color Management settings
@@ -779,7 +776,6 @@ namespace ImageGlass
                     isSkipCache: isSkipCache,
                     pageIndex: pageIndex
                    );
-                im = bmpImg.Image;
 
                 // Update current frame index
                 Local.CurrentPageIndex = bmpImg.ActivePageIndex;
@@ -794,10 +790,7 @@ namespace ImageGlass
                 if (!token.Token.IsCancellationRequested)
                 {
                     // Need to clone to display different image page
-                    picMain.Image = (Bitmap)im.Clone();
-
-
-                    im = null;
+                    SetMainImage(bmpImg.Clone());
 
                     // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
@@ -822,7 +815,7 @@ namespace ImageGlass
             {
                 SetAppBusy(false); // make sure busy state is off if exception during image load
 
-                picMain.Image = null;
+                SetMainImage(null);
                 Local.ImageModifiedPath = "";
                 Local.CurrentPageIndex = 0;
                 Local.CurrentPageCount = 0;
@@ -912,11 +905,11 @@ namespace ImageGlass
                 var imgData = Configs.Language.Items[$"{Name}._ImageData"];
                 zoom = $"{picMain.Zoom.ToString()}%";
 
-                if (picMain.Image != null)
+                if (Local.MainImage != null && Local.MainImage.Image != null)
                 {
                     try
                     {
-                        imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                        imgSize = $"{Local.MainImage.Image.Width} x {Local.MainImage.Image.Height} px";
                     }
                     catch { }
 
@@ -999,11 +992,11 @@ namespace ImageGlass
 
 
                     // image info
-                    if (picMain.Image != null)
+                    if (Local.MainImage != null && Local.MainImage.Image != null)
                     {
                         try
                         {
-                            imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
+                            imgSize = $"{Local.MainImage.Image.Width} x {Local.MainImage.Image.Height} px";
                         }
                         catch { }
 
@@ -1422,6 +1415,16 @@ namespace ImageGlass
 
         #region Private functions
 
+        private void SetMainImage(Heart.Img newImg)
+        {
+            if (Local.MainImage != null)
+            {
+                Local.MainImage.Dispose();
+            }
+            Local.MainImage = newImg;
+            picMain.Image = Local.MainImage != null ? Local.MainImage.Image : null;
+        }
+
         /// <summary>
         /// Handle the event when Dpi changed
         /// </summary>
@@ -1558,7 +1561,7 @@ namespace ImageGlass
         /// <param name="isResetScrollPosition"></param>
         private void ApplyZoomMode(ZoomMode zoomMode, bool isResetScrollPosition = true)
         {
-            if (picMain.Image == null)
+            if (Local.MainImage == null || picMain.Image == null)
             {
                 return;
             }
@@ -1573,12 +1576,12 @@ namespace ImageGlass
             switch (zoomMode)
             {
                 case ZoomMode.ScaleToWidth:
-                    frac = picMain.Width / (1f * picMain.Image.Width);
+                    frac = picMain.Width / (1f * Local.MainImage.Image.Width);
                     picMain.Zoom = frac * 100;
                     break;
 
                 case ZoomMode.ScaleToHeight:
-                    frac = picMain.Height / (1f * picMain.Image.Height);
+                    frac = picMain.Height / (1f * Local.MainImage.Image.Height);
                     picMain.Zoom = frac * 100;
                     break;
 
@@ -1591,16 +1594,16 @@ namespace ImageGlass
                     break;
 
                 case ZoomMode.ScaleToFill:
-                    var widthRatio = picMain.Width / (1f * picMain.Image.Width);
-                    var heightRatio = picMain.Height / (1f * picMain.Image.Height);
+                    var widthRatio = picMain.Width / (1f * Local.MainImage.Image.Width);
+                    var heightRatio = picMain.Height / (1f * Local.MainImage.Image.Height);
 
                     if (widthRatio > heightRatio)
                     {
-                        frac = picMain.Width / (1f * picMain.Image.Width);
+                        frac = picMain.Width / (1f * Local.MainImage.Image.Width);
                     }
                     else
                     {
-                        frac = picMain.Height / (1f * picMain.Image.Height);
+                        frac = picMain.Height / (1f * Local.MainImage.Image.Height);
                     }
 
                     picMain.Zoom = frac * 100;
@@ -1911,7 +1914,7 @@ namespace ImageGlass
             try
             {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
-                var newBitmap = new Bitmap(picMain.Image);
+                var newBitmap = new Bitmap(Local.MainImage.Image);
 
                 // override the current image file
                 Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
@@ -1942,8 +1945,7 @@ namespace ImageGlass
         /// <param name="img"></param>
         private void LoadImageData(Image img)
         {
-            picMain.Image = img;
-            picMain.Text = "";
+            SetMainImage(new Heart.Img(new Bitmap(img)));
             Local.IsTempMemoryData = true;
 
             UpdateStatusBar();
@@ -1963,7 +1965,7 @@ namespace ImageGlass
 
             string filename = Path.Combine(tempDir, "temp_" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".png");
 
-            picMain.Image.Save(filename, ImageFormat.Png);
+            Local.MainImage.Image.Save(filename, ImageFormat.Png);
 
             return filename;
         }
@@ -2194,7 +2196,7 @@ namespace ImageGlass
         /// </summary>
         private void WindowFitMode()
         {
-            if (!Configs.IsWindowFit || picMain.Image == null)
+            if (!Configs.IsWindowFit || Local.MainImage == null || picMain.Image == null)
                 return; // Nothing to do
 
 
@@ -2214,8 +2216,8 @@ namespace ImageGlass
 
             // First, adjust our main window to theoretically fit the entire
             // picture, but not larger than desktop working area.
-            var fullW = Width + picMain.Image.Width - picMain.Width;
-            var fullH = Height + picMain.Image.Height - picMain.Height;
+            var fullW = Width + Local.MainImage.Image.Width - picMain.Width;
+            var fullH = Height + Local.MainImage.Image.Height - picMain.Height;
 
 
             var maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
@@ -2228,8 +2230,8 @@ namespace ImageGlass
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
-            var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
-            var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
+            var newW = (int)(Local.MainImage.Image.Width * picMain.ZoomFactor);
+            var newH = (int)(Local.MainImage.Image.Height * picMain.ZoomFactor);
 
 
             Size = new Size(Width += newW - picMain.Width,
@@ -4205,7 +4207,7 @@ namespace ImageGlass
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopy));
             }
 
-            if (picMain.Image != null)
+            if (Local.MainImage != null && Local.MainImage.Image != null)
             {
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
             }
@@ -4303,10 +4305,7 @@ namespace ImageGlass
 
                         var file_bytes = Convert.FromBase64String(base64str);
                         var file_stream = new MemoryStream(file_bytes);
-                        var file_image = Image.FromStream(file_stream);
-
-                        picMain.Image = file_image;
-                        Local.IsTempMemoryData = true;
+                        LoadImageData(Image.FromStream(file_stream));
                     }
                     catch { }
                 }
@@ -4315,7 +4314,7 @@ namespace ImageGlass
 
         private async void mnuMainSaveAs_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
+            if (Local.MainImage == null || Local.MainImage.Image == null)
             {
                 return;
             }
@@ -4374,7 +4373,7 @@ namespace ImageGlass
 
             if (s.ShowDialog() == DialogResult.OK)
             {
-                Bitmap clonedPic = (Bitmap)picMain.Image;
+                Bitmap clonedPic = (Bitmap)Local.MainImage.Image;
 
                 Local.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
@@ -4688,7 +4687,7 @@ namespace ImageGlass
         private void mnuMainPrint_Click(object sender, EventArgs e)
         {
             //image error
-            if (picMain.Image == null)
+            if (Local.MainImage == null || Local.MainImage.Image == null)
             {
                 return;
             }
@@ -4713,9 +4712,13 @@ namespace ImageGlass
         }
 
 
-        private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Check if the image can be modified and apply the update.
+        /// </summary>
+        /// <param name="update">Image update to be applied</param>
+        private async Task UpdateImage(Func<Task> update)
         {
-            if (picMain.Image == null)
+            if (Local.MainImage == null)
             {
                 return;
             }
@@ -4726,87 +4729,37 @@ namespace ImageGlass
                 return;
             }
 
-
-            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 270);
+            await update();
+            picMain.Image = Local.MainImage.Image;
 
             if (!Local.IsTempMemoryData)
             {
                 // Save the image path for saving
                 Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
             }
+        }
 
+
+        private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
+        {
+            await UpdateImage(async () => { await Local.MainImage.Rotate(270); });
             ApplyZoomMode(Configs.ZoomMode);
         }
 
         private async void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            if (picMain.CanAnimate)
-            {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
-                return;
-            }
-
-
-            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 90);
-
-            if (!Local.IsTempMemoryData)
-            {
-                // Save the image path for saving
-                Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
-            }
-
+            await UpdateImage(async () => { await Local.MainImage.Rotate(90); });
             ApplyZoomMode(Configs.ZoomMode);
         }
 
         private async void mnuMainFlipHorz_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            if (picMain.CanAnimate)
-            {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
-                return;
-            }
-
-
-            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: true);
-
-            if (!Local.IsTempMemoryData)
-            {
-                // Save the image path for saving
-                Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
-            }
+            await UpdateImage(async () => { await Local.MainImage.Flip(isHorizontal: true); });
         }
 
         private async void mnuMainFlipVert_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
-
-            if (picMain.CanAnimate)
-            {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
-                return;
-            }
-
-
-            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: false);
-
-            if (!Local.IsTempMemoryData)
-            {
-                // Save the image path for saving
-                Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
-            }
+            await UpdateImage(async () => { await Local.MainImage.Flip(isHorizontal: false); });
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e)
@@ -5143,9 +5096,9 @@ namespace ImageGlass
 
         private void mnuMainCopyImageData_Click(object sender, EventArgs e)
         {
-            if (picMain.Image != null)
+            if (Local.MainImage != null && Local.MainImage.Image != null)
             {
-                Clipboard.SetImage(picMain.Image);
+                Clipboard.SetImage(Local.MainImage.Image);
                 ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }

@@ -35,6 +35,11 @@ namespace ImageGlass
         #region Auto Properties
 
         /// <summary>
+        /// Gets, sets main image data
+        /// </summary>
+        public static Heart.Img MainImage { get; set; } = null;
+
+        /// <summary>
         /// Gets, sets index of the viewing image
         /// </summary>
         public static int CurrentIndex { get; set; } = -1;
