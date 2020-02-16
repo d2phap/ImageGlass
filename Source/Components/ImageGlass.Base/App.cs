@@ -43,9 +43,10 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Gets value of Portable mode if the startup dir is writtable
+        /// Gets value of Portable mode if the startup dir is writable
         /// </summary>
-        public static bool IsPortable { get => Helpers.CheckPathWritable(StartUpDir()); }
+        // Issue #676 switch to CheckFolderWritable
+        public static bool IsPortable => Helpers.CheckFolderWritable(StartUpDir());
 
 
         /// <summary>
@@ -74,7 +75,8 @@ namespace ImageGlass.Base
         {
             // use StartUp dir if it's writable
             var startUpDir = StartUpDir(paths);
-            if (Helpers.CheckPathWritable(startUpDir))
+            // Issue #676 switch to CheckFolderWritable
+            if (Helpers.CheckFolderWritable(startUpDir))
             {
                 return startUpDir;
             }

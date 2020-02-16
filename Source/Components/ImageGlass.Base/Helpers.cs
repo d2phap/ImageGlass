@@ -26,10 +26,46 @@ using System.Linq;
 namespace ImageGlass.Base
 {
     /// <summary>
-    /// The helper functions used globaly
+    /// The helper functions used globally
     /// </summary>
     public static class Helpers
     {
+        /// <summary>
+        /// Determine if a path to a folder is writable. This function assumes
+        /// that the path is a directory and not a file. This function accepts
+        /// a path of any format, unlike CheckPathWritable.
+        /// </summary>
+        /// <param name="path">the path to a folder</param>
+        /// <returns>true if folder is writable</returns>
+        public static bool CheckFolderWritable(string path)
+        {
+            try
+            {
+                var isDirExist = Directory.Exists(path);
+
+                if (!isDirExist)
+                {
+                    Directory.CreateDirectory(path);
+                }
+                    
+                var sampleFile = Path.Combine(path, "test_write_file.temp");
+
+                using (File.Create(sampleFile)) { }
+                File.Delete(sampleFile);
+
+                if (!isDirExist)
+                {
+                    Directory.Delete(path, true);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Check if the given path (file or directory) is writable. 
         /// Note**: This function does not handle the directory name that contains '.'
@@ -49,28 +85,12 @@ namespace ImageGlass.Base
                 // if path is directory
                 else
                 {
-                    var isDirExist = Directory.Exists(path);
-
-                    if (!isDirExist)
-                    {
-                       Directory.CreateDirectory(path);
-                    }
-                    
-                    
-                    var sampleFile = Path.Combine(path, "test_write_file.temp");
-
-                    using (File.Create(sampleFile)) { }
-                    File.Delete(sampleFile);
-
-                    if (!isDirExist)
-                    {
-                        Directory.Delete(path, true);
-                    }
+                    return CheckFolderWritable(path);
                 }
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -78,18 +98,23 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert string to int array
+        /// Convert string to int array, where numbers are separated by semicolons
         /// </summary>
-        /// <param name="str">Input string. E.g. "12, -40, 50"</param>
+        /// <param name="str">Input string. E.g. "12; -40; 50"</param>
+        /// <param name="unsignedOnly">whether negative numbers are allowed</param>
+        /// <param name="distinct">whether repitition of values is allowed</param>
         /// <returns></returns>
         public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
         {
-            var args = str.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var args = str.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
             foreach (var item in args)
             {
-                var num = int.Parse(item, Constants.NumberFormat);
+                // Issue #677 : don't throw exception if we encounter invalid number, e.g. the comma-separated zoom values from pre-V7.5
+                if (!int.TryParse(item, System.Globalization.NumberStyles.Integer, Constants.NumberFormat, out var num))
+                    continue;
+
                 if (unsignedOnly && num < 0)
                 {
                     continue;
@@ -108,7 +133,7 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert int array to string
+        /// Convert int array to semi-colon delimited string
         /// </summary>
         /// <param name="array">Input int array</param>
         /// <returns></returns>
@@ -119,15 +144,16 @@ namespace ImageGlass.Base
 
 
         /// <summary>
-        /// Convert string to Rectangle
+        /// Convert string to Rectangle - input string must have four integer values
+        /// (Left;Top;Width;Height)
         /// </summary>
-        /// <param name="str">Input string. E.g. "12, 40, 50"</param>
+        /// <param name="str">Input string. E.g. "12; 40; 50; 60"</param>
         /// <returns></returns>
         public static Rectangle StringToRect(string str)
         {
             var args = StringToIntArray(str);
 
-            if (args.Count() == 4)
+            if (args.Length == 4)
             {
                 return new Rectangle(args[0], args[1], args[2], args[3]);
             }

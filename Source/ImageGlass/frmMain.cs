@@ -5234,10 +5234,12 @@ namespace ImageGlass
                     // KBR 20190302 Issue #483: reset splitter width if it gets out of whack somehow
                     if ((sp1.Width - Configs.ThumbnailBarWidth) < 1)
                     {
-                        Configs.ThumbnailBarWidth = (uint)Math.Min(128, sp1.Width);
+                        minSize = (uint)Math.Min(128, sp1.Width);
+                        Configs.ThumbnailBarWidth = minSize;
                     }
 
-                    sp1.SplitterDistance = sp1.Width - (int)minSize;
+                    // KBR 20200110 Issue #678 : restore saved thumbnail panel size
+                    sp1.SplitterDistance = sp1.Width - (int)Configs.ThumbnailBarWidth;
                     thumbnailBar.View = ImageListView.View.Thumbnails;
                 }
             }

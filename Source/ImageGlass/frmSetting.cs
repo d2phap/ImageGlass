@@ -44,7 +44,10 @@ namespace ImageGlass
             imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
             imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
 
+            txtZoomLevels.KeyPress += TxtZoomLevels_KeyPress; // Filter user input for zoom levels
+
         }
+
 
         #region PROPERTIES
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
@@ -809,6 +812,19 @@ namespace ImageGlass
                 Process.Start("explorer.exe", "/select,\"" +
                     lnkColorProfilePath.Text + "\"");
             }
+        }
+
+        // Part of issue #677: zoom levels MUST be positive integers, delimited by semicolons.
+        // Prevent the user from entering anything else!
+        private void TxtZoomLevels_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var keyval = e.KeyChar;
+            bool accept = char.IsDigit(keyval) ||
+                          keyval == ';' || 
+                          keyval == (char) Keys.Back || 
+                          keyval == (char)Keys.Space;
+            if (!accept)
+                e.Handled = true;
         }
 
         #endregion
