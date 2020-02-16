@@ -728,7 +728,7 @@ namespace ImageGlass.ImageListView
 
             #region Key Event Handlers
             /// <summary>
-            /// [Pháp] Handles control's KeyDown event.
+            /// [IG_Change] Handles control's KeyDown event.
             /// </summary>
             public void KeyDown(KeyEventArgs e)
             {

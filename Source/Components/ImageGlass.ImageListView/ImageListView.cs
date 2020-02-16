@@ -816,7 +816,7 @@ namespace ImageGlass.ImageListView
             }
         }
         /// <summary>
-        /// Gets or sets the view mode of the image list view.
+        /// [IG_Change] Gets or sets the view mode of the image list view.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the view mode of the image list view."), DefaultValue(typeof(View), "Thumbnails")]
         public View View
@@ -1444,7 +1444,7 @@ namespace ImageGlass.ImageListView
 
 
         /// <summary>
-        /// Scrolls horizontal scrollbar by delta. Checks that scrolling is within
+        /// [IG_New] Scrolls horizontal scrollbar by delta. Checks that scrolling is within
         /// allowed range. Calls Refresh() if scrolling position was changed.
         /// </summary>
         /// <param name="delta">Delta to move scrolling.</param>
@@ -1452,24 +1452,27 @@ namespace ImageGlass.ImageListView
         private bool ScrollHorizontalDelta(int delta)
         {
             int newXOffset = mViewOffset.X - delta;
+
             if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
                 newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
             if (newXOffset < hScrollBar.Minimum)
                 newXOffset = hScrollBar.Minimum;
             if (newXOffset == mViewOffset.X)
                 return false;
+
             mViewOffset.X = newXOffset;
             mViewOffset.Y = 0;
             hScrollBar.Value = newXOffset;
             vScrollBar.Value = 0;
 
             Refresh();
+
             return true;
         }
 
 
         /// <summary>
-        /// Scrolls vertical scrollbar by delta. Checks that scrolling is within
+        /// [IG_New] Scrolls vertical scrollbar by delta. Checks that scrolling is within
         /// allowed range. Calls Refresh() if scrolling position was changed.
         /// </summary>
         /// <param name="delta">Delta to move scrolling.</param>
@@ -1477,24 +1480,27 @@ namespace ImageGlass.ImageListView
         private bool ScrollVerticalDelta(int delta)
         {
             int newYOffset = mViewOffset.Y - delta;
+
             if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
                 newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
             if (newYOffset < vScrollBar.Minimum)
                 newYOffset = vScrollBar.Minimum;
             if (newYOffset == mViewOffset.Y)
                 return false;
+
             mViewOffset.X = 0;
             mViewOffset.Y = newYOffset;
             hScrollBar.Value = 0;
             vScrollBar.Value = newYOffset;
 
             Refresh();
+
             return true;
         }
 
 
         /// <summary>
-        /// Scrolls the image list view to ensure that the item with the specified 
+        /// [IG_Change] Scrolls the image list view to ensure that the item with the specified 
         /// index is visible on the screen.
         /// </summary>
         /// <param name="itemIndex">The index of the item to make visible.</param>
@@ -1525,7 +1531,7 @@ namespace ImageGlass.ImageListView
 
 
         /// <summary>
-        /// Scrolls the image list view to place the item with the specified
+        /// [IG_Change] Scrolls the image list view to place the item with the specified
         /// index as close to the center of the visible area as possible.
         /// </summary>
         /// <param name="itemIndex">The index of the item to scroll to.</param>
@@ -2039,17 +2045,16 @@ namespace ImageGlass.ImageListView
         /// <param name="e">A CacheErrorEventArgs that contains event data.</param>
         protected virtual void OnCacheError(CacheErrorEventArgs e)
         {
-            if (CacheError != null)
-                CacheError(this, e);
+            CacheError?.Invoke(this, e);
         }
+
         /// <summary>
-        /// Raises the DropFiles event.
+        /// [IG_Change] Raises the DropFiles event.
         /// </summary>
         /// <param name="e">A DropFileEventArgs that contains event data.</param>
         protected virtual void OnDropFiles(DropFileEventArgs e)
         {
-            if (DropFiles != null)
-                DropFiles(this, e);
+            DropFiles?.Invoke(this, e);
 
             if (e.Cancel)
                 return;
