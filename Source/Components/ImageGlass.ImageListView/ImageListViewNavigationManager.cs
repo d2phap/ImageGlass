@@ -728,7 +728,7 @@ namespace ImageGlass.ImageListView
 
             #region Key Event Handlers
             /// <summary>
-            /// [Pháp] Handles control's KeyDown event.
+            /// [IG_Change] Handles control's KeyDown event.
             /// </summary>
             public void KeyDown(KeyEventArgs e)
             {
@@ -806,7 +806,7 @@ namespace ImageGlass.ImageListView
                             mImageListView.OnSelectionChangedInternal();
                         }
                         mImageListView.Items.FocusedItem = mImageListView.Items[newindex];
-                        mImageListView.EnsureVisible(newindex);
+                        mImageListView.ScrollToIndex(newindex);
                         mImageListView.Refresh();
                     }
                 }
