@@ -32,6 +32,40 @@ namespace ImageGlass.Heart
         #region Load image / thumbnail
 
         /// <summary>
+        /// Holds results of loading an image - processed bitmap and
+        /// corresponding MagickImage object.
+        /// </summary>
+        public class ImageData
+        {
+            /// <summary>
+            /// Processed bitmap image ready to be shown to user.
+            /// </summary>
+            public Bitmap ProcessedBitmap { get; set; }
+            /// <summary>
+            /// Original MagickImage used to load bitmap image. May be
+            /// reconstructed from the bitmap, if ImageMagick was not used to
+            /// load the image.
+            /// </summary>
+            public IMagickImage OriginalImage { get; set; }
+
+            public ImageData(Bitmap bmp, IMagickImage magickImage = null)
+            {
+                this.ProcessedBitmap = bmp;
+                this.OriginalImage = magickImage;
+
+                if (this.OriginalImage == null)
+                {
+                    // Create MagickImage from the bitmap if it is not provided
+                    // externally.
+                    this.OriginalImage = new MagickImage(this.ProcessedBitmap)
+                    {
+                        Quality = 100
+                    };
+                }
+            }
+        }
+
+        /// <summary>
         /// Load image from file
         /// </summary>
         /// <param name="filename">Full path of image file</param>
@@ -42,7 +76,7 @@ namespace ImageGlass.Heart
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Load(
+        public static ImageData Load(
             string filename,
             Size size = new Size(),
             string colorProfileName = "sRGB",
@@ -53,6 +87,7 @@ namespace ImageGlass.Heart
         )
         {
             Bitmap bitmap = null;
+            IMagickImage originalImage = null;
             var ext = Path.GetExtension(filename).ToUpperInvariant();
             var settings = new MagickReadSettings();
 
@@ -224,8 +259,10 @@ namespace ImageGlass.Heart
 
                 // TODO: there is a bug of using bytes[]:
                 // https://github.com/dlemstra/Magick.NET/issues/538
-                using (var imgM = new MagickImage(filename, settings))
+                var imgM = new MagickImage(filename, settings);
                 {
+                    originalImage = imgM.Clone();
+
                     var checkRotation = ext != ".HEIC";
                     PreprocesMagickImage(imgM, checkRotation);
 
@@ -238,7 +275,7 @@ namespace ImageGlass.Heart
             #endregion
 
 
-            return bitmap;
+            return new ImageData(bitmap, originalImage);
         }
 
 
@@ -253,13 +290,13 @@ namespace ImageGlass.Heart
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
+        public static async Task<ImageData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
         {
-            Bitmap bitmap = null;
+            ImageData data = null;
 
             await Task.Run(() =>
             {
-                bitmap = Load(
+                data = Load(
                     filename,
                     size,
                     colorProfileName,
@@ -269,9 +306,8 @@ namespace ImageGlass.Heart
                     useEmbeddedThumbnail
                 );
             }).ConfigureAwait(false);
-
-
-            return bitmap;
+            
+            return data;
         }
 
 
@@ -285,12 +321,13 @@ namespace ImageGlass.Heart
         /// <returns></returns>
         public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            Bitmap bmp = Load(filename,
+            ImageData data = Load(filename,
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
 
-            return bmp;
+            data.OriginalImage?.Dispose();
+            return data.ProcessedBitmap;
         }
 
 
@@ -307,10 +344,12 @@ namespace ImageGlass.Heart
 
             await Task.Run(() =>
             {
-                bmp = Load(filename,
+                ImageData data = Load(filename,
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
+                bmp = data.ProcessedBitmap;
+                data.OriginalImage?.Dispose();
 
             }).ConfigureAwait(false);
 
@@ -345,19 +384,19 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Save as image file
         /// </summary>
-        /// <param name="srcBitmap">Source bitmap to save</param>
+        /// <param name="srcImage">Source image to save</param>
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static void SaveImage(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100)
+        public static void SaveImage(IMagickImage srcImage, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100)
         {
-            using (var imgM = new MagickImage(srcBitmap))
+            using (var imgM = srcImage.Clone())
             {
                 imgM.Quality = quality;
 
-                if (format != (int)MagickFormat.Unknown)
+                if (format != MagickFormat.Unknown)
                 {
-                    imgM.Write(destFileName, (MagickFormat)format);
+                    imgM.Write(destFileName, format);
                 }
                 else
                 {

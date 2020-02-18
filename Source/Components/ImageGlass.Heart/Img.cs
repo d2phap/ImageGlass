@@ -21,6 +21,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using ImageMagick;
 
 namespace ImageGlass.Heart
 {
@@ -51,6 +52,12 @@ namespace ImageGlass.Heart
         /// Gets, sets Bitmap data
         /// </summary>
         public Bitmap Image { get; set; } = null;
+
+
+        /// <summary>
+        /// Gets, sets original MagickImage data
+        /// </summary>
+        public IMagickImage OriginalImage { get; set; } = null;
 
 
         /// <summary>
@@ -102,6 +109,7 @@ namespace ImageGlass.Heart
             result.IsDone = this.IsDone;
             result.Filename = this.Filename;
             result.Image = (Bitmap)this.Image.Clone();
+            result.OriginalImage = this.OriginalImage.Clone();
             result.PageCount = this.PageCount;
             result.ActivePageIndex = this.ActivePageIndex;
             return result;
@@ -119,10 +127,8 @@ namespace ImageGlass.Heart
             this.Error = null;
             this.PageCount = 0;
 
-            if (this.Image != null)
-            {
-                this.Image.Dispose();
-            }
+            this.Image?.Dispose();
+            this.OriginalImage?.Dispose();
         }
 
 
@@ -145,7 +151,7 @@ namespace ImageGlass.Heart
             try
             {
                 // load image data
-                this.Image = await Photo.LoadAsync(
+                Photo.ImageData data = await Photo.LoadAsync(
                     filename: this.Filename,
                     size: size,
                     colorProfileName: colorProfileName,
@@ -153,6 +159,9 @@ namespace ImageGlass.Heart
                     channel: channel,
                     useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
+
+                this.Image = data.ProcessedBitmap;
+                this.OriginalImage = data.OriginalImage;
 
                 // Get page count
                 var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
@@ -216,6 +225,29 @@ namespace ImageGlass.Heart
 
 
         /// <summary>
+        /// Save current image file
+        /// </summary>
+        /// <param name="destFolder">The destination folder to save to</param>
+        /// <returns></returns>
+        public async Task Save(string destFileName = "", MagickFormat format = MagickFormat.Unknown, int quality = 100)
+        {
+            if (destFileName == "")
+            {
+                destFileName = this.Filename;
+            }
+            if (Image == null || destFileName == "")
+            {
+                return;
+            }
+
+            await Task.Run(() =>
+            {
+                Photo.SaveImage(OriginalImage, destFileName, format != MagickFormat.Unknown ? format : OriginalImage.Format, quality);
+            }).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Flip (mirror) the image.
         /// </summary>
         /// <param name="isHorizontal">If true, image is flipped horizontally; vertically otherwise.</param>
@@ -227,6 +259,17 @@ namespace ImageGlass.Heart
             }
 
             Image = await Heart.Photo.Flip(new Bitmap(Image), isHorizontal);
+            await Task.Run(() =>
+            {
+                if (isHorizontal)
+                {
+                    OriginalImage.Flop();
+                }
+                else
+                {
+                    OriginalImage.Flip();
+                }
+            }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -241,6 +284,10 @@ namespace ImageGlass.Heart
             }
 
             Image = await Heart.Photo.RotateImage(new Bitmap(Image), degrees);
+            await Task.Run(() =>
+            {
+                OriginalImage.Rotate(degrees);
+            }).ConfigureAwait(false);
         }
 
         #endregion

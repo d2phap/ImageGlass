@@ -82,7 +82,9 @@ namespace ImageGlass.UI
 
             try
             {
-                Image = Photo.Load(Filename, new Size(Height, Height));
+                var data = Photo.Load(Filename, new Size(Height, Height));
+                data.OriginalImage.Dispose();
+                Image = data.ProcessedBitmap;
             }
             catch { }
         }

@@ -1914,10 +1914,9 @@ namespace ImageGlass
             try
             {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
-                var newBitmap = new Bitmap(Local.MainImage.Image);
 
                 // override the current image file
-                Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
+                await Local.MainImage.Save(Local.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (Configs.IsPreserveModifiedDate)
@@ -1927,7 +1926,7 @@ namespace ImageGlass
 
                 // update cache of the modified item
                 var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
-                img.Image = newBitmap;
+                img.Image = Local.MainImage.Image;
 
             }
             catch (Exception)
@@ -4373,16 +4372,22 @@ namespace ImageGlass
 
             if (s.ShowDialog() == DialogResult.OK)
             {
-                Bitmap clonedPic = (Bitmap)Local.MainImage.Image;
+                Bitmap clonedPic = (Bitmap)Local.MainImage.Image.Clone();
 
                 Local.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
                 {
                     case 1:
+                        await Local.MainImage.Save(s.FileName, format: ImageMagick.MagickFormat.Bmp);
+                        break;
                     case 4:
+                        await Local.MainImage.Save(s.FileName, format: ImageMagick.MagickFormat.Gif);
+                        break;
                     case 6:
+                        await Local.MainImage.Save(s.FileName, format: ImageMagick.MagickFormat.Jpg);
+                        break;
                     case 7:
-                        Heart.Photo.SaveImage(clonedPic, s.FileName);
+                        await Local.MainImage.Save(s.FileName, format: ImageMagick.MagickFormat.Png);
                         break;
                     case 2:
                         clonedPic.Save(s.FileName, ImageFormat.Emf);
@@ -4415,7 +4420,7 @@ namespace ImageGlass
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because of this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
 
