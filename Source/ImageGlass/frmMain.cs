@@ -652,6 +652,19 @@ namespace ImageGlass
         /// <param name="pageIndex"></param>
         public async void NextPic(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0)
         {
+            // WARNING! This method is not thread-safe, but it uses async/await.
+            // It modifies many variables in the Local struct without any
+            // any synchronization.
+            // One common case of race condition is saving modified image. It
+            // modifies current image file, which triggers the file watcher,
+            // which calls NextPic in parallel. This race condition is hacked
+            // by stopping the file watcher right before saving the image, and
+            // restarting it right after. This is not a correct solution, as it:
+            // * Ignores real changes to other files while saving.
+            // * Doesn't prevent from other possible cases when NextPic is
+            //   called in parallel.
+            // A major refactoring is required to fix this problem correctly.
+
             Timer _loadingTimer = null; // busy state timer
 
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
@@ -669,12 +682,14 @@ namespace ImageGlass
             }
 
             // Save previous image if it was modified
-            if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating)
+            if (Configs.IsSaveAfterRotating && Local.ImageModifiedPath != "" && File.Exists(Local.ImageModifiedPath))
             {
+                string imageModifiedPath = Local.ImageModifiedPath;
+                Local.ImageModifiedPath = "";
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                await ImageSaveChange(imageModifiedPath);
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -775,7 +790,7 @@ namespace ImageGlass
                     Local.CurrentIndex,
                     isSkipCache: isSkipCache,
                     pageIndex: pageIndex
-                   );
+                    );
 
                 // Update current frame index
                 Local.CurrentPageIndex = bmpImg.ActivePageIndex;
@@ -1909,32 +1924,34 @@ namespace ImageGlass
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async void ImageSaveChange()
+        private async Task ImageSaveChange(string imageModifiedPath)
         {
+            // Stop the file watcher, as it triggers race condition when the
+            // image is saved. It will be restarted afterwards.
+            // WARNING! This is a hack to chances of race condition
+            // dramatically, but it is NOT a valid fix! See comments to the
+            // NextPic method for details.
+            _fileWatcher.Stop();
+
             try
             {
-                var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
+                var lastWriteTime = File.GetLastWriteTime(imageModifiedPath);
 
                 // override the current image file
-                await Local.MainImage.Save(Local.ImageModifiedPath);
+                await Local.MainImage.Save(imageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (Configs.IsPreserveModifiedDate)
                 {
-                    File.SetLastWriteTime(Local.ImageModifiedPath, lastWriteTime);
+                    File.SetLastWriteTime(imageModifiedPath, lastWriteTime);
                 }
-
-                // update cache of the modified item
-                var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
-                img.Image = Local.MainImage.Image;
-
             }
             catch (Exception)
             {
                 MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], Local.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            Local.ImageModifiedPath = "";
+            _fileWatcher.Start();
         }
 
 
@@ -2662,12 +2679,15 @@ namespace ImageGlass
 
 
             // Save previous image if it was modified
-            if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating)
+            if (Configs.IsSaveAfterRotating && Local.ImageModifiedPath != "" && File.Exists(Local.ImageModifiedPath))
             {
+                string imageModifiedPath = Local.ImageModifiedPath;
+                Local.ImageModifiedPath = "";
+
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                ImageSaveChange(imageModifiedPath);
             }
 
             // Save last seen image path
