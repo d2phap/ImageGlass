@@ -259,7 +259,7 @@ namespace ImageGlass.Heart
 
                 // TODO: there is a bug of using bytes[]:
                 // https://github.com/dlemstra/Magick.NET/issues/538
-                var imgM = new MagickImage(filename, settings);
+                using (var imgM = new MagickImage(filename, settings))
                 {
                     originalImage = imgM.Clone();
 
