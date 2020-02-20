@@ -51,13 +51,13 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Gets, sets Bitmap data
         /// </summary>
-        public Bitmap Image { get; set; } = null;
+        public Bitmap Image { get; private set; } = null;
 
 
         /// <summary>
         /// Gets, sets original MagickImage data
         /// </summary>
-        public IMagickImage OriginalImage { get; set; } = null;
+        public IMagickImage OriginalImage { get; private set; } = null;
 
 
         /// <summary>
