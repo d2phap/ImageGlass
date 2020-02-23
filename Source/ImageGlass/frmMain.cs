@@ -5440,6 +5440,7 @@ namespace ImageGlass
                 else
                 {
                     mnuMainCheckForUpdate.Text = mnuMainCheckForUpdate.Text = Configs.Language.Items[$"{Name}.mnuMainCheckForUpdate._NoUpdate"];
+                    mnuMainHelp.BackColor = mnuMainCheckForUpdate.BackColor = Color.Transparent;
                 }
 
 

@@ -215,10 +215,7 @@ namespace ImageGlass
                     p.WaitForExit();
 
                     // There is a newer version
-                    if (p.ExitCode == 1)
-                    {
-                        Configs.IsNewVersionAvailable = true;
-                    }
+                    Configs.IsNewVersionAvailable = p.ExitCode == 1;
 
                     // save last update
                     Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
