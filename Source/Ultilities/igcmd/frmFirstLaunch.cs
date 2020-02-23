@@ -296,7 +296,7 @@ namespace igcmd
             cmbTheme.SelectedIndex = 0;
 
 
-            string themeFolder = App.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
 
 
             if (Directory.Exists(themeFolder))

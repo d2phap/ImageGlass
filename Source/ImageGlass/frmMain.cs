@@ -1955,7 +1955,7 @@ namespace ImageGlass
         /// </summary>
         private string SaveTemporaryMemoryData()
         {
-            var tempDir = App.ConfigDir(Dir.Temporary);
+            var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
             if (!Directory.Exists(tempDir))
             {
                 Directory.CreateDirectory(tempDir);
@@ -3034,7 +3034,7 @@ namespace ImageGlass
                 this._fileWatcher.Dispose();
 
                 //clear temp files
-                var tempDir = App.ConfigDir(Dir.Temporary);
+                var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
                 if (Directory.Exists(tempDir))
                 {
                     Directory.Delete(tempDir, true);

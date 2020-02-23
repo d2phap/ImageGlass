@@ -245,4 +245,14 @@ namespace ImageGlass.Base
         Button5,    // X2
         Button5Dbl,
     }
+
+
+    /// <summary>
+    /// Types of path
+    /// </summary>
+    public enum PathType {
+        File,
+        Dir,
+    }
+
 }

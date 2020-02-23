@@ -662,7 +662,7 @@ namespace ImageGlass.UI
                 return ThemeInstallingResult.ERROR;
             }
 
-            string themeFolder = App.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
             Directory.CreateDirectory(themeFolder);
 
             return ExtractTheme(themePath, themeFolder);
@@ -676,7 +676,7 @@ namespace ImageGlass.UI
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
         {
-            string fullConfigPath = App.ConfigDir(Dir.Themes, themeFolderName, "config.xml");
+            string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "config.xml");
 
             if (File.Exists(fullConfigPath))
             {

@@ -31,62 +31,41 @@ namespace ImageGlass.Base
     public static class Helpers
     {
         /// <summary>
-        /// Determine if a path to a folder is writable. This function assumes
-        /// that the path is a directory and not a file. This function accepts
-        /// a path of any format, unlike CheckPathWritable.
-        /// </summary>
-        /// <param name="path">the path to a folder</param>
-        /// <returns>true if folder is writable</returns>
-        public static bool CheckFolderWritable(string path)
-        {
-            try
-            {
-                var isDirExist = Directory.Exists(path);
-
-                if (!isDirExist)
-                {
-                    Directory.CreateDirectory(path);
-                }
-                    
-                var sampleFile = Path.Combine(path, "test_write_file.temp");
-
-                using (File.Create(sampleFile)) { }
-                File.Delete(sampleFile);
-
-                if (!isDirExist)
-                {
-                    Directory.Delete(path, true);
-                }
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Check if the given path (file or directory) is writable. 
-        /// Note**: This function does not handle the directory name that contains '.'
-        /// E.g. C:\dir\new.dir will be treated as a File!
         /// </summary>
+        /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="path">Full path of file or directory</param>
         /// <returns></returns>
-        public static bool CheckPathWritable(string path)
+        public static bool CheckPathWritable(PathType type, string path)
         {
             try
             {
                 // If path is file
-                if (Path.HasExtension(path))
+                if (type == PathType.File)
                 {
                     using (File.OpenWrite(path)) { }
                 }
                 // if path is directory
                 else
                 {
-                    return CheckFolderWritable(path);
+                    var isDirExist = Directory.Exists(path);
+
+                    if (!isDirExist)
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    var sampleFile = Path.Combine(path, "test_write_file.temp");
+
+                    using (File.Create(sampleFile)) { }
+                    File.Delete(sampleFile);
+
+                    if (!isDirExist)
+                    {
+                        Directory.Delete(path, true);
+                    }
                 }
+
 
                 return true;
             }

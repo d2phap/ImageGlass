@@ -251,7 +251,7 @@ namespace ImageGlass
 
 
             lblHeadConfigDir.Text = lang[$"{Name}.{nameof(lblHeadConfigDir)}"];//
-            lnkConfigDir.Text = App.ConfigDir();
+            lnkConfigDir.Text = App.ConfigDir(PathType.Dir);
 
 
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];//
@@ -562,7 +562,7 @@ namespace ImageGlass
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("explorer.exe", App.ConfigDir());
+            Process.Start("explorer.exe", App.ConfigDir(PathType.Dir));
         }
 
 
@@ -1622,7 +1622,7 @@ namespace ImageGlass
 
         private async void RefreshThemeList()
         {
-            string themeFolder = App.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
 
             lvTheme.Items.Clear();
             lvTheme.Items.Add("2017 (Dark)").Tag = "default";
@@ -1718,7 +1718,7 @@ namespace ImageGlass
                 }
                 else
                 {
-                    th = new Theme(App.ConfigDir(Dir.Themes, themeName));
+                    th = new Theme(App.ConfigDir(PathType.Dir, Dir.Themes, themeName));
                 }
                 
                 picPreview.BackgroundImage = th.PreviewImage.Image;
@@ -1813,7 +1813,7 @@ namespace ImageGlass
                 if (s.ShowDialog() == DialogResult.OK)
                 {
                     var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    var configFilePath = App.ConfigDir(Dir.Themes, themeName, "config.xml");
+                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, "config.xml");
 
                     if (!File.Exists(configFilePath))
                     {
@@ -1838,7 +1838,7 @@ namespace ImageGlass
 
         private void btnThemeFolderOpen_Click(object sender, EventArgs e)
         {
-            string themeFolder = App.ConfigDir(Dir.Themes);
+            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
 
@@ -1848,7 +1848,7 @@ namespace ImageGlass
             if (lvTheme.SelectedItems.Count > 0)
             {
                 string themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
-                string themeFolderPath = App.ConfigDir(Dir.Themes, themeFolderName);
+                string themeFolderPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName);
 
                 var th = new Theme(themeFolderPath);
 

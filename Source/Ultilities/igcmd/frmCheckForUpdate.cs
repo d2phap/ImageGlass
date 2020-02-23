@@ -33,7 +33,7 @@ namespace igcmd
     public partial class frmCheckForUpdate : Form
     {
         private Update up = new Update();
-        private string UpdateInfoFile { get => App.ConfigDir(Dir.Temporary, "update.xml"); }
+        private string UpdateInfoFile { get => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml"); }
 
 
         public frmCheckForUpdate()
@@ -107,7 +107,7 @@ namespace igcmd
         #region Form events
         private void frmMain_Load(object sender, EventArgs e)
         {
-            Directory.CreateDirectory(App.ConfigDir(Dir.Temporary));
+            Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
             picStatus.Image = igcmd.Properties.Resources.loading;
             var t = new Thread(new ThreadStart(CheckForUpdate))

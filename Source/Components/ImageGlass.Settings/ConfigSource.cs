@@ -36,7 +36,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// User config file
         /// </summary>
-        public string Filename { get => App.ConfigDir("igconfig.xml"); }
+        public string Filename { get => App.ConfigDir(PathType.File, "igconfig.xml"); }
 
 
         /// <summary>

@@ -37,9 +37,9 @@ namespace igcmd
             // Issue #520: intercept any possible exception and fail quietly
             try
             {
-                Directory.CreateDirectory(App.ConfigDir(Dir.Temporary));
+                Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
-                var updateXML = App.ConfigDir(Dir.Temporary, "update.xml");
+                var updateXML = App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
                 var up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
                 if (File.Exists(updateXML))

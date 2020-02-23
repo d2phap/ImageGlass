@@ -67,7 +67,7 @@ namespace ImageGlass
 
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
-            ProfileOptimization.SetProfileRoot(App.ConfigDir());
+            ProfileOptimization.SetProfileRoot(App.ConfigDir(PathType.Dir));
             ProfileOptimization.StartProfile("igstartup.profile");
 
             SetProcessDPIAware();

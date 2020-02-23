@@ -45,8 +45,7 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets value of Portable mode if the startup dir is writable
         /// </summary>
-        // Issue #676 switch to CheckFolderWritable
-        public static bool IsPortable => Helpers.CheckFolderWritable(StartUpDir());
+        public static bool IsPortable => Helpers.CheckPathWritable(PathType.Dir, StartUpDir());
 
 
         /// <summary>
@@ -69,14 +68,15 @@ namespace ImageGlass.Base
         /// Returns the path based on the configuration folder of ImageGlass.
         /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
         /// </summary>
+        /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="paths"></param>
         /// <returns></returns>
-        public static string ConfigDir(params string[] paths)
+        public static string ConfigDir(PathType type, params string[] paths)
         {
             // use StartUp dir if it's writable
             var startUpDir = StartUpDir(paths);
-            // Issue #676 switch to CheckFolderWritable
-            if (Helpers.CheckFolderWritable(startUpDir))
+
+            if (Helpers.CheckPathWritable(type, startUpDir))
             {
                 return startUpDir;
             }
@@ -144,7 +144,7 @@ namespace ImageGlass.Base
 #if DEBUG
             try
             {
-                var tempDir = App.ConfigDir(Dir.Log);
+                var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);
                 if (!Directory.Exists(tempDir))
                 {
                     Directory.CreateDirectory(tempDir);

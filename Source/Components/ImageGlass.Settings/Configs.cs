@@ -762,7 +762,7 @@ namespace ImageGlass.Settings
 
             #region Theme
             var themeFolderName = Get<string>(nameof(Theme), Dir.DefaultTheme);
-            var th = new Theme(App.ConfigDir(Dir.Themes, themeFolderName));
+            var th = new Theme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
             if (th.IsValid)
             {
