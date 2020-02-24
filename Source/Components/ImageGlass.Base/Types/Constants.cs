@@ -97,11 +97,11 @@ namespace ImageGlass.Base
                 ToolbarButton.Separator,
 
                 ToolbarButton.btnAutoZoom,
+                ToolbarButton.btnZoomLock,
                 ToolbarButton.btnScaletoWidth,
                 ToolbarButton.btnScaletoHeight,
                 ToolbarButton.btnScaleToFit,
                 ToolbarButton.btnScaleToFill,
-                ToolbarButton.btnZoomLock,
                 ToolbarButton.Separator,
 
                 ToolbarButton.btnOpen,

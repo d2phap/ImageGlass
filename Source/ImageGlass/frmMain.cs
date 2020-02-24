@@ -1042,14 +1042,15 @@ namespace ImageGlass
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
+            //this.Text = e.KeyValue.ToString();
 
             #region Register MAIN MENU shortcuts
             bool checkMenuShortcut(ToolStripMenuItem mnu)
             {
                 Keys pressed = e.KeyCode;
-                if (e.Control) pressed = pressed | Keys.Control;
-                if (e.Shift) pressed = pressed | Keys.Shift;
-                if (e.Alt) pressed = pressed | Keys.Alt;
+                if (e.Control) pressed |= Keys.Control;
+                if (e.Shift) pressed |= Keys.Shift;
+                if (e.Alt) pressed |= Keys.Alt;
 
                 if (mnu.ShortcutKeys == pressed)
                 {
@@ -1367,6 +1368,69 @@ namespace ImageGlass
                 #endregion
 
                 return;
+            }
+            #endregion
+
+
+            // Without Modifiers keys --------------------------------------------------------
+            #region Without Modifiers keys
+            if (hasNoMods)
+            {
+                // Edit image
+                if (e.KeyCode == Keys.E)
+                {
+                    mnuMainEditImage_Click(null, null);
+                    return;
+                }
+
+                // Open with
+                if (e.KeyCode == Keys.D)
+                {
+                    mnuOpenWith_Click(null, null);
+                    return;
+                }
+
+                // Auto zoom
+                if (e.KeyValue == 49 || e.KeyCode == Keys.NumPad1) // Num1 / NumPad1
+                {
+                    mnuMainAutoZoom_Click(null, null);
+                    return;
+                }
+
+                // Lock zoom ratio
+                if (e.KeyValue == 50 || e.KeyCode == Keys.NumPad2) // Num2 / NumPad2
+                {
+                    mnuMainLockZoomRatio_Click(null, null);
+                    return;
+                }
+
+                // Scale to width
+                if (e.KeyValue == 51 || e.KeyCode == Keys.NumPad3) // Num3 / NumPad3
+                {
+                    mnuMainScaleToWidth_Click(null, null);
+                    return;
+                }
+
+                // Scale to height
+                if (e.KeyValue == 52 || e.KeyCode == Keys.NumPad4) // Num4 / NumPad4
+                {
+                    mnuMainScaleToHeight_Click(null, null);
+                    return;
+                }
+
+                // Scale to fit
+                if (e.KeyValue == 53 || e.KeyCode == Keys.NumPad5) // Num5 / NumPad5
+                {
+                    mnuMainScaleToFit_Click(null, null);
+                    return;
+                }
+
+                // Scale to fill
+                if (e.KeyValue == 54 || e.KeyCode == Keys.NumPad6) // Num6 / NumPad6
+                {
+                    mnuMainScaleToFill_Click(null, null);
+                    return;
+                }
             }
             #endregion
         }
@@ -3075,6 +3139,7 @@ namespace ImageGlass
                 mnuMainRefresh.Text = lang[$"{Name}.{nameof(mnuMainRefresh)}"];
                 mnuMainReloadImage.Text = lang[$"{Name}.{nameof(mnuMainReloadImage)}"];
                 mnuMainReloadImageList.Text = lang[$"{Name}.{nameof(mnuMainReloadImageList)}"];
+                mnuOpenWith.Text = lang[$"{Name}.{nameof(mnuOpenWith)}"];
                 mnuMainEditImage.Text = lang[$"{Name}.{nameof(mnuMainEditImage)}"];
                 mnuMainPrint.Text = lang[$"{Name}.{nameof(mnuMainPrint)}"];
                 #endregion
@@ -4157,6 +4222,7 @@ namespace ImageGlass
                 }
 
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
+                mnuContext.Items.Add(Library.Menu.Clone(mnuOpenWith));
 
                 UpdateEditAppInfoForMenu();
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainEditImage));
@@ -4451,6 +4517,34 @@ namespace ImageGlass
             // update image list
             PrepareLoading(Local.ImageList.FileNames, Local.ImageList.GetFileName(Local.CurrentIndex));
         }
+
+
+        private void mnuOpenWith_Click(object sender, EventArgs e)
+        {
+            if (Local.ImageError != null)
+            {
+                return;
+            }
+
+            using (var p = new Process())
+            {
+                p.StartInfo.FileName = "openwith";
+
+                // Build the arguments
+                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+                p.StartInfo.Arguments = $"\"{filename}\"";
+
+                // show error dialog
+                p.StartInfo.ErrorDialog = true;
+
+                try
+                {
+                    p.Start();
+                }
+                catch { }
+            }
+        }
+
 
         private void mnuMainEditImage_Click(object sender, EventArgs e)
         {
@@ -5539,6 +5633,7 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

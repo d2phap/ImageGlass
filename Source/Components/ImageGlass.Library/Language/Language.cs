@@ -248,6 +248,7 @@ namespace ImageGlass.Library
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainReloadImageList", "Reload image list"); //v7.0
+            Items.Add("frmMain.mnuOpenWith", "Open with..."); //v7.6
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
             Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
             #endregion
