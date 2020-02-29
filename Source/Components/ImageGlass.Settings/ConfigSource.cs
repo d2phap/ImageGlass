@@ -138,7 +138,11 @@ namespace ImageGlass.Settings
             {
                 var nItem = (XmlElement)item;
                 string key = nItem.GetAttribute("key");
-                string value = nItem.GetAttribute("value").Replace("\\n", "\n");
+
+                //Issue #567: this breaks LastSeenImagePath when "\n" is part of the path
+                var value = nItem.GetAttribute("value");
+                if (key != "LastSeenImagePath")
+                    value = value.Replace("\\n", "\n");
 
                 if (list.ContainsKey(key))
                 {
