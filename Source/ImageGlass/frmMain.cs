@@ -2568,8 +2568,16 @@ namespace ImageGlass
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-                this.Bounds = Configs.FrmMainWindowsBound;
-
+                var test = Configs.FrmMainWindowsBound;
+                test.Inflate(-10,-10);
+                if (Helpers.IsVisibleOnAnyScreen(test))
+                    this.Bounds = Configs.FrmMainWindowsBound;
+                else
+                {
+                    // The saved position no longer exists (e.g. 2d monitor removed).
+                    // Prevent us from appearing off-screen.
+                    StartPosition = FormStartPosition.WindowsDefaultLocation;
+                }
 
                 // Load state of Thumbnail
                 Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_BAR;
