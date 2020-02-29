@@ -228,7 +228,7 @@ namespace ImageGlass.ImageListView
         }
 
         // IG_CHANGE : provide the ability to control the metadata caching
-        [Category("Behavior"), Description("Controls metadata caching")]
+        [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
         public bool MetadataCacheEnabled
         {
             set
