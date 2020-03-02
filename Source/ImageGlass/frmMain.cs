@@ -2472,7 +2472,7 @@ namespace ImageGlass
             btnRotateRight.Image = th.ToolbarIcons.RotateRight.Image;
             btnFlipHorz.Image = th.ToolbarIcons.FlipHorz.Image;
             btnFlipVert.Image = th.ToolbarIcons.FlipVert.Image;
-            btnDelete.Image = th.ToolbarIcons.Detele.Image;
+            btnDelete.Image = th.ToolbarIcons.Delete.Image;
             btnEdit.Image = th.ToolbarIcons.Edit.Image;
 
             btnZoomIn.Image = th.ToolbarIcons.ZoomIn.Image;

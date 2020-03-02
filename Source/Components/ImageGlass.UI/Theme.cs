@@ -228,7 +228,7 @@ namespace ImageGlass.UI
             ToolbarIcons.RotateRight.Refresh();
             ToolbarIcons.FlipHorz.Refresh();
             ToolbarIcons.FlipVert.Refresh();
-            ToolbarIcons.Detele.Refresh();
+            ToolbarIcons.Delete.Refresh();
             ToolbarIcons.Edit.Refresh();
             ToolbarIcons.ZoomIn.Refresh();
             ToolbarIcons.ZoomOut.Refresh();
@@ -464,7 +464,7 @@ namespace ImageGlass.UI
             ToolbarIcons.RotateRight = LoadThemeImage(dir, n, "rightrotate");
             ToolbarIcons.FlipHorz = LoadThemeImage(dir, n, "fliphorz");
             ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert");
-            ToolbarIcons.Detele = LoadThemeImage(dir, n, "delete");
+            ToolbarIcons.Delete = LoadThemeImage(dir, n, "delete");
             ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit");
             ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin");
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout");
@@ -555,7 +555,7 @@ namespace ImageGlass.UI
             n.SetAttribute("rightrotate", Path.GetFileName(ToolbarIcons.RotateRight.Filename));
             n.SetAttribute("fliphorz", Path.GetFileName(ToolbarIcons.FlipHorz.Filename));
             n.SetAttribute("flipvert", Path.GetFileName(ToolbarIcons.FlipVert.Filename));
-            n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Detele.Filename));
+            n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Delete.Filename));
             n.SetAttribute("edit", Path.GetFileName(ToolbarIcons.Edit.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
