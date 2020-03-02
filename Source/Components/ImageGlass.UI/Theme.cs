@@ -344,120 +344,32 @@ namespace ImageGlass.UI
 
             ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar");
 
-            try
-            {
-                var colorString = n.GetAttribute("topbarcolor");
-                var inputColor = ToolbarBackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                ToolbarBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
+            var color = FetchColorAttribute(n, "topbarcolor");
+            if (color != Color.Transparent)
+                ToolbarBackgroundColor = color;
 
             ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar");
 
+            color = FetchColorAttribute(n, "bottombarcolor");
+            if (color != Color.Transparent)
+                ThumbnailBackgroundColor = color;
 
-            try
-            {
-                var colorString = n.GetAttribute("bottombarcolor");
-                var inputColor = ThumbnailBackgroundColor;
+            color = FetchColorAttribute(n, "backcolor");
+            if (color != Color.Transparent)
+                BackgroundColor = color;
 
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
+            color = FetchColorAttribute(n, "statuscolor");
+            if (color != Color.Transparent)
+                TextInfoColor = color;
 
-                ThumbnailBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
+            color = FetchColorAttribute(n, "menubackgroundcolor");
+            if (color != Color.Transparent)
+                MenuBackgroundColor = color;
 
+            color = FetchColorAttribute(n, "menutextcolor");
+            if (color != Color.Transparent)
+                MenuTextColor = color;
 
-            try
-            {
-                var colorString = n.GetAttribute("backcolor");
-                var inputColor = BackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                BackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("statuscolor");
-                var inputColor = TextInfoColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                TextInfoColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("menubackgroundcolor");
-                var inputColor = this.MenuBackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                this.MenuBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("menutextcolor");
-                var inputColor = this.MenuTextColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                this.MenuTextColor = inputColor;
-            }
-            catch (Exception ex) { };
 
             // For 7.6: add ability to control the size of the navigation arrows
             // Minimum value is 1.0, default is 2.0.
@@ -532,6 +444,32 @@ namespace ImageGlass.UI
 
             this.IsValid = true;
             return this.IsValid;
+
+
+            //
+            // Fetch a color attribute value from the theme config file.
+            // Returns: a Color value if valid; Color.Transparent if an error
+            //
+            Color FetchColorAttribute(XmlElement xmlElement, string attribute)
+            {
+                try
+                {
+                    var colorString = xmlElement.GetAttribute(attribute);
+
+                    if (IsValidHex(colorString))
+                    {
+                        return ConvertHexStringToColor(colorString, true);
+                    }
+
+                    return Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                return Color.Transparent;
+            }
         }
 
 
