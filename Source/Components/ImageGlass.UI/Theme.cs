@@ -147,6 +147,12 @@ namespace ImageGlass.UI
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
 
+
+        /// <summary>
+        /// The multiplier which impacts the size of the navigation arrows.
+        /// </summary>
+        public double NavArrowMultiplier { get; set; } = 2.0;
+
         #endregion
 
 
@@ -258,7 +264,8 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 2;
+            var arrowHeight = (int)(DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
+
             var prevImage = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
             var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
@@ -449,6 +456,22 @@ namespace ImageGlass.UI
                 }
 
                 this.MenuTextColor = inputColor;
+            }
+            catch (Exception ex) { };
+
+            // For 7.6: add ability to control the size of the navigation arrows
+            // Minimum value is 1.0, default is 2.0.
+            try
+            {
+                var colorString = n.GetAttribute("navarrowsize");
+                if (!string.IsNullOrWhiteSpace(colorString))
+                {
+                    if (!double.TryParse(colorString, out var val))
+                        val = 2.0;
+                    val = Math.Max(val, 1.0);
+
+                    NavArrowMultiplier = val;
+                }
             }
             catch (Exception ex) { };
 
