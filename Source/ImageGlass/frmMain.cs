@@ -2044,8 +2044,9 @@ namespace ImageGlass
         {
             if (Local.ImageList.Length > 1)
             {
-                // calculate icon height
-                var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+                // Related to issue #552: use actual size of cursor, not a constant
+                var curse = Configs.Theme.NextArrowCursor;
+                var iconHeight = curse.Size.Height;
 
                 // get the hotpot area width
                 var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
