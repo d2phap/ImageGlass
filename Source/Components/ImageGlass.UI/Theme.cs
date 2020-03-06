@@ -430,7 +430,7 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 3;
+            var arrowHeight = (int)(DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
             var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
             var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
