@@ -64,6 +64,7 @@ namespace ImageGlass
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
 
+            _IsWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
 
@@ -120,6 +121,8 @@ namespace ImageGlass
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
+
+        private bool _IsWindows10;
 
         #endregion
 
@@ -4264,7 +4267,7 @@ namespace ImageGlass
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (File.Exists(App.StartUpDir("igcmdWin10.exe")))
+                if (_IsWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
                 }
@@ -5176,6 +5179,9 @@ namespace ImageGlass
 
         private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
         {
+            if (!_IsWindows10)
+                return; // Do nothing - running Windows 8 or earlier
+
             var isError = false;
 
             try
@@ -5578,7 +5584,7 @@ namespace ImageGlass
                 mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], frameCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!File.Exists(App.StartUpDir("igcmdWin10.exe")))
+                if (!_IsWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuMainSetAsLockImage.Enabled = false;
                 }
