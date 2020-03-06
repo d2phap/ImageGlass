@@ -2050,11 +2050,14 @@ namespace ImageGlass
                 // calculate icon height
                 var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
 
-                // get the hotpot area width
-                var hotpotWidth = Math.Max(iconHeight, picMain.Width / 7);
+                // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
+                var actualWidth = picMain.GetImageViewPort().Width;
+
+                // get the hotspot area width
+                var hotspotWidth = Math.Max(iconHeight, actualWidth / 7);
 
                 // left side
-                if (location.X < hotpotWidth)
+                if (location.X < hotspotWidth)
                 {
                     // The first image in the list
                     if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0)
@@ -2067,7 +2070,7 @@ namespace ImageGlass
                     }
                 }
                 // right side
-                else if (location.X > picMain.Width - hotpotWidth)
+                else if (location.X > (actualWidth - hotspotWidth))
                 {
                     // The last image in the list
                     if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1)
@@ -4015,6 +4018,8 @@ namespace ImageGlass
                     }, onCursorRightAction: () =>
                     {
                         picMain.Cursor = Configs.Theme.NextArrowCursor ?? DefaultCursor;
+                        // Issue #618: the scrollbar cursor should never be the nav arrow
+                        picMain.VerticalScroll.Cursor = Cursors.Default;
 
                     }, onCursorCenterAction: () =>
                     {
