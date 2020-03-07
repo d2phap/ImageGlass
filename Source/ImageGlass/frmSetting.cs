@@ -573,6 +573,10 @@ namespace ImageGlass
                 AllowFullOpen = true
             };
 
+            // Initialize to the existing color value instead of default black
+            c.Color = picBackgroundColor.BackColor;
+            c.FullOpen = true;
+
             if (c.ShowDialog() == DialogResult.OK)
             {
                 picBackgroundColor.BackColor = c.Color;
