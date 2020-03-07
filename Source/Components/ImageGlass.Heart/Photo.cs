@@ -227,6 +227,10 @@ namespace ImageGlass.Heart
                 using (var imgM = new MagickImage(filename, settings))
                 {
                     var checkRotation = ext != ".HEIC";
+
+                    // Issue #679: fix targa display with Magick.NET 7.15.x 
+                    if (ext == ".TGA")
+                        imgM.AutoOrient();
                     PreprocesMagickImage(imgM, checkRotation);
 
                     using (var channelImgM = ApplyColorChannel(imgM))
