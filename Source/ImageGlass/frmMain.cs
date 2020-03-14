@@ -2592,8 +2592,7 @@ namespace ImageGlass
 
 
                 // Windows state must be loaded after Windows Bound!
-                // Issue #706: we can only restore in Normal; restore to Maximize messes up multi-monitor
-                this.WindowState = FormWindowState.Normal;
+                this.WindowState = Configs.FrmMainWindowState;
 
 
                 #region Load Frameless mode
@@ -2722,10 +2721,9 @@ namespace ImageGlass
         /// </summary>
         private void SaveConfig()
         {
-            // Issue #706: save windows bounds for maximized state as well, to be restored
-            // as normal state [See LoadConfig above].
-            if (this.WindowState != FormWindowState.Minimized)
+            if (WindowState == FormWindowState.Normal)
             {
+                // don't save Bound if in Full screen and SlideShow mode
                 if (!Configs.IsFullScreen && !Configs.IsSlideshow)
                 {
                     // Windows Bound-----------------------------------------------------------
