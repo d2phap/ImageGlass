@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageMagick;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -64,6 +65,12 @@ namespace ImageGlass.Heart
         /// </summary>
         public int ActivePageIndex { get; private set; } = 0;
 
+
+        /// <summary>
+        /// Gets the Exif profile of image
+        /// </summary>
+        public IExifProfile Exif { get; protected set; } = null;
+
         #endregion
 
 
@@ -88,6 +95,8 @@ namespace ImageGlass.Heart
             this.IsDone = false;
             this.Error = null;
             this.PageCount = 0;
+
+            this.Exif = null;
 
             if (this.Image != null)
             {
@@ -115,7 +124,7 @@ namespace ImageGlass.Heart
             try
             {
                 // load image data
-                this.Image = await Photo.LoadAsync(
+                var data = await Photo.LoadAsync(
                     filename: this.Filename,
                     size: size,
                     colorProfileName: colorProfileName,
@@ -123,6 +132,9 @@ namespace ImageGlass.Heart
                     channel: channel,
                     useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
+
+                this.Image = data.Image;
+                this.Exif = data.Exif;
 
                 // Get page count
                 var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);

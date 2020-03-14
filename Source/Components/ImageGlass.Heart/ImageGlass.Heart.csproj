@@ -97,6 +97,7 @@
     <Compile Include="Factory.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Img.cs" />
+    <Compile Include="ImgData.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

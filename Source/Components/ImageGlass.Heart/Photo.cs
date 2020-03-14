@@ -42,7 +42,7 @@ namespace ImageGlass.Heart
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Load(
+        public static ImgData Load(
             string filename,
             Size size = new Size(),
             string colorProfileName = "sRGB",
@@ -53,6 +53,8 @@ namespace ImageGlass.Heart
         )
         {
             Bitmap bitmap = null;
+            IExifProfile exif = null;
+
             var ext = Path.GetExtension(filename).ToUpperInvariant();
             var settings = new MagickReadSettings();
 
@@ -113,7 +115,7 @@ namespace ImageGlass.Heart
             #region Internal Functions 
 
             // Preprocess magick image
-            void PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
+            IExifProfile PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
             {
                 imgM.Quality = quality;
 
@@ -185,6 +187,8 @@ namespace ImageGlass.Heart
                     }
                 }
 
+
+                return profile;
             }
 
 
@@ -231,7 +235,7 @@ namespace ImageGlass.Heart
                     // Issue #679: fix targa display with Magick.NET 7.15.x 
                     if (ext == ".TGA")
                         imgM.AutoOrient();
-                    PreprocesMagickImage(imgM, checkRotation);
+                    exif = PreprocesMagickImage(imgM, checkRotation);
 
                     using (var channelImgM = ApplyColorChannel(imgM))
                     {
@@ -242,7 +246,11 @@ namespace ImageGlass.Heart
             #endregion
 
 
-            return bitmap;
+            return new ImgData()
+            {
+                Image = bitmap,
+                Exif = exif
+            };
         }
 
 
@@ -257,13 +265,11 @@ namespace ImageGlass.Heart
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
-        public static async Task<Bitmap> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
+        public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false)
         {
-            Bitmap bitmap = null;
-
-            await Task.Run(() =>
+            var data =  await Task.Run(() =>
             {
-                bitmap = Load(
+                return Load(
                     filename,
                     size,
                     colorProfileName,
@@ -275,7 +281,7 @@ namespace ImageGlass.Heart
             }).ConfigureAwait(false);
 
 
-            return bitmap;
+            return data;
         }
 
 
@@ -289,12 +295,12 @@ namespace ImageGlass.Heart
         /// <returns></returns>
         public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            Bitmap bmp = Load(filename,
+            var data = Load(filename,
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
 
-            return bmp;
+            return data.Image;
         }
 
 
@@ -307,18 +313,16 @@ namespace ImageGlass.Heart
         /// <returns></returns>
         public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true)
         {
-            Bitmap bmp = null;
-
-            await Task.Run(() =>
+            var data = await Task.Run(() =>
             {
-                bmp = Load(filename,
+                return Load(filename,
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
 
             }).ConfigureAwait(false);
 
-            return bmp;
+            return data.Image;
         }
 
         #endregion
@@ -540,4 +544,5 @@ namespace ImageGlass.Heart
 
         #endregion
     }
+
 }
