@@ -2575,9 +2575,10 @@ namespace ImageGlass
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-                var test = Configs.FrmMainWindowsBound;
-                test.Inflate(-10,-10);
-                if (Helpers.IsVisibleOnAnyScreen(test))
+                var testWindowBound = Configs.FrmMainWindowsBound;
+                testWindowBound.Inflate(-10,-10);
+
+                if (Helpers.IsVisibleOnAnyScreen(testWindowBound))
                     this.Bounds = Configs.FrmMainWindowsBound;
                 else
                 {
