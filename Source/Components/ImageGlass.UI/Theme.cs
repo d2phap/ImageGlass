@@ -147,6 +147,12 @@ namespace ImageGlass.UI
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
 
+
+        /// <summary>
+        /// The multiplier which impacts the size of the navigation arrows.
+        /// </summary>
+        public double NavArrowMultiplier { get; set; } = 2.0;
+
         #endregion
 
 
@@ -228,7 +234,7 @@ namespace ImageGlass.UI
             ToolbarIcons.RotateRight.Refresh();
             ToolbarIcons.FlipHorz.Refresh();
             ToolbarIcons.FlipVert.Refresh();
-            ToolbarIcons.Detele.Refresh();
+            ToolbarIcons.Delete.Refresh();
             ToolbarIcons.Edit.Refresh();
             ToolbarIcons.ZoomIn.Refresh();
             ToolbarIcons.ZoomOut.Refresh();
@@ -258,7 +264,8 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 2;
+            var arrowHeight = (int)(DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
+
             var prevImage = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
             var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
@@ -337,118 +344,46 @@ namespace ImageGlass.UI
 
             ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar");
 
-            try
-            {
-                var colorString = n.GetAttribute("topbarcolor");
-                var inputColor = ToolbarBackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                ToolbarBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
+            var color = FetchColorAttribute(n, "topbarcolor");
+            if (color != Color.Transparent)
+                ToolbarBackgroundColor = color;
 
             ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar");
 
+            color = FetchColorAttribute(n, "bottombarcolor");
+            if (color != Color.Transparent)
+                ThumbnailBackgroundColor = color;
 
+            color = FetchColorAttribute(n, "backcolor");
+            if (color != Color.Transparent)
+                BackgroundColor = color;
+
+            color = FetchColorAttribute(n, "statuscolor");
+            if (color != Color.Transparent)
+                TextInfoColor = color;
+
+            color = FetchColorAttribute(n, "menubackgroundcolor");
+            if (color != Color.Transparent)
+                MenuBackgroundColor = color;
+
+            color = FetchColorAttribute(n, "menutextcolor");
+            if (color != Color.Transparent)
+                MenuTextColor = color;
+
+
+            // For 7.6: add ability to control the size of the navigation arrows
+            // Minimum value is 1.0, default is 2.0.
             try
             {
-                var colorString = n.GetAttribute("bottombarcolor");
-                var inputColor = ThumbnailBackgroundColor;
-
-                if (IsValidHex(colorString))
+                var colorString = n.GetAttribute("navarrowsize");
+                if (!string.IsNullOrWhiteSpace(colorString))
                 {
-                    inputColor = ConvertHexStringToColor(colorString, true);
+                    if (!double.TryParse(colorString, out var val))
+                        val = 2.0;
+                    val = Math.Max(val, 1.0);
+
+                    NavArrowMultiplier = val;
                 }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                ThumbnailBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("backcolor");
-                var inputColor = BackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                BackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("statuscolor");
-                var inputColor = TextInfoColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                TextInfoColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("menubackgroundcolor");
-                var inputColor = this.MenuBackgroundColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                this.MenuBackgroundColor = inputColor;
-            }
-            catch (Exception ex) { };
-
-
-            try
-            {
-                var colorString = n.GetAttribute("menutextcolor");
-                var inputColor = this.MenuTextColor;
-
-                if (IsValidHex(colorString))
-                {
-                    inputColor = ConvertHexStringToColor(colorString, true);
-                }
-                else
-                {
-                    inputColor = Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
-                }
-
-                this.MenuTextColor = inputColor;
             }
             catch (Exception ex) { };
 
@@ -464,7 +399,7 @@ namespace ImageGlass.UI
             ToolbarIcons.RotateRight = LoadThemeImage(dir, n, "rightrotate");
             ToolbarIcons.FlipHorz = LoadThemeImage(dir, n, "fliphorz");
             ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert");
-            ToolbarIcons.Detele = LoadThemeImage(dir, n, "delete");
+            ToolbarIcons.Delete = LoadThemeImage(dir, n, "delete");
             ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit");
             ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin");
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout");
@@ -495,7 +430,7 @@ namespace ImageGlass.UI
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * 3;
+            var arrowHeight = (int)(DPIScaling.TransformNumber(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
             var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
             var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
@@ -509,6 +444,32 @@ namespace ImageGlass.UI
 
             this.IsValid = true;
             return this.IsValid;
+
+
+            //
+            // Fetch a color attribute value from the theme config file.
+            // Returns: a Color value if valid; Color.Transparent if an error
+            //
+            Color FetchColorAttribute(XmlElement xmlElement, string attribute)
+            {
+                try
+                {
+                    var colorString = xmlElement.GetAttribute(attribute);
+
+                    if (IsValidHex(colorString))
+                    {
+                        return ConvertHexStringToColor(colorString, true);
+                    }
+
+                    return Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
+                }
+                catch
+                {
+                    // ignored
+                }
+
+                return Color.Transparent;
+            }
         }
 
 
@@ -555,7 +516,7 @@ namespace ImageGlass.UI
             n.SetAttribute("rightrotate", Path.GetFileName(ToolbarIcons.RotateRight.Filename));
             n.SetAttribute("fliphorz", Path.GetFileName(ToolbarIcons.FlipHorz.Filename));
             n.SetAttribute("flipvert", Path.GetFileName(ToolbarIcons.FlipVert.Filename));
-            n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Detele.Filename));
+            n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Delete.Filename));
             n.SetAttribute("edit", Path.GetFileName(ToolbarIcons.Edit.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));

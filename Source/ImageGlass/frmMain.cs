@@ -2047,8 +2047,9 @@ namespace ImageGlass
         {
             if (Local.ImageList.Length > 1)
             {
-                // calculate icon height
-                var iconHeight = DPIScaling.TransformNumber((int)Constants.TOOLBAR_ICON_HEIGHT * 3);
+                // Related to issue #552: use actual size of cursor, not a constant
+                var curse = Configs.Theme.NextArrowCursor;
+                var iconHeight = curse.Size.Height;
 
                 // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
                 var actualWidth = picMain.GetImageViewPort().Width;
@@ -2478,7 +2479,7 @@ namespace ImageGlass
             btnRotateRight.Image = th.ToolbarIcons.RotateRight.Image;
             btnFlipHorz.Image = th.ToolbarIcons.FlipHorz.Image;
             btnFlipVert.Image = th.ToolbarIcons.FlipVert.Image;
-            btnDelete.Image = th.ToolbarIcons.Detele.Image;
+            btnDelete.Image = th.ToolbarIcons.Delete.Image;
             btnEdit.Image = th.ToolbarIcons.Edit.Image;
 
             btnZoomIn.Image = th.ToolbarIcons.ZoomIn.Image;
