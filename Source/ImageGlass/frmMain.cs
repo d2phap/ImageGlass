@@ -64,7 +64,7 @@ namespace ImageGlass
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
 
-            _IsWindows10 = Environment.OSVersion.Version.Major >= 10;
+            _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
 
@@ -122,7 +122,7 @@ namespace ImageGlass
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
 
-        private bool _IsWindows10;
+        private bool _isWindows10;
 
         #endregion
 
@@ -842,7 +842,7 @@ namespace ImageGlass
             _isDraggingImage = false;
 
             // reset countdown timer value
-            _slideshowCountdown = Configs.SlideShowInterval;
+            _slideshowCountdown = Configs.RandomizeSlideshowInterval();
 
 
             // auto-show Page Nav tool
@@ -3447,10 +3447,6 @@ namespace ImageGlass
                 picMain.BackColor = Configs.BackgroundColor;
 
 
-                // update slideshow countdown
-                _slideshowCountdown = Configs.SlideShowInterval;
-
-
                 // Update ZoomLevels
                 picMain.ZoomLevels = new ImageBoxZoomLevelCollection(Configs.ZoomLevels);
 
@@ -3535,7 +3531,6 @@ namespace ImageGlass
                 }
 
                 NextPic(1);
-                _slideshowCountdown = Configs.SlideShowInterval;
             }
 
             
@@ -4272,7 +4267,7 @@ namespace ImageGlass
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (_IsWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe")))
+                if (_isWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
                 }
@@ -4771,14 +4766,12 @@ namespace ImageGlass
             // performing
             if (timSlideShow.Enabled)
             {
-                //_slideshowCountdown = Configs.SlideShowInterval;
                 timSlideShow.Enabled = false;
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else
             {
-                //_slideshowCountdown = 0;
                 timSlideShow.Enabled = true;
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
@@ -5184,7 +5177,7 @@ namespace ImageGlass
 
         private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e)
         {
-            if (!_IsWindows10)
+            if (!_isWindows10)
                 return; // Do nothing - running Windows 8 or earlier
 
             var isError = false;
@@ -5589,7 +5582,7 @@ namespace ImageGlass
                 mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], frameCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!_IsWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe")))
+                if (!_isWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe")))
                 {
                     mnuMainSetAsLockImage.Enabled = false;
                 }

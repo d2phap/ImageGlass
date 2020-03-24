@@ -66,6 +66,12 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
+        /// Gets, sets value indicating that weather the slide show interval is random
+        /// </summary>
+        public static bool IsRandomSlideshowInterval { get; set; } = false;
+
+
+        /// <summary>
         /// Gets, sets value indicating that wheather the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
@@ -299,9 +305,15 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets slide show interval
+        /// Gets, sets slide show interval (minimum value if it's random)
         /// </summary>
         public static uint SlideShowInterval { get; set; } = 5;
+
+
+        /// <summary>
+        /// Gets, sets the maximum slide show interval value
+        /// </summary>
+        public static uint SlideShowIntervalTo { get; set; } = 5;
 
 
         /// <summary>
@@ -570,6 +582,7 @@ namespace ImageGlass.Settings
 
             IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+            IsRandomSlideshowInterval = Get<bool>(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
             IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
             IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
@@ -614,8 +627,14 @@ namespace ImageGlass.Settings
             #region Number items
 
             FirstLaunchVersion = Get<int>(nameof(FirstLaunchVersion), FirstLaunchVersion);
+
+            #region Slide show
             SlideShowInterval = Get<uint>(nameof(SlideShowInterval), SlideShowInterval);
             if (SlideShowInterval < 1) SlideShowInterval = 5;
+
+            SlideShowIntervalTo = Get<uint>(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+            SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
+            #endregion
 
             #region Load thumbnail bar width & position
             ThumbnailDimension = Get<uint>(nameof(ThumbnailDimension), ThumbnailDimension);
@@ -792,6 +811,7 @@ namespace ImageGlass.Settings
 
             Set(nameof(IsSlideshow), IsSlideshow);
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+            Set(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             Set(nameof(IsFullScreen), IsFullScreen);
             Set(nameof(IsShowThumbnail), IsShowThumbnail);
             Set(nameof(IsCenterImage), IsCenterImage);
@@ -837,6 +857,7 @@ namespace ImageGlass.Settings
 
             Set(nameof(FirstLaunchVersion), FirstLaunchVersion);
             Set(nameof(SlideShowInterval), SlideShowInterval);
+            Set(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
             Set(nameof(ThumbnailDimension), ThumbnailDimension);
             Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
@@ -946,6 +967,22 @@ namespace ImageGlass.Settings
 
             return exts.ToString();
         }
+
+
+        /// <summary>
+        /// Randomize slideshow interval in seconds
+        /// </summary>
+        /// <returns></returns>
+        public static uint RandomizeSlideshowInterval()
+        {
+            var intervalTo = (int)(IsRandomSlideshowInterval ? SlideShowIntervalTo : SlideShowInterval);
+
+            var ran = new Random();
+            var interval = (uint)ran.Next((int)SlideShowInterval, intervalTo);
+
+            return interval;
+        }
+
 
         #endregion
 

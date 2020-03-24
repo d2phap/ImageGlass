@@ -302,8 +302,10 @@ namespace ImageGlass
 
             lblHeadSlideshow.Text = lang[$"{Name}.{nameof(lblHeadSlideshow)}"];//
             chkLoopSlideshow.Text = lang[$"{Name}.{nameof(chkLoopSlideshow)}"];
+            chkRandomSlideshowInterval.Text = lang[$"{Name}.{nameof(chkRandomSlideshowInterval)}"];
             chkShowSlideshowCountdown.Text = lang[$"{Name}.{nameof(chkShowSlideshowCountdown)}"];
-            lblSlideshowInterval.Text = string.Format(lang[$"{Name}.{nameof(lblSlideshowInterval)}"], barInterval.Value);
+            lblSlideshowIntervalTo.Text = lang[$"{Name}.{nameof(lblSlideshowIntervalTo)}"];
+            numSlideShowInterval_ValueChanged(null, null); // format interval value
 
             #endregion
 
@@ -758,19 +760,49 @@ namespace ImageGlass
             // Set value of chkLoopSlideshow --------------------------------------------------
             chkLoopSlideshow.Checked = Configs.IsLoopBackSlideshow;
             chkShowSlideshowCountdown.Checked = Configs.IsShowSlideshowCountdown;
+            chkRandomSlideshowInterval.Checked = Configs.IsRandomSlideshowInterval;
 
-            // Set value of barInterval
-            barInterval.Value = (int)Configs.SlideShowInterval;
-
-            var time = TimeSpan.FromSeconds(barInterval.Value).ToString("mm':'ss");
-            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], time);
+            // Set value of slideshow intervals
+            numSlideShowInterval.Value = Configs.SlideShowInterval;
+            numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
+            numSlideShowInterval_ValueChanged(null, null); // format interval value
 
         }
 
 
-        private void barInterval_Scroll(object sender, EventArgs e)
+        private void chkRandomSlideshowInterval_CheckedChanged(object sender, EventArgs e)
         {
-            var time = TimeSpan.FromSeconds(barInterval.Value).ToString("mm':'ss");
+            lblSlideshowIntervalTo.Visible = 
+                numSlideshowIntervalTo.Visible =
+                chkRandomSlideshowInterval.Checked;
+        }
+
+        private void numSlideShowInterval_ValueChanged(object sender, EventArgs e)
+        {
+            // set the minimum value of To
+            numSlideshowIntervalTo.Minimum = numSlideShowInterval.Value;
+
+            // format value
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+
+            if (chkRandomSlideshowInterval.Checked)
+            {
+                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+
+                time = $"{time} - {timeTo}";
+            }
+
+            lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], time);
+        }
+
+        private void numSlideshowIntervalTo_ValueChanged(object sender, EventArgs e)
+        {
+            // format value
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+
+            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+
+            time = $"{time} - {timeTo}";
 
             lblSlideshowInterval.Text = string.Format(Configs.Language.Items[$"{Name}.lblSlideshowInterval"], time);
         }
@@ -2263,19 +2295,10 @@ namespace ImageGlass
             // slideshow
             Configs.IsLoopBackSlideshow = chkLoopSlideshow.Checked;
             Configs.IsShowSlideshowCountdown = chkShowSlideshowCountdown.Checked;
+            Configs.IsRandomSlideshowInterval = chkRandomSlideshowInterval.Checked;
 
-
-            #region SlideShowInterval: MainFormForceUpdateAction.OTHER_SETTINGS
-
-            // SlideShowInterval
-            newUInt = (uint)barInterval.Value;
-
-            if (Configs.SlideShowInterval != newUInt)
-            {
-                Configs.SlideShowInterval = newUInt;
-                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
-            }
-            #endregion
+            Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
+            Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
 
 
             #endregion
@@ -2357,8 +2380,11 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
+        
 
+        
     }
 }

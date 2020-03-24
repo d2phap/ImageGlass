@@ -82,6 +82,11 @@ namespace ImageGlass
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.numSlideShowInterval = new System.Windows.Forms.NumericUpDown();
+            this.numSlideshowIntervalTo = new System.Windows.Forms.NumericUpDown();
+            this.lblSlideshowIntervalTo = new System.Windows.Forms.Label();
+            this.chkRandomSlideshowInterval = new System.Windows.Forms.CheckBox();
             this.chkShowSlideshowCountdown = new System.Windows.Forms.CheckBox();
             this.chkIsCenterImage = new System.Windows.Forms.CheckBox();
             this.lblImageBoosterCachedCount = new System.Windows.Forms.Label();
@@ -121,7 +126,6 @@ namespace ImageGlass
             this.chkLoopSlideshow = new System.Windows.Forms.CheckBox();
             this.lblImageLoadingOrder = new System.Windows.Forms.Label();
             this.cmbImageOrder = new System.Windows.Forms.ComboBox();
-            this.barInterval = new System.Windows.Forms.TrackBar();
             this.lblSlideshowInterval = new System.Windows.Forms.Label();
             this.chkFindChildFolder = new System.Windows.Forms.CheckBox();
             this.tabEdit = new System.Windows.Forms.TabPage();
@@ -202,7 +206,9 @@ namespace ImageGlass
             this.tabGeneral.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tabImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlideshowIntervalTo)).BeginInit();
             this.tabEdit.SuspendLayout();
             this.tabToolbar.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -864,6 +870,8 @@ namespace ImageGlass
             // 
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.White;
+            this.tabImage.Controls.Add(this.tableLayoutPanel2);
+            this.tabImage.Controls.Add(this.chkRandomSlideshowInterval);
             this.tabImage.Controls.Add(this.chkShowSlideshowCountdown);
             this.tabImage.Controls.Add(this.chkIsCenterImage);
             this.tabImage.Controls.Add(this.lblImageBoosterCachedCount);
@@ -903,7 +911,6 @@ namespace ImageGlass
             this.tabImage.Controls.Add(this.chkLoopSlideshow);
             this.tabImage.Controls.Add(this.lblImageLoadingOrder);
             this.tabImage.Controls.Add(this.cmbImageOrder);
-            this.tabImage.Controls.Add(this.barInterval);
             this.tabImage.Controls.Add(this.lblSlideshowInterval);
             this.tabImage.Controls.Add(this.chkFindChildFolder);
             this.tabImage.Location = new System.Drawing.Point(4, 37);
@@ -912,6 +919,95 @@ namespace ImageGlass
             this.tabImage.Size = new System.Drawing.Size(799, 583);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.numSlideShowInterval, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.numSlideshowIntervalTo, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblSlideshowIntervalTo, 1, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(45, 1776);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(644, 47);
+            this.tableLayoutPanel2.TabIndex = 68;
+            // 
+            // numSlideShowInterval
+            // 
+            this.numSlideShowInterval.Location = new System.Drawing.Point(3, 3);
+            this.numSlideShowInterval.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.numSlideShowInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSlideShowInterval.Name = "numSlideShowInterval";
+            this.numSlideShowInterval.Size = new System.Drawing.Size(115, 31);
+            this.numSlideShowInterval.TabIndex = 65;
+            this.numSlideShowInterval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSlideShowInterval.ValueChanged += new System.EventHandler(this.numSlideShowInterval_ValueChanged);
+            // 
+            // numSlideshowIntervalTo
+            // 
+            this.numSlideshowIntervalTo.Location = new System.Drawing.Point(167, 3);
+            this.numSlideshowIntervalTo.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.numSlideshowIntervalTo.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSlideshowIntervalTo.Name = "numSlideshowIntervalTo";
+            this.numSlideshowIntervalTo.Size = new System.Drawing.Size(115, 31);
+            this.numSlideshowIntervalTo.TabIndex = 67;
+            this.numSlideshowIntervalTo.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSlideshowIntervalTo.Visible = false;
+            this.numSlideshowIntervalTo.ValueChanged += new System.EventHandler(this.numSlideshowIntervalTo_ValueChanged);
+            // 
+            // lblSlideshowIntervalTo
+            // 
+            this.lblSlideshowIntervalTo.AutoSize = true;
+            this.lblSlideshowIntervalTo.Location = new System.Drawing.Point(123, 4);
+            this.lblSlideshowIntervalTo.Margin = new System.Windows.Forms.Padding(2, 4, 2, 0);
+            this.lblSlideshowIntervalTo.Name = "lblSlideshowIntervalTo";
+            this.lblSlideshowIntervalTo.Size = new System.Drawing.Size(39, 25);
+            this.lblSlideshowIntervalTo.TabIndex = 69;
+            this.lblSlideshowIntervalTo.Text = "[to]";
+            this.lblSlideshowIntervalTo.Visible = false;
+            // 
+            // chkRandomSlideshowInterval
+            // 
+            this.chkRandomSlideshowInterval.AutoSize = true;
+            this.chkRandomSlideshowInterval.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkRandomSlideshowInterval.Location = new System.Drawing.Point(45, 1687);
+            this.chkRandomSlideshowInterval.Margin = new System.Windows.Forms.Padding(2);
+            this.chkRandomSlideshowInterval.Name = "chkRandomSlideshowInterval";
+            this.chkRandomSlideshowInterval.Size = new System.Drawing.Size(219, 30);
+            this.chkRandomSlideshowInterval.TabIndex = 66;
+            this.chkRandomSlideshowInterval.Text = "[Use random interval]";
+            this.chkRandomSlideshowInterval.UseVisualStyleBackColor = true;
+            this.chkRandomSlideshowInterval.CheckedChanged += new System.EventHandler(this.chkRandomSlideshowInterval_CheckedChanged);
             // 
             // chkShowSlideshowCountdown
             // 
@@ -1206,7 +1302,7 @@ namespace ImageGlass
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(27, 1814);
+            this.panel3.Location = new System.Drawing.Point(27, 1851);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(110, 51);
@@ -1324,7 +1420,7 @@ namespace ImageGlass
             "256",
             "512",
             "1024"});
-            this.cmbThumbnailDimension.Location = new System.Drawing.Point(48, 1503);
+            this.cmbThumbnailDimension.Location = new System.Drawing.Point(45, 1500);
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(2);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(278, 33);
@@ -1383,24 +1479,10 @@ namespace ImageGlass
             this.cmbImageOrder.Size = new System.Drawing.Size(278, 33);
             this.cmbImageOrder.TabIndex = 20;
             // 
-            // barInterval
-            // 
-            this.barInterval.BackColor = System.Drawing.SystemColors.Window;
-            this.barInterval.Location = new System.Drawing.Point(46, 1747);
-            this.barInterval.Margin = new System.Windows.Forms.Padding(2);
-            this.barInterval.Maximum = 600;
-            this.barInterval.Minimum = 1;
-            this.barInterval.Name = "barInterval";
-            this.barInterval.Size = new System.Drawing.Size(599, 69);
-            this.barInterval.TabIndex = 39;
-            this.barInterval.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.barInterval.Value = 38;
-            this.barInterval.Scroll += new System.EventHandler(this.barInterval_Scroll);
-            // 
             // lblSlideshowInterval
             // 
             this.lblSlideshowInterval.AutoSize = true;
-            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1712);
+            this.lblSlideshowInterval.Location = new System.Drawing.Point(40, 1748);
             this.lblSlideshowInterval.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSlideshowInterval.Name = "lblSlideshowInterval";
             this.lblSlideshowInterval.Size = new System.Drawing.Size(217, 25);
@@ -2439,7 +2521,10 @@ namespace ImageGlass
             this.tab1.ResumeLayout(false);
             this.tabImage.ResumeLayout(false);
             this.tabImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barInterval)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlideshowIntervalTo)).EndInit();
             this.tabEdit.ResumeLayout(false);
             this.tabEdit.PerformLayout();
             this.tabToolbar.ResumeLayout(false);
@@ -2521,7 +2606,6 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkLoopSlideshow;
         private System.Windows.Forms.Label lblImageLoadingOrder;
         private System.Windows.Forms.ComboBox cmbImageOrder;
-        private System.Windows.Forms.TrackBar barInterval;
         private System.Windows.Forms.Label lblSlideshowInterval;
         private System.Windows.Forms.CheckBox chkFindChildFolder;
         private System.Windows.Forms.Label lblHeadZooming;
@@ -2632,5 +2716,10 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblPageNav;
         private System.Windows.Forms.CheckBox chkShowPageNavAuto;
         private System.Windows.Forms.CheckBox chkShowSlideshowCountdown;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.NumericUpDown numSlideShowInterval;
+        private System.Windows.Forms.NumericUpDown numSlideshowIntervalTo;
+        private System.Windows.Forms.Label lblSlideshowIntervalTo;
+        private System.Windows.Forms.CheckBox chkRandomSlideshowInterval;
     }
 }
