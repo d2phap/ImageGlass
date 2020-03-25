@@ -952,6 +952,7 @@ namespace ImageGlass
 
                 indexTotal = $"{Local.CurrentIndex + 1}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
 
+
                 if (isShowMoreData)
                 {
                     fileSize = ImageInfo.GetFileSize(filename);
@@ -960,17 +961,9 @@ namespace ImageGlass
                     var colorProfile = Local.CurrentColor?.ColorSpace.ToString();
                     exifInfo += colorProfile?.Length > 0 ? $"{SEP}{colorProfile}" : "";
 
-                    // get date taken
-                    var dateTakenExif = Local.CurrentExif?.GetValue(ExifTag.DateTime)?.Value;
+                    // get date info
+                    exifInfo += $"{SEP}{GetImageDateInfo(filename)}";
 
-                    if (DateTime.TryParseExact(dateTakenExif,
-                        "yyyy:MM:dd HH:mm:ss",
-                        CultureInfo.CurrentCulture,
-                        DateTimeStyles.None,
-                        out DateTime dateTaken))
-                    {
-                        exifInfo += $"{SEP}{dateTaken:yyyy/MM/dd HH:mm:ss}";
-                    }
                 }
 
 
@@ -1041,6 +1034,52 @@ namespace ImageGlass
                 }
             }
 
+        }
+
+
+        /// <summary>
+        /// Get image datetime info, returns either Exif.DateTimeOriginal (o), Exif.DateTime, or File.LastWriteTime (m)
+        /// </summary>
+        /// <param name="filename">The full file path</param>
+        /// <returns></returns>
+        private string GetImageDateInfo(string filename)
+        {
+            string GetExifDateInfo(ExifTag<string> tag)
+            {
+                // get date
+                var dateExif = Local.CurrentExif?.GetValue(tag)?.Value;
+
+                if (DateTime.TryParseExact(dateExif,
+                    "yyyy:MM:dd HH:mm:ss",
+                    CultureInfo.CurrentCulture,
+                    DateTimeStyles.None,
+                    out DateTime dateTaken))
+                {
+                    return $"{dateTaken:yyyy/MM/dd HH:mm:ss}";
+                }
+
+                return string.Empty;
+            }
+
+
+            var exifDateOriginal = GetExifDateInfo(ExifTag.DateTimeOriginal);
+            if (exifDateOriginal.Length == 0)
+            {
+                var exifDate = GetExifDateInfo(ExifTag.DateTime);
+                if (exifDate.Length == 0)
+                {
+                    var fileDateModified = File.GetLastWriteTime(filename).ToString("yyyy/MM/dd HH:mm:ss");
+
+                    // return LastWriteTime
+                    return fileDateModified + " (m)";
+                }
+
+                // return DateTime
+                return exifDate;
+            }
+
+            // return DateTimeOriginal
+            return exifDateOriginal + " (o)";
         }
 
         #endregion
