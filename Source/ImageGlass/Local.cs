@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Heart;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -143,6 +144,18 @@ namespace ImageGlass
         /// Saves the total pages number of the viewing image
         /// </summary>
         public static int CurrentPageCount { get; set; } = 0;
+
+
+        /// <summary>
+        /// Gets, sets Exif tags of current image
+        /// </summary>
+        public static IExifProfile CurrentExif { get; set; } = null;
+
+
+        /// <summary>
+        /// Gets, sets color profile of current image
+        /// </summary>
+        public static IColorProfile CurrentColor { get; set; } = null;
 
         #endregion
 

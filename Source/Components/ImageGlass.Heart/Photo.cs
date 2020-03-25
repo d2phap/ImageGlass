@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 using System.Linq;
+using System;
 
 namespace ImageGlass.Heart
 {
@@ -54,6 +55,7 @@ namespace ImageGlass.Heart
         {
             Bitmap bitmap = null;
             IExifProfile exif = null;
+            IColorProfile colorProfile = null;
 
             var ext = Path.GetExtension(filename).ToUpperInvariant();
             var settings = new MagickReadSettings();
@@ -115,10 +117,12 @@ namespace ImageGlass.Heart
             #region Internal Functions 
 
             // Preprocess magick image
-            IExifProfile PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
+            Tuple<IExifProfile, IColorProfile> PreprocesMagickImage(MagickImage imgM, bool checkRotation = true)
             {
                 imgM.Quality = quality;
 
+                // get the color profile of image
+                var imgColorProfile = imgM.GetColorProfile();
 
                 // Get Exif information
                 var profile = imgM.GetExifProfile();
@@ -158,10 +162,6 @@ namespace ImageGlass.Heart
                     }
 
 
-                    // get the color profile of image
-                    var imgColorProfile = imgM.GetColorProfile();
-
-
                     // if always apply color profile
                     // or only apply color profile if there is an embedded profile
                     if (isApplyColorProfileForAll || imgColorProfile != null)
@@ -178,17 +178,17 @@ namespace ImageGlass.Heart
                             imgM.ColorSpace = ColorProfile.SRGB.ColorSpace;
                         }
 
-                        var colorProfile = Helpers.GetColorProfile(colorProfileName);
-                        if (colorProfile != null)
+                        var imgColor = Helpers.GetColorProfile(colorProfileName);
+                        if (imgColor != null)
                         {
-                            imgM.AddProfile(colorProfile);
-                            imgM.ColorSpace = colorProfile.ColorSpace;
+                            imgM.AddProfile(imgColor);
+                            imgM.ColorSpace = imgColor.ColorSpace;
                         }
                     }
                 }
 
 
-                return profile;
+                return new Tuple<IExifProfile, IColorProfile>(profile, imgColorProfile);
             }
 
 
@@ -235,7 +235,7 @@ namespace ImageGlass.Heart
                     // Issue #679: fix targa display with Magick.NET 7.15.x 
                     if (ext == ".TGA")
                         imgM.AutoOrient();
-                    exif = PreprocesMagickImage(imgM, checkRotation);
+                    (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
 
                     using (var channelImgM = ApplyColorChannel(imgM))
                     {
@@ -249,7 +249,8 @@ namespace ImageGlass.Heart
             return new ImgData()
             {
                 Image = bitmap,
-                Exif = exif
+                Exif = exif,
+                ColorProfile = colorProfile,
             };
         }
 

@@ -29,6 +29,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
 using ImageGlass.UI.ToolForms;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -36,6 +37,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -788,6 +790,8 @@ namespace ImageGlass
                 Local.CurrentPageIndex = bmpImg.ActivePageIndex;
                 Local.CurrentPageCount = bmpImg.PageCount;
 
+                Local.CurrentExif = bmpImg.Exif;
+                Local.CurrentColor = bmpImg.ColorProfile;
 
                 // clear busy state
                 SetAppBusy(false);
@@ -829,6 +833,8 @@ namespace ImageGlass
                 Local.ImageModifiedPath = "";
                 Local.CurrentPageIndex = 0;
                 Local.CurrentPageCount = 0;
+                Local.CurrentExif = null;
+                Local.CurrentColor = null;
 
                 if (!File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex)))
                 {
@@ -901,19 +907,19 @@ namespace ImageGlass
             string appName = Application.ProductName;
             const string SEP = "  |  ";
 
-            string indexTotal = string.Empty;
-            string filename = string.Empty;
-            string zoom = string.Empty;
-            string imgSize = string.Empty;
-            string fileSize = string.Empty;
-            string fileDate = string.Empty;
-            string pageInfo = string.Empty;
-
+            var indexTotal = string.Empty;
+            var filename = string.Empty;
+            var zoom = string.Empty;
+            var imgSize = string.Empty;
+            var fileSize = string.Empty;
+            var pageInfo = string.Empty;
+            var exifInfo = string.Empty;
+            
 
             if (Local.IsTempMemoryData)
             {
                 var imgData = Configs.Language.Items[$"{Name}._ImageData"];
-                zoom = $"{picMain.Zoom.ToString()}%";
+                zoom = $"{picMain.Zoom}%";
 
                 if (picMain.Image != null)
                 {
@@ -944,12 +950,27 @@ namespace ImageGlass
                 // when there is a problem with a file, don't try to show more info
                 bool isShowMoreData = File.Exists(filename);
 
-                indexTotal = $"{(Local.CurrentIndex + 1)}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
+                indexTotal = $"{Local.CurrentIndex + 1}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
 
                 if (isShowMoreData)
                 {
                     fileSize = ImageInfo.GetFileSize(filename);
-                    fileDate = File.GetCreationTime(filename).ToString("yyyy/MM/dd HH:mm:ss");
+
+                    // get color profile
+                    var colorProfile = Local.CurrentColor?.ColorSpace.ToString();
+                    exifInfo += colorProfile?.Length > 0 ? $"{SEP}{colorProfile}" : "";
+
+                    // get date taken
+                    var dateTakenExif = Local.CurrentExif?.GetValue(ExifTag.DateTime)?.Value;
+
+                    if (DateTime.TryParseExact(dateTakenExif,
+                        "yyyy:MM:dd HH:mm:ss",
+                        CultureInfo.CurrentCulture,
+                        DateTimeStyles.None,
+                        out DateTime dateTaken))
+                    {
+                        exifInfo += $"{SEP}{dateTaken:yyyy/MM/dd HH:mm:ss}";
+                    }
                 }
 
 
@@ -981,11 +1002,11 @@ namespace ImageGlass
                     if (!isShowMoreData) // size and date not available
                         this.Text = $"{filename}{SEP}{indexTotal}  - {appName}";
                     else
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  - {appName}";
                 }
                 else
                 {
-                    zoom = $"{picMain.Zoom.ToString("F2")}%";
+                    zoom = $"{picMain.Zoom:F2}%";
 
                     // pages information
                     pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount}";
@@ -1011,11 +1032,11 @@ namespace ImageGlass
                         catch { }
 
 
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
                     else
                     {
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{SEP}{fileDate}  - {appName}";
+                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
                 }
             }

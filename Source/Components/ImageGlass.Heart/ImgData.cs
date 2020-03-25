@@ -27,5 +27,6 @@ namespace ImageGlass.Heart
     {
         public Bitmap Image { get; set; } = null;
         public IExifProfile Exif { get; set; } = null;
+        public IColorProfile ColorProfile { get; set; } = null;
     }
 }

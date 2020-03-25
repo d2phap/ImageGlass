@@ -71,6 +71,12 @@ namespace ImageGlass.Heart
         /// </summary>
         public IExifProfile Exif { get; protected set; } = null;
 
+
+        /// <summary>
+        /// Gets the color profile of image
+        /// </summary>
+        public IColorProfile ColorProfile { get; protected set; } = null;
+
         #endregion
 
 
@@ -97,6 +103,7 @@ namespace ImageGlass.Heart
             this.PageCount = 0;
 
             this.Exif = null;
+            this.ColorProfile = null;
 
             if (this.Image != null)
             {
@@ -135,6 +142,7 @@ namespace ImageGlass.Heart
 
                 this.Image = data.Image;
                 this.Exif = data.Exif;
+                this.ColorProfile = data.ColorProfile;
 
                 // Get page count
                 var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
