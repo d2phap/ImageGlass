@@ -3621,28 +3621,37 @@ namespace ImageGlass
             }
         }
 
+
         /// <summary>
-        ///   Draws the selection region.
+        ///   [IG_CHANGE] Draws the selection region.
         /// </summary>
         /// <param name="e">
         ///   The <see cref="System.Windows.Forms.PaintEventArgs" /> instance containing the event data.
         /// </param>
         protected virtual void DrawSelection(PaintEventArgs e)
         {
-            RectangleF rect;
+            var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
+            var selectionRec = GetOffsetRectangle(SelectionRegion);
+            var clip = new Region(drawableRegion);
 
-            e.Graphics.SetClip(GetInsideViewPort(true));
+            // invert the selection
+            clip.Exclude(selectionRec);
+            e.Graphics.Clip = clip;
 
-            rect = GetOffsetRectangle(SelectionRegion);
+            // allow user-defined alpha value
+            var alpha = SelectionColor.A == 255 ? 128 : SelectionColor.A;
+            var brushColor = Color.FromArgb(alpha, SelectionColor);
 
-            using (Brush brush = new SolidBrush(Color.FromArgb(128, SelectionColor)))
+            // draw dimmed background
+            using (Brush brush = new SolidBrush(brushColor))
             {
-                e.Graphics.FillRectangle(brush, rect);
+                e.Graphics.FillRectangle(brush, drawableRegion);
             }
 
-            using (Pen pen = new Pen(SelectionColor))
+            // draw border, ignore alpha value
+            using (Pen pen = new Pen(Color.FromArgb(255, SelectionColor)))
             {
-                e.Graphics.DrawRectangle(pen, rect.X, rect.Y, rect.Width, rect.Height);
+                e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width, selectionRec.Height);
             }
 
             e.Graphics.ResetClip();

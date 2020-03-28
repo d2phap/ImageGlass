@@ -102,6 +102,7 @@ namespace ImageGlass
             base.OnMouseDown(e);
         }
 
+
         /// <summary>
         ///   Raises the <see cref="System.Windows.Forms.Control.MouseMove" /> event.
         /// </summary>
@@ -410,17 +411,13 @@ namespace ImageGlass
 
         protected virtual void DrawDragHandle(Graphics graphics, DragHandle handle)
         {
-            int left;
-            int top;
-            int width;
-            int height;
             Pen outerPen;
             Brush innerBrush;
 
-            left = handle.Bounds.Left;
-            top = handle.Bounds.Top;
-            width = handle.Bounds.Width;
-            height = handle.Bounds.Height;
+            var left = handle.Bounds.Left;
+            var top = handle.Bounds.Top;
+            var width = handle.Bounds.Width;
+            var height = handle.Bounds.Height;
 
             if (handle.Enabled)
             {
@@ -740,67 +737,60 @@ namespace ImageGlass
         {
             // http://forums.cyotek.com/imagebox/cursor-issue-in-imageboxex/msg92/#msg92
 
-            if (!this.IsPanning)
-            {
-                Cursor cursor;
+            if (this.IsPanning) return;
 
-                if (this.IsSelecting)
+            // default cursor
+            var cursor = Cursors.Default;
+
+            if (!this.IsSelecting)
+            {
+                var handleAnchor = this.IsResizing ? this.ResizeAnchor : this.HitTest(point);
+
+                if (handleAnchor != DragHandleAnchor.None && this.DragHandles[handleAnchor].Enabled)
                 {
-                    cursor = Cursors.Default;
+                    switch (handleAnchor)
+                    {
+                        case DragHandleAnchor.TopLeft:
+                        case DragHandleAnchor.BottomRight:
+                            cursor = Cursors.SizeNWSE;
+                            break;
+                        case DragHandleAnchor.TopCenter:
+                        case DragHandleAnchor.BottomCenter:
+                            cursor = Cursors.SizeNS;
+                            break;
+                        case DragHandleAnchor.TopRight:
+                        case DragHandleAnchor.BottomLeft:
+                            cursor = Cursors.SizeNESW;
+                            break;
+                        case DragHandleAnchor.MiddleLeft:
+                        case DragHandleAnchor.MiddleRight:
+                            cursor = Cursors.SizeWE;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                else if (this.IsMoving || this.SelectionRegion.Contains(this.PointToImage(point)))
+                {
+                    cursor = Cursors.SizeAll;
                 }
                 else
                 {
-                    DragHandleAnchor handleAnchor;
-
-                    handleAnchor = this.IsResizing ? this.ResizeAnchor : this.HitTest(point);
-                    if (handleAnchor != DragHandleAnchor.None && this.DragHandles[handleAnchor].Enabled)
-                    {
-                        switch (handleAnchor)
-                        {
-                            case DragHandleAnchor.TopLeft:
-                            case DragHandleAnchor.BottomRight:
-                                cursor = Cursors.SizeNWSE;
-                                break;
-                            case DragHandleAnchor.TopCenter:
-                            case DragHandleAnchor.BottomCenter:
-                                cursor = Cursors.SizeNS;
-                                break;
-                            case DragHandleAnchor.TopRight:
-                            case DragHandleAnchor.BottomLeft:
-                                cursor = Cursors.SizeNESW;
-                                break;
-                            case DragHandleAnchor.MiddleLeft:
-                            case DragHandleAnchor.MiddleRight:
-                                cursor = Cursors.SizeWE;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    else if (this.IsMoving || this.SelectionRegion.Contains(this.PointToImage(point)))
-                    {
-                        cursor = Cursors.SizeAll;
-                    }
-                    else
-                    {
-                        cursor = Cursors.Default;
-                    }
+                    cursor = Cursors.Default;
                 }
-
-                this.Cursor = cursor;
             }
+
+            this.Cursor = cursor;
         }
 
         private void StartResize(DragHandleAnchor anchor)
         {
-            CancelEventArgs e;
-
             if (this.IsMoving || this.IsResizing)
             {
                 throw new InvalidOperationException("A move or resize action is currently being performed.");
             }
 
-            e = new CancelEventArgs();
+            var e = new CancelEventArgs();
 
             this.OnSelectionResizing(e);
 
