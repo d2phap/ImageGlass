@@ -108,7 +108,7 @@ namespace ImageGlass.UI
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static double TransformNumber(double num)
+        public static double Transform(double num)
         {
             return num * GetDPIScaleFactor();
         }
@@ -118,7 +118,7 @@ namespace ImageGlass.UI
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static int TransformNumber(int num)
+        public static int Transform(int num)
         {
             return (int) Math.Round(num * GetDPIScaleFactor());
         }
@@ -132,7 +132,7 @@ namespace ImageGlass.UI
         public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight)
         {
             // Update size of toolbar
-            toolbar.Height = TransformNumber(baseHeight);
+            toolbar.Height = Transform(baseHeight);
 
             // Get new toolbar item height
             int newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);

@@ -979,7 +979,7 @@ namespace ImageGlass
                     var basename = Path.GetFileName(filename);
 
                     var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
+                    var textMaxLength = (this.Width - DPIScaling.Transform(400)) / charWidth;
                     var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
 
                     filename = Helper.ShortenPath(filename, maxLength);
@@ -1555,7 +1555,10 @@ namespace ImageGlass
         private void OnDpiChanged()
         {
             // Change grid cell size
-            picMain.GridCellSize = DPIScaling.TransformNumber(Constants.VIEWER_GRID_SIZE);
+            picMain.GridCellSize = DPIScaling.Transform(Constants.VIEWER_GRID_SIZE);
+
+            // Change size of resize handlers
+            picMain.DragHandleSize = DPIScaling.Transform(8);
 
 
             #region change size of toolbar
@@ -1569,7 +1572,7 @@ namespace ImageGlass
 
 
             #region change size of menu items
-            int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
+            int newMenuIconHeight = DPIScaling.Transform((int)Constants.MENU_ICON_HEIGHT);
 
             mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
@@ -1620,7 +1623,7 @@ namespace ImageGlass
 
                     // Update icon
                     var ico = Icon.ExtractAssociatedIcon(app.AppPath);
-                    var iconWidth = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
+                    var iconWidth = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -2199,7 +2202,7 @@ namespace ImageGlass
             // clear items
             mnuMainChannels.DropDown.Items.Clear();
 
-            var newMenuIconHeight = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
             // add new items
             var channelArr = Enum.GetValues(typeof(ColorChannels));
@@ -2515,7 +2518,7 @@ namespace ImageGlass
             // Overflow button and Overflow dropdown
             toolMain.OverflowButton.DropDown.BackColor = th.ToolbarBackgroundColor;
             toolMain.OverflowButton.AutoSize = false;
-            toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
+            toolMain.OverflowButton.Padding = new Padding(DPIScaling.Transform(10));
         }
 
 
@@ -3607,7 +3610,7 @@ namespace ImageGlass
             }
 
             // draw countdown text ----------------------------------------------
-            var gap = DPIScaling.TransformNumber(20);
+            var gap = DPIScaling.Transform(20);
             var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
 
 
@@ -4094,7 +4097,10 @@ namespace ImageGlass
 
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
-            ShowActiveCursor(e.Location);
+            if (picMain.SelectionMode != ImageBoxSelectionMode.Rectangle)
+            {
+                ShowActiveCursor(e.Location);
+            }
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
@@ -5724,6 +5730,7 @@ namespace ImageGlass
             if (mnuMainCrop.Checked)
             {
                 picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
+                picMain.SelectionRegion = picMain.GetSourceImageRegion();
             }
         }
 

@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timSlideShow = new System.Windows.Forms.Timer(this.components);
@@ -125,7 +125,6 @@
             this.mnuMainExitApplication = new System.Windows.Forms.ToolStripMenuItem();
             this.sp0 = new System.Windows.Forms.SplitContainer();
             this.sp1 = new System.Windows.Forms.SplitContainer();
-            this.picMain = new ImageGlass.ImageBoxEx();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
             this.toolMain = new ImageGlass.UI.ToolStripToolTip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
@@ -163,6 +162,7 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.picMain = new ImageGlass.ImageBoxEx();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -1333,32 +1333,6 @@
             this.sp1.TabStop = false;
             this.sp1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.sp1_SplitterMoved);
             // 
-            // picMain
-            // 
-            this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
-            this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.picMain.ContextMenuStrip = this.mnuContext;
-            this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
-            this.picMain.HorizontalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
-            this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-            this.picMain.Location = new System.Drawing.Point(0, 0);
-            this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(973, 363);
-            this.picMain.TabIndex = 1;
-            this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
-            this.picMain.Zoom = 100D;
-            this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
-            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
-            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
-            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.PicMain_Paint);
-            this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
-            this.picMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDoubleClick);
-            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
-            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
-            // 
             // thumbnailBar
             // 
             this.thumbnailBar.AllowDrop = true;
@@ -1873,6 +1847,33 @@
             this.btnScaleToFill.Tag = "";
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
+            // 
+            // picMain
+            // 
+            this.picMain.AllowDrop = true;
+            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
+            this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.picMain.ContextMenuStrip = this.mnuContext;
+            this.picMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picMain.DragHandleSize = 12;
+            this.picMain.GridDisplayMode = ImageGlass.ImageBoxGridDisplayMode.None;
+            this.picMain.HorizontalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
+            this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+            this.picMain.Location = new System.Drawing.Point(0, 0);
+            this.picMain.Name = "picMain";
+            this.picMain.Size = new System.Drawing.Size(973, 363);
+            this.picMain.TabIndex = 1;
+            this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
+            this.picMain.Zoom = 100D;
+            this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
+            this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
+            this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
+            this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.PicMain_Paint);
+            this.picMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseClick);
+            this.picMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDoubleClick);
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
+            this.picMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseMove);
             // 
             // frmMain
             // 

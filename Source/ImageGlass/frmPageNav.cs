@@ -116,7 +116,7 @@ namespace ImageGlass
             // Overflow button and Overflow dropdown
             toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.OverflowButton.AutoSize = false;
-            toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
+            toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.Transform(10));
 
             
             btnNextPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainNextPage"];
