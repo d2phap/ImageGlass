@@ -5711,8 +5711,21 @@ namespace ImageGlass
 
 
 
+
         #endregion
 
-        
+
+        private void mnuMainCrop_Click(object sender, EventArgs e)
+        {
+            picMain.SelectionRegion = new RectangleF();
+            picMain.SelectionMode = ImageBoxSelectionMode.None;
+
+            // enable selection mode
+            if (mnuMainCrop.Checked)
+            {
+                picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
+            }
+        }
+
     }
 }
