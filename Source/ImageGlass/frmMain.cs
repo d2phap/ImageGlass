@@ -1153,6 +1153,7 @@ namespace ImageGlass
             // these lines to _after_ WIN logo key check is complete.
             bool hasNoMods = !e.Control && !e.Shift && !e.Alt;
             bool ignore = _isAppBusy || _isWindowsKeyPressed;
+            _isDraggingImage = false;
 
 
             // Show main menu
