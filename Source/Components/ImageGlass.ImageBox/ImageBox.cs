@@ -998,7 +998,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        ///   Raises the <see cref="System.Windows.Forms.Control.Paint" /> event.
+        ///   [IG_CHANGE] Raises the <see cref="System.Windows.Forms.Control.Paint" /> event.
         /// </summary>
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.
@@ -1030,8 +1030,8 @@ namespace ImageGlass
                     DrawPixelGrid(e.Graphics);
                 }
 
-                // draw the selection
-                if (SelectionRegion != Rectangle.Empty)
+                // draw the selection. [IG_CHANGE]: add SelectionRegion != Rectangle.Empty
+                if (SelectionRegion != Rectangle.Empty || SelectionMode == ImageBoxSelectionMode.Rectangle)
                 {
                     DrawSelection(e);
                 }
@@ -4333,21 +4333,18 @@ namespace ImageGlass
         }
 
         /// <summary>
-        ///   Raises the <see cref="SelectionModeChanged" /> event.
+        ///   [IG_CHANGE] Raises the <see cref="SelectionModeChanged" /> event.
         /// </summary>
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
         protected virtual void OnSelectionModeChanged(EventArgs e)
         {
-            EventHandler handler;
+            // [IG_CHANGE] Update graphics
+            this.Invalidate();
 
-            handler = SelectionModeChanged;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            var handler = SelectionModeChanged;
+            handler?.Invoke(this, e);
         }
 
         /// <summary>

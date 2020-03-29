@@ -850,6 +850,8 @@ namespace ImageGlass
             // reset countdown timer value
             _slideshowCountdown = Configs.RandomizeSlideshowInterval();
 
+            // reset Cropping region
+            SetCroppingMode(mnuMainCrop.Checked);
 
             // auto-show Page Nav tool
             if (Local.CurrentPageCount > 1 && Configs.IsShowPageNavAuto)
@@ -5724,14 +5726,21 @@ namespace ImageGlass
 
         private void mnuMainCrop_Click(object sender, EventArgs e)
         {
-            picMain.SelectionRegion = new RectangleF();
-            picMain.SelectionMode = ImageBoxSelectionMode.None;
+            SetCroppingMode(mnuMainCrop.Checked);
+        }
 
-            // enable selection mode
-            if (mnuMainCrop.Checked)
+
+        private void SetCroppingMode(bool enable)
+        {
+            mnuMainCrop.Checked = enable;
+            picMain.SelectionMode = ImageBoxSelectionMode.None;
+            picMain.SelectNone();
+
+            // enable Cropping mode
+            if (enable)
             {
                 picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
-                picMain.SelectionRegion = picMain.GetSourceImageRegion();
+                picMain.SelectionRegion = new RectangleF();
             }
         }
 
