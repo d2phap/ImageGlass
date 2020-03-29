@@ -3632,6 +3632,9 @@ namespace ImageGlass
         {
             var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
             var selectionRec = GetOffsetRectangle(SelectionRegion);
+
+
+            #region draw inverted selection region
             var clip = new Region(drawableRegion);
 
             // invert the selection
@@ -3647,6 +3650,12 @@ namespace ImageGlass
             {
                 e.Graphics.FillRectangle(brush, drawableRegion);
             }
+            e.Graphics.ResetClip();
+            #endregion
+
+
+            #region draw selection border and grid
+            e.Graphics.SetClip(drawableRegion);
 
             // draw border, ignore alpha value
             using (Pen pen = new Pen(Color.FromArgb(255, SelectionColor)))
@@ -3654,7 +3663,31 @@ namespace ImageGlass
                 e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width, selectionRec.Height);
             }
 
+            // draw grid, ignore alpha value
+            using (Pen pen = new Pen(Color.FromArgb(200, SelectionColor)))
+            {
+                var width3 = selectionRec.Width / 3;
+                var height3 = selectionRec.Height / 3;
+
+                for (int i = 1; i < 3; i++)
+                {
+                    e.Graphics.DrawLine(pen,
+                        selectionRec.X + (i*width3),
+                        selectionRec.Y,
+                        selectionRec.X + (i*width3),
+                        selectionRec.Y + selectionRec.Height);
+
+                    e.Graphics.DrawLine(pen,
+                        selectionRec.X,
+                        selectionRec.Y + (i * height3),
+                        selectionRec.X + selectionRec.Width,
+                        selectionRec.Y + (i * height3));
+                }
+            }
+
             e.Graphics.ResetClip();
+            #endregion
+
         }
 
         /// <summary>
