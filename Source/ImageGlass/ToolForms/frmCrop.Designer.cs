@@ -262,6 +262,7 @@
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "[Save]";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.CropActionButton_Click);
             // 
             // btnSaveAs
             // 
@@ -275,6 +276,7 @@
             this.btnSaveAs.TabIndex = 23;
             this.btnSaveAs.Text = "[Save as]";
             this.btnSaveAs.UseVisualStyleBackColor = true;
+            this.btnSaveAs.Click += new System.EventHandler(this.CropActionButton_Click);
             // 
             // btnCopy
             // 
@@ -288,6 +290,7 @@
             this.btnCopy.TabIndex = 24;
             this.btnCopy.Text = "[Copy]";
             this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.CropActionButton_Click);
             // 
             // btnClear
             // 

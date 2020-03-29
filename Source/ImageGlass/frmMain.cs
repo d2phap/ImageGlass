@@ -679,7 +679,7 @@ namespace ImageGlass
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                SaveImageChange();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -2039,7 +2039,7 @@ namespace ImageGlass
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async void ImageSaveChange()
+        private async void SaveImageChange()
         {
             try
             {
@@ -2257,33 +2257,6 @@ namespace ImageGlass
 
 
         /// <summary>
-        /// Handle page navigation event
-        /// </summary>
-        /// <param name="navEvent"></param>
-        private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
-        {
-            switch (navEvent)
-            {
-                case frmPageNav.NavEvent.PageFirst:
-                    mnuMainFirstPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PageNext:
-                    mnuMainNextPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PagePrevious:
-                    mnuMainPrevPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PageLast:
-                    mnuMainLastPage_Click(null, null);
-                    break;
-            }
-        }
-
-
-        /// <summary>
         /// Load toolbar configs and update the buttons
         /// </summary>
         private void UpdateToolbarButtons()
@@ -2387,6 +2360,55 @@ namespace ImageGlass
             picMain.VerticalScrollBarStyle = oldScrollSetting;
         }
 
+
+        /// <summary>
+        /// Handle page navigation event
+        /// </summary>
+        /// <param name="navEvent"></param>
+        private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
+        {
+            switch (navEvent)
+            {
+                case frmPageNav.NavEvent.PageFirst:
+                    mnuMainFirstPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PageNext:
+                    mnuMainNextPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PagePrevious:
+                    mnuMainPrevPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PageLast:
+                    mnuMainLastPage_Click(null, null);
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// Handle cropping tool event
+        /// </summary>
+        /// <param name="actionEvent"></param>
+        private void CropActionEvent(frmCrop.CropActionEvent actionEvent)
+        {
+            switch (actionEvent)
+            {
+                case frmCrop.CropActionEvent.Save:
+                    SaveImageChange();
+                    break;
+                case frmCrop.CropActionEvent.SaveAs:
+                    mnuMainSaveAs_Click(null, null);
+                    break;
+                case frmCrop.CropActionEvent.Copy:
+                    mnuMainCopyImageData_Click(null, null);
+                    break;
+                default:
+                    break;
+            }
+        }
 
         /// <summary>
         /// Show or hide Color picker tool
@@ -2499,7 +2521,7 @@ namespace ImageGlass
                 }
 
                 // register page event handler
-                //Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
+                Local.FCrop.CropEventHandler = CropActionEvent;
                 Local.FCrop.SetToolFormManager(_toolManager);
                 Local.FCrop.Owner = this;
                 Local.FCrop.SetImageBox(picMain);
@@ -2517,6 +2539,7 @@ namespace ImageGlass
                 {
                     // Close Crop tool
                     Local.FCrop.Close();
+                    Local.FCrop.CropEventHandler = null;
                 }
             }
         }
@@ -2857,7 +2880,7 @@ namespace ImageGlass
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                SaveImageChange();
             }
 
             // Save last seen image path
@@ -4568,7 +4591,16 @@ namespace ImageGlass
 
             if (s.ShowDialog() == DialogResult.OK)
             {
-                Bitmap clonedPic = (Bitmap)picMain.Image;
+                Bitmap clonedPic;
+
+                if (picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
+                {
+                    clonedPic = (Bitmap)picMain.GetSelectedImage();
+                }
+                else
+                {
+                    clonedPic = (Bitmap)picMain.Image;
+                }
 
                 Local.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
@@ -5366,9 +5398,19 @@ namespace ImageGlass
 
         private void mnuMainCopyImageData_Click(object sender, EventArgs e)
         {
-            if (picMain.Image != null)
+            Image img;
+            if (picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
             {
-                Clipboard.SetImage(picMain.Image);
+                img = picMain.GetSelectedImage();
+            }
+            else
+            {
+                img = picMain.Image;
+            }
+
+            if (img != null)
+            {
+                Clipboard.SetImage(img);
                 ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }

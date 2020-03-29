@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.Base;
@@ -33,6 +32,19 @@ namespace ImageGlass
         // default location offset on the parent form
         private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
         private ImageBoxEx _imgBox;
+
+        /// <summary>
+        /// The handler to send CropEvent to.
+        /// </summary>
+        public CropToolEvent CropEventHandler { get; set; }
+        public delegate void CropToolEvent(CropActionEvent cropEvent);
+
+        public enum CropActionEvent
+        {
+            Save,
+            SaveAs,
+            Copy
+        }
 
         public frmCrop()
         {
@@ -123,15 +135,11 @@ namespace ImageGlass
 
         private void frmCrop_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Local.IsPageNavToolOpenning = false;
-
-            //Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
-            //NavEventHandler = null;
+            CropEventHandler = null;
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            //Configs.IsShowPageNavOnStartup = false;
             this.Close();
         }
 
@@ -159,6 +167,19 @@ namespace ImageGlass
                     (float)numWidth.Value,
                     (float)numHeight.Value);
             }
+        }
+
+        private void CropActionButton_Click(object sender, EventArgs e)
+        {
+            if (CropEventHandler == null)  // no handler established, do nothing
+                return;
+
+            if (sender == btnSave)
+                CropEventHandler(CropActionEvent.Save);
+            if (sender == btnSaveAs)
+                CropEventHandler(CropActionEvent.SaveAs);
+            if (sender == btnCopy)
+                CropEventHandler(CropActionEvent.Copy);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
