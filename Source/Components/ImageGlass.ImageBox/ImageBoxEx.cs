@@ -567,49 +567,81 @@ namespace ImageGlass
 
         private void PositionDragHandles()
         {
-            if (this.DragHandles != null && this.DragHandleSize > 0)
+            if (this.DragHandles == null || this.DragHandleSize == 0) return;
+
+            // user hasn't selected
+            if (this.SelectionRegion.IsEmpty)
             {
-                if (this.SelectionRegion.IsEmpty)
+                foreach (DragHandle handle in this.DragHandles)
                 {
-                    foreach (DragHandle handle in this.DragHandles)
-                    {
-                        handle.Bounds = Rectangle.Empty;
-                    }
+                    handle.Bounds = Rectangle.Empty;
                 }
-                else
-                {
-                    int left;
-                    int top;
-                    int right;
-                    int bottom;
-                    int halfWidth;
-                    int halfHeight;
-                    int halfDragHandleSize;
-                    Rectangle viewport;
-                    int offsetX;
-                    int offsetY;
 
-                    viewport = this.GetImageViewPort();
-                    offsetX = viewport.Left + this.Padding.Left + this.AutoScrollPosition.X;
-                    offsetY = viewport.Top + this.Padding.Top + this.AutoScrollPosition.Y;
-                    halfDragHandleSize = this.DragHandleSize / 2;
-                    left = Convert.ToInt32((this.SelectionRegion.Left * this.ZoomFactor) + offsetX);
-                    top = Convert.ToInt32((this.SelectionRegion.Top * this.ZoomFactor) + offsetY);
-                    right = left + Convert.ToInt32(this.SelectionRegion.Width * this.ZoomFactor);
-                    bottom = top + Convert.ToInt32(this.SelectionRegion.Height * this.ZoomFactor);
-                    halfWidth = Convert.ToInt32(this.SelectionRegion.Width * this.ZoomFactor) / 2;
-                    halfHeight = Convert.ToInt32(this.SelectionRegion.Height * this.ZoomFactor) / 2;
-
-                    this.DragHandles[DragHandleAnchor.TopLeft].Bounds = new Rectangle(left - this.DragHandleSize, top - this.DragHandleSize, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.TopCenter].Bounds = new Rectangle(left + halfWidth - halfDragHandleSize, top - this.DragHandleSize, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.TopRight].Bounds = new Rectangle(right, top - this.DragHandleSize, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.MiddleLeft].Bounds = new Rectangle(left - this.DragHandleSize, top + halfHeight - halfDragHandleSize, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.MiddleRight].Bounds = new Rectangle(right, top + halfHeight - halfDragHandleSize, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.BottomLeft].Bounds = new Rectangle(left - this.DragHandleSize, bottom, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.BottomCenter].Bounds = new Rectangle(left + halfWidth - halfDragHandleSize, bottom, this.DragHandleSize, this.DragHandleSize);
-                    this.DragHandles[DragHandleAnchor.BottomRight].Bounds = new Rectangle(right, bottom, this.DragHandleSize, this.DragHandleSize);
-                }
+                return;
             }
+
+            // get the visible image region
+            var viewport = this.GetImageViewPort();
+            var offsetX = viewport.Left + this.Padding.Left + this.AutoScrollPosition.X;
+            var offsetY = viewport.Top + this.Padding.Top + this.AutoScrollPosition.Y;
+            var halfDragHandleSize = this.DragHandleSize / 2;
+
+            // selection factors
+            var left = (int)(this.SelectionRegion.Left * this.ZoomFactor) + offsetX;
+            var top = (int)(this.SelectionRegion.Top * this.ZoomFactor) + offsetY;
+            var right = left + (int)(this.SelectionRegion.Width * this.ZoomFactor);
+            var bottom = top + (int)(this.SelectionRegion.Height * this.ZoomFactor);
+            var halfWidth = (int)(this.SelectionRegion.Width * this.ZoomFactor) / 2;
+            var halfHeight = (int)(this.SelectionRegion.Height * this.ZoomFactor) / 2;
+
+
+            this.DragHandles[DragHandleAnchor.TopLeft].Bounds = new Rectangle(
+                left - this.DragHandleSize,
+                top - this.DragHandleSize,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.TopCenter].Bounds = new Rectangle(
+                left + halfWidth - halfDragHandleSize,
+                top - this.DragHandleSize,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.TopRight].Bounds = new Rectangle(
+                right,
+                top - this.DragHandleSize,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.MiddleLeft].Bounds = new Rectangle(
+                left - this.DragHandleSize,
+                top + halfHeight - halfDragHandleSize,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.MiddleRight].Bounds = new Rectangle(
+                right,
+                top + halfHeight - halfDragHandleSize,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.BottomLeft].Bounds = new Rectangle(
+                left - this.DragHandleSize,
+                bottom,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.BottomCenter].Bounds = new Rectangle(
+                left + halfWidth - halfDragHandleSize,
+                bottom,
+                this.DragHandleSize,
+                this.DragHandleSize);
+
+            this.DragHandles[DragHandleAnchor.BottomRight].Bounds = new Rectangle(
+                right,
+                bottom,
+                this.DragHandleSize,
+                this.DragHandleSize);
         }
 
         private void ProcessSelectionMove(Point cursorPosition)
