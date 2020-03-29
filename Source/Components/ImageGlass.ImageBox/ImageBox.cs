@@ -5133,6 +5133,26 @@ namespace ImageGlass
                 handler(this, e);
         }
 
+
+        /// <summary>
+        ///   Occurs when the AutoScrollPosition property value changes. [IG_CHANGE] This is new event
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler AutoScrollPositionChanged;
+
+        /// <summary>
+        ///   Raises the <see cref="AutoScrollPositionChanged" /> event. [IG_CHANGE] This is new event
+        /// </summary>
+        /// <param name="e">
+        ///   The <see cref="EventArgs" /> instance containing the event data.
+        /// </param>
+        protected virtual void OnAutoScrollPositionChanged(EventArgs e)
+        {
+            var handler = this.AutoScrollPositionChanged;
+
+            handler?.Invoke(this, e);
+        }
+
         private Point _autoScrollPosition;
 
         private bool _updatingPosition;
@@ -5164,13 +5184,15 @@ namespace ImageGlass
 
                         if (_autoScrollPosition != value)
                         {
-//                            Debug.WriteLine(value);
+                            // Debug.WriteLine(value);
 
                             _autoScrollPosition = value;
 
                             UpdateScrollbars();
 
                             Invalidate();
+
+                            this.OnAutoScrollPositionChanged(EventArgs.Empty);
                         }
                     }
                     finally

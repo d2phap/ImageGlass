@@ -263,6 +263,20 @@ namespace ImageGlass
             this.PositionDragHandles();
         }
 
+
+        /// <summary>
+        ///   Raises the <see cref="ImageBox.AutoScrollPositionChanged" /> event. [IG_CHANGE] This is new event.
+        /// </summary>
+        /// <param name="e">
+        ///   The <see cref="System.EventArgs" /> instance containing the event data.
+        /// </param>
+        protected override void OnAutoScrollPositionChanged(EventArgs e)
+        {
+            base.OnAutoScrollPositionChanged(e);
+
+            this.PositionDragHandles();
+        }
+
         /// <summary>
         /// Processes a dialog key.
         /// </summary>
@@ -565,6 +579,9 @@ namespace ImageGlass
             return !dragZone.Contains(location);
         }
 
+        /// <summary>
+        /// [IG_CHANGE]
+        /// </summary>
         private void PositionDragHandles()
         {
             if (this.DragHandles == null || this.DragHandleSize == 0) return;
@@ -585,6 +602,7 @@ namespace ImageGlass
             var offsetX = viewport.Left + this.Padding.Left + this.AutoScrollPosition.X;
             var offsetY = viewport.Top + this.Padding.Top + this.AutoScrollPosition.Y;
             var halfDragHandleSize = this.DragHandleSize / 2;
+
 
             // selection factors
             var left = (int)(this.SelectionRegion.Left * this.ZoomFactor) + offsetX;
