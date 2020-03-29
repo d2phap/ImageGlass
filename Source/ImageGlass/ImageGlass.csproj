@@ -191,10 +191,10 @@
     <Compile Include="frmAddNewFormat.Designer.cs">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmColorPicker.cs">
+    <Compile Include="ToolForms\frmColorPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmColorPicker.Designer.cs">
+    <Compile Include="ToolForms\frmColorPicker.Designer.cs">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="frmEditApp.cs">
@@ -209,10 +209,16 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPageNav.cs">
+    <Compile Include="ToolForms\frmCrop.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPageNav.Designer.cs">
+    <Compile Include="ToolForms\frmCrop.Designer.cs">
+      <DependentUpon>frmCrop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolForms\frmPageNav.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolForms\frmPageNav.Designer.cs">
       <DependentUpon>frmPageNav.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSetting.cs">
@@ -231,7 +237,7 @@
     <EmbeddedResource Include="frmAddNewFormat.resx">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmColorPicker.resx">
+    <EmbeddedResource Include="ToolForms\frmColorPicker.resx">
       <DependentUpon>frmColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditApp.resx">
@@ -241,7 +247,10 @@
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPageNav.resx">
+    <EmbeddedResource Include="ToolForms\frmCrop.resx">
+      <DependentUpon>frmCrop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolForms\frmPageNav.resx">
       <DependentUpon>frmPageNav.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

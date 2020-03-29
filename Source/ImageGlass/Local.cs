@@ -31,6 +31,7 @@ namespace ImageGlass
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
+        private static frmCrop _fCrop;
 
 
         #region Auto Properties
@@ -189,6 +190,16 @@ namespace ImageGlass
         {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
+        }
+
+
+        /// <summary>
+        /// Form frmCrop
+        /// </summary>
+        public static frmCrop FCrop
+        {
+            get { return LazyInitializer.EnsureInitialized(ref _fCrop); }
+            set { _fCrop = value; }
         }
 
 

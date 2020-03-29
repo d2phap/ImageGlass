@@ -851,7 +851,7 @@ namespace ImageGlass
             _slideshowCountdown = Configs.RandomizeSlideshowInterval();
 
             // reset Cropping region
-            SetCroppingMode(mnuMainCrop.Checked);
+            ShowCropTool(mnuMainCrop.Checked);
 
             // auto-show Page Nav tool
             if (Local.CurrentPageCount > 1 && Configs.IsShowPageNavAuto)
@@ -2475,6 +2475,50 @@ namespace ImageGlass
             }
         }
 
+
+        /// <summary>
+        /// Enable / disable Crop tool
+        /// </summary>
+        /// <param name="show"></param>
+        private void ShowCropTool(bool show = true)
+        {
+            mnuMainCrop.Checked = show;
+            picMain.SelectionMode = ImageBoxSelectionMode.None;
+            picMain.SelectNone();
+
+            // show Cropping mode
+            if (show)
+            {
+                picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
+                picMain.SelectionRegion = new RectangleF();
+
+                // Open the page navigation tool
+                if (Local.FCrop == null || Local.FCrop.IsDisposed)
+                {
+                    Local.FCrop = new frmCrop();
+                }
+
+                // register page event handler
+                //Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
+                Local.FCrop.SetToolFormManager(_toolManager);
+                Local.FCrop.Owner = this;
+
+                if (!Local.FCrop.Visible)
+                {
+                    Local.FCrop.Show(this);
+                }
+
+                this.Activate();
+            }
+            else
+            {
+                if (Local.FCrop != null)
+                {
+                    // Close Crop tool
+                    Local.FCrop.Close();
+                }
+            }
+        }
 
         #endregion
 
@@ -5536,6 +5580,12 @@ namespace ImageGlass
         }
 
 
+        private void mnuMainCrop_Click(object sender, EventArgs e)
+        {
+            ShowCropTool(mnuMainCrop.Checked);
+        }
+
+
         private void mnuMainSettings_Click(object sender, EventArgs e)
         {
             if (Local.FSetting.IsDisposed)
@@ -5719,30 +5769,9 @@ namespace ImageGlass
 
 
 
-
-
         #endregion
 
 
-        private void mnuMainCrop_Click(object sender, EventArgs e)
-        {
-            SetCroppingMode(mnuMainCrop.Checked);
-        }
-
-
-        private void SetCroppingMode(bool enable)
-        {
-            mnuMainCrop.Checked = enable;
-            picMain.SelectionMode = ImageBoxSelectionMode.None;
-            picMain.SelectNone();
-
-            // enable Cropping mode
-            if (enable)
-            {
-                picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
-                picMain.SelectionRegion = new RectangleF();
-            }
-        }
 
     }
 }
