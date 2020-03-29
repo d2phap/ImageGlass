@@ -33,7 +33,6 @@ namespace ImageGlass
         // default location offset on the parent form
         private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
         private ImageBoxEx _imgBox;
-        private bool _isSelecting = false;
 
         public frmCrop()
         {
@@ -52,29 +51,10 @@ namespace ImageGlass
             if (_imgBox != null)
             {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
-                _imgBox.SelectionMoving -= this._imgBox_Selecting;
-                _imgBox.SelectionMoved -= this._imgBox_Selected;
-                _imgBox.SelectionResized -= this._imgBox_Selected;
-                _imgBox.SelectionResizing -= this._imgBox_Selecting;
             }
 
             _imgBox = imgBox;
-
             _imgBox.SelectionRegionChanged += this._imgBox_SelectionRegionChanged;
-            _imgBox.SelectionMoving += this._imgBox_Selecting;
-            _imgBox.SelectionMoved += this._imgBox_Selected;
-            _imgBox.SelectionResized += this._imgBox_Selected;
-            _imgBox.SelectionResizing += this._imgBox_Selecting;
-        }
-
-        private void _imgBox_Selected(object sender, EventArgs e)
-        {
-            _isSelecting = false;
-        }
-
-        private void _imgBox_Selecting(object sender, CancelEventArgs e)
-        {
-            _isSelecting = true;
         }
 
         private void _imgBox_SelectionRegionChanged(object sender, EventArgs e)
@@ -169,7 +149,9 @@ namespace ImageGlass
         private void Numeric_ValueChanged(object sender, EventArgs e)
         {
             // manually set the selection region
-            if (!_imgBox.IsSelecting && !_imgBox.IsResizing && !_imgBox.IsMoving)
+            if (!_imgBox.IsSelecting 
+                && !_imgBox.IsResizingSelection 
+                && !_imgBox.IsMovingSelection)
             {
                 _imgBox.SelectionRegion = new RectangleF(
                     (float)numX.Value,

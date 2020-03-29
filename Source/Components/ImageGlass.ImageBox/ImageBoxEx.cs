@@ -88,7 +88,7 @@ namespace ImageGlass
 
             imagePoint = this.PointToImage(e.Location);
 
-            if (e.Button == MouseButtons.Left && (this.SelectionRegion.Contains(imagePoint) || this.HitTest(e.Location) != DragHandleAnchor.None))
+            if (e.Button == MouseButtons.Left && (this.SelectionRegion.Contains(imagePoint) || this.HitDragHandleTest(e.Location) != DragHandleAnchor.None))
             {
                 this.DragOrigin = e.Location;
                 this.DragOriginOffset = new Point(imagePoint.X - (int)this.SelectionRegion.X, imagePoint.Y - (int)this.SelectionRegion.Y);
@@ -112,11 +112,11 @@ namespace ImageGlass
         protected override void OnMouseMove(MouseEventArgs e)
         {
             // start either a move or a resize operation
-            if (!this.IsSelecting && !this.IsMoving && !this.IsResizing && e.Button == MouseButtons.Left && !this.DragOrigin.IsEmpty && this.IsOutsideDragZone(e.Location))
+            if (!this.IsSelecting && !this.IsMovingSelection && !this.IsResizingSelection && e.Button == MouseButtons.Left && !this.DragOrigin.IsEmpty && this.IsOutsideDragZone(e.Location))
             {
                 DragHandleAnchor anchor;
 
-                anchor = this.HitTest(this.DragOrigin);
+                anchor = this.HitDragHandleTest(this.DragOrigin);
 
                 if (anchor == DragHandleAnchor.None)
                 {
@@ -148,13 +148,13 @@ namespace ImageGlass
         /// </param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (this.IsMoving)
+            if (this.IsMovingSelection)
             {
-                this.CompleteMove();
+                this.CompleteMovingSelection();
             }
-            else if (this.IsResizing)
+            else if (this.IsResizingSelection)
             {
-                this.CompleteResize();
+                this.CompleteResizingSelection();
             }
 
             base.OnMouseUp(e);
@@ -190,7 +190,7 @@ namespace ImageGlass
         /// </param>
         protected override void OnPanStart(CancelEventArgs e)
         {
-            if (this.IsMoving || this.IsResizing || !this.DragOrigin.IsEmpty)
+            if (this.IsMovingSelection || this.IsResizingSelection || !this.DragOrigin.IsEmpty)
             {
                 e.Cancel = true;
             }
@@ -232,7 +232,7 @@ namespace ImageGlass
         /// </param>
         protected override void OnSelecting(ImageBoxCancelEventArgs e)
         {
-            e.Cancel = this.IsMoving || this.IsResizing || this.SelectionRegion.Contains(this.PointToImage(e.Location)) || this.HitTest(e.Location) != DragHandleAnchor.None;
+            e.Cancel = this.IsMovingSelection || this.IsResizingSelection || this.SelectionRegion.Contains(this.PointToImage(e.Location)) || this.HitDragHandleTest(e.Location) != DragHandleAnchor.None;
 
             base.OnSelecting(e);
         }
@@ -288,15 +288,15 @@ namespace ImageGlass
         {
             bool result;
 
-            if (keyData == Keys.Escape && (this.IsResizing || this.IsMoving))
+            if (keyData == Keys.Escape && (this.IsResizingSelection || this.IsMovingSelection))
             {
-                if (this.IsResizing)
+                if (this.IsResizingSelection)
                 {
                     this.CancelResize();
                 }
                 else
                 {
-                    this.CancelMove();
+                    this.CancelMovingSelection();
                 }
 
                 result = true;
@@ -338,11 +338,11 @@ namespace ImageGlass
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool IsMoving { get; protected set; }
+        public bool IsMovingSelection { get; protected set; }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool IsResizing { get; protected set; }
+        public bool IsResizingSelection { get; protected set; }
 
         [Category("Behavior")]
         [DefaultValue(typeof(Size), "0, 0")]
@@ -395,14 +395,14 @@ namespace ImageGlass
         public void CancelResize()
         {
             this.SelectionRegion = this.PreviousSelectionRegion;
-            this.CompleteResize();
+            this.CompleteResizingSelection();
         }
 
         public void StartMove()
         {
             CancelEventArgs e;
 
-            if (this.IsMoving || this.IsResizing)
+            if (this.IsMovingSelection || this.IsResizingSelection)
             {
                 throw new InvalidOperationException("A move or resize action is currently being performed.");
             }
@@ -414,7 +414,7 @@ namespace ImageGlass
             if (!e.Cancel)
             {
                 this.PreviousSelectionRegion = this.SelectionRegion;
-                this.IsMoving = true;
+                this.IsMovingSelection = true;
             }
         }
 
@@ -543,25 +543,25 @@ namespace ImageGlass
 
         #region Private Members
 
-        private void CancelMove()
+        private void CancelMovingSelection()
         {
             this.SelectionRegion = this.PreviousSelectionRegion;
-            this.CompleteMove();
+            this.CompleteMovingSelection();
         }
 
-        private void CompleteMove()
+        private void CompleteMovingSelection()
         {
             this.ResetDrag();
             this.OnSelectionMoved(EventArgs.Empty);
         }
 
-        private void CompleteResize()
+        private void CompleteResizingSelection()
         {
             this.ResetDrag();
             this.OnSelectionResized(EventArgs.Empty);
         }
 
-        private DragHandleAnchor HitTest(Point cursorPosition)
+        private DragHandleAnchor HitDragHandleTest(Point cursorPosition)
         {
             return this.DragHandles.HitTest(cursorPosition);
         }
@@ -664,7 +664,7 @@ namespace ImageGlass
 
         private void ProcessSelectionMove(Point cursorPosition)
         {
-            if (this.IsMoving)
+            if (this.IsMovingSelection)
             {
                 int x;
                 int y;
@@ -690,7 +690,7 @@ namespace ImageGlass
 
         private void ProcessSelectionResize(Point cursorPosition)
         {
-            if (this.IsResizing)
+            if (this.IsResizingSelection)
             {
                 Point imagePosition;
                 float left;
@@ -777,8 +777,8 @@ namespace ImageGlass
 
         private void ResetDrag()
         {
-            this.IsResizing = false;
-            this.IsMoving = false;
+            this.IsResizingSelection = false;
+            this.IsMovingSelection = false;
             this.DragOrigin = Point.Empty;
             this.DragOriginOffset = Point.Empty;
         }
@@ -794,7 +794,7 @@ namespace ImageGlass
 
             if (!this.IsSelecting)
             {
-                var handleAnchor = this.IsResizing ? this.ResizeAnchor : this.HitTest(point);
+                var handleAnchor = this.IsResizingSelection ? this.ResizeAnchor : this.HitDragHandleTest(point);
 
                 if (handleAnchor != DragHandleAnchor.None && this.DragHandles[handleAnchor].Enabled)
                 {
@@ -820,7 +820,7 @@ namespace ImageGlass
                             throw new ArgumentOutOfRangeException();
                     }
                 }
-                else if (this.IsMoving || this.SelectionRegion.Contains(this.PointToImage(point)))
+                else if (this.IsMovingSelection || this.SelectionRegion.Contains(this.PointToImage(point)))
                 {
                     cursor = Cursors.SizeAll;
                 }
@@ -835,7 +835,7 @@ namespace ImageGlass
 
         private void StartResize(DragHandleAnchor anchor)
         {
-            if (this.IsMoving || this.IsResizing)
+            if (this.IsMovingSelection || this.IsResizingSelection)
             {
                 throw new InvalidOperationException("A move or resize action is currently being performed.");
             }
@@ -848,7 +848,7 @@ namespace ImageGlass
             {
                 this.ResizeAnchor = anchor;
                 this.PreviousSelectionRegion = this.SelectionRegion;
-                this.IsResizing = true;
+                this.IsResizingSelection = true;
             }
         }
 
