@@ -2502,6 +2502,7 @@ namespace ImageGlass
                 //Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
                 Local.FCrop.SetToolFormManager(_toolManager);
                 Local.FCrop.Owner = this;
+                Local.FCrop.SetImageBox(picMain);
 
                 if (!Local.FCrop.Visible)
                 {
@@ -3475,6 +3476,7 @@ namespace ImageGlass
                 ApplyTheme(changeBackground: true);
                 Local.FColorPicker.UpdateUI();
                 Local.FPageNav.UpdateUI();
+                Local.FCrop.UpdateUI();
             }
             #endregion
 

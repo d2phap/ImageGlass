@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageGlass.Base;
@@ -30,7 +31,9 @@ namespace ImageGlass
     public partial class frmCrop : ToolForm
     {
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
+        private ImageBoxEx _imgBox;
+        private bool _isSelecting = false;
 
         public frmCrop()
         {
@@ -44,6 +47,48 @@ namespace ImageGlass
         }
 
 
+        public void SetImageBox(ImageBoxEx imgBox)
+        {
+            if (_imgBox != null)
+            {
+                _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
+                _imgBox.SelectionMoving -= this._imgBox_Selecting;
+                _imgBox.SelectionMoved -= this._imgBox_Selected;
+                _imgBox.SelectionResized -= this._imgBox_Selected;
+                _imgBox.SelectionResizing -= this._imgBox_Selecting;
+            }
+
+            _imgBox = imgBox;
+
+            _imgBox.SelectionRegionChanged += this._imgBox_SelectionRegionChanged;
+            _imgBox.SelectionMoving += this._imgBox_Selecting;
+            _imgBox.SelectionMoved += this._imgBox_Selected;
+            _imgBox.SelectionResized += this._imgBox_Selected;
+            _imgBox.SelectionResizing += this._imgBox_Selecting;
+        }
+
+        private void _imgBox_Selected(object sender, EventArgs e)
+        {
+            _isSelecting = false;
+        }
+
+        private void _imgBox_Selecting(object sender, CancelEventArgs e)
+        {
+            _isSelecting = true;
+        }
+
+        private void _imgBox_SelectionRegionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                numX.Value = (decimal)_imgBox.SelectionRegion.X;
+                numY.Value = (decimal)_imgBox.SelectionRegion.Y;
+                numWidth.Value = (decimal)_imgBox.SelectionRegion.Width;
+                numHeight.Value = (decimal)_imgBox.SelectionRegion.Height;
+            }
+            catch { }
+        }
+
 
 
         #region Private Methods
@@ -55,6 +100,8 @@ namespace ImageGlass
         {
             // Apply current theme ------------------------------------------------------
             SetColors(Configs.Theme);
+
+            tableActions.BackColor = Configs.Theme.ToolbarBackgroundColor;
 
             btnSnapTo.FlatAppearance.MouseOverBackColor = Theme.LightenColor(Configs.Theme.BackgroundColor, 0.1f);
             btnSnapTo.FlatAppearance.MouseDownBackColor = Theme.DarkenColor(Configs.Theme.BackgroundColor, 0.1f);
@@ -107,6 +154,41 @@ namespace ImageGlass
             //Configs.IsShowPageNavOnStartup = false;
             this.Close();
         }
+
+
+        private void Numeric_Click(object sender, EventArgs e)
+        {
+            var num = (NumericUpDown)sender;
+            num.Select(0, num.Text.Length);
+
+            // fixed: cannot copy the text if Owner form is not activated
+            this.Owner.Activate();
+            this.Activate();
+        }
+
+        private void Numeric_ValueChanged(object sender, EventArgs e)
+        {
+            // manually set the selection region
+            if (!_imgBox.IsSelecting && !_imgBox.IsResizing && !_imgBox.IsMoving)
+            {
+                _imgBox.SelectionRegion = new RectangleF(
+                    (float)numX.Value,
+                    (float)numY.Value,
+                    (float)numWidth.Value,
+                    (float)numHeight.Value);
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            numX.Value = 0;
+            numY.Value = 0;
+            numWidth.Value = 0;
+            numHeight.Value = 0;
+        }
+
         #endregion
+
+        
     }
 }
