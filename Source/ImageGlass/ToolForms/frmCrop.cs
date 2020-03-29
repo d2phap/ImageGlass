@@ -175,10 +175,23 @@ namespace ImageGlass
                 return;
 
             if (sender == btnSave)
-                CropEventHandler(CropActionEvent.Save);
-            if (sender == btnSaveAs)
+            {
+                if (!Local.IsTempMemoryData)
+                {
+                    // Save the image path for saving
+                    Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
+                    CropEventHandler(CropActionEvent.Save);
+                }
+                else
+                {
+                    // for non-existing file, trigger SaveAs
+                    CropEventHandler(CropActionEvent.SaveAs);
+                }
+            }
+            else if (sender == btnSaveAs)
                 CropEventHandler(CropActionEvent.SaveAs);
-            if (sender == btnCopy)
+
+            else if (sender == btnCopy)
                 CropEventHandler(CropActionEvent.Copy);
         }
 

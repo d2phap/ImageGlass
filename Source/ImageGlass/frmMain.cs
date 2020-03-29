@@ -2044,7 +2044,16 @@ namespace ImageGlass
             try
             {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
-                var newBitmap = new Bitmap(picMain.Image);
+                Bitmap newBitmap;
+
+                if (!picMain.SelectionRegion.IsEmpty)
+                {
+                    newBitmap = new Bitmap(picMain.GetSelectedImage());
+                }
+                else
+                {
+                    newBitmap = new Bitmap(picMain.Image);
+                }
 
                 // override the current image file
                 Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
@@ -4593,7 +4602,7 @@ namespace ImageGlass
             {
                 Bitmap clonedPic;
 
-                if (picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
+                if (!picMain.SelectionRegion.IsEmpty)
                 {
                     clonedPic = (Bitmap)picMain.GetSelectedImage();
                 }
@@ -4967,10 +4976,7 @@ namespace ImageGlass
 
         private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -4992,10 +4998,7 @@ namespace ImageGlass
 
         private async void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -5017,10 +5020,7 @@ namespace ImageGlass
 
         private async void mnuMainFlipHorz_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -5040,10 +5040,7 @@ namespace ImageGlass
 
         private async void mnuMainFlipVert_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -5399,7 +5396,7 @@ namespace ImageGlass
         private void mnuMainCopyImageData_Click(object sender, EventArgs e)
         {
             Image img;
-            if (picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
+            if (!picMain.SelectionRegion.IsEmpty)
             {
                 img = picMain.GetSelectedImage();
             }
