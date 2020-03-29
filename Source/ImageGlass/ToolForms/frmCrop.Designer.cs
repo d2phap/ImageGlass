@@ -348,6 +348,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "frmCrop";
             this.Load += new System.EventHandler(this.frmCrop_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCrop_KeyDown);
             this.tableFactors.ResumeLayout(false);
             this.tableFactors.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHeight)).EndInit();

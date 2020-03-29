@@ -1442,10 +1442,10 @@ namespace ImageGlass
             #region Without Modifiers keys
             if (hasNoMods)
             {
-                // Edit image
-                if (e.KeyCode == Keys.E)
+                // Crop tool
+                if (e.KeyCode == Keys.C)
                 {
-                    mnuMainEditImage_Click(null, null);
+                    mnuMainCrop.PerformClick();
                     return;
                 }
 
@@ -1453,6 +1453,13 @@ namespace ImageGlass
                 if (e.KeyCode == Keys.D)
                 {
                     mnuOpenWith_Click(null, null);
+                    return;
+                }
+
+                // Edit image
+                if (e.KeyCode == Keys.E)
+                {
+                    mnuMainEditImage_Click(null, null);
                     return;
                 }
 
@@ -2511,7 +2518,7 @@ namespace ImageGlass
         /// Enable / disable Crop tool
         /// </summary>
         /// <param name="show"></param>
-        private void ShowCropTool(bool show = true)
+        public void ShowCropTool(bool show = true)
         {
             mnuMainCrop.Checked = show;
             picMain.SelectionMode = ImageBoxSelectionMode.None;

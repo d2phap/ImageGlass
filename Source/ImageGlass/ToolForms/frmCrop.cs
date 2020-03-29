@@ -63,10 +63,17 @@ namespace ImageGlass
             if (_imgBox != null)
             {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
+                _imgBox.ImageChanged -= this._imgBox_ImageChanged;
             }
 
             _imgBox = imgBox;
             _imgBox.SelectionRegionChanged += this._imgBox_SelectionRegionChanged;
+            _imgBox.ImageChanged += this._imgBox_ImageChanged;
+        }
+
+        private void _imgBox_ImageChanged(object sender, EventArgs e)
+        {
+            btnClear_Click(null, null);
         }
 
         private void _imgBox_SelectionRegionChanged(object sender, EventArgs e)
@@ -135,12 +142,15 @@ namespace ImageGlass
 
         private void frmCrop_FormClosing(object sender, FormClosingEventArgs e)
         {
+            btnClear_Click(null, null);
+
             CropEventHandler = null;
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var frm = (frmMain) this._currentOwner;
+            frm.ShowCropTool(false);
         }
 
 
