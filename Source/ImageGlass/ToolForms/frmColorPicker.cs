@@ -33,9 +33,9 @@ namespace ImageGlass
     {
         
         // default location offset on the parent form
-        private static Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(80 * DPIScaling.GetDPIScaleFactor()));
+        private static Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(80));
 
-        private ImageBox _imgBox;
+        private ImageBoxEx _imgBox;
         private BitmapBooster _bmpBooster;
         private Point _cursorPos;
 
@@ -49,7 +49,7 @@ namespace ImageGlass
         }
 
 
-        public void SetImageBox(ImageBox imgBox)
+        public void SetImageBox(ImageBoxEx imgBox)
         {
             if (_imgBox != null)
             {
@@ -141,6 +141,7 @@ namespace ImageGlass
         private void _DisplayColor(Color color)
         {
             txtLocation.Text = lblPixel.Text;
+            lblPixel.BackColor = Color.Transparent;
             panelColor.BackColor = color;
 
             //RGBA color -----------------------------------------------
@@ -252,6 +253,8 @@ namespace ImageGlass
 
             btnSnapTo.FlatAppearance.MouseOverBackColor = Theme.LightenColor(Configs.Theme.BackgroundColor, 0.1f);
             btnSnapTo.FlatAppearance.MouseDownBackColor = Theme.DarkenColor(Configs.Theme.BackgroundColor, 0.1f);
+
+            lblFormTitle.Text = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainColorPicker"];
         }
 
         private void frmColorPicker_Load(object sender, EventArgs e)

@@ -41,8 +41,8 @@ namespace ImageGlass
         {
             InitializeComponent();
 
-            imglGeneral.ImageSize = new Size(10, DPIScaling.TransformNumber(30));
-            imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.TransformNumber(30)));
+            imglGeneral.ImageSize = new Size(10, DPIScaling.Transform(30));
+            imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.Transform(30)));
 
             txtZoomLevels.KeyPress += TxtZoomLevels_KeyPress; // Filter user input for zoom levels
 
@@ -491,7 +491,7 @@ namespace ImageGlass
                 lblFileTypeAssoc.Tag = 1;
                 lblFileTypeAssoc.BackColor = M_COLOR_MENU_ACTIVE;
 
-                lvExtension.TileSize = new Size(100, DPIScaling.TransformNumber(30));
+                lvExtension.TileSize = new Size(100, DPIScaling.Transform(30));
 
                 // Load image formats to the list
                 LoadExtensionList();

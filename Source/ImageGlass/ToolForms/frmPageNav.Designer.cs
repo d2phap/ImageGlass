@@ -38,6 +38,7 @@
             this.btnNextPage = new System.Windows.Forms.ToolStripButton();
             this.btnLastPage = new System.Windows.Forms.ToolStripButton();
             this.lblPageInfo = new System.Windows.Forms.Label();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.toolPageNav.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,12 +168,29 @@
             this.lblPageInfo.TabIndex = 9;
             this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblFormTitle
+            // 
+            this.lblFormTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFormTitle.AutoEllipsis = true;
+            this.lblFormTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblFormTitle.ForeColor = System.Drawing.Color.White;
+            this.lblFormTitle.Location = new System.Drawing.Point(0, 5);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.lblFormTitle.Size = new System.Drawing.Size(156, 32);
+            this.lblFormTitle.TabIndex = 28;
+            this.lblFormTitle.Text = "[Page navigation]";
+            this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // frmPageNav
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(316, 190);
+            this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.toolPageNav);
             this.Controls.Add(this.lblPageInfo);
             this.Controls.Add(this.btnSnapTo);
@@ -209,5 +227,6 @@
         private System.Windows.Forms.ToolStripButton btnNextPage;
         private System.Windows.Forms.ToolStripButton btnLastPage;
         public System.Windows.Forms.Label lblPageInfo;
+        private System.Windows.Forms.Label lblFormTitle;
     }
 }

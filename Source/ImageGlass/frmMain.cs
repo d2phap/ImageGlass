@@ -66,6 +66,9 @@ namespace ImageGlass
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
 
+            // Fix disk thrashing
+            thumbnailBar.MetadataCacheEnabled = false;
+
             _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
@@ -679,7 +682,7 @@ namespace ImageGlass
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                SaveImageChange();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -850,6 +853,8 @@ namespace ImageGlass
             // reset countdown timer value
             _slideshowCountdown = Configs.RandomizeSlideshowInterval();
 
+            // reset Cropping region
+            ShowCropTool(mnuMainCrop.Checked);
 
             // auto-show Page Nav tool
             if (Local.CurrentPageCount > 1 && Configs.IsShowPageNavAuto)
@@ -979,7 +984,7 @@ namespace ImageGlass
                     var basename = Path.GetFileName(filename);
 
                     var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width - DPIScaling.TransformNumber(400)) / charWidth;
+                    var textMaxLength = (this.Width - DPIScaling.Transform(400)) / charWidth;
                     var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
 
                     filename = Helper.ShortenPath(filename, maxLength);
@@ -1153,6 +1158,7 @@ namespace ImageGlass
             // these lines to _after_ WIN logo key check is complete.
             bool hasNoMods = !e.Control && !e.Shift && !e.Alt;
             bool ignore = _isAppBusy || _isWindowsKeyPressed;
+            _isDraggingImage = false;
 
 
             // Show main menu
@@ -1439,10 +1445,10 @@ namespace ImageGlass
             #region Without Modifiers keys
             if (hasNoMods)
             {
-                // Edit image
-                if (e.KeyCode == Keys.E)
+                // Crop tool
+                if (e.KeyCode == Keys.C)
                 {
-                    mnuMainEditImage_Click(null, null);
+                    mnuMainCrop.PerformClick();
                     return;
                 }
 
@@ -1450,6 +1456,27 @@ namespace ImageGlass
                 if (e.KeyCode == Keys.D)
                 {
                     mnuOpenWith_Click(null, null);
+                    return;
+                }
+
+                // Edit image
+                if (e.KeyCode == Keys.E)
+                {
+                    mnuMainEditImage_Click(null, null);
+                    return;
+                }
+
+                // Color picker tool
+                if (e.KeyCode == Keys.K)
+                {
+                    mnuMainColorPicker.PerformClick();
+                    return;
+                }
+
+                // Page naviagtion tool
+                if (e.KeyCode == Keys.P)
+                {
+                    mnuMainPageNav.PerformClick();
                     return;
                 }
 
@@ -1555,7 +1582,10 @@ namespace ImageGlass
         private void OnDpiChanged()
         {
             // Change grid cell size
-            picMain.GridCellSize = DPIScaling.TransformNumber(Constants.VIEWER_GRID_SIZE);
+            picMain.GridCellSize = DPIScaling.Transform(Constants.VIEWER_GRID_SIZE);
+
+            // Change size of resize handlers
+            picMain.DragHandleSize = DPIScaling.Transform(8);
 
 
             #region change size of toolbar
@@ -1569,7 +1599,7 @@ namespace ImageGlass
 
 
             #region change size of menu items
-            int newMenuIconHeight = DPIScaling.TransformNumber((int)Constants.MENU_ICON_HEIGHT);
+            int newMenuIconHeight = DPIScaling.Transform((int)Constants.MENU_ICON_HEIGHT);
 
             mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
@@ -1620,7 +1650,7 @@ namespace ImageGlass
 
                     // Update icon
                     var ico = Icon.ExtractAssociatedIcon(app.AppPath);
-                    var iconWidth = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
+                    var iconWidth = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
                     mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
@@ -2033,12 +2063,21 @@ namespace ImageGlass
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async void ImageSaveChange()
+        private async void SaveImageChange()
         {
             try
             {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
-                var newBitmap = new Bitmap(picMain.Image);
+                Bitmap newBitmap;
+
+                if (!picMain.SelectionRegion.IsEmpty)
+                {
+                    newBitmap = new Bitmap(picMain.GetSelectedImage());
+                }
+                else
+                {
+                    newBitmap = new Bitmap(picMain.Image);
+                }
 
                 // override the current image file
                 Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
@@ -2199,7 +2238,7 @@ namespace ImageGlass
             // clear items
             mnuMainChannels.DropDown.Items.Clear();
 
-            var newMenuIconHeight = DPIScaling.TransformNumber(Constants.MENU_ICON_HEIGHT);
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
             // add new items
             var channelArr = Enum.GetValues(typeof(ColorChannels));
@@ -2246,33 +2285,6 @@ namespace ImageGlass
 
                 // update cached images
                 Local.ImageList.UpdateCache();
-            }
-        }
-
-
-        /// <summary>
-        /// Handle page navigation event
-        /// </summary>
-        /// <param name="navEvent"></param>
-        private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
-        {
-            switch (navEvent)
-            {
-                case frmPageNav.NavEvent.PageFirst:
-                    mnuMainFirstPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PageNext:
-                    mnuMainNextPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PagePrevious:
-                    mnuMainPrevPage_Click(null, null);
-                    break;
-
-                case frmPageNav.NavEvent.PageLast:
-                    mnuMainLastPage_Click(null, null);
-                    break;
             }
         }
 
@@ -2383,6 +2395,55 @@ namespace ImageGlass
 
 
         /// <summary>
+        /// Handle page navigation event
+        /// </summary>
+        /// <param name="navEvent"></param>
+        private void PageNavigationEvent(frmPageNav.NavEvent navEvent)
+        {
+            switch (navEvent)
+            {
+                case frmPageNav.NavEvent.PageFirst:
+                    mnuMainFirstPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PageNext:
+                    mnuMainNextPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PagePrevious:
+                    mnuMainPrevPage_Click(null, null);
+                    break;
+
+                case frmPageNav.NavEvent.PageLast:
+                    mnuMainLastPage_Click(null, null);
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// Handle cropping tool event
+        /// </summary>
+        /// <param name="actionEvent"></param>
+        private void CropActionEvent(frmCrop.CropActionEvent actionEvent)
+        {
+            switch (actionEvent)
+            {
+                case frmCrop.CropActionEvent.Save:
+                    SaveImageChange();
+                    break;
+                case frmCrop.CropActionEvent.SaveAs:
+                    mnuMainSaveAs_Click(null, null);
+                    break;
+                case frmCrop.CropActionEvent.Copy:
+                    mnuMainCopyImageData_Click(null, null);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Show or hide Color picker tool
         /// </summary>
         /// <param name="show"></param>
@@ -2470,6 +2531,52 @@ namespace ImageGlass
         }
 
 
+        /// <summary>
+        /// Enable / disable Crop tool
+        /// </summary>
+        /// <param name="show"></param>
+        public void ShowCropTool(bool show = true)
+        {
+            mnuMainCrop.Checked = show;
+            picMain.SelectionMode = ImageBoxSelectionMode.None;
+            picMain.SelectNone();
+
+            // show Cropping mode
+            if (show)
+            {
+                picMain.SelectionMode = ImageBoxSelectionMode.Rectangle;
+                picMain.SelectionRegion = new RectangleF();
+
+                // Open the page navigation tool
+                if (Local.FCrop == null || Local.FCrop.IsDisposed)
+                {
+                    Local.FCrop = new frmCrop();
+                }
+
+                // register page event handler
+                Local.FCrop.CropEventHandler = CropActionEvent;
+                Local.FCrop.SetToolFormManager(_toolManager);
+                Local.FCrop.Owner = this;
+                Local.FCrop.SetImageBox(picMain);
+
+                if (!Local.FCrop.Visible)
+                {
+                    Local.FCrop.Show(this);
+                }
+
+                this.Activate();
+            }
+            else
+            {
+                if (Local.FCrop != null)
+                {
+                    // Close Crop tool
+                    Local.FCrop.Close();
+                    Local.FCrop.CropEventHandler = null;
+                }
+            }
+        }
+
         #endregion
 
 
@@ -2515,7 +2622,7 @@ namespace ImageGlass
             // Overflow button and Overflow dropdown
             toolMain.OverflowButton.DropDown.BackColor = th.ToolbarBackgroundColor;
             toolMain.OverflowButton.AutoSize = false;
-            toolMain.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
+            toolMain.OverflowButton.Padding = new Padding(DPIScaling.Transform(10));
         }
 
 
@@ -2806,7 +2913,7 @@ namespace ImageGlass
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
-                ImageSaveChange();
+                SaveImageChange();
             }
 
             // Save last seen image path
@@ -3306,6 +3413,7 @@ namespace ImageGlass
                 mnuMainTools.Text = lang[$"{Name}.{nameof(mnuMainTools)}"];
                 mnuMainColorPicker.Text = lang[$"{Name}.{nameof(mnuMainColorPicker)}"];
                 mnuMainPageNav.Text = lang[$"{Name}.{nameof(mnuMainPageNav)}"];
+                mnuMainCrop.Text = lang[$"{Name}.{nameof(mnuMainCrop)}"];
                 #endregion
 
 
@@ -3425,6 +3533,7 @@ namespace ImageGlass
                 ApplyTheme(changeBackground: true);
                 Local.FColorPicker.UpdateUI();
                 Local.FPageNav.UpdateUI();
+                Local.FCrop.UpdateUI();
             }
             #endregion
 
@@ -3607,7 +3716,7 @@ namespace ImageGlass
             }
 
             // draw countdown text ----------------------------------------------
-            var gap = DPIScaling.TransformNumber(20);
+            var gap = DPIScaling.Transform(20);
             var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
 
 
@@ -4052,20 +4161,12 @@ namespace ImageGlass
             {
                 void SetDefaultCursor()
                 {
-                    if (Local.IsColorPickerToolOpening)
-                    {
-                        picMain.Cursor = Cursors.Cross;
-                    }
-                    else
-                    {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
+                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                 }
 
                 // set the Arrow cursor
                 if (Configs.IsShowNavigationButtons)
                 {
-
                     CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () =>
                     {
                         picMain.Cursor = Configs.Theme.PreviousArrowCursor ?? DefaultCursor;
@@ -4076,11 +4177,7 @@ namespace ImageGlass
                         // Issue #618: the scrollbar cursor should never be the nav arrow
                         picMain.VerticalScroll.Cursor = Cursors.Default;
 
-                    }, onCursorCenterAction: () =>
-                    {
-                        SetDefaultCursor();
-                    });
-
+                    }, onCursorCenterAction: SetDefaultCursor);
                 }
 
                 //reset the cursor
@@ -4089,12 +4186,18 @@ namespace ImageGlass
                     SetDefaultCursor();
                 }
             }
-
         }
+
 
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
-            ShowActiveCursor(e.Location);
+            if (Local.IsColorPickerToolOpening ||
+                picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
+            {
+                return;
+            }
+
+            ShowActiveCursor();
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
@@ -4513,7 +4616,16 @@ namespace ImageGlass
 
             if (s.ShowDialog() == DialogResult.OK)
             {
-                Bitmap clonedPic = (Bitmap)picMain.Image;
+                Bitmap clonedPic;
+
+                if (!picMain.SelectionRegion.IsEmpty)
+                {
+                    clonedPic = (Bitmap)picMain.GetSelectedImage();
+                }
+                else
+                {
+                    clonedPic = (Bitmap)picMain.Image;
+                }
 
                 Local.SaveAsFilterIndex = s.FilterIndex;
                 switch (s.FilterIndex)
@@ -4880,10 +4992,7 @@ namespace ImageGlass
 
         private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -4905,10 +5014,7 @@ namespace ImageGlass
 
         private async void mnuMainRotateClockwise_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -4930,10 +5036,7 @@ namespace ImageGlass
 
         private async void mnuMainFlipHorz_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -4953,10 +5056,7 @@ namespace ImageGlass
 
         private async void mnuMainFlipVert_Click(object sender, EventArgs e)
         {
-            if (picMain.Image == null)
-            {
-                return;
-            }
+            if (picMain.Image == null) return;
 
             if (picMain.CanAnimate)
             {
@@ -5311,9 +5411,19 @@ namespace ImageGlass
 
         private void mnuMainCopyImageData_Click(object sender, EventArgs e)
         {
-            if (picMain.Image != null)
+            Image img;
+            if (!picMain.SelectionRegion.IsEmpty)
             {
-                Clipboard.SetImage(picMain.Image);
+                img = picMain.GetSelectedImage();
+            }
+            else
+            {
+                img = picMain.Image;
+            }
+
+            if (img != null)
+            {
+                Clipboard.SetImage(img);
                 ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }
@@ -5527,6 +5637,12 @@ namespace ImageGlass
         }
 
 
+        private void mnuMainCrop_Click(object sender, EventArgs e)
+        {
+            ShowCropTool(mnuMainCrop.Checked);
+        }
+
+
         private void mnuMainSettings_Click(object sender, EventArgs e)
         {
             if (Local.FSetting.IsDisposed)
@@ -5707,6 +5823,8 @@ namespace ImageGlass
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
+
 
 
 

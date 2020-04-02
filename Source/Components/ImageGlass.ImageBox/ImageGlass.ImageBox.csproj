@@ -86,14 +86,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultGifAnimator.cs" />
+    <Compile Include="DragHandle.cs" />
+    <Compile Include="DragHandleAnchor.cs" />
+    <Compile Include="DragHandleCollection.cs" />
     <Compile Include="GifAnimator.cs" />
     <Compile Include="HighResolutionGifAnimator.cs" />
     <Compile Include="ImageBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImageBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ImageBoxMouseWheelMessageFilter.cs" />

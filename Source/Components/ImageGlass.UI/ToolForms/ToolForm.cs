@@ -281,7 +281,7 @@ namespace ImageGlass.UI.ToolForms
             var bgColor = th.BackgroundColor;
             var fontColor = th.TextInfoColor;
 
-            foreach (Control control in Controls)
+            foreach (Control control in this.Controls)
             {
                 if (control is Button button)
                 {
@@ -290,10 +290,28 @@ namespace ImageGlass.UI.ToolForms
 
                 if (control is Label ||
                     control is TextBox ||
+                    control is NumericUpDown ||
                     control is Button)
                 {
                     control.BackColor = bgColor;
                     control.ForeColor = fontColor;
+                }
+
+
+                // container
+                if (control.HasChildren)
+                {
+                    foreach (Control childControl in control.Controls)
+                    {
+                        if (childControl is Label ||
+                            childControl is TextBox ||
+                            childControl is NumericUpDown ||
+                            childControl is Button)
+                        {
+                            childControl.BackColor = bgColor;
+                            childControl.ForeColor = fontColor;
+                        }
+                    }
                 }
             }
 
@@ -331,7 +349,7 @@ namespace ImageGlass.UI.ToolForms
             foreach (Control control in Controls)
             {
                 if (control is Label ||
-                    control is Panel)
+                    control.HasChildren)
                 {
                     control.MouseDown += Form1_MouseDown;
                     control.MouseUp += Form1_MouseUp;
@@ -340,6 +358,20 @@ namespace ImageGlass.UI.ToolForms
 
                 control.MouseEnter += this.ToolForm_MouseEnter;
                 control.MouseLeave += this.ToolForm_MouseLeave;
+
+                // child controls
+                foreach (Control childControl in control.Controls)
+                {
+                    if (childControl is Label)
+                    {
+                        childControl.MouseDown += Form1_MouseDown;
+                        childControl.MouseUp += Form1_MouseUp;
+                        childControl.MouseMove += Form1_MouseMove;
+                    }
+
+                    childControl.MouseEnter += this.ToolForm_MouseEnter;
+                    childControl.MouseLeave += this.ToolForm_MouseLeave;
+                }
             }
         }
 
