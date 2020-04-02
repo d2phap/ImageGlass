@@ -35,7 +35,7 @@ namespace ImageGlass
         // default location offset on the parent form
         private static Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(80));
 
-        private ImageBox _imgBox;
+        private ImageBoxEx _imgBox;
         private BitmapBooster _bmpBooster;
         private Point _cursorPos;
 
@@ -49,7 +49,7 @@ namespace ImageGlass
         }
 
 
-        public void SetImageBox(ImageBox imgBox)
+        public void SetImageBox(ImageBoxEx imgBox)
         {
             if (_imgBox != null)
             {
@@ -141,6 +141,7 @@ namespace ImageGlass
         private void _DisplayColor(Color color)
         {
             txtLocation.Text = lblPixel.Text;
+            lblPixel.BackColor = Color.Transparent;
             panelColor.BackColor = color;
 
             //RGBA color -----------------------------------------------
