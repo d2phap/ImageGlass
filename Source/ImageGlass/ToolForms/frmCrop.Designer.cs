@@ -44,6 +44,7 @@
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.tableActions = new System.Windows.Forms.TableLayoutPanel();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.tableFactors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
@@ -322,8 +323,25 @@
             this.tableActions.RowCount = 2;
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableActions.Size = new System.Drawing.Size(316, 130);
             this.tableActions.TabIndex = 26;
+            // 
+            // lblFormTitle
+            // 
+            this.lblFormTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFormTitle.AutoEllipsis = true;
+            this.lblFormTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblFormTitle.ForeColor = System.Drawing.Color.White;
+            this.lblFormTitle.Location = new System.Drawing.Point(0, 5);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.lblFormTitle.Size = new System.Drawing.Size(156, 32);
+            this.lblFormTitle.TabIndex = 28;
+            this.lblFormTitle.Text = "[Cropping]";
+            this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmCrop
             // 
@@ -331,6 +349,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(316, 360);
+            this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.tableActions);
             this.Controls.Add(this.tableFactors);
             this.Controls.Add(this.btnSnapTo);
@@ -379,5 +398,6 @@
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.TableLayoutPanel tableActions;
+        private System.Windows.Forms.Label lblFormTitle;
     }
 }

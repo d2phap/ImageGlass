@@ -30,7 +30,7 @@ namespace ImageGlass
     public partial class frmCrop : ToolForm
     {
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(420));
         private ImageBoxEx _imgBox;
 
         /// <summary>
@@ -99,11 +99,19 @@ namespace ImageGlass
         {
             // Apply current theme ------------------------------------------------------
             SetColors(Configs.Theme);
-
             tableActions.BackColor = Configs.Theme.ToolbarBackgroundColor;
 
             btnSnapTo.FlatAppearance.MouseOverBackColor = Theme.LightenColor(Configs.Theme.BackgroundColor, 0.1f);
             btnSnapTo.FlatAppearance.MouseDownBackColor = Theme.DarkenColor(Configs.Theme.BackgroundColor, 0.1f);
+
+            // Upate language
+            lblFormTitle.Text = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainCrop"];
+            lblWidth.Text = Configs.Language.Items[$"{Name}.lblWidth"];
+            lblHeight.Text = Configs.Language.Items[$"{Name}.lblHeight"];
+            btnSave.Text = Configs.Language.Items[$"{Name}.btnSave"];
+            btnSaveAs.Text = Configs.Language.Items[$"{Name}.btnSaveAs"];
+            btnCopy.Text = Configs.Language.Items[$"{Name}.btnCopy"];
+            btnClear.Text = Configs.Language.Items[$"{Name}.btnClear"];
         }
         #endregion
 

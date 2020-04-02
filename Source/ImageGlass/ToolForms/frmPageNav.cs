@@ -51,7 +51,7 @@ namespace ImageGlass
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
 
 
 
@@ -118,7 +118,8 @@ namespace ImageGlass
             toolPageNav.OverflowButton.AutoSize = false;
             toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.Transform(10));
 
-            
+
+            lblFormTitle.Text = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainPageNav"];
             btnNextPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainNextPage"];
             btnPreviousPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainPrevPage"];
             btnFirstPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainFirstPage"];

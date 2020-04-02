@@ -349,7 +349,8 @@ namespace ImageGlass.Library
             #region Tools
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
-            Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // V7.5
+            Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // v7.5
+            Items.Add("frmMain.mnuMainCrop", "Cropping"); // v7.6
             #endregion
 
 
@@ -734,6 +735,16 @@ namespace ImageGlass.Library
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion
 
+
+            #region frmCrop
+            Items.Add("frmCrop.lblWidth", "Width:"); //v7.6
+            Items.Add("frmCrop.lblHeight", "Height:"); //v7.6
+            Items.Add("frmCrop.btnSave", "Save"); //v7.6
+            Items.Add("frmCrop.btnSaveAs", "Save as"); //v7.6
+            Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
+            Items.Add("frmCrop.btnClear", "Clear"); //v7.6
+
+            #endregion
         }
     }
 }
