@@ -1466,6 +1466,20 @@ namespace ImageGlass
                     return;
                 }
 
+                // Color picker tool
+                if (e.KeyCode == Keys.K)
+                {
+                    mnuMainColorPicker.PerformClick();
+                    return;
+                }
+
+                // Page naviagtion tool
+                if (e.KeyCode == Keys.P)
+                {
+                    mnuMainPageNav.PerformClick();
+                    return;
+                }
+
                 // Auto zoom
                 if (e.KeyValue == 49 || e.KeyCode == Keys.NumPad1) // Num1 / NumPad1
                 {

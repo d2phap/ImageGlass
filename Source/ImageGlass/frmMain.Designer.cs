@@ -224,7 +224,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 500);
+            this.mnuMain.Size = new System.Drawing.Size(258, 533);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1157,11 +1157,9 @@
             this.mnuMainColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainColorPicker.Name = "mnuMainColorPicker";
             this.mnuMainColorPicker.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainColorPicker.ShortcutKeyDisplayString = "Ctrl+Shift+K";
-            this.mnuMainColorPicker.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.K)));
-            this.mnuMainColorPicker.Size = new System.Drawing.Size(348, 33);
-            this.mnuMainColorPicker.Text = "&Color picker";
+            this.mnuMainColorPicker.ShortcutKeyDisplayString = "K";
+            this.mnuMainColorPicker.Size = new System.Drawing.Size(272, 33);
+            this.mnuMainColorPicker.Text = "[Color picker]";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
             // mnuMainPageNav
@@ -1171,11 +1169,9 @@
             this.mnuMainPageNav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainPageNav.Name = "mnuMainPageNav";
             this.mnuMainPageNav.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainPageNav.ShortcutKeyDisplayString = "Ctrl+Shift+J";
-            this.mnuMainPageNav.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.J)));
-            this.mnuMainPageNav.Size = new System.Drawing.Size(348, 33);
-            this.mnuMainPageNav.Text = "Page Navigation";
+            this.mnuMainPageNav.ShortcutKeyDisplayString = "P";
+            this.mnuMainPageNav.Size = new System.Drawing.Size(272, 33);
+            this.mnuMainPageNav.Text = "[Page navigation]";
             this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
             // 
             // mnuMainCrop
@@ -1186,8 +1182,8 @@
             this.mnuMainCrop.Name = "mnuMainCrop";
             this.mnuMainCrop.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCrop.ShortcutKeyDisplayString = "C";
-            this.mnuMainCrop.Size = new System.Drawing.Size(348, 33);
-            this.mnuMainCrop.Text = "[Crop]";
+            this.mnuMainCrop.Size = new System.Drawing.Size(272, 33);
+            this.mnuMainCrop.Text = "[Cropping]";
             this.mnuMainCrop.Click += new System.EventHandler(this.mnuMainCrop_Click);
             // 
             // toolStripSeparator12
