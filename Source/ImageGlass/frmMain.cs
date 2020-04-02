@@ -66,6 +66,9 @@ namespace ImageGlass
             // Disable built-in shortcuts
             picMain.ShortcutsEnabled = false;
 
+            // Fix disk thrashing
+            thumbnailBar.MetadataCacheEnabled = false;
+
             _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
