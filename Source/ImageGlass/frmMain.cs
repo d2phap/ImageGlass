@@ -4147,20 +4147,12 @@ namespace ImageGlass
             {
                 void SetDefaultCursor()
                 {
-                    if (Local.IsColorPickerToolOpening)
-                    {
-                        picMain.Cursor = Cursors.Cross;
-                    }
-                    else
-                    {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
+                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
                 }
 
                 // set the Arrow cursor
                 if (Configs.IsShowNavigationButtons)
                 {
-
                     CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () =>
                     {
                         picMain.Cursor = Configs.Theme.PreviousArrowCursor ?? DefaultCursor;
@@ -4171,11 +4163,7 @@ namespace ImageGlass
                         // Issue #618: the scrollbar cursor should never be the nav arrow
                         picMain.VerticalScroll.Cursor = Cursors.Default;
 
-                    }, onCursorCenterAction: () =>
-                    {
-                        SetDefaultCursor();
-                    });
-
+                    }, onCursorCenterAction: SetDefaultCursor);
                 }
 
                 //reset the cursor
@@ -4184,15 +4172,18 @@ namespace ImageGlass
                     SetDefaultCursor();
                 }
             }
-
         }
+
 
         private void picMain_MouseMove(object sender, MouseEventArgs e)
         {
-            if (picMain.SelectionMode != ImageBoxSelectionMode.Rectangle)
+            if (Local.IsColorPickerToolOpening ||
+                picMain.SelectionMode == ImageBoxSelectionMode.Rectangle)
             {
-                ShowActiveCursor(e.Location);
+                return;
             }
+
+            ShowActiveCursor();
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e)
@@ -5821,9 +5812,11 @@ namespace ImageGlass
 
 
 
+
+
+
         #endregion
 
-
-
+        
     }
 }
