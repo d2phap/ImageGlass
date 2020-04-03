@@ -83,35 +83,35 @@ namespace ImageGlass.Library.Image {
 
             switch (ext) {
                 case "bmp":
-                return "Bitmap Image File";
+                    return "Bitmap Image File";
                 case "dib":
-                return "Device Independent Bitmap File";
+                    return "Device Independent Bitmap File";
                 case "jpg":
-                return "JPEG Image File";
+                    return "JPEG Image File";
                 case "jpeg":
-                return "Joint Photographic Experts Group";
+                    return "Joint Photographic Experts Group";
                 case "jfif":
-                return "JPEG File Interchange Format";
+                    return "JPEG File Interchange Format";
                 case "jpe":
-                return "JPEG Image File";
+                    return "JPEG Image File";
                 case "png":
-                return "Portable Network Graphics";
+                    return "Portable Network Graphics";
                 case "gif":
-                return "Graphics Interchange Format File";
+                    return "Graphics Interchange Format File";
                 case "ico":
-                return "Icon File";
+                    return "Icon File";
                 case "emf":
-                return "Enhanced Windows Metafile";
+                    return "Enhanced Windows Metafile";
                 case "exif":
-                return "Exchangeable Image Information File";
+                    return "Exchangeable Image Information File";
                 case "wmf":
-                return "Windows Metafile";
+                    return "Windows Metafile";
                 case "tif":
-                return "Tagged Image File";
+                    return "Tagged Image File";
                 case "tiff":
-                return "Tagged Image File Format";
+                    return "Tagged Image File Format";
                 default:
-                return ext.ToUpper() + " File";
+                    return ext.ToUpper() + " File";
             }
         }
 

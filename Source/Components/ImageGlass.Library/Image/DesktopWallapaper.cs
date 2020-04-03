@@ -133,15 +133,15 @@ namespace ImageGlass.Library.Image {
                     string winStyle = "1"; // default centered
                     switch (style) {
                         case Style.Tiled:
-                        tileVal = "1";
-                        break;
+                            tileVal = "1";
+                            break;
                         case Style.Stretched:
-                        winStyle = "2";
-                        break;
+                            winStyle = "2";
+                            break;
                         case Style.Current:
-                        tileVal = (string)key.GetValue("TileWallpaper");
-                        winStyle = (string)key.GetValue("WallpaperStyle");
-                        break;
+                            tileVal = (string)key.GetValue("TileWallpaper");
+                            winStyle = (string)key.GetValue("WallpaperStyle");
+                            break;
                     }
                     key.SetValue("TileWallpaper", tileVal);
                     key.SetValue("WallpaperStyle", winStyle);

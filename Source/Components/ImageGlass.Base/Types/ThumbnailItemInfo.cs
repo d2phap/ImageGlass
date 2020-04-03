@@ -18,13 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-namespace ImageGlass.Base
-{
+namespace ImageGlass.Base {
     /// <summary>
     /// Contains the information of thumbnail item in thumbnail bar
     /// </summary>
-    public class ThumbnailItemInfo
-    {
+    public class ThumbnailItemInfo {
         /// <summary>
         /// Gets actual thumbnail dimension
         /// </summary>
@@ -39,8 +37,7 @@ namespace ImageGlass.Base
         /// Get total dimension
         /// </summary>
         /// <returns></returns>
-        public uint GetTotalDimension()
-        {
+        public uint GetTotalDimension() {
             return Dimension + ExtraSpace;
         }
 
@@ -49,17 +46,13 @@ namespace ImageGlass.Base
         /// </summary>
         /// <param name="dimension">Thumbnail size</param>
         /// <param name="isHorizontalView">Horizontal or Verticle view</param>
-        public ThumbnailItemInfo(uint dimension, bool isHorizontalView)
-        {
-            if (isHorizontalView)
-            {
+        public ThumbnailItemInfo(uint dimension, bool isHorizontalView) {
+            if (isHorizontalView) {
                 Dimension = dimension;
                 //ExtraSpace = 58;
             }
-            else
-            {
-                switch (dimension)
-                {
+            else {
+                switch (dimension) {
                     case 32:
                         Dimension = 32;
                         //ExtraSpace = 48;

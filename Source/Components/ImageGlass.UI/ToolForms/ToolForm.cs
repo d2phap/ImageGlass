@@ -114,23 +114,23 @@ namespace ImageGlass.UI.ToolForms {
         protected override void WndProc(ref Message m) {
             switch (m.Msg) {
                 case WM_NCPAINT: // box shadow
-                if (m_aeroEnabled) {
-                    var v = 2;
-                    DwmSetWindowAttribute(Handle, 2, ref v, 4);
+                    if (m_aeroEnabled) {
+                        var v = 2;
+                        DwmSetWindowAttribute(Handle, 2, ref v, 4);
 
-                    MARGINS margins = new MARGINS()
+                        MARGINS margins = new MARGINS()
                         {
-                        bottomHeight = 1,
-                        leftWidth = 1,
-                        rightWidth = 1,
-                        topHeight = 1
-                    };
+                            bottomHeight = 1,
+                            leftWidth = 1,
+                            rightWidth = 1,
+                            topHeight = 1
+                        };
 
-                    DwmExtendFrameIntoClientArea(Handle, ref margins);
-                }
-                break;
+                        DwmExtendFrameIntoClientArea(Handle, ref margins);
+                    }
+                    break;
                 default:
-                break;
+                    break;
             }
 
             base.WndProc(ref m);

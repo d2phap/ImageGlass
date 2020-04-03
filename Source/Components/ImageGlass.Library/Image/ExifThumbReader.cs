@@ -85,33 +85,33 @@ namespace ImageGlass.Library.Image {
         private static Exception createException(int gdipErrorCode) {
             switch (gdipErrorCode) {
                 case 1:
-                return new ExternalException("Gdiplus Generic Error", -2147467259);
+                    return new ExternalException("Gdiplus Generic Error", -2147467259);
                 case 2:
-                return new ArgumentException("Gdiplus Invalid Parameter");
+                    return new ArgumentException("Gdiplus Invalid Parameter");
                 case 3:
-                return new OutOfMemoryException("Gdiplus Out Of Memory");
+                    return new OutOfMemoryException("Gdiplus Out Of Memory");
                 case 4:
-                return new InvalidOperationException("Gdiplus Object Busy");
+                    return new InvalidOperationException("Gdiplus Object Busy");
                 case 5:
-                return new OutOfMemoryException("Gdiplus Insufficient Buffer");
+                    return new OutOfMemoryException("Gdiplus Insufficient Buffer");
                 case 7:
-                return new ExternalException("Gdiplus Generic Error", -2147467259);
+                    return new ExternalException("Gdiplus Generic Error", -2147467259);
                 case 8:
-                return new InvalidOperationException("Gdiplus Wrong State");
+                    return new InvalidOperationException("Gdiplus Wrong State");
                 case 9:
-                return new ExternalException("Gdiplus Aborted", -2147467260);
+                    return new ExternalException("Gdiplus Aborted", -2147467260);
                 case 10:
-                return new FileNotFoundException("Gdiplus File Not Found");
+                    return new FileNotFoundException("Gdiplus File Not Found");
                 case 11:
-                return new OverflowException("Gdiplus Over flow");
+                    return new OverflowException("Gdiplus Over flow");
                 case 12:
-                return new ExternalException("Gdiplus Access Denied", -2147024891);
+                    return new ExternalException("Gdiplus Access Denied", -2147024891);
                 case 13:
-                return new ArgumentException("Gdiplus Unknown Image Format");
+                    return new ArgumentException("Gdiplus Unknown Image Format");
                 case 18:
-                return new ExternalException("Gdiplus Not Initialized", -2147467259);
+                    return new ExternalException("Gdiplus Not Initialized", -2147467259);
                 case 20:
-                return new ArgumentException("Gdiplus Property Not Supported Error");
+                    return new ArgumentException("Gdiplus Property Not Supported Error");
             }
 
             return new ExternalException("Gdiplus Unknown Error", -2147418113);

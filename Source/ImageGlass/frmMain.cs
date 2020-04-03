@@ -1524,32 +1524,32 @@ namespace ImageGlass {
 
             switch (Configs.ZoomMode) {
                 case ZoomMode.ScaleToFit:
-                btnScaleToFit.Checked = mnuMainScaleToFit.Checked = true;
-                break;
+                    btnScaleToFit.Checked = mnuMainScaleToFit.Checked = true;
+                    break;
 
                 case ZoomMode.ScaleToWidth:
-                btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked = true;
-                break;
+                    btnScaletoWidth.Checked = mnuMainScaleToWidth.Checked = true;
+                    break;
 
                 case ZoomMode.ScaleToHeight:
-                btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = true;
-                break;
+                    btnScaletoHeight.Checked = mnuMainScaleToHeight.Checked = true;
+                    break;
 
                 case ZoomMode.LockZoomRatio:
-                btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
+                    btnZoomLock.Checked = mnuMainLockZoomRatio.Checked = true;
 
-                // Enable Zoom Lock
-                Configs.ZoomLockValue = picMain.Zoom;
-                break;
+                    // Enable Zoom Lock
+                    Configs.ZoomLockValue = picMain.Zoom;
+                    break;
 
                 case ZoomMode.ScaleToFill:
-                mnuMainScaleToFill.Checked = btnScaleToFill.Checked = true;
-                break;
+                    mnuMainScaleToFill.Checked = btnScaleToFill.Checked = true;
+                    break;
 
                 case ZoomMode.AutoZoom:
                 default:
-                btnAutoZoom.Checked = mnuMainAutoZoom.Checked = true;
-                break;
+                    btnAutoZoom.Checked = mnuMainAutoZoom.Checked = true;
+                    break;
             }
         }
 
@@ -1572,41 +1572,41 @@ namespace ImageGlass {
             double frac;
             switch (zoomMode) {
                 case ZoomMode.ScaleToWidth:
-                frac = picMain.Width / (1f * picMain.Image.Width);
-                picMain.Zoom = frac * 100;
-                break;
+                    frac = picMain.Width / (1f * picMain.Image.Width);
+                    picMain.Zoom = frac * 100;
+                    break;
 
                 case ZoomMode.ScaleToHeight:
-                frac = picMain.Height / (1f * picMain.Image.Height);
-                picMain.Zoom = frac * 100;
-                break;
+                    frac = picMain.Height / (1f * picMain.Image.Height);
+                    picMain.Zoom = frac * 100;
+                    break;
 
                 case ZoomMode.ScaleToFit:
-                picMain.ZoomToFit();
-                break;
+                    picMain.ZoomToFit();
+                    break;
 
                 case ZoomMode.LockZoomRatio:
-                picMain.Zoom = Configs.ZoomLockValue;
-                break;
+                    picMain.Zoom = Configs.ZoomLockValue;
+                    break;
 
                 case ZoomMode.ScaleToFill:
-                var widthRatio = picMain.Width / (1f * picMain.Image.Width);
-                var heightRatio = picMain.Height / (1f * picMain.Image.Height);
+                    var widthRatio = picMain.Width / (1f * picMain.Image.Width);
+                    var heightRatio = picMain.Height / (1f * picMain.Image.Height);
 
-                if (widthRatio > heightRatio) {
-                    frac = picMain.Width / (1f * picMain.Image.Width);
-                }
-                else {
-                    frac = picMain.Height / (1f * picMain.Image.Height);
-                }
+                    if (widthRatio > heightRatio) {
+                        frac = picMain.Width / (1f * picMain.Image.Width);
+                    }
+                    else {
+                        frac = picMain.Height / (1f * picMain.Image.Height);
+                    }
 
-                picMain.Zoom = frac * 100;
-                break;
+                    picMain.Zoom = frac * 100;
+                    break;
 
                 case ZoomMode.AutoZoom:
                 default:
-                picMain.ZoomAuto();
-                break;
+                    picMain.ZoomAuto();
+                    break;
             }
 
 
@@ -2172,20 +2172,20 @@ namespace ImageGlass {
         private void PageNavigationEvent(frmPageNav.NavEvent navEvent) {
             switch (navEvent) {
                 case frmPageNav.NavEvent.PageFirst:
-                mnuMainFirstPage_Click(null, null);
-                break;
+                    mnuMainFirstPage_Click(null, null);
+                    break;
 
                 case frmPageNav.NavEvent.PageNext:
-                mnuMainNextPage_Click(null, null);
-                break;
+                    mnuMainNextPage_Click(null, null);
+                    break;
 
                 case frmPageNav.NavEvent.PagePrevious:
-                mnuMainPrevPage_Click(null, null);
-                break;
+                    mnuMainPrevPage_Click(null, null);
+                    break;
 
                 case frmPageNav.NavEvent.PageLast:
-                mnuMainLastPage_Click(null, null);
-                break;
+                    mnuMainLastPage_Click(null, null);
+                    break;
             }
         }
 
@@ -2197,16 +2197,16 @@ namespace ImageGlass {
         private void CropActionEvent(frmCrop.CropActionEvent actionEvent) {
             switch (actionEvent) {
                 case frmCrop.CropActionEvent.Save:
-                SaveImageChange();
-                break;
+                    SaveImageChange();
+                    break;
                 case frmCrop.CropActionEvent.SaveAs:
-                mnuMainSaveAs_Click(null, null);
-                break;
+                    mnuMainSaveAs_Click(null, null);
+                    break;
                 case frmCrop.CropActionEvent.Copy:
-                mnuMainCopyImageData_Click(null, null);
-                break;
+                    mnuMainCopyImageData_Click(null, null);
+                    break;
                 default:
-                break;
+                    break;
             }
         }
 
@@ -2842,31 +2842,31 @@ namespace ImageGlass {
 
                 switch (act) {
                     case Touch.Action.SwipeLeft:
-                    NextPic(-1);
-                    break;
+                        NextPic(-1);
+                        break;
                     case Touch.Action.SwipeRight:
-                    NextPic(1);
-                    break;
+                        NextPic(1);
+                        break;
                     case Touch.Action.RotateCCW:
-                    mnuMainRotateCounterclockwise_Click(null, null);
-                    break;
+                        mnuMainRotateCounterclockwise_Click(null, null);
+                        break;
                     case Touch.Action.RotateCW:
-                    mnuMainRotateClockwise_Click(null, null);
-                    break;
+                        mnuMainRotateClockwise_Click(null, null);
+                        break;
                     case Touch.Action.ZoomIn:
-                    for (int i = 0; i < Touch.ZoomFactor; i++)
-                        ZoomAtPosition(true, Touch.ZoomLocation);
-                    break;
+                        for (int i = 0; i < Touch.ZoomFactor; i++)
+                            ZoomAtPosition(true, Touch.ZoomLocation);
+                        break;
                     case Touch.Action.ZoomOut:
-                    for (int i = 0; i < Touch.ZoomFactor; i++)
-                        ZoomAtPosition(false, Touch.ZoomLocation);
-                    break;
+                        for (int i = 0; i < Touch.ZoomFactor; i++)
+                            ZoomAtPosition(false, Touch.ZoomLocation);
+                        break;
                     case Touch.Action.SwipeUp:
-                    btnZoomOut_Click(null, null);
-                    break;
+                        btnZoomOut_Click(null, null);
+                        break;
                     case Touch.Action.SwipeDown:
-                    btnZoomIn_Click(null, null);
-                    break;
+                        btnZoomIn_Click(null, null);
+                        break;
                 }
             }
 
@@ -3373,27 +3373,26 @@ namespace ImageGlass {
 
 
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            using (var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)))) {
-                var font = new Font(this.Font.FontFamily, 30f);
-                var fontSize = e.Graphics.MeasureString(text, font);
+            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
+            var font = new Font(this.Font.FontFamily, 30f);
+            var fontSize = e.Graphics.MeasureString(text, font);
 
-                // calculate background size
-                var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
-                var bgX = picMain.Width - bgSize.Width - gap;
-                var bgY = picMain.Height - bgSize.Height - gap;
+            // calculate background size
+            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
+            var bgX = picMain.Width - bgSize.Width - gap;
+            var bgY = picMain.Height - bgSize.Height - gap;
 
-                // calculate text size
-                var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
-                var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+            // calculate text size
+            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
+            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
 
-                // draw background
-                using (var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor))) {
-                    e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
-                }
+            // draw background
+            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
+            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
 
-                // draw countdown text
-                e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
-            }
+
+            // draw countdown text
+            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
         }
 
 
@@ -3615,43 +3614,46 @@ namespace ImageGlass {
             MouseWheelActions action;
             switch (Control.ModifierKeys) {
                 case Keys.Control:
-                action = Configs.MouseWheelCtrlAction;
-                break;
+                    action = Configs.MouseWheelCtrlAction;
+                    break;
+
                 case Keys.Shift:
-                action = Configs.MouseWheelShiftAction;
-                break;
+                    action = Configs.MouseWheelShiftAction;
+                    break;
+
                 case Keys.Alt:
-                action = Configs.MouseWheelAltAction;
-                break;
+                    action = Configs.MouseWheelAltAction;
+                    break;
+
                 case Keys.None:
                 default:
-                action = Configs.MouseWheelAction;
-                break;
+                    action = Configs.MouseWheelAction;
+                    break;
             }
 
             switch (action) {
                 case MouseWheelActions.Zoom:
-                picMain.ZoomWithMouseWheel(e.Delta, e.Location);
-                break;
+                    picMain.ZoomWithMouseWheel(e.Delta, e.Location);
+                    break;
                 case MouseWheelActions.ScrollVertically:
-                picMain.ScrollWithMouseWheel(e.Delta);
-                break;
+                    picMain.ScrollWithMouseWheel(e.Delta);
+                    break;
                 case MouseWheelActions.ScrollHorizontally:
-                picMain.ScrollWithMouseWheel(e.Delta, true);
-                break;
+                    picMain.ScrollWithMouseWheel(e.Delta, true);
+                    break;
                 case MouseWheelActions.BrowseImages:
-                if (e.Delta < 0) {
-                    // Next pic
-                    mnuMainViewNext_Click(null, null);
-                }
-                else {
-                    // Previous pic
-                    mnuMainViewPrevious_Click(null, null);
-                }
-                break;
+                    if (e.Delta < 0) {
+                        // Next pic
+                        mnuMainViewNext_Click(null, null);
+                    }
+                    else {
+                        // Previous pic
+                        mnuMainViewPrevious_Click(null, null);
+                    }
+                    break;
                 case MouseWheelActions.DoNothing:
                 default:
-                break;
+                    break;
             }
 
         }
@@ -3674,29 +3676,29 @@ namespace ImageGlass {
         private void picMain_MouseClick(object sender, MouseEventArgs e) {
             switch (e.Button) {
                 case MouseButtons.Middle: //Reset zoom mode
-                ApplyZoomMode(Configs.ZoomMode);
-                break;
+                    ApplyZoomMode(Configs.ZoomMode);
+                    break;
 
                 case MouseButtons.XButton1: //Back
-                mnuMainViewPrevious_Click(null, null);
-                break;
+                    mnuMainViewPrevious_Click(null, null);
+                    break;
 
                 case MouseButtons.XButton2: //Next
-                mnuMainViewNext_Click(null, null);
-                break;
+                    mnuMainViewNext_Click(null, null);
+                    break;
 
                 case MouseButtons.Left:
-                if (Configs.IsShowNavigationButtons && !picMain.IsPanning) {
-                    CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () => {
-                        mnuMainViewPrevious_Click(null, null);
-                    }, onCursorRightAction: () => {
-                        mnuMainViewNext_Click(null, null);
-                    });
-                }
-                break;
+                    if (Configs.IsShowNavigationButtons && !picMain.IsPanning) {
+                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () => {
+                            mnuMainViewPrevious_Click(null, null);
+                        }, onCursorRightAction: () => {
+                            mnuMainViewNext_Click(null, null);
+                        });
+                    }
+                    break;
 
                 default:
-                break;
+                    break;
             }
 
 
@@ -4110,34 +4112,34 @@ namespace ImageGlass {
             else
                 switch (ext.ToLower()) {
                     case "bmp":
-                    s.FilterIndex = 1;
-                    break;
+                        s.FilterIndex = 1;
+                        break;
                     case "emf":
-                    s.FilterIndex = 2;
-                    break;
+                        s.FilterIndex = 2;
+                        break;
                     case "exif":
-                    s.FilterIndex = 3;
-                    break;
+                        s.FilterIndex = 3;
+                        break;
                     case "gif":
-                    s.FilterIndex = 4;
-                    break;
+                        s.FilterIndex = 4;
+                        break;
                     case "ico":
-                    s.FilterIndex = 5;
-                    break;
+                        s.FilterIndex = 5;
+                        break;
                     case "jpg":
                     case "jpeg":
                     case "jpe":
-                    s.FilterIndex = 6;
-                    break;
+                        s.FilterIndex = 6;
+                        break;
                     case "png":
-                    s.FilterIndex = 7;
-                    break;
+                        s.FilterIndex = 7;
+                        break;
                     case "tiff":
-                    s.FilterIndex = 8;
-                    break;
+                        s.FilterIndex = 8;
+                        break;
                     case "wmf":
-                    s.FilterIndex = 9;
-                    break;
+                        s.FilterIndex = 9;
+                        break;
                 }
 
 
@@ -4157,40 +4159,40 @@ namespace ImageGlass {
                     case 4:
                     case 6:
                     case 7:
-                    Heart.Photo.SaveImage(clonedPic, s.FileName);
-                    break;
+                        Heart.Photo.SaveImage(clonedPic, s.FileName);
+                        break;
                     case 2:
-                    clonedPic.Save(s.FileName, ImageFormat.Emf);
-                    break;
+                        clonedPic.Save(s.FileName, ImageFormat.Emf);
+                        break;
                     case 3:
-                    clonedPic.Save(s.FileName, ImageFormat.Exif);
-                    break;
+                        clonedPic.Save(s.FileName, ImageFormat.Exif);
+                        break;
                     case 5:
-                    clonedPic.Save(s.FileName, ImageFormat.Icon);
-                    break;
+                        clonedPic.Save(s.FileName, ImageFormat.Icon);
+                        break;
                     case 8:
-                    clonedPic.Save(s.FileName, ImageFormat.Tiff);
-                    break;
+                        clonedPic.Save(s.FileName, ImageFormat.Tiff);
+                        break;
                     case 9:
-                    clonedPic.Save(s.FileName, ImageFormat.Wmf);
-                    break;
+                        clonedPic.Save(s.FileName, ImageFormat.Wmf);
+                        break;
                     case 10:
-                    using (MemoryStream ms = new MemoryStream()) {
-                        try {
-                            clonedPic.Save(ms, ImageFormat.Png);
-                            string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                        using (MemoryStream ms = new MemoryStream()) {
+                            try {
+                                clonedPic.Save(ms, ImageFormat.Png);
+                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
 
-                            using (StreamWriter fs = new StreamWriter(s.FileName)) {
-                                await fs.WriteAsync(base64string);
-                                fs.Flush();
+                                using (StreamWriter fs = new StreamWriter(s.FileName)) {
+                                    await fs.WriteAsync(base64string);
+                                    fs.Flush();
+                                }
+                            }
+                            catch (Exception ex) {
+                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch (Exception ex) {
-                            MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
 
-                    break;
+                        break;
                 }
 
                 // release resources

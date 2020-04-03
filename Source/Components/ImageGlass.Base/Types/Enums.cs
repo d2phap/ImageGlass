@@ -18,15 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 
-namespace ImageGlass.Base
-{
+namespace ImageGlass.Base {
     /// <summary>
     /// The loading order list.
     /// **If we need to rename, we MUST update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
-    public enum ImageOrderBy
-    {
+    public enum ImageOrderBy {
         Name = 0,
         Length = 1,
         CreationTime = 2,
@@ -41,8 +39,7 @@ namespace ImageGlass.Base
     /// **If we need to rename, we MUST update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
-    public enum ImageOrderType
-    {
+    public enum ImageOrderType {
         Asc = 0,
         Desc = 1
     }
@@ -52,8 +49,7 @@ namespace ImageGlass.Base
     /// **If we need to rename, have to update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
-    public enum ZoomOptimizationMethods
-    {
+    public enum ZoomOptimizationMethods {
         Auto = 0,
         SmoothPixels = 1,
         ClearPixels = 2
@@ -65,8 +61,7 @@ namespace ImageGlass.Base
     /// **If we need to rename, have to update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
-    public enum MouseWheelActions
-    {
+    public enum MouseWheelActions {
         DoNothing = 0,
         Zoom = 1,
         ScrollVertically = 2,
@@ -78,8 +73,7 @@ namespace ImageGlass.Base
     /// Define the flags to tell frmMain update the UI
     /// </summary>
     [Flags]
-    public enum ForceUpdateActions
-    {
+    public enum ForceUpdateActions {
         NONE = 0,
         OTHER_SETTINGS = 1,
         THEME = 2,
@@ -100,8 +94,7 @@ namespace ImageGlass.Base
     /// **If we need to rename, have to update the language string too.
     /// Because the name is also language keyword!
     /// </summary>
-    public enum LayoutMode
-    {
+    public enum LayoutMode {
         Standard = 0,
         Designer = 1
     }
@@ -114,8 +107,7 @@ namespace ImageGlass.Base
     ///
     /// The integer value of the enum is used for storing the config info.
     /// </summary>
-    public enum ToolbarButton
-    {
+    public enum ToolbarButton {
         Separator = -1,
         btnBack = 0,
         btnNext = 1,
@@ -152,8 +144,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Zooming modes.
     /// </summary>
-    public enum ZoomMode
-    {
+    public enum ZoomMode {
         AutoZoom = 0,
         ScaleToFit = 1,
         ScaleToWidth = 2,
@@ -165,8 +156,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Toolbar position
     /// </summary>
-    public enum ToolbarPosition
-    {
+    public enum ToolbarPosition {
         Top = 0,
         Bottom = 1
     }
@@ -175,8 +165,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Color channels of image, the value should be same as MagickImage.Channels enum
     /// </summary>
-    public enum ColorChannels
-    {
+    public enum ColorChannels {
         All = -1, // not applicable
 
         Red = 1,
@@ -190,8 +179,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Actions the user can assign to keys
     /// </summary>
-    public enum AssignableActions
-    {
+    public enum AssignableActions {
         DoNothing = -1,    // error case
         PrevNextImage = 0, // previous/next image in list
         PanLeftRight,      // pan current image left/right
@@ -204,8 +192,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// User customizable key pairs
     /// </summary>
-    public enum KeyCombos
-    {
+    public enum KeyCombos {
         LeftRight = 0, // left/right arrow keys
         UpDown,      // up/down arrow keys
         PageUpDown,  // pageup/pagedown keys
@@ -215,8 +202,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Supported actions which can be assigned to mouse click
     /// </summary>
-    public enum MouseAction
-    {
+    public enum MouseAction {
         ToggleZoomFit = 0, // switch between 100% and fit-to-window
         ZoomIn,            // zoom in by zoom step
         ZoomOut,           // zoom out by zoom step
@@ -232,8 +218,7 @@ namespace ImageGlass.Base
     /// <summary>
     /// Supported customizable mouse click
     /// </summary>
-    public enum MouseClick
-    {
+    public enum MouseClick {
         Button1,    // Left single
         Button1Dbl,
         Button2,    // Right single

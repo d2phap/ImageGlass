@@ -20,13 +20,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ImageGlass.Base
-{
+namespace ImageGlass.Base {
     /// <summary>
     /// Constants list of the app
     /// </summary>
-    public static class Constants
-    {
+    public static class Constants {
         public const int MENU_ICON_HEIGHT = 21;
         public const int TOOLBAR_ICON_HEIGHT = 20;
         public const int TOOLBAR_HEIGHT = 40;
@@ -55,10 +53,8 @@ namespace ImageGlass.Base
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
-        public static NumberFormatInfo NumberFormat
-        {
-            get => new NumberFormatInfo
-            {
+        public static NumberFormatInfo NumberFormat {
+            get => new NumberFormatInfo {
                 NegativeSign = "-"
             };
         }
@@ -67,8 +63,7 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets the default set of keycombo actions
         /// </summary>
-        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions
-        {
+        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions {
             get => new Dictionary<KeyCombos, AssignableActions>
                 {
                     { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
@@ -82,8 +77,7 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets the default set of toolbar buttons
         /// </summary>
-        public static List<ToolbarButton> DefaultToolbarButtons
-        {
+        public static List<ToolbarButton> DefaultToolbarButtons {
             get => new List<ToolbarButton>
             {
                 ToolbarButton.btnBack,

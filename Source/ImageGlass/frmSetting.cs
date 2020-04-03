@@ -387,32 +387,32 @@ namespace ImageGlass {
 
             switch (lbl.Name) {
                 case nameof(lblGeneral):
-                tab1.SelectedTab = tabGeneral;
-                break;
+                    tab1.SelectedTab = tabGeneral;
+                    break;
                 case nameof(lblImage):
-                tab1.SelectedTab = tabImage;
-                break;
+                    tab1.SelectedTab = tabImage;
+                    break;
                 case nameof(lblEdit):
-                tab1.SelectedTab = tabEdit;
-                break;
+                    tab1.SelectedTab = tabEdit;
+                    break;
                 case nameof(lblFileTypeAssoc):
-                tab1.SelectedTab = tabFileTypeAssoc;
-                break;
+                    tab1.SelectedTab = tabFileTypeAssoc;
+                    break;
                 case nameof(lblLanguage):
-                tab1.SelectedTab = tabLanguage;
-                break;
+                    tab1.SelectedTab = tabLanguage;
+                    break;
                 case nameof(lblToolbar):
-                tab1.SelectedTab = tabToolbar;
-                break;
+                    tab1.SelectedTab = tabToolbar;
+                    break;
                 case nameof(lblTools):
-                tab1.SelectedTab = tabTools;
-                break;
+                    tab1.SelectedTab = tabTools;
+                    break;
                 case nameof(lblTheme):
-                tab1.SelectedTab = tabTheme;
-                break;
+                    tab1.SelectedTab = tabTheme;
+                    break;
                 case nameof(lblKeyboard):
-                tab1.SelectedTab = tabKeyboard;
-                break;
+                    tab1.SelectedTab = tabKeyboard;
+                    break;
             }
         }
 

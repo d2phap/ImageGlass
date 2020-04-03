@@ -72,34 +72,34 @@ namespace ImageGlass.Heart {
             #region Read image data
             switch (ext) {
                 case ".GIF":
-                // Note: Using FileStream is much faster than using MagickImageCollection
-                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
-                    var ms = new MemoryStream();
-                    fs.CopyTo(ms);
-                    ms.Position = 0;
+                    // Note: Using FileStream is much faster than using MagickImageCollection
+                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
+                        var ms = new MemoryStream();
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
 
-                    bitmap = new Bitmap(ms, true);
-                }
-                break;
+                        bitmap = new Bitmap(ms, true);
+                    }
+                    break;
 
                 case ".ICO":
                 case ".TIF":
                 case ".WEBP":
-                try {
-                    using (var imgColl = new MagickImageCollection(filename, settings)) {
-                        bitmap = imgColl.ToBitmap();
+                    try {
+                        using (var imgColl = new MagickImageCollection(filename, settings)) {
+                            bitmap = imgColl.ToBitmap();
+                        }
                     }
-                }
-                catch {
-                    // Issue #637: MagickImageCollection falls over with certain images, fallback to MagickImage
-                    ReadWithMagickImage();
-                }
-                break;
+                    catch {
+                        // Issue #637: MagickImageCollection falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
+                    }
+                    break;
 
                 default:
-                ReadWithMagickImage();
+                    ReadWithMagickImage();
 
-                break;
+                    break;
             }
             #endregion
 
