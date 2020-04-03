@@ -800,7 +800,7 @@ namespace ImageGlass {
                 if (isbusy)
                     picMain.Cursor = Cursors.WaitCursor;
                 else
-                    ShowActiveCursor();
+                    picMain.Cursor = Cursors.Default;
 
                 // Part of Issue #485 fix: failure to disable timer after image load meant message 
                 // could appear after image already loaded
@@ -3349,8 +3349,10 @@ namespace ImageGlass {
 
 
         private void PicMain_Paint(object sender, PaintEventArgs e) {
+            // draw slideshow clock
             PaintSlideshowClock(e);
 
+            // draw navigation regions
             PaintNavigationRegions(e);
         }
 
@@ -3566,8 +3568,6 @@ namespace ImageGlass {
 
 
 
-
-
         // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e) {
             MouseWheelActions action;
@@ -3648,11 +3648,14 @@ namespace ImageGlass {
 
                 case MouseButtons.Left:
                     if (Configs.IsShowNavigationButtons && !picMain.IsPanning) {
-                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () => {
+                        var region = TestCursorHitNavRegions(e.Location);
+
+                        if (region?.Position == "left") {
                             mnuMainViewPrevious_Click(null, null);
-                        }, onCursorRightAction: () => {
+                        }
+                        else if (region?.Position == "right") {
                             mnuMainViewNext_Click(null, null);
-                        });
+                        }
                     }
                     break;
 
@@ -3669,7 +3672,7 @@ namespace ImageGlass {
 
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
-            //workaround that makes it so side mouse buttons will not zoom the image
+            // workaround that makes it so side mouse buttons will not zoom the image
             if (e.Button == MouseButtons.XButton1) {
                 mnuMainViewPrevious_Click(null, null);
                 return;
@@ -3691,9 +3694,18 @@ namespace ImageGlass {
 
 
             if (Configs.IsShowNavigationButtons) {
-                CheckCursorPositionOnViewer(e.Location, onCursorCenterAction: () => {
+                var region = TestCursorHitNavRegions(e.Location);
+
+                if (region?.Position == "left") {
+                    NextPic(-1);
+                }
+                else if (region?.Position == "right") {
+                    NextPic(1);
+                }
+                else {
                     ToggleActualSize();
-                });
+                }
+                    
             }
             else {
                 ToggleActualSize();
@@ -3701,58 +3713,11 @@ namespace ImageGlass {
         }
 
 
+
         /// <summary>
-        /// Check and run an action if cursor position is the LEFT/CENTER/RIGHT side of picMain
+        /// Gets navigation regions
         /// </summary>
-        /// <param name="location">Cursor Location</param>
-        /// <param name="onCursorLeftAction">Action to run if Cursor Position is LEFT</param>
-        /// <param name="onCursorCenterAction">Action to run if Cursor Position is CENTER</param>
-        /// <param name="onCursorRightAction">Action to run if Cursor Position is RIGHT</param>
-        private void CheckCursorPositionOnViewer(Point location, Action onCursorLeftAction = null, Action onCursorCenterAction = null, Action onCursorRightAction = null) {
-            if (Local.ImageList.Length > 1) {
-                // Related to issue #552: use actual size of cursor, not a constant
-                var curse = Configs.Theme.NextArrowCursor;
-                var iconHeight = curse.Size.Height;
-
-                // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
-                var actualWidth = picMain.GetImageViewPort().Width;
-
-                // get the hotspot area width
-                var hotspotWidth = Math.Max(iconHeight, actualWidth / 7);
-
-                // left side
-                if (location.X < hotspotWidth) {
-                    // The first image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorLeftAction?.Invoke();
-                    }
-                }
-                // right side
-                else if (location.X > (actualWidth - hotspotWidth)) {
-                    // The last image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorRightAction?.Invoke();
-                    }
-                }
-                // center
-                else {
-                    onCursorCenterAction?.Invoke();
-                }
-            }
-
-            // fire-eggs 20190902 Fix observed glitch: color picker cursor doesn't appear if image count is 1
-            if (Local.ImageList.Length == 1)
-                onCursorCenterAction?.Invoke();
-
-        }
-
-
+        /// <returns></returns>
         private List<(string Position, Rectangle Region)> GetNavigationRegions() {
             var viewerWidth = picMain.Width;
 
@@ -3766,6 +3731,11 @@ namespace ImageGlass {
         }
 
 
+        /// <summary>
+        /// Test if the given point is one of the left and right navigation regions
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point position) {
             var hitRegions = GetNavigationRegions();
 
@@ -3799,6 +3769,9 @@ namespace ImageGlass {
             Image icon;
 
             if (position == "left") {
+                // exit on first image if no loopback
+                if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) return;
+
                 icon = Configs.Theme.PreviousNavArrow;
                 brush = new LinearGradientBrush(
                     region,
@@ -3807,6 +3780,9 @@ namespace ImageGlass {
                     LinearGradientMode.Horizontal);
             }
             else { // right
+                // exit on last image if no loopback
+                if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) return;
+
                 icon = Configs.Theme.NextNavArrow;
                 brush = new LinearGradientBrush(
                     new Rectangle(new Point(region.X - 1, region.Y), region.Size),
@@ -3831,52 +3807,8 @@ namespace ImageGlass {
         }
 
 
-        /// <summary>
-        /// When IG is not 'busy', show the appropriate mouse cursor.
-        /// The appropriate cursor depends on whether the color picker
-        /// is active; the navigation arrows are active; or neither.
-        /// </summary>
-        /// <param name="location">the location of the mouse relative to picMain</param>
-        private void ShowActiveCursor(Point? location = null) {
-            // For non-mouse events, need to determine the mouse location
-            if (location == null)
-                location = picMain.PointToClient(Control.MousePosition);
-
-            if (!picMain.IsPanning) {
-                void SetDefaultCursor() {
-                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                }
-
-                // set the Arrow cursor
-                if (Configs.IsShowNavigationButtons) {
-                    CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () => {
-                        picMain.Cursor = Configs.Theme.PreviousArrowCursor ?? DefaultCursor;
-
-                    }, onCursorRightAction: () => {
-                        picMain.Cursor = Configs.Theme.NextArrowCursor ?? DefaultCursor;
-                        // Issue #618: the scrollbar cursor should never be the nav arrow
-                        picMain.VerticalScroll.Cursor = Cursors.Default;
-
-                    }, onCursorCenterAction: SetDefaultCursor);
-                }
-
-                //reset the cursor
-                else {
-                    SetDefaultCursor();
-                }
-            }
-        }
-
-
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
-            //if (Local.IsColorPickerToolOpening ||
-            //    picMain.SelectionMode == ImageBoxSelectionMode.Rectangle) {
-            //    return;
-            //}
-
-            //ShowActiveCursor();
-
-
+            // draw navigation regions
             picMain.Invalidate();
         }
 
