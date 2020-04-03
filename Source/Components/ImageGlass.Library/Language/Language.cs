@@ -21,10 +21,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ImageGlass.Library
-{
-    public class Language
-    {
+namespace ImageGlass.Library {
+    public class Language {
         private string _langCode;
         private string _langName;
         private string _author;
@@ -40,22 +38,19 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get, set code of language
         /// </summary>
-        public string LangCode
-        {
+        public string LangCode {
             get { return _langCode; }
             set { _langCode = value; }
         }
 
         //Get, set name of language
-        public string LangName
-        {
+        public string LangName {
             get { return _langName; }
             set { _langName = value; }
         }
 
         //Get, set author
-        public string Author
-        {
+        public string Author {
             get { return _author; }
             set { _author = value; }
         }
@@ -63,8 +58,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get, set description
         /// </summary>
-        public string Description
-        {
+        public string Description {
             get { return _description; }
             set { _description = value; }
         }
@@ -72,8 +66,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get, set language file path
         /// </summary>
-        public string FileName
-        {
+        public string FileName {
             get { return _fileName; }
             set { _fileName = value; }
         }
@@ -81,8 +74,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Get, set list of language string
         /// </summary>
-        public LanguageItem<string, string> Items
-        {
+        public LanguageItem<string, string> Items {
             get { return _Items; }
             set { _Items = value; }
         }
@@ -90,8 +82,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Gets, sets minimum version of ImageGlass that compatible with.
         /// </summary>
-        public string MinVersion
-        {
+        public string MinVersion {
             get { return _minVersion; }
             set { _minVersion = value; }
         }
@@ -99,9 +90,8 @@ namespace ImageGlass.Library
         /// <summary>
         /// Gets, sets the value that indicates right-to-left layout style
         /// </summary>
-        public RightToLeft IsRightToLeftLayout
-        {
-            get { return _isRightToLeftLayout; } 
+        public RightToLeft IsRightToLeftLayout {
+            get { return _isRightToLeftLayout; }
             set { _isRightToLeftLayout = value; }
         }
         #endregion
@@ -110,8 +100,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Set default values of Language
         /// </summary>
-        public Language()
-        {
+        public Language() {
             _langCode = "en-US";
             _langName = "Local name of the language";
             _author = "ImageGlass community";
@@ -131,15 +120,13 @@ namespace ImageGlass.Library
         /// </summary>
         /// <param name="fileName">*.igLang path</param>
         /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
-        public Language(string fileName, string dirPath = "")
-        {
+        public Language(string fileName, string dirPath = "") {
             _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
             _fileName = Path.Combine(dirPath, fileName);
 
-            if (File.Exists(_fileName))
-            {
+            if (File.Exists(_fileName)) {
                 ReadLanguageFile();
             }
         }
@@ -149,8 +136,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// Read language strings from file (new format)
         /// </summary>
-        public void ReadLanguageFile()
-        {
+        public void ReadLanguageFile() {
             XmlDocument doc = new XmlDocument();
             doc.Load(_fileName);
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
@@ -173,14 +159,12 @@ namespace ImageGlass.Library
             //Get all lang items
             XmlNodeList nLangList = nContent.SelectNodes("Item");//<Item>
 
-            foreach (var item in nLangList)
-            {
+            foreach (var item in nLangList) {
                 XmlElement nItem = (XmlElement)item;
                 string _key = nItem.GetAttribute("key");
                 string _value = nItem.GetAttribute("value").Replace("\\n", "\n");
 
-                try
-                {
+                try {
                     Items[_key] = _value;
                 }
                 catch { }
@@ -193,8 +177,7 @@ namespace ImageGlass.Library
         /// Export all language strings to xml file
         /// </summary>
         /// <param name="filename"></param>
-        public void ExportLanguageToXML(string filename)
-        {
+        public void ExportLanguageToXML(string filename) {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
             XmlElement nType = doc.CreateElement("Language");// <Language>
@@ -209,8 +192,7 @@ namespace ImageGlass.Library
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>
-            foreach (var item in Items)
-            {
+            foreach (var item in Items) {
                 XmlElement n = doc.CreateElement("Item"); // <Item>
                 n.SetAttribute("key", item.Key);
                 n.SetAttribute("value", item.Value);
@@ -229,8 +211,7 @@ namespace ImageGlass.Library
         /// <summary>
         /// This is default language of ImageGlass
         /// </summary>
-        private void InitDefaultLanguageDictionary()
-        {
+        private void InitDefaultLanguageDictionary() {
             Items.Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
 
@@ -686,7 +667,7 @@ namespace ImageGlass.Library
             Items.Add("frmSetting.lblKeysLeftRight", "Left / Right arrows"); // v7.0
 
             #region Actions Combo Values
-            Items.Add("frmSetting.KeyActions._PrevNextImage","Previous / Next Image"); // v7.0
+            Items.Add("frmSetting.KeyActions._PrevNextImage", "Previous / Next Image"); // v7.0
             Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v7.0
             Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
             Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0

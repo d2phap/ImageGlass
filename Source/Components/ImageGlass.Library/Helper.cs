@@ -25,22 +25,17 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ImageGlass.Library
-{
-    public static class Helper
-    {
+namespace ImageGlass.Library {
+    public static class Helper {
         /// <summary>
         /// Check if the given form's location is visible on screen
         /// </summary>
         /// <param name="location">The location of form to check</param>
         /// <returns></returns>
-        public static bool IsOnScreen(Point location)
-        {
+        public static bool IsOnScreen(Point location) {
             Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens)
-            {
-                if (screen.WorkingArea.Contains(location))
-                {
+            foreach (Screen screen in screens) {
+                if (screen.WorkingArea.Contains(location)) {
                     return true;
                 }
             }
@@ -54,13 +49,10 @@ namespace ImageGlass.Library
         /// </summary>
         /// <param name="bounds"></param>
         /// <returns></returns>
-        public static bool IsAnyPartOnScreen(Rectangle bounds)
-        {
+        public static bool IsAnyPartOnScreen(Rectangle bounds) {
             Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens)
-            {
-                if (screen.WorkingArea.IntersectsWith(bounds))
-                {
+            foreach (Screen screen in screens) {
+                if (screen.WorkingArea.IntersectsWith(bounds)) {
                     return true;
                 }
             }
@@ -77,8 +69,7 @@ namespace ImageGlass.Library
         /// <param name="path"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static string ShortenPath(string path, int length)
-        {
+        public static string ShortenPath(string path, int length) {
             StringBuilder sb = new StringBuilder(length);
             PathCompactPathEx(sb, path, length, 0);
             return sb.ToString();
@@ -90,48 +81,38 @@ namespace ImageGlass.Library
         /// </summary>
         /// <param name="pathList">Paths list</param>
         /// <returns></returns>
-        public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList)
-        {
+        public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList) {
             if (pathList.Count() == 0) return new List<string>();
 
             var hashedDirsList = new HashSet<string>();
 
-            foreach (var path in pathList)
-            {
-                if (File.Exists(path))
-                {
+            foreach (var path in pathList) {
+                if (File.Exists(path)) {
                     string dir;
-                    if (Path.GetExtension(path).ToLower() == ".lnk")
-                    {
+                    if (Path.GetExtension(path).ToLower() == ".lnk") {
                         var shortcutPath = Shortcuts.GetTargetPathFromShortcut(path);
 
                         // get the DIR path of shortcut target
-                        if (File.Exists(shortcutPath))
-                        {
+                        if (File.Exists(shortcutPath)) {
                             dir = Path.GetDirectoryName(shortcutPath);
                         }
-                        else if (Directory.Exists(shortcutPath))
-                        {
+                        else if (Directory.Exists(shortcutPath)) {
                             dir = shortcutPath;
                         }
-                        else
-                        {
+                        else {
                             continue;
                         }
                     }
-                    else
-                    {
+                    else {
                         dir = Path.GetDirectoryName(path);
                     }
 
                     hashedDirsList.Add(dir);
                 }
-                else if (Directory.Exists(path))
-                {
+                else if (Directory.Exists(path)) {
                     hashedDirsList.Add(path);
                 }
-                else
-                {
+                else {
                     continue;
                 }
             }

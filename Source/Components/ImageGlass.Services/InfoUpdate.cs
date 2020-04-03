@@ -19,12 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 
-namespace ImageGlass.Services
-{
+namespace ImageGlass.Services {
 
 
-    public class InfoUpdate
-    {
+    public class InfoUpdate {
         private Version _newVersion;
         private string _versionType;
         private string _level;
@@ -34,32 +32,27 @@ namespace ImageGlass.Services
         private string _decription;
 
         #region Properties
-        public Version NewVersion
-        {
+        public Version NewVersion {
             get { return _newVersion; }
             set { _newVersion = value; }
-        }        
+        }
 
-        public string VersionType
-        {
+        public string VersionType {
             get { return _versionType; }
             set { _versionType = value; }
-        }        
+        }
 
-        public string Level
-        {
+        public string Level {
             get { return _level; }
             set { _level = value; }
-        }        
+        }
 
-        public Uri Link
-        {
+        public Uri Link {
             get { return _link; }
             set { _link = value; }
-        }        
+        }
 
-        public string Size
-        {
+        public string Size {
             get { return _size; }
             set { _size = value; }
         }
@@ -67,14 +60,12 @@ namespace ImageGlass.Services
         /// <summary>
         /// Get, set publish date
         /// </summary>
-        public DateTime PublishDate
-        {
+        public DateTime PublishDate {
             get { return _pubDate; }
             set { _pubDate = value; }
         }
 
-        public string Decription
-        {
+        public string Decription {
             get { return _decription; }
             set { _decription = value; }
         }
@@ -83,15 +74,14 @@ namespace ImageGlass.Services
         /// <summary>
         /// Provides information of element 'Info> in 'Update>
         /// </summary>
-        public InfoUpdate()
-        {
+        public InfoUpdate() {
             _newVersion = new System.Version("1.0.0.0");
             _versionType = "Stable";
             _level = "Recommended";
             _link = new Uri("https://imageglass.org");
             _size = "0 MB";
             _pubDate = DateTime.Now;
-            _decription = string.Empty;           
+            _decription = string.Empty;
         }
 
     }

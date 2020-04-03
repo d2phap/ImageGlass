@@ -19,13 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 
-namespace ImageGlass.Services.InstanceManagement
-{
+namespace ImageGlass.Services.InstanceManagement {
     /// <summary>
     /// Holds a list of arguments given to an application at startup.
     /// </summary>
-    public class ArgumentsReceivedEventArgs : EventArgs
-    {
+    public class ArgumentsReceivedEventArgs: EventArgs {
         public String[] Args { get; set; }
     }
 }

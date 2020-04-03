@@ -5,13 +5,11 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.Image
-{
+namespace ImageGlass.Library.Image {
     /// <summary>
     /// Allows reading of embedded thumbnail image from the EXIF information in an image.
     /// </summary>
-    public abstract class ExifThumbReader
-    {
+    public abstract class ExifThumbReader {
         // GDI plus functions
         [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         internal static extern int GdipGetPropertyItem(IntPtr image, int propid, int size, IntPtr buffer);
@@ -35,8 +33,7 @@ namespace ImageGlass.Library.Image
         /// <summary>
         /// Reads the thumbnail in the given image. If no thumbnail is found, returns null
         /// </summary>
-        public static System.Drawing.Image ReadThumb(string imagePath)
-        {
+        public static System.Drawing.Image ReadThumb(string imagePath) {
             const int GDI_ERR_PROP_NOT_FOUND = 19;  // Property not found error
             const int GDI_ERR_OUT_OF_MEMORY = 3;
 
@@ -45,8 +42,7 @@ namespace ImageGlass.Library.Image
             int ret;
             ret = GdipLoadImageFromFile(imagePath, out hImage);
 
-            try
-            {
+            try {
                 if (ret != 0)
                     throw createException(ret);
 
@@ -73,8 +69,7 @@ namespace ImageGlass.Library.Image
                 return convertFromMemory(buffer);
             }
 
-            finally
-            {
+            finally {
                 // Free the buffer
                 if (buffer != IntPtr.Zero)
                     Marshal.FreeHGlobal(buffer);
@@ -87,38 +82,36 @@ namespace ImageGlass.Library.Image
         /// Generates an exception depending on the GDI+ error codes (I removed some error
         /// codes)
         /// </summary>
-        private static Exception createException(int gdipErrorCode)
-        {
-            switch (gdipErrorCode)
-            {
+        private static Exception createException(int gdipErrorCode) {
+            switch (gdipErrorCode) {
                 case 1:
-                    return new ExternalException("Gdiplus Generic Error", -2147467259);
+                return new ExternalException("Gdiplus Generic Error", -2147467259);
                 case 2:
-                    return new ArgumentException("Gdiplus Invalid Parameter");
+                return new ArgumentException("Gdiplus Invalid Parameter");
                 case 3:
-                    return new OutOfMemoryException("Gdiplus Out Of Memory");
+                return new OutOfMemoryException("Gdiplus Out Of Memory");
                 case 4:
-                    return new InvalidOperationException("Gdiplus Object Busy");
+                return new InvalidOperationException("Gdiplus Object Busy");
                 case 5:
-                    return new OutOfMemoryException("Gdiplus Insufficient Buffer");
+                return new OutOfMemoryException("Gdiplus Insufficient Buffer");
                 case 7:
-                    return new ExternalException("Gdiplus Generic Error", -2147467259);
+                return new ExternalException("Gdiplus Generic Error", -2147467259);
                 case 8:
-                    return new InvalidOperationException("Gdiplus Wrong State");
+                return new InvalidOperationException("Gdiplus Wrong State");
                 case 9:
-                    return new ExternalException("Gdiplus Aborted", -2147467260);
+                return new ExternalException("Gdiplus Aborted", -2147467260);
                 case 10:
-                    return new FileNotFoundException("Gdiplus File Not Found");
+                return new FileNotFoundException("Gdiplus File Not Found");
                 case 11:
-                    return new OverflowException("Gdiplus Over flow");
+                return new OverflowException("Gdiplus Over flow");
                 case 12:
-                    return new ExternalException("Gdiplus Access Denied", -2147024891);
+                return new ExternalException("Gdiplus Access Denied", -2147024891);
                 case 13:
-                    return new ArgumentException("Gdiplus Unknown Image Format");
+                return new ArgumentException("Gdiplus Unknown Image Format");
                 case 18:
-                    return new ExternalException("Gdiplus Not Initialized", -2147467259);
+                return new ExternalException("Gdiplus Not Initialized", -2147467259);
                 case 20:
-                    return new ArgumentException("Gdiplus Property Not Supported Error");
+                return new ArgumentException("Gdiplus Property Not Supported Error");
             }
 
             return new ExternalException("Gdiplus Unknown Error", -2147418113);
@@ -130,8 +123,7 @@ namespace ImageGlass.Library.Image
         /// Converts the IntPtr buffer to a property item and then converts its 
         /// value to a Drawing.Image item
         /// </summary>
-        private static System.Drawing.Image convertFromMemory(IntPtr thumbData)
-        {
+        private static System.Drawing.Image convertFromMemory(IntPtr thumbData) {
             propertyItemInternal prop =
                 (propertyItemInternal)Marshal.PtrToStructure
                 (thumbData, typeof(propertyItemInternal));
@@ -153,17 +145,14 @@ namespace ImageGlass.Library.Image
         /// type. See MSDN for a definition of Blittable.)
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        private class propertyItemInternal
-        {
+        private class propertyItemInternal {
             public int id = 0;
             public int len = 0;
             public short type = 0;
             public IntPtr value = IntPtr.Zero;
 
-            public byte[] Value
-            {
-                get
-                {
+            public byte[] Value {
+                get {
                     byte[] bytes = new byte[(uint)len];
                     Marshal.Copy(value, bytes, 0, len);
                     return bytes;

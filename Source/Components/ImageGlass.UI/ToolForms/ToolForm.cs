@@ -22,13 +22,11 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI.ToolForms
-{
+namespace ImageGlass.UI.ToolForms {
     /// <summary>
     /// Common functionalities for floating 'tool' windows
     /// </summary>
-    public class ToolForm : Form
-    {
+    public class ToolForm: Form {
         protected Form _currentOwner;
 
 
@@ -38,8 +36,7 @@ namespace ImageGlass.UI.ToolForms
         private Point lastLocation; // initial mouse position
         private bool moveSnapped; // move toolform windows together
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
+        private void Form1_MouseDown(object sender, MouseEventArgs e) {
             if (e.Clicks == 1)
                 mouseDown = true;
             if (ModifierKeys == Keys.Control)
@@ -48,16 +45,13 @@ namespace ImageGlass.UI.ToolForms
             lastLocation = e.Location;
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
-        {
+        private void Form1_MouseMove(object sender, MouseEventArgs e) {
             if (!mouseDown) return; // not moving windows, ignore
 
-            if (moveSnapped)
-            {
+            if (moveSnapped) {
                 _manager.MoveSnappedTools(lastLocation, e.Location);
             }
-            else
-            {
+            else {
                 Location = new Point((Location.X - lastLocation.X) + e.X,
                     (Location.Y - lastLocation.Y) + e.Y);
 
@@ -65,8 +59,7 @@ namespace ImageGlass.UI.ToolForms
             }
         }
 
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
-        {
+        private void Form1_MouseUp(object sender, MouseEventArgs e) {
             mouseDown = false;
             moveSnapped = false;
         }
@@ -109,10 +102,8 @@ namespace ImageGlass.UI.ToolForms
             public int bottomHeight;
         }
 
-        protected bool CheckAeroEnabled()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
+        protected bool CheckAeroEnabled() {
+            if (Environment.OSVersion.Version.Major >= 6) {
                 int enabled = 0;
                 DwmIsCompositionEnabled(ref enabled);
                 return (enabled == 1) ? true : false;
@@ -120,29 +111,26 @@ namespace ImageGlass.UI.ToolForms
             return false;
         }
 
-        protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
+        protected override void WndProc(ref Message m) {
+            switch (m.Msg) {
                 case WM_NCPAINT: // box shadow
-                    if (m_aeroEnabled)
-                    {
-                        var v = 2;
-                        DwmSetWindowAttribute(Handle, 2, ref v, 4);
+                if (m_aeroEnabled) {
+                    var v = 2;
+                    DwmSetWindowAttribute(Handle, 2, ref v, 4);
 
-                        MARGINS margins = new MARGINS()
+                    MARGINS margins = new MARGINS()
                         {
-                            bottomHeight = 1,
-                            leftWidth = 1,
-                            rightWidth = 1,
-                            topHeight = 1
-                        };
+                        bottomHeight = 1,
+                        leftWidth = 1,
+                        rightWidth = 1,
+                        topHeight = 1
+                    };
 
-                        DwmExtendFrameIntoClientArea(Handle, ref margins);
-                    }
-                    break;
+                    DwmExtendFrameIntoClientArea(Handle, ref margins);
+                }
+                break;
                 default:
-                    break;
+                break;
             }
 
             base.WndProc(ref m);
@@ -152,15 +140,12 @@ namespace ImageGlass.UI.ToolForms
 
         #region Properties to make a tool window
 
-        protected override bool ShowWithoutActivation
-        {
+        protected override bool ShowWithoutActivation {
             get { return true; }
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
+        protected override CreateParams CreateParams {
+            get {
                 CreateParams baseParams = base.CreateParams;
                 baseParams.ExStyle |= 0x8000000 // WS_EX_NOACTIVATE
                                       | 0x00000080;   // WS_EX_TOOLWINDOW
@@ -188,8 +173,7 @@ namespace ImageGlass.UI.ToolForms
         protected Point _locationOffset;
 
 
-        private void _AttachEventsToParent(Form frmOwner)
-        {
+        private void _AttachEventsToParent(Form frmOwner) {
             if (frmOwner == null)
                 return;
 
@@ -200,14 +184,12 @@ namespace ImageGlass.UI.ToolForms
         }
 
 
-        private void FrmOwner_LocationChanged(object sender, EventArgs e)
-        {
+        private void FrmOwner_LocationChanged(object sender, EventArgs e) {
             formOwnerMoving = false;
         }
 
 
-        private void _DetachEventsFromParent(Form frmOwner)
-        {
+        private void _DetachEventsFromParent(Form frmOwner) {
             if (frmOwner == null)
                 return;
 
@@ -218,8 +200,7 @@ namespace ImageGlass.UI.ToolForms
         }
 
 
-        private void Owner_Move(object sender, EventArgs e)
-        {
+        private void Owner_Move(object sender, EventArgs e) {
             if (Owner == null) return;
 
             formOwnerMoving = true;
@@ -229,19 +210,15 @@ namespace ImageGlass.UI.ToolForms
 
 
         // The tool windows itself has moved; track its location relative to parent
-        private void ToolForm_Move(object sender, EventArgs e)
-        {
-            if (!formOwnerMoving)
-            {
+        private void ToolForm_Move(object sender, EventArgs e) {
+            if (!formOwnerMoving) {
                 _locationOffset = new Point(Left - Owner.Left, Top - Owner.Top);
                 parentOffset = _locationOffset;
             }
         }
 
-        protected override void OnShown(EventArgs e)
-        {
-            if (Owner != _currentOwner)
-            {
+        protected override void OnShown(EventArgs e) {
+            if (Owner != _currentOwner) {
                 _DetachEventsFromParent(_currentOwner);
                 _currentOwner = Owner;
                 _AttachEventsToParent(_currentOwner);
@@ -251,13 +228,11 @@ namespace ImageGlass.UI.ToolForms
         }
 
 
-        protected void _SetLocationBasedOnParent()
-        {
+        protected void _SetLocationBasedOnParent() {
             if (Owner == null)
                 return;
 
-            if (Owner.WindowState == FormWindowState.Minimized || !Owner.Visible)
-            {
+            if (Owner.WindowState == FormWindowState.Minimized || !Owner.Visible) {
                 Visible = false;
                 return;
             }
@@ -276,38 +251,31 @@ namespace ImageGlass.UI.ToolForms
         /// Apply theme colors to controls
         /// </summary>
         /// <param name="th">Theme</param>
-        protected void SetColors(Theme th)
-        {
+        protected void SetColors(Theme th) {
             var bgColor = th.BackgroundColor;
             var fontColor = th.TextInfoColor;
 
-            foreach (Control control in this.Controls)
-            {
-                if (control is Button button)
-                {
+            foreach (Control control in this.Controls) {
+                if (control is Button button) {
                     button.FlatAppearance.BorderColor = bgColor;
                 }
 
                 if (control is Label ||
                     control is TextBox ||
                     control is NumericUpDown ||
-                    control is Button)
-                {
+                    control is Button) {
                     control.BackColor = bgColor;
                     control.ForeColor = fontColor;
                 }
 
 
                 // container
-                if (control.HasChildren)
-                {
-                    foreach (Control childControl in control.Controls)
-                    {
+                if (control.HasChildren) {
+                    foreach (Control childControl in control.Controls) {
                         if (childControl is Label ||
                             childControl is TextBox ||
                             childControl is NumericUpDown ||
-                            childControl is Button)
-                        {
+                            childControl is Button) {
                             childControl.BackColor = bgColor;
                             childControl.ForeColor = fontColor;
                         }
@@ -321,15 +289,13 @@ namespace ImageGlass.UI.ToolForms
 
         #region ToolForm "Snap" support
         private ToolFormManager _manager;
-        public void SetToolFormManager(ToolFormManager manager)
-        {
+        public void SetToolFormManager(ToolFormManager manager) {
             _manager = manager;
             _manager.Add(this);
         }
 
 
-        protected void SnapButton_Click(object sender, EventArgs e)
-        {
+        protected void SnapButton_Click(object sender, EventArgs e) {
             _manager.SnapToNearest(this);
         }
         #endregion
@@ -338,19 +304,16 @@ namespace ImageGlass.UI.ToolForms
         /// <summary>
         /// Initialize all event handlers required to manage borderless window movement.
         /// </summary>
-        protected void RegisterToolFormEvents()
-        {
+        protected void RegisterToolFormEvents() {
             Move += ToolForm_Move;
 
             MouseDown += Form1_MouseDown;
             MouseUp += Form1_MouseUp;
             MouseMove += Form1_MouseMove;
 
-            foreach (Control control in Controls)
-            {
+            foreach (Control control in Controls) {
                 if (control is Label ||
-                    control.HasChildren)
-                {
+                    control.HasChildren) {
                     control.MouseDown += Form1_MouseDown;
                     control.MouseUp += Form1_MouseUp;
                     control.MouseMove += Form1_MouseMove;
@@ -360,10 +323,8 @@ namespace ImageGlass.UI.ToolForms
                 control.MouseLeave += this.ToolForm_MouseLeave;
 
                 // child controls
-                foreach (Control childControl in control.Controls)
-                {
-                    if (childControl is Label)
-                    {
+                foreach (Control childControl in control.Controls) {
+                    if (childControl is Label) {
                         childControl.MouseDown += Form1_MouseDown;
                         childControl.MouseUp += Form1_MouseUp;
                         childControl.MouseMove += Form1_MouseMove;
@@ -377,8 +338,7 @@ namespace ImageGlass.UI.ToolForms
 
 
 
-        public ToolForm()
-        {
+        public ToolForm() {
             Activated += this.ToolForm_Activated;
             Deactivate += this.ToolForm_Deactivate;
             MouseEnter += this.ToolForm_MouseEnter;
@@ -387,32 +347,25 @@ namespace ImageGlass.UI.ToolForms
             this.Opacity = 0.85;
         }
 
-        private void ToolForm_MouseLeave(object sender, EventArgs e)
-        {
-            if (ActiveForm != this)
-            {
-                try
-                {
+        private void ToolForm_MouseLeave(object sender, EventArgs e) {
+            if (ActiveForm != this) {
+                try {
                     this.Opacity = 0.85;
                 }
                 catch { }
             }
         }
 
-        private void ToolForm_MouseEnter(object sender, EventArgs e)
-        {
+        private void ToolForm_MouseEnter(object sender, EventArgs e) {
             this.Opacity = 1;
         }
 
-        private void ToolForm_Activated(object sender, EventArgs e)
-        {
+        private void ToolForm_Activated(object sender, EventArgs e) {
             this.Opacity = 1;
         }
 
-        private void ToolForm_Deactivate(object sender, EventArgs e)
-        {
-            try
-            {
+        private void ToolForm_Deactivate(object sender, EventArgs e) {
+            try {
                 this.Opacity = 0.85;
             }
             catch { }

@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.UI
-{
-    public class ThemeIconCollection
-    {
+namespace ImageGlass.UI {
+    public class ThemeIconCollection {
         public ThemeImage About { get; set; } = new ThemeImage();
         public ThemeImage ActualSize { get; set; } = new ThemeImage();
         public ThemeImage AdjustWindowSize { get; set; } = new ThemeImage();

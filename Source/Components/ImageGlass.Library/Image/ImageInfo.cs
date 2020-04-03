@@ -17,19 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.IO;
-using System.Drawing;
-using System.Runtime.InteropServices;
 using Microsoft.VisualBasic.FileIO;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.Image
-{
-    public class ImageInfo
-    {
+namespace ImageGlass.Library.Image {
+    public class ImageInfo {
         [StructLayout(LayoutKind.Sequential)]
-        private struct SHELLEXECUTEINFO
-        {
+        private struct SHELLEXECUTEINFO {
             public int cbSize;
             public int fMask;
             public IntPtr hwnd;
@@ -59,8 +56,7 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="fileName">file name</param>
         /// <param name="hwnd"></param>
-        public static void DisplayFileProperties(string fileName, IntPtr hwnd)
-        {
+        public static void DisplayFileProperties(string fileName, IntPtr hwnd) {
             const int SEE_MASK_INVOKEIDLIST = 0xc;
             const int SW_SHOW = 5;
             SHELLEXECUTEINFO shInfo = new SHELLEXECUTEINFO();
@@ -82,55 +78,51 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static string GetImageFileType(string filename)
-        {
+        public static string GetImageFileType(string filename) {
             string ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
-            switch (ext)
-            {
+            switch (ext) {
                 case "bmp":
-                    return "Bitmap Image File";
+                return "Bitmap Image File";
                 case "dib":
-                    return "Device Independent Bitmap File";
+                return "Device Independent Bitmap File";
                 case "jpg":
-                    return "JPEG Image File";
+                return "JPEG Image File";
                 case "jpeg":
-                    return "Joint Photographic Experts Group";
+                return "Joint Photographic Experts Group";
                 case "jfif":
-                    return "JPEG File Interchange Format";
+                return "JPEG File Interchange Format";
                 case "jpe":
-                    return "JPEG Image File";
+                return "JPEG Image File";
                 case "png":
-                    return "Portable Network Graphics";
+                return "Portable Network Graphics";
                 case "gif":
-                    return "Graphics Interchange Format File";
+                return "Graphics Interchange Format File";
                 case "ico":
-                    return "Icon File";
+                return "Icon File";
                 case "emf":
-                    return "Enhanced Windows Metafile";
+                return "Enhanced Windows Metafile";
                 case "exif":
-                    return "Exchangeable Image Information File";
+                return "Exchangeable Image Information File";
                 case "wmf":
-                    return "Windows Metafile";
+                return "Windows Metafile";
                 case "tif":
-                    return "Tagged Image File";
+                return "Tagged Image File";
                 case "tiff":
-                    return "Tagged Image File Format";
+                return "Tagged Image File Format";
                 default:
-                    return ext.ToUpper() + " File";
+                return ext.ToUpper() + " File";
             }
         }
-        
-        
+
+
         /// <summary>
         /// Get file size format
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public static string GetFileSize(string filename)
-        {
-            try
-            {
+        public static string GetFileSize(string filename) {
+            try {
                 double mod = 1024;
                 string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
@@ -138,8 +130,7 @@ namespace ImageGlass.Library.Image
                 double sized = fi.Length * 1.0f;
                 int i;
 
-                for (i = 0; sized > mod; i++)
-                {
+                for (i = 0; sized > mod; i++) {
                     sized /= mod;
                 }
 
@@ -155,27 +146,21 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static string GetWxHSize(string filename)
-        {
-            try
-            {
-                if (Path.GetExtension(filename).ToLower() != ".ico")
-                {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
-                    {
+        public static string GetWxHSize(string filename) {
+            try {
+                if (Path.GetExtension(filename).ToLower() != ".ico") {
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
                         //get Width x Height
                         return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                     }
                 }
-                else
-                {
+                else {
                     Icon ico = new Icon(filename);
                     //get Width x Height
                     return Convert.ToString(ico.Width) + " x " + Convert.ToString(ico.Height);
                 }
             }
-            catch
-            {
+            catch {
                 return string.Empty;
             }
 
@@ -186,17 +171,13 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public static string GetImageResolution(string filename)
-        {
-            try
-            {
+        public static string GetImageResolution(string filename) {
+            try {
                 double h = 0;
                 double v = 0;
 
-                if (Path.GetExtension(filename).ToLower() != ".ico")
-                {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename))
-                    {
+                if (Path.GetExtension(filename).ToLower() != ".ico") {
+                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
 
                         //get HorizontalResolution 
                         h = Math.Round((double)img.HorizontalResolution, 2);
@@ -205,8 +186,7 @@ namespace ImageGlass.Library.Image
                         v = Math.Round((double)img.VerticalResolution, 2);
                     }
                 }
-                else
-                {
+                else {
                     Icon ico = new Icon(filename);
 
                     //get HorizontalResolution 
@@ -218,19 +198,18 @@ namespace ImageGlass.Library.Image
 
                 return string.Format("{0} x {1}", h, v);
             }
-            catch {}
+            catch { }
 
             return " ";
         }
-        
+
 
         /// <summary>
         /// Get file creation time
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static DateTime GetCreateTime(string filename)
-        {
+        public static DateTime GetCreateTime(string filename) {
             FileInfo fi = new FileInfo(filename);
 
             //get Create Time
@@ -242,8 +221,7 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static DateTime GetLastAccess(string filename)
-        {
+        public static DateTime GetLastAccess(string filename) {
             FileInfo fi = new FileInfo(filename);
             //get Create Time
             return fi.LastAccessTime;
@@ -254,8 +232,7 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
-        public static DateTime GetWriteTime(string filename)
-        {
+        public static DateTime GetWriteTime(string filename) {
             FileInfo fi = new FileInfo(filename);
 
             return fi.LastWriteTime;
@@ -266,21 +243,18 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="oldFileName">old file name</param>
         /// <param name="newFileName">new file name</param>
-        public static void RenameFile(string oldFileName, string newFileName)
-        {
+        public static void RenameFile(string oldFileName, string newFileName) {
             // Issue 73: Windows ignores case-only changes
-            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant())
-            {
+            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant()) {
                 // user changing only the case of the filename. Need to perform a trick.
                 File.Move(oldFileName, oldFileName + "_imgglass_extra");
                 File.Move(oldFileName + "_imgglass_extra", newFileName);
             }
-            else
-            {
+            else {
                 File.Move(oldFileName, newFileName);
             }
         }
-        
+
 
         /// <summary>
         /// Delete file
@@ -288,8 +262,7 @@ namespace ImageGlass.Library.Image
         /// <param name="fileName">file name</param>
         /// <param name="isMoveToRecycleBin">True: Move to Recycle bin | False: Delete permanently</param>
         /// <returns></returns>
-        public static void DeleteFile(string fileName, bool isMoveToRecycleBin = true)
-        {
+        public static void DeleteFile(string fileName, bool isMoveToRecycleBin = true) {
             var option = isMoveToRecycleBin ? RecycleOption.SendToRecycleBin : RecycleOption.DeletePermanently;
 
             FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, option);
