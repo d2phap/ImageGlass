@@ -25,12 +25,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ImageGlass
-{
-    public partial class frmAbout : Form
-    {
-        public frmAbout()
-        {
+namespace ImageGlass {
+    public partial class frmAbout: Form {
+        public frmAbout() {
             InitializeComponent();
         }
 
@@ -39,75 +36,60 @@ namespace ImageGlass
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
 
         #region MOUSE ENTER - HOVER - DOWN MENU
-        private void lblMenu_MouseDown(object sender, MouseEventArgs e)
-        {
+        private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
             Label lbl = (Label)sender;
             lbl.BackColor = M_COLOR_MENU_ACTIVE;
         }
 
-        private void lblMenu_MouseUp(object sender, MouseEventArgs e)
-        {
+        private void lblMenu_MouseUp(object sender, MouseEventArgs e) {
             Label lbl = (Label)sender;
 
-            if (int.Parse(lbl.Tag.ToString()) == 1)
-            {
+            if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
-            else
-            {
+            else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
             }
         }
 
-        private void lblMenu_MouseEnter(object sender, EventArgs e)
-        {
+        private void lblMenu_MouseEnter(object sender, EventArgs e) {
             Label lbl = (Label)sender;
 
-            if (int.Parse(lbl.Tag.ToString()) == 1)
-            {
+            if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
-            else
-            {
+            else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
             }
 
         }
 
-        private void lblMenu_MouseLeave(object sender, EventArgs e)
-        {
+        private void lblMenu_MouseLeave(object sender, EventArgs e) {
             Label lbl = (Label)sender;
-            if (int.Parse(lbl.Tag.ToString()) == 1)
-            {
+            if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_ACTIVE;
             }
-            else
-            {
+            else {
                 lbl.BackColor = M_COLOR_MENU_NORMAL;
             }
         }
         #endregion
 
-        private void lblMenu_Click(object sender, EventArgs e)
-        {
+        private void lblMenu_Click(object sender, EventArgs e) {
             Label lbl = (Label)sender;
 
-            if (lbl.Name == "lblInfo")
-            {
+            if (lbl.Name == "lblInfo") {
                 tab1.SelectedTab = tpInfo;
             }
-            else if (lbl.Name == "lblComponent")
-            {
+            else if (lbl.Name == "lblComponent") {
                 tab1.SelectedTab = tpComponents;
             }
-            else if (lbl.Name == "lblReferences")
-            {
+            else if (lbl.Name == "lblReferences") {
                 tab1.SelectedTab = tpReferences;
             }
         }
 
-        private void frmAbout_Load(object sender, EventArgs e)
-        {
+        private void frmAbout_Load(object sender, EventArgs e) {
             // Remove tabs header
             tab1.Appearance = TabAppearance.FlatButtons;
             tab1.ItemSize = new Size(0, 1);
@@ -120,11 +102,9 @@ namespace ImageGlass
 
             // Load item component
             txtComponents.Text = "";
-            foreach (string f in Directory.GetFiles(Application.StartupPath))
-            {
+            foreach (string f in Directory.GetFiles(Application.StartupPath)) {
                 if (Path.GetExtension(f).ToLower() == ".dll" ||
-                    Path.GetExtension(f).ToLower() == ".exe")
-                {
+                    Path.GetExtension(f).ToLower() == ".exe") {
                     FileVersionInfo fi = FileVersionInfo.GetVersionInfo(f);
 
                     txtComponents.Text += $"{Path.GetFileName(f)} - {fi.FileVersion}\r\n" +
@@ -143,33 +123,27 @@ namespace ImageGlass
             lblInfoContact.Text = Configs.Language.Items["frmAbout.lblInfoContact"];
             lblSoftwareUpdate.Text = Configs.Language.Items["frmAbout.lblSoftwareUpdate"];
             lnkCheckUpdate.Text = Configs.Language.Items["frmAbout.lnkCheckUpdate"];
-            
+
         }
 
         #region IMAGEGLASS INFORMATION PANEL
-        private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+        private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 Process.Start("mailto:d2phap@gmail.com");
             }
             catch { }
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 Process.Start("skype:d2phap");
             }
             catch { }
         }
 
-        
-        private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+
+        private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 string version = App.Version;
 
                 Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
@@ -177,10 +151,8 @@ namespace ImageGlass
             catch { }
         }
 
-        private void lnkProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+        private void lnkProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 string version = App.Version;
 
                 Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
@@ -188,28 +160,23 @@ namespace ImageGlass
             catch { }
         }
 
-        private void lnkFacebook_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+        private void lnkFacebook_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 Process.Start("https://www.facebook.com/ImageGlass");
             }
             catch { }
         }
 
-        private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
+        private void lnkCheckUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             Program.CheckForUpdate();
         }
         #endregion
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
+        private void btnClose_Click(object sender, EventArgs e) {
             Close();
         }
 
-        private void tab1_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void tab1_SelectedIndexChanged(object sender, EventArgs e) {
             lblInfo.Tag = 0;
             lblComponent.Tag = 0;
             lblReferences.Tag = 0;
@@ -218,28 +185,23 @@ namespace ImageGlass
             lblComponent.BackColor = M_COLOR_MENU_NORMAL;
             lblReferences.BackColor = M_COLOR_MENU_NORMAL;
 
-            if (tab1.SelectedTab == tpInfo)
-            {
+            if (tab1.SelectedTab == tpInfo) {
                 lblInfo.Tag = 1;
                 lblInfo.BackColor = M_COLOR_MENU_ACTIVE;
 
             }
-            else if (tab1.SelectedTab == tpComponents)
-            {
+            else if (tab1.SelectedTab == tpComponents) {
                 lblComponent.Tag = 1;
                 lblComponent.BackColor = M_COLOR_MENU_ACTIVE;
             }
-            else if (tab1.SelectedTab == tpReferences)
-            {
+            else if (tab1.SelectedTab == tpReferences) {
                 lblReferences.Tag = 1;
                 lblReferences.BackColor = M_COLOR_MENU_ACTIVE;
             }
         }
 
-        private void btnDonation_Click(object sender, EventArgs e)
-        {
-            try
-            {
+        private void btnDonation_Click(object sender, EventArgs e) {
+            try {
                 string version = App.Version;
 
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
@@ -247,10 +209,8 @@ namespace ImageGlass
             catch { }
         }
 
-        private void lnkCollaborator_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
+        private void lnkCollaborator_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
                 Process.Start("https://github.com/fire-eggs");
             }
             catch { }

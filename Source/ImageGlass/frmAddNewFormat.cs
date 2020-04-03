@@ -17,39 +17,32 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
 using ImageGlass.Settings;
 using System;
 using System.Windows.Forms;
 
-namespace ImageGlass
-{
-    public partial class frmAddNewFormat : Form
-    {
+namespace ImageGlass {
+    public partial class frmAddNewFormat: Form {
         private bool _isAllowFormClosed = false;
         public string FileFormat { get; set; }
 
-        public frmAddNewFormat()
-        {
+        public frmAddNewFormat() {
             InitializeComponent();
-            
+
             lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
             btnOK.Text = Configs.Language.Items[$"{this.Name}.btnOK"];
             btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
+        private void btnClose_Click(object sender, EventArgs e) {
             DialogResult = DialogResult.Cancel;
             _isAllowFormClosed = true;
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
+        private void btnOK_Click(object sender, EventArgs e) {
             FileFormat = txtFileExtension.Text.ToLower().Trim();
 
-            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllFormats.Contains(FileFormat))
-            {
+            if (FileFormat.Length < 2 || !FileFormat.StartsWith(".") || Configs.AllFormats.Contains(FileFormat)) {
                 txtFileExtension.Focus();
                 return;
             }
@@ -62,33 +55,27 @@ namespace ImageGlass
             _isAllowFormClosed = true;
         }
 
-        private void frmAddNewFormat_Load(object sender, EventArgs e)
-        {
+        private void frmAddNewFormat_Load(object sender, EventArgs e) {
             txtFileExtension.Text = this.FileFormat;
 
             txtFileExtension.Focus();
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             // disable parent form shotcuts
             return false;
         }
 
-        private void frmAddNewFormat_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void frmAddNewFormat_KeyDown(object sender, KeyEventArgs e) {
             // close dialog
-            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
-            {
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) {
                 DialogResult = DialogResult.Cancel;
                 _isAllowFormClosed = true;
             }
         }
 
-        private void frmAddNewFormat_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(!_isAllowFormClosed)
-            {
+        private void frmAddNewFormat_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!_isAllowFormClosed) {
                 e.Cancel = true;
             }
         }

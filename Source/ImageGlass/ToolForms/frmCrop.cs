@@ -17,18 +17,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
-namespace ImageGlass
-{
-    public partial class frmCrop : ToolForm
-    {
+namespace ImageGlass {
+    public partial class frmCrop: ToolForm {
         // default location offset on the parent form
         private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(420));
         private ImageBoxEx _imgBox;
@@ -39,15 +37,13 @@ namespace ImageGlass
         public CropToolEvent CropEventHandler { get; set; }
         public delegate void CropToolEvent(CropActionEvent cropEvent);
 
-        public enum CropActionEvent
-        {
+        public enum CropActionEvent {
             Save,
             SaveAs,
             Copy
         }
 
-        public frmCrop()
-        {
+        public frmCrop() {
             InitializeComponent();
 
             _locationOffset = DefaultLocationOffset; // TODO simplify and move logic to ToolForm
@@ -58,10 +54,8 @@ namespace ImageGlass
         }
 
 
-        public void SetImageBox(ImageBoxEx imgBox)
-        {
-            if (_imgBox != null)
-            {
+        public void SetImageBox(ImageBoxEx imgBox) {
+            if (_imgBox != null) {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
                 _imgBox.ImageChanged -= this._imgBox_ImageChanged;
             }
@@ -71,15 +65,12 @@ namespace ImageGlass
             _imgBox.ImageChanged += this._imgBox_ImageChanged;
         }
 
-        private void _imgBox_ImageChanged(object sender, EventArgs e)
-        {
+        private void _imgBox_ImageChanged(object sender, EventArgs e) {
             btnClear_Click(null, null);
         }
 
-        private void _imgBox_SelectionRegionChanged(object sender, EventArgs e)
-        {
-            try
-            {
+        private void _imgBox_SelectionRegionChanged(object sender, EventArgs e) {
+            try {
                 numX.Value = (decimal)_imgBox.SelectionRegion.X;
                 numY.Value = (decimal)_imgBox.SelectionRegion.Y;
                 numWidth.Value = (decimal)_imgBox.SelectionRegion.Width;
@@ -95,8 +86,7 @@ namespace ImageGlass
         /// <summary>
         /// Apply theme / language
         /// </summary>
-        internal void UpdateUI()
-        {
+        internal void UpdateUI() {
             // Apply current theme ------------------------------------------------------
             SetColors(Configs.Theme);
             tableActions.BackColor = Configs.Theme.ToolbarBackgroundColor;
@@ -117,28 +107,24 @@ namespace ImageGlass
 
 
         #region Events
-        private void frmCrop_Load(object sender, EventArgs e)
-        {
+        private void frmCrop_Load(object sender, EventArgs e) {
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
             Rectangle rc = Helpers.StringToRect("0;0;300;160");
 
-            if (rc.X == 0 && rc.Y == 0)
-            {
+            if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;
                 parentOffset = _locationOffset;
 
                 _SetLocationBasedOnParent();
             }
-            else
-            {
+            else {
                 Location = rc.Location;
             }
         }
 
-        private void frmCrop_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void frmCrop_KeyDown(object sender, KeyEventArgs e) {
             // ESC or C --------------------------------------------------------
             if (!e.Control && !e.Shift && !e.Alt
                 && (e.KeyCode == Keys.Escape || (e.KeyCode == Keys.C))) // C
@@ -148,22 +134,19 @@ namespace ImageGlass
             }
         }
 
-        private void frmCrop_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void frmCrop_FormClosing(object sender, FormClosingEventArgs e) {
             btnClear_Click(null, null);
 
             CropEventHandler = null;
         }
 
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
+        private void BtnClose_Click(object sender, EventArgs e) {
             var frm = (frmMain) this._currentOwner;
             frm.ShowCropTool(false);
         }
 
 
-        private void Numeric_Click(object sender, EventArgs e)
-        {
+        private void Numeric_Click(object sender, EventArgs e) {
             var num = (NumericUpDown)sender;
             num.Select(0, num.Text.Length);
 
@@ -172,13 +155,11 @@ namespace ImageGlass
             this.Activate();
         }
 
-        private void Numeric_ValueChanged(object sender, EventArgs e)
-        {
+        private void Numeric_ValueChanged(object sender, EventArgs e) {
             // manually set the selection region
-            if (!_imgBox.IsSelecting 
-                && !_imgBox.IsResizingSelection 
-                && !_imgBox.IsMovingSelection)
-            {
+            if (!_imgBox.IsSelecting
+                && !_imgBox.IsResizingSelection
+                && !_imgBox.IsMovingSelection) {
                 _imgBox.SelectionRegion = new RectangleF(
                     (float)numX.Value,
                     (float)numY.Value,
@@ -187,21 +168,17 @@ namespace ImageGlass
             }
         }
 
-        private void CropActionButton_Click(object sender, EventArgs e)
-        {
+        private void CropActionButton_Click(object sender, EventArgs e) {
             if (CropEventHandler == null)  // no handler established, do nothing
                 return;
 
-            if (sender == btnSave)
-            {
-                if (!Local.IsTempMemoryData)
-                {
+            if (sender == btnSave) {
+                if (!Local.IsTempMemoryData) {
                     // Save the image path for saving
                     Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
                     CropEventHandler(CropActionEvent.Save);
                 }
-                else
-                {
+                else {
                     // for non-existing file, trigger SaveAs
                     CropEventHandler(CropActionEvent.SaveAs);
                 }
@@ -213,8 +190,7 @@ namespace ImageGlass
                 CropEventHandler(CropActionEvent.Copy);
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
+        private void btnClear_Click(object sender, EventArgs e) {
             numX.Value = 0;
             numY.Value = 0;
             numWidth.Value = 0;
@@ -223,6 +199,6 @@ namespace ImageGlass
 
         #endregion
 
-        
+
     }
 }

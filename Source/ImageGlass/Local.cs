@@ -24,10 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ImageGlass
-{
-    public static class Local
-    {
+namespace ImageGlass {
+    public static class Local {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
@@ -166,8 +164,7 @@ namespace ImageGlass
         /// <summary>
         /// Form frmSetting
         /// </summary>
-        public static frmSetting FSetting
-        {
+        public static frmSetting FSetting {
             get { return LazyInitializer.EnsureInitialized(ref _fSetting); }
             set { _fSetting = value; }
         }
@@ -176,8 +173,7 @@ namespace ImageGlass
         /// <summary>
         /// The Page Navigation form
         /// </summary>
-        public static frmPageNav FPageNav
-        {
+        public static frmPageNav FPageNav {
             get { return LazyInitializer.EnsureInitialized(ref _fPageNav); }
             set { _fPageNav = value; }
         }
@@ -186,8 +182,7 @@ namespace ImageGlass
         /// <summary>
         /// Form frmColorPicker
         /// </summary>
-        public static frmColorPicker FColorPicker
-        {
+        public static frmColorPicker FColorPicker {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
         }
@@ -196,8 +191,7 @@ namespace ImageGlass
         /// <summary>
         /// Form frmCrop
         /// </summary>
-        public static frmCrop FCrop
-        {
+        public static frmCrop FCrop {
             get { return LazyInitializer.EnsureInitialized(ref _fCrop); }
             set { _fCrop = value; }
         }
