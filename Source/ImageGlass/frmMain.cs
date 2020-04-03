@@ -36,6 +36,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -1932,59 +1933,6 @@ namespace ImageGlass {
             return filename;
         }
 
-
-        /// <summary>
-        /// Check and run an action if cursor position is the LEFT/CENTER/RIGHT side of picMain
-        /// </summary>
-        /// <param name="location">Cursor Location</param>
-        /// <param name="onCursorLeftAction">Action to run if Cursor Position is LEFT</param>
-        /// <param name="onCursorCenterAction">Action to run if Cursor Position is CENTER</param>
-        /// <param name="onCursorRightAction">Action to run if Cursor Position is RIGHT</param>
-        private void CheckCursorPositionOnViewer(Point location, Action onCursorLeftAction = null, Action onCursorCenterAction = null, Action onCursorRightAction = null) {
-            if (Local.ImageList.Length > 1) {
-                // Related to issue #552: use actual size of cursor, not a constant
-                var curse = Configs.Theme.NextArrowCursor;
-                var iconHeight = curse.Size.Height;
-
-                // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
-                var actualWidth = picMain.GetImageViewPort().Width;
-
-                // get the hotspot area width
-                var hotspotWidth = Math.Max(iconHeight, actualWidth / 7);
-
-                // left side
-                if (location.X < hotspotWidth) {
-                    // The first image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorLeftAction?.Invoke();
-                    }
-                }
-                // right side
-                else if (location.X > (actualWidth - hotspotWidth)) {
-                    // The last image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorRightAction?.Invoke();
-                    }
-                }
-                // center
-                else {
-                    onCursorCenterAction?.Invoke();
-                }
-            }
-
-            // fire-eggs 20190902 Fix observed glitch: color picker cursor doesn't appear if image count is 1
-            if (Local.ImageList.Length == 1)
-                onCursorCenterAction?.Invoke();
-
-        }
-
-
         /// <summary>
         /// Determine the image sort order/direction based on user settings
         /// or Windows Explorer sorting.
@@ -2162,6 +2110,44 @@ namespace ImageGlass {
             // Restore the user's "Display viewer scrollbars" setting.
             picMain.HorizontalScrollBarStyle = oldScrollSetting;
             picMain.VerticalScrollBarStyle = oldScrollSetting;
+        }
+
+
+        /// <summary>
+        /// Paint countdown clock in Slideshow mode
+        /// </summary>
+        /// <param name="e"></param>
+        private void PaintSlideshowClock(PaintEventArgs e) {
+            if (!timSlideShow.Enabled || !Configs.IsShowSlideshowCountdown) {
+                return;
+            }
+
+            // draw countdown text ----------------------------------------------
+            var gap = DPIScaling.Transform(20);
+            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
+
+
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
+            var font = new Font(this.Font.FontFamily, 30f);
+            var fontSize = e.Graphics.MeasureString(text, font);
+
+            // calculate background size
+            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
+            var bgX = picMain.Width - bgSize.Width - gap;
+            var bgY = picMain.Height - bgSize.Height - gap;
+
+            // calculate text size
+            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
+            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+
+            // draw background
+            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
+            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+
+
+            // draw countdown text
+            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
         }
 
 
@@ -3363,36 +3349,9 @@ namespace ImageGlass {
 
 
         private void PicMain_Paint(object sender, PaintEventArgs e) {
-            if (!timSlideShow.Enabled || !Configs.IsShowSlideshowCountdown) {
-                return;
-            }
+            PaintSlideshowClock(e);
 
-            // draw countdown text ----------------------------------------------
-            var gap = DPIScaling.Transform(20);
-            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
-
-
-            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
-            var font = new Font(this.Font.FontFamily, 30f);
-            var fontSize = e.Graphics.MeasureString(text, font);
-
-            // calculate background size
-            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
-            var bgX = picMain.Width - bgSize.Width - gap;
-            var bgY = picMain.Height - bgSize.Height - gap;
-
-            // calculate text size
-            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
-            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
-
-            // draw background
-            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
-
-
-            // draw countdown text
-            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+            PaintNavigationRegions(e);
         }
 
 
@@ -3700,8 +3659,6 @@ namespace ImageGlass {
                 default:
                     break;
             }
-
-
         }
 
 
@@ -3743,6 +3700,137 @@ namespace ImageGlass {
             }
         }
 
+
+        /// <summary>
+        /// Check and run an action if cursor position is the LEFT/CENTER/RIGHT side of picMain
+        /// </summary>
+        /// <param name="location">Cursor Location</param>
+        /// <param name="onCursorLeftAction">Action to run if Cursor Position is LEFT</param>
+        /// <param name="onCursorCenterAction">Action to run if Cursor Position is CENTER</param>
+        /// <param name="onCursorRightAction">Action to run if Cursor Position is RIGHT</param>
+        private void CheckCursorPositionOnViewer(Point location, Action onCursorLeftAction = null, Action onCursorCenterAction = null, Action onCursorRightAction = null) {
+            if (Local.ImageList.Length > 1) {
+                // Related to issue #552: use actual size of cursor, not a constant
+                var curse = Configs.Theme.NextArrowCursor;
+                var iconHeight = curse.Size.Height;
+
+                // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
+                var actualWidth = picMain.GetImageViewPort().Width;
+
+                // get the hotspot area width
+                var hotspotWidth = Math.Max(iconHeight, actualWidth / 7);
+
+                // left side
+                if (location.X < hotspotWidth) {
+                    // The first image in the list
+                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) {
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                    }
+                    else {
+                        onCursorLeftAction?.Invoke();
+                    }
+                }
+                // right side
+                else if (location.X > (actualWidth - hotspotWidth)) {
+                    // The last image in the list
+                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) {
+                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
+                    }
+                    else {
+                        onCursorRightAction?.Invoke();
+                    }
+                }
+                // center
+                else {
+                    onCursorCenterAction?.Invoke();
+                }
+            }
+
+            // fire-eggs 20190902 Fix observed glitch: color picker cursor doesn't appear if image count is 1
+            if (Local.ImageList.Length == 1)
+                onCursorCenterAction?.Invoke();
+
+        }
+
+
+        private List<(string Position, Rectangle Region)> GetNavigationRegions() {
+            var viewerWidth = picMain.Width;
+
+            // get the hotspot area width
+            var width = Math.Max(Configs.Theme.ToolbarIcons.ViewNextImage.Height * 2, viewerWidth / 10);
+
+            return new List<(string Position, Rectangle Region)> {
+                ("left", new Rectangle(0, 0, width, picMain.Height)),
+                ("right", new Rectangle(viewerWidth - width, 0, width, picMain.Height))
+            };
+        }
+
+
+        private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point position) {
+            var hitRegions = GetNavigationRegions();
+
+            foreach (var item in hitRegions) {
+                if (item.Region.Contains(position)) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Paint left-right navigation regions
+        /// </summary>
+        /// <param name="e"></param>
+        private void PaintNavigationRegions(PaintEventArgs e) {
+            if (!Configs.IsShowNavigationButtons || picMain.IsPanning) return;
+
+
+            // get current cursor position on frmMain
+            var pos = this.PointToClient(MousePosition);
+            var hotSpot = TestCursorHitNavRegions(pos);
+
+            if (!hotSpot.HasValue) return;
+
+
+            var (position, region) = hotSpot.Value;
+            LinearGradientBrush brush;
+            Image icon;
+
+            if (position == "left") {
+                icon = Configs.Theme.PreviousNavArrow;
+                brush = new LinearGradientBrush(
+                    region,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    Color.Transparent,
+                    LinearGradientMode.Horizontal);
+            }
+            else { // right
+                icon = Configs.Theme.NextNavArrow;
+                brush = new LinearGradientBrush(
+                    new Rectangle(new Point(region.X - 1, region.Y), region.Size),
+                    Color.Transparent,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    LinearGradientMode.Horizontal);
+            }
+
+
+            e.Graphics.SetClip(region);
+
+            // draw navigation background
+            e.Graphics.FillRectangle(brush, region);
+
+            // draw arrow icon
+            var iconPosX = region.X + (region.Width / 2) - (icon.Width / 2);
+            var iconPosY = (region.Height / 2) - (icon.Width / 2);
+            e.Graphics.DrawImage(icon, iconPosX, iconPosY);
+
+            e.Graphics.ResetClip();
+            brush.Dispose();
+        }
+
+
         /// <summary>
         /// When IG is not 'busy', show the appropriate mouse cursor.
         /// The appropriate cursor depends on whether the color picker
@@ -3781,12 +3869,15 @@ namespace ImageGlass {
 
 
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
-            if (Local.IsColorPickerToolOpening ||
-                picMain.SelectionMode == ImageBoxSelectionMode.Rectangle) {
-                return;
-            }
+            //if (Local.IsColorPickerToolOpening ||
+            //    picMain.SelectionMode == ImageBoxSelectionMode.Rectangle) {
+            //    return;
+            //}
 
-            ShowActiveCursor();
+            //ShowActiveCursor();
+
+
+            picMain.Invalidate();
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e) {

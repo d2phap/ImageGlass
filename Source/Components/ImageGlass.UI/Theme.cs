@@ -168,6 +168,9 @@ namespace ImageGlass.UI {
 
         public Cursor NextArrowCursor { get; set; }
 
+        public Image PreviousNavArrow { get; set; }
+        public Image NextNavArrow { get; set; }
+
         #endregion
 
         #endregion
@@ -261,10 +264,12 @@ namespace ImageGlass.UI {
             var prevImage = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
             var icon = prevImage.Image.GetHicon();
             PreviousArrowCursor = new Cursor(icon);
+            PreviousNavArrow = prevImage.Image;
 
             var nextImage = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight);
             icon = nextImage.Image.GetHicon();
             NextArrowCursor = new Cursor(icon);
+            NextNavArrow = nextImage.Image;
 
             #endregion
         }
