@@ -3674,7 +3674,7 @@ namespace ImageGlass {
             if (navRegion?.Type == NavigationRegionType.Left) {
                 NextPic(-1);
             }
-            else if (navRegion.Type == NavigationRegionType.Right) {
+            else if (navRegion?.Type == NavigationRegionType.Right) {
                 NextPic(1);
             }
             else {
