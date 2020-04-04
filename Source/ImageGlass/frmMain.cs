@@ -2311,6 +2311,119 @@ namespace ImageGlass {
             }
         }
 
+
+        /// <summary>
+        /// Gets navigation regions
+        /// </summary>
+        /// <returns></returns>
+        private List<NavigationRegion> GetNavigationRegions() {
+            // get the nav region area width
+            var width = Math.Max(Configs.Theme.NavArrowLeft.Height, picMain.Width / 10);
+
+            return new List<NavigationRegion> {
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Left,
+                    Region = new Rectangle(0, 0, width, picMain.Height),
+                },
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Right,
+                    Region = new Rectangle(picMain.Width - width, 0, width, picMain.Height),
+                }
+            };
+        }
+
+
+        /// <summary>
+        /// Test if the given point is one of the left and right navigation regions
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        private NavigationRegion TestCursorHitNavRegions(Point point) {
+            if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
+                return null;
+
+            var item = Local.NavRegions.Find(item => item.Region.Contains(point));
+
+            // the given point is not in the hit regions
+            if (item == null)
+                return null;
+
+            // no loopback
+            if (!Configs.IsLoopBackViewer) {
+                // disable left arrow on first image
+                if (item.Type == NavigationRegionType.Left && Local.CurrentIndex == 0)
+                    return null;
+
+                // disable right arrow on last image
+                if (item.Type == NavigationRegionType.Right && Local.CurrentIndex >= Local.ImageList.Length - 1)
+                    return null;
+            }
+
+            return item;
+        }
+
+        
+        /// <summary>
+        /// Paint left-right navigation regions
+        /// </summary>
+        /// <param name="e"></param>
+        private void PaintNavigationRegions(PaintEventArgs e) {
+            // get current cursor position on frmMain
+            var pos = this.PointToClient(MousePosition);
+            var navRegion = TestCursorHitNavRegions(pos);
+
+            // check if the hotspot hit
+            if (navRegion == null || navRegion.Type == NavigationRegionType.Undefined) return;
+
+            var region = navRegion.Region;
+            LinearGradientBrush brush;
+            Image icon;
+
+            // expand rectangle by 1px to fit the drawable region
+            region.Offset(-1, -1);
+            region.Inflate(1, 1);
+
+            if (navRegion.Type == NavigationRegionType.Left) {
+                icon = Configs.Theme.NavArrowLeft;
+                brush = new LinearGradientBrush(
+                    region,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    Color.Transparent,
+                    LinearGradientMode.Horizontal);
+            }
+            else { // right
+                icon = Configs.Theme.NavArrowRight;
+                brush = new LinearGradientBrush(
+                    new Rectangle(
+                        new Point(region.X - 1, region.Y),
+                        new Size(region.Width + 1, region.Height)),
+                    Color.Transparent,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    LinearGradientMode.Horizontal);
+            }
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.SetClip(region);
+
+            // draw navigation background
+            e.Graphics.FillRectangle(brush, region);
+
+            var iconPosX = region.X + (region.Width / 2) - (icon.Width / 2);
+            var iconPosY = (region.Height / 2) - (icon.Width / 2);
+
+            // draw circle background for icon
+            using var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor);
+            e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
+
+            // draw arrow icon
+            e.Graphics.DrawImage(icon, iconPosX, iconPosY);
+
+            e.Graphics.ResetClip();
+            brush.Dispose();
+        }
+
+
+
         #endregion
 
 
@@ -3688,122 +3801,8 @@ namespace ImageGlass {
         }
 
 
-
-        /// <summary>
-        /// Gets navigation regions
-        /// </summary>
-        /// <returns></returns>
-        private List<NavigationRegion> GetNavigationRegions() {
-            var viewerWidth = picMain.Width;
-
-            // get the hotspot area width
-            var width = Math.Max(Configs.Theme.NavArrowLeft.Height, viewerWidth / 10);
-
-            return new List<NavigationRegion> {
-                new NavigationRegion() {
-                    Type = NavigationRegionType.Left,
-                    Region = new Rectangle(0, 0, width, picMain.Height),
-                },
-                new NavigationRegion() {
-                    Type = NavigationRegionType.Right,
-                    Region = new Rectangle(viewerWidth - width, 0, width, picMain.Height),
-                }
-            };
-        }
-
-
-        /// <summary>
-        /// Test if the given point is one of the left and right navigation regions
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        private NavigationRegion TestCursorHitNavRegions(Point point) {
-            if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
-                return null;
-
-            var navRegions = GetNavigationRegions();
-            var item = navRegions.Find(item => item.Region.Contains(point));
-
-            // the given point is not in the hit regions
-            if (item == null)
-                return null;
-            
-            // no loopback
-            if (!Configs.IsLoopBackViewer) {
-                // disable left arrow on first image
-                if (item.Type == NavigationRegionType.Left && Local.CurrentIndex == 0)
-                    return null;
-
-                // disable right arrow on last image
-                if (item.Type == NavigationRegionType.Right && Local.CurrentIndex >= Local.ImageList.Length - 1)
-                    return null;
-            }
-
-            return item;
-        }
-
-
-        /// <summary>
-        /// Paint left-right navigation regions
-        /// </summary>
-        /// <param name="e"></param>
-        private void PaintNavigationRegions(PaintEventArgs e) {
-            // get current cursor position on frmMain
-            var pos = this.PointToClient(MousePosition);
-            var navRegion = TestCursorHitNavRegions(pos);
-
-            // check if the hotspot hit
-            if (navRegion == null || navRegion.Type == NavigationRegionType.Undefined) return;
-
-            var region = navRegion.Region;
-            LinearGradientBrush brush;
-            Image icon;
-
-            // expand rectangle by 1px to fit the drawable region
-            region.Offset(-1, -1);
-            region.Inflate(1, 1);
-
-            if (navRegion.Type == NavigationRegionType.Left) {
-                icon = Configs.Theme.NavArrowLeft;
-                brush = new LinearGradientBrush(
-                    region,
-                    Configs.Theme.ToolbarBackgroundColor,
-                    Color.Transparent,
-                    LinearGradientMode.Horizontal);
-            }
-            else { // right
-                icon = Configs.Theme.NavArrowRight;
-                brush = new LinearGradientBrush(
-                    new Rectangle(
-                        new Point(region.X - 1, region.Y),
-                        new Size(region.Width + 1, region.Height)),
-                    Color.Transparent,
-                    Configs.Theme.ToolbarBackgroundColor,
-                    LinearGradientMode.Horizontal);
-            }
-
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.SetClip(region);
-
-            // draw navigation background
-            e.Graphics.FillRectangle(brush, region);
-
-            var iconPosX = region.X + (region.Width / 2) - (icon.Width / 2);
-            var iconPosY = (region.Height / 2) - (icon.Width / 2);
-
-            // draw circle background for icon
-            using var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor);
-            e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
-
-            // draw arrow icon
-            e.Graphics.DrawImage(icon, iconPosX, iconPosY);
-
-            e.Graphics.ResetClip();
-            brush.Dispose();
-        }
-
-
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
+            #region Navigation regions
             // get current cursor position on frmMain
             var pos = this.PointToClient(MousePosition);
             var navRegion = TestCursorHitNavRegions(pos);
@@ -3818,6 +3817,7 @@ namespace ImageGlass {
                 // draw navigation regions
                 picMain.Invalidate();
             }
+            #endregion
         }
 
         private void picMain_MouseLeave(object sender, EventArgs e) {
@@ -3828,6 +3828,14 @@ namespace ImageGlass {
                 picMain.Invalidate();
             }
         }
+
+        private void picMain_SizeChanged(object sender, EventArgs e) {
+            // update navigation regions list
+            if (Configs.IsShowNavigationButtons) {
+                Local.NavRegions = GetNavigationRegions();
+            }
+        }
+
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e) {
             // User has moved the thumbnail splitter bar. Update image size.
@@ -5211,6 +5219,7 @@ namespace ImageGlass {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
 
 
 

@@ -1346,6 +1346,7 @@
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoom = 100D;
             this.picMain.Zoomed += new System.EventHandler<ImageGlass.ImageBoxZoomEventArgs>(this.picMain_Zoomed);
+            this.picMain.SizeChanged += new System.EventHandler(this.picMain_SizeChanged);
             this.picMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.picMain.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
             this.picMain.Paint += new System.Windows.Forms.PaintEventHandler(this.PicMain_Paint);
