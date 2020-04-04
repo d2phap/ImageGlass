@@ -2840,12 +2840,14 @@ namespace ImageGlass {
                         mnuMainRotateClockwise_Click(null, null);
                         break;
                     case Touch.Action.ZoomIn:
+                        // Zoom in to a specific position
                         for (int i = 0; i < Touch.ZoomFactor; i++)
-                            ZoomAtPosition(true, Touch.ZoomLocation);
+                            picMain.ProcessMouseZoom(true, Touch.ZoomLocation);
                         break;
                     case Touch.Action.ZoomOut:
+                        // Zoom out to a specific position
                         for (int i = 0; i < Touch.ZoomFactor; i++)
-                            ZoomAtPosition(false, Touch.ZoomLocation);
+                            picMain.ProcessMouseZoom(false, Touch.ZoomLocation);
                         break;
                     case Touch.Action.SwipeUp:
                         btnZoomOut_Click(null, null);
@@ -2907,6 +2909,7 @@ namespace ImageGlass {
             if (touchHandled)
                 m.Result = new IntPtr(1);
         }
+
 
         private void frmMain_Load(object sender, EventArgs e) {
             // Load Other Configs
@@ -3647,15 +3650,13 @@ namespace ImageGlass {
                     break;
 
                 case MouseButtons.Left:
-                    if (Configs.IsShowNavigationButtons && !picMain.IsPanning) {
-                        var region = TestCursorHitNavRegions(e.Location);
+                    var region = TestCursorHitNavRegions(e.Location);
 
-                        if (region?.Position == "left") {
-                            mnuMainViewPrevious_Click(null, null);
-                        }
-                        else if (region?.Position == "right") {
-                            mnuMainViewNext_Click(null, null);
-                        }
+                    if (region?.Position == "left") {
+                        mnuMainViewPrevious_Click(null, null);
+                    }
+                    else if (region?.Position == "right") {
+                        mnuMainViewNext_Click(null, null);
                     }
                     break;
 
@@ -3665,50 +3666,24 @@ namespace ImageGlass {
         }
 
 
-        private void ZoomAtPosition(bool zoomIn, Point position) {
-            // Zoom in/out to a specific position
-            picMain.ProcessMouseZoom(zoomIn, position);
-        }
-
-
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
-            // workaround that makes it so side mouse buttons will not zoom the image
-            if (e.Button == MouseButtons.XButton1) {
-                mnuMainViewPrevious_Click(null, null);
-                return;
-            }
+            if (e.Button != MouseButtons.Left) return;
 
-            if (e.Button == MouseButtons.XButton2) {
-                mnuMainViewNext_Click(null, null);
-                return;
+            // check double-click in Navigation regions
+            var region = TestCursorHitNavRegions(e.Location);
+            if (region?.Position == "left") {
+                NextPic(-1);
             }
-
-            void ToggleActualSize() {
+            else if (region?.Position == "right") {
+                NextPic(1);
+            }
+            else {
                 if (picMain.Zoom < 100) {
                     mnuMainActualSize_Click(null, null);
                 }
                 else {
                     ApplyZoomMode(Configs.ZoomMode);
                 }
-            }
-
-
-            if (Configs.IsShowNavigationButtons) {
-                var region = TestCursorHitNavRegions(e.Location);
-
-                if (region?.Position == "left") {
-                    NextPic(-1);
-                }
-                else if (region?.Position == "right") {
-                    NextPic(1);
-                }
-                else {
-                    ToggleActualSize();
-                }
-                    
-            }
-            else {
-                ToggleActualSize();
             }
         }
 
@@ -3737,6 +3712,9 @@ namespace ImageGlass {
         /// <param name="point"></param>
         /// <returns></returns>
         private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point point) {
+            if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
+                return null;
+
             var hitRegions = GetNavigationRegions();
             var item = hitRegions.Find(item => item.Region.Contains(point));
 
@@ -3764,9 +3742,6 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="e"></param>
         private void PaintNavigationRegions(PaintEventArgs e) {
-            if (!Configs.IsShowNavigationButtons || picMain.IsPanning) return;
-
-
             // get current cursor position on frmMain
             var pos = this.PointToClient(MousePosition);
             var hotSpot = TestCursorHitNavRegions(pos);
