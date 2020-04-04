@@ -3354,7 +3354,7 @@ namespace ImageGlass {
         private void PicMain_Paint(object sender, PaintEventArgs e) {
             // draw slideshow clock
             PaintSlideshowClock(e);
-
+            
             // draw navigation regions
             PaintNavigationRegions(e);
         }
@@ -3650,12 +3650,12 @@ namespace ImageGlass {
                     break;
 
                 case MouseButtons.Left:
-                    var region = TestCursorHitNavRegions(e.Location);
+                    var navRegion = TestCursorHitNavRegions(e.Location);
 
-                    if (region?.Position == "left") {
+                    if (navRegion?.Type == NavigationRegionType.Left) {
                         mnuMainViewPrevious_Click(null, null);
                     }
-                    else if (region?.Position == "right") {
+                    else if (navRegion?.Type == NavigationRegionType.Right) {
                         mnuMainViewNext_Click(null, null);
                     }
                     break;
@@ -3670,11 +3670,11 @@ namespace ImageGlass {
             if (e.Button != MouseButtons.Left) return;
 
             // check double-click in Navigation regions
-            var region = TestCursorHitNavRegions(e.Location);
-            if (region?.Position == "left") {
+            var navRegion = TestCursorHitNavRegions(e.Location);
+            if (navRegion?.Type == NavigationRegionType.Left) {
                 NextPic(-1);
             }
-            else if (region?.Position == "right") {
+            else if (navRegion.Type == NavigationRegionType.Right) {
                 NextPic(1);
             }
             else {
@@ -3693,15 +3693,21 @@ namespace ImageGlass {
         /// Gets navigation regions
         /// </summary>
         /// <returns></returns>
-        private List<(string Position, Rectangle Region)> GetNavigationRegions() {
+        private List<NavigationRegion> GetNavigationRegions() {
             var viewerWidth = picMain.Width;
 
             // get the hotspot area width
             var width = Math.Max(Configs.Theme.NavArrowLeft.Height, viewerWidth / 10);
 
-            return new List<(string Position, Rectangle Region)> {
-                ("left", new Rectangle(0, 0, width, picMain.Height)),
-                ("right", new Rectangle(viewerWidth - width, 0, width, picMain.Height))
+            return new List<NavigationRegion> {
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Left,
+                    Region = new Rectangle(0, 0, width, picMain.Height),
+                },
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Right,
+                    Region = new Rectangle(viewerWidth - width, 0, width, picMain.Height),
+                }
             };
         }
 
@@ -3711,25 +3717,25 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point point) {
+        private NavigationRegion TestCursorHitNavRegions(Point point) {
             if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
                 return null;
 
-            var hitRegions = GetNavigationRegions();
-            var item = hitRegions.Find(item => item.Region.Contains(point));
+            var navRegions = GetNavigationRegions();
+            var item = navRegions.Find(item => item.Region.Contains(point));
 
             // the given point is not in the hit regions
-            if (item.Region.IsEmpty || string.IsNullOrEmpty(item.Position))
+            if (item == null)
                 return null;
             
             // no loopback
             if (!Configs.IsLoopBackViewer) {
                 // disable left arrow on first image
-                if (item.Position == "left" && Local.CurrentIndex == 0)
+                if (item.Type == NavigationRegionType.Left && Local.CurrentIndex == 0)
                     return null;
 
                 // disable right arrow on last image
-                if (item.Position == "right" && Local.CurrentIndex >= Local.ImageList.Length - 1)
+                if (item.Type == NavigationRegionType.Right && Local.CurrentIndex >= Local.ImageList.Length - 1)
                     return null;
             }
 
@@ -3744,13 +3750,12 @@ namespace ImageGlass {
         private void PaintNavigationRegions(PaintEventArgs e) {
             // get current cursor position on frmMain
             var pos = this.PointToClient(MousePosition);
-            var hotSpot = TestCursorHitNavRegions(pos);
+            var navRegion = TestCursorHitNavRegions(pos);
 
-            // check if the hotpot hit
-            if (!hotSpot.HasValue) return;
+            // check if the hotspot hit
+            if (navRegion == null) return;
 
-
-            var (position, region) = hotSpot.Value;
+            var region = navRegion.Region;
             LinearGradientBrush brush;
             Image icon;
 
@@ -3758,7 +3763,7 @@ namespace ImageGlass {
             region.Offset(-1, -1);
             region.Inflate(1, 1);
 
-            if (position == "left") {
+            if (navRegion.Type == NavigationRegionType.Left) {
                 icon = Configs.Theme.NavArrowLeft;
                 brush = new LinearGradientBrush(
                     region,
@@ -3766,7 +3771,7 @@ namespace ImageGlass {
                     Color.Transparent,
                     LinearGradientMode.Horizontal);
             }
-            else { // right
+            else if (navRegion.Type == NavigationRegionType.Right) {
                 icon = Configs.Theme.NavArrowRight;
                 brush = new LinearGradientBrush(
                     new Rectangle(
@@ -3775,6 +3780,8 @@ namespace ImageGlass {
                     Color.Transparent,
                     Configs.Theme.ToolbarBackgroundColor,
                     LinearGradientMode.Horizontal);
+            } else {
+                return;
             }
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
