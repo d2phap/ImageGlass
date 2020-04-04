@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Heart;
+using ImageGlass.UI;
 using ImageMagick;
 using System;
 using System.Collections.Generic;
@@ -155,6 +156,18 @@ namespace ImageGlass {
         /// Gets, sets color profile of current image
         /// </summary>
         public static IColorProfile CurrentColor { get; set; } = null;
+
+
+        /// <summary>
+        /// Gets, sets current navigation region type
+        /// </summary>
+        public static NavigationRegionType NavRegionType { get; set; } = NavigationRegionType.Unknown;
+
+
+        /// <summary>
+        /// Gets, sets the list of navigation regions
+        /// </summary>
+        public static List<NavigationRegion> NavRegions { get; set; } = new List<NavigationRegion>();
 
         #endregion
 

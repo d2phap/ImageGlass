@@ -163,10 +163,16 @@ namespace ImageGlass.UI {
         #endregion
 
 
-        #region Arrow Cursors
-        public Cursor PreviousArrowCursor { get; set; }
+        #region Navigation arrows
+        /// <summary>
+        /// Gets, sets the navigation left arrow
+        /// </summary>
+        public Image NavArrowLeft { get; set; } = null;
 
-        public Cursor NextArrowCursor { get; set; }
+        /// <summary>
+        /// Gets, sets the navigation right arrow
+        /// </summary>
+        public Image NavArrowRight { get; set; } = null;
 
         #endregion
 
@@ -254,17 +260,12 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewLastImage.Refresh();
 
 
-            #region Arrow cursors (derived from toolbar)
+            #region Naviagtion arrows (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
-            var prevImage = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
-            var icon = prevImage.Image.GetHicon();
-            PreviousArrowCursor = new Cursor(icon);
-
-            var nextImage = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight);
-            icon = nextImage.Image.GetHicon();
-            NextArrowCursor = new Cursor(icon);
+            NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
+            NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
 
             #endregion
         }
@@ -417,13 +418,9 @@ namespace ImageGlass.UI {
             #region Arrow cursors (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
-            var prevImage = LoadThemeImage(dir, n, "back", arrowHeight);
-            var icon = prevImage.Image.GetHicon();
-            PreviousArrowCursor = new Cursor(icon);
 
-            var nextImage = LoadThemeImage(dir, n, "next", arrowHeight);
-            icon = nextImage.Image.GetHicon();
-            NextArrowCursor = new Cursor(icon);
+            NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
+            NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
 
             #endregion
 

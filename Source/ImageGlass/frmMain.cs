@@ -36,6 +36,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -799,7 +800,7 @@ namespace ImageGlass {
                 if (isbusy)
                     picMain.Cursor = Cursors.WaitCursor;
                 else
-                    ShowActiveCursor();
+                    picMain.Cursor = Cursors.Default;
 
                 // Part of Issue #485 fix: failure to disable timer after image load meant message 
                 // could appear after image already loaded
@@ -1932,59 +1933,6 @@ namespace ImageGlass {
             return filename;
         }
 
-
-        /// <summary>
-        /// Check and run an action if cursor position is the LEFT/CENTER/RIGHT side of picMain
-        /// </summary>
-        /// <param name="location">Cursor Location</param>
-        /// <param name="onCursorLeftAction">Action to run if Cursor Position is LEFT</param>
-        /// <param name="onCursorCenterAction">Action to run if Cursor Position is CENTER</param>
-        /// <param name="onCursorRightAction">Action to run if Cursor Position is RIGHT</param>
-        private void CheckCursorPositionOnViewer(Point location, Action onCursorLeftAction = null, Action onCursorCenterAction = null, Action onCursorRightAction = null) {
-            if (Local.ImageList.Length > 1) {
-                // Related to issue #552: use actual size of cursor, not a constant
-                var curse = Configs.Theme.NextArrowCursor;
-                var iconHeight = curse.Size.Height;
-
-                // Issue #618 Using picMain.Width doesn't take vertical scrollbar into account
-                var actualWidth = picMain.GetImageViewPort().Width;
-
-                // get the hotspot area width
-                var hotspotWidth = Math.Max(iconHeight, actualWidth / 7);
-
-                // left side
-                if (location.X < hotspotWidth) {
-                    // The first image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorLeftAction?.Invoke();
-                    }
-                }
-                // right side
-                else if (location.X > (actualWidth - hotspotWidth)) {
-                    // The last image in the list
-                    if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) {
-                        picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                    }
-                    else {
-                        onCursorRightAction?.Invoke();
-                    }
-                }
-                // center
-                else {
-                    onCursorCenterAction?.Invoke();
-                }
-            }
-
-            // fire-eggs 20190902 Fix observed glitch: color picker cursor doesn't appear if image count is 1
-            if (Local.ImageList.Length == 1)
-                onCursorCenterAction?.Invoke();
-
-        }
-
-
         /// <summary>
         /// Determine the image sort order/direction based on user settings
         /// or Windows Explorer sorting.
@@ -2166,6 +2114,44 @@ namespace ImageGlass {
 
 
         /// <summary>
+        /// Paint countdown clock in Slideshow mode
+        /// </summary>
+        /// <param name="e"></param>
+        private void PaintSlideshowClock(PaintEventArgs e) {
+            if (!timSlideShow.Enabled || !Configs.IsShowSlideshowCountdown) {
+                return;
+            }
+
+            // draw countdown text ----------------------------------------------
+            var gap = DPIScaling.Transform(20);
+            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
+
+
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
+            var font = new Font(this.Font.FontFamily, 30f);
+            var fontSize = e.Graphics.MeasureString(text, font);
+
+            // calculate background size
+            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
+            var bgX = picMain.Width - bgSize.Width - gap;
+            var bgY = picMain.Height - bgSize.Height - gap;
+
+            // calculate text size
+            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
+            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+
+            // draw background
+            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
+            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+
+
+            // draw countdown text
+            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+        }
+
+
+        /// <summary>
         /// Handle page navigation event
         /// </summary>
         /// <param name="navEvent"></param>
@@ -2324,6 +2310,119 @@ namespace ImageGlass {
                 }
             }
         }
+
+
+        /// <summary>
+        /// Gets navigation regions
+        /// </summary>
+        /// <returns></returns>
+        private List<NavigationRegion> GetNavigationRegions() {
+            // get the nav region area width
+            var width = Math.Max(Configs.Theme.NavArrowLeft.Height, picMain.Width / 10);
+
+            return new List<NavigationRegion> {
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Left,
+                    Region = new Rectangle(0, 0, width, picMain.Height),
+                },
+                new NavigationRegion() {
+                    Type = NavigationRegionType.Right,
+                    Region = new Rectangle(picMain.Width - width, 0, width, picMain.Height),
+                }
+            };
+        }
+
+
+        /// <summary>
+        /// Test if the given point is one of the left and right navigation regions
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        private NavigationRegion TestCursorHitNavRegions(Point point) {
+            if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
+                return null;
+
+            var item = Local.NavRegions.Find(item => item.Region.Contains(point));
+
+            // the given point is not in the hit regions
+            if (item == null)
+                return null;
+
+            // no loopback
+            if (!Configs.IsLoopBackViewer) {
+                // disable left arrow on first image
+                if (item.Type == NavigationRegionType.Left && Local.CurrentIndex == 0)
+                    return null;
+
+                // disable right arrow on last image
+                if (item.Type == NavigationRegionType.Right && Local.CurrentIndex >= Local.ImageList.Length - 1)
+                    return null;
+            }
+
+            return item;
+        }
+
+
+        /// <summary>
+        /// Paint left-right navigation regions
+        /// </summary>
+        /// <param name="e"></param>
+        private void PaintNavigationRegions(PaintEventArgs e) {
+            // get current cursor position on frmMain
+            var pos = this.PointToClient(MousePosition);
+            var navRegion = TestCursorHitNavRegions(pos);
+
+            // check if the hotspot hit
+            if (navRegion == null || navRegion.Type == NavigationRegionType.Unknown) return;
+
+            var region = navRegion.Region;
+            LinearGradientBrush brush;
+            Image icon;
+
+            // expand rectangle by 1px to fit the drawable region
+            region.Offset(-1, -1);
+            region.Inflate(1, 1);
+
+            if (navRegion.Type == NavigationRegionType.Left) {
+                icon = Configs.Theme.NavArrowLeft;
+                brush = new LinearGradientBrush(
+                    region,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    Color.Transparent,
+                    LinearGradientMode.Horizontal);
+            }
+            else { // right
+                icon = Configs.Theme.NavArrowRight;
+                brush = new LinearGradientBrush(
+                    new Rectangle(
+                        new Point(region.X - 1, region.Y),
+                        new Size(region.Width + 1, region.Height)),
+                    Color.Transparent,
+                    Configs.Theme.ToolbarBackgroundColor,
+                    LinearGradientMode.Horizontal);
+            }
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.SetClip(region);
+
+            // draw navigation background
+            e.Graphics.FillRectangle(brush, region);
+
+            var iconPosX = region.X + (region.Width / 2) - (icon.Width / 2);
+            var iconPosY = (region.Height / 2) - (icon.Width / 2);
+
+            // draw circle background for icon
+            using var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor);
+            e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
+
+            // draw arrow icon
+            e.Graphics.DrawImage(icon, iconPosX, iconPosY);
+
+            e.Graphics.ResetClip();
+            brush.Dispose();
+        }
+
+
 
         #endregion
 
@@ -2854,12 +2953,14 @@ namespace ImageGlass {
                         mnuMainRotateClockwise_Click(null, null);
                         break;
                     case Touch.Action.ZoomIn:
+                        // Zoom in to a specific position
                         for (int i = 0; i < Touch.ZoomFactor; i++)
-                            ZoomAtPosition(true, Touch.ZoomLocation);
+                            picMain.ProcessMouseZoom(true, Touch.ZoomLocation);
                         break;
                     case Touch.Action.ZoomOut:
+                        // Zoom out to a specific position
                         for (int i = 0; i < Touch.ZoomFactor; i++)
-                            ZoomAtPosition(false, Touch.ZoomLocation);
+                            picMain.ProcessMouseZoom(false, Touch.ZoomLocation);
                         break;
                     case Touch.Action.SwipeUp:
                         btnZoomOut_Click(null, null);
@@ -2921,6 +3022,7 @@ namespace ImageGlass {
             if (touchHandled)
                 m.Result = new IntPtr(1);
         }
+
 
         private void frmMain_Load(object sender, EventArgs e) {
             // Load Other Configs
@@ -3363,36 +3465,11 @@ namespace ImageGlass {
 
 
         private void PicMain_Paint(object sender, PaintEventArgs e) {
-            if (!timSlideShow.Enabled || !Configs.IsShowSlideshowCountdown) {
-                return;
-            }
+            // draw slideshow clock
+            PaintSlideshowClock(e);
 
-            // draw countdown text ----------------------------------------------
-            var gap = DPIScaling.Transform(20);
-            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
-
-
-            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
-            var font = new Font(this.Font.FontFamily, 30f);
-            var fontSize = e.Graphics.MeasureString(text, font);
-
-            // calculate background size
-            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
-            var bgX = picMain.Width - bgSize.Width - gap;
-            var bgY = picMain.Height - bgSize.Height - gap;
-
-            // calculate text size
-            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
-            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
-
-            // draw background
-            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
-
-
-            // draw countdown text
-            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+            // draw navigation regions
+            PaintNavigationRegions(e);
         }
 
 
@@ -3607,8 +3684,6 @@ namespace ImageGlass {
 
 
 
-
-
         // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e) {
             MouseWheelActions action;
@@ -3688,42 +3763,34 @@ namespace ImageGlass {
                     break;
 
                 case MouseButtons.Left:
-                    if (Configs.IsShowNavigationButtons && !picMain.IsPanning) {
-                        CheckCursorPositionOnViewer(e.Location, onCursorLeftAction: () => {
-                            mnuMainViewPrevious_Click(null, null);
-                        }, onCursorRightAction: () => {
-                            mnuMainViewNext_Click(null, null);
-                        });
+                    var navRegion = TestCursorHitNavRegions(e.Location);
+
+                    if (navRegion?.Type == NavigationRegionType.Left) {
+                        mnuMainViewPrevious_Click(null, null);
+                    }
+                    else if (navRegion?.Type == NavigationRegionType.Right) {
+                        mnuMainViewNext_Click(null, null);
                     }
                     break;
 
                 default:
                     break;
             }
-
-
-        }
-
-
-        private void ZoomAtPosition(bool zoomIn, Point position) {
-            // Zoom in/out to a specific position
-            picMain.ProcessMouseZoom(zoomIn, position);
         }
 
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
-            //workaround that makes it so side mouse buttons will not zoom the image
-            if (e.Button == MouseButtons.XButton1) {
-                mnuMainViewPrevious_Click(null, null);
-                return;
-            }
+            if (e.Button != MouseButtons.Left) return;
 
-            if (e.Button == MouseButtons.XButton2) {
-                mnuMainViewNext_Click(null, null);
-                return;
+            // check double-click in Navigation regions
+            var navRegion = TestCursorHitNavRegions(e.Location);
+            if (navRegion?.Type == NavigationRegionType.Left) {
+                NextPic(-1);
             }
-
-            void ToggleActualSize() {
+            else if (navRegion?.Type == NavigationRegionType.Right) {
+                NextPic(1);
+            }
+            else {
                 if (picMain.Zoom < 100) {
                     mnuMainActualSize_Click(null, null);
                 }
@@ -3731,63 +3798,44 @@ namespace ImageGlass {
                     ApplyZoomMode(Configs.ZoomMode);
                 }
             }
-
-
-            if (Configs.IsShowNavigationButtons) {
-                CheckCursorPositionOnViewer(e.Location, onCursorCenterAction: () => {
-                    ToggleActualSize();
-                });
-            }
-            else {
-                ToggleActualSize();
-            }
-        }
-
-        /// <summary>
-        /// When IG is not 'busy', show the appropriate mouse cursor.
-        /// The appropriate cursor depends on whether the color picker
-        /// is active; the navigation arrows are active; or neither.
-        /// </summary>
-        /// <param name="location">the location of the mouse relative to picMain</param>
-        private void ShowActiveCursor(Point? location = null) {
-            // For non-mouse events, need to determine the mouse location
-            if (location == null)
-                location = picMain.PointToClient(Control.MousePosition);
-
-            if (!picMain.IsPanning) {
-                void SetDefaultCursor() {
-                    picMain.Cursor = _isAppBusy ? Cursors.WaitCursor : Cursors.Default;
-                }
-
-                // set the Arrow cursor
-                if (Configs.IsShowNavigationButtons) {
-                    CheckCursorPositionOnViewer(location.Value, onCursorLeftAction: () => {
-                        picMain.Cursor = Configs.Theme.PreviousArrowCursor ?? DefaultCursor;
-
-                    }, onCursorRightAction: () => {
-                        picMain.Cursor = Configs.Theme.NextArrowCursor ?? DefaultCursor;
-                        // Issue #618: the scrollbar cursor should never be the nav arrow
-                        picMain.VerticalScroll.Cursor = Cursors.Default;
-
-                    }, onCursorCenterAction: SetDefaultCursor);
-                }
-
-                //reset the cursor
-                else {
-                    SetDefaultCursor();
-                }
-            }
         }
 
 
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
-            if (Local.IsColorPickerToolOpening ||
-                picMain.SelectionMode == ImageBoxSelectionMode.Rectangle) {
-                return;
-            }
+            #region Navigation regions
+            // get current cursor position on frmMain
+            var pos = this.PointToClient(MousePosition);
+            var navRegion = TestCursorHitNavRegions(pos);
 
-            ShowActiveCursor();
+            // get the current nav type
+            var navType = navRegion?.Type ?? NavigationRegionType.Unknown;
+
+            // only draw if nav type is different
+            if (Local.NavRegionType != navType) {
+                Local.NavRegionType = navType;
+
+                // draw navigation regions
+                picMain.Invalidate();
+            }
+            #endregion
         }
+
+        private void picMain_MouseLeave(object sender, EventArgs e) {
+            if (Local.NavRegionType != NavigationRegionType.Unknown) {
+                Local.NavRegionType = NavigationRegionType.Unknown;
+
+                // draw navigation regions
+                picMain.Invalidate();
+            }
+        }
+
+        private void picMain_SizeChanged(object sender, EventArgs e) {
+            // update navigation regions list
+            if (Configs.IsShowNavigationButtons) {
+                Local.NavRegions = GetNavigationRegions();
+            }
+        }
+
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e) {
             // User has moved the thumbnail splitter bar. Update image size.
@@ -5171,6 +5219,8 @@ namespace ImageGlass {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
+
 
 
 
