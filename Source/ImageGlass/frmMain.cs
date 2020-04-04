@@ -3753,7 +3753,7 @@ namespace ImageGlass {
             var navRegion = TestCursorHitNavRegions(pos);
 
             // check if the hotspot hit
-            if (navRegion == null) return;
+            if (navRegion == null || navRegion.Type == NavigationRegionType.Undefined) return;
 
             var region = navRegion.Region;
             LinearGradientBrush brush;
@@ -3771,7 +3771,7 @@ namespace ImageGlass {
                     Color.Transparent,
                     LinearGradientMode.Horizontal);
             }
-            else if (navRegion.Type == NavigationRegionType.Right) {
+            else { // right
                 icon = Configs.Theme.NavArrowRight;
                 brush = new LinearGradientBrush(
                     new Rectangle(
@@ -3780,8 +3780,6 @@ namespace ImageGlass {
                     Color.Transparent,
                     Configs.Theme.ToolbarBackgroundColor,
                     LinearGradientMode.Horizontal);
-            } else {
-                return;
             }
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -3806,8 +3804,29 @@ namespace ImageGlass {
 
 
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
-            // draw navigation regions
-            picMain.Invalidate();
+            // get current cursor position on frmMain
+            var pos = this.PointToClient(MousePosition);
+            var navRegion = TestCursorHitNavRegions(pos);
+
+            // get the current nav type
+            var navType = navRegion?.Type ?? NavigationRegionType.Undefined;
+
+            // only draw if nav type is different
+            if (Local.NavRegionType != navType) {
+                Local.NavRegionType = navType;
+
+                // draw navigation regions
+                picMain.Invalidate();
+            }
+        }
+
+        private void picMain_MouseLeave(object sender, EventArgs e) {
+            if (Local.NavRegionType != NavigationRegionType.Undefined) {
+                Local.NavRegionType = NavigationRegionType.Undefined;
+
+                // draw navigation regions
+                picMain.Invalidate();
+            }
         }
 
         private void sp1_SplitterMoved(object sender, SplitterEventArgs e) {
@@ -5198,8 +5217,9 @@ namespace ImageGlass {
 
 
 
+
         #endregion
 
-
+        
     }
 }
