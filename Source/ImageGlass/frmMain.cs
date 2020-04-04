@@ -3734,18 +3734,28 @@ namespace ImageGlass {
         /// <summary>
         /// Test if the given point is one of the left and right navigation regions
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="point"></param>
         /// <returns></returns>
-        private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point position) {
+        private (string Position, Rectangle Region)? TestCursorHitNavRegions(Point point) {
             var hitRegions = GetNavigationRegions();
+            var item = hitRegions.Find(item => item.Region.Contains(point));
 
-            foreach (var item in hitRegions) {
-                if (item.Region.Contains(position)) {
-                    return item;
-                }
+            // the given point is not in the hit regions
+            if (item.Region.IsEmpty || string.IsNullOrEmpty(item.Position))
+                return null;
+            
+            // no loopback
+            if (!Configs.IsLoopBackViewer) {
+                // disable left arrow on first image
+                if (item.Position == "left" && Local.CurrentIndex == 0)
+                    return null;
+
+                // disable right arrow on last image
+                if (item.Position == "right" && Local.CurrentIndex >= Local.ImageList.Length - 1)
+                    return null;
             }
 
-            return null;
+            return item;
         }
 
 
@@ -3761,6 +3771,7 @@ namespace ImageGlass {
             var pos = this.PointToClient(MousePosition);
             var hotSpot = TestCursorHitNavRegions(pos);
 
+            // check if the hotpot hit
             if (!hotSpot.HasValue) return;
 
 
@@ -3769,9 +3780,6 @@ namespace ImageGlass {
             Image icon;
 
             if (position == "left") {
-                // exit on first image if no loopback
-                if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) return;
-
                 icon = Configs.Theme.NavArrowLeft;
                 brush = new LinearGradientBrush(
                     region,
@@ -3780,9 +3788,6 @@ namespace ImageGlass {
                     LinearGradientMode.Horizontal);
             }
             else { // right
-                // exit on last image if no loopback
-                if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) return;
-
                 icon = Configs.Theme.NavArrowRight;
                 brush = new LinearGradientBrush(
                     new Rectangle(new Point(region.X - 1, region.Y), region.Size),
