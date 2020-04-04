@@ -3772,7 +3772,7 @@ namespace ImageGlass {
                 // exit on first image if no loopback
                 if (!Configs.IsLoopBackViewer && Local.CurrentIndex == 0) return;
 
-                icon = Configs.Theme.PreviousNavArrow;
+                icon = Configs.Theme.NavArrowLeft;
                 brush = new LinearGradientBrush(
                     region,
                     Configs.Theme.ToolbarBackgroundColor,
@@ -3783,7 +3783,7 @@ namespace ImageGlass {
                 // exit on last image if no loopback
                 if (!Configs.IsLoopBackViewer && Local.CurrentIndex >= Local.ImageList.Length - 1) return;
 
-                icon = Configs.Theme.NextNavArrow;
+                icon = Configs.Theme.NavArrowRight;
                 brush = new LinearGradientBrush(
                     new Rectangle(new Point(region.X - 1, region.Y), region.Size),
                     Color.Transparent,
