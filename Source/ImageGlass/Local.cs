@@ -161,7 +161,7 @@ namespace ImageGlass {
         /// <summary>
         /// Gets, sets current navigation region type
         /// </summary>
-        public static NavigationRegionType NavRegionType { get; set; } = NavigationRegionType.Undefined;
+        public static NavigationRegionType NavRegionType { get; set; } = NavigationRegionType.Unknown;
 
 
         /// <summary>

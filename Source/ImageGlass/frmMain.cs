@@ -2362,7 +2362,7 @@ namespace ImageGlass {
             return item;
         }
 
-        
+
         /// <summary>
         /// Paint left-right navigation regions
         /// </summary>
@@ -2373,7 +2373,7 @@ namespace ImageGlass {
             var navRegion = TestCursorHitNavRegions(pos);
 
             // check if the hotspot hit
-            if (navRegion == null || navRegion.Type == NavigationRegionType.Undefined) return;
+            if (navRegion == null || navRegion.Type == NavigationRegionType.Unknown) return;
 
             var region = navRegion.Region;
             LinearGradientBrush brush;
@@ -3467,7 +3467,7 @@ namespace ImageGlass {
         private void PicMain_Paint(object sender, PaintEventArgs e) {
             // draw slideshow clock
             PaintSlideshowClock(e);
-            
+
             // draw navigation regions
             PaintNavigationRegions(e);
         }
@@ -3808,7 +3808,7 @@ namespace ImageGlass {
             var navRegion = TestCursorHitNavRegions(pos);
 
             // get the current nav type
-            var navType = navRegion?.Type ?? NavigationRegionType.Undefined;
+            var navType = navRegion?.Type ?? NavigationRegionType.Unknown;
 
             // only draw if nav type is different
             if (Local.NavRegionType != navType) {
@@ -3821,8 +3821,8 @@ namespace ImageGlass {
         }
 
         private void picMain_MouseLeave(object sender, EventArgs e) {
-            if (Local.NavRegionType != NavigationRegionType.Undefined) {
-                Local.NavRegionType = NavigationRegionType.Undefined;
+            if (Local.NavRegionType != NavigationRegionType.Unknown) {
+                Local.NavRegionType = NavigationRegionType.Unknown;
 
                 // draw navigation regions
                 picMain.Invalidate();
@@ -5229,6 +5229,6 @@ namespace ImageGlass {
 
         #endregion
 
-        
+
     }
 }
