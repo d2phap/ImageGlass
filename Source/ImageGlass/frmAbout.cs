@@ -31,9 +31,10 @@ namespace ImageGlass {
             InitializeComponent();
         }
 
-        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
-        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
-        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
+        private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 230, 230, 230);
+        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 170, 170, 170);
+        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 210, 210, 210);
+        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 190, 190, 190);
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
@@ -45,7 +46,7 @@ namespace ImageGlass {
             Label lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
@@ -56,7 +57,7 @@ namespace ImageGlass {
             Label lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
@@ -67,7 +68,7 @@ namespace ImageGlass {
         private void lblMenu_MouseLeave(object sender, EventArgs e) {
             Label lbl = (Label)sender;
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_NORMAL;
@@ -101,7 +102,7 @@ namespace ImageGlass {
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             // Load item component
-            txtComponents.Text = "";
+            txtComponents.Text = "\r\n";
             foreach (string f in Directory.GetFiles(Application.StartupPath)) {
                 if (Path.GetExtension(f).ToLower() == ".dll" ||
                     Path.GetExtension(f).ToLower() == ".exe") {
@@ -113,6 +114,7 @@ namespace ImageGlass {
                         $"-----------------------------------------\r\n\r\n";
                 }
             }
+            txtComponents.Text += "\r\n";
 
             // Load language:
             this.Text = Configs.Language.Items["frmAbout._Text"];
@@ -214,6 +216,10 @@ namespace ImageGlass {
                 Process.Start("https://github.com/fire-eggs");
             }
             catch { }
+        }
+
+        private void tb1_Paint(object sender, PaintEventArgs e) {
+
         }
     }
 }

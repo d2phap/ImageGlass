@@ -47,10 +47,10 @@ namespace ImageGlass {
 
 
         #region PROPERTIES
-        private Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 230, 230, 230);
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 170, 170, 170);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 210, 210, 210);
-        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 190, 190, 190);
+        private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 230, 230, 230);
+        private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 170, 170, 170);
+        private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 210, 210, 210);
+        private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 190, 190, 190);
 
         private List<Language> lstLanguages = new List<Language>();
 
