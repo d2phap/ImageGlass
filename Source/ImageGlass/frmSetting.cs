@@ -1873,9 +1873,18 @@ namespace ImageGlass {
             Configs.IsPressESCToQuit = chkESCToQuit.Checked;
             Configs.IsConfirmationDelete = chkConfirmationDelete.Checked;
             Configs.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
-            Configs.IsShowNavigationButtons = chkShowNavButtons.Checked;
             Configs.IsCenterWindowFit = chkCenterWindowFit.Checked;
             Configs.IsShowToast = chkShowToast.Checked;
+
+
+            #region IsShowNavigationButtons: MainFormForceUpdateAction.OTHER_SETTINGS
+            // IsShowNavigationButtons
+            newBool = chkShowNavButtons.Checked;
+            if (Configs.IsShowNavigationButtons != newBool) {
+                Configs.IsShowNavigationButtons = newBool;
+                Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
+            }
+            #endregion
 
 
             #region IsShowCheckerboardOnlyImageRegion: MainFormForceUpdateAction.OTHER_SETTINGS

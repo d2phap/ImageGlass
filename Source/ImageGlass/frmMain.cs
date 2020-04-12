@@ -3381,6 +3381,11 @@ namespace ImageGlass {
                     mnuMainCheckBackground_Click(null, null);
                 }
 
+                // update navigation regions
+                if (Configs.IsShowNavigationButtons) {
+                    Local.NavRegions = GetNavigationRegions();
+                }
+
                 // Update background
                 picMain.BackColor = Configs.BackgroundColor;
 
