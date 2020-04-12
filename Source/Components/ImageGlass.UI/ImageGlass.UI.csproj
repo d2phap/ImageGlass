@@ -93,6 +93,9 @@
     <Compile Include="frmDialogBox.Designer.cs">
       <DependentUpon>frmDialogBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="NakedTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="NavigationRegion.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

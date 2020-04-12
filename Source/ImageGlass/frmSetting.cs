@@ -47,9 +47,11 @@ namespace ImageGlass {
 
 
         #region PROPERTIES
+        private Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 230, 230, 230);
         private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 170, 170, 170);
         private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 210, 210, 210);
         private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 190, 190, 190);
+
         private List<Language> lstLanguages = new List<Language>();
 
         #region Toolbar
@@ -75,7 +77,7 @@ namespace ImageGlass {
             Label lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
@@ -86,7 +88,7 @@ namespace ImageGlass {
             Label lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
@@ -97,34 +99,11 @@ namespace ImageGlass {
         private void lblMenu_MouseLeave(object sender, EventArgs e) {
             Label lbl = (Label)sender;
             if (int.Parse(lbl.Tag.ToString()) == 1) {
-                lbl.BackColor = M_COLOR_MENU_ACTIVE;
+                lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
             else {
                 lbl.BackColor = M_COLOR_MENU_NORMAL;
             }
-        }
-        #endregion
-
-
-        #region MOUSE ENTER - HOVER - DOWN BUTTON
-        private void lblButton_MouseDown(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_ACTIVE;
-        }
-
-        private void lblButton_MouseUp(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_HOVER;
-        }
-
-        private void lblButton_MouseEnter(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_HOVER;
-        }
-
-        private void lblButton_MouseLeave(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
-            lbl.BackColor = M_COLOR_MENU_NORMAL;
         }
         #endregion
 
@@ -444,25 +423,25 @@ namespace ImageGlass {
 
             if (tab1.SelectedTab == tabGeneral) {
                 lblGeneral.Tag = 1;
-                lblGeneral.BackColor = M_COLOR_MENU_ACTIVE;
+                lblGeneral.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabGeneralConfig();
             }
             else if (tab1.SelectedTab == tabImage) {
                 lblImage.Tag = 1;
-                lblImage.BackColor = M_COLOR_MENU_ACTIVE;
+                lblImage.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabImageConfig();
             }
             else if (tab1.SelectedTab == tabEdit) {
                 lblEdit.Tag = 1;
-                lblEdit.BackColor = M_COLOR_MENU_ACTIVE;
+                lblEdit.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabEditConfig();
             }
             else if (tab1.SelectedTab == tabFileTypeAssoc) {
                 lblFileTypeAssoc.Tag = 1;
-                lblFileTypeAssoc.BackColor = M_COLOR_MENU_ACTIVE;
+                lblFileTypeAssoc.BackColor = M_COLOR_MENU_SELECTED;
 
                 lvExtension.TileSize = new Size(100, DPIScaling.Transform(30));
 
@@ -474,31 +453,31 @@ namespace ImageGlass {
             }
             else if (tab1.SelectedTab == tabLanguage) {
                 lblLanguage.Tag = 1;
-                lblLanguage.BackColor = M_COLOR_MENU_ACTIVE;
+                lblLanguage.BackColor = M_COLOR_MENU_SELECTED;
 
                 lnkRefresh_LinkClicked(null, null);
             }
             else if (tab1.SelectedTab == tabToolbar) {
                 lblToolbar.Tag = 1;
-                lblToolbar.BackColor = M_COLOR_MENU_ACTIVE;
+                lblToolbar.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabToolbar();
             }
             else if (tab1.SelectedTab == tabTools) {
                 lblTools.Tag = 1;
-                lblTools.BackColor = M_COLOR_MENU_ACTIVE;
+                lblTools.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabTools();
             }
             else if (tab1.SelectedTab == tabTheme) {
                 lblTheme.Tag = 1;
-                lblTheme.BackColor = M_COLOR_MENU_ACTIVE;
+                lblTheme.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabTheme();
             }
             else if (tab1.SelectedTab == tabKeyboard) {
                 lblKeyboard.Tag = 1;
-                lblKeyboard.BackColor = M_COLOR_MENU_ACTIVE;
+                lblKeyboard.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabKeyboard(Configs.KeyComboActions);
             }
