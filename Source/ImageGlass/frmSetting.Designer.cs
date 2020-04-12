@@ -860,7 +860,7 @@ namespace ImageGlass
             // 
             // numSlideShowInterval
             // 
-            this.numSlideShowInterval.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.numSlideShowInterval.BackColor = System.Drawing.Color.WhiteSmoke;
             this.numSlideShowInterval.Location = new System.Drawing.Point(3, 3);
             this.numSlideShowInterval.Maximum = new decimal(new int[] {
             600,
@@ -884,7 +884,7 @@ namespace ImageGlass
             // 
             // numSlideshowIntervalTo
             // 
-            this.numSlideshowIntervalTo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.numSlideshowIntervalTo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.numSlideshowIntervalTo.Location = new System.Drawing.Point(167, 3);
             this.numSlideshowIntervalTo.Maximum = new decimal(new int[] {
             600,
@@ -990,7 +990,7 @@ namespace ImageGlass
             // 
             // txtZoomLevels
             // 
-            this.txtZoomLevels.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.txtZoomLevels.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtZoomLevels.Location = new System.Drawing.Point(45, 1237);
             this.txtZoomLevels.Multiline = true;
             this.txtZoomLevels.Name = "txtZoomLevels";
@@ -1520,7 +1520,7 @@ namespace ImageGlass
             this.lvImageEditing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvImageEditing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lvImageEditing.BackColor = System.Drawing.Color.WhiteSmoke;
             this.lvImageEditing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clnFileExtension,
             this.clnAppName,
@@ -1654,7 +1654,7 @@ namespace ImageGlass
             this.lvExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lvExtension.BackColor = System.Drawing.Color.WhiteSmoke;
             this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvExtension.FullRowSelect = true;
@@ -1693,7 +1693,7 @@ namespace ImageGlass
             this.lnkOpenFileAssoc.BackColor = System.Drawing.Color.Transparent;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(335, 20);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(374, 20);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
             this.lnkOpenFileAssoc.Size = new System.Drawing.Size(392, 38);
             this.lnkOpenFileAssoc.TabIndex = 41;
@@ -2123,6 +2123,7 @@ namespace ImageGlass
             this.picPreview.BackColor = System.Drawing.Color.Transparent;
             this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.picPreview.Location = new System.Drawing.Point(3, 3);
+            this.picPreview.Margin = new System.Windows.Forms.Padding(0);
             this.picPreview.Name = "picPreview";
             this.picPreview.Size = new System.Drawing.Size(248, 100);
             this.picPreview.TabIndex = 34;
@@ -2135,7 +2136,7 @@ namespace ImageGlass
             this.btnThemeFolderOpen.AutoSize = true;
             this.btnThemeFolderOpen.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeFolderOpen.Location = new System.Drawing.Point(3, 306);
-            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0);
             this.btnThemeFolderOpen.Name = "btnThemeFolderOpen";
             this.btnThemeFolderOpen.Size = new System.Drawing.Size(248, 44);
             this.btnThemeFolderOpen.TabIndex = 69;
@@ -2150,6 +2151,7 @@ namespace ImageGlass
             this.btnThemeSaveAs.AutoSize = true;
             this.btnThemeSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeSaveAs.Location = new System.Drawing.Point(3, 260);
+            this.btnThemeSaveAs.Margin = new System.Windows.Forms.Padding(0);
             this.btnThemeSaveAs.Name = "btnThemeSaveAs";
             this.btnThemeSaveAs.Size = new System.Drawing.Size(248, 44);
             this.btnThemeSaveAs.TabIndex = 68;
@@ -2166,6 +2168,7 @@ namespace ImageGlass
             this.txtThemeInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtThemeInfo.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.txtThemeInfo.Location = new System.Drawing.Point(3, 363);
+            this.txtThemeInfo.Margin = new System.Windows.Forms.Padding(0);
             this.txtThemeInfo.Multiline = true;
             this.txtThemeInfo.Name = "txtThemeInfo";
             this.txtThemeInfo.ReadOnly = true;
@@ -2180,6 +2183,7 @@ namespace ImageGlass
             this.btnThemeRefresh.AutoSize = true;
             this.btnThemeRefresh.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeRefresh.Location = new System.Drawing.Point(3, 120);
+            this.btnThemeRefresh.Margin = new System.Windows.Forms.Padding(0);
             this.btnThemeRefresh.Name = "btnThemeRefresh";
             this.btnThemeRefresh.Size = new System.Drawing.Size(248, 44);
             this.btnThemeRefresh.TabIndex = 65;
@@ -2194,6 +2198,7 @@ namespace ImageGlass
             this.btnThemeInstall.AutoSize = true;
             this.btnThemeInstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeInstall.Location = new System.Drawing.Point(3, 166);
+            this.btnThemeInstall.Margin = new System.Windows.Forms.Padding(0);
             this.btnThemeInstall.Name = "btnThemeInstall";
             this.btnThemeInstall.Size = new System.Drawing.Size(248, 44);
             this.btnThemeInstall.TabIndex = 66;
@@ -2209,6 +2214,7 @@ namespace ImageGlass
             this.btnThemeUninstall.Enabled = false;
             this.btnThemeUninstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnThemeUninstall.Location = new System.Drawing.Point(3, 212);
+            this.btnThemeUninstall.Margin = new System.Windows.Forms.Padding(0);
             this.btnThemeUninstall.Name = "btnThemeUninstall";
             this.btnThemeUninstall.Size = new System.Drawing.Size(248, 44);
             this.btnThemeUninstall.TabIndex = 67;
@@ -2222,7 +2228,7 @@ namespace ImageGlass
             this.lvTheme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lvTheme.BackColor = System.Drawing.Color.WhiteSmoke;
             this.lvTheme.FullRowSelect = true;
             this.lvTheme.HideSelection = false;
             this.lvTheme.LargeImageList = this.imglGeneral;
