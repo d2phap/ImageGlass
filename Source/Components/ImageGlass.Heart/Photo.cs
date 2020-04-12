@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 using ImageMagick;
-using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -107,7 +106,7 @@ namespace ImageGlass.Heart {
             #region Internal Functions 
 
             // Preprocess magick image
-            Tuple<IExifProfile, IColorProfile> PreprocesMagickImage(MagickImage imgM, bool checkRotation = true) {
+            (IExifProfile, IColorProfile) PreprocesMagickImage(MagickImage imgM, bool checkRotation = true) {
                 imgM.Quality = quality;
 
                 // get the color profile of image
@@ -166,13 +165,12 @@ namespace ImageGlass.Heart {
                 }
 
 
-                return new Tuple<IExifProfile, IColorProfile>(profile, imgColorProfile);
+                return (profile, imgColorProfile);
             }
 
 
             // Separate color channel
             MagickImage ApplyColorChannel(MagickImage imgM) {
-                // separate color channel
                 if (channel != -1) {
                     var magickChannel = (Channels)channel;
                     var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
@@ -183,7 +181,6 @@ namespace ImageGlass.Heart {
                         }
                     }
 
-
                     return channelImgM;
                 }
 
@@ -192,27 +189,33 @@ namespace ImageGlass.Heart {
 
 
             void ReadWithMagickImage() {
-                // Issue #530: ImageMagick falls over if the file path is longer than the (old)
-                // windows limit of 260 characters. Workaround is to read the file bytes, but 
-                // that requires using the "long path name" prefix to succeed.
+                MagickImage imgM;
 
-                //filename = Helpers.PrefixLongPath(filename);
-                //var allBytes = File.ReadAllBytes(filename);
+                // Issue #530: ImageMagick falls over if the file path is longer than the (old) windows limit of 260 characters. Workaround is to read the file bytes, but that requires using the "long path name" prefix to succeed.
+                if (filename.Length > 260) {
+                    var newFilename = Helpers.PrefixLongPath(filename);
+                    var allBytes = File.ReadAllBytes(newFilename);
 
-                // TODO: there is a bug of using bytes[]:
-                // https://github.com/dlemstra/Magick.NET/issues/538
-                using (var imgM = new MagickImage(filename, settings)) {
-                    var checkRotation = ext != ".HEIC";
-
-                    // Issue #679: fix targa display with Magick.NET 7.15.x 
-                    if (ext == ".TGA")
-                        imgM.AutoOrient();
-                    (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
-
-                    using (var channelImgM = ApplyColorChannel(imgM)) {
-                        bitmap = channelImgM.ToBitmap();
-                    }
+                    imgM = new MagickImage(allBytes, settings);
+                } else {
+                    imgM = new MagickImage(filename, settings);
                 }
+
+
+                // Issue #679: fix targa display with Magick.NET 7.15.x 
+                if (ext == ".TGA") {
+                    imgM.AutoOrient();
+                }
+
+                var checkRotation = ext != ".HEIC";
+                (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
+
+                using (var channelImgM = ApplyColorChannel(imgM)) {
+                    bitmap = channelImgM.ToBitmap();
+                }
+
+
+                imgM.Dispose();
             }
             #endregion
 
