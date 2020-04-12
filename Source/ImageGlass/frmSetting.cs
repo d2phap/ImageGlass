@@ -47,9 +47,9 @@ namespace ImageGlass {
 
 
         #region PROPERTIES
-        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 220, 220, 220);
-        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 247, 247, 247);
-        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 240, 240, 240);
+        private Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 170, 170, 170);
+        private Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 210, 210, 210);
+        private Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 190, 190, 190);
         private List<Language> lstLanguages = new List<Language>();
 
         #region Toolbar
@@ -219,30 +219,34 @@ namespace ImageGlass {
 
 
             #region GENERAL TAB
-            lblHeadStartup.Text = lang[$"{Name}.{nameof(lblHeadStartup)}"];//
+            // Startup
+            lblHeadStartup.Text = lang[$"{Name}.{nameof(lblHeadStartup)}"];
             chkWelcomePicture.Text = lang[$"{Name}.{nameof(chkWelcomePicture)}"];
             chkLastSeenImage.Text = lang[$"{Name}.{nameof(chkLastSeenImage)}"];
             chkShowToolBar.Text = lang[$"{Name}.{nameof(chkShowToolBar)}"];
             chkAllowMultiInstances.Text = lang[$"{Name}.{nameof(chkAllowMultiInstances)}"];
 
-
-            lblHeadConfigDir.Text = lang[$"{Name}.{nameof(lblHeadConfigDir)}"];//
+            // Configuration
+            lblHeadConfigDir.Text = lang[$"{Name}.{nameof(lblHeadConfigDir)}"];
             lnkConfigDir.Text = App.ConfigDir(PathType.Dir);
 
+            // Viewer
+            lblHeadViewer.Text = lang[$"{Name}.{nameof(lblHeadViewer)}"];
+            chkShowScrollbar.Text = lang[$"{Name}.{nameof(chkShowScrollbar)}"];
+            chkShowNavButtons.Text = lang[$"{Name}.{nameof(chkShowNavButtons)}"];
+            chkDisplayBasename.Text = lang[$"{Name}.{nameof(chkDisplayBasename)}"];
+            chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.{nameof(chkShowCheckerboardOnlyImage)}"];
+            lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
+            lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
-            lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];//
+            // Others
+            lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
             chkAutoUpdate.Text = lang[$"{Name}.{nameof(chkAutoUpdate)}"];
             chkESCToQuit.Text = lang[$"{Name}.{nameof(chkESCToQuit)}"];
             chkConfirmationDelete.Text = lang[$"{Name}.{nameof(chkConfirmationDelete)}"];
-            chkShowScrollbar.Text = lang[$"{Name}.{nameof(chkShowScrollbar)}"];
-            chkDisplayBasename.Text = lang[$"{Name}.{nameof(chkDisplayBasename)}"];
-            chkShowNavButtons.Text = lang[$"{Name}.{nameof(chkShowNavButtons)}"];
-            chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.{nameof(chkShowCheckerboardOnlyImage)}"];
             chkCenterWindowFit.Text = lang[$"{Name}.{nameof(chkCenterWindowFit)}"];
             chkShowToast.Text = lang[$"{Name}.{nameof(chkShowToast)}"];
 
-            lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
-            lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
             #endregion
 
 

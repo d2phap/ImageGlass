@@ -440,7 +440,7 @@ namespace ImageGlass.Library {
             #endregion
 
 
-            #region Portable mode
+            #region Configuration dir
             //Items.Add("frmSetting.lblHeadPortableMode", "Portable mode"); //v4.0, removed 5.5.x
 
             //Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //remove v4.0
@@ -451,20 +451,26 @@ namespace ImageGlass.Library {
             #endregion
 
 
+            #region Viewer
+            Items.Add("frmSetting.lblHeadViewer", "Viewer"); // v7.6
+            Items.Add("frmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
+            Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
+            Items.Add("frmSetting.chkDisplayBasename", "Display basename of the viewing image on title bar"); //v5.0
+            Items.Add("frmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
+            Items.Add("frmSetting.lblBackGroundColor", "Background color");
+            Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
+            #endregion
+
+
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
-            Items.Add("frmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
-            Items.Add("frmSetting.chkDisplayBasename", "Display basename of the viewing image on title bar"); //v5.0
-            Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
-            Items.Add("frmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
             Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
             Items.Add("frmSetting.chkShowToast", "Show toast message"); //v7.5
-            Items.Add("frmSetting.lblBackGroundColor", "Background color");
-            Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
+            
             #endregion
             #endregion
 
