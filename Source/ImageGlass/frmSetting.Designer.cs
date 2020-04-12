@@ -39,6 +39,7 @@ namespace ImageGlass
             this.lblFileTypeAssoc = new System.Windows.Forms.Label();
             this.lblGeneral = new System.Windows.Forms.Label();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.imglGeneral = new System.Windows.Forms.ImageList(this.components);
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
@@ -49,11 +50,6 @@ namespace ImageGlass
             this.lblEdit = new System.Windows.Forms.Label();
             this.lblKeyboard = new System.Windows.Forms.Label();
             this.lblTheme = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnApply = new System.Windows.Forms.Button();
-            this.tblayout = new System.Windows.Forms.TableLayoutPanel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.lblHeadViewer = new System.Windows.Forms.Label();
@@ -74,7 +70,6 @@ namespace ImageGlass
             this.chkAllowMultiInstances = new System.Windows.Forms.CheckBox();
             this.chkESCToQuit = new System.Windows.Forms.CheckBox();
             this.chkShowToolBar = new System.Windows.Forms.CheckBox();
-            this.picBackgroundColor = new System.Windows.Forms.PictureBox();
             this.lblBackGroundColor = new System.Windows.Forms.Label();
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
@@ -200,16 +195,24 @@ namespace ImageGlass
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.tblayout = new System.Windows.Forms.TableLayoutPanel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.tableEdit = new System.Windows.Forms.TableLayoutPanel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.tableFileAssoc = new System.Windows.Forms.TableLayoutPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
             this.sp1.SuspendLayout();
             this.tableTabHeaders.SuspendLayout();
-            this.tblayout.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             this.tabImage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).BeginInit();
@@ -225,6 +228,13 @@ namespace ImageGlass
             this.panelThemeActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.tabLanguage.SuspendLayout();
+            this.tblayout.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.tableEdit.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.tableFileAssoc.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -290,6 +300,20 @@ namespace ImageGlass
             this.lblGeneral.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblGeneral.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblGeneral.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            // 
+            // picBackgroundColor
+            // 
+            this.picBackgroundColor.BackColor = System.Drawing.Color.White;
+            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picBackgroundColor.Location = new System.Drawing.Point(45, 523);
+            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
+            this.picBackgroundColor.Name = "picBackgroundColor";
+            this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
+            this.picBackgroundColor.TabIndex = 12;
+            this.picBackgroundColor.TabStop = false;
+            this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
+            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
             // 
             // imglGeneral
             // 
@@ -470,78 +494,6 @@ namespace ImageGlass
             this.lblTheme.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblTheme.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblTheme.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.AutoSize = true;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnSave.Location = new System.Drawing.Point(627, 14);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(124, 45);
-            this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.AutoSize = true;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(760, 14);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(124, 45);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnApply
-            // 
-            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.AutoSize = true;
-            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnApply.Location = new System.Drawing.Point(892, 14);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(124, 45);
-            this.btnApply.TabIndex = 2;
-            this.btnApply.Text = "Apply";
-            this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-            // 
-            // tblayout
-            // 
-            this.tblayout.BackColor = System.Drawing.Color.Transparent;
-            this.tblayout.ColumnCount = 1;
-            this.tblayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblayout.Controls.Add(this.sp1, 0, 0);
-            this.tblayout.Controls.Add(this.panel4, 0, 1);
-            this.tblayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblayout.Location = new System.Drawing.Point(0, 0);
-            this.tblayout.Margin = new System.Windows.Forms.Padding(0);
-            this.tblayout.Name = "tblayout";
-            this.tblayout.RowCount = 2;
-            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tblayout.Size = new System.Drawing.Size(1044, 679);
-            this.tblayout.TabIndex = 19;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.Controls.Add(this.btnApply);
-            this.panel4.Controls.Add(this.btnSave);
-            this.panel4.Controls.Add(this.btnCancel);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 607);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1044, 72);
-            this.panel4.TabIndex = 18;
             // 
             // tab1
             // 
@@ -810,20 +762,6 @@ namespace ImageGlass
             this.chkShowToolBar.Text = "Show toolbar when starting up";
             this.chkShowToolBar.UseVisualStyleBackColor = true;
             // 
-            // picBackgroundColor
-            // 
-            this.picBackgroundColor.BackColor = System.Drawing.Color.White;
-            this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(45, 523);
-            this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
-            this.picBackgroundColor.Name = "picBackgroundColor";
-            this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
-            this.picBackgroundColor.TabIndex = 12;
-            this.picBackgroundColor.TabStop = false;
-            this.tip1.SetToolTip(this.picBackgroundColor, "Change background color");
-            this.picBackgroundColor.Click += new System.EventHandler(this.picBackgroundColor_Click);
-            // 
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
@@ -927,7 +865,7 @@ namespace ImageGlass
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(359, 47);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(333, 47);
             this.tableLayoutPanel2.TabIndex = 68;
             // 
             // numSlideShowInterval
@@ -1499,13 +1437,7 @@ namespace ImageGlass
             // tabEdit
             // 
             this.tabEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.tabEdit.Controls.Add(this.lblSelectAppForEdit);
-            this.tabEdit.Controls.Add(this.chkSaveOnRotate);
-            this.tabEdit.Controls.Add(this.chkSaveModifyDate);
-            this.tabEdit.Controls.Add(this.btnEditEditAllExt);
-            this.tabEdit.Controls.Add(this.btnEditResetExt);
-            this.tabEdit.Controls.Add(this.btnEditEditExt);
-            this.tabEdit.Controls.Add(this.lvImageEditing);
+            this.tabEdit.Controls.Add(this.tableEdit);
             this.tabEdit.Location = new System.Drawing.Point(4, 73);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
@@ -1516,7 +1448,7 @@ namespace ImageGlass
             // lblSelectAppForEdit
             // 
             this.lblSelectAppForEdit.AutoSize = true;
-            this.lblSelectAppForEdit.Location = new System.Drawing.Point(16, 112);
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(20, 111);
             this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
             this.lblSelectAppForEdit.Size = new System.Drawing.Size(296, 25);
@@ -1527,7 +1459,7 @@ namespace ImageGlass
             // 
             this.chkSaveOnRotate.AutoSize = true;
             this.chkSaveOnRotate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkSaveOnRotate.Location = new System.Drawing.Point(22, 20);
+            this.chkSaveOnRotate.Location = new System.Drawing.Point(25, 16);
             this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(345, 30);
@@ -1539,7 +1471,7 @@ namespace ImageGlass
             // 
             this.chkSaveModifyDate.AutoSize = true;
             this.chkSaveModifyDate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkSaveModifyDate.Location = new System.Drawing.Point(22, 58);
+            this.chkSaveModifyDate.Location = new System.Drawing.Point(25, 50);
             this.chkSaveModifyDate.Margin = new System.Windows.Forms.Padding(2);
             this.chkSaveModifyDate.Name = "chkSaveModifyDate";
             this.chkSaveModifyDate.Size = new System.Drawing.Size(357, 30);
@@ -1549,10 +1481,9 @@ namespace ImageGlass
             // 
             // btnEditEditAllExt
             // 
-            this.btnEditEditAllExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditEditAllExt.AutoSize = true;
             this.btnEditEditAllExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(160, 482);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(165, 3);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(266, 45);
             this.btnEditEditAllExt.TabIndex = 39;
@@ -1562,10 +1493,9 @@ namespace ImageGlass
             // 
             // btnEditResetExt
             // 
-            this.btnEditResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditResetExt.AutoSize = true;
             this.btnEditResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditResetExt.Location = new System.Drawing.Point(432, 482);
+            this.btnEditResetExt.Location = new System.Drawing.Point(437, 3);
             this.btnEditResetExt.Name = "btnEditResetExt";
             this.btnEditResetExt.Size = new System.Drawing.Size(244, 45);
             this.btnEditResetExt.TabIndex = 40;
@@ -1575,11 +1505,10 @@ namespace ImageGlass
             // 
             // btnEditEditExt
             // 
-            this.btnEditEditExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditEditExt.AutoSize = true;
             this.btnEditEditExt.Enabled = false;
             this.btnEditEditExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditExt.Location = new System.Drawing.Point(22, 482);
+            this.btnEditEditExt.Location = new System.Drawing.Point(25, 3);
             this.btnEditEditExt.Name = "btnEditEditExt";
             this.btnEditEditExt.Size = new System.Drawing.Size(134, 45);
             this.btnEditEditExt.TabIndex = 38;
@@ -1608,12 +1537,12 @@ namespace ImageGlass
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(22, 141);
+            this.lvImageEditing.Location = new System.Drawing.Point(25, 139);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(706, 322);
+            this.lvImageEditing.Size = new System.Drawing.Size(734, 293);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 37;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1643,10 +1572,7 @@ namespace ImageGlass
             // tabFileTypeAssoc
             // 
             this.tabFileTypeAssoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.tabFileTypeAssoc.Controls.Add(this.panel2);
-            this.tabFileTypeAssoc.Controls.Add(this.lvExtension);
-            this.tabFileTypeAssoc.Controls.Add(this.lblSupportedExtension);
-            this.tabFileTypeAssoc.Controls.Add(this.lnkOpenFileAssoc);
+            this.tabFileTypeAssoc.Controls.Add(this.tableFileAssoc);
             this.tabFileTypeAssoc.Location = new System.Drawing.Point(4, 73);
             this.tabFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileTypeAssoc.Name = "tabFileTypeAssoc";
@@ -1661,19 +1587,18 @@ namespace ImageGlass
             this.panel2.Controls.Add(this.btnResetExt);
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 440);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 455);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(786, 90);
+            this.panel2.Size = new System.Drawing.Size(786, 75);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
             // 
-            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRegisterExt.AutoSize = true;
             this.btnRegisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnRegisterExt.Location = new System.Drawing.Point(525, 12);
+            this.btnRegisterExt.Location = new System.Drawing.Point(525, 3);
             this.btnRegisterExt.Name = "btnRegisterExt";
             this.btnRegisterExt.Size = new System.Drawing.Size(340, 45);
             this.btnRegisterExt.TabIndex = 46;
@@ -1683,10 +1608,9 @@ namespace ImageGlass
             // 
             // btnResetExt
             // 
-            this.btnResetExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetExt.AutoSize = true;
             this.btnResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnResetExt.Location = new System.Drawing.Point(298, 12);
+            this.btnResetExt.Location = new System.Drawing.Point(298, 3);
             this.btnResetExt.Name = "btnResetExt";
             this.btnResetExt.Size = new System.Drawing.Size(220, 45);
             this.btnResetExt.TabIndex = 45;
@@ -1696,10 +1620,9 @@ namespace ImageGlass
             // 
             // btnAddNewExt
             // 
-            this.btnAddNewExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddNewExt.AutoSize = true;
             this.btnAddNewExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAddNewExt.Location = new System.Drawing.Point(27, 12);
+            this.btnAddNewExt.Location = new System.Drawing.Point(27, 3);
             this.btnAddNewExt.Name = "btnAddNewExt";
             this.btnAddNewExt.Size = new System.Drawing.Size(130, 45);
             this.btnAddNewExt.TabIndex = 43;
@@ -1709,11 +1632,10 @@ namespace ImageGlass
             // 
             // btnDeleteExt
             // 
-            this.btnDeleteExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
             this.btnDeleteExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDeleteExt.Location = new System.Drawing.Point(164, 12);
+            this.btnDeleteExt.Location = new System.Drawing.Point(164, 3);
             this.btnDeleteExt.Name = "btnDeleteExt";
             this.btnDeleteExt.Size = new System.Drawing.Size(130, 45);
             this.btnDeleteExt.TabIndex = 44;
@@ -1733,9 +1655,9 @@ namespace ImageGlass
             this.lvExtension.GridLines = true;
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvExtension.HideSelection = false;
-            this.lvExtension.Location = new System.Drawing.Point(27, 56);
+            this.lvExtension.Location = new System.Drawing.Point(27, 52);
             this.lvExtension.Name = "lvExtension";
-            this.lvExtension.Size = new System.Drawing.Size(735, 391);
+            this.lvExtension.Size = new System.Drawing.Size(735, 385);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 42;
             this.lvExtension.TileSize = new System.Drawing.Size(100, 30);
@@ -1765,13 +1687,13 @@ namespace ImageGlass
             this.lnkOpenFileAssoc.BackColor = System.Drawing.Color.Transparent;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(374, 20);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(370, 15);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
-            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(392, 38);
+            this.lnkOpenFileAssoc.Size = new System.Drawing.Size(392, 34);
             this.lnkOpenFileAssoc.TabIndex = 41;
             this.lnkOpenFileAssoc.TabStop = true;
             this.lnkOpenFileAssoc.Text = "Open File Associations";
-            this.lnkOpenFileAssoc.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lnkOpenFileAssoc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lnkOpenFileAssoc.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(151)))), ((int)(((byte)(255)))));
             this.lnkOpenFileAssoc.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenFileAssoc_LinkClicked);
             // 
@@ -2508,6 +2430,146 @@ namespace ImageGlass
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.AutoSize = true;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnSave.Location = new System.Drawing.Point(627, 14);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(124, 45);
+            this.btnSave.TabIndex = 0;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnCancel.Location = new System.Drawing.Point(760, 14);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(124, 45);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnApply
+            // 
+            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApply.AutoSize = true;
+            this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnApply.Location = new System.Drawing.Point(892, 14);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(124, 45);
+            this.btnApply.TabIndex = 2;
+            this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            // 
+            // tblayout
+            // 
+            this.tblayout.BackColor = System.Drawing.Color.Transparent;
+            this.tblayout.ColumnCount = 1;
+            this.tblayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblayout.Controls.Add(this.sp1, 0, 0);
+            this.tblayout.Controls.Add(this.panel4, 0, 1);
+            this.tblayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblayout.Location = new System.Drawing.Point(0, 0);
+            this.tblayout.Margin = new System.Windows.Forms.Padding(0);
+            this.tblayout.Name = "tblayout";
+            this.tblayout.RowCount = 2;
+            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tblayout.Size = new System.Drawing.Size(1044, 679);
+            this.tblayout.TabIndex = 19;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.Controls.Add(this.btnApply);
+            this.panel4.Controls.Add(this.btnSave);
+            this.panel4.Controls.Add(this.btnCancel);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 607);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1044, 72);
+            this.panel4.TabIndex = 18;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.chkSaveOnRotate);
+            this.panel6.Controls.Add(this.lblSelectAppForEdit);
+            this.panel6.Controls.Add(this.lvImageEditing);
+            this.panel6.Controls.Add(this.chkSaveModifyDate);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(0, 0);
+            this.panel6.Margin = new System.Windows.Forms.Padding(0);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(780, 449);
+            this.panel6.TabIndex = 60;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.btnEditEditExt);
+            this.panel7.Controls.Add(this.btnEditResetExt);
+            this.panel7.Controls.Add(this.btnEditEditAllExt);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(0, 449);
+            this.panel7.Margin = new System.Windows.Forms.Padding(0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(780, 75);
+            this.panel7.TabIndex = 61;
+            // 
+            // tableEdit
+            // 
+            this.tableEdit.ColumnCount = 1;
+            this.tableEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableEdit.Controls.Add(this.panel6, 0, 0);
+            this.tableEdit.Controls.Add(this.panel7, 0, 1);
+            this.tableEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableEdit.Location = new System.Drawing.Point(3, 3);
+            this.tableEdit.Margin = new System.Windows.Forms.Padding(0);
+            this.tableEdit.Name = "tableEdit";
+            this.tableEdit.RowCount = 2;
+            this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.tableEdit.Size = new System.Drawing.Size(780, 524);
+            this.tableEdit.TabIndex = 62;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.lblSupportedExtension);
+            this.panel8.Controls.Add(this.lvExtension);
+            this.panel8.Controls.Add(this.lnkOpenFileAssoc);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Margin = new System.Windows.Forms.Padding(0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(786, 455);
+            this.panel8.TabIndex = 43;
+            // 
+            // tableFileAssoc
+            // 
+            this.tableFileAssoc.ColumnCount = 1;
+            this.tableFileAssoc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableFileAssoc.Controls.Add(this.panel2, 0, 1);
+            this.tableFileAssoc.Controls.Add(this.panel8, 0, 0);
+            this.tableFileAssoc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableFileAssoc.Location = new System.Drawing.Point(0, 0);
+            this.tableFileAssoc.Name = "tableFileAssoc";
+            this.tableFileAssoc.RowCount = 2;
+            this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.tableFileAssoc.Size = new System.Drawing.Size(786, 530);
+            this.tableFileAssoc.TabIndex = 44;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2527,18 +2589,15 @@ namespace ImageGlass
             this.Load += new System.EventHandler(this.frmSetting_Load);
             this.SizeChanged += new System.EventHandler(this.frmSetting_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSetting_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.sp1.Panel1.ResumeLayout(false);
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
             this.sp1.ResumeLayout(false);
             this.tableTabHeaders.ResumeLayout(false);
-            this.tblayout.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.tab1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).EndInit();
             this.tabImage.ResumeLayout(false);
             this.tabImage.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -2546,9 +2605,7 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlideshowIntervalTo)).EndInit();
             this.tabEdit.ResumeLayout(false);
-            this.tabEdit.PerformLayout();
             this.tabFileTypeAssoc.ResumeLayout(false);
-            this.tabFileTypeAssoc.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabToolbar.ResumeLayout(false);
@@ -2566,6 +2623,17 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
+            this.tblayout.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.tableEdit.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.tableFileAssoc.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2740,5 +2808,10 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblSlideshowIntervalTo;
         private System.Windows.Forms.CheckBox chkRandomSlideshowInterval;
         private System.Windows.Forms.Label lblHeadViewer;
+        private System.Windows.Forms.TableLayoutPanel tableEdit;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.TableLayoutPanel tableFileAssoc;
+        private System.Windows.Forms.Panel panel8;
     }
 }
