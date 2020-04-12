@@ -642,8 +642,6 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.btnThemeUninstall", "Uninstall"); //v5.0
             Items.Add("frmSetting.btnThemeSaveAs", "Save As"); //v5.0
             Items.Add("frmSetting.btnThemeFolderOpen", "Open Theme Folder"); //v5.0
-            Items.Add("frmSetting.btnThemeEdit._Edit", "Edit Selected Theme"); //v5.0
-            Items.Add("frmSetting.btnThemeEdit._New", "Create New Theme"); //v5.0
             Items.Add("frmSetting.btnThemeApply", "Apply Theme"); //v5.0
 
             Items.Add("frmSetting.txtThemeInfo._Name", "Name"); //v5.0

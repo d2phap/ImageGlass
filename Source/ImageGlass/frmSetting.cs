@@ -342,7 +342,6 @@ namespace ImageGlass {
             btnThemeSaveAs.Text = lang[$"{this.Name}.{nameof(btnThemeSaveAs)}"];
             btnThemeFolderOpen.Text = lang[$"{this.Name}.{nameof(btnThemeFolderOpen)}"];
 
-            btnThemeEdit.Text = lang[$"{this.Name}.{nameof(btnThemeEdit)}._Edit"];
             btnThemeApply.Text = lang[$"{this.Name}.{nameof(btnThemeApply)}"];
 
             #endregion
@@ -1578,8 +1577,6 @@ namespace ImageGlass {
                     $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {th.Description}";
 
                 txtThemeInfo.Visible = true;
-
-                btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._Edit"];
             }
             else {
                 picPreview.Image = null;
@@ -1587,7 +1584,6 @@ namespace ImageGlass {
                 txtThemeInfo.Text = "";
                 btnThemeSaveAs.Enabled = false;
                 btnThemeUninstall.Enabled = false;
-                btnThemeEdit.Text = lang[$"{this.Name}.btnThemeEdit._New"];
             }
         }
 
