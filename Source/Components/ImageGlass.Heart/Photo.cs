@@ -153,13 +153,13 @@ namespace ImageGlass.Heart {
                         }
                         else {
                             // set default color profile and color space
-                            imgM.AddProfile(ColorProfile.SRGB);
+                            imgM.SetProfile(ColorProfile.SRGB);
                             imgM.ColorSpace = ColorProfile.SRGB.ColorSpace;
                         }
 
                         var imgColor = Helpers.GetColorProfile(colorProfileName);
                         if (imgColor != null) {
-                            imgM.AddProfile(imgColor);
+                            imgM.SetProfile(imgColor);
                             imgM.ColorSpace = imgColor.ColorSpace;
                         }
                     }
