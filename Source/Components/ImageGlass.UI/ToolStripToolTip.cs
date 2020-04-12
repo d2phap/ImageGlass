@@ -188,6 +188,9 @@ namespace ImageGlass.UI {
                     else {
                         toolbarContentWidth += item.Width;
                     }
+
+                    // reset margin
+                    item.Margin = defaultMargin;
                 }
 
                 // if the content cannot fit the toolbar size:
