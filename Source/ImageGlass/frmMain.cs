@@ -2941,10 +2941,10 @@ namespace ImageGlass {
 
                 switch (act) {
                     case Touch.Action.SwipeLeft:
-                        NextPic(-1);
+                        NextPic(1);
                         break;
                     case Touch.Action.SwipeRight:
-                        NextPic(1);
+                        NextPic(-1);
                         break;
                     case Touch.Action.RotateCCW:
                         mnuMainRotateCounterclockwise_Click(null, null);
