@@ -4449,7 +4449,7 @@ namespace ImageGlass {
                 return;
             }
 
-            //not performing
+            // not performing
             if (!Configs.IsSlideshow) {
                 picMain.BackColor = Color.Black;
 
@@ -4460,10 +4460,11 @@ namespace ImageGlass {
                 timSlideShow.Enabled = true;
 
                 Configs.IsSlideshow = true;
+                SysExecutionState.PreventSleep();
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessage"], 2000);
             }
-            //performing
+            // performing
             else {
                 mnuMainSlideShowExit_Click(null, null);
             }
@@ -4486,6 +4487,7 @@ namespace ImageGlass {
         private void mnuMainSlideShowExit_Click(object sender, EventArgs e) {
             timSlideShow.Enabled = false;
             Configs.IsSlideshow = false;
+            SysExecutionState.AllowSleep();
 
             picMain.BackColor = Configs.BackgroundColor;
 

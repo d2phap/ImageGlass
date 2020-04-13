@@ -106,6 +106,7 @@
     <Compile Include="WinAPI\FormBorder.cs" />
     <Compile Include="WinAPI\MovableForm.cs" />
     <Compile Include="WinAPI\Shortcuts.cs" />
+    <Compile Include="WinAPI\SysExecutionState.cs" />
     <Compile Include="WinAPI\TimerAPI.cs" />
     <Compile Include="WinAPI\Touch.cs" />
   </ItemGroup>
