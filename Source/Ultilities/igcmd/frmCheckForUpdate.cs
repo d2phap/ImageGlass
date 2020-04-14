@@ -63,7 +63,7 @@ namespace igcmd {
                     $"Version type: {up.Info.VersionType}\r\n" +
                     $"Importance: {up.Info.Level}\r\n" +
                     $"Size: {up.Info.Size}\r\n" +
-                    $"Publish date: {up.Info.PublishDate.ToString("MMM d, yyyy HH:mm:ss")}");
+                    $"Publish date: {up.Info.PublishDate:MMM d, yyyy HH:mm:ss}");
 
                 if (up.CheckForUpdate(App.StartUpDir("ImageGlass.exe"))) {
                     if (up.Info.VersionType.ToLower() == "stable") {
