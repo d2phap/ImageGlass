@@ -54,6 +54,7 @@
             this.lblComponent = new System.Windows.Forms.Label();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tpInfo = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.lnkCollaborator = new System.Windows.Forms.LinkLabel();
             this.tpComponents = new System.Windows.Forms.TabPage();
             this.txtComponents = new System.Windows.Forms.RichTextBox();
@@ -62,7 +63,6 @@
             this.btnDonation = new System.Windows.Forms.PictureBox();
             this.panHeader = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -343,7 +343,7 @@
             // 
             // sp0
             // 
-            this.sp0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.sp0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.sp0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp0.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.sp0.Location = new System.Drawing.Point(0, 150);
@@ -352,7 +352,7 @@
             // 
             // sp0.Panel1
             // 
-            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.sp0.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.sp0.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
@@ -408,7 +408,7 @@
             // 
             this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblInfo.ForeColor = System.Drawing.Color.Black;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
@@ -469,7 +469,7 @@
             // tpInfo
             // 
             this.tpInfo.AutoScroll = true;
-            this.tpInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tpInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tpInfo.Controls.Add(this.panel2);
             this.tpInfo.Controls.Add(this.lnkCollaborator);
             this.tpInfo.Controls.Add(this.lnkLogoDesigner);
@@ -491,6 +491,13 @@
             this.tpInfo.Size = new System.Drawing.Size(714, 501);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
+            // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(392, 558);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(111, 38);
+            this.panel2.TabIndex = 17;
             // 
             // lnkCollaborator
             // 
@@ -514,7 +521,7 @@
             // 
             // tpComponents
             // 
-            this.tpComponents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tpComponents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tpComponents.Controls.Add(this.txtComponents);
             this.tpComponents.ForeColor = System.Drawing.Color.Black;
             this.tpComponents.Location = new System.Drawing.Point(4, 37);
@@ -527,7 +534,7 @@
             // 
             // txtComponents
             // 
-            this.txtComponents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.txtComponents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtComponents.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtComponents.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -544,7 +551,7 @@
             // 
             // tpReferences
             // 
-            this.tpReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tpReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tpReferences.Controls.Add(this.txtReferences);
             this.tpReferences.Location = new System.Drawing.Point(4, 37);
             this.tpReferences.Margin = new System.Windows.Forms.Padding(0);
@@ -556,7 +563,7 @@
             // 
             // txtReferences
             // 
-            this.txtReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.txtReferences.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtReferences.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtReferences.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -616,18 +623,11 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(976, 692);
             this.tableLayoutPanel2.TabIndex = 23;
             // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(392, 558);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(111, 38);
-            this.panel2.TabIndex = 17;
-            // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(976, 692);

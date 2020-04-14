@@ -290,7 +290,7 @@ namespace ImageGlass
             // 
             this.lblGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lblGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.lblGeneral.Location = new System.Drawing.Point(0, 0);
             this.lblGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.lblGeneral.Name = "lblGeneral";
@@ -334,7 +334,7 @@ namespace ImageGlass
             // 
             // sp1
             // 
-            this.sp1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.sp1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sp1.Location = new System.Drawing.Point(0, 0);
             this.sp1.Margin = new System.Windows.Forms.Padding(0);
@@ -342,7 +342,7 @@ namespace ImageGlass
             // 
             // sp1.Panel1
             // 
-            this.sp1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.sp1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.sp1.Panel1.Controls.Add(this.tableTabHeaders);
             // 
             // sp1.Panel2
@@ -356,7 +356,7 @@ namespace ImageGlass
             // 
             // tableTabHeaders
             // 
-            this.tableTabHeaders.BackColor = System.Drawing.Color.Transparent;
+            this.tableTabHeaders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.tableTabHeaders.ColumnCount = 1;
             this.tableTabHeaders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 254F));
             this.tableTabHeaders.Controls.Add(this.lblGeneral, 0, 0);
@@ -527,7 +527,7 @@ namespace ImageGlass
             // tabGeneral
             // 
             this.tabGeneral.AutoScroll = true;
-            this.tabGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabGeneral.Controls.Add(this.lblHeadViewer);
             this.tabGeneral.Controls.Add(this.chkShowToast);
             this.tabGeneral.Controls.Add(this.chkCenterWindowFit);
@@ -804,7 +804,7 @@ namespace ImageGlass
             // tabImage
             // 
             this.tabImage.AutoScroll = true;
-            this.tabImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabImage.Controls.Add(this.tableLayoutPanel2);
             this.tabImage.Controls.Add(this.chkRandomSlideshowInterval);
             this.tabImage.Controls.Add(this.chkShowSlideshowCountdown);
@@ -857,8 +857,7 @@ namespace ImageGlass
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -870,12 +869,12 @@ namespace ImageGlass
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(281, 47);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(337, 47);
             this.tableLayoutPanel2.TabIndex = 68;
             // 
             // numSlideShowInterval
             // 
-            this.numSlideShowInterval.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.numSlideShowInterval.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.numSlideShowInterval.Location = new System.Drawing.Point(3, 3);
             this.numSlideShowInterval.Maximum = new decimal(new int[] {
             600,
@@ -899,7 +898,7 @@ namespace ImageGlass
             // 
             // numSlideshowIntervalTo
             // 
-            this.numSlideshowIntervalTo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.numSlideshowIntervalTo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.numSlideshowIntervalTo.Location = new System.Drawing.Point(167, 3);
             this.numSlideshowIntervalTo.Maximum = new decimal(new int[] {
             600,
@@ -1005,7 +1004,7 @@ namespace ImageGlass
             // 
             // txtZoomLevels
             // 
-            this.txtZoomLevels.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtZoomLevels.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.txtZoomLevels.Location = new System.Drawing.Point(45, 1237);
             this.txtZoomLevels.Multiline = true;
             this.txtZoomLevels.Name = "txtZoomLevels";
@@ -1441,7 +1440,7 @@ namespace ImageGlass
             // 
             // tabEdit
             // 
-            this.tabEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabEdit.Controls.Add(this.tableEdit);
             this.tabEdit.Location = new System.Drawing.Point(4, 73);
             this.tabEdit.Name = "tabEdit";
@@ -1468,6 +1467,7 @@ namespace ImageGlass
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.Color.Transparent;
             this.panel6.Controls.Add(this.chkSaveOnRotate);
             this.panel6.Controls.Add(this.lblSelectAppForEdit);
             this.panel6.Controls.Add(this.lvImageEditing);
@@ -1506,7 +1506,7 @@ namespace ImageGlass
             this.lvImageEditing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvImageEditing.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.lvImageEditing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.lvImageEditing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clnFileExtension,
             this.clnAppName,
@@ -1568,6 +1568,7 @@ namespace ImageGlass
             // 
             // panel7
             // 
+            this.panel7.BackColor = System.Drawing.Color.Transparent;
             this.panel7.Controls.Add(this.btnEditEditExt);
             this.panel7.Controls.Add(this.btnEditResetExt);
             this.panel7.Controls.Add(this.btnEditEditAllExt);
@@ -1617,7 +1618,7 @@ namespace ImageGlass
             // 
             // tabFileTypeAssoc
             // 
-            this.tabFileTypeAssoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabFileTypeAssoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabFileTypeAssoc.Controls.Add(this.tableFileAssoc);
             this.tabFileTypeAssoc.Location = new System.Drawing.Point(4, 73);
             this.tabFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
@@ -1706,6 +1707,7 @@ namespace ImageGlass
             // 
             // panel8
             // 
+            this.panel8.BackColor = System.Drawing.Color.Transparent;
             this.panel8.Controls.Add(this.lblSupportedExtension);
             this.panel8.Controls.Add(this.lvExtension);
             this.panel8.Controls.Add(this.lnkOpenFileAssoc);
@@ -1731,7 +1733,7 @@ namespace ImageGlass
             this.lvExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvExtension.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.lvExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvExtension.FullRowSelect = true;
@@ -1773,7 +1775,7 @@ namespace ImageGlass
             // tabToolbar
             // 
             this.tabToolbar.AutoScroll = true;
-            this.tabToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabToolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabToolbar.Controls.Add(this.tableLayoutPanel1);
             this.tabToolbar.Location = new System.Drawing.Point(4, 73);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
@@ -1784,6 +1786,7 @@ namespace ImageGlass
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel9, 0, 0);
@@ -1981,7 +1984,7 @@ namespace ImageGlass
             // tabTools
             // 
             this.tabTools.AutoScroll = true;
-            this.tabTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabTools.Controls.Add(this.lblPageNav);
             this.tabTools.Controls.Add(this.chkShowPageNavAuto);
             this.tabTools.Controls.Add(this.chkColorUseHSLA);
@@ -2065,7 +2068,7 @@ namespace ImageGlass
             // 
             // tabKeyboard
             // 
-            this.tabKeyboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabKeyboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabKeyboard.Controls.Add(this.btnKeyReset);
             this.tabKeyboard.Controls.Add(this.cmbKeysSpaceBack);
             this.tabKeyboard.Controls.Add(this.cmbKeysPgUpDown);
@@ -2175,7 +2178,7 @@ namespace ImageGlass
             // tabTheme
             // 
             this.tabTheme.AutoScroll = true;
-            this.tabTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabTheme.Controls.Add(this.tableTheme);
             this.tabTheme.Location = new System.Drawing.Point(4, 73);
             this.tabTheme.Margin = new System.Windows.Forms.Padding(0);
@@ -2280,7 +2283,7 @@ namespace ImageGlass
             this.txtThemeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtThemeInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.txtThemeInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtThemeInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtThemeInfo.Location = new System.Drawing.Point(3, 363);
             this.txtThemeInfo.Margin = new System.Windows.Forms.Padding(0);
@@ -2362,7 +2365,7 @@ namespace ImageGlass
             this.lvTheme.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvTheme.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.lvTheme.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.lvTheme.FullRowSelect = true;
             this.lvTheme.HideSelection = false;
             this.lvTheme.LargeImageList = this.imglGeneral;
@@ -2394,7 +2397,7 @@ namespace ImageGlass
             // tabLanguage
             // 
             this.tabLanguage.AutoScroll = true;
-            this.tabLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.tabLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabLanguage.Controls.Add(this.lblLanguageWarning);
             this.tabLanguage.Controls.Add(this.lnkInstallLanguage);
             this.tabLanguage.Controls.Add(this.lnkRefresh);
@@ -2604,7 +2607,7 @@ namespace ImageGlass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.ClientSize = new System.Drawing.Size(1044, 679);
             this.Controls.Add(this.tblayout);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
