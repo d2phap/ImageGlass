@@ -64,13 +64,13 @@ namespace ImageGlass.Settings {
 
 
         /// <summary>
-        /// Gets, sets value indicating that weather the slide show interval is random
+        /// Gets, sets value indicating whether the slide show interval is random
         /// </summary>
         public static bool IsRandomSlideshowInterval { get; set; } = false;
 
 
         /// <summary>
-        /// Gets, sets value indicating that wheather the window is full screen or not
+        /// Gets, sets value indicating whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
 
@@ -226,13 +226,13 @@ namespace ImageGlass.Settings {
 
 
         /// <summary>
-        /// Gets, sets the value indicates that to show or hide the Navigation Buttons on viewer
+        /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
         /// </summary>
         public static bool IsShowNavigationButtons { get; set; } = false;
 
 
         /// <summary>
-        /// Gets, sets the value indicates that to checkerboard in the image region only
+        /// Gets, sets the value indicates whether to show checkerboard in the image region only
         /// </summary>
         public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
 
@@ -286,7 +286,7 @@ namespace ImageGlass.Settings {
 
 
         /// <summary>
-        /// Gets, sets value indicates that toast message will show
+        /// Gets, sets value indicates that toast messages will show
         /// </summary>
         public static bool IsShowToast { get; set; } = true;
 
