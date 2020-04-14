@@ -48,7 +48,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.panel1.Controls.Add(this.btnReset);
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
@@ -114,6 +114,7 @@
             // 
             this.txtFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFileExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtFileExtension.Location = new System.Drawing.Point(18, 52);
             this.txtFileExtension.Margin = new System.Windows.Forms.Padding(4);
             this.txtFileExtension.Name = "txtFileExtension";
@@ -135,6 +136,7 @@
             // 
             this.txtAppName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAppName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.txtAppName.Location = new System.Drawing.Point(18, 134);
             this.txtAppName.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppName.Name = "txtAppName";
@@ -145,6 +147,7 @@
             // 
             this.txtAppPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAppPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.txtAppPath.Location = new System.Drawing.Point(18, 214);
             this.txtAppPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppPath.Name = "txtAppPath";
@@ -165,6 +168,7 @@
             // 
             this.txtAppArguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAppArguments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.txtAppArguments.Location = new System.Drawing.Point(18, 296);
             this.txtAppArguments.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppArguments.Name = "txtAppArguments";
@@ -210,6 +214,7 @@
             // 
             this.txtCommandPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCommandPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtCommandPreview.Location = new System.Drawing.Point(18, 381);
             this.txtCommandPreview.Margin = new System.Windows.Forms.Padding(4);
             this.txtCommandPreview.Multiline = true;
@@ -218,11 +223,11 @@
             this.txtCommandPreview.Size = new System.Drawing.Size(472, 93);
             this.txtCommandPreview.TabIndex = 5;
             // 
-            // frmEditEditingAssocisation
+            // frmEditApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(510, 574);
             this.Controls.Add(this.txtCommandPreview);
