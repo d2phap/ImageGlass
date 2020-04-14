@@ -2257,6 +2257,7 @@ namespace ImageGlass {
 
                 if (!Local.FPageNav.Visible) {
                     Local.FPageNav.Show(this);
+                    UpdateStatusBar();
                 }
 
                 this.Activate();
