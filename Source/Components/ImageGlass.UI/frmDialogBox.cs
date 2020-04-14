@@ -45,11 +45,16 @@ namespace ImageGlass.UI {
         public KeyFilter Filter { get; set; } = null;
 
 
-        public frmDialogBox(string title, string message) {
+        public frmDialogBox(string title, string message, Theme theme) {
             InitializeComponent();
 
             Text = title;
             lblMessage.Text = message;
+
+            // apply theme
+            this.BackColor = theme.BackgroundColor;
+            lblMessage.ForeColor = theme.TextInfoColor;
+            panel1.BackColor = theme.ToolbarBackgroundColor;
         }
 
         /// <summary>

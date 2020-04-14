@@ -22,7 +22,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace ImageGlass.UI {
-    public class InputBox {
+    public static class InputBox {
         /// <summary>
         /// Get, set the message user inputs
         /// </summary>
@@ -52,6 +52,7 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Show input dialog box
         /// </summary>
+        /// <param name="theme">Theme</param>
         /// <param name="title">Title</param>
         /// <param name="message">Message</param>
         /// <param name="defaultValue">Default value</param>
@@ -59,29 +60,29 @@ namespace ImageGlass.UI {
         /// <param name="topMost">Set the form to top most</param>
         /// <param name="isFilename">Filename input</param>
         /// <returns></returns>
-        public static DialogResult ShowDialog(string title, string message, string defaultValue, bool @isNumberOnly = false, bool @topMost = false, bool isFilename = false) {
-            frmDialogBox f = new frmDialogBox(title, message)
+        public static DialogResult ShowDialog(Theme theme, string title, string message, string defaultValue, bool isNumberOnly = false, bool topMost = false, bool isFilename = false) {
+            var frm = new frmDialogBox(title, message, theme)
             {
                 Content = defaultValue,
                 TopMost = topMost
             };
 
             if (isNumberOnly) {
-                f.Filter = NumberFilter;
-                f.MaxLimit = 10;
+                frm.Filter = NumberFilter;
+                frm.MaxLimit = 10;
             }
 
             if (isFilename) {
-                f.Filter = FilenameFilter;
-                f.MaxLimit = 256;
+                frm.Filter = FilenameFilter;
+                frm.MaxLimit = 256;
             }
 
-            if (f.ShowDialog() == DialogResult.OK) {
+            if (frm.ShowDialog() == DialogResult.OK) {
                 //Save input data
-                InputBox.Message = f.Content;
+                InputBox.Message = frm.Content;
             }
 
-            return f.DialogResult;
+            return frm.DialogResult;
         }
 
 
