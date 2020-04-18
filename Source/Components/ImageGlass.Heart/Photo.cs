@@ -19,9 +19,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 using ImageMagick;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
@@ -70,28 +72,34 @@ namespace ImageGlass.Heart {
 
             #region Read image data
             switch (ext) {
-                case ".GIF":
-                    // Note: Using FileStream is much faster than using MagickImageCollection
-                    using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
-                        var ms = new MemoryStream();
-                        fs.CopyTo(ms);
-                        ms.Position = 0;
+                case ".TXT": // base64 string
+                case ".B64":
+                    var base64Content = string.Empty;
+                    using (var fs = new StreamReader(filename)) {
+                        base64Content = fs.ReadToEnd();
+                        fs.Close();
+                    }
 
-                        bitmap = new Bitmap(ms, true);
+                    bitmap = ConvertBase64ToBitmap(base64Content);
+                    break;
+
+                case ".GIF":
+                case ".TIF":
+                    // Note: Using FileStream is much faster than using MagickImageCollection
+
+                    try {
+                        bitmap = ConvertFileToBitmap(filename);
+                    }
+                    catch {
+                        // #637: falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
                     }
                     break;
 
                 case ".ICO":
-                case ".TIF":
                 case ".WEBP":
-                    try {
-                        using (var imgColl = new MagickImageCollection(filename, settings)) {
-                            bitmap = imgColl.ToBitmap();
-                        }
-                    }
-                    catch {
-                        // Issue #637: MagickImageCollection falls over with certain images, fallback to MagickImage
-                        ReadWithMagickImage();
+                    using (var imgColl = new MagickImageCollection(filename, settings)) {
+                        bitmap = imgColl.ToBitmap();
                     }
                     break;
 
@@ -302,6 +310,141 @@ namespace ImageGlass.Heart {
 
             return data.Image;
         }
+
+
+
+        /// <summary>
+        /// Converts file to Bitmap
+        /// </summary>
+        /// <param name="filename">Full path of file</param>
+        /// <returns></returns>
+        public static Bitmap ConvertFileToBitmap(string filename) {
+            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
+                var ms = new MemoryStream();
+                fs.CopyTo(ms);
+                ms.Position = 0;
+
+                return new Bitmap(ms, true);
+            }
+        }
+
+
+        /// <summary>
+        /// Converts base64 string to byte array, returns MIME type and raw data in byte array.
+        /// </summary>
+        /// <param name="content">Base64 string</param>
+        /// <returns></returns>
+        public static (string, byte[]) ConvertBase64ToBytes(string content) {
+            var mimeType = string.Empty;
+            var rawData = Array.Empty<byte>();
+
+            if (string.IsNullOrWhiteSpace(content)) return (mimeType, rawData);
+
+            // data:image/svg-xml;base64,xxxxxxxx
+            var dataUriPattern = new Regex(@"^data\:(?<type>image\/[a-z\+\-]*);base64,(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+
+
+            var match = dataUriPattern.Match(content);
+            if (!match.Success) return (mimeType, rawData);
+            var base64Data = match.Groups["data"].Value;
+            
+
+            try {
+                mimeType = match.Groups["type"].Value.ToLower();
+                rawData = Convert.FromBase64String(base64Data);
+            }
+            catch {}
+
+            return (mimeType, rawData);
+        }
+
+
+        /// <summary>
+        /// Converts base64 string to Bitmap.
+        /// </summary>
+        /// <param name="content">Base64 string</param>
+        /// <returns></returns>
+        public static Bitmap ConvertBase64ToBitmap(string content) {
+            var (mimeType, rawData) = ConvertBase64ToBytes(content);
+            if (string.IsNullOrEmpty(mimeType)) return null;
+
+
+            #region Settings
+            var settings = new MagickReadSettings();
+            switch (mimeType) {
+                case "image/bmp":
+                    settings.Format = MagickFormat.Bmp;
+                    break;
+                case "image/gif":
+                    settings.Format = MagickFormat.Gif;
+                    break;
+                case "image/tiff":
+                    settings.Format = MagickFormat.Tiff;
+                    break;
+                case "image/jpeg":
+                    settings.Format = MagickFormat.Jpeg;
+                    break;
+                case "image/svg+xml":
+                    settings.BackgroundColor = MagickColors.Transparent;
+                    settings.Format = MagickFormat.Svg;
+                    break;
+                case "image/x-icon":
+                    settings.Format = MagickFormat.Ico;
+                    break;
+                case "image/x-portable-anymap":
+                    settings.Format = MagickFormat.Pnm;
+                    break;
+                case "image/x-portable-bitmap":
+                    settings.Format = MagickFormat.Pbm;
+                    break;
+                case "image/x-portable-graymap":
+                    settings.Format = MagickFormat.Pgm;
+                    break;
+                case "image/x-portable-pixmap":
+                    settings.Format = MagickFormat.Ppm;
+                    break;
+                case "image/x-xbitmap":
+                    settings.Format = MagickFormat.Xbm;
+                    break;
+                case "image/x-xpixmap":
+                    settings.Format = MagickFormat.Xpm;
+                    break;
+                case "image/x-cmu-raster":
+                    settings.Format = MagickFormat.Ras;
+                    break;
+
+                default:
+                    break;
+            }
+            #endregion
+
+
+            Bitmap bmp = null;
+
+            switch (settings.Format) {
+                case MagickFormat.Gif:
+                case MagickFormat.Gif87:
+                case MagickFormat.Tif:
+                case MagickFormat.Tiff64:
+                case MagickFormat.Tiff:
+                case MagickFormat.Ico:
+                case MagickFormat.Icon:
+                    bmp = new Bitmap(new MemoryStream(rawData) {
+                        Position = 0
+                    }, true);
+
+                    break;
+
+                default:
+                    using (var imgM = new MagickImage(rawData, settings)) {
+                        bmp = imgM.ToBitmap();
+                    }
+                    break;
+            }
+
+            return bmp;
+        }
+
 
         #endregion
 

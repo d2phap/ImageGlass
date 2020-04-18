@@ -4106,7 +4106,7 @@ namespace ImageGlass {
         }
 
         private void mnuMainOpenImageData_Click(object sender, EventArgs e) {
-            //Is there a file in clipboard ?--------------------------------------------------
+            // Is there a file in clipboard ?
             if (Clipboard.ContainsFileDropList()) {
                 string[] sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
 
@@ -4115,35 +4115,26 @@ namespace ImageGlass {
             }
 
 
-            //Is there a image in clipboard ?-------------------------------------------------
-            //CheckImageInClipboard: ;
+            // Is there a image in clipboard ?
+            // CheckImageInClipboard: ;
             else if (Clipboard.ContainsImage()) {
                 LoadImageData(Clipboard.GetImage());
             }
 
-            // Is there a filename in clipboard?-----------------------------------------------
+            // Is there a filename in clipboard?
             // CheckPathInClipboard: ;
             else if (Clipboard.ContainsText()) {
                 // try to get absolute path
-                var inputPath = App.ToAbsolutePath(Clipboard.GetText());
+                var text = App.ToAbsolutePath(Clipboard.GetText());
 
-                if (File.Exists(inputPath) || Directory.Exists(inputPath)) {
-                    PrepareLoading(inputPath);
+                if (File.Exists(text) || Directory.Exists(text)) {
+                    PrepareLoading(text);
                 }
                 // get image from Base64string 
                 else {
-                    try {
-                        // data:image/jpeg;base64,xxxxxxxx
-                        var base64str = inputPath.Substring(inputPath.LastIndexOf(',') + 1);
 
-                        var file_bytes = Convert.FromBase64String(base64str);
-                        var file_stream = new MemoryStream(file_bytes);
-                        var file_image = Image.FromStream(file_stream);
-
-                        picMain.Image = file_image;
-                        Local.IsTempMemoryData = true;
-                    }
-                    catch { }
+                    picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
+                    Local.IsTempMemoryData = true;
                 }
             }
         }
