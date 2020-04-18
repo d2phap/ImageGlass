@@ -109,11 +109,18 @@ namespace ImageGlass.Heart {
             (IExifProfile, IColorProfile) PreprocesMagickImage(MagickImage imgM, bool checkRotation = true) {
                 imgM.Quality = quality;
 
-                // get the color profile of image
-                var imgColorProfile = imgM.GetColorProfile();
+                
+                IColorProfile imgColorProfile = null;
+                IExifProfile profile = null;
+                try {
+                    // get the color profile of image
+                    imgColorProfile = imgM.GetColorProfile();
 
-                // Get Exif information
-                var profile = imgM.GetExifProfile();
+                    // Get Exif information
+                    profile = imgM.GetExifProfile();
+                }
+                catch { }
+                
 
                 // Use embedded thumbnails if specified
                 if (profile != null && useEmbeddedThumbnails) {
