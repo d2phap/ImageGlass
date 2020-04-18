@@ -379,6 +379,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
             Items.Add("frmMain._SaveChanges", "Saving change..."); // v2.0 final
             Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
+            Items.Add("frmMain._SavingImage", "Saving image...\r\n{0}"); // v8.0
             Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
             Items.Add("frmMain._Loading", "Loading..."); // v3.0
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); // v4.0

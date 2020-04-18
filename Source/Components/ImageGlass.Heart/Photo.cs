@@ -532,18 +532,20 @@ namespace ImageGlass.Heart {
         public static async Task SaveAsBase64Async(string srcFilename, string destFilename, ImageFormat format) {
             var srcExt = Path.GetExtension(srcFilename).ToUpperInvariant();
 
-            // for SVG format
-            if (srcExt == ".SVG") {
+            var mimeType = GetMIMETypeFromExtension(srcExt);
+
+            // for basic MIME formats
+            if (!string.IsNullOrEmpty(mimeType)) {
                 byte[] data;
 
-                using(var fs = new FileStream(srcFilename, FileMode.Open, FileAccess.Read)) {
+                using (var fs = new FileStream(srcFilename, FileMode.Open, FileAccess.Read)) {
                     data = new byte[fs.Length];
                     await fs.ReadAsync(data, 0, (int)fs.Length);
 
                     fs.Close();
                 }
 
-                var header = $"data:image/svg+xml;base64,";
+                var header = $"data:{mimeType};base64,";
                 var base64 = Convert.ToBase64String(data);
 
                 using (var sw = new StreamWriter(destFilename)) {
@@ -570,23 +572,9 @@ namespace ImageGlass.Heart {
         /// <returns></returns>
         public static async Task SaveAsBase64Async(Bitmap srcBitmap, string destFilename, ImageFormat format) {
 
-            var mimeType = "image/png";
+            var mimeType = GetMIMETypeForWrite(format);
 
-            if (format.Equals(ImageFormat.Gif)) {
-                mimeType = "image/gif";
-            }
-            else if (format.Equals(ImageFormat.Bmp)) {
-                mimeType = "image/bmp";
-            }
-            else if (format.Equals(ImageFormat.Jpeg)) {
-                mimeType = "image/jpeg";
-            }
-            else if (format.Equals(ImageFormat.Tiff)) {
-                mimeType = "image/tiff";
-            }
-            else if (format.Equals(ImageFormat.Icon)) {
-                mimeType = "image/x-icon";
-            } else {
+            if (mimeType == "image/png") {
                 format = ImageFormat.Png;
             }
 
@@ -720,6 +708,80 @@ namespace ImageGlass.Heart {
             imgM.Quality = 100;
 
             return imgM.ToBitmap();
+        }
+
+
+        /// <summary>
+        /// Get image MIME type from extension
+        /// </summary>
+        /// <param name="ext">Extension, including ., example: .png</param>
+        /// <returns></returns>
+        private static string GetMIMETypeFromExtension(string ext) {
+            var mimeType = string.Empty;
+
+            switch (ext.ToUpperInvariant()) {
+                case ".GIF":
+                    mimeType = "image/gif";
+                    break;
+                case ".BMP":
+                    mimeType = "image/bmp";
+                    break;
+                case ".PNG":
+                    mimeType = "image/png";
+                    break;
+                case ".WEBP":
+                    mimeType = "image/webp";
+                    break;
+                case ".SVG":
+                    mimeType = "image/svg+xml";
+                    break;
+                case ".JPG":
+                case ".JPEG":
+                case ".JFIF":
+                case ".JP2":
+                    mimeType = "image/jpeg";
+                    break;
+                case ".TIF":
+                case ".TIFF":
+                    mimeType = "image/tiff";
+                    break;
+                case ".ICO":
+                case ".ICON":
+                    mimeType = "image/x-icon";
+                    break;
+                default:
+                    break;
+            }
+
+            return mimeType;
+        }
+
+
+        /// <summary>
+        /// Get image MIME type for writing file
+        /// </summary>
+        /// <param name="format">Image format</param>
+        /// <returns></returns>
+        private static string GetMIMETypeForWrite(ImageFormat format) {
+            var mimeType = "image/png";
+
+            if (format.Equals(ImageFormat.Gif)) {
+                mimeType = "image/gif";
+            }
+            else if (format.Equals(ImageFormat.Bmp)) {
+                mimeType = "image/bmp";
+            }
+            else if (format.Equals(ImageFormat.Jpeg)) {
+                mimeType = "image/jpeg";
+            }
+            else if (format.Equals(ImageFormat.Tiff)) {
+                mimeType = "image/tiff";
+            }
+            else if (format.Equals(ImageFormat.Icon)) {
+                mimeType = "image/x-icon";
+            }
+
+            return mimeType;
         }
 
         #endregion

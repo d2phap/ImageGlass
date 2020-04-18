@@ -4201,6 +4201,10 @@ namespace ImageGlass {
                     clonedPic = (Bitmap)picMain.Image;
                 }
 
+                // display saving msg
+                ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], saveDialog.FileName), 2000);
+
+
                 Local.SaveAsFilterIndex = saveDialog.FilterIndex;
                 switch (saveDialog.FilterIndex) {
                     case 1:
@@ -4239,7 +4243,7 @@ namespace ImageGlass {
                                 }
                             }
                             catch (Exception ex) {
-                                MessageBox.Show("Sorry, ImageGlass cannot convert this image because this error: \n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(Configs.Language.Items[$"{Name}._SaveImageError"] + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
 
