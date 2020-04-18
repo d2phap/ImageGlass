@@ -137,9 +137,12 @@ namespace ImageGlass.Heart {
                 this.Exif = data.Exif;
                 this.ColorProfile = data.ColorProfile;
 
-                // Get page count
-                var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-                this.PageCount = this.Image.GetFrameCount(dim);
+                if (this.Image != null) {
+                    // Get page count
+                    var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+                    this.PageCount = this.Image.GetFrameCount(dim);
+                }
+                
             }
             catch (Exception ex) {
                 // save the error
@@ -168,6 +171,8 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="index">Page index</param>
         public void SetActivePage(int index) {
+            if (this.Image == null) return;
+
             // Check if page index is greater than upper limit
             if (index >= this.PageCount)
                 index = 0;

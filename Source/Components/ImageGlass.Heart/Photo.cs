@@ -337,25 +337,23 @@ namespace ImageGlass.Heart {
         /// <param name="content">Base64 string</param>
         /// <returns></returns>
         public static (string, byte[]) ConvertBase64ToBytes(string content) {
-            var mimeType = string.Empty;
-            var rawData = Array.Empty<byte>();
-
-            if (string.IsNullOrWhiteSpace(content)) return (mimeType, rawData);
+            if (string.IsNullOrWhiteSpace(content)) {
+                throw new Exception("Base-64 file content is empty.");
+            }
 
             // data:image/svg-xml;base64,xxxxxxxx
             var dataUriPattern = new Regex(@"^data\:(?<type>image\/[a-z\+\-]*);base64,(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
 
             var match = dataUriPattern.Match(content);
-            if (!match.Success) return (mimeType, rawData);
-            var base64Data = match.Groups["data"].Value;
-            
-
-            try {
-                mimeType = match.Groups["type"].Value.ToLower();
-                rawData = Convert.FromBase64String(base64Data);
+            if (!match.Success) {
+                throw new Exception("Base-64 file content is invalid.");
             }
-            catch {}
+            var base64Data = match.Groups["data"].Value;
+
+
+            var mimeType = match.Groups["type"].Value.ToLower();
+            var rawData = Convert.FromBase64String(base64Data);
 
             return (mimeType, rawData);
         }
