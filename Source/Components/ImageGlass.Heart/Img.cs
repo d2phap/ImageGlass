@@ -190,7 +190,7 @@ namespace ImageGlass.Heart {
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
         public async Task SaveImagePages(string destFolder) {
-            await Photo.SaveImagePagesAsync(this.Filename, destFolder);
+            await Photo.SavePagesAsync(this.Filename, destFolder);
         }
 
         #endregion

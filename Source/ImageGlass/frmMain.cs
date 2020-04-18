@@ -1890,7 +1890,7 @@ namespace ImageGlass {
                 }
 
                 // override the current image file
-                Heart.Photo.SaveImage(newBitmap, Local.ImageModifiedPath);
+                Heart.Photo.Save(newBitmap, Local.ImageModifiedPath);
 
                 // Issue #307: option to preserve the modified date/time
                 if (Configs.IsPreserveModifiedDate) {
@@ -4144,57 +4144,54 @@ namespace ImageGlass {
                 return;
             }
 
-            string filename = Local.ImageList.GetFileName(Local.CurrentIndex);
-            if (filename == "") {
-                filename = "untitled.png";
-            }
-            string ext = Path.GetExtension(filename).Substring(1);
+            var filename = Local.ImageList.GetFileName(Local.CurrentIndex) ?? "untitled.png";
+            var ext = Path.GetExtension(filename).Substring(1);
 
 
-            SaveFileDialog s = new SaveFileDialog
+            var saveDialog = new SaveFileDialog
             {
-                Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.txt)|*.txt",
+                Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
                 FileName = Path.GetFileNameWithoutExtension(filename)
             };
 
             // Use the last-selected file extension, if available.
             if (Local.SaveAsFilterIndex != 0)
-                s.FilterIndex = Local.SaveAsFilterIndex;
+                saveDialog.FilterIndex = Local.SaveAsFilterIndex;
             else
                 switch (ext.ToLower()) {
                     case "bmp":
-                        s.FilterIndex = 1;
+                        saveDialog.FilterIndex = 1;
                         break;
                     case "emf":
-                        s.FilterIndex = 2;
+                        saveDialog.FilterIndex = 2;
                         break;
                     case "exif":
-                        s.FilterIndex = 3;
+                        saveDialog.FilterIndex = 3;
                         break;
                     case "gif":
-                        s.FilterIndex = 4;
+                        saveDialog.FilterIndex = 4;
                         break;
                     case "ico":
-                        s.FilterIndex = 5;
+                        saveDialog.FilterIndex = 5;
                         break;
                     case "jpg":
                     case "jpeg":
                     case "jpe":
-                        s.FilterIndex = 6;
+                        saveDialog.FilterIndex = 6;
                         break;
                     case "png":
-                        s.FilterIndex = 7;
+                        saveDialog.FilterIndex = 7;
                         break;
                     case "tiff":
-                        s.FilterIndex = 8;
+                        saveDialog.FilterIndex = 8;
                         break;
                     case "wmf":
-                        s.FilterIndex = 9;
+                        saveDialog.FilterIndex = 9;
                         break;
                 }
 
 
-            if (s.ShowDialog() == DialogResult.OK) {
+            if (saveDialog.ShowDialog() == DialogResult.OK) {
                 Bitmap clonedPic;
 
                 if (!picMain.SelectionRegion.IsEmpty) {
@@ -4204,38 +4201,41 @@ namespace ImageGlass {
                     clonedPic = (Bitmap)picMain.Image;
                 }
 
-                Local.SaveAsFilterIndex = s.FilterIndex;
-                switch (s.FilterIndex) {
+                Local.SaveAsFilterIndex = saveDialog.FilterIndex;
+                switch (saveDialog.FilterIndex) {
                     case 1:
                     case 4:
                     case 6:
                     case 7:
-                        Heart.Photo.SaveImage(clonedPic, s.FileName);
+                        Heart.Photo.Save(clonedPic, saveDialog.FileName);
                         break;
                     case 2:
-                        clonedPic.Save(s.FileName, ImageFormat.Emf);
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Emf);
                         break;
                     case 3:
-                        clonedPic.Save(s.FileName, ImageFormat.Exif);
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Exif);
                         break;
                     case 5:
-                        clonedPic.Save(s.FileName, ImageFormat.Icon);
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Icon);
                         break;
                     case 8:
-                        clonedPic.Save(s.FileName, ImageFormat.Tiff);
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Tiff);
                         break;
                     case 9:
-                        clonedPic.Save(s.FileName, ImageFormat.Wmf);
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Wmf);
                         break;
                     case 10:
-                        using (MemoryStream ms = new MemoryStream()) {
+                        using (var ms = new MemoryStream()) {
                             try {
-                                clonedPic.Save(ms, ImageFormat.Png);
-                                string base64string = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
-
-                                using (StreamWriter fs = new StreamWriter(s.FileName)) {
-                                    await fs.WriteAsync(base64string);
-                                    fs.Flush();
+                                // temporary data or selected region
+                                if (Local.IsTempMemoryData || !picMain.SelectionRegion.IsEmpty) {
+                                    await Heart.Photo.SaveAsBase64Async(clonedPic, saveDialog.FileName, ImageFormat.Png);
+                                }
+                                else {
+                                    await Heart.Photo.SaveAsBase64Async(
+                                        Local.ImageList.GetFileName(Local.CurrentIndex),
+                                        saveDialog.FileName,
+                                        clonedPic.RawFormat);
                                 }
                             }
                             catch (Exception ex) {
@@ -4246,12 +4246,9 @@ namespace ImageGlass {
                         break;
                 }
 
-                // release resources
-                clonedPic.Dispose();
-
-                //display successful msg
-                if (File.Exists(s.FileName)) {
-                    ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], s.FileName), 2000);
+                // display successful msg
+                if (File.Exists(saveDialog.FileName)) {
+                    ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], saveDialog.FileName), 2000);
                 }
             }
 

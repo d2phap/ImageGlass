@@ -21,10 +21,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageMagick;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ImageGlass.Heart {
     public static class Photo {
@@ -458,7 +460,7 @@ namespace ImageGlass.Heart {
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static async Task SaveImageAsync(string srcFileName, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100) {
+        public static async Task SaveAsync(string srcFileName, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100) {
             await Task.Run(() => {
                 using (var imgM = new MagickImage(srcFileName)) {
                     imgM.Quality = quality;
@@ -475,7 +477,7 @@ namespace ImageGlass.Heart {
         /// <param name="destFileName">Destination filename</param>
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-        public static void SaveImage(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100) {
+        public static void Save(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100) {
             using (var imgM = new MagickImage(srcBitmap)) {
                 imgM.Quality = quality;
 
@@ -494,7 +496,7 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="filename">The full path of source file</param>
         /// <param name="destFileName">The destination folder to save to</param>
-        public static async Task SaveImagePagesAsync(string filename, string destFolder) {
+        public static async Task SavePagesAsync(string filename, string destFolder) {
             await Task.Run(() => {
                 // create dirs unless it does not exist
                 Directory.CreateDirectory(destFolder);
@@ -516,6 +518,90 @@ namespace ImageGlass.Heart {
                     }
                 }
             });
+        }
+
+
+
+        /// <summary>
+        /// Saves source file as base64 file
+        /// </summary>
+        /// <param name="srcFilename">Source file</param>
+        /// <param name="destFilename">Destination file</param>
+        /// <param name="format">Image format</param>
+        /// <returns></returns>
+        public static async Task SaveAsBase64Async(string srcFilename, string destFilename, ImageFormat format) {
+            var srcExt = Path.GetExtension(srcFilename).ToUpperInvariant();
+
+            // for SVG format
+            if (srcExt == ".SVG") {
+                byte[] data;
+
+                using(var fs = new FileStream(srcFilename, FileMode.Open, FileAccess.Read)) {
+                    data = new byte[fs.Length];
+                    await fs.ReadAsync(data, 0, (int)fs.Length);
+
+                    fs.Close();
+                }
+
+                var header = $"data:image/svg+xml;base64,";
+                var base64 = Convert.ToBase64String(data);
+
+                using (var sw = new StreamWriter(destFilename)) {
+                    await sw.WriteAsync(header + base64);
+                    sw.Flush();
+                    sw.Close();
+                }
+
+                return;
+            }
+
+            // non-svg formats
+            var bmp = await LoadAsync(srcFilename);
+            await SaveAsBase64Async(bmp.Image, destFilename, format);
+        }
+
+
+        /// <summary>
+        /// Saves source bitmap image as base64 file
+        /// </summary>
+        /// <param name="srcBitmap">Source bitmap</param>
+        /// <param name="destFilename">Destination file</param>
+        /// <param name="format">Image format</param>
+        /// <returns></returns>
+        public static async Task SaveAsBase64Async(Bitmap srcBitmap, string destFilename, ImageFormat format) {
+
+            var mimeType = "image/png";
+
+            if (format.Equals(ImageFormat.Gif)) {
+                mimeType = "image/gif";
+            }
+            else if (format.Equals(ImageFormat.Bmp)) {
+                mimeType = "image/bmp";
+            }
+            else if (format.Equals(ImageFormat.Jpeg)) {
+                mimeType = "image/jpeg";
+            }
+            else if (format.Equals(ImageFormat.Tiff)) {
+                mimeType = "image/tiff";
+            }
+            else if (format.Equals(ImageFormat.Icon)) {
+                mimeType = "image/x-icon";
+            } else {
+                format = ImageFormat.Png;
+            }
+
+            using (var ms = new MemoryStream()) {
+                srcBitmap.Save(ms, format);
+                
+                var header = $"data:{mimeType};base64,";
+                var base64 = Convert.ToBase64String(ms.ToArray());
+                
+                using (var sw = new StreamWriter(destFilename)) {
+                    await sw.WriteAsync(header + base64);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
         }
 
 
