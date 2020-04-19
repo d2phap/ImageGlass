@@ -75,7 +75,7 @@ namespace ImageGlass {
         #region Local variables
 
         // window size value before resizing
-        private Size _windowSize = new Size(1200, 800);
+        private Size _windowSize = new Size(1300, 800);
 
         // determine if the image is zoomed
         private bool _isManuallyZoomed = false;

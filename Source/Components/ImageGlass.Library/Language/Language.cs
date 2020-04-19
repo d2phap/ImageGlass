@@ -221,17 +221,17 @@ namespace ImageGlass.Library {
 
             #region File
             Items.Add("frmMain.mnuMainFile", "File"); //v7.0
-            Items.Add("frmMain.mnuMainOpenFile", "Open file"); //v3.0
+            Items.Add("frmMain.mnuMainOpenFile", "Open file…"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v7.0
             Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
-            Items.Add("frmMain.mnuMainSaveAs", "Save image as ..."); //v3.0
+            Items.Add("frmMain.mnuMainSaveAs", "Save image as…"); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
             Items.Add("frmMain.mnuMainReloadImageList", "Reload image list"); //v7.0
-            Items.Add("frmMain.mnuOpenWith", "Open with..."); //v7.6
-            Items.Add("frmMain.mnuMainEditImage", "Edit image {0}"); //v3.0, updated 4.0
-            Items.Add("frmMain.mnuMainPrint", "Print"); //v3.0
+            Items.Add("frmMain.mnuOpenWith", "Open with…"); //v7.6
+            Items.Add("frmMain.mnuMainEditImage", "Edit image {0}…"); //v3.0, updated 4.0
+            Items.Add("frmMain.mnuMainPrint", "Print…"); //v3.0
             #endregion
 
 
@@ -242,7 +242,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainViewPrevious", "View previous image"); //v3.0
             Items.Add("frmMain.mnuMainViewPrevious.Shortcut", "Left Arrow / PageUp"); // V6.0
 
-            Items.Add("frmMain.mnuMainGoto", "Go to ..."); //v3.0
+            Items.Add("frmMain.mnuMainGoto", "Go to…"); //v3.0
             Items.Add("frmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
             Items.Add("frmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
 
@@ -280,10 +280,10 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainRotateRight", "Rotate right"); //v7.5
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
             Items.Add("frmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
-            Items.Add("frmMain.mnuMainRename", "Rename image"); //v3.0
+            Items.Add("frmMain.mnuMainRename", "Rename image…"); //v3.0
             Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
-            Items.Add("frmMain.mnuMainExtractPages", "Extract image pages ({0})"); //v7.5
+            Items.Add("frmMain.mnuMainExtractPages", "Extract image pages ({0})…"); //v7.5
             Items.Add("frmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
             Items.Add("frmMain.mnuMainSetAsDesktop", "Set as Desktop background"); //v3.0
             Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
@@ -315,7 +315,7 @@ namespace ImageGlass.Library {
             #endregion
 
 
-            Items.Add("frmMain.mnuMainShare", "Share ..."); //v3.0
+            Items.Add("frmMain.mnuMainShare", "Share…"); //v3.0
 
 
             #region Layout
@@ -335,16 +335,16 @@ namespace ImageGlass.Library {
             #endregion
 
 
-            Items.Add("frmMain.mnuMainSettings", "Settings"); //v3.0
+            Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
 
 
             #region Help
             Items.Add("frmMain.mnuMainHelp", "Help"); //v7.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
-            Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations"); //v5.0
-            Items.Add("frmMain.mnuMainCheckForUpdate._NoUpdate", "Check for update"); //v5.0
+            Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations…"); //v5.0
+            Items.Add("frmMain.mnuMainCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
-            Items.Add("frmMain.mnuMainReportIssue", "Report an issue"); //v3.0
+            Items.Add("frmMain.mnuMainReportIssue", "Report an issue…"); //v3.0
 
 
             Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
@@ -379,7 +379,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
             Items.Add("frmMain._SaveChanges", "Saving change..."); // v2.0 final
             Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
-            Items.Add("frmMain._SavingImage", "Saving image...\r\n{0}"); // v8.0
+            Items.Add("frmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
             Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
             Items.Add("frmMain._Loading", "Loading..."); // v3.0
             Items.Add("frmMain._FirstItemOfList", "Reached the first image"); // v4.0
@@ -405,7 +405,7 @@ namespace ImageGlass.Library {
             Items.Add("frmAbout.lblVersion", "Version: {0}");
             Items.Add("frmAbout.lblInfoContact", "Contact");
             Items.Add("frmAbout.lblSoftwareUpdate", "Software updates");
-            Items.Add("frmAbout.lnkCheckUpdate", "» Check for update");
+            Items.Add("frmAbout.lnkCheckUpdate", "» Check for update…");
             Items.Add("frmAbout._Text", "About");
             Items.Add("frmAbout._PortableText", "[Portable]"); //v4.0
             #endregion
@@ -505,9 +505,9 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblColorManagement", "Color management"); //v6.0
             Items.Add("frmSetting.chkApplyColorProfile", "Apply also for images without embedded color profile"); //v6.0
             Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
-            Items.Add("frmSetting.lnkColorProfileBrowse", "Browse"); //v6.0
+            Items.Add("frmSetting.lnkColorProfileBrowse", "Browse…"); //v6.0
             Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
-            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom..."); //v6.0
+            Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom…"); //v6.0
 
             #endregion
 
@@ -566,9 +566,9 @@ namespace ImageGlass.Library {
             //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
-            Items.Add("frmSetting.btnEditEditExt", "Edit"); //v4.0
+            Items.Add("frmSetting.btnEditEditExt", "Edit…"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
-            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions"); //v4.1
+            Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions…"); //v4.1
             Items.Add("frmSetting._allExtensions", "all extensions"); //v4.1
             Items.Add("frmSetting.lvImageEditing.clnFileExtension", "File extension"); //v4.0
             Items.Add("frmSetting.lvImageEditing.clnAppName", "App name"); //v4.0
@@ -583,8 +583,8 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
 
-            Items.Add("frmSetting.btnAddNewExt", "Add"); // 4.0
-            Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer"); // 4.0, updated v5.0
+            Items.Add("frmSetting.btnAddNewExt", "Add…"); // 4.0
+            Items.Add("frmSetting.btnRegisterExt", "Set as Default photo viewer…"); // 4.0, updated v5.0
             Items.Add("frmSetting.btnDeleteExt", "Delete"); // 4.0
             Items.Add("frmSetting.btnResetExt", "Reset to default"); // 4.0
             Items.Add("frmSetting._RegisterWebToApp_Error", "Unable to register Web-to-App linking"); // 7.0
@@ -627,23 +627,23 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
 
-            Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)"); //v2.0 final
-            Items.Add("frmSetting.lnkCreateNew", "> Create new language pack");
-            Items.Add("frmSetting.lnkEdit", "> Edit selected language pack");
-            Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs");
+            Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)…"); //v2.0 final
+            Items.Add("frmSetting.lnkCreateNew", "> Create new language pack…");
+            Items.Add("frmSetting.lnkEdit", "> Edit selected language pack…");
+            Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs…");
             #endregion
 
 
             #region TAB Theme
 
             Items.Add("frmSetting.lblInstalledThemes", "Installed themes: {0}"); //v5.0
-            Items.Add("frmSetting.lnkThemeDownload", "Download themes"); //v5.0
+            Items.Add("frmSetting.lnkThemeDownload", "Download themes…"); //v5.0
             Items.Add("frmSetting.btnThemeRefresh", "Refresh"); //v5.0
-            Items.Add("frmSetting.btnThemeInstall", "Install"); //v5.0
-            Items.Add("frmSetting.btnThemeUninstall", "Uninstall"); //v5.0
-            Items.Add("frmSetting.btnThemeSaveAs", "Save As"); //v5.0
-            Items.Add("frmSetting.btnThemeFolderOpen", "Open Theme Folder"); //v5.0
-            Items.Add("frmSetting.btnThemeApply", "Apply Theme"); //v5.0
+            Items.Add("frmSetting.btnThemeInstall", "Install…"); //v5.0
+            Items.Add("frmSetting.btnThemeUninstall", "Uninstall…"); //v5.0
+            Items.Add("frmSetting.btnThemeSaveAs", "Save as…"); //v5.0
+            Items.Add("frmSetting.btnThemeFolderOpen", "Open theme folder"); //v5.0
+            Items.Add("frmSetting.btnThemeApply", "Apply theme"); //v5.0
 
             Items.Add("frmSetting.txtThemeInfo._Name", "Name"); //v5.0
             Items.Add("frmSetting.txtThemeInfo._Version", "Version"); //v5.0
@@ -726,7 +726,7 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.lblWidth", "Width:"); //v7.6
             Items.Add("frmCrop.lblHeight", "Height:"); //v7.6
             Items.Add("frmCrop.btnSave", "Save"); //v7.6
-            Items.Add("frmCrop.btnSaveAs", "Save as"); //v7.6
+            Items.Add("frmCrop.btnSaveAs", "Save as…"); //v7.6
             Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
             Items.Add("frmCrop.btnClear", "Clear"); //v7.6
 

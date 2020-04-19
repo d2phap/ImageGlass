@@ -224,7 +224,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 500);
+            this.mnuMain.Size = new System.Drawing.Size(258, 533);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -301,7 +301,7 @@
             this.mnuMainSaveAs.ShortcutKeyDisplayString = "Ctrl+S";
             this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.mnuMainSaveAs.Size = new System.Drawing.Size(438, 33);
-            this.mnuMainSaveAs.Text = "&Save image as ...";
+            this.mnuMainSaveAs.Text = "&Save image as...";
             this.mnuMainSaveAs.Click += new System.EventHandler(this.mnuMainSaveAs_Click);
             // 
             // toolStripSeparator10
@@ -1360,7 +1360,7 @@
             // 
             this.thumbnailBar.AllowDrop = true;
             this.thumbnailBar.AllowDuplicateFileNames = true;
-            this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
+            this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
