@@ -458,6 +458,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
             Items.Add("frmSetting.chkDisplayBasename", "Display basename of the viewing image on title bar"); //v5.0
             Items.Add("frmSetting.chkShowCheckerboardOnlyImage", "Display checkerboard only in the image region"); //v6.0
+            Items.Add("frmSetting.chkUseTouchGesture", "Enable touch gesture support"); // v7.6
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion

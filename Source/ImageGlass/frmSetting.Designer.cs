@@ -207,6 +207,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.chkUseTouchGesture = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -311,7 +312,7 @@ namespace ImageGlass
             this.picBackgroundColor.BackColor = System.Drawing.Color.White;
             this.picBackgroundColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBackgroundColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picBackgroundColor.Location = new System.Drawing.Point(45, 523);
+            this.picBackgroundColor.Location = new System.Drawing.Point(45, 558);
             this.picBackgroundColor.Margin = new System.Windows.Forms.Padding(2);
             this.picBackgroundColor.Name = "picBackgroundColor";
             this.picBackgroundColor.Size = new System.Drawing.Size(100, 40);
@@ -528,6 +529,7 @@ namespace ImageGlass
             // 
             this.tabGeneral.AutoScroll = true;
             this.tabGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tabGeneral.Controls.Add(this.chkUseTouchGesture);
             this.tabGeneral.Controls.Add(this.lblHeadViewer);
             this.tabGeneral.Controls.Add(this.chkShowToast);
             this.tabGeneral.Controls.Add(this.chkCenterWindowFit);
@@ -571,7 +573,7 @@ namespace ImageGlass
             // 
             this.chkShowToast.AutoSize = true;
             this.chkShowToast.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowToast.Location = new System.Drawing.Point(45, 814);
+            this.chkShowToast.Location = new System.Drawing.Point(45, 849);
             this.chkShowToast.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowToast.Name = "chkShowToast";
             this.chkShowToast.Size = new System.Drawing.Size(224, 30);
@@ -583,7 +585,7 @@ namespace ImageGlass
             // 
             this.chkCenterWindowFit.AutoSize = true;
             this.chkCenterWindowFit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkCenterWindowFit.Location = new System.Drawing.Point(45, 780);
+            this.chkCenterWindowFit.Location = new System.Drawing.Point(45, 815);
             this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(2);
             this.chkCenterWindowFit.Name = "chkCenterWindowFit";
             this.chkCenterWindowFit.Size = new System.Drawing.Size(415, 30);
@@ -672,7 +674,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.AutoSize = true;
             this.lnkResetBackgroundColor.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkResetBackgroundColor.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 531);
+            this.lnkResetBackgroundColor.Location = new System.Drawing.Point(150, 566);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(54, 25);
             this.lnkResetBackgroundColor.TabIndex = 11;
@@ -685,7 +687,7 @@ namespace ImageGlass
             // 
             this.lblHeadOthers.AutoSize = true;
             this.lblHeadOthers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadOthers.Location = new System.Drawing.Point(25, 610);
+            this.lblHeadOthers.Location = new System.Drawing.Point(25, 645);
             this.lblHeadOthers.Name = "lblHeadOthers";
             this.lblHeadOthers.Size = new System.Drawing.Size(69, 25);
             this.lblHeadOthers.TabIndex = 46;
@@ -713,7 +715,7 @@ namespace ImageGlass
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(388, 864);
+            this.panel1.Location = new System.Drawing.Point(388, 899);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(110, 32);
@@ -723,7 +725,7 @@ namespace ImageGlass
             // 
             this.chkConfirmationDelete.AutoSize = true;
             this.chkConfirmationDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 746);
+            this.chkConfirmationDelete.Location = new System.Drawing.Point(45, 781);
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(2);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(329, 30);
@@ -735,7 +737,7 @@ namespace ImageGlass
             // 
             this.chkAllowMultiInstances.AutoSize = true;
             this.chkAllowMultiInstances.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 678);
+            this.chkAllowMultiInstances.Location = new System.Drawing.Point(45, 713);
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(2);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(367, 30);
@@ -747,7 +749,7 @@ namespace ImageGlass
             // 
             this.chkESCToQuit.AutoSize = true;
             this.chkESCToQuit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkESCToQuit.Location = new System.Drawing.Point(45, 712);
+            this.chkESCToQuit.Location = new System.Drawing.Point(45, 747);
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(2);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(348, 30);
@@ -770,7 +772,7 @@ namespace ImageGlass
             // lblBackGroundColor
             // 
             this.lblBackGroundColor.AutoSize = true;
-            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 497);
+            this.lblBackGroundColor.Location = new System.Drawing.Point(40, 532);
             this.lblBackGroundColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBackGroundColor.Name = "lblBackGroundColor";
             this.lblBackGroundColor.Size = new System.Drawing.Size(156, 25);
@@ -793,7 +795,7 @@ namespace ImageGlass
             // 
             this.chkAutoUpdate.AutoSize = true;
             this.chkAutoUpdate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 644);
+            this.chkAutoUpdate.Location = new System.Drawing.Point(45, 679);
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(296, 30);
@@ -2603,6 +2605,19 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(1044, 72);
             this.panel4.TabIndex = 18;
             // 
+            // chkUseTouchGesture
+            // 
+            this.chkUseTouchGesture.AutoSize = true;
+            this.chkUseTouchGesture.BackColor = System.Drawing.Color.Transparent;
+            this.chkUseTouchGesture.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkUseTouchGesture.Location = new System.Drawing.Point(45, 477);
+            this.chkUseTouchGesture.Margin = new System.Windows.Forms.Padding(2);
+            this.chkUseTouchGesture.Name = "chkUseTouchGesture";
+            this.chkUseTouchGesture.Size = new System.Drawing.Size(294, 30);
+            this.chkUseTouchGesture.TabIndex = 48;
+            this.chkUseTouchGesture.Text = "[Enable touch gesture support]";
+            this.chkUseTouchGesture.UseVisualStyleBackColor = false;
+            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -2851,5 +2866,6 @@ namespace ImageGlass
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.TableLayoutPanel tableTheme;
+        private System.Windows.Forms.CheckBox chkUseTouchGesture;
     }
 }

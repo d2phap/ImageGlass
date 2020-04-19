@@ -2938,12 +2938,12 @@ namespace ImageGlass {
             }
 
             // Touch support
-            else if (m.Msg == Touch.WM_GESTURENOTIFY) {
+            else if (m.Msg == Touch.WM_GESTURENOTIFY && Configs.IsUseTouchGesture) {
                 touchHandled = Touch.AcceptTouch(this);
             }
 
             // Touch support
-            else if (m.Msg == Touch.WM_GESTURE) {
+            else if (m.Msg == Touch.WM_GESTURE && Configs.IsUseTouchGesture) {
                 touchHandled = Touch.DecodeTouch(m, out Touch.Action act);
 
                 switch (act) {
@@ -2978,7 +2978,7 @@ namespace ImageGlass {
                 }
             }
 
-            // Window resizing
+            // Window frameless resizing
             else if (m.Msg == 0x0084 && Configs.IsWindowFrameless) {
                 base.WndProc(ref m);
 

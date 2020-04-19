@@ -291,6 +291,12 @@ namespace ImageGlass.Settings {
         public static bool IsShowToast { get; set; } = true;
 
 
+        /// <summary>
+        /// Gets, sets value indicates that touch gesture support enabled
+        /// </summary>
+        public static bool IsUseTouchGesture { get; set; } = true;
+
+
         #endregion
 
 
@@ -611,6 +617,7 @@ namespace ImageGlass.Settings {
             IsWindowFit = Get<bool>(nameof(IsWindowFit), IsWindowFit);
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
+            IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
 
             #endregion
 
@@ -831,6 +838,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsWindowFit), IsWindowFit);
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
             Set(nameof(IsShowToast), IsShowToast);
+            Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
 
             #endregion
 

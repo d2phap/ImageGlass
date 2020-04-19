@@ -215,6 +215,7 @@ namespace ImageGlass {
             chkShowNavButtons.Text = lang[$"{Name}.{nameof(chkShowNavButtons)}"];
             chkDisplayBasename.Text = lang[$"{Name}.{nameof(chkDisplayBasename)}"];
             chkShowCheckerboardOnlyImage.Text = lang[$"{Name}.{nameof(chkShowCheckerboardOnlyImage)}"];
+            chkUseTouchGesture.Text = lang[$"{Name}.{nameof(chkUseTouchGesture)}"];
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
@@ -503,6 +504,7 @@ namespace ImageGlass {
             chkShowCheckerboardOnlyImage.Checked = Configs.IsShowCheckerboardOnlyImageRegion;
             chkCenterWindowFit.Checked = Configs.IsCenterWindowFit;
             chkShowToast.Checked = Configs.IsShowToast;
+            chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
         }
 
@@ -1854,6 +1856,7 @@ namespace ImageGlass {
             Configs.IsDisplayBasenameOfImage = chkDisplayBasename.Checked;
             Configs.IsCenterWindowFit = chkCenterWindowFit.Checked;
             Configs.IsShowToast = chkShowToast.Checked;
+            Configs.IsUseTouchGesture = chkUseTouchGesture.Checked;
 
 
             #region IsShowNavigationButtons: MainFormForceUpdateAction.OTHER_SETTINGS
