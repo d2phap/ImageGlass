@@ -88,6 +88,7 @@ namespace ImageGlass.Base {
                 ToolbarButton.btnRotateRight,
                 ToolbarButton.btnFlipHorz,
                 ToolbarButton.btnFlipVert,
+                ToolbarButton.btnCrop,
                 ToolbarButton.Separator,
 
                 ToolbarButton.btnAutoZoom,

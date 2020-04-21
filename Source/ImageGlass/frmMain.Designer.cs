@@ -163,6 +163,8 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnColorPicker = new System.Windows.Forms.ToolStripButton();
+            this.btnCrop = new System.Windows.Forms.ToolStripButton();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -224,7 +226,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(258, 533);
+            this.mnuMain.Size = new System.Drawing.Size(258, 500);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1292,7 +1294,7 @@
             this.sp0.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.sp0.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp0.Panel2Collapsed = true;
-            this.sp0.Size = new System.Drawing.Size(973, 450);
+            this.sp0.Size = new System.Drawing.Size(1098, 450);
             this.sp0.SplitterDistance = 588;
             this.sp0.SplitterWidth = 2;
             this.sp0.TabIndex = 1;
@@ -1320,7 +1322,7 @@
             this.sp1.Panel2.Controls.Add(this.thumbnailBar);
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
-            this.sp1.Size = new System.Drawing.Size(973, 390);
+            this.sp1.Size = new System.Drawing.Size(1098, 390);
             this.sp1.SplitterDistance = 363;
             this.sp1.SplitterWidth = 2;
             this.sp1.TabIndex = 2;
@@ -1341,7 +1343,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(973, 363);
+            this.picMain.Size = new System.Drawing.Size(1098, 363);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoom = 100D;
@@ -1372,7 +1374,7 @@
             this.thumbnailBar.Name = "thumbnailBar";
             this.thumbnailBar.PersistentCacheFile = "";
             this.thumbnailBar.PersistentCacheSize = ((long)(100));
-            this.thumbnailBar.Size = new System.Drawing.Size(973, 25);
+            this.thumbnailBar.Size = new System.Drawing.Size(1098, 25);
             this.thumbnailBar.TabIndex = 0;
             this.thumbnailBar.ThumbnailSize = new System.Drawing.Size(48, 48);
             this.thumbnailBar.View = ImageGlass.ImageListView.View.Gallery;
@@ -1419,13 +1421,15 @@
             this.btnPrintImage,
             this.btnEdit,
             this.btnDelete,
+            this.btnCrop,
+            this.btnColorPicker,
             this.btnMenu,
             this.lblInfo});
             this.toolMain.Location = new System.Drawing.Point(0, 0);
             this.toolMain.Name = "toolMain";
             this.toolMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolMain.ShowItemToolTips = false;
-            this.toolMain.Size = new System.Drawing.Size(973, 60);
+            this.toolMain.Size = new System.Drawing.Size(1098, 60);
             this.toolMain.TabIndex = 1;
             // 
             // btnBack
@@ -1871,6 +1875,36 @@
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
             // 
+            // btnColorPicker
+            // 
+            this.btnColorPicker.AutoSize = false;
+            this.btnColorPicker.BackColor = System.Drawing.Color.Transparent;
+            this.btnColorPicker.CheckOnClick = true;
+            this.btnColorPicker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnColorPicker.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnColorPicker.Margin = new System.Windows.Forms.Padding(0);
+            this.btnColorPicker.Name = "btnColorPicker";
+            this.btnColorPicker.Size = new System.Drawing.Size(33, 33);
+            this.btnColorPicker.ToolTipText = "[Color picker]";
+            this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
+            // 
+            // btnCropping
+            // 
+            this.btnCrop.AutoSize = false;
+            this.btnCrop.BackColor = System.Drawing.Color.Transparent;
+            this.btnCrop.CheckOnClick = true;
+            this.btnCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCrop.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnCrop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCrop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCrop.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCrop.Name = "btnCropping";
+            this.btnCrop.Size = new System.Drawing.Size(33, 33);
+            this.btnCrop.ToolTipText = "[Cropping]";
+            this.btnCrop.Click += new System.EventHandler(this.btnCropping_Click);
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1878,7 +1912,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(973, 450);
+            this.ClientSize = new System.Drawing.Size(1098, 450);
             this.Controls.Add(this.sp0);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2050,6 +2084,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuOpenWith;
         private System.Windows.Forms.ToolStripMenuItem mnuMainCrop;
         private ImageBoxEx picMain;
+        private System.Windows.Forms.ToolStripButton btnColorPicker;
+        private System.Windows.Forms.ToolStripButton btnCrop;
     }
 }
 

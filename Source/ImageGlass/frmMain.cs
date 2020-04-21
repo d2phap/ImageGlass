@@ -2283,7 +2283,7 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="show"></param>
         public void ShowCropTool(bool show = true) {
-            mnuMainCrop.Checked = show;
+            btnCrop.Checked = mnuMainCrop.Checked = show;
             picMain.SelectionMode = ImageBoxSelectionMode.None;
             picMain.SelectNone();
 
@@ -2498,6 +2498,8 @@ namespace ImageGlass {
             btnFlipVert.Image = th.ToolbarIcons.FlipVert.Image;
             btnDelete.Image = th.ToolbarIcons.Delete.Image;
             btnEdit.Image = th.ToolbarIcons.Edit.Image;
+            btnCrop.Image = th.ToolbarIcons.Crop.Image;
+            btnColorPicker.Image = th.ToolbarIcons.ColorPicker.Image;
 
             btnZoomIn.Image = th.ToolbarIcons.ZoomIn.Image;
             btnZoomOut.Image = th.ToolbarIcons.ZoomOut.Image;
@@ -3238,6 +3240,8 @@ namespace ImageGlass {
                 btnFlipVert.ToolTipText = mnuMainFlipVert.Text + $" ({mnuMainFlipVert.ShortcutKeyDisplayString})";
                 btnDelete.ToolTipText = mnuMainMoveToRecycleBin.Text + $" ({mnuMainMoveToRecycleBin.ShortcutKeyDisplayString})";
                 btnEdit.ToolTipText = string.Format(mnuMainEditImage.Text, "") + $" ({mnuMainEditImage.ShortcutKeyDisplayString})";
+                btnCrop.ToolTipText = string.Format(mnuMainCrop.Text, "") + $" ({mnuMainCrop.ShortcutKeyDisplayString})";
+                btnColorPicker.ToolTipText = string.Format(mnuMainColorPicker.Text, "") + $" ({mnuMainColorPicker.ShortcutKeyDisplayString})";
 
                 // Zooming
                 btnZoomIn.ToolTipText = mnuMainZoomIn.Text + $" ({mnuMainZoomIn.ShortcutKeyDisplayString})";
@@ -3302,7 +3306,9 @@ namespace ImageGlass {
 
             #region COLOR_PICKER_MENU
             if ((flags & ForceUpdateActions.COLOR_PICKER_MENU) == ForceUpdateActions.COLOR_PICKER_MENU) {
-                mnuMainColorPicker.Checked = Local.IsColorPickerToolOpening;
+                btnColorPicker.Checked =
+                    mnuMainColorPicker.Checked =
+                    Local.IsColorPickerToolOpening;
             }
             #endregion
 
@@ -5053,7 +5059,9 @@ namespace ImageGlass {
 
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e) {
-            Configs.IsShowColorPickerOnStartup = mnuMainColorPicker.Checked;
+            Configs.IsShowColorPickerOnStartup = 
+                btnColorPicker.Checked =
+                mnuMainColorPicker.Checked;
 
             ShowColorPickerTool(mnuMainColorPicker.Checked);
         }
@@ -5233,8 +5241,16 @@ namespace ImageGlass {
 
 
 
+
         #endregion
 
 
+        private void btnCropping_Click(object sender, EventArgs e) {
+            mnuMainCrop.PerformClick();
+        }
+
+        private void btnColorPicker_Click(object sender, EventArgs e) {
+            mnuMainColorPicker.PerformClick();
+        }
     }
 }

@@ -136,6 +136,8 @@ namespace ImageGlass.Base {
         btnFlipVert = 24,
         btnScaleToFill = 25,
         btnEdit = 26,
+        btnCrop = 27,
+        btnColorPicker = 28,
 
         MAX // DO NOT ADD ANYTHING AFTER THIS
     }

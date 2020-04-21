@@ -487,13 +487,13 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1000, 800);
+        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1300, 800);
 
 
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 900, 700);
+        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 1050, 750);
 
 
 

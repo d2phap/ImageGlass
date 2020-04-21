@@ -234,6 +234,8 @@ namespace ImageGlass.UI {
             ToolbarIcons.FlipVert.Refresh();
             ToolbarIcons.Delete.Refresh();
             ToolbarIcons.Edit.Refresh();
+            ToolbarIcons.Crop.Refresh();
+            ToolbarIcons.ColorPicker.Refresh();
             ToolbarIcons.ZoomIn.Refresh();
             ToolbarIcons.ZoomOut.Refresh();
             ToolbarIcons.ScaleToFit.Refresh();
@@ -388,6 +390,8 @@ namespace ImageGlass.UI {
             ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert");
             ToolbarIcons.Delete = LoadThemeImage(dir, n, "delete");
             ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit");
+            ToolbarIcons.Crop = LoadThemeImage(dir, n, "crop");
+            ToolbarIcons.ColorPicker = LoadThemeImage(dir, n, "colorpicker");
             ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin");
             ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout");
             ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit");
@@ -429,10 +433,8 @@ namespace ImageGlass.UI {
             return this.IsValid;
 
 
-            //
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            //
             Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
@@ -496,6 +498,8 @@ namespace ImageGlass.UI {
             n.SetAttribute("flipvert", Path.GetFileName(ToolbarIcons.FlipVert.Filename));
             n.SetAttribute("delete", Path.GetFileName(ToolbarIcons.Delete.Filename));
             n.SetAttribute("edit", Path.GetFileName(ToolbarIcons.Edit.Filename));
+            n.SetAttribute("crop", Path.GetFileName(ToolbarIcons.Crop.Filename));
+            n.SetAttribute("colorpicker", Path.GetFileName(ToolbarIcons.ColorPicker.Filename));
             n.SetAttribute("zoomin", Path.GetFileName(ToolbarIcons.ZoomIn.Filename));
             n.SetAttribute("zoomout", Path.GetFileName(ToolbarIcons.ZoomOut.Filename));
             n.SetAttribute("zoomtofit", Path.GetFileName(ToolbarIcons.ScaleToFit.Filename));
