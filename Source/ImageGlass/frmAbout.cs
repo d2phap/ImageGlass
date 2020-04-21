@@ -36,6 +36,7 @@ namespace ImageGlass {
         private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
 
+
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
             Label lbl = (Label)sender;
@@ -76,6 +77,7 @@ namespace ImageGlass {
         }
         #endregion
 
+
         private void lblMenu_Click(object sender, EventArgs e) {
             Label lbl = (Label)sender;
 
@@ -90,23 +92,24 @@ namespace ImageGlass {
             }
         }
 
+
         private void frmAbout_Load(object sender, EventArgs e) {
-            // Remove tabs header
-            tab1.Appearance = TabAppearance.FlatButtons;
-            tab1.ItemSize = new Size(0, 1);
-            tab1.SizeMode = TabSizeMode.Fixed;
+            var lang = Configs.Language.Items;
 
             // this.RightToLeft = Configs.Language.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
-            lblVersion.Text = String.Format(Configs.Language.Items["frmAbout.lblVersion"], Application.ProductVersion) + (App.IsPortable ? " " + Configs.Language.Items["frmAbout._PortableText"] : "");
+            lblVersion.Text = string.Format(lang["frmAbout.lblVersion"], App.Version)
+                + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
+
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
 
             // Load item component
             txtComponents.Text = "\r\n";
             foreach (string f in Directory.GetFiles(Application.StartupPath)) {
-                if (Path.GetExtension(f).ToLower() == ".dll" ||
-                    Path.GetExtension(f).ToLower() == ".exe") {
-                    FileVersionInfo fi = FileVersionInfo.GetVersionInfo(f);
+                var ext = Path.GetExtension(f).ToLower();
+
+                if (ext == ".dll" || ext == ".exe") {
+                    var fi = FileVersionInfo.GetVersionInfo(f);
 
                     txtComponents.Text += $"{Path.GetFileName(f)} - {fi.FileVersion}\r\n" +
                         $"{fi.LegalCopyright}\r\n" +
@@ -117,16 +120,17 @@ namespace ImageGlass {
             txtComponents.Text += "\r\n";
 
             // Load language:
-            this.Text = Configs.Language.Items["frmAbout._Text"];
-            lblSlogant.Text = Configs.Language.Items["frmAbout.lblSlogant"];
-            lblInfo.Text = Configs.Language.Items["frmAbout.lblInfo"];
-            lblComponent.Text = Configs.Language.Items["frmAbout.lblComponent"];
-            lblReferences.Text = Configs.Language.Items["frmAbout.lblReferences"];
-            lblInfoContact.Text = Configs.Language.Items["frmAbout.lblInfoContact"];
-            lblSoftwareUpdate.Text = Configs.Language.Items["frmAbout.lblSoftwareUpdate"];
-            lnkCheckUpdate.Text = Configs.Language.Items["frmAbout.lnkCheckUpdate"];
+            this.Text = lang["frmAbout._Text"];
+            lblSlogant.Text = lang["frmAbout.lblSlogant"];
+            lblInfo.Text = lang["frmAbout.lblInfo"];
+            lblComponent.Text = lang["frmAbout.lblComponent"];
+            lblReferences.Text = lang["frmAbout.lblReferences"];
+            lblInfoContact.Text = lang["frmAbout.lblInfoContact"];
+            lblSoftwareUpdate.Text = lang["frmAbout.lblSoftwareUpdate"];
+            lnkCheckUpdate.Text = lang["frmAbout.lnkCheckUpdate"];
 
         }
+
 
         #region IMAGEGLASS INFORMATION PANEL
         private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -173,6 +177,7 @@ namespace ImageGlass {
             Program.CheckForUpdate();
         }
         #endregion
+
 
         private void btnClose_Click(object sender, EventArgs e) {
             Close();

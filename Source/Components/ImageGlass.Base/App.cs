@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -28,16 +29,17 @@ namespace ImageGlass.Base {
     /// The base information of ImageGlass app
     /// </summary>
     public static class App {
+        
         /// <summary>
-        /// Gets the application version
-        /// </summary>
-        public static string Version { get => Application.ProductVersion; }
-
-
-        /// <summary>
-        /// Gets the application version
+        /// Gets the application executable path
         /// </summary>
         public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
+
+
+        /// <summary>
+        /// Gets the application version
+        /// </summary>
+        public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion; }
 
 
         /// <summary>
