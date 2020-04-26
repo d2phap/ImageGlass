@@ -22,6 +22,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -77,6 +78,15 @@ namespace ImageGlass {
                 numHeight.Value = (decimal)_imgBox.SelectionRegion.Height;
             }
             catch { }
+        }
+
+        protected override void OnClosing(CancelEventArgs e) {
+            base.OnClosing(e);
+
+            if (_imgBox != null) {
+                _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
+                _imgBox.ImageChanged -= this._imgBox_ImageChanged;
+            }
         }
 
 
