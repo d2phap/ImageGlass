@@ -31,6 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Settings", "Comp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Base", "Components\ImageGlass.Base\ImageGlass.Base.csproj", "{6CC96A70-6773-41B5-9FCA-4F0AB6FAD8CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B8EAB85-4C03-4A5A-AA61-1A3AD6299832}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Designer|Any CPU = Debug Designer|Any CPU

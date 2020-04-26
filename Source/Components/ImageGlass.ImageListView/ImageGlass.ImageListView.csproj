@@ -136,7 +136,7 @@
     <DefineConstants>TRACE;USEWIC</DefineConstants>
     <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <LangVersion>7.3</LangVersion>
