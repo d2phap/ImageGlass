@@ -3658,9 +3658,9 @@ namespace ImageGlass
             e.Graphics.SetClip(drawableRegion);
 
             // draw border, ignore alpha value
-            using (Pen pen = new Pen(Color.FromArgb(255, SelectionColor)))
+            using (var pen = new Pen(Color.FromArgb(255, SelectionColor)))
             {
-                e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width, selectionRec.Height);
+                e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width - 1, selectionRec.Height - 1);
             }
 
             // draw grid, ignore alpha value
