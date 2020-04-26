@@ -81,7 +81,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" SelfReg="false" DigSign="true"/>
     <ROW File="ChineseTraditional.iglang" Component_="Languages" FileName="CHINES~1.IGL|Chinese Traditional.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.iglang" SelfReg="false"/>
-    <ROW File="Czech.iglang" Component_="Languages" FileName="CZECH~1.IGL|Czech.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Czech.iglang" SelfReg="false"/>
     <ROW File="Greek.iglang" Component_="Languages" FileName="GREEK~1.IGL|Greek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.iglang" SelfReg="false"/>
     <ROW File="Hungarian.iglang" Component_="Languages" FileName="HUNGAR~1.IGL|Hungarian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.iglang" SelfReg="false"/>
     <ROW File="Polish.iglang" Component_="Languages" FileName="POLISH~1.IGL|Polish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.iglang" SelfReg="false"/>
@@ -90,8 +89,6 @@
     <ROW File="Russian.iglang" Component_="Languages" FileName="RUSSIA~1.IGL|Russian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Russian.iglang" SelfReg="false"/>
     <ROW File="Slovenian.iglang" Component_="Languages" FileName="SLOVEN~1.IGL|Slovenian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.iglang" SelfReg="false"/>
     <ROW File="Spanish.iglang" Component_="Languages" FileName="SPANIS~1.IGL|Spanish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.iglang" SelfReg="false"/>
-    <ROW File="Swedish.iglang" Component_="Languages" FileName="SWEDIS~1.IGL|Swedish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.iglang" SelfReg="false"/>
-    <ROW File="Thai.iglang" Component_="Languages" FileName="THAI~1.IGL|Thai.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Thai.iglang" SelfReg="false"/>
     <ROW File="Ukrainian.iglang" Component_="Languages" FileName="UKRAIN~1.IGL|Ukrainian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.iglang" SelfReg="false"/>
     <ROW File="Vietnamese.iglang" Component_="Languages" FileName="VIETNA~1.IGL|Vietnamese.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.iglang" SelfReg="false"/>
     <ROW File="FR.ico" Component_="ExtIcons" FileName="3FR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
@@ -220,12 +217,22 @@
     <ROW File="Windows.winmd" Component_="Windows.winmd" FileName="WINDOW~1.WIN|Windows.winmd" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Windows.winmd" SelfReg="false"/>
     <ROW File="ColorPicker.svg" Component_="DefaultTheme" FileName="COLORP~1.SVG|ColorPicker.svg" Attributes="0" SourcePath="..\..\Assets\DefaultTheme\ColorPicker.svg" SelfReg="false"/>
     <ROW File="Crop.svg" Component_="DefaultTheme" FileName="Crop.svg" Attributes="0" SourcePath="..\..\Assets\DefaultTheme\Crop.svg" SelfReg="false"/>
+    <ROW File="ArabicEgypt.iglang" Component_="Languages" FileName="ARABIC~1.IGL|Arabic, Egypt.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Arabic, Egypt.iglang" SelfReg="false"/>
+    <ROW File="ChineseSimplified.iglang" Component_="Languages" FileName="CHINES~2.IGL|Chinese Simplified.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.iglang" SelfReg="false"/>
+    <ROW File="Finnish.iglang" Component_="Languages" FileName="FINNIS~1.IGL|Finnish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.iglang" SelfReg="false"/>
+    <ROW File="French.iglang" Component_="Languages" FileName="FRENCH~1.IGL|French.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\French.iglang" SelfReg="false"/>
+    <ROW File="German.iglang" Component_="Languages" FileName="GERMAN~1.IGL|German.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.iglang" SelfReg="false"/>
+    <ROW File="Indonesian.iglang" Component_="Languages" FileName="INDONE~1.IGL|Indonesian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Indonesian.iglang" SelfReg="false"/>
+    <ROW File="Italian.iglang" Component_="Languages" FileName="ITALIA~1.IGL|Italian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Italian.iglang" SelfReg="false"/>
+    <ROW File="Romanian.iglang" Component_="Languages" FileName="ROMANI~1.IGL|Romanian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Romanian.iglang" SelfReg="false"/>
+    <ROW File="SerbianCyrillic.iglang" Component_="Languages" FileName="SERBIA~1.IGL|Serbian (Cyrillic).iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Cyrillic).iglang" SelfReg="false"/>
+    <ROW File="Turkish.iglang" Component_="Languages" FileName="TURKIS~1.IGL|Turkish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.iglang" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_7.5.1.1_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_7.6.4.30_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
