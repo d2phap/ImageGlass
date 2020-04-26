@@ -63,6 +63,7 @@
             this.btnDonation = new System.Windows.Forms.PictureBox();
             this.panHeader = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -595,6 +596,7 @@
             // panHeader
             // 
             this.panHeader.BackColor = System.Drawing.Color.Transparent;
+            this.panHeader.Controls.Add(this.label1);
             this.panHeader.Controls.Add(this.pictureBox1);
             this.panHeader.Controls.Add(this.lblAppName);
             this.panHeader.Controls.Add(this.btnDonation);
@@ -622,6 +624,19 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.Size = new System.Drawing.Size(976, 692);
             this.tableLayoutPanel2.TabIndex = 23;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label1.Location = new System.Drawing.Point(336, 31);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(147, 30);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "10th (❁´◡`❁)";
             // 
             // frmAbout
             // 
@@ -698,5 +713,6 @@
         private System.Windows.Forms.Panel panHeader;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -3905,6 +3905,14 @@ namespace ImageGlass {
             mnuMainEditImage_Click(null, null);
         }
 
+        private void btnCropping_Click(object sender, EventArgs e) {
+            mnuMainCrop.PerformClick();
+        }
+
+        private void btnColorPicker_Click(object sender, EventArgs e) {
+            mnuMainColorPicker.PerformClick();
+        }
+
         private void btnOpen_Click(object sender, EventArgs e) {
             mnuMainOpenFile_Click(null, e);
         }
@@ -5245,12 +5253,6 @@ namespace ImageGlass {
         #endregion
 
 
-        private void btnCropping_Click(object sender, EventArgs e) {
-            mnuMainCrop.PerformClick();
-        }
-
-        private void btnColorPicker_Click(object sender, EventArgs e) {
-            mnuMainColorPicker.PerformClick();
-        }
+        
     }
 }
