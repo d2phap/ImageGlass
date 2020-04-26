@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="7.5.1.1" isRightToLeftLayout="No"/>
+    <Info langCode="hu-HU" langName="Magyar" author="ImageGlass community" description="Hungarian" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Néhány beállítás nem kompatibilis az ImageGlass {0} verziójával. Javasolt frissíteni a folytatás előtt. &#10;&#10;- Kattintson az Igen-re, az újdonságok megtekintéséhez.&#10;- Kattintson a Nem-re, az ImageGlass alapértelmezett beállításokkal való futtatásához."/>
       <Item key="frmMain.mnuMainFile" value="Fájl"/>
-      <Item key="frmMain.mnuMainOpenFile" value="Fájl megnyitása"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Fájl megnyitása…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Képadatok megnyitása a vágólapról"/>
       <Item key="frmMain.mnuMainNewWindow" value="Új ablak megnyitása"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Nem lehet új ablakot nyitni, mivel csak egy lehetséges"/>
-      <Item key="frmMain.mnuMainSaveAs" value="Kép mentése másként..."/>
+      <Item key="frmMain.mnuMainSaveAs" value="Kép mentése másként…"/>
       <Item key="frmMain.mnuMainRefresh" value="Frissítés"/>
       <Item key="frmMain.mnuMainReloadImage" value="Kép újratöltése"/>
       <Item key="frmMain.mnuMainReloadImageList" value="Képek listájának újra töltése"/>
-      <Item key="frmMain.mnuMainEditImage" value="Kép szerkesztés {0}"/>
-      <Item key="frmMain.mnuMainPrint" value="Nyomtatás"/>
+      <Item key="frmMain.mnuOpenWith" value="Megnyitás ezzel…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Kép {0} szerkesztése…"/>
+      <Item key="frmMain.mnuMainPrint" value="Nyomtatás…"/>
       <Item key="frmMain.mnuMainNavigation" value="Navigáció"/>
       <Item key="frmMain.mnuMainViewNext" value="Következő kép megtekintése"/>
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="Jobbra nyíl / Lapozás lefelé"/>
       <Item key="frmMain.mnuMainViewPrevious" value="Előző kép megtekintése"/>
       <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Balra nyíl / Lapozás felfelé"/>
-      <Item key="frmMain.mnuMainGoto" value="Ugrás..."/>
+      <Item key="frmMain.mnuMainGoto" value="Ugrás…"/>
       <Item key="frmMain.mnuMainGotoFirst" value="Ugrás az első képhez"/>
       <Item key="frmMain.mnuMainGotoLast" value="Ugrás az utolsó képhez"/>
       <Item key="frmMain.mnuMainNextPage" value="A következő oldal megtekintése"/>
@@ -34,11 +35,11 @@
       <Item key="frmMain.mnuMainScaleToFill" value="Kitöltés"/>
       <Item key="frmMain.mnuMainActualSize" value="Tényleges méret"/>
       <Item key="frmMain.mnuMainLockZoomRatio" value="Nagyítási arány rögzítése"/>
-      <Item key="frmMain.mnuMainAutoZoom" value="Auto. zoom"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Automatikus nagyítás"/>
       <Item key="frmMain.mnuMainScaleToWidth" value="Szélesség igazítás"/>
       <Item key="frmMain.mnuMainScaleToHeight" value="Magasság igazítás"/>
       <Item key="frmMain.mnuMainImage" value="Kép"/>
-      <Item key="frmMain.mnuMainChannels" value="Cstornák megmutatása"/>
+      <Item key="frmMain.mnuMainChannels" value="Csatornák megmutatása"/>
       <Item key="frmMain.mnuMainChannels._All" value="Mind"/>
       <Item key="frmMain.mnuMainChannels._Red" value="Vörös"/>
       <Item key="frmMain.mnuMainChannels._Green" value="Zöld"/>
@@ -49,13 +50,13 @@
       <Item key="frmMain.mnuMainRotateRight" value="Forgatás jobbra"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Vízszintes tükrözés"/>
       <Item key="frmMain.mnuMainFlipVert" value="Függőleges tükrözés"/>
-      <Item key="frmMain.mnuMainRename" value="Kép átnevezése"/>
+      <Item key="frmMain.mnuMainRename" value="Kép átnevezése…"/>
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="Lomtárba áthelyez"/>
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Törlés véglegesen"/>
-      <Item key="frmMain.mnuMainExtractPages" value="Képoldalak kibontása ({0})"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Képoldalak kibontása ({0})…"/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="Mozgókép indítás / megállítás"/>
       <Item key="frmMain.mnuMainSetAsDesktop" value="Beállítás asztal hátterképnek"/>
-      <Item key="frmMain.mnuMainSetAsLockImage" value="Beállítás képernyő képének zárolásaként"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Beállítás Zárolás háttérképnek"/>
       <Item key="frmMain.mnuMainImageLocation" value="Kép helyének megnyitása"/>
       <Item key="frmMain.mnuMainImageProperties" value="Kép tulajdonságok"/>
       <Item key="frmMain.mnuMainClipboard" value="Vágólap"/>
@@ -71,7 +72,7 @@
       <Item key="frmMain.mnuMainSlideShowStart" value="Diavetítés indítása"/>
       <Item key="frmMain.mnuMainSlideShowPause" value="Diavetítés szüneteltetése / folytatása"/>
       <Item key="frmMain.mnuMainSlideShowExit" value="Kilépés a diavetítésből"/>
-      <Item key="frmMain.mnuMainShare" value="Megosztás..."/>
+      <Item key="frmMain.mnuMainShare" value="Megosztás…"/>
       <Item key="frmMain.mnuMainLayout" value="Elrendezés"/>
       <Item key="frmMain.mnuMainToolbar" value="Eszköztár"/>
       <Item key="frmMain.mnuMainThumbnailBar" value="Bélyegképek"/>
@@ -80,13 +81,14 @@
       <Item key="frmMain.mnuMainTools" value="Eszközök"/>
       <Item key="frmMain.mnuMainColorPicker" value="Színválasztó"/>
       <Item key="frmMain.mnuMainPageNav" value="Oldalnavigáció"/>
-      <Item key="frmMain.mnuMainSettings" value="Beállítások"/>
+      <Item key="frmMain.mnuMainCrop" value="A kép vágása folyamatban"/>
+      <Item key="frmMain.mnuMainSettings" value="Beállítások…"/>
       <Item key="frmMain.mnuMainHelp" value="Súgó"/>
       <Item key="frmMain.mnuMainAbout" value="Névjegy"/>
-      <Item key="frmMain.mnuMainFirstLaunch" value="Indítási konfiguráció"/>
-      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Frissítések keresése"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Első indítás beállításai…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Frissítések keresése…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Új verzió elérhető!"/>
-      <Item key="frmMain.mnuMainReportIssue" value="Probléma jelentése"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Hibajelentés…"/>
       <Item key="frmMain.mnuMainExitApplication" value="Kilépés az ImageGlass programból"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nem tudja megnyitni ezt a képet, mert a fájl sérült, érvénytelen vagy nem támogatott."/>
       <Item key="frmMain._ImageNotExist" value="A megjelenített kép nem létezik."/>
@@ -111,6 +113,7 @@
       <Item key="frmMain._ClearClipboard" value="Vágólap törölve"/>
       <Item key="frmMain._SaveChanges" value="Módosítások mentése..."/>
       <Item key="frmMain._SaveImage" value="A kép elmentésre került ide&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Kép mentése...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Nem lehet menteni a {0} képet."/>
       <Item key="frmMain._Loading" value="Betöltés..."/>
       <Item key="frmMain._FirstItemOfList" value="Elérte az első képet"/>
@@ -129,7 +132,7 @@
       <Item key="frmAbout.lblVersion" value="Verzió: {0}"/>
       <Item key="frmAbout.lblInfoContact" value="Kapcsolat"/>
       <Item key="frmAbout.lblSoftwareUpdate" value="Szoftverfrissítés"/>
-      <Item key="frmAbout.lnkCheckUpdate" value="» Frissítések keresése"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Frissítések keresése…"/>
       <Item key="frmAbout._Text" value="Névjegy"/>
       <Item key="frmAbout._PortableText" value="[Hordozható]"/>
       <Item key="frmSetting._Text" value="Beállítások"/>
@@ -138,7 +141,7 @@
       <Item key="frmSetting.btnApply" value="Alkalmaz"/>
       <Item key="frmSetting.lblGeneral" value="Általános"/>
       <Item key="frmSetting.lblImage" value="Kép"/>
-      <Item key="frmSetting.lblEdit" value="Szerkeztés"/>
+      <Item key="frmSetting.lblEdit" value="Szerkesztés"/>
       <Item key="frmSetting.lblFileTypeAssoc" value="Fájltípus társítások"/>
       <Item key="frmSetting.lblToolbar" value="Eszköztár"/>
       <Item key="frmSetting.lblLanguage" value="Nyelv"/>
@@ -149,19 +152,21 @@
       <Item key="frmSetting.chkLastSeenImage" value="Utoljára megtekintett kép megnyitása"/>
       <Item key="frmSetting.chkShowToolBar" value="Eszköztár megjelenítése induláskor"/>
       <Item key="frmSetting.lblHeadConfigDir" value="Konfigurációs mappa"/>
+      <Item key="frmSetting.lblHeadViewer" value="Nézegető"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Képnéző gördítősáv megjelenítése"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Navigációs nyíl gombok megjelenitése"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Kép fájlnevének megjelenítése a címsoron"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Csak a kép régióban mutassa az ellenőrző táblát"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Gesztusvezérlés engedélyezése"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Háttérszín"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Visszaállít"/>
       <Item key="frmSetting.lblHeadOthers" value="Egyebek"/>
       <Item key="frmSetting.chkAutoUpdate" value="Frissítés automatikus ellenőrzése"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Alkalmazás több példányban is futhat"/>
       <Item key="frmSetting.chkESCToQuit" value="ESC engedélyezése az alkalmazás bezárásához"/>
       <Item key="frmSetting.chkConfirmationDelete" value="Törlés megerősítés megjelenítése"/>
-      <Item key="frmSetting.chkShowScrollbar" value="Képnéző gördítősáv megjelenítése"/>
-      <Item key="frmSetting.chkDisplayBasename" value="Kép fájlnevének megjelenítése a címsoron"/>
-      <Item key="frmSetting.chkShowNavButtons" value="Navigációs nyíl gombok megjelenitése"/>
-      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Csak a kép régióban mutassa az ellenőrző táblát"/>
       <Item key="frmSetting.chkCenterWindowFit" value="Ablak automatikus középre igazítása az illesztés módban"/>
       <Item key="frmSetting.chkShowToast" value="Tippek mutatása"/>
-      <Item key="frmSetting.lblBackGroundColor" value="Háttérszín"/>
-      <Item key="frmSetting.lnkResetBackgroundColor" value="Visszaállít"/>
       <Item key="frmSetting.lblHeadImageLoading" value="Kép betöltése"/>
       <Item key="frmSetting.chkFindChildFolder" value="Képek keresése almappában"/>
       <Item key="frmSetting.chkShowHiddenImages" value="Rejtett képek megjelenítése"/>
@@ -182,9 +187,9 @@
       <Item key="frmSetting.lblColorManagement" value="Színkezelő"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Alkalmazza a színprofil nélkül beágyazott képekre is"/>
       <Item key="frmSetting.lblColorProfile" value="Színprofil:"/>
-      <Item key="frmSetting.lnkColorProfileBrowse" value="Tallózás"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Böngészés…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="Egyik sem"/>
-      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Egyéni..."/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Egyéni…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Egér görgő műveletek"/>
       <Item key="frmSetting.lblMouseWheel" value="Egér görgő"/>
       <Item key="frmSetting.lblMouseWheelAlt" value="Egér görgő + Alt"/>
@@ -209,12 +214,14 @@
       <Item key="frmSetting.lblHeadSlideshow" value="Diavetítés"/>
       <Item key="frmSetting.chkLoopSlideshow" value="Diavetítés újrakezdése amikor a végére ér"/>
       <Item key="frmSetting.chkShowSlideshowCountdown" value="Bemutató-visszaszámlálás mutatása"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Véletlenszerű intervallum használata"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Bemutató intervalluma: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="idáig"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Kép mentése forgatás után"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Válasszon képszerkesztő alkalmazást"/>
-      <Item key="frmSetting.btnEditEditExt" value="Szerkeztés"/>
+      <Item key="frmSetting.btnEditEditExt" value="Szerkesztés…"/>
       <Item key="frmSetting.btnEditResetExt" value="Alapbeállítások visszaállítása"/>
-      <Item key="frmSetting.btnEditEditAllExt" value="Minden bővítmény szerkesztése"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Minden kiterjesztés szerkesztése…"/>
       <Item key="frmSetting._allExtensions" value="minden kiterjesztés"/>
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Fájlkiterjesztés"/>
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Alkalmazás neve"/>
@@ -223,8 +230,8 @@
       <Item key="frmSetting.chkSaveModifyDate" value="Tartsa meg a kép módosítási dátumát a mentéskor"/>
       <Item key="frmSetting.lblSupportedExtension" value="Támogatott formátumok: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Fájltípustársítások megnyitása"/>
-      <Item key="frmSetting.btnAddNewExt" value="Hozzáadás"/>
-      <Item key="frmSetting.btnRegisterExt" value="Beállítás alapértelmezett képnézegetőként"/>
+      <Item key="frmSetting.btnAddNewExt" value="Új…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Beállítás alapértelmezett fénykép-megjelenítőként…"/>
       <Item key="frmSetting.btnDeleteExt" value="Törlés"/>
       <Item key="frmSetting.btnResetExt" value="Alapbeállítások visszaállítása"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Nem lehet regisztrálni a Web-to-App csatolásra"/>
@@ -250,19 +257,17 @@
       <Item key="frmSetting.lblLanguageText" value="Telepített nyelvek"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Frissítés"/>
       <Item key="frmSetting.lblLanguageWarning" value="Ez a nyelvi csomag lehet, hogy nem kompatibilis vele: {0}"/>
-      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Új nyelvi csomag telepítése (*.iglang)"/>
-      <Item key="frmSetting.lnkCreateNew" value="&gt; Új nyelvi csomag létrehozása"/>
-      <Item key="frmSetting.lnkEdit" value="&gt; Kiválasztott nyelvi csomag szerkesztése"/>
-      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; További nyelvi csomagok beszerzése"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Új nyelvi csomag telepítése (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Új nyelvi csomag létrehozása…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Kiválasztott nyelvi csomag szerkesztése…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; További nyelvi csomagok beszerzése…"/>
       <Item key="frmSetting.lblInstalledThemes" value="Telepített témák: {0}"/>
-      <Item key="frmSetting.lnkThemeDownload" value="Témák letöltése"/>
-      <Item key="frmSetting.btnThemeRefresh" value="Frissítés"/>
-      <Item key="frmSetting.btnThemeInstall" value="Telepítés"/>
-      <Item key="frmSetting.btnThemeUninstall" value="Eltávolítás"/>
-      <Item key="frmSetting.btnThemeSaveAs" value="Mentés másként"/>
-      <Item key="frmSetting.btnThemeFolderOpen" value="Témák mappájának megnyitása"/>
-      <Item key="frmSetting.btnThemeEdit._Edit" value="Kiválasztott téma szerkesztése"/>
-      <Item key="frmSetting.btnThemeEdit._New" value="Új téma létrehozása"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Témák letöltése…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Frissít"/>
+      <Item key="frmSetting.btnThemeInstall" value="Telepítés…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Eltávolítás…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Mentés másként…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Téma könyvtár megnyitása"/>
       <Item key="frmSetting.btnThemeApply" value="Téma alkalmazása"/>
       <Item key="frmSetting.txtThemeInfo._Name" value="Név"/>
       <Item key="frmSetting.txtThemeInfo._Version" value="Verzió"/>
@@ -313,6 +318,12 @@
       <Item key="frmFirstLaunch.lblTheme" value="Téma kiválasztása"/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass beállítása alapértelmezett képnézegetőként?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Igen"/>
+      <Item key="frmCrop.lblWidth" value="Szélesség:"/>
+      <Item key="frmCrop.lblHeight" value="Magasság:"/>
+      <Item key="frmCrop.btnSave" value="Mentés"/>
+      <Item key="frmCrop.btnSaveAs" value="Mentés másként…"/>
+      <Item key="frmCrop.btnCopy" value="Másolás"/>
+      <Item key="frmCrop.btnClear" value="Törlés"/>
     </Content>
   </Language>
 </ImageGlass>

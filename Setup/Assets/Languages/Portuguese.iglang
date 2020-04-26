@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-PT" langName="Português" author="ImageGlass community" description="Portuguese" minVersion="7.5.1.1" isRightToLeftLayout="No"/>
+    <Info langCode="pt-PT" langName="Português" author="ImageGlass community" description="Portuguese" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algumas definições não são compatíveis com ImageGlass {0}. Recomendamos a atualização para poder continuar.&#10;&#10;- Clique Sim para saber mais sobre as alterações.&#10;- Clique Não para iniciar ImageGlass com as definições padrão."/>
       <Item key="frmMain.mnuMainFile" value="Ficheiro"/>
-      <Item key="frmMain.mnuMainOpenFile" value="Abrir ficheiro"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Abrir ficheiro…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Abrir a partir da área de transferência"/>
       <Item key="frmMain.mnuMainNewWindow" value="Abrir nova janela"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Não é possível abrir uma nova janela porque apenas é permitida uma instância"/>
-      <Item key="frmMain.mnuMainSaveAs" value="Guardar imagem como..."/>
+      <Item key="frmMain.mnuMainSaveAs" value="Guardar imagem como…"/>
       <Item key="frmMain.mnuMainRefresh" value="Recarregar"/>
       <Item key="frmMain.mnuMainReloadImage" value="Recarregar imagem"/>
       <Item key="frmMain.mnuMainReloadImageList" value="Recarregar lista de imagens"/>
-      <Item key="frmMain.mnuMainEditImage" value="Editar {0}"/>
-      <Item key="frmMain.mnuMainPrint" value="Imprimir"/>
+      <Item key="frmMain.mnuOpenWith" value="Abrir com…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Editar imagem {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Imprimir…"/>
       <Item key="frmMain.mnuMainNavigation" value="Navegação"/>
       <Item key="frmMain.mnuMainViewNext" value="Ver imagem seguinte"/>
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="Seta para a direita/PageDown"/>
       <Item key="frmMain.mnuMainViewPrevious" value="Ver imagem anterior"/>
       <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Seta para a esquerda/PageUp"/>
-      <Item key="frmMain.mnuMainGoto" value="Ir para..."/>
+      <Item key="frmMain.mnuMainGoto" value="Ir para…"/>
       <Item key="frmMain.mnuMainGotoFirst" value="Ir para a primeira imagem"/>
       <Item key="frmMain.mnuMainGotoLast" value="Ir para a última imagem"/>
       <Item key="frmMain.mnuMainNextPage" value="Ver página seguinte"/>
@@ -49,10 +50,10 @@
       <Item key="frmMain.mnuMainRotateRight" value="Rodar à direita"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Inverter na horizontal"/>
       <Item key="frmMain.mnuMainFlipVert" value="Inverter na vertical"/>
-      <Item key="frmMain.mnuMainRename" value="Renomear imagem"/>
+      <Item key="frmMain.mnuMainRename" value="Mudar nome…"/>
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="Mover para a Reciclagem"/>
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Apagar do disco"/>
-      <Item key="frmMain.mnuMainExtractPages" value="A extrair páginas ({0})"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extrair páginas da imagem ({0})…"/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="Iniciar/parar animação de imagens"/>
       <Item key="frmMain.mnuMainSetAsDesktop" value="Definir como papel de parede"/>
       <Item key="frmMain.mnuMainSetAsLockImage" value="Definir como ecrã de bloqueio"/>
@@ -71,7 +72,7 @@
       <Item key="frmMain.mnuMainSlideShowStart" value="Iniciar apresentação"/>
       <Item key="frmMain.mnuMainSlideShowPause" value="Pausa/retomar apresentação"/>
       <Item key="frmMain.mnuMainSlideShowExit" value="Sair da apresentação"/>
-      <Item key="frmMain.mnuMainShare" value="Partilhar..."/>
+      <Item key="frmMain.mnuMainShare" value="Partilhar…"/>
       <Item key="frmMain.mnuMainLayout" value="Disposição"/>
       <Item key="frmMain.mnuMainToolbar" value="Barra de ferramentas"/>
       <Item key="frmMain.mnuMainThumbnailBar" value="Painel de miniaturas"/>
@@ -80,13 +81,14 @@
       <Item key="frmMain.mnuMainTools" value="Ferramentas"/>
       <Item key="frmMain.mnuMainColorPicker" value="Seletor de cores"/>
       <Item key="frmMain.mnuMainPageNav" value="Navegação de páginas"/>
-      <Item key="frmMain.mnuMainSettings" value="Definições"/>
+      <Item key="frmMain.mnuMainCrop" value="Recorte"/>
+      <Item key="frmMain.mnuMainSettings" value="Definições…"/>
       <Item key="frmMain.mnuMainHelp" value="Ajuda"/>
       <Item key="frmMain.mnuMainAbout" value="Acerca"/>
-      <Item key="frmMain.mnuMainFirstLaunch" value="Configuração inicial"/>
-      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Procurar atualizações"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Configuração inicial…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Procurar atualizações…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Está disponível uma nova versão!"/>
-      <Item key="frmMain.mnuMainReportIssue" value="Reportar um erro"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Reportar um erro…"/>
       <Item key="frmMain.mnuMainExitApplication" value="Sair"/>
       <Item key="frmMain.picMain._ErrorText" value="O ImageGlass não consegue abrir esta imagem porque o ficheiro não é suportado ou então porque está danificado."/>
       <Item key="frmMain._ImageNotExist" value="A imagem não existe."/>
@@ -111,6 +113,7 @@
       <Item key="frmMain._ClearClipboard" value="A área de transferência foi limpa"/>
       <Item key="frmMain._SaveChanges" value="A guardar alterações..."/>
       <Item key="frmMain._SaveImage" value="Imagem guardada em&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="A guardar imagem...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Não foi possível guardar a imagem&#10;{0}."/>
       <Item key="frmMain._Loading" value="A carregar..."/>
       <Item key="frmMain._FirstItemOfList" value="Chegou à primeira imagem"/>
@@ -129,7 +132,7 @@
       <Item key="frmAbout.lblVersion" value="Versão: {0}"/>
       <Item key="frmAbout.lblInfoContact" value="Contacto"/>
       <Item key="frmAbout.lblSoftwareUpdate" value="Atualizações de software"/>
-      <Item key="frmAbout.lnkCheckUpdate" value="» Procurar atualizações"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Procurar atualizações…"/>
       <Item key="frmAbout._Text" value="Acerca"/>
       <Item key="frmAbout._PortableText" value="[Portátil]"/>
       <Item key="frmSetting._Text" value="Definições"/>
@@ -149,19 +152,21 @@
       <Item key="frmSetting.chkLastSeenImage" value="Abrir última imagem visualizada"/>
       <Item key="frmSetting.chkShowToolBar" value="Mostrar barra de ferramentas"/>
       <Item key="frmSetting.lblHeadConfigDir" value="Diretório de configurações"/>
+      <Item key="frmSetting.lblHeadViewer" value="Visualizador"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Mostrar barras de deslocação"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Mostrar setas de navegação"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Mostrar nome na imagem na barra de título"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Mostrar grelha apenas na área da imagem"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Ativar suporte a gestos"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Cor de fundo"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Repor"/>
       <Item key="frmSetting.lblHeadOthers" value="Outras"/>
       <Item key="frmSetting.chkAutoUpdate" value="Procurar atualizações automaticamente"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Permitir várias instâncias da aplicação"/>
       <Item key="frmSetting.chkESCToQuit" value="Permitir uso de ESC para fechar a aplicação"/>
       <Item key="frmSetting.chkConfirmationDelete" value="Mostrar diálogo de confirmação de eliminação"/>
-      <Item key="frmSetting.chkShowScrollbar" value="Mostrar barras de deslocação"/>
-      <Item key="frmSetting.chkDisplayBasename" value="Mostrar nome na imagem na barra de título"/>
-      <Item key="frmSetting.chkShowNavButtons" value="Mostrar setas de navegação"/>
-      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Mostrar grelha apenas na área da imagem"/>
       <Item key="frmSetting.chkCenterWindowFit" value="Centrar imagem no modo Ajustar à janela"/>
       <Item key="frmSetting.chkShowToast" value="Prikaži sporočila s pomočjo"/>
-      <Item key="frmSetting.lblBackGroundColor" value="Cor de fundo"/>
-      <Item key="frmSetting.lnkResetBackgroundColor" value="Repor"/>
       <Item key="frmSetting.lblHeadImageLoading" value="Carregamento de imagens"/>
       <Item key="frmSetting.chkFindChildFolder" value="Localizar imagens na pasta dependente"/>
       <Item key="frmSetting.chkShowHiddenImages" value="Mostrar imagens ocultas"/>
@@ -182,9 +187,9 @@
       <Item key="frmSetting.lblColorManagement" value="Gestão de cores"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Aplicar também para imagens com perfil de cor incorporado"/>
       <Item key="frmSetting.lblColorProfile" value="Perfil de cor:"/>
-      <Item key="frmSetting.lnkColorProfileBrowse" value="Explorar"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Explorar…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="Não aplicável"/>
-      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Personalizado..."/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Personalizar…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Ações para a roda do rato"/>
       <Item key="frmSetting.lblMouseWheel" value="Roda do rato"/>
       <Item key="frmSetting.lblMouseWheelAlt" value="Roda do rato + Alt"/>
@@ -209,12 +214,14 @@
       <Item key="frmSetting.lblHeadSlideshow" value="Apresentação"/>
       <Item key="frmSetting.chkLoopSlideshow" value="Mostrar a primeira imagem depois de atingir a última (em apresentações)"/>
       <Item key="frmSetting.chkShowSlideshowCountdown" value="Mostrar contagem regressiva nas apresentações"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Intervalo aleatório"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Tempo entre imagens: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="até"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Guardar a imagem depois de rodar"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Selecione a aplicação para edição de imagens"/>
-      <Item key="frmSetting.btnEditEditExt" value="Editar"/>
+      <Item key="frmSetting.btnEditEditExt" value="Editar…"/>
       <Item key="frmSetting.btnEditResetExt" value="Repor predefinições"/>
-      <Item key="frmSetting.btnEditEditAllExt" value="Editar todas as extensões"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Editar todas as extensões…"/>
       <Item key="frmSetting._allExtensions" value="todas as extensões"/>
       <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Extensão do ficheiro"/>
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nome da aplicação"/>
@@ -223,8 +230,8 @@
       <Item key="frmSetting.chkSaveModifyDate" value="Manter data de modificação da imagem ao guardar"/>
       <Item key="frmSetting.lblSupportedExtension" value="Formatos suportados: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Abrir associação dos tipos de ficheiro"/>
-      <Item key="frmSetting.btnAddNewExt" value="Adicionar"/>
-      <Item key="frmSetting.btnRegisterExt" value="Definir como visualizador padrão"/>
+      <Item key="frmSetting.btnAddNewExt" value="Adicionar…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Definir como visualizador padrão…"/>
       <Item key="frmSetting.btnDeleteExt" value="Apagar"/>
       <Item key="frmSetting.btnResetExt" value="Repor predefinições"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Não foi possível registar o vínculo Web-to-App"/>
@@ -250,19 +257,17 @@
       <Item key="frmSetting.lblLanguageText" value="Idiomas instalados"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Recarregar"/>
       <Item key="frmSetting.lblLanguageWarning" value="Este pacote pode não ser compatível com {0}"/>
-      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Instalar novo pacote de idioma (*.iglang)"/>
-      <Item key="frmSetting.lnkCreateNew" value="&gt; Criar um novo pacote de idioma"/>
-      <Item key="frmSetting.lnkEdit" value="&gt; Editar o pacote de idioma selecionado"/>
-      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Obter mais idiomas"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Instalar novo pacote de idioma (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Criar pacote de idioma…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Editar pacote de idioma selecionado…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Obter mais pacotes de idioma…"/>
       <Item key="frmSetting.lblInstalledThemes" value="Temas instalados: {0}"/>
-      <Item key="frmSetting.lnkThemeDownload" value="Descarregar temas"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Descarregar temas…"/>
       <Item key="frmSetting.btnThemeRefresh" value="Recarregar"/>
-      <Item key="frmSetting.btnThemeInstall" value="Instalar"/>
-      <Item key="frmSetting.btnThemeUninstall" value="Desinstalar"/>
-      <Item key="frmSetting.btnThemeSaveAs" value="Guardar como"/>
-      <Item key="frmSetting.btnThemeFolderOpen" value="Abrir pasta de temas"/>
-      <Item key="frmSetting.btnThemeEdit._Edit" value="Editar tema selecionado"/>
-      <Item key="frmSetting.btnThemeEdit._New" value="Criar novo tema"/>
+      <Item key="frmSetting.btnThemeInstall" value="Instalar…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Desinstalar…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Guardar como…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Abrir pasta do tema"/>
       <Item key="frmSetting.btnThemeApply" value="Aplicar tema"/>
       <Item key="frmSetting.txtThemeInfo._Name" value="Nome"/>
       <Item key="frmSetting.txtThemeInfo._Version" value="Versão"/>
@@ -313,6 +318,12 @@
       <Item key="frmFirstLaunch.lblTheme" value="Selecionar tema"/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Definir ImageGlass como visualizador de fotos padrão?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Sim"/>
+      <Item key="frmCrop.lblWidth" value="Largura:"/>
+      <Item key="frmCrop.lblHeight" value="Altura:"/>
+      <Item key="frmCrop.btnSave" value="Guardar"/>
+      <Item key="frmCrop.btnSaveAs" value="Guardar como…"/>
+      <Item key="frmCrop.btnCopy" value="Copiar"/>
+      <Item key="frmCrop.btnClear" value="Limpar"/>
     </Content>
   </Language>
 </ImageGlass>
