@@ -76,7 +76,7 @@
       <Item key="frmMain.mnuMainLayout" value="Disposição"/>
       <Item key="frmMain.mnuMainToolbar" value="Barra de ferramentas"/>
       <Item key="frmMain.mnuMainThumbnailBar" value="Painel de miniaturas"/>
-      <Item key="frmMain.mnuMainCheckBackground" value="Cor de fundo do xadrez"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Fundo em xadrez"/>
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Manter janela sempre na frente"/>
       <Item key="frmMain.mnuMainTools" value="Ferramentas"/>
       <Item key="frmMain.mnuMainColorPicker" value="Seletor de cores"/>
@@ -97,7 +97,7 @@
       <Item key="frmMain._Files" value="ficheiro(s)"/>
       <Item key="frmMain._Pages" value="páginas"/>
       <Item key="frmMain._ImageData" value="Dados da imagem"/>
-      <Item key="frmMain._RenameDialogText" value="Renomear"/>
+      <Item key="frmMain._RenameDialogText" value="Mudar nome"/>
       <Item key="frmMain._RenameDialog" value="Digite o novo nome"/>
       <Item key="frmMain._GotoDialogText" value="Introduza o índice da imagem para a ver e prima Enter."/>
       <Item key="frmMain._DeleteDialogText" value="Apagar '{0}' ?"/>
@@ -166,7 +166,7 @@
       <Item key="frmSetting.chkESCToQuit" value="Permitir uso de ESC para fechar a aplicação"/>
       <Item key="frmSetting.chkConfirmationDelete" value="Mostrar diálogo de confirmação de eliminação"/>
       <Item key="frmSetting.chkCenterWindowFit" value="Centrar imagem no modo Ajustar à janela"/>
-      <Item key="frmSetting.chkShowToast" value="Prikaži sporočila s pomočjo"/>
+      <Item key="frmSetting.chkShowToast" value="Mostrar notificação"/>
       <Item key="frmSetting.lblHeadImageLoading" value="Carregamento de imagens"/>
       <Item key="frmSetting.chkFindChildFolder" value="Localizar imagens na pasta dependente"/>
       <Item key="frmSetting.chkShowHiddenImages" value="Mostrar imagens ocultas"/>
