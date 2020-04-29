@@ -17,24 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
-namespace ImageGlass
-{
+namespace ImageGlass {
     /// <summary>
     /// A "Page Navigation" dialog, to allow the user a GUI for moving between
     /// pages of a multi-page file via the mouse.
     /// </summary>
-    public partial class frmPageNav : ToolForm
-    {
-        public enum NavEvent
-        {
+    public partial class frmPageNav: ToolForm {
+        public enum NavEvent {
             PageFirst,
             PagePrevious,
             PageNext,
@@ -51,12 +48,11 @@ namespace ImageGlass
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point((int)(20 * DPIScaling.GetDPIScaleFactor()), (int)(300 * DPIScaling.GetDPIScaleFactor()));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
 
 
 
-        public frmPageNav()
-        {
+        public frmPageNav() {
             InitializeComponent();
 
             _locationOffset = DefaultLocationOffset; // TODO simplify and move logic to ToolForm
@@ -80,8 +76,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonClick(object sender, EventArgs e)
-        {
+        private void ButtonClick(object sender, EventArgs e) {
             if (NavEventHandler == null)  // no handler established, do nothing
                 return;
 
@@ -100,8 +95,7 @@ namespace ImageGlass
         /// <summary>
         /// Apply theme / language
         /// </summary>
-        internal void UpdateUI()
-        {
+        internal void UpdateUI() {
             // Apply current theme ------------------------------------------------------
             OnDpiChanged();
             SetColors(Configs.Theme);
@@ -116,9 +110,10 @@ namespace ImageGlass
             // Overflow button and Overflow dropdown
             toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.OverflowButton.AutoSize = false;
-            toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.TransformNumber(10));
+            toolPageNav.OverflowButton.Padding = new Padding(DPIScaling.Transform(10));
 
-            
+
+            lblFormTitle.Text = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainPageNav"];
             btnNextPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainNextPage"];
             btnPreviousPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainPrevPage"];
             btnFirstPage.ToolTipText = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainFirstPage"];
@@ -129,8 +124,7 @@ namespace ImageGlass
         }
 
 
-        private void OnDpiChanged()
-        {
+        private void OnDpiChanged() {
             // Update size of toolbar
             DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
 
@@ -143,8 +137,7 @@ namespace ImageGlass
         }
 
 
-        private void LoadToolbarIcons(Theme th)
-        {
+        private void LoadToolbarIcons(Theme th) {
             btnFirstPage.Image = th.ToolbarIcons.ViewFirstImage.Image;
             btnPreviousPage.Image = th.ToolbarIcons.ViewPreviousImage.Image;
             btnNextPage.Image = th.ToolbarIcons.ViewNextImage.Image;
@@ -154,29 +147,25 @@ namespace ImageGlass
 
 
         #region Events
-        private void frmPageNav_Load(object sender, EventArgs e)
-        {
+        private void frmPageNav_Load(object sender, EventArgs e) {
             UpdateUI();
 
             //Windows Bound (Position + Size)-------------------------------------------
             // TODO must be different from Color Picker
             Rectangle rc = Helpers.StringToRect("0;0;300;160");
 
-            if (rc.X == 0 && rc.Y == 0)
-            {
+            if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;
                 parentOffset = _locationOffset;
 
                 _SetLocationBasedOnParent();
             }
-            else
-            {
+            else {
                 Location = rc.Location;
             }
         }
 
-        private void frmPageNav_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void frmPageNav_KeyDown(object sender, KeyEventArgs e) {
             // ESC or Ctrl+Shift+J --------------------------------------------------------
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
                 (e.KeyCode == Keys.J && e.Control && e.Shift && !e.Alt)) // CTRL + SHIFT + J
@@ -186,16 +175,14 @@ namespace ImageGlass
             }
         }
 
-        private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void frmPageNav_FormClosing(object sender, FormClosingEventArgs e) {
             Local.IsPageNavToolOpenning = false;
 
             Local.ForceUpdateActions |= ForceUpdateActions.PAGE_NAV_MENU;
             NavEventHandler = null;
         }
 
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
+        private void BtnClose_Click(object sender, EventArgs e) {
             Configs.IsShowPageNavOnStartup = false;
             this.Close();
         }

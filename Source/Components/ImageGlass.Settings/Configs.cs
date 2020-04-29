@@ -30,13 +30,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ImageGlass.Settings
-{
+namespace ImageGlass.Settings {
     /// <summary>
     /// Provide all the settings of the app
     /// </summary>
-    public static class Configs
-    {
+    public static class Configs {
         /// <summary>
         /// Configuration Source file
         /// </summary>
@@ -66,7 +64,13 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets value indicating that wheather the window is full screen or not
+        /// Gets, sets value indicating whether the slide show interval is random
+        /// </summary>
+        public static bool IsRandomSlideshowInterval { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets, sets value indicating whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
 
@@ -222,13 +226,13 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets the value indicates that to show or hide the Navigation Buttons on viewer
+        /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
         /// </summary>
         public static bool IsShowNavigationButtons { get; set; } = false;
 
 
         /// <summary>
-        /// Gets, sets the value indicates that to checkerboard in the image region only
+        /// Gets, sets the value indicates whether to show checkerboard in the image region only
         /// </summary>
         public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
 
@@ -282,9 +286,15 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets value indicates that toast message will show
+        /// Gets, sets value indicates that toast messages will show
         /// </summary>
         public static bool IsShowToast { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets, sets value indicates that touch gesture support enabled
+        /// </summary>
+        public static bool IsUseTouchGesture { get; set; } = true;
 
 
         #endregion
@@ -299,9 +309,15 @@ namespace ImageGlass.Settings
 
 
         /// <summary>
-        /// Gets, sets slide show interval
+        /// Gets, sets slide show interval (minimum value if it's random)
         /// </summary>
         public static uint SlideShowInterval { get; set; } = 5;
+
+
+        /// <summary>
+        /// Gets, sets the maximum slide show interval value
+        /// </summary>
+        public static uint SlideShowIntervalTo { get; set; } = 5;
 
 
         /// <summary>
@@ -471,13 +487,13 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1000, 800);
+        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1300, 800);
 
 
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 900, 700);
+        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 1050, 750);
 
 
 
@@ -507,8 +523,7 @@ namespace ImageGlass.Settings
         /// <typeparam name="T">Enum type</typeparam>
         /// <param name="value">Value</param>
         /// <returns></returns>
-        private static T ParseEnum<T>(object value)
-        {
+        private static T ParseEnum<T>(object value) {
             return (T)Enum.Parse(typeof(T), value.ToString(), true);
         }
 
@@ -520,10 +535,8 @@ namespace ImageGlass.Settings
         /// <param name="key">Key of the config</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns></returns>
-        private static T Get<T>(string key, object defaultValue)
-        {
-            try
-            {
+        private static T Get<T>(string key, object defaultValue) {
+            try {
                 return ConvertType<T>(Source[key]);
             }
             catch { }
@@ -538,14 +551,11 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="key">Key of the config</param>
         /// <param name="value">Value</param>
-        private static void Set(string key, object value)
-        {
-            if (Source.ContainsKey(key))
-            {
+        private static void Set(string key, object value) {
+            if (Source.ContainsKey(key)) {
                 Source[key] = value.ToString();
             }
-            else
-            {
+            else {
                 Source.Add(key, value.ToString());
             }
         }
@@ -559,8 +569,7 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Load and parse configs from file
         /// </summary>
-        public static void Load()
-        {
+        public static void Load() {
             // load user configs from file
             Source.LoadUserConfigs();
 
@@ -570,6 +579,7 @@ namespace ImageGlass.Settings
 
             IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+            IsRandomSlideshowInterval = Get<bool>(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
             IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
             IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
@@ -586,7 +596,7 @@ namespace ImageGlass.Settings
             IsAllowMultiInstances = Get<bool>(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
             IsWindowAlwaysOnTop = Get<bool>(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
             IsWindowFrameless = Get<bool>(nameof(IsWindowFrameless), IsWindowFrameless);
-            IsThumbnailHorizontal = Get<bool>(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);            
+            IsThumbnailHorizontal = Get<bool>(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
             IsConfirmationDelete = Get<bool>(nameof(IsConfirmationDelete), IsConfirmationDelete);
             IsScrollbarsVisible = Get<bool>(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
             IsSaveAfterRotating = Get<bool>(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
@@ -607,6 +617,7 @@ namespace ImageGlass.Settings
             IsWindowFit = Get<bool>(nameof(IsWindowFit), IsWindowFit);
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
+            IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
 
             #endregion
 
@@ -614,22 +625,26 @@ namespace ImageGlass.Settings
             #region Number items
 
             FirstLaunchVersion = Get<int>(nameof(FirstLaunchVersion), FirstLaunchVersion);
+
+            #region Slide show
             SlideShowInterval = Get<uint>(nameof(SlideShowInterval), SlideShowInterval);
             if (SlideShowInterval < 1) SlideShowInterval = 5;
 
+            SlideShowIntervalTo = Get<uint>(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+            SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
+            #endregion
+
             #region Load thumbnail bar width & position
             ThumbnailDimension = Get<uint>(nameof(ThumbnailDimension), ThumbnailDimension);
-           
-            if (IsThumbnailHorizontal)
-            {
+
+            if (IsThumbnailHorizontal) {
                 // Get minimum width needed for thumbnail dimension
                 var tbMinWidth = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
                 // Get the greater width value
                 ThumbnailBarWidth = Math.Max(ThumbnailBarWidth, tbMinWidth);
             }
-            else
-            {
+            else {
                 ThumbnailBarWidth = Get<uint>(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             }
             #endregion
@@ -702,8 +717,7 @@ namespace ImageGlass.Settings
             #region KeyComboActions
 
             var keyActionStr = Get<string>(nameof(KeyComboActions), "");
-            if (!string.IsNullOrEmpty(keyActionStr))
-            {
+            if (!string.IsNullOrEmpty(keyActionStr)) {
                 KeyComboActions = GetKeyComboActions(keyActionStr);
             }
 
@@ -725,11 +739,9 @@ namespace ImageGlass.Settings
 
             #region FrmMainWindowsBound
             var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
-            if (!string.IsNullOrEmpty(boundStr))
-            {
+            if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
-                if (!Helper.IsAnyPartOnScreen(rc))
-                {
+                if (!Helper.IsAnyPartOnScreen(rc)) {
                     rc = new Rectangle(280, 125, 1000, 800);
                 }
 
@@ -740,12 +752,10 @@ namespace ImageGlass.Settings
 
             #region FrmSettingsWindowsBound
             boundStr = Get<string>(nameof(FrmSettingsWindowsBound), "");
-            if (!string.IsNullOrEmpty(boundStr))
-            {
+            if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
 
-                if (!Helper.IsOnScreen(rc.Location))
-                {
+                if (!Helper.IsOnScreen(rc.Location)) {
                     rc.Location = new Point(280, 125);
                 }
 
@@ -762,10 +772,9 @@ namespace ImageGlass.Settings
 
             #region Theme
             var themeFolderName = Get<string>(nameof(Theme), Dir.DefaultTheme);
-            var th = new Theme(App.ConfigDir(Dir.Themes, themeFolderName));
+            var th = new Theme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
-            if (th.IsValid)
-            {
+            if (th.IsValid) {
                 Theme = th;
             }
             #endregion
@@ -785,13 +794,13 @@ namespace ImageGlass.Settings
         /// <summary>
         /// Parse and write configs to file
         /// </summary>
-        public static void Write()
-        {
+        public static void Write() {
             // save public properties to configs
             #region Boolean items
 
             Set(nameof(IsSlideshow), IsSlideshow);
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+            Set(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             Set(nameof(IsFullScreen), IsFullScreen);
             Set(nameof(IsShowThumbnail), IsShowThumbnail);
             Set(nameof(IsCenterImage), IsCenterImage);
@@ -829,6 +838,7 @@ namespace ImageGlass.Settings
             Set(nameof(IsWindowFit), IsWindowFit);
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
             Set(nameof(IsShowToast), IsShowToast);
+            Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
 
             #endregion
 
@@ -837,6 +847,7 @@ namespace ImageGlass.Settings
 
             Set(nameof(FirstLaunchVersion), FirstLaunchVersion);
             Set(nameof(SlideShowInterval), SlideShowInterval);
+            Set(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
             Set(nameof(ThumbnailDimension), ThumbnailDimension);
             Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
@@ -908,16 +919,13 @@ namespace ImageGlass.Settings
         /// <typeparam name="T">Type</typeparam>
         /// <param name="value">Value</param>
         /// <returns></returns>
-        public static T ConvertType<T>(object value)
-        {
+        public static T ConvertType<T>(object value) {
             var type = typeof(T);
 
-            if (type.IsEnum)
-            {
+            if (type.IsEnum) {
                 return ParseEnum<T>(value);
             }
-            else
-            {
+            else {
                 return (T)Convert.ChangeType(value, type);
             }
         }
@@ -928,8 +936,7 @@ namespace ImageGlass.Settings
         /// Ex: *.svg;*.png;
         /// </summary>
         /// <returns></returns>
-        public static string GetRegisteredExtensions()
-        {
+        public static string GetRegisteredExtensions() {
             var reg = new RegistryHelper()
             {
                 BaseRegistryKey = Registry.LocalMachine,
@@ -939,13 +946,27 @@ namespace ImageGlass.Settings
             var extList = reg.GetValueNames();
             var exts = new StringBuilder();
 
-            foreach (var ext in extList)
-            {
+            foreach (var ext in extList) {
                 exts.Append($"*{ext};");
             }
 
             return exts.ToString();
         }
+
+
+        /// <summary>
+        /// Randomize slideshow interval in seconds
+        /// </summary>
+        /// <returns></returns>
+        public static uint RandomizeSlideshowInterval() {
+            var intervalTo = (int)(IsRandomSlideshowInterval ? SlideShowIntervalTo : SlideShowInterval);
+
+            var ran = new Random();
+            var interval = (uint)ran.Next((int)SlideShowInterval, intervalTo);
+
+            return interval;
+        }
+
 
         #endregion
 
@@ -959,10 +980,8 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="ext">An extension to search. Ex: .png</param>
         /// <returns></returns>
-        public static EditApp GetEditApp(string ext)
-        {
-            if (EditApps.Count > 0)
-            {
+        public static EditApp GetEditApp(string ext) {
+            if (EditApps.Count > 0) {
                 return EditApps.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
             }
 
@@ -975,17 +994,13 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="apps"></param>
         /// <returns></returns>
-        public static List<EditApp> GetEditApps(string apps)
-        {
+        public static List<EditApp> GetEditApps(string apps) {
             var appStr = apps.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             var list = new List<EditApp>();
 
-            if (appStr.Length > 0)
-            {
-                foreach (var item in appStr)
-                {
-                    try
-                    {
+            if (appStr.Length > 0) {
+                foreach (var item in appStr) {
+                    try {
                         var extAssoc = new EditApp(item);
                         list.Add(extAssoc);
                     }
@@ -1002,11 +1017,9 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="apps"></param>
         /// <returns></returns>
-        public static string GetEditApps(List<EditApp> apps)
-        {
+        public static string GetEditApps(List<EditApp> apps) {
             var appStr = new StringBuilder();
-            foreach (var item in apps)
-            {
+            foreach (var item in apps) {
                 appStr.Append($"[{item.ToString()}]");
             }
 
@@ -1023,14 +1036,12 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
         /// <returns></returns>
-        public static HashSet<string> GetImageFormats(string formats)
-        {
+        public static HashSet<string> GetImageFormats(string formats) {
             var list = new HashSet<string>();
             var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             char[] wildTrim = { '*' };
 
-            foreach (var ext in formatList)
-            {
+            foreach (var ext in formatList) {
                 list.Add(ext.Trim(wildTrim));
             }
 
@@ -1043,11 +1054,9 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="list">The input HashSet</param>
         /// <returns></returns>
-        public static string GetImageFormats(HashSet<string> list)
-        {
+        public static string GetImageFormats(HashSet<string> list) {
             var sb = new StringBuilder(list.Count);
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 sb.Append($"*{item.ToString()};");
             }
 
@@ -1064,15 +1073,12 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="keyActions">The input string. E.g. "combo1:action1;combo2:action2"</param>
         /// <returns></returns>
-        public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions)
-        {
+        public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions) {
             var pairs = keyActions.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var dic = new Dictionary<KeyCombos, AssignableActions>();
 
-            try
-            {
-                foreach (var pair in pairs)
-                {
+            try {
+                foreach (var pair in pairs) {
                     var parts = pair.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
                     var keyCombo = ParseEnum<KeyCombos>(parts[0]);
@@ -1081,8 +1087,7 @@ namespace ImageGlass.Settings
                     dic.Add(keyCombo, action);
                 }
             }
-            catch
-            {
+            catch {
                 // reset to default set on error
                 dic = Constants.DefaultKeycomboActions;
             }
@@ -1096,12 +1101,10 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="keyActions">The input keycombo actions</param>
         /// <returns></returns>
-        public static string GetKeyComboActions(Dictionary<KeyCombos, AssignableActions> keyActions)
-        {
+        public static string GetKeyComboActions(Dictionary<KeyCombos, AssignableActions> keyActions) {
             var sb = new StringBuilder();
 
-            foreach (var key in keyActions.Keys)
-            {
+            foreach (var key in keyActions.Keys) {
                 sb.Append(key.ToString());
                 sb.Append(':');
                 sb.Append(keyActions[key].ToString());
@@ -1121,15 +1124,12 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="buttons">The input string</param>
         /// <returns></returns>
-        public static List<ToolbarButton> GetToolbarButtons(string buttons)
-        {
+        public static List<ToolbarButton> GetToolbarButtons(string buttons) {
             var list = new List<ToolbarButton>();
             string[] splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var item in splitvals)
-            {
-                try
-                {
+            foreach (var item in splitvals) {
+                try {
                     var btn = ParseEnum<ToolbarButton>(item);
                     list.Add(btn);
                 }
@@ -1146,11 +1146,9 @@ namespace ImageGlass.Settings
         /// </summary>
         /// <param name="list">The input toolbar buttons</param>
         /// <returns></returns>
-        public static string GetToolbarButtons(List<ToolbarButton> list)
-        {
+        public static string GetToolbarButtons(List<ToolbarButton> list) {
             var sb = new StringBuilder(list.Count);
-            foreach (var item in list)
-            {
+            foreach (var item in list) {
                 sb.Append($"{item.ToString()};");
             }
 

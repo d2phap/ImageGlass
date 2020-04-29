@@ -24,10 +24,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 
-namespace igcmd
-{
-    static class Program
-    {
+namespace igcmd {
+    static class Program {
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
@@ -37,8 +35,7 @@ namespace igcmd
         static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
-        public enum ErrorModes : uint
-        {
+        public enum ErrorModes: uint {
             SYSTEM_DEFAULT = 0x0,
             SEM_FAILCRITICALERRORS = 0x0001,
             SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
@@ -51,8 +48,7 @@ namespace igcmd
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static int Main(string[] args)
-        {
+        static int Main(string[] args) {
             // Issue #360: IG periodically searching for dismounted device
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
@@ -68,18 +64,16 @@ namespace igcmd
 
             // Load user configs
             Configs.Load();
-            
+
 
             // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
-            if (topcmd == "setwallpaper")
-            {
+            if (topcmd == "setwallpaper") {
                 // Get image's path
                 string imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
-                if (args.Length > 2)
-                {
+                if (args.Length > 2) {
                     // Get style
                     Enum.TryParse(args[2], out style);
                 }
@@ -91,28 +85,25 @@ namespace igcmd
 
 
             // check for update
-            else if (topcmd == "igupdate")
-            {
+            else if (topcmd == "igupdate") {
                 return Core.CheckForUpdate() ? 1 : 0;
             }
 
 
             // auto check for update
-            else if (topcmd == "igautoupdate")
-            {
+            else if (topcmd == "igautoupdate") {
                 return Core.AutoUpdate() ? 1 : 0;
             }
 
 
             // run first launch configs
-            else if (topcmd == "firstlaunch")
-            {
+            else if (topcmd == "firstlaunch") {
                 Application.Run(new frmFirstLaunch());
             }
 
             return 0;
         }
 
-        
+
     }
 }

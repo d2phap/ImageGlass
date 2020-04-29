@@ -19,17 +19,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Heart;
+using ImageGlass.UI;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ImageGlass
-{
-    public static class Local
-    {
+namespace ImageGlass {
+    public static class Local {
         private static frmSetting _fSetting;
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
+        private static frmCrop _fCrop;
 
 
         #region Auto Properties
@@ -144,6 +145,30 @@ namespace ImageGlass
         /// </summary>
         public static int CurrentPageCount { get; set; } = 0;
 
+
+        /// <summary>
+        /// Gets, sets Exif tags of current image
+        /// </summary>
+        public static IExifProfile CurrentExif { get; set; } = null;
+
+
+        /// <summary>
+        /// Gets, sets color profile of current image
+        /// </summary>
+        public static IColorProfile CurrentColor { get; set; } = null;
+
+
+        /// <summary>
+        /// Gets, sets current navigation region type
+        /// </summary>
+        public static NavigationRegionType NavRegionType { get; set; } = NavigationRegionType.Unknown;
+
+
+        /// <summary>
+        /// Gets, sets the list of navigation regions
+        /// </summary>
+        public static List<NavigationRegion> NavRegions { get; set; } = new List<NavigationRegion>();
+
         #endregion
 
 
@@ -152,8 +177,7 @@ namespace ImageGlass
         /// <summary>
         /// Form frmSetting
         /// </summary>
-        public static frmSetting FSetting
-        {
+        public static frmSetting FSetting {
             get { return LazyInitializer.EnsureInitialized(ref _fSetting); }
             set { _fSetting = value; }
         }
@@ -162,8 +186,7 @@ namespace ImageGlass
         /// <summary>
         /// The Page Navigation form
         /// </summary>
-        public static frmPageNav FPageNav
-        {
+        public static frmPageNav FPageNav {
             get { return LazyInitializer.EnsureInitialized(ref _fPageNav); }
             set { _fPageNav = value; }
         }
@@ -172,10 +195,18 @@ namespace ImageGlass
         /// <summary>
         /// Form frmColorPicker
         /// </summary>
-        public static frmColorPicker FColorPicker
-        {
+        public static frmColorPicker FColorPicker {
             get { return LazyInitializer.EnsureInitialized(ref _fColorPicker); }
             set { _fColorPicker = value; }
+        }
+
+
+        /// <summary>
+        /// Form frmCrop
+        /// </summary>
+        public static frmCrop FCrop {
+            get { return LazyInitializer.EnsureInitialized(ref _fCrop); }
+            set { _fCrop = value; }
         }
 
 

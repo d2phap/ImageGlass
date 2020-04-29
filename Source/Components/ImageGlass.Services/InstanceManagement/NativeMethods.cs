@@ -20,10 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Services.InstanceManagement
-{
-    public class NativeMethods
-    {
+namespace ImageGlass.Services.InstanceManagement {
+    public class NativeMethods {
         [DllImport("user32")]
         public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
 

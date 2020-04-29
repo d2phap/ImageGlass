@@ -18,17 +18,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Author: Kevin Routley (aka fire-eggs)
 */
+using ImageGlass.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using ImageGlass.Base;
 
-namespace ImageGlass.Services
-{
-    public static class ExplorerSortOrder
-    {
+namespace ImageGlass.Services {
+    public static class ExplorerSortOrder {
         /// <summary>
         /// Convert an Explorer column name to one of our currently available sorting orders.
         /// </summary>
@@ -63,14 +61,12 @@ namespace ImageGlass.Services
         /// <param name="loadOrder">the resulting sort order or null</param>
         /// <param name="isAscending">the resulting sort direction or null</param>
         /// <returns>false on failure - out parameters will be null!</returns>
-        public static bool GetExplorerSortOrder(string fullPath, out ImageOrderBy? loadOrder, out bool? isAscending)
-        {
+        public static bool GetExplorerSortOrder(string fullPath, out ImageOrderBy? loadOrder, out bool? isAscending) {
             // assume failure
             loadOrder = null;
             isAscending = null;
 
-            try
-            {
+            try {
                 var folderPath = Path.GetDirectoryName(fullPath);
 
                 var sb = new StringBuilder(200); // arbitrary length should fit any
@@ -81,8 +77,7 @@ namespace ImageGlass.Services
                 {
                     explorerSortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
                 }
-                else
-                {
+                else {
                     explorerSortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
                 }
 
@@ -94,11 +89,10 @@ namespace ImageGlass.Services
                 // Success! Attempt to translate the Explorer column to our supported
                 // sort order values.
                 var column = sb.ToString();
-                if (SortTranslation.ContainsKey(column))
-                {
+                if (SortTranslation.ContainsKey(column)) {
                     loadOrder = SortTranslation[column];
                 }
-                    
+
                 isAscending = ascend > 0;
 
                 return loadOrder != null; // will be false on not-yet-supported column

@@ -23,21 +23,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * https://astoundingprogramming.wordpress.com/2012/12/17/how-to-get-the-target-of-a-windows-shortcut-c/
  ********************************/
 
-namespace ImageGlass.Library.WinAPI
-{
-    public static class Shortcuts
-    {
+namespace ImageGlass.Library.WinAPI {
+    public static class Shortcuts {
         /// <summary>
         /// Get the target path from shortcut (*.lnk)
         /// </summary>
         /// <param name="shortcutPath">Path of shortcut (*.lnk)</param>
         /// <returns></returns>
-        public static string GetTargetPathFromShortcut(string shortcutPath)
-        {
+        public static string GetTargetPathFromShortcut(string shortcutPath) {
             IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
 
-            try
-            {
+            try {
                 IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
                 return shortcut.TargetPath;
             }

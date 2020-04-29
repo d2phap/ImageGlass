@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageMagick;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Heart
-{
-    public class Img: IDisposable
-    {
+namespace ImageGlass.Heart {
+    public class Img: IDisposable {
 
         #region PUBLIC PROPERTIES
 
@@ -64,6 +63,18 @@ namespace ImageGlass.Heart
         /// </summary>
         public int ActivePageIndex { get; private set; } = 0;
 
+
+        /// <summary>
+        /// Gets the Exif profile of image
+        /// </summary>
+        public IExifProfile Exif { get; protected set; } = null;
+
+
+        /// <summary>
+        /// Gets the color profile of image
+        /// </summary>
+        public IColorProfile ColorProfile { get; protected set; } = null;
+
         #endregion
 
 
@@ -72,8 +83,7 @@ namespace ImageGlass.Heart
         /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
-        public Img(string filename)
-        {
+        public Img(string filename) {
             this.Filename = filename;
         }
 
@@ -83,14 +93,15 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Release all resources of Img
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             this.IsDone = false;
             this.Error = null;
             this.PageCount = 0;
 
-            if (this.Image != null)
-            {
+            this.Exif = null;
+            this.ColorProfile = null;
+
+            if (this.Image != null) {
                 this.Image.Dispose();
             }
         }
@@ -104,18 +115,16 @@ namespace ImageGlass.Heart
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false)
-        {
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false) {
             // reset done status
             this.IsDone = false;
 
             // reset error
             this.Error = null;
 
-            try
-            {
+            try {
                 // load image data
-                this.Image = await Photo.LoadAsync(
+                var data = await Photo.LoadAsync(
                     filename: this.Filename,
                     size: size,
                     colorProfileName: colorProfileName,
@@ -124,12 +133,18 @@ namespace ImageGlass.Heart
                     useEmbeddedThumbnail: useEmbeddedThumbnail
                 );
 
-                // Get page count
-                var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-                this.PageCount = this.Image.GetFrameCount(dim);
+                this.Image = data.Image;
+                this.Exif = data.Exif;
+                this.ColorProfile = data.ColorProfile;
+
+                if (this.Image != null) {
+                    // Get page count
+                    var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+                    this.PageCount = this.Image.GetFrameCount(dim);
+                }
+                
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 // save the error
                 this.Error = ex;
             }
@@ -146,8 +161,7 @@ namespace ImageGlass.Heart
         /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
-        {
+        public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true) {
             return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
         }
 
@@ -156,8 +170,9 @@ namespace ImageGlass.Heart
         /// Sets active page index
         /// </summary>
         /// <param name="index">Page index</param>
-        public void SetActivePage(int index)
-        {
+        public void SetActivePage(int index) {
+            if (this.Image == null) return;
+
             // Check if page index is greater than upper limit
             if (index >= this.PageCount)
                 index = 0;
@@ -179,9 +194,8 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
-        public async Task SaveImagePages(string destFolder)
-        {
-            await Photo.SaveImagePagesAsync(this.Filename, destFolder);
+        public async Task SaveImagePages(string destFolder) {
+            await Photo.SavePagesAsync(this.Filename, destFolder);
         }
 
         #endregion

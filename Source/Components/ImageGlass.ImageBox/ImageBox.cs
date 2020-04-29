@@ -998,7 +998,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        ///   Raises the <see cref="System.Windows.Forms.Control.Paint" /> event.
+        ///   [IG_CHANGE] Raises the <see cref="System.Windows.Forms.Control.Paint" /> event.
         /// </summary>
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.
@@ -1030,8 +1030,8 @@ namespace ImageGlass
                     DrawPixelGrid(e.Graphics);
                 }
 
-                // draw the selection
-                if (SelectionRegion != Rectangle.Empty)
+                // draw the selection. [IG_CHANGE]: add SelectionRegion != Rectangle.Empty
+                if (SelectionRegion != Rectangle.Empty || SelectionMode == ImageBoxSelectionMode.Rectangle)
                 {
                     DrawSelection(e);
                 }
@@ -3621,31 +3621,73 @@ namespace ImageGlass
             }
         }
 
+
         /// <summary>
-        ///   Draws the selection region.
+        ///   [IG_CHANGE] Draws the selection region.
         /// </summary>
         /// <param name="e">
         ///   The <see cref="System.Windows.Forms.PaintEventArgs" /> instance containing the event data.
         /// </param>
         protected virtual void DrawSelection(PaintEventArgs e)
         {
-            RectangleF rect;
+            var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
+            var selectionRec = GetOffsetRectangle(SelectionRegion);
 
-            e.Graphics.SetClip(GetInsideViewPort(true));
 
-            rect = GetOffsetRectangle(SelectionRegion);
+            #region draw inverted selection region
+            var clip = new Region(drawableRegion);
 
-            using (Brush brush = new SolidBrush(Color.FromArgb(128, SelectionColor)))
+            // invert the selection
+            clip.Exclude(selectionRec);
+            e.Graphics.Clip = clip;
+
+            // allow user-defined alpha value
+            var alpha = SelectionColor.A == 255 ? 128 : SelectionColor.A;
+            var brushColor = Color.FromArgb(alpha, SelectionColor);
+
+            // draw dimmed background
+            using (Brush brush = new SolidBrush(brushColor))
             {
-                e.Graphics.FillRectangle(brush, rect);
+                e.Graphics.FillRectangle(brush, drawableRegion);
+            }
+            e.Graphics.ResetClip();
+            #endregion
+
+
+            #region draw selection border and grid
+            e.Graphics.SetClip(drawableRegion);
+
+            // draw border, ignore alpha value
+            using (var pen = new Pen(Color.FromArgb(255, SelectionColor)))
+            {
+                e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width - 1, selectionRec.Height - 1);
             }
 
-            using (Pen pen = new Pen(SelectionColor))
+            // draw grid, ignore alpha value
+            using (Pen pen = new Pen(Color.FromArgb(200, SelectionColor)))
             {
-                e.Graphics.DrawRectangle(pen, rect.X, rect.Y, rect.Width, rect.Height);
+                var width3 = selectionRec.Width / 3;
+                var height3 = selectionRec.Height / 3;
+
+                for (int i = 1; i < 3; i++)
+                {
+                    e.Graphics.DrawLine(pen,
+                        selectionRec.X + (i*width3),
+                        selectionRec.Y,
+                        selectionRec.X + (i*width3),
+                        selectionRec.Y + selectionRec.Height);
+
+                    e.Graphics.DrawLine(pen,
+                        selectionRec.X,
+                        selectionRec.Y + (i * height3),
+                        selectionRec.X + selectionRec.Width,
+                        selectionRec.Y + (i * height3));
+                }
             }
 
             e.Graphics.ResetClip();
+            #endregion
+
         }
 
         /// <summary>
@@ -4324,21 +4366,18 @@ namespace ImageGlass
         }
 
         /// <summary>
-        ///   Raises the <see cref="SelectionModeChanged" /> event.
+        ///   [IG_CHANGE] Raises the <see cref="SelectionModeChanged" /> event.
         /// </summary>
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
         protected virtual void OnSelectionModeChanged(EventArgs e)
         {
-            EventHandler handler;
+            // [IG_CHANGE] Update graphics
+            this.Invalidate();
 
-            handler = SelectionModeChanged;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            var handler = SelectionModeChanged;
+            handler?.Invoke(this, e);
         }
 
         /// <summary>
@@ -5124,6 +5163,26 @@ namespace ImageGlass
                 handler(this, e);
         }
 
+
+        /// <summary>
+        ///   Occurs when the AutoScrollPosition property value changes. [IG_CHANGE] This is new event
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler AutoScrollPositionChanged;
+
+        /// <summary>
+        ///   Raises the <see cref="AutoScrollPositionChanged" /> event. [IG_CHANGE] This is new event
+        /// </summary>
+        /// <param name="e">
+        ///   The <see cref="EventArgs" /> instance containing the event data.
+        /// </param>
+        protected virtual void OnAutoScrollPositionChanged(EventArgs e)
+        {
+            var handler = this.AutoScrollPositionChanged;
+
+            handler?.Invoke(this, e);
+        }
+
         private Point _autoScrollPosition;
 
         private bool _updatingPosition;
@@ -5155,13 +5214,15 @@ namespace ImageGlass
 
                         if (_autoScrollPosition != value)
                         {
-//                            Debug.WriteLine(value);
+                            // Debug.WriteLine(value);
 
                             _autoScrollPosition = value;
 
                             UpdateScrollbars();
 
                             Invalidate();
+
+                            this.OnAutoScrollPositionChanged(EventArgs.Empty);
                         }
                     }
                     finally

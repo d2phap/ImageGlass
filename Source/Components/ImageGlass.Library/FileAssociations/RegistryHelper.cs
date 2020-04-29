@@ -18,26 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-namespace ImageGlass.Library.FileAssociations
-{
+namespace ImageGlass.Library.FileAssociations {
     /// <summary>
     /// An useful class to read/write/delete/count registry keys
     /// </summary>
-    public class RegistryHelper
-    {
+    public class RegistryHelper {
 
         private bool showError = false;
         /// <summary>
         /// A property to show or hide error messages 
         /// (default = false)
         /// </summary>
-        public bool ShowError
-        {
+        public bool ShowError {
             get { return showError; }
             set { showError = value; }
         }
@@ -48,8 +42,7 @@ namespace ImageGlass.Library.FileAssociations
         /// A property to set the SubKey value
         /// (default = "SOFTWARE\PhapSoftware\ImageGlass")
         /// </summary>
-        public string SubKey
-        {
+        public string SubKey {
             get { return subKey; }
             set { subKey = value; }
         }
@@ -59,8 +52,7 @@ namespace ImageGlass.Library.FileAssociations
         /// A property to set the BaseRegistryKey value.
         /// (default = Registry.LocalMachine)
         /// </summary>
-        public RegistryKey BaseRegistryKey
-        {
+        public RegistryKey BaseRegistryKey {
             get { return baseRegistryKey; }
             set { baseRegistryKey = value; }
         }
@@ -71,27 +63,22 @@ namespace ImageGlass.Library.FileAssociations
         /// input: KeyName (string)
         /// output: value (string) 
         /// </summary>
-        public string Read(string KeyName)
-        {
+        public string Read(string KeyName) {
             // Opening the registry key
             RegistryKey rk = baseRegistryKey;
             // Open a subKey as read-only
             RegistryKey sk1 = rk.OpenSubKey(subKey);
             // If the RegistrySubKey doesn't exist -> (null)
-            if (sk1 == null)
-            {
+            if (sk1 == null) {
                 return null;
             }
-            else
-            {
-                try
-                {
+            else {
+                try {
                     // If the RegistryKey exists I get its value
                     // or null is returned.
                     return (string)sk1.GetValue(KeyName);
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     // AAAAAAAAAAARGH, an error!
                     ShowErrorMessage(e, "Reading registry " + KeyName);
                     return null;
@@ -105,10 +92,8 @@ namespace ImageGlass.Library.FileAssociations
         /// input: KeyName (string) , Value (object)
         /// output: true or false 
         /// </summary>
-        public bool Write(string KeyName, object Value)
-        {
-            try
-            {
+        public bool Write(string KeyName, object Value) {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 // I have to use CreateSubKey 
@@ -120,8 +105,7 @@ namespace ImageGlass.Library.FileAssociations
 
                 return true;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Writing registry " + KeyName);
                 return false;
@@ -134,10 +118,8 @@ namespace ImageGlass.Library.FileAssociations
         /// input: KeyName (string)
         /// output: true or false 
         /// </summary>
-        public bool DeleteKey(string KeyName)
-        {
-            try
-            {
+        public bool DeleteKey(string KeyName) {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 RegistryKey sk1 = rk.CreateSubKey(subKey);
@@ -149,8 +131,7 @@ namespace ImageGlass.Library.FileAssociations
 
                 return true;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Deleting SubKey " + subKey);
                 return false;
@@ -163,10 +144,8 @@ namespace ImageGlass.Library.FileAssociations
         /// input: void
         /// output: true or false 
         /// </summary>
-        public bool DeleteSubKeyTree()
-        {
-            try
-            {
+        public bool DeleteSubKeyTree() {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 RegistryKey sk1 = rk.OpenSubKey(subKey);
@@ -176,8 +155,7 @@ namespace ImageGlass.Library.FileAssociations
 
                 return true;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Deleting SubKey " + subKey);
                 return false;
@@ -190,10 +168,8 @@ namespace ImageGlass.Library.FileAssociations
         /// input: void
         /// output: number of subkeys
         /// </summary>
-        public int SubKeyCount()
-        {
-            try
-            {
+        public int SubKeyCount() {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 RegistryKey sk1 = rk.OpenSubKey(subKey);
@@ -203,8 +179,7 @@ namespace ImageGlass.Library.FileAssociations
                 else
                     return 0;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Retrieving subkeys of " + subKey);
                 return 0;
@@ -217,10 +192,8 @@ namespace ImageGlass.Library.FileAssociations
         /// input: void
         /// output: number of keys
         /// </summary>
-        public int ValueCount()
-        {
-            try
-            {
+        public int ValueCount() {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 RegistryKey sk1 = rk.OpenSubKey(subKey);
@@ -230,8 +203,7 @@ namespace ImageGlass.Library.FileAssociations
                 else
                     return 0;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Retrieving keys of " + subKey);
                 return 0;
@@ -242,10 +214,8 @@ namespace ImageGlass.Library.FileAssociations
         /// Retrieve all value names in the key
         /// </summary>
         /// <returns></returns>
-        public string[] GetValueNames()
-        {
-            try
-            {
+        public string[] GetValueNames() {
+            try {
                 // Setting
                 RegistryKey rk = baseRegistryKey;
                 RegistryKey sk1 = rk.OpenSubKey(subKey);
@@ -255,17 +225,15 @@ namespace ImageGlass.Library.FileAssociations
                 else
                     return new string[0];
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Retrieving keys of " + subKey);
                 return new string[0];
             }
         }
-        
 
-        private void ShowErrorMessage(Exception e, string Title)
-        {
+
+        private void ShowErrorMessage(Exception e, string Title) {
             if (showError == true)
                 MessageBox.Show(e.Message, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

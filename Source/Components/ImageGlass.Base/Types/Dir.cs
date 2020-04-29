@@ -17,13 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.Base
-{
+namespace ImageGlass.Base {
     /// <summary>
     /// The directory name constants
     /// </summary>
-    public static class Dir
-    {
+    public static class Dir {
         /// <summary>
         /// Gets the Themes folder name
         /// </summary>

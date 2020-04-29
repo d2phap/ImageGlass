@@ -42,6 +42,7 @@
             this.lblLocation = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSnapTo = new System.Windows.Forms.Button();
+            this.lblFormTitle = new System.Windows.Forms.Label();
             this.panelColor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             this.panelColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelColor.Controls.Add(this.lblPixel);
             this.panelColor.Location = new System.Drawing.Point(20, 64);
-            this.panelColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelColor.Margin = new System.Windows.Forms.Padding(4);
             this.panelColor.Name = "panelColor";
             this.panelColor.Size = new System.Drawing.Size(276, 40);
             this.panelColor.TabIndex = 1;
@@ -207,7 +208,7 @@
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.Location = new System.Drawing.Point(241, 2);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(74, 40);
             this.btnClose.TabIndex = 6;
@@ -227,12 +228,28 @@
             this.btnSnapTo.ForeColor = System.Drawing.Color.White;
             this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSnapTo.Location = new System.Drawing.Point(165, 2);
-            this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4);
             this.btnSnapTo.Name = "btnSnapTo";
             this.btnSnapTo.Size = new System.Drawing.Size(74, 40);
             this.btnSnapTo.TabIndex = 12;
             this.btnSnapTo.Text = "^";
             this.btnSnapTo.UseVisualStyleBackColor = false;
+            // 
+            // lblFormTitle
+            // 
+            this.lblFormTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFormTitle.AutoEllipsis = true;
+            this.lblFormTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblFormTitle.ForeColor = System.Drawing.Color.White;
+            this.lblFormTitle.Location = new System.Drawing.Point(0, 5);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblFormTitle.Name = "lblFormTitle";
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.lblFormTitle.Size = new System.Drawing.Size(156, 32);
+            this.lblFormTitle.TabIndex = 29;
+            this.lblFormTitle.Text = "[Color picker]";
+            this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmColorPicker
             // 
@@ -240,6 +257,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(316, 314);
+            this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.btnSnapTo);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtLocation);
@@ -256,7 +274,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmColorPicker";
@@ -291,5 +309,6 @@
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSnapTo;
+        private System.Windows.Forms.Label lblFormTitle;
     }
 }

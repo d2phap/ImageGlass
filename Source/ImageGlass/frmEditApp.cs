@@ -22,18 +22,15 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ImageGlass
-{
-    public partial class frmEditApp : Form
-    {
+namespace ImageGlass {
+    public partial class frmEditApp: Form {
         private bool _isAllowFormClosed = false;
         public string FileExtension { get; set; }
         public string AppName { get; set; }
         public string AppPath { get; set; }
         public string AppArguments { get; set; }
 
-        public frmEditApp()
-        {
+        public frmEditApp() {
             InitializeComponent();
 
             lblFileExtension.Text = Configs.Language.Items[$"{this.Name}.lblFileExtension"];
@@ -47,8 +44,7 @@ namespace ImageGlass
             btnClose.Text = Configs.Language.Items[$"{this.Name}.btnClose"];
         }
 
-        private void frmEditApp_Load(object sender, EventArgs e)
-        {
+        private void frmEditApp_Load(object sender, EventArgs e) {
             // Issue #543 Prevent usage of characters which cause problems for settings
             txtFileExtension.KeyPress += textBox_KeyPress;
             txtAppName.KeyPress += textBox_KeyPress;
@@ -69,20 +65,17 @@ namespace ImageGlass
             txtAppArguments.LostFocus += Option_LostFocus;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
+        private void btnClose_Click(object sender, EventArgs e) {
             DialogResult = DialogResult.Cancel;
             _isAllowFormClosed = true;
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
+        private void btnOK_Click(object sender, EventArgs e) {
             AppName = txtAppName.Text.Trim();
             AppPath = txtAppPath.Text.Trim();
             AppArguments = txtAppArguments.Text.Trim();
 
-            if (AppPath.Length > 0 && !File.Exists(AppPath))
-            {
+            if (AppPath.Length > 0 && !File.Exists(AppPath)) {
                 txtAppPath.Focus(); // TODO shouldn't this also prevent dialog close?
             }
 
@@ -90,45 +83,37 @@ namespace ImageGlass
             _isAllowFormClosed = true;
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
-        {
+        private void btnReset_Click(object sender, EventArgs e) {
             txtAppName.Text = txtAppPath.Text = txtAppArguments.Text = string.Empty;
             InsureMacro();
             UpdateCommandPreview();
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
+        private void btnBrowse_Click(object sender, EventArgs e) {
             OpenFileDialog o = new OpenFileDialog();
             o.CheckFileExists = true;
 
-            if (o.ShowDialog() == DialogResult.OK)
-            {
+            if (o.ShowDialog() == DialogResult.OK) {
                 txtAppPath.Text = o.FileName;
             }
             UpdateCommandPreview();
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             // disable parent form shortcuts
             return false;
         }
 
-        private void frmEditApp_KeyDown(object sender, KeyEventArgs e)
-        {
+        private void frmEditApp_KeyDown(object sender, KeyEventArgs e) {
             //close dialog
-            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
-            {
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) {
                 DialogResult = DialogResult.Cancel;
                 _isAllowFormClosed = true;
             }
         }
 
-        private void frmEditApp_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!_isAllowFormClosed)
-            {
+        private void frmEditApp_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!_isAllowFormClosed) {
                 e.Cancel = true;
             }
         }
@@ -136,8 +121,7 @@ namespace ImageGlass
         /// <summary>
         /// Insure the macro is put in the app arguments box
         /// </summary>
-        private void InsureMacro()
-        {
+        private void InsureMacro() {
             // Make certain the app arguments has the file substitution string
             var txt = txtAppArguments.Text.Trim();
             if (txt.ToLower().Contains(EditApp.FileMacro))
@@ -150,30 +134,26 @@ namespace ImageGlass
         /// <summary>
         /// Update command preview
         /// </summary>
-        private void UpdateCommandPreview()
-        {
+        private void UpdateCommandPreview() {
             var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
 
             var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
-            if (!File.Exists(fileSample))
-            {
+            if (!File.Exists(fileSample)) {
                 fileSample = @"C:\fake dir\sample photo.jpg";
             }
-            
+
             // Something has changed; update the sample text
             var cmd = $"{appPath} {txtAppArguments.Text.Replace(EditApp.FileMacro, fileSample)}";
             txtCommandPreview.Text = cmd;
         }
 
 
-        private void Option_LostFocus(object sender, EventArgs e)
-        {
+        private void Option_LostFocus(object sender, EventArgs e) {
             // Focus was lost from a user-edit control. Make sure the preview is updated.
             UpdateCommandPreview();
         }
 
-        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e) {
             // Issue #543: use of square brackets breaks settings, don't let the user enter them
             if (e.KeyChar == '[' || e.KeyChar == ']' || e.KeyChar == '|')
                 e.Handled = true;

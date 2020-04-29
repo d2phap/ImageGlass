@@ -179,6 +179,22 @@ namespace ImageGlass
       }
     }
 
+    // [IG_CHANGE] When setting the ImageBox cursor,
+    // the scrollbars also get the cursor. I don't
+    // believe this should EVER happen, but to work
+    // around this fact, I've created this property.
+    // In an ideal world, this cursor management
+    // would be handled when the ImageBox.Cursor
+    // property is changed.
+    // ImageGlass Issue #618
+    public Cursor Cursor
+    {
+        set
+        {
+            if (_scrollBar.Visible) 
+                _scrollBar.Cursor = value;
+        }
+    }
     #endregion
   }
 }

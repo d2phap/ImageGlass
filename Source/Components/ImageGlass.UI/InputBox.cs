@@ -21,10 +21,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI
-{
-    public class InputBox
-    {
+namespace ImageGlass.UI {
+    public static class InputBox {
         /// <summary>
         /// Get, set the message user inputs
         /// </summary>
@@ -35,9 +33,8 @@ namespace ImageGlass.UI
         /// </summary>
         /// <param name="keyval"></param>
         /// <returns></returns>
-        private static bool NumberFilter(char keyval)
-        {
-            return (char.IsDigit(keyval) || keyval == (char) Keys.Back);
+        private static bool NumberFilter(char keyval) {
+            return (char.IsDigit(keyval) || keyval == (char)Keys.Back);
         }
 
 
@@ -46,16 +43,16 @@ namespace ImageGlass.UI
         /// </summary>
         /// <param name="keyval"></param>
         /// <returns></returns>
-        private static bool FilenameFilter(char keyval)
-        {
+        private static bool FilenameFilter(char keyval) {
             var badChars = Path.GetInvalidFileNameChars();
             bool invalid = badChars.Contains(keyval);
-            return !invalid || keyval == (char) Keys.Back;
+            return !invalid || keyval == (char)Keys.Back;
         }
 
         /// <summary>
         /// Show input dialog box
         /// </summary>
+        /// <param name="theme">Theme</param>
         /// <param name="title">Title</param>
         /// <param name="message">Message</param>
         /// <param name="defaultValue">Default value</param>
@@ -63,33 +60,29 @@ namespace ImageGlass.UI
         /// <param name="topMost">Set the form to top most</param>
         /// <param name="isFilename">Filename input</param>
         /// <returns></returns>
-        public static DialogResult ShowDialog(string title, string message, string defaultValue, bool @isNumberOnly = false, bool @topMost = false, bool isFilename = false)
-        {
-            frmDialogBox f = new frmDialogBox(title, message)
+        public static DialogResult ShowDialog(Theme theme, string title, string message, string defaultValue, bool isNumberOnly = false, bool topMost = false, bool isFilename = false) {
+            var frm = new frmDialogBox(title, message, theme)
             {
                 Content = defaultValue,
                 TopMost = topMost
             };
 
-            if (isNumberOnly)
-            {
-                f.Filter = NumberFilter;
-                f.MaxLimit = 10;
+            if (isNumberOnly) {
+                frm.Filter = NumberFilter;
+                frm.MaxLimit = 10;
             }
 
-            if (isFilename)
-            {
-                f.Filter = FilenameFilter;
-                f.MaxLimit = 256;
+            if (isFilename) {
+                frm.Filter = FilenameFilter;
+                frm.MaxLimit = 256;
             }
 
-            if (f.ShowDialog() == DialogResult.OK)
-            {
+            if (frm.ShowDialog() == DialogResult.OK) {
                 //Save input data
-                InputBox.Message = f.Content;
+                InputBox.Message = frm.Content;
             }
 
-            return f.DialogResult;
+            return frm.DialogResult;
         }
 
 

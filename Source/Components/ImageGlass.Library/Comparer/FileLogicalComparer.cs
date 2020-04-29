@@ -20,40 +20,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections;
 using System.IO;
 
-namespace ImageGlass.Library.Comparer
-{
-    public class FileLogicalComparer
-    {
+namespace ImageGlass.Library.Comparer {
+    public class FileLogicalComparer {
         private ArrayList _files = null;
 
-        public ArrayList Files
-        {
+        public ArrayList Files {
             get { return _files; }
             set { _files = value; }
         }
 
         #region Local Functions
-        public void AddFile(string file)
-        {
+        public void AddFile(string file) {
             if (file == null) return;
             if (_files == null) _files = new ArrayList();
             _files.Add(new DictionaryEntry(Path.GetFileName(file), file));
         }
 
-        
-        public void AddFiles(string[] f)
-        {
+
+        public void AddFiles(string[] f) {
             if (f == null) return;
-            for (int i = 0; i < f.Length; i++)
-            {
+            for (int i = 0; i < f.Length; i++) {
                 AddFile(f[i]);
             }
         }
 
-        public ArrayList GetSorted()
-        {
-            if (_files != null)
-            {
+        public ArrayList GetSorted() {
+            if (_files != null) {
                 _files.Sort(new DictionaryEntryComparer(new NumericComparer()));
             }
             return _files;
@@ -66,8 +58,7 @@ namespace ImageGlass.Library.Comparer
         /// </summary>
         /// <param name="stringArray">String array</param>
         /// <returns></returns>
-        public static string[] Sort(string[] stringArray)
-        {
+        public static string[] Sort(string[] stringArray) {
             if (stringArray == null) return null;
 
             FileLogicalComparer fc = new FileLogicalComparer();
@@ -76,8 +67,7 @@ namespace ImageGlass.Library.Comparer
 
             if (ds == null) return stringArray;
 
-            for (int i = 0; i < ds.Count; i++)
-            {
+            for (int i = 0; i < ds.Count; i++) {
                 stringArray[i] = (string)((DictionaryEntry)ds[i]).Value;
             }
 
@@ -88,6 +78,6 @@ namespace ImageGlass.Library.Comparer
 
 
 
-    
+
 
 }

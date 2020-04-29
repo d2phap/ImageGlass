@@ -20,16 +20,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Heart
-{
-    public class Factory : IDisposable
-    {
+namespace ImageGlass.Heart {
+    public class Factory: IDisposable {
 
         #region PRIVATE PROPERTIES
 
@@ -91,13 +88,10 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Get filenames list
         /// </summary>
-        public List<string> FileNames
-        {
-            get
-            {
+        public List<string> FileNames {
+            get {
                 var list = new List<string>();
-                foreach (var item in this.ImgList)
-                {
+                foreach (var item in this.ImgList) {
                     list.Add(item.Filename);
                 }
 
@@ -133,11 +127,9 @@ namespace ImageGlass.Heart
         /// The ImageBooster Factory
         /// </summary>
         /// <param name="filenames">List of filenames</param>
-        public Factory(IList<string> filenames)
-        {
+        public Factory(IList<string> filenames) {
             // import filenames to the list
-            foreach (var filename in filenames)
-            {
+            foreach (var filename in filenames) {
                 this.ImgList.Add(new Img(filename));
             }
 
@@ -155,8 +147,7 @@ namespace ImageGlass.Heart
         /// Add index of the image to queue list
         /// </summary>
         /// <param name="index">Current index of image list</param>
-        private void UpdateQueueList(int index)
-        {
+        private void UpdateQueueList(int index) {
             // check valid index
             if (index < 0 || index >= this.ImgList.Count) return;
 
@@ -169,38 +160,31 @@ namespace ImageGlass.Heart
             var maxCachedItems = this.MaxQueue * 2 + 1;
             var iRight = index;
             var iLeft = index;
-            
+
 
             // add index in the range in order: index -> right -> left -> ...
-            for (int i = 0; list.Count < maxCachedItems && list.Count < this.ImgList.Count; i++)
-            {
+            for (int i = 0; list.Count < maxCachedItems && list.Count < this.ImgList.Count; i++) {
                 // if i is even number
-                if ((i & 1) == 0)
-                {
+                if ((i & 1) == 0) {
                     // add right item: [index + 1; ...; to]
                     iRight += 1;
 
-                    if (iRight < this.ImgList.Count)
-                    {
+                    if (iRight < this.ImgList.Count) {
                         list.Add(iRight);
                     }
-                    else
-                    {
+                    else {
                         list.Add(iRight - this.ImgList.Count);
                     }
                 }
                 // if i is odd number
-                else
-                {
+                else {
                     // add left item: [index - 1; ...; from]
                     iLeft -= 1;
 
-                    if (iLeft >= 0)
-                    {
+                    if (iLeft >= 0) {
                         list.Add(iLeft);
                     }
-                    else
-                    {
+                    else {
                         list.Add(this.ImgList.Count + iLeft);
                     }
                 }
@@ -208,10 +192,8 @@ namespace ImageGlass.Heart
 
 
             // release the resources
-            foreach (var indexItem in this.FreeList)
-            {
-                if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < this.ImgList.Count)
-                {
+            foreach (var indexItem in this.FreeList) {
+                if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < this.ImgList.Count) {
                     this.ImgList[indexItem].Dispose();
                 }
             }
@@ -235,20 +217,16 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Start ImageBooster thread
         /// </summary>
-        public async void StartImageBooster()
-        {
-            while (this.IsRunWorker)
-            {
-                if (this.QueuedList.Count > 0)
-                {
+        public async void StartImageBooster() {
+            while (this.IsRunWorker) {
+                if (this.QueuedList.Count > 0) {
                     // pop out the first item
                     var index = this.QueuedList[0];
                     var img = this.ImgList[index];
                     QueuedList.RemoveAt(0);
 
 
-                    if (!img.IsDone)
-                    {
+                    if (!img.IsDone) {
                         // start loading image file
                         await img.LoadAsync(
                             size: this.ImgSize,
@@ -268,8 +246,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Releases all resources of the Factory and Stop ImageBooster thread
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             // stop the worker
             this.IsRunWorker = false;
 
@@ -282,8 +259,7 @@ namespace ImageGlass.Heart
         /// Add a filename to the list
         /// </summary>
         /// <param name="filename">Image filename</param>
-        public void Add(string filename)
-        {
+        public void Add(string filename) {
             this.ImgList.Add(new Img(filename));
         }
 
@@ -295,11 +271,9 @@ namespace ImageGlass.Heart
         /// <param name="isSkipCache"></param>
         /// <param name="pageIndex">The index of image page to display (if it's multi-page)</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = 0)
-        {
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = 0) {
             // reload fresh new image data
-            if (isSkipCache)
-            {
+            if (isSkipCache) {
                 await this.ImgList[index].LoadAsync(
                     size: this.ImgSize,
                     colorProfileName: this.ColorProfileName,
@@ -309,18 +283,15 @@ namespace ImageGlass.Heart
                 );
             }
             // get image data from cache
-            else
-            {
+            else {
                 // update queue list according to index
                 UpdateQueueList(index);
             }
 
 
             // wait until the image loading is done
-            if (ImgList.Count > 0)
-            {
-                while (!this.ImgList[index].IsDone)
-                {
+            if (ImgList.Count > 0) {
+                while (!this.ImgList[index].IsDone) {
                     await Task.Delay(1);
                 }
             }
@@ -329,10 +300,8 @@ namespace ImageGlass.Heart
             OnFinishLoadingImage?.Invoke(this, new EventArgs());
 
             // if there is no error
-            if (ImgList.Count > 0)
-            {
-                if (ImgList[index].Error == null)
-                {
+            if (ImgList.Count > 0) {
+                if (ImgList[index].Error == null) {
                     ImgList[index].SetActivePage(pageIndex);
                 }
 
@@ -348,12 +317,9 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index"></param>
         /// <returns>Returns filename or empty string</returns>
-        public string GetFileName(int index)
-        {
-            try
-            {
-                if (ImgList.Count > 0 && ImgList[index] != null)
-                {
+        public string GetFileName(int index) {
+            try {
+                if (ImgList.Count > 0 && ImgList[index] != null) {
                     return this.ImgList[index].Filename;
                 }
             }
@@ -371,10 +337,8 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="index"></param>
         /// <param name="filename">Image filename</param>
-        public void SetFileName(int index, string filename)
-        {
-            if (this.ImgList[index] != null)
-            {
+        public void SetFileName(int index, string filename) {
+            if (this.ImgList[index] != null) {
                 this.ImgList[index].Filename = filename;
             }
         }
@@ -386,8 +350,7 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="filename">Image filename</param>
         /// <returns></returns>
-        public int IndexOf(string filename)
-        {
+        public int IndexOf(string filename) {
             // case sensitivity, esp. if filename passed on command line
             return this.ImgList.FindIndex(item => item.Filename.ToUpperInvariant() == filename.ToUpperInvariant());
         }
@@ -397,10 +360,8 @@ namespace ImageGlass.Heart
         /// Unload and release resources of item with the given index
         /// </summary>
         /// <param name="index"></param>
-        public void Unload(int index)
-        {
-            if (this.ImgList[index] != null)
-            {
+        public void Unload(int index) {
+            if (this.ImgList[index] != null) {
                 this.ImgList[index].Dispose();
             }
         }
@@ -410,8 +371,7 @@ namespace ImageGlass.Heart
         /// Remove an item in the list with the given index
         /// </summary>
         /// <param name="index"></param>
-        public void Remove(int index)
-        {
+        public void Remove(int index) {
             this.Unload(index);
             this.ImgList.RemoveAt(index);
         }
@@ -420,8 +380,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Empty and release resource of the list
         /// </summary>
-        public void Clear()
-        {
+        public void Clear() {
             // release the resources of the img list
             this.ClearCache();
             this.ImgList.Clear();
@@ -431,11 +390,9 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Clear all cached images and release resource of the list
         /// </summary>
-        public void ClearCache()
-        {
+        public void ClearCache() {
             // release the resources of the img list
-            foreach (var item in this.ImgList)
-            {
+            foreach (var item in this.ImgList) {
                 item.Dispose();
             }
 
@@ -446,8 +403,7 @@ namespace ImageGlass.Heart
         /// <summary>
         /// Update cached images
         /// </summary>
-        public void UpdateCache()
-        {
+        public void UpdateCache() {
             // clear current queue list
             this.QueuedList.Clear();
 
@@ -458,8 +414,7 @@ namespace ImageGlass.Heart
                 .ToList();
 
             // release the cachced images
-            foreach (var index in cachedIndexList)
-            {
+            foreach (var index in cachedIndexList) {
                 this.ImgList[index].Dispose();
             }
 
@@ -473,8 +428,7 @@ namespace ImageGlass.Heart
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public bool ContainsDirPathOf(string filename)
-        {
+        public bool ContainsDirPathOf(string filename) {
             var target = Path.GetDirectoryName(filename).ToUpperInvariant();
 
             var index = this.ImgList.FindIndex(item => Path.GetDirectoryName(item.Filename).ToUpperInvariant() == target);
