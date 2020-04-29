@@ -158,13 +158,13 @@
             this.btnPrintImage = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnCrop = new System.Windows.Forms.ToolStripButton();
+            this.btnColorPicker = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnColorPicker = new System.Windows.Forms.ToolStripButton();
-            this.btnCrop = new System.Windows.Forms.ToolStripButton();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -355,8 +355,7 @@
             this.mnuMainRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainRefresh.Name = "mnuMainRefresh";
             this.mnuMainRefresh.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainRefresh.ShortcutKeyDisplayString = "F5";
-            this.mnuMainRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuMainRefresh.ShortcutKeyDisplayString = "R";
             this.mnuMainRefresh.Size = new System.Drawing.Size(438, 33);
             this.mnuMainRefresh.Text = "[Refresh]";
             this.mnuMainRefresh.Click += new System.EventHandler(this.mnuMainRefresh_Click);
@@ -446,8 +445,7 @@
             this.mnuMainGoto.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainGoto.Name = "mnuMainGoto";
             this.mnuMainGoto.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainGoto.ShortcutKeyDisplayString = "Ctrl+G";
-            this.mnuMainGoto.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.mnuMainGoto.ShortcutKeyDisplayString = "G";
             this.mnuMainGoto.Size = new System.Drawing.Size(449, 33);
             this.mnuMainGoto.Text = "&Go to ...";
             this.mnuMainGoto.Click += new System.EventHandler(this.mnuMainGoto_Click);
@@ -593,7 +591,6 @@
             this.mnuMainAutoZoom.Name = "mnuMainAutoZoom";
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "1";
-            this.mnuMainAutoZoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.mnuMainAutoZoom.Size = new System.Drawing.Size(264, 33);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
@@ -605,7 +602,6 @@
             this.mnuMainLockZoomRatio.Name = "mnuMainLockZoomRatio";
             this.mnuMainLockZoomRatio.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLockZoomRatio.ShortcutKeyDisplayString = "2";
-            this.mnuMainLockZoomRatio.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(264, 33);
             this.mnuMainLockZoomRatio.Text = "&Lock zoom ratio";
             this.mnuMainLockZoomRatio.Click += new System.EventHandler(this.mnuMainLockZoomRatio_Click);
@@ -618,7 +614,6 @@
             this.mnuMainScaleToWidth.Name = "mnuMainScaleToWidth";
             this.mnuMainScaleToWidth.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToWidth.ShortcutKeyDisplayString = "3";
-            this.mnuMainScaleToWidth.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.mnuMainScaleToWidth.Size = new System.Drawing.Size(264, 33);
             this.mnuMainScaleToWidth.Text = "Scale to &Width";
             this.mnuMainScaleToWidth.Click += new System.EventHandler(this.mnuMainScaleToWidth_Click);
@@ -631,7 +626,6 @@
             this.mnuMainScaleToHeight.Name = "mnuMainScaleToHeight";
             this.mnuMainScaleToHeight.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToHeight.ShortcutKeyDisplayString = "4";
-            this.mnuMainScaleToHeight.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.mnuMainScaleToHeight.Size = new System.Drawing.Size(264, 33);
             this.mnuMainScaleToHeight.Text = "Scale to &Height";
             this.mnuMainScaleToHeight.Click += new System.EventHandler(this.mnuMainScaleToHeight_Click);
@@ -656,7 +650,6 @@
             this.mnuMainScaleToFill.Name = "mnuMainScaleToFill";
             this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToFill.ShortcutKeyDisplayString = "6";
-            this.mnuMainScaleToFill.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.mnuMainScaleToFill.Size = new System.Drawing.Size(264, 33);
             this.mnuMainScaleToFill.Text = "Scale to fill";
             this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
@@ -1086,8 +1079,7 @@
             this.mnuMainToolbar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainToolbar.Name = "mnuMainToolbar";
             this.mnuMainToolbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainToolbar.ShortcutKeyDisplayString = "Ctrl+F1";
-            this.mnuMainToolbar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
+            this.mnuMainToolbar.ShortcutKeyDisplayString = "T";
             this.mnuMainToolbar.Size = new System.Drawing.Size(336, 33);
             this.mnuMainToolbar.Text = "Toolbar";
             this.mnuMainToolbar.Click += new System.EventHandler(this.mnuMainToolbar_Click);
@@ -1100,8 +1092,7 @@
             this.mnuMainThumbnailBar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainThumbnailBar.Name = "mnuMainThumbnailBar";
             this.mnuMainThumbnailBar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainThumbnailBar.ShortcutKeyDisplayString = "Ctrl+T";
-            this.mnuMainThumbnailBar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.mnuMainThumbnailBar.ShortcutKeyDisplayString = "H";
             this.mnuMainThumbnailBar.Size = new System.Drawing.Size(336, 33);
             this.mnuMainThumbnailBar.Text = "Thumbnail panel";
             this.mnuMainThumbnailBar.Click += new System.EventHandler(this.mnuMainThumbnailBar_Click);
@@ -1114,8 +1105,7 @@
             this.mnuMainCheckBackground.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCheckBackground.Name = "mnuMainCheckBackground";
             this.mnuMainCheckBackground.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCheckBackground.ShortcutKeyDisplayString = "Ctrl+B";
-            this.mnuMainCheckBackground.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.mnuMainCheckBackground.ShortcutKeyDisplayString = "B";
             this.mnuMainCheckBackground.Size = new System.Drawing.Size(336, 33);
             this.mnuMainCheckBackground.Text = "&Check background";
             this.mnuMainCheckBackground.Click += new System.EventHandler(this.mnuMainCheckBackground_Click);
@@ -1836,6 +1826,36 @@
             this.btnDelete.ToolTipText = "Send to recycle bin";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnCrop
+            // 
+            this.btnCrop.AutoSize = false;
+            this.btnCrop.BackColor = System.Drawing.Color.Transparent;
+            this.btnCrop.CheckOnClick = true;
+            this.btnCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCrop.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnCrop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCrop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCrop.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCrop.Name = "btnCrop";
+            this.btnCrop.Size = new System.Drawing.Size(33, 33);
+            this.btnCrop.ToolTipText = "[Cropping]";
+            this.btnCrop.Click += new System.EventHandler(this.btnCropping_Click);
+            // 
+            // btnColorPicker
+            // 
+            this.btnColorPicker.AutoSize = false;
+            this.btnColorPicker.BackColor = System.Drawing.Color.Transparent;
+            this.btnColorPicker.CheckOnClick = true;
+            this.btnColorPicker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnColorPicker.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnColorPicker.Margin = new System.Windows.Forms.Padding(0);
+            this.btnColorPicker.Name = "btnColorPicker";
+            this.btnColorPicker.Size = new System.Drawing.Size(33, 33);
+            this.btnColorPicker.ToolTipText = "[Color picker]";
+            this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
+            // 
             // btnMenu
             // 
             this.btnMenu.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -1874,36 +1894,6 @@
             this.btnScaleToFill.Tag = "";
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
-            // 
-            // btnColorPicker
-            // 
-            this.btnColorPicker.AutoSize = false;
-            this.btnColorPicker.BackColor = System.Drawing.Color.Transparent;
-            this.btnColorPicker.CheckOnClick = true;
-            this.btnColorPicker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnColorPicker.Image = global::ImageGlass.Properties.Resources.info;
-            this.btnColorPicker.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnColorPicker.Margin = new System.Windows.Forms.Padding(0);
-            this.btnColorPicker.Name = "btnColorPicker";
-            this.btnColorPicker.Size = new System.Drawing.Size(33, 33);
-            this.btnColorPicker.ToolTipText = "[Color picker]";
-            this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
-            // 
-            // btnCropping
-            // 
-            this.btnCrop.AutoSize = false;
-            this.btnCrop.BackColor = System.Drawing.Color.Transparent;
-            this.btnCrop.CheckOnClick = true;
-            this.btnCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCrop.Image = global::ImageGlass.Properties.Resources.info;
-            this.btnCrop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCrop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCrop.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCrop.Name = "btnCropping";
-            this.btnCrop.Size = new System.Drawing.Size(33, 33);
-            this.btnCrop.ToolTipText = "[Cropping]";
-            this.btnCrop.Click += new System.EventHandler(this.btnCropping_Click);
             // 
             // frmMain
             // 

@@ -1048,16 +1048,7 @@ namespace ImageGlass {
             _isDraggingImage = false;
 
 
-            // Show main menu
-            #region Ctrl + `
-            if (e.KeyValue == 192 && !e.Control && !e.Shift && !e.Alt) // `
-            {
-                mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
-            }
-            #endregion
-
-
-            // Rotation Counterclockwise----------------------------------------------------
+            // Rotation Counterclockwise
             #region Ctrl + ,
             if (e.KeyValue == 188 && e.Control && !e.Shift && !e.Alt)//Ctrl + ,
             {
@@ -1067,7 +1058,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Rotate Clockwise--------------------------------------------------------------
+            // Rotate Clockwise
             #region Ctrl + .
             if (e.KeyValue == 190 && e.Control && !e.Shift && !e.Alt)//Ctrl + .
             {
@@ -1077,7 +1068,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Flip Horizontally-----------------------------------------------------------
+            // Flip Horizontally
             #region Ctrl + ;
             if (e.KeyValue == 186 && e.Control && !e.Shift && !e.Alt)//Ctrl + ;
             {
@@ -1087,7 +1078,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Flip Vertically-----------------------------------------------------------
+            // Flip Vertically
             #region Ctrl + '
             if (e.KeyValue == 222 && e.Control && !e.Shift && !e.Alt)//Ctrl + '
             {
@@ -1097,7 +1088,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Clear clipboard----------------------------------------------------------------
+            // Clear clipboard
             #region CTRL + `
             if (e.KeyValue == 192 && e.Control && !e.Shift && !e.Alt)//CTRL + `
             {
@@ -1107,7 +1098,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Zoom + ------------------------------------------------------------------------
+            // Zoom in
             #region Ctrl + = / = / + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
             {
@@ -1117,7 +1108,7 @@ namespace ImageGlass {
             #endregion
 
 
-            //Zoom - ------------------------------------------------------------------------
+            // Zoom out
             #region Ctrl + - / - / - (numPad)
             if ((e.KeyValue == 189 || (e.KeyValue == 109 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + -
             {
@@ -1127,17 +1118,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Zoom to fit--------------------------------------------------------------------
-            #region CTRL + /
-            if (e.KeyValue == 191 && e.Control && !e.Shift && !e.Alt)//CTRL + /
-            {
-                mnuMainScaleToFit_Click(null, null);
-                return;
-            }
-            #endregion
-
-
-            // Actual size image -------------------------------------------------------------
+            // Actual size image
             #region Ctrl + 0 / Ctrl + Num0 / 0 / Num0
             if (!e.Shift && !e.Alt && (e.KeyValue == 48 || e.KeyValue == 96)) // 0 || Num0 || Ctrl + 0 || Ctrl + Num0
             {
@@ -1147,7 +1128,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // ESC ultility------------------------------------------------------------------
+            // ESC ultility
             #region ESC
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
             {
@@ -1164,7 +1145,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Previous Image----------------------------------------------------------------
+            // Previous Image
             #region LEFT ARROW / PAGE UP
             if (!ignore && e.KeyValue == (int)Keys.Left && hasNoMods) {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
@@ -1186,7 +1167,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Next Image---------------------------------------------------------------------
+            // Next Image
             #region RIGHT ARROW / PAGE DOWN
             if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods) {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
@@ -1232,7 +1213,7 @@ namespace ImageGlass {
             #endregion
 
 
-            //Goto the first Image---------------------------------------------------------------
+            //Goto the first Image
             #region HOME
             if (!_isWindowsKeyPressed && e.KeyValue == 36 &&
                 !e.Control && !e.Shift && !e.Alt) {
@@ -1242,7 +1223,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Goto the last Image---------------------------------------------------------------
+            // Goto the last Image
             #region END
             if (!_isWindowsKeyPressed && e.KeyValue == 35 &&
                 !e.Control && !e.Shift && !e.Alt) {
@@ -1252,7 +1233,7 @@ namespace ImageGlass {
             #endregion
 
 
-            // Ctrl---------------------------------------------------------------------------
+            // Ctrl
             #region CTRL + ...
             if (e.Control && !e.Alt && !e.Shift) // Ctrl
             {
@@ -1306,9 +1287,22 @@ namespace ImageGlass {
             #endregion
 
 
-            // Without Modifiers keys --------------------------------------------------------
+            // Without Modifiers keys 
             #region Without Modifiers keys
             if (hasNoMods) {
+
+                // Show main menu
+                if (e.KeyValue == 192) // `
+                {
+                    mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+                }
+
+                // Checkerboard background
+                if (e.KeyCode == Keys.B) {
+                    mnuMainCheckBackground.PerformClick();
+                    return;
+                }
+
                 // Crop tool
                 if (e.KeyCode == Keys.C) {
                     mnuMainCrop.PerformClick();
@@ -1327,6 +1321,18 @@ namespace ImageGlass {
                     return;
                 }
 
+                // Go to...
+                if (e.KeyCode == Keys.G) {
+                    mnuMainGoto.PerformClick();
+                    return;
+                }
+
+                // Thumbnail bar
+                if (e.KeyCode == Keys.H) {
+                    mnuMainThumbnailBar.PerformClick();
+                    return;
+                }
+
                 // Color picker tool
                 if (e.KeyCode == Keys.K) {
                     mnuMainColorPicker.PerformClick();
@@ -1336,6 +1342,18 @@ namespace ImageGlass {
                 // Page naviagtion tool
                 if (e.KeyCode == Keys.P) {
                     mnuMainPageNav.PerformClick();
+                    return;
+                }
+
+                // Refresh image
+                if (e.KeyCode == Keys.R) {
+                    mnuMainRefresh.PerformClick();
+                    return;
+                }
+
+                // Toolbar
+                if (e.KeyCode == Keys.T) {
+                    mnuMainToolbar.PerformClick();
                     return;
                 }
 
