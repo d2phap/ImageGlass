@@ -21,30 +21,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.Comparer
-{
-    public class WindowsNaturalSort : IComparer<string>
-    {
+namespace ImageGlass.Library.Comparer {
+    public class WindowsNaturalSort: IComparer<string> {
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         static extern int StrCmpLogicalW(String x, String y);
 
-        public int Compare(string filePath1, string filePath2)
-        {
+        public int Compare(string filePath1, string filePath2) {
             var basename1 = Path.GetFileName(filePath1);
             var basename2 = Path.GetFileName(filePath2);
 
             return StrCmpLogicalW(basename1, basename2);
         }
-        
+
     }
 
-    public class ReverseWindowsNaturalSort : IComparer<string>
-    {
+    public class ReverseWindowsNaturalSort: IComparer<string> {
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         static extern int StrCmpLogicalW(String x, String y);
 
-        public int Compare(string filePath1, string filePath2)
-        {
+        public int Compare(string filePath1, string filePath2) {
             var basename1 = Path.GetFileName(filePath2);
             var basename2 = Path.GetFileName(filePath1);
 

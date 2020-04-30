@@ -265,7 +265,7 @@
             // 
             this.btnSetDefaultApp.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnSetDefaultApp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnSetDefaultApp.Location = new System.Drawing.Point(204, 76);
+            this.btnSetDefaultApp.Location = new System.Drawing.Point(207, 76);
             this.btnSetDefaultApp.Name = "btnSetDefaultApp";
             this.btnSetDefaultApp.Size = new System.Drawing.Size(150, 40);
             this.btnSetDefaultApp.TabIndex = 1;

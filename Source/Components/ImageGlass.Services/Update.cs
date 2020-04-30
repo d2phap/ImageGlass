@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -18,15 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Xml;
-using System.Net;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Xml;
 
-namespace ImageGlass.Services
-{
-    public class Update
-    {
+namespace ImageGlass.Services {
+    public class Update {
         private InfoUpdate _info;
         private bool _isError;
 
@@ -34,8 +32,7 @@ namespace ImageGlass.Services
         /// <summary>
         /// Get / set information of info update
         /// </summary>
-        public InfoUpdate Info
-        {
+        public InfoUpdate Info {
             get { return _info; }
             set { _info = value; }
         }
@@ -43,8 +40,7 @@ namespace ImageGlass.Services
         /// <summary>
         /// Gets value if checking for update is error
         /// </summary>
-        public bool IsError
-        {
+        public bool IsError {
             get { return _isError; }
         }
         #endregion
@@ -52,8 +48,7 @@ namespace ImageGlass.Services
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
-        public Update(Uri link, string savedPath)
-        {
+        public Update(Uri link, string savedPath) {
             _info = new InfoUpdate();
 
             //Get information update pack
@@ -63,8 +58,7 @@ namespace ImageGlass.Services
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
-        public Update()
-        {
+        public Update() {
             _isError = true;
             _info = new InfoUpdate();
         }
@@ -76,11 +70,9 @@ namespace ImageGlass.Services
         /// <param name="link"></param>
         /// <param name="savedPath"></param>
         /// <returns></returns>
-        private bool GetUpdateConfig(Uri link, string savedPath)
-        {
+        private bool GetUpdateConfig(Uri link, string savedPath) {
             //Get config file
-            try
-            {
+            try {
                 if (File.Exists(savedPath)) { File.Delete(savedPath); }
 
                 System.Net.WebClient w = new WebClient();
@@ -96,12 +88,11 @@ namespace ImageGlass.Services
                 return false;
 
             //error on downloading
-            if (_info.NewVersion.ToString() == "1.0.0.0")
-            {
+            if (_info.NewVersion.ToString() == "1.0.0.0") {
                 return false;
             }
 
-            return true;    
+            return true;
         }
 
         /// <summary>
@@ -109,14 +100,11 @@ namespace ImageGlass.Services
         /// </summary>
         /// <param name="xmlFilename"></param>
         /// <returns>false on load failure</returns>
-        public bool LoadUpdateConfig(string xmlFilename)
-        {
-            try
-            {
+        public bool LoadUpdateConfig(string xmlFilename) {
+            try {
                 XmlDocument xmlDoc = new XmlDocument();
                 // Issue #520: the xml document was locked somehow. Open it read-only to prevent lock issues
-                using (Stream s = File.OpenRead(xmlFilename))
-                {
+                using (Stream s = File.OpenRead(xmlFilename)) {
                     xmlDoc.Load(s);
                 }
                 XmlElement root = xmlDoc.DocumentElement;// <ImageGlass>
@@ -133,8 +121,7 @@ namespace ImageGlass.Services
                 _info.Decription = n.GetAttribute("decription");
                 return true;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 // access error; corrupted file
                 return false;
             }
@@ -147,37 +134,32 @@ namespace ImageGlass.Services
         /// </summary>
         /// <param name="exePath"></param>
         /// <returns></returns>
-        public bool CheckForUpdate(string exePath)
-        {
+        public bool CheckForUpdate(string exePath) {
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
             Version currentVersion = new Version(fv.FileVersion);
 
             // Version = [Major.Minor.Build.Revision]
 
             // [6.1.12.3] > [5.1.12.3]
-            if (Info.NewVersion.Major > currentVersion.Major)
-            {
+            if (Info.NewVersion.Major > currentVersion.Major) {
                 return true;
             }
             // [6.1.12.3] > [6.0.12.3]
-            else if (Info.NewVersion.Major == currentVersion.Major && 
-                Info.NewVersion.Minor > currentVersion.Minor)
-            {
+            else if (Info.NewVersion.Major == currentVersion.Major &&
+                Info.NewVersion.Minor > currentVersion.Minor) {
                 return true;
             }
             // [6.1.12.3] > [6.1.10.3]
             else if (Info.NewVersion.Major == currentVersion.Major &&
                 Info.NewVersion.Minor == currentVersion.Minor &&
-                Info.NewVersion.Build > currentVersion.Build)
-            {
+                Info.NewVersion.Build > currentVersion.Build) {
                 return true;
             }
             // [6.1.12.3] > [6.1.12.0]
             else if (Info.NewVersion.Major == currentVersion.Major &&
                 Info.NewVersion.Minor == currentVersion.Minor &&
                 Info.NewVersion.Build == currentVersion.Build &&
-                Info.NewVersion.Revision > currentVersion.Revision)
-            {
+                Info.NewVersion.Revision > currentVersion.Revision) {
                 return true;
             }
 
@@ -186,7 +168,7 @@ namespace ImageGlass.Services
             return false;
         }
 
-        
+
     }
 
 }

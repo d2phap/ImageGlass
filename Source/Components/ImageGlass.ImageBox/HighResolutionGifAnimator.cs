@@ -172,11 +172,21 @@ namespace ImageGlass {
 
         // image lock should be held
         //
-        private bool ImageHasTimeFrames(Image image) {
-            foreach (Guid guid in image.FrameDimensionsList) {
-                FrameDimension dimension = new FrameDimension(guid);
-                if (dimension.Equals(FrameDimension.Time))
-                    return image.GetFrameCount(FrameDimension.Time) > 1;
+        private bool ImageHasTimeFrames(Image image) 
+        {
+            try
+            {
+                foreach (Guid guid in image.FrameDimensionsList) 
+                {
+                    if (guid == FrameDimension.Time.Guid)
+                        return image.GetFrameCount(FrameDimension.Time) > 1;
+                }
+            }
+            catch
+            {
+                // fire-eggs 20191114 fix observed issue: if pounding heavily CTRL+Space (to
+                // toggle GIF animation) _while_ playing a slideshow, there is a window of
+                // time where the image could be invalid. This manifested as an exception here.
             }
 
             return false;

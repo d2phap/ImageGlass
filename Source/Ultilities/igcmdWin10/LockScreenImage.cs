@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,27 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System.UserProfile;
 
-namespace igcmdWin10
-{
+namespace igcmdWin10 {
     /// <summary>
     /// Set the Lock Screen image from an image path
     /// </summary>
-    public class LockScreenImage
-    {
-        public static async Task<int> SetAsync(string path)
-        {
+    public class LockScreenImage {
+        public static async Task<int> SetAsync(string path) {
             //System.Diagnostics.Debugger.Break();
 
             var folder = Path.GetDirectoryName(path);
             var file = Path.GetFileName(path);
 
-            try
-            {
+            try {
                 StorageFolder sf = await StorageFolder.GetFolderFromPathAsync(folder);
                 StorageFile imgFile = await sf.GetFileAsync(file);
 
-                using (var stream = await imgFile.OpenAsync(FileAccessMode.Read))
-                {
+                using (var stream = await imgFile.OpenAsync(FileAccessMode.Read)) {
                     await LockScreen.SetImageStreamAsync(stream);
                 }
-                
+
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 return 1;
             }
 

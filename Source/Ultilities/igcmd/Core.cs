@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,58 +17,53 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
+using ImageGlass.Services;
+using ImageGlass.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using ImageGlass.Services;
-using ImageGlass.Services.Configuration;
 
-
-namespace igcmd
-{
-    public static class Core
-    {
+namespace igcmd {
+    public static class Core {
 
         /// <summary>
         /// Check for update
         /// </summary>
-        public static void AutoUpdate()
-        {
+        public static bool AutoUpdate() {
             // Issue #520: intercept any possible exception and fail quietly
-            try
-            {
-                Directory.CreateDirectory(GlobalSetting.ConfigDir(Dir.Temporary));
+            try {
+                Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
-                string updateXML = GlobalSetting.ConfigDir(Dir.Temporary, "update.xml");
-                Update up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
+                var updateXML = App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
+                var up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
-                if (File.Exists(updateXML))
-                {
+                if (File.Exists(updateXML)) {
                     File.Delete(updateXML);
                 }
 
                 if (!up.IsError &&
-                    up.CheckForUpdate(GlobalSetting.StartUpDir("ImageGlass.exe")) &&
-                    up.Info.VersionType.ToLower() == "stable")
-                {
-                    frmCheckForUpdate f = new frmCheckForUpdate();
-                    f.ShowDialog();
+                    up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")) &&
+                    up.Info.VersionType.ToLower() == "stable") {
+                    using (var f = new frmCheckForUpdate()) {
+                        f.ShowDialog();
+                    }
                 }
             }
-            catch (Exception e)
-            {
-            }
+            catch { }
 
-            Application.Exit();
+
+            return Configs.IsNewVersionAvailable;
         }
 
 
         /// <summary>
         /// Check for update
         /// </summary>
-        public static void CheckForUpdate()
-        {
+        public static bool CheckForUpdate() {
             Application.Run(new frmCheckForUpdate());
+
+            return Configs.IsNewVersionAvailable;
         }
 
     }

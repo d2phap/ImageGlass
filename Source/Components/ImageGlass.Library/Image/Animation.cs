@@ -17,38 +17,37 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.IO;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System;
+using System.IO;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Library.Image
-{
-    public class Animation
-    {
+namespace ImageGlass.Library.Image {
+    public class Animation {
         private Bitmap _img;
         private bool _isAnimating = false;
         private int _i;
         private string _filename;
         private string _desFolder;
+        private ExtractCallback _extractFinished;
 
+        public delegate void ExtractCallback();
 
         /// <summary>
         /// Extract all frames of animation
         /// </summary>
         /// <param name="animationFile">File name</param>
         /// <param name="destinationFolder">Output folder</param>
-        public void ExtractAllFrames(string animationFile, string destinationFolder)
-        {
+        public void ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback) {
             //initiate class
 
             _isAnimating = false;
             _filename = animationFile;
             _desFolder = destinationFolder;
+            _extractFinished = callback;
 
-            Task.Run(() =>
-            {
+            Task.Run(() => {
                 _img = new Bitmap(animationFile);
                 _i = 1;
 
@@ -60,10 +59,8 @@ namespace ImageGlass.Library.Image
         /// <summary>
         /// This method begins the animation.
         /// </summary>
-        private void AnimateImage()
-        {
-            if (!_isAnimating)
-            {
+        private void AnimateImage() {
+            if (!_isAnimating) {
                 //Begin the animation only once.
                 ImageAnimator.Animate(_img, new EventHandler(SaveFrames));
                 _isAnimating = true;
@@ -76,19 +73,20 @@ namespace ImageGlass.Library.Image
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveFrames(object sender, EventArgs e)
-        {
+        private void SaveFrames(object sender, EventArgs e) {
             if (!_isAnimating) return;
 
             var frameCount = System.Drawing.Image.FromFile(_filename).GetFrameCount(FrameDimension.Time);
             var numberIndex = frameCount.ToString().Length;
 
             // Check current frame
-            if (_i > frameCount)
-            {
+            if (_i > frameCount) {
                 _isAnimating = false;
                 ImageAnimator.StopAnimate(_img, null);
-                
+
+                // Issue #565 callback to let the user know the extract has finished
+                _extractFinished?.Invoke();
+                _extractFinished = null;
                 return;
             }
 
