@@ -3816,23 +3816,45 @@ namespace ImageGlass {
 
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
-            if (e.Button != MouseButtons.Left) return;
-
-            // check double-click in Navigation regions
-            var navRegion = TestCursorHitNavRegions(e.Location);
-            if (navRegion?.Type == NavigationRegionType.Left) {
-                NextPic(-1);
-            }
-            else if (navRegion?.Type == NavigationRegionType.Right) {
-                NextPic(1);
-            }
-            else {
-                if (picMain.Zoom < 100) {
-                    mnuMainActualSize_Click(null, null);
-                }
-                else {
+            switch (e.Button) {
+                case MouseButtons.Middle:
                     ApplyZoomMode(Configs.ZoomMode);
-                }
+                    break;
+
+                case MouseButtons.XButton1:
+                    mnuMainViewPrevious_Click(null, null);
+                    break;
+
+                case MouseButtons.XButton2:
+                    mnuMainViewNext_Click(null, null);
+                    break;
+
+                case MouseButtons.Left:
+                    // check double-click in Navigation regions
+                    var navRegion = TestCursorHitNavRegions(e.Location);
+                    if (navRegion?.Type == NavigationRegionType.Left)
+                    {
+                        NextPic(-1);
+                    }
+                    else if (navRegion?.Type == NavigationRegionType.Right)
+                    {
+                        NextPic(1);
+                    }
+                    else
+                    {
+                        if (picMain.Zoom < 100)
+                        {
+                            mnuMainActualSize_Click(null, null);
+                        }
+                        else
+                        {
+                            ApplyZoomMode(Configs.ZoomMode);
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
 
