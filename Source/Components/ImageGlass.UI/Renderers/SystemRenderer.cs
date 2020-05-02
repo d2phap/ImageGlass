@@ -21,8 +21,10 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI.Renderers {
-    public static class SystemRenderer {
+namespace ImageGlass.UI.Renderers
+{
+    public static class SystemRenderer
+    {
         [DllImport("uxtheme.dll")]
         private static extern int SetWindowTheme(
             [In] IntPtr hwnd,
@@ -35,7 +37,8 @@ namespace ImageGlass.UI.Renderers {
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public static int ApplyTheme(Control control) {
+        public static int ApplyTheme(Control control)
+        {
             return ApplyTheme(control, "Explorer");
         }
 
@@ -45,27 +48,32 @@ namespace ImageGlass.UI.Renderers {
         /// <param name="control"></param>
         /// <param name="theme"></param>
         /// <returns></returns>
-        public static int ApplyTheme(Control control, string theme) {
-            try {
-                if (control != null) {
-                    if (control.IsHandleCreated) {
+        public static int ApplyTheme(Control control, string theme)
+        {
+            try
+            {
+                if (control != null)
+                {
+                    if (control.IsHandleCreated)
+                    {
                         return SetWindowTheme(control.Handle, theme, null);
                     }
                 }
             }
-            catch {
+            catch
+            {
                 return 0;
             }
             return 1;
         }
-
 
         /// <summary>
         /// Remove system theme
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public static int ClearTheme(Control control) {
+        public static int ClearTheme(Control control)
+        {
             return ApplyTheme(control, string.Empty);
         }
     }

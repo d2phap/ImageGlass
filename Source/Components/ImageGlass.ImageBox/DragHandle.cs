@@ -21,7 +21,7 @@ namespace ImageGlass
             this.Anchor = anchor;
         }
 
-        #endregion
+        #endregion Public Constructors
 
         #region Protected Constructors
 
@@ -31,7 +31,7 @@ namespace ImageGlass
             this.Visible = true;
         }
 
-        #endregion
+        #endregion Protected Constructors
 
         #region Public Properties
 
@@ -43,6 +43,6 @@ namespace ImageGlass
 
         public bool Visible { get; set; }
 
-        #endregion
+        #endregion Public Properties
     }
 }

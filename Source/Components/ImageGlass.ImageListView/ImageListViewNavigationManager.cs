@@ -30,13 +30,16 @@ namespace ImageGlass.ImageListView
         internal class ImageListViewNavigationManager : IDisposable
         {
             #region Constants
+
             /// <summary>
             /// Selection tolerance in pixels.
             /// </summary>
             private const int SelectionTolerance = 5;
-            #endregion
+
+            #endregion Constants
 
             #region Member Variables
+
             private ImageListView mImageListView;
 
             private bool inItemArea;
@@ -65,21 +68,26 @@ namespace ImageGlass.ImageListView
             private bool selfDragging;
 
             private System.Windows.Forms.Timer scrollTimer;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets whether the left mouse button is down.
             /// </summary>
             public bool LeftButton { get; private set; }
+
             /// <summary>
             /// Gets whether the right mouse button is down.
             /// </summary>
             public bool RightButton { get; private set; }
+
             /// <summary>
             /// Gets whether the shift key is down.
             /// </summary>
             public bool ShiftKey { get; private set; }
+
             /// <summary>
             /// Gets whether the control key is down.
             /// </summary>
@@ -89,22 +97,27 @@ namespace ImageGlass.ImageListView
             /// Gets the item under the mouse.
             /// </summary>
             public ImageListViewItem HoveredItem { get; private set; }
+
             /// <summary>
             /// Gets the sub item under the mouse.
             /// </summary>
             public int HoveredSubItem { get; private set; }
+
             /// <summary>
             /// Gets the column under the mouse.
             /// </summary>
             public ImageListView.ImageListViewColumnHeader HoveredColumn { get; private set; }
+
             /// <summary>
             /// Gets the column whose separator is under the mouse.
             /// </summary>
             public ImageListView.ImageListViewColumnHeader HoveredSeparator { get; private set; }
+
             /// <summary>
             /// Gets the column whose separator is being dragged.
             /// </summary>
             public ImageListView.ImageListViewColumnHeader SelectedSeparator { get; private set; }
+
             /// <summary>
             /// Gets whether the mouse is over the pane border.
             /// </summary>
@@ -114,10 +127,12 @@ namespace ImageGlass.ImageListView
             /// Gets whether a mouse selection is in progress.
             /// </summary>
             public bool MouseSelecting { get; private set; }
+
             /// <summary>
             /// Gets whether a separator is being dragged with the mouse.
             /// </summary>
             public bool DraggingSeperator { get; private set; }
+
             /// <summary>
             /// Gets whether the left-pane is being resized with the mouse.
             /// </summary>
@@ -127,6 +142,7 @@ namespace ImageGlass.ImageListView
             /// Gets the target item for a drop operation.
             /// </summary>
             public ImageListViewItem DropTarget { get; private set; }
+
             /// <summary>
             /// Gets whether drop target is to the right of the item.
             /// </summary>
@@ -136,9 +152,11 @@ namespace ImageGlass.ImageListView
             /// Gets the selection rectangle.
             /// </summary>
             public Rectangle SelectionRectangle { get; private set; }
-            #endregion
+
+            #endregion Properties
 
             #region Constructor
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewNavigationManager class.
             /// </summary>
@@ -177,9 +195,11 @@ namespace ImageGlass.ImageListView
 
                 suppressClick = false;
             }
-            #endregion
+
+            #endregion Constructor
 
             #region Instance Methods
+
             /// <summary>
             /// Determines whether the item is highlighted.
             /// </summary>
@@ -195,17 +215,20 @@ namespace ImageGlass.ImageListView
                 }
                 return ItemHighlightState.NotHighlighted;
             }
+
             /// <summary>
-            /// Performs application-defined tasks associated with freeing, 
+            /// Performs application-defined tasks associated with freeing,
             /// releasing, or resetting unmanaged resources.
             /// </summary>
             public void Dispose()
             {
                 scrollTimer.Dispose();
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Mouse Event Handlers
+
             /// <summary>
             /// Handles control's MouseDown event.
             /// </summary>
@@ -229,6 +252,7 @@ namespace ImageGlass.ImageListView
                 lastViewOffset = mImageListView.ViewOffset;
                 lastMouseDownLocation = e.Location;
             }
+
             /// <summary>
             /// Handles control's MouseMove event.
             /// </summary>
@@ -499,6 +523,7 @@ namespace ImageGlass.ImageListView
 
                 lastMouseMoveLocation = e.Location;
             }
+
             /// <summary>
             /// Handles control's MouseUp event.
             /// </summary>
@@ -688,6 +713,7 @@ namespace ImageGlass.ImageListView
 
                 mImageListView.ResumePaint();
             }
+
             /// <summary>
             /// Handles control's MouseDoubleClick event.
             /// </summary>
@@ -705,6 +731,7 @@ namespace ImageGlass.ImageListView
                     suppressClick = true;
                 }
             }
+
             /// <summary>
             /// Handles control's MouseLeave event.
             /// </summary>
@@ -724,9 +751,11 @@ namespace ImageGlass.ImageListView
                     mImageListView.Refresh();
                 }
             }
-            #endregion
+
+            #endregion Mouse Event Handlers
 
             #region Key Event Handlers
+
             /// <summary>
             /// [IG_Change] Handles control's KeyDown event.
             /// </summary>
@@ -813,6 +842,7 @@ namespace ImageGlass.ImageListView
 
                 mImageListView.ResumePaint();
             }
+
             /// <summary>
             /// Handles control's KeyUp event.
             /// </summary>
@@ -821,9 +851,11 @@ namespace ImageGlass.ImageListView
                 ShiftKey = (e.Modifiers & Keys.Shift) == Keys.Shift;
                 ControlKey = (e.Modifiers & Keys.Control) == Keys.Control;
             }
-            #endregion
+
+            #endregion Key Event Handlers
 
             #region Drag and Drop Event Handlers
+
             /// <summary>
             /// Handles control's DragDrop event.
             /// </summary>
@@ -872,6 +904,7 @@ namespace ImageGlass.ImageListView
                 mImageListView.Refresh();
                 mImageListView.ResumePaint();
             }
+
             /// <summary>
             /// Handles control's DragEnter event.
             /// </summary>
@@ -882,6 +915,7 @@ namespace ImageGlass.ImageListView
                 else
                     e.Effect = DragDropEffects.None;
             }
+
             /// <summary>
             /// Handles control's DragOver event.
             /// </summary>
@@ -988,6 +1022,7 @@ namespace ImageGlass.ImageListView
                 else
                     e.Effect = DragDropEffects.None;
             }
+
             /// <summary>
             /// Handles control's DragLeave event.
             /// </summary>
@@ -999,9 +1034,11 @@ namespace ImageGlass.ImageListView
                 if (scrollTimer.Enabled)
                     scrollTimer.Enabled = false;
             }
-            #endregion
+
+            #endregion Drag and Drop Event Handlers
 
             #region Helper Methods
+
             /// <summary>
             /// Performs a hit test.
             /// </summary>
@@ -1041,6 +1078,7 @@ namespace ImageGlass.ImageListView
                 inHeaderArea = h.InHeaderArea;
                 inPaneArea = h.InPaneArea;
             }
+
             /// <summary>
             /// Returns the item index after applying the given navigation key.
             /// </summary>
@@ -1088,9 +1126,11 @@ namespace ImageGlass.ImageListView
 
                 return index;
             }
-            #endregion
+
+            #endregion Helper Methods
 
             #region Scroll Timer
+
             /// <summary>
             /// Handles the Tick event of the scrollTimer control.
             /// </summary>
@@ -1101,7 +1141,8 @@ namespace ImageGlass.ImageListView
                 mImageListView.OnMouseMove(new MouseEventArgs(Control.MouseButtons, 0, location.X, location.Y, 0));
                 mImageListView.OnMouseWheel(new MouseEventArgs(MouseButtons.None, 0, location.X, location.Y, delta));
             }
-            #endregion
+
+            #endregion Scroll Timer
         }
     }
 }

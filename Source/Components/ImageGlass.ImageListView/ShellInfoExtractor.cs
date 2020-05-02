@@ -16,8 +16,8 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.IO;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.ImageListView
@@ -28,6 +28,7 @@ namespace ImageGlass.ImageListView
     internal class ShellInfoExtractor
     {
         #region Platform Invoke
+
         // GetFileAttributesEx
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -40,6 +41,7 @@ namespace ImageGlass.ImageListView
             GetFileExInfoStandard,
             GetFileExMaxInfoLevel
         }
+
         [StructLayout(LayoutKind.Sequential)]
         private struct WIN32_FILE_ATTRIBUTE_DATA
         {
@@ -50,6 +52,7 @@ namespace ImageGlass.ImageListView
             public uint nFileSizeHigh;
             public uint nFileSizeLow;
         }
+
         [StructLayout(LayoutKind.Sequential)]
         private struct FILETIME
         {
@@ -65,26 +68,33 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         // DestroyIcon
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool DestroyIcon(IntPtr hIcon);
+
         // SHGetFileInfo
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SHGetFileInfo(string pszPath, FileAttributes dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct SHFILEINFO
         {
             public IntPtr hIcon;
             public int iIcon;
             public uint dwAttributes;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_PATH)]
             public string szDisplayName;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MAX_TYPE)]
             public string szTypeName;
         };
+
         private const int MAX_PATH = 260;
         private const int MAX_TYPE = 80;
+
         [Flags]
         private enum SHGFI : uint
         {
@@ -107,28 +117,35 @@ namespace ImageGlass.ImageListView
             AddOverlays = 0x000000020,
             OverlayIndex = 0x000000040,
         }
-        #endregion
+
+        #endregion Platform Invoke
 
         #region Shell Properties
+
         /// <summary>
         /// Error.
         /// </summary>
         public Exception Error = null;
+
         /// <summary>
         /// Mime type.
         /// </summary>
         public string FileType = null;
+
         /// <summary>
         /// Small shell icon.
         /// </summary>
         public Image SmallIcon = null;
+
         /// <summary>
         /// Large shell icon.
         /// </summary>
         public Image LargeIcon = null;
-        #endregion
+
+        #endregion Shell Properties
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the ShellInfoExtractor class.
         /// </summary>
@@ -136,9 +153,11 @@ namespace ImageGlass.ImageListView
         {
             ;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Public Methods
+
         /// <summary>
         /// Creates an instance of the ShellInfoExtractor class.
         /// </summary>
@@ -160,7 +179,7 @@ namespace ImageGlass.ImageListView
                 // Get mime type
                 info.FileType = shinfo.szTypeName;
 
-                // Get small icon 
+                // Get small icon
                 if (hImg != IntPtr.Zero && shinfo.hIcon != IntPtr.Zero)
                 {
                     using (Icon newIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon))
@@ -194,6 +213,7 @@ namespace ImageGlass.ImageListView
 
             return info;
         }
-        #endregion
+
+        #endregion Public Methods
     }
 }

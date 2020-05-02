@@ -17,11 +17,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms.VisualStyles;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ImageGlass.ImageListView
 {
@@ -31,6 +31,7 @@ namespace ImageGlass.ImageListView
     public static partial class ImageListViewRenderers
     {
         #region DefaultRenderer
+
         /// <summary>
         /// The default renderer.
         /// </summary>
@@ -44,10 +45,13 @@ namespace ImageGlass.ImageListView
                 ;
             }
         }
-        #endregion
+
+        #endregion DefaultRenderer
 
         #region DebugRenderer
+
 #if DEBUG
+
         /// <summary>
         /// Represents a renderer meant to be used for debugging purposes.
         /// Included in the debug build only.
@@ -65,6 +69,7 @@ namespace ImageGlass.ImageListView
                 p.Refresh();
                 baseMem = p.PrivateMemorySize64;
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -93,6 +98,7 @@ namespace ImageGlass.ImageListView
 
                 base.DrawItem(g, item, state, bounds);
             }
+
             /// <summary>
             /// Draws an overlay image over the client area.
             /// </summary>
@@ -205,10 +211,13 @@ namespace ImageGlass.ImageListView
                 r.Offset(0, 12);
             }
         }
+
 #endif
-        #endregion
+
+        #endregion DebugRenderer
 
         #region NewYear2010Renderer
+
         /// <summary>
         /// A renderer to celebrate the new year of 2010.
         /// </summary>
@@ -225,10 +234,12 @@ namespace ImageGlass.ImageListView
                 /// Gets or sets the client coordinates of the snow flake.
                 /// </summary>
                 public Point Location { get; set; }
+
                 /// <summary>
                 /// Gets or sets the rotation angle of the snow flake in degrees.
                 /// </summary>
                 public double Rotation { get; set; }
+
                 /// <summary>
                 /// Gets or sets the size of the snow flake.
                 /// </summary>
@@ -282,7 +293,7 @@ namespace ImageGlass.ImageListView
             /// http://en.wikipedia.org/wiki/Koch_snowflake
             /// </summary>
             /// <param name="size">The size of the snow flake.</param>
-            /// <param name="iterations">Number of iterations. Higher values 
+            /// <param name="iterations">Number of iterations. Higher values
             /// produce more complex curves.</param>
             private GraphicsPath CreateFlake(int size, int iterations)
             {
@@ -567,9 +578,11 @@ namespace ImageGlass.ImageListView
                 timer.Dispose();
             }
         }
-        #endregion
+
+        #endregion NewYear2010Renderer
 
         #region NoirRenderer
+
         /// <summary>
         /// A renderer with a dark theme.
         /// This renderer cannot be themed.
@@ -592,6 +605,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the NoirRenderer class.
             /// </summary>
@@ -617,6 +631,7 @@ namespace ImageGlass.ImageListView
             {
                 g.Clear(Color.Black);
             }
+
             /// <summary>
             /// Returns item size for the given view mode.
             /// </summary>
@@ -630,6 +645,7 @@ namespace ImageGlass.ImageListView
                     return new Size(ImageListView.ThumbnailSize.Width + 2 * padding,
                         ImageListView.ThumbnailSize.Height + 2 * padding + mReflectionSize);
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -686,7 +702,7 @@ namespace ImageGlass.ImageListView
                         }
                         x += column.Width;
                     }
-                    // Separators 
+                    // Separators
                     x = ImageListView.layoutManager.ColumnHeaderBounds.Left;
                     foreach (ImageListView.ImageListViewColumnHeader column in uicolumns)
                     {
@@ -839,6 +855,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the checkbox icon for the specified item on the given graphics.
             /// </summary>
@@ -849,6 +866,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Draws the file icon for the specified item on the given graphics.
             /// </summary>
@@ -859,6 +877,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Draws the column headers.
             /// </summary>
@@ -931,6 +950,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the extender after the last column.
             /// </summary>
@@ -956,6 +976,7 @@ namespace ImageGlass.ImageListView
                     g.DrawLine(pen, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 2);
                 }
             }
+
             /// <summary>
             /// Draws the large preview image of the focused item in Gallery mode.
             /// </summary>
@@ -972,6 +993,7 @@ namespace ImageGlass.ImageListView
                     DrawImageWithReflection(g, image, pos, mReflectionSize);
                 }
             }
+
             /// <summary>
             /// Draws the left pane in Pane view mode.
             /// </summary>
@@ -1061,6 +1083,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the selection rectangle.
             /// </summary>
@@ -1082,6 +1105,7 @@ namespace ImageGlass.ImageListView
                     g.DrawRectangle(pen, selection);
                 }
             }
+
             /// <summary>
             /// Draws the insertion caret for drag and drop operations.
             /// </summary>
@@ -1094,6 +1118,7 @@ namespace ImageGlass.ImageListView
                     g.FillRectangle(b, bounds);
                 }
             }
+
             /// <summary>
             /// Draws the group headers.
             /// </summary>
@@ -1160,6 +1185,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws an image with a reflection effect at the bottom.
             /// </summary>
@@ -1172,9 +1198,11 @@ namespace ImageGlass.ImageListView
                 DrawImageWithReflection(g, img, bounds.X, bounds.Y, bounds.Width, bounds.Height, reflection);
             }
         }
-        #endregion
+
+        #endregion NoirRenderer
 
         #region TilesRenderer
+
         /// <summary>
         /// Displays items with large tiles.
         /// </summary>
@@ -1227,6 +1255,7 @@ namespace ImageGlass.ImageListView
 
                 base.Dispose();
             }
+
             /// <summary>
             /// Returns item size for the given view mode.
             /// </summary>
@@ -1248,6 +1277,7 @@ namespace ImageGlass.ImageListView
                 else
                     return base.MeasureItem(view);
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -1439,9 +1469,11 @@ namespace ImageGlass.ImageListView
                     base.DrawItem(g, item, state, bounds);
             }
         }
-        #endregion
+
+        #endregion TilesRenderer
 
         #region XPRenderer
+
         /// <summary>
         /// Mimics Windows XP appearance.
         /// This renderer cannot be themed.
@@ -1477,6 +1509,7 @@ namespace ImageGlass.ImageListView
                     return itemSize;
                 }
             }
+
             /// <summary>
             /// Draws the background of the control.
             /// </summary>
@@ -1489,6 +1522,7 @@ namespace ImageGlass.ImageListView
                 else
                     g.Clear(SystemColors.Control);
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -1654,6 +1688,7 @@ namespace ImageGlass.ImageListView
                         ControlPaint.DrawFocusRectangle(g, bounds);
                 }
             }
+
             /// <summary>
             /// Draws the large preview image of the focused item in Gallery mode.
             /// </summary>
@@ -1678,6 +1713,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the left pane in Pane view mode.
             /// </summary>
@@ -1770,6 +1806,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the column headers.
             /// </summary>
@@ -1838,6 +1875,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the extender after the last column.
             /// </summary>
@@ -1861,6 +1899,7 @@ namespace ImageGlass.ImageListView
                     g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
                 }
             }
+
             /// <summary>
             /// Draws the selection rectangle.
             /// </summary>
@@ -1875,6 +1914,7 @@ namespace ImageGlass.ImageListView
                     g.DrawRectangle(pen, selection);
                 }
             }
+
             /// <summary>
             /// Draws the insertion caret for drag and drop operations.
             /// </summary>
@@ -1884,6 +1924,7 @@ namespace ImageGlass.ImageListView
             {
                 g.FillRectangle(SystemBrushes.Highlight, bounds);
             }
+
             /// <summary>
             /// Draws the group headers.
             /// </summary>
@@ -1914,9 +1955,11 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
-        #endregion
+
+        #endregion XPRenderer
 
         #region ZoomingRenderer
+
         /// <summary>
         /// Zooms items on mouse over.
         /// </summary>
@@ -1970,6 +2013,7 @@ namespace ImageGlass.ImageListView
 
                 ItemDrawOrder = ItemDrawOrder.NormalSelectedHovered;
             }
+
             /// <summary>
             /// Returns item size for the given view mode.
             /// </summary>
@@ -1982,6 +2026,7 @@ namespace ImageGlass.ImageListView
                 else
                     return base.MeasureItem(view);
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -2205,6 +2250,7 @@ namespace ImageGlass.ImageListView
                 else
                     base.DrawItem(g, item, state, bounds);
             }
+
             /// <summary>
             /// Draws the checkbox icon for the specified item on the given graphics.
             /// </summary>
@@ -2216,6 +2262,7 @@ namespace ImageGlass.ImageListView
                 if (ImageListView.View == View.Details)
                     base.DrawCheckBox(g, item, bounds);
             }
+
             /// <summary>
             /// Draws the file icon for the specified item on the given graphics.
             /// </summary>
@@ -2228,9 +2275,11 @@ namespace ImageGlass.ImageListView
                     base.DrawFileIcon(g, item, bounds);
             }
         }
-        #endregion
+
+        #endregion ZoomingRenderer
 
         #region ThemeRenderer
+
         /// <summary>
         /// Displays the control in the current system theme.
         /// This renderer cannot be themed.
@@ -2239,27 +2288,35 @@ namespace ImageGlass.ImageListView
         {
             // Check boxes
             private VisualStyleRenderer rCheckedNormal = null;
+
             private VisualStyleRenderer rUncheckedNormal = null;
             private VisualStyleRenderer rCheckedDisabled = null;
             private VisualStyleRenderer rUncheckedDisabled = null;
+
             // File icons
             private VisualStyleRenderer rFileIcon = null;
+
             // Column headers
             private VisualStyleRenderer rColumnNormal = null;
+
             private VisualStyleRenderer rColumnHovered = null;
             private VisualStyleRenderer rColumnSorted = null;
             private VisualStyleRenderer rColumnSortedHovered = null;
             private VisualStyleRenderer rSortAscending = null;
             private VisualStyleRenderer rSortDescending = null;
+
             // Items
             private VisualStyleRenderer rItemNormal = null;
+
             private VisualStyleRenderer rItemHovered = null;
             private VisualStyleRenderer rItemSelected = null;
             private VisualStyleRenderer rItemHoveredSelected = null;
             private VisualStyleRenderer rItemSelectedHidden = null;
             private VisualStyleRenderer rItemDisabled = null;
+
             // Group headers
             private VisualStyleRenderer rGroupNormal = null;
+
             private VisualStyleRenderer rGroupLine = null;
 
             /// <summary>
@@ -2555,7 +2612,7 @@ namespace ImageGlass.ImageListView
                     {
                         List<ImageListView.ImageListViewColumnHeader> uicolumns = ImageListView.Columns.GetDisplayedColumns();
 
-                        // Separators 
+                        // Separators
                         int x = bounds.Left - 2;
                         foreach (ImageListView.ImageListViewColumnHeader column in uicolumns)
                         {
@@ -2633,11 +2690,11 @@ namespace ImageGlass.ImageListView
                         focusBounds.Inflate(-2, -2);
                         ControlPaint.DrawFocusRectangle(g, focusBounds);
                     }
-
                 }
                 else
                     base.DrawItem(g, item, state, bounds);
             }
+
             /// <summary>
             /// Draws the group headers.
             /// </summary>
@@ -2666,9 +2723,11 @@ namespace ImageGlass.ImageListView
                     base.DrawGroupHeader(g, name, bounds);
             }
         }
-        #endregion
+
+        #endregion ThemeRenderer
 
         #region MeerkatRenderer
+
         /// <summary>
         /// A renderer to celebrate the release of Ubuntu 10.10 Maverick Meerkat.
         /// </summary>
@@ -2694,6 +2753,7 @@ namespace ImageGlass.ImageListView
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             }
+
             /// <summary>
             /// Returns item size for the given view mode.
             /// </summary>
@@ -2716,6 +2776,7 @@ namespace ImageGlass.ImageListView
                     return itemSize;
                 }
             }
+
             /// <summary>
             /// Draws the column headers.
             /// </summary>
@@ -2785,6 +2846,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the extender after the last column.
             /// </summary>
@@ -2807,6 +2869,7 @@ namespace ImageGlass.ImageListView
                     g.DrawRectangle(pBorder, bounds.Left + 1, bounds.Top, bounds.Width - 2, bounds.Height - 2);
                 }
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -2877,10 +2940,9 @@ namespace ImageGlass.ImageListView
                             }
                             x += column.Width;
                         }
-
                     }
 
-                    // Separators 
+                    // Separators
                     int xs = bounds.Left - 1;
                     foreach (ImageListView.ImageListViewColumnHeader column in uicolumns)
                     {
@@ -3067,6 +3129,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the large preview image of the focused item in Gallery mode.
             /// </summary>
@@ -3094,6 +3157,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
-        #endregion
+
+        #endregion MeerkatRenderer
     }
 }

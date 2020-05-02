@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.Base {
+namespace ImageGlass.Base
+{
     /// <summary>
     /// The directory name constants
     /// </summary>
-    public static class Dir {
+    public static class Dir
+    {
         /// <summary>
         /// Gets the Themes folder name
         /// </summary>
@@ -43,11 +45,12 @@ namespace ImageGlass.Base {
         public static string Temporary { get; } = "Temp";
 
 #if DEBUG
+
         /// <summary>
         /// Logging should not be to the temporary folder, as it is deleted on shutdown
         /// </summary>
         public static string Log { get; } = "Log";
-#endif
 
+#endif
     }
 }

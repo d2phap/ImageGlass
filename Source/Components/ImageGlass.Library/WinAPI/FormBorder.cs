@@ -20,23 +20,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.WinAPI {
+namespace ImageGlass.Library.WinAPI
+{
     /// <summary>
     /// Adjust client border of the form
     /// </summary>
-    public static class FormBorder {
+    public static class FormBorder
+    {
         /// <summary>
         /// Struct for box shadow
         /// </summary>
-        private struct MARGINS {
+        private struct MARGINS
+        {
             public int leftWidth;
             public int rightWidth;
             public int topHeight;
             public int bottomHeight;
         }
 
-        const int DWMWA_NCRENDERING_POLICY = 2;
-
+        private const int DWMWA_NCRENDERING_POLICY = 2;
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
@@ -44,14 +46,13 @@ namespace ImageGlass.Library.WinAPI {
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
-
-
         /// <summary>
         /// Set window border
         /// </summary>
         /// <param name="handle">The pointer of the form</param>
         /// <param name="borderWidth">The border width</param>
-        public static void Set(IntPtr handle, int borderWidth = 1) {
+        public static void Set(IntPtr handle, int borderWidth = 1)
+        {
             var attrValue = DWMWA_NCRENDERING_POLICY;
             DwmSetWindowAttribute(handle, DWMWA_NCRENDERING_POLICY, ref attrValue, 4);
 

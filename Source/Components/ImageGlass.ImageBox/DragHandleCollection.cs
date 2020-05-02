@@ -19,7 +19,7 @@ namespace ImageGlass
 
         private readonly IDictionary<DragHandleAnchor, DragHandle> _items;
 
-        #endregion
+        #endregion Instance Fields
 
         #region Public Constructors
 
@@ -36,7 +36,7 @@ namespace ImageGlass
             _items.Add(DragHandleAnchor.BottomRight, new DragHandle(DragHandleAnchor.BottomRight));
         }
 
-        #endregion
+        #endregion Public Constructors
 
         #region Public Properties
 
@@ -50,7 +50,7 @@ namespace ImageGlass
             get { return _items[index]; }
         }
 
-        #endregion
+        #endregion Public Properties
 
         #region Public Members
 
@@ -83,7 +83,7 @@ namespace ImageGlass
             return result;
         }
 
-        #endregion
+        #endregion Public Members
 
         #region IEnumerable<DragHandle> Members
 
@@ -98,6 +98,6 @@ namespace ImageGlass
             return this.GetEnumerator();
         }
 
-        #endregion
+        #endregion IEnumerable<DragHandle> Members
     }
 }

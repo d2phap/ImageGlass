@@ -16,12 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI {
-    public partial class frmDialogBox: Form {
-        public string Content {
+namespace ImageGlass.UI
+{
+    public partial class frmDialogBox : Form
+    {
+        public string Content
+        {
             get => txtValue.Text;
             set => txtValue.Text = value;
         }
@@ -29,10 +33,10 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Limit the number of characters the user can enter
         /// </summary>
-        public int MaxLimit {
+        public int MaxLimit
+        {
             set => txtValue.MaxLength = value;
         }
-
 
         /// <summary>
         /// Provide a character filter. Used either to 1) prevent non-numeric characters;
@@ -44,8 +48,8 @@ namespace ImageGlass.UI {
 
         public KeyFilter Filter { get; set; } = null;
 
-
-        public frmDialogBox(string title, string message, Theme theme) {
+        public frmDialogBox(string title, string message, Theme theme)
+        {
             InitializeComponent();
 
             Text = title;
@@ -58,14 +62,16 @@ namespace ImageGlass.UI {
         }
 
         /// <summary>
-        /// Moving form 
+        /// Moving form
         /// </summary>
         /// <param name="m"></param>
-        protected override void WndProc(ref Message m) {
+        protected override void WndProc(ref Message m)
+        {
             base.WndProc(ref m);
 
             int WM_NCHITTEST = 0x84;
-            if (m.Msg == WM_NCHITTEST) {
+            if (m.Msg == WM_NCHITTEST)
+            {
                 int HTCLIENT = 1;
                 int HTCAPTION = 2;
                 if (m.Result.ToInt32() == HTCLIENT)
@@ -73,11 +79,13 @@ namespace ImageGlass.UI {
             }
         }
 
-        private void btnOK_Click(object sender, EventArgs e) {
+        private void btnOK_Click(object sender, EventArgs e)
+        {
             DialogResult = DialogResult.OK;
         }
 
-        private void txtValue_KeyPress(object sender, KeyPressEventArgs e) {
+        private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
             if (Filter == null)
                 return;
 
@@ -86,18 +94,22 @@ namespace ImageGlass.UI {
                 e.Handled = true;
         }
 
-        private void DialogBox_Load(object sender, EventArgs e) {
+        private void DialogBox_Load(object sender, EventArgs e)
+        {
             txtValue.Focus();
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
             // disable parent form shotcuts
             return false;
         }
 
-        private void frmDialogBox_KeyDown(object sender, KeyEventArgs e) {
+        private void frmDialogBox_KeyDown(object sender, KeyEventArgs e)
+        {
             //close dialog
-            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) {
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
+            {
                 DialogResult = DialogResult.Cancel;
             }
         }

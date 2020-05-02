@@ -17,10 +17,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
 using System.Resources;
+using System.Windows.Forms;
 
 namespace ImageGlass.ImageListView
 {
@@ -44,28 +44,36 @@ namespace ImageGlass.ImageListView
     public partial class ImageListView : Control, IComponent
     {
         #region Constants
+
         /// <summary>
         /// Default width of column headers in pixels.
         /// </summary>
         internal const int DefaultColumnWidth = 100;
+
         /// <summary>
         /// Selection tolerance for column separators.
         /// </summary>
         internal const int SeparatorSize = 12;
+
         /// <summary>
         /// Selection tolerance for left-pane border.
         /// </summary>
         internal const int PaneBorderSize = 4;
-        #endregion
+
+        #endregion Constants
 
         #region Member Variables
+
         // Set when properties change
         private bool mDefaultImageChanged = false;
+
         private bool mErrorImageChanged = false;
         private bool mRatingImageChanged = false;
         private bool mEmptyRatingImageChanged = false;
+
         // Properties
         private BorderStyle mBorderStyle;
+
         private CacheMode mCacheMode;
         private int mCacheLimitAsItemCount;
         private long mCacheLimitAsMemory;
@@ -103,10 +111,12 @@ namespace ImageGlass.ImageListView
 
         // Groups
         internal ImageListViewGroupCollection groups;
+
         internal bool showGroups;
 
         // Renderer variables
         internal ImageListViewRenderer mRenderer;
+
         private bool controlSuspended;
         private int rendererSuspendCount;
         private bool rendererNeedsPaint;
@@ -115,6 +125,7 @@ namespace ImageGlass.ImageListView
 
         // Layout variables
         internal HScrollBar hScrollBar;
+
         internal VScrollBar vScrollBar;
         internal ImageListViewLayoutManager layoutManager;
         private bool disposed;
@@ -124,51 +135,61 @@ namespace ImageGlass.ImageListView
 
         // Cache threads
         internal ImageListViewCacheThumbnail thumbnailCache;
+
         internal ImageListViewCacheShellInfo shellInfoCache;
         internal ImageListViewCacheMetadata metadataCache;
         internal ImageListViewItemAdaptors.FileSystemAdaptor defaultAdaptor;
 
         // Resource manager
         private ResourceManager resources;
-        #endregion
+
+        #endregion Member Variables
 
         #region Properties
+
         /// <summary>
         /// Gets or sets whether thumbnail images are automatically rotated.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether thumbnail images are automatically rotated."), DefaultValue(true)]
         public bool AutoRotateThumbnails { get; set; }
+
         /// <summary>
         /// Gets or sets whether checkboxes respond to mouse clicks.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether checkboxes respond to mouse clicks."), DefaultValue(true)]
         public bool AllowCheckBoxClick { get; set; }
+
         /// <summary>
         /// Gets or sets whether column headers respond to mouse clicks.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether column headers respond to mouse clicks."), DefaultValue(true)]
         public bool AllowColumnClick { get; set; }
+
         /// <summary>
         /// Gets or sets whether column headers can be resized with the mouse.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether column headers can be resized with the mouse."), DefaultValue(true)]
         public bool AllowColumnResize { get; set; }
+
         /// <summary>
         /// Gets or sets whether the user can drag items for drag-and-drop operations.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether the user can drag items for drag-and-drop operations."), DefaultValue(false)]
         public bool AllowDrag { get; set; }
+
         /// <summary>
-        /// Gets or sets whether duplicate items (image files pointing to the same path 
+        /// Gets or sets whether duplicate items (image files pointing to the same path
         /// on the file system) are allowed.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether duplicate items (image files pointing to the same path on the file system) are allowed."), DefaultValue(false)]
         public bool AllowDuplicateFileNames { get; set; }
+
         /// <summary>
         /// Gets or sets whether the left-pane can be resized with the mouse.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether the left-pane can be resized with the mouse."), DefaultValue(true)]
         public bool AllowPaneResize { get; set; }
+
         /// <summary>
         /// Gets or sets the background color of the control.
         /// </summary>
@@ -182,6 +203,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the border style of the control.
         /// </summary>
@@ -195,6 +217,7 @@ namespace ImageGlass.ImageListView
                 UpdateStyles();
             }
         }
+
         /// <summary>
         /// Gets or sets the cache mode. Setting the the CacheMode to Continuous disables the CacheLimit.
         /// </summary>
@@ -233,9 +256,9 @@ namespace ImageGlass.ImageListView
         {
             set
             {
-                if (value) 
+                if (value)
                     metadataCache.Resume();
-                else 
+                else
                     metadataCache.Pause();
             }
         }
@@ -282,6 +305,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("Cache limit must be specified as either the count of thumbnail images or the memory allocated for cache (eg 10MB)", "value");
             }
         }
+
         /// <summary>
         /// Gets or sets the path to the persistent cache file.
         /// </summary>
@@ -297,6 +321,7 @@ namespace ImageGlass.ImageListView
                 thumbnailCache.diskCache.FileName = value;
             }
         }
+
         /// <summary>
         /// Gets or sets the size of the persistent cache file in MB.
         /// </summary>
@@ -312,6 +337,7 @@ namespace ImageGlass.ImageListView
                 thumbnailCache.diskCache.Size = value * 1024 * 1024;
             }
         }
+
         /// <summary>
         /// Gets or sets the color palette of the ImageListView.
         /// </summary>
@@ -346,6 +372,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the placeholder image.
         /// </summary>
@@ -366,6 +393,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets the rectangle that represents the display area of the control.
         /// </summary>
@@ -380,6 +408,7 @@ namespace ImageGlass.ImageListView
                     return layoutManager.ClientArea;
             }
         }
+
         /// <summary>
         /// Gets or sets a value indicating whether the control can respond to user interaction.
         /// Cache threads are paused while the control is disabled and resumed when the control is
@@ -406,6 +435,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// [Pháp] Gets or sets whether Key Navigation is enabled.
         /// </summary>
@@ -418,6 +448,7 @@ namespace ImageGlass.ImageListView
                 mEnableKeyNavigation = value;
             }
         }
+
         /// <summary>
         /// Gets or sets the error image.
         /// </summary>
@@ -438,6 +469,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the font of the group headers.
         /// </summary>
@@ -462,6 +494,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the font of the column headers.
         /// </summary>
@@ -486,6 +519,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets whether scrollbars scroll by an amount which is a multiple of item height.
         /// </summary>
@@ -502,6 +536,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets the collection of items contained in the image list view.
         /// </summary>
@@ -516,11 +551,13 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets whether multiple items can be selected.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether multiple items can be selected."), DefaultValue(true)]
         public bool MultiSelect { get; set; }
+
         /// <summary>
         /// Gets or sets the width of the left pane.
         /// </summary>
@@ -539,6 +576,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the rating image.
         /// </summary>
@@ -559,6 +597,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the empty rating image.
         /// </summary>
@@ -579,6 +618,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets whether the control will retry loading thumbnails on an error.
         /// </summary>
@@ -597,6 +637,7 @@ namespace ImageGlass.ImageListView
                     metadataCache.RetryOnError = mRetryOnError;
             }
         }
+
         /// <summary>
         /// Gets or sets whether the scrollbars should be shown.
         /// </summary>
@@ -610,6 +651,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets the collection of selected items contained in the image list view.
         /// </summary>
@@ -619,6 +661,7 @@ namespace ImageGlass.ImageListView
         {
             get { return mSelectedItems; }
         }
+
         /// <summary>
         /// Gets the collection of checked items contained in the image list view.
         /// </summary>
@@ -628,11 +671,13 @@ namespace ImageGlass.ImageListView
         {
             get { return mCheckedItems; }
         }
+
         /// <summary>
         /// Gets or sets whether shell icons are displayed for non-image files.
         /// </summary>
         [Browsable(false), Category("Behavior"), Description("Gets or sets whether shell icons are displayed for non-image files."), DefaultValue(true)]
         public bool ShellIconFallback { get; set; }
+
         /// <summary>
         /// Gets or sets whether to display the file icons.
         /// </summary>
@@ -646,6 +691,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets whether to display the item checkboxes.
         /// </summary>
@@ -659,6 +705,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets alignment of file icons.
         /// </summary>
@@ -672,6 +719,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets file icon padding.
         /// </summary>
@@ -685,6 +733,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets alignment of item checkboxes.
         /// </summary>
@@ -698,6 +747,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets item checkbox padding.
         /// </summary>
@@ -711,6 +761,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Gets or sets the index of the sort column.
         /// </summary>
@@ -727,6 +778,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the sort order.
         /// </summary>
@@ -743,6 +795,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the index of the group column.
         /// </summary>
@@ -759,6 +812,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the group order.
         /// </summary>
@@ -775,11 +829,13 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// This property is not relevant for this class.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override string Text { get; set; }
+
         /// <summary>
         /// Gets or sets the size of image thumbnails.
         /// </summary>
@@ -797,6 +853,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the embedded thumbnails extraction behavior.
         /// </summary>
@@ -813,6 +870,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets whether Windows Imaging Compomnent will be used.
         /// </summary>
@@ -829,6 +887,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// [IG_Change] Gets or sets the view mode of the image list view.
         /// </summary>
@@ -847,6 +906,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets whether groups are displayed.
         /// </summary>
@@ -855,7 +915,6 @@ namespace ImageGlass.ImageListView
         {
             get { return showGroups; }
         }
-        
 
         /// <summary>
         /// Gets or sets the scroll offset.
@@ -865,6 +924,7 @@ namespace ImageGlass.ImageListView
             get { return mViewOffset; }
             set { mViewOffset = value; }
         }
+
         /// <summary>
         /// Gets the scroll orientation.
         /// </summary>
@@ -872,13 +932,15 @@ namespace ImageGlass.ImageListView
         {
             get { return ((mView == View.Gallery) ? ScrollOrientation.HorizontalScroll : ScrollOrientation.VerticalScroll); }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Custom Property Serializers
+
         /// <summary>
         /// Determines if the header font should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeHeaderFont()
         {
@@ -887,6 +949,7 @@ namespace ImageGlass.ImageListView
                 return !mColumnHeaderFont.Equals(font);
             }
         }
+
         /// <summary>
         /// Resets the header font to its default value.
         /// </summary>
@@ -898,13 +961,14 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the colors should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeColors()
         {
             ImageListViewColor defaultColors = ImageListViewColor.Default;
             return !mColors.Equals(defaultColors);
         }
+
         /// <summary>
         /// Resets the colors to their default value.
         /// </summary>
@@ -916,12 +980,13 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the default image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeDefaultImage()
         {
             return mDefaultImageChanged;
         }
+
         /// <summary>
         /// Resets the default image to its default value.
         /// </summary>
@@ -934,12 +999,13 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the error image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeErrorImage()
         {
             return mErrorImageChanged;
         }
+
         /// <summary>
         /// Resets the error image to its default value.
         /// </summary>
@@ -952,12 +1018,13 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the rating image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeRatingImage()
         {
             return mRatingImageChanged;
         }
+
         /// <summary>
         /// Resets the rating image to its default value.
         /// </summary>
@@ -970,12 +1037,13 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the empty rating image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeEmptyRatingImage()
         {
             return mEmptyRatingImageChanged;
         }
+
         /// <summary>
         /// Resets the empty rating image to its default value.
         /// </summary>
@@ -984,9 +1052,11 @@ namespace ImageGlass.ImageListView
             EmptyRatingImage = resources.GetObject("EmptyRatingImage") as Image;
             mEmptyRatingImageChanged = false;
         }
-        #endregion
+
+        #endregion Custom Property Serializers
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the ImageListView class.
         /// </summary>
@@ -1083,9 +1153,11 @@ namespace ImageGlass.ImageListView
 
             disposed = false;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Select/Check
+
         /// <summary>
         /// Marks all items as selected.
         /// </summary>
@@ -1101,6 +1173,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Marks all items as unselected.
         /// </summary>
@@ -1111,6 +1184,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Reverses the selection state of all items.
         /// </summary>
@@ -1126,6 +1200,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Marks all items as checked.
         /// </summary>
@@ -1142,6 +1217,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Marks all items as unchecked.
         /// </summary>
@@ -1152,6 +1228,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Reverses the check state of all items.
         /// </summary>
@@ -1168,6 +1245,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Marks all items as enabled.
         /// </summary>
@@ -1181,6 +1259,7 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Marks all items as disabled.
         /// </summary>
@@ -1194,9 +1273,11 @@ namespace ImageGlass.ImageListView
             Refresh();
             ResumePaint();
         }
-        #endregion
+
+        #endregion Select/Check
 
         #region Instance Methods
+
         /// <summary>
         /// Clears the thumbnail cache.
         /// </summary>
@@ -1215,6 +1296,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             }
         }
+
         /// <summary>
         /// Temporarily suspends the layout logic for the control.
         /// </summary>
@@ -1227,6 +1309,7 @@ namespace ImageGlass.ImageListView
             base.SuspendLayout();
             SuspendPaint();
         }
+
         /// <summary>
         /// Resumes usual layout logic.
         /// </summary>
@@ -1234,6 +1317,7 @@ namespace ImageGlass.ImageListView
         {
             ResumeLayout(false);
         }
+
         /// <summary>
         /// Resumes usual layout logic, optionally forcing an immediate layout of pending layout requests.
         /// </summary>
@@ -1249,6 +1333,7 @@ namespace ImageGlass.ImageListView
                 Refresh();
             ResumePaint();
         }
+
         /// <summary>
         /// Sets the renderer for this instance.
         /// </summary>
@@ -1280,6 +1365,7 @@ namespace ImageGlass.ImageListView
 
             Refresh();
         }
+
         /// <summary>
         /// Sets the renderer for this instance.
         /// </summary>
@@ -1288,6 +1374,7 @@ namespace ImageGlass.ImageListView
         {
             SetRenderer(renderer, false);
         }
+
         /// <summary>
         /// Sorts the items.
         /// </summary>
@@ -1296,6 +1383,7 @@ namespace ImageGlass.ImageListView
             mItems.Sort();
             Refresh();
         }
+
         /// <summary>
         /// Determines the image list view element under the specified coordinates.
         /// </summary>
@@ -1456,7 +1544,6 @@ namespace ImageGlass.ImageListView
             }
         }
 
-
         /// <summary>
         /// [IG_New] Scrolls horizontal scrollbar by delta. Checks that scrolling is within
         /// allowed range. Calls Refresh() if scrolling position was changed.
@@ -1483,7 +1570,6 @@ namespace ImageGlass.ImageListView
 
             return true;
         }
-
 
         /// <summary>
         /// [IG_New] Scrolls vertical scrollbar by delta. Checks that scrolling is within
@@ -1512,9 +1598,8 @@ namespace ImageGlass.ImageListView
             return true;
         }
 
-
         /// <summary>
-        /// [IG_Change] Scrolls the image list view to ensure that the item with the specified 
+        /// [IG_Change] Scrolls the image list view to ensure that the item with the specified
         /// index is visible on the screen.
         /// </summary>
         /// <param name="itemIndex">The index of the item to make visible.</param>
@@ -1543,13 +1628,12 @@ namespace ImageGlass.ImageListView
             }
         }
 
-
         /// <summary>
         /// [IG_Change] Scrolls the image list view to place the item with the specified
         /// index as close to the center of the visible area as possible.
         /// </summary>
         /// <param name="itemIndex">The index of the item to scroll to.</param>
-        /// <returns>true if the scroll position was changed; otherwise false 
+        /// <returns>true if the scroll position was changed; otherwise false
         /// (item is already centered or the image list view is empty).</returns>
         public bool ScrollToIndex(int itemIndex)
         {
@@ -1572,7 +1656,6 @@ namespace ImageGlass.ImageListView
             }
         }
 
-
         /// <summary>
         /// Determines whether the specified item is visible on the screen.
         /// </summary>
@@ -1582,6 +1665,7 @@ namespace ImageGlass.ImageListView
         {
             return IsItemVisible(item.Index);
         }
+
         /// <summary>
         /// Finds the first item that starts with the specified string.
         /// </summary>
@@ -1593,11 +1677,12 @@ namespace ImageGlass.ImageListView
         {
             return FindString(s, 0);
         }
+
         /// <summary>
         /// Finds the first item that starts with the specified string.
         /// </summary>
         /// <param name="s">The text to search for.</param>
-        /// <param name="startIndex">The zero-based index of the first 
+        /// <param name="startIndex">The zero-based index of the first
         /// item to be searched. Set to zero to search from the
         /// beginning of the control.</param>
         /// <returns>
@@ -1616,9 +1701,11 @@ namespace ImageGlass.ImageListView
 
             return -1;
         }
-        #endregion
+
+        #endregion Instance Methods
 
         #region Rendering Methods
+
         /// <summary>
         /// Refreshes the control.
         /// </summary>
@@ -1639,6 +1726,7 @@ namespace ImageGlass.ImageListView
             else
                 rendererNeedsPaint = true;
         }
+
         /// <summary>
         /// Redraws the owner control.
         /// </summary>
@@ -1648,6 +1736,7 @@ namespace ImageGlass.ImageListView
         {
             Refresh(force, false);
         }
+
         /// <summary>
         /// Redraws the owner control.
         /// </summary>
@@ -1655,6 +1744,7 @@ namespace ImageGlass.ImageListView
         {
             Refresh(false, false);
         }
+
         /// <summary>
         /// Suspends painting until a matching ResumePaint call is made.
         /// </summary>
@@ -1664,6 +1754,7 @@ namespace ImageGlass.ImageListView
                 rendererNeedsPaint = false;
             rendererSuspendCount++;
         }
+
         /// <summary>
         /// Resumes painting. This call must be matched by a prior SuspendPaint call.
         /// </summary>
@@ -1675,6 +1766,7 @@ namespace ImageGlass.ImageListView
             if (rendererNeedsPaint)
                 Refresh();
         }
+
         /// <summary>
         /// Determines if the control can be painted.
         /// </summary>
@@ -1687,9 +1779,11 @@ namespace ImageGlass.ImageListView
             else
                 return true;
         }
-        #endregion
+
+        #endregion Rendering Methods
 
         #region Helper Methods
+
         /// <summary>
         /// Determines whether the specified item is visible on the screen.
         /// </summary>
@@ -1699,6 +1793,7 @@ namespace ImageGlass.ImageListView
         {
             return layoutManager.IsItemVisible(guid);
         }
+
         /// <summary>
         /// Determines whether the specified item is modified.
         /// </summary>
@@ -1712,6 +1807,7 @@ namespace ImageGlass.ImageListView
 
             return false;
         }
+
         /// <summary>
         /// Determines whether the specified item is visible on the screen.
         /// </summary>
@@ -1731,6 +1827,7 @@ namespace ImageGlass.ImageListView
             else
                 return ItemVisibility.PartiallyVisible;
         }
+
         /// <summary>
         /// Gets the guids of visible items.
         /// </summary>
@@ -1753,9 +1850,11 @@ namespace ImageGlass.ImageListView
             }
             return visible;
         }
-        #endregion
+
+        #endregion Helper Methods
 
         #region Event Handlers
+
         /// <summary>
         /// Handles the DragOver event.
         /// </summary>
@@ -1765,6 +1864,7 @@ namespace ImageGlass.ImageListView
             navigationManager.DragOver(e);
             base.OnDragOver(e);
         }
+
         /// <summary>
         /// Handles the DragEnter event.
         /// </summary>
@@ -1774,6 +1874,7 @@ namespace ImageGlass.ImageListView
             navigationManager.DragEnter(e);
             base.OnDragEnter(e);
         }
+
         /// <summary>
         /// Handles the DragLeave event.
         /// </summary>
@@ -1793,6 +1894,7 @@ namespace ImageGlass.ImageListView
             navigationManager.DragDrop(e);
             base.OnDragDrop(e);
         }
+
         /// <summary>
         /// Handles the Scroll event of the vScrollBar control.
         /// </summary>
@@ -1803,6 +1905,7 @@ namespace ImageGlass.ImageListView
             mViewOffset.Y = e.NewValue;
             Refresh();
         }
+
         /// <summary>
         /// Handles the Scroll event of the hScrollBar control.
         /// </summary>
@@ -1813,12 +1916,13 @@ namespace ImageGlass.ImageListView
             mViewOffset.X = e.NewValue;
             Refresh();
         }
+
         /// <summary>
         /// Handles the Tick event of the lazyRefreshTimer control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void lazyRefreshTimer_Tick(object sender, EventArgs e)
+        private void lazyRefreshTimer_Tick(object sender, EventArgs e)
         {
             try
             {
@@ -1831,6 +1935,7 @@ namespace ImageGlass.ImageListView
                 ;
             }
         }
+
         /// <summary>
         /// Handles the Resize event.
         /// </summary>
@@ -1847,6 +1952,7 @@ namespace ImageGlass.ImageListView
 
             Refresh();
         }
+
         /// <summary>
         /// Handles the Paint event.
         /// </summary>
@@ -1857,6 +1963,7 @@ namespace ImageGlass.ImageListView
                 mRenderer.Render(e.Graphics);
             rendererNeedsPaint = false;
         }
+
         /// <summary>
         /// Handles the MouseDown event.
         /// </summary>
@@ -1870,6 +1977,7 @@ namespace ImageGlass.ImageListView
             navigationManager.MouseDown(e);
             base.OnMouseDown(e);
         }
+
         /// <summary>
         /// Handles the MouseUp event.
         /// </summary>
@@ -1879,6 +1987,7 @@ namespace ImageGlass.ImageListView
             navigationManager.MouseUp(e);
             base.OnMouseUp(e);
         }
+
         /// <summary>
         /// Handles the MouseMove event.
         /// </summary>
@@ -1888,6 +1997,7 @@ namespace ImageGlass.ImageListView
             navigationManager.MouseMove(e);
             base.OnMouseMove(e);
         }
+
         /// <summary>
         /// Handles the MouseWheel event.
         /// </summary>
@@ -1931,6 +2041,7 @@ namespace ImageGlass.ImageListView
 
             base.OnMouseWheel(e);
         }
+
         /// <summary>
         /// Handles the MouseLeave event.
         /// </summary>
@@ -1940,6 +2051,7 @@ namespace ImageGlass.ImageListView
             navigationManager.MouseLeave();
             base.OnMouseLeave(e);
         }
+
         /// <summary>
         /// Handles the MouseDoubleClick event.
         /// </summary>
@@ -1949,6 +2061,7 @@ namespace ImageGlass.ImageListView
             navigationManager.MouseDoubleClick(e);
             base.OnMouseDoubleClick(e);
         }
+
         /// <summary>
         /// Handles the IsInputKey event.
         /// </summary>
@@ -1963,6 +2076,7 @@ namespace ImageGlass.ImageListView
             else
                 return base.IsInputKey(keyData);
         }
+
         /// <summary>
         /// Handles the KeyDown event.
         /// </summary>
@@ -1972,6 +2086,7 @@ namespace ImageGlass.ImageListView
             navigationManager.KeyDown(e);
             base.OnKeyDown(e);
         }
+
         /// <summary>
         /// Handles the KeyUp event.
         /// </summary>
@@ -1981,6 +2096,7 @@ namespace ImageGlass.ImageListView
             navigationManager.KeyUp(e);
             base.OnKeyUp(e);
         }
+
         /// <summary>
         /// Handles the GotFocus event.
         /// </summary>
@@ -1990,6 +2106,7 @@ namespace ImageGlass.ImageListView
             base.OnGotFocus(e);
             Refresh();
         }
+
         /// <summary>
         /// Handles the LostFocus event.
         /// </summary>
@@ -1999,6 +2116,7 @@ namespace ImageGlass.ImageListView
             base.OnLostFocus(e);
             Refresh();
         }
+
         /// <summary>
         /// Releases the unmanaged resources used by the control and its child controls
         /// and optionally releases the managed resources.
@@ -2050,9 +2168,11 @@ namespace ImageGlass.ImageListView
             if (IsHandleCreated && !IsDisposed && !InvokeRequired)
                 base.Dispose(disposing);
         }
-        #endregion
+
+        #endregion Event Handlers
 
         #region Virtual Functions
+
         /// <summary>
         /// Raises the CacheError event.
         /// </summary>
@@ -2099,8 +2219,8 @@ namespace ImageGlass.ImageListView
 
             ScrollToIndex(firstItemIndex);
             OnSelectionChangedInternal();
-            
         }
+
         /// <summary>
         /// Raises the ColumnWidthChanged event.
         /// </summary>
@@ -2110,6 +2230,7 @@ namespace ImageGlass.ImageListView
             if (ColumnWidthChanged != null)
                 ColumnWidthChanged(this, e);
         }
+
         /// <summary>
         /// Raises the ColumnClick event.
         /// </summary>
@@ -2119,6 +2240,7 @@ namespace ImageGlass.ImageListView
             if (ColumnClick != null)
                 ColumnClick(this, e);
         }
+
         /// <summary>
         /// Raises the ColumnHover event.
         /// </summary>
@@ -2128,6 +2250,7 @@ namespace ImageGlass.ImageListView
             if (ColumnHover != null)
                 ColumnHover(this, e);
         }
+
         /// <summary>
         /// Raises the ItemClick event.
         /// </summary>
@@ -2137,6 +2260,7 @@ namespace ImageGlass.ImageListView
             if (ItemClick != null)
                 ItemClick(this, e);
         }
+
         /// <summary>
         /// Raises the ItemCheckBoxClick event.
         /// </summary>
@@ -2146,6 +2270,7 @@ namespace ImageGlass.ImageListView
             if (ItemCheckBoxClick != null)
                 ItemCheckBoxClick(this, e);
         }
+
         /// <summary>
         /// Raises the ItemCheckBoxClick event.
         /// </summary>
@@ -2154,6 +2279,7 @@ namespace ImageGlass.ImageListView
         {
             OnItemCheckBoxClick(new ItemEventArgs(item));
         }
+
         /// <summary>
         /// Raises the ItemHover event.
         /// </summary>
@@ -2163,6 +2289,7 @@ namespace ImageGlass.ImageListView
             if (ItemHover != null)
                 ItemHover(this, e);
         }
+
         /// <summary>
         /// Raises the ItemDoubleClick event.
         /// </summary>
@@ -2172,6 +2299,7 @@ namespace ImageGlass.ImageListView
             if (ItemDoubleClick != null)
                 ItemDoubleClick(this, e);
         }
+
         /// <summary>
         /// Raises the SelectionChanged event.
         /// </summary>
@@ -2181,6 +2309,7 @@ namespace ImageGlass.ImageListView
             if (SelectionChanged != null)
                 SelectionChanged(this, e);
         }
+
         /// <summary>
         /// Raises the SelectionChanged event.
         /// </summary>
@@ -2188,6 +2317,7 @@ namespace ImageGlass.ImageListView
         {
             OnSelectionChanged(new EventArgs());
         }
+
         /// <summary>
         /// Raises the ThumbnailCached event.
         /// </summary>
@@ -2197,6 +2327,7 @@ namespace ImageGlass.ImageListView
             if (ThumbnailCached != null)
                 ThumbnailCached(this, e);
         }
+
         /// <summary>
         /// Raises the PaneReszied event.
         /// </summary>
@@ -2206,6 +2337,7 @@ namespace ImageGlass.ImageListView
             if (PaneResized != null)
                 PaneResized(this, e);
         }
+
         /// <summary>
         /// Raises the PaneResizing event.
         /// </summary>
@@ -2215,6 +2347,7 @@ namespace ImageGlass.ImageListView
             if (PaneResizing != null)
                 PaneResizing(this, e);
         }
+
         /// <summary>
         /// Raises the CacheError event.
         /// This method is invoked from the thumbnail thread.
@@ -2229,6 +2362,7 @@ namespace ImageGlass.ImageListView
             mItems.TryGetValue(guid, out item);
             OnCacheError(new CacheErrorEventArgs(item, error, cacheThread));
         }
+
         /// <summary>
         /// Raises the ThumbnailCached event.
         /// This method is invoked from the thumbnail thread.
@@ -2244,6 +2378,7 @@ namespace ImageGlass.ImageListView
             if (mItems.TryGetValue(guid, out item))
                 OnThumbnailCached(new ThumbnailCachedEventArgs(item, thumbnail, size, thumbnailImage));
         }
+
         /// <summary>
         /// Updates item details.
         /// This method is invoked from the item cache thread.
@@ -2256,6 +2391,7 @@ namespace ImageGlass.ImageListView
             if (mItems.TryGetValue(guid, out item))
                 item.UpdateDetailsInternal(details);
         }
+
         /// <summary>
         /// Raises the ThumbnailCaching event.
         /// This method is invoked from the thumbnail thread.
@@ -2268,6 +2404,7 @@ namespace ImageGlass.ImageListView
             if (mItems.TryGetValue(guid, out item))
                 OnThumbnailCaching(new ThumbnailCachingEventArgs(item, size));
         }
+
         /// <summary>
         /// Raises the ThumbnailCaching event.
         /// </summary>
@@ -2277,6 +2414,7 @@ namespace ImageGlass.ImageListView
             if (ThumbnailCaching != null)
                 ThumbnailCaching(this, e);
         }
+
         /// <summary>
         /// Raises the ItemCollectionChanged event.
         /// </summary>
@@ -2286,84 +2424,101 @@ namespace ImageGlass.ImageListView
             if (ItemCollectionChanged != null)
                 ItemCollectionChanged(this, e);
         }
-        #endregion
+
+        #endregion Virtual Functions
 
         #region Public Events
+
         /// <summary>
         /// Occurs when an error occurs during an asynchronous cache operation.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Occurs when an error occurs during an asynchronous cache operation.")]
         public event CacheErrorEventHandler CacheError;
+
         /// <summary>
         /// Occurs after the user drops files on to the control.
         /// </summary>
         [Category("Drag Drop"), Browsable(true), Description("Occurs after the user drops files on to the control.")]
         public event DropFilesEventHandler DropFiles;
+
         /// <summary>
         /// Occurs after the user successfully resized a column header.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs after the user successfully resized a column header.")]
         public event ColumnWidthChangedEventHandler ColumnWidthChanged;
+
         /// <summary>
         /// Occurs when the user clicks a column header.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user clicks a column header.")]
         public event ColumnClickEventHandler ColumnClick;
+
         /// <summary>
         /// Occurs when the user moves the mouse over (and out of) a column header.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user moves the mouse over (and out of) a column header.")]
         public event ColumnHoverEventHandler ColumnHover;
+
         /// <summary>
         /// Occurs when the user clicks an item.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user clicks an item.")]
         public event ItemClickEventHandler ItemClick;
+
         /// <summary>
         /// Occurs when the user clicks an item checkbox.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user clicks an item checkbox.")]
         public event ItemCheckBoxClickEventHandler ItemCheckBoxClick;
+
         /// <summary>
         /// Occurs when the user moves the mouse over (and out of) an item.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user moves the mouse over (and out of) an item.")]
         public event ItemHoverEventHandler ItemHover;
+
         /// <summary>
         /// Occurs when the user double-clicks an item.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs when the user double-clicks an item.")]
         public event ItemDoubleClickEventHandler ItemDoubleClick;
+
         /// <summary>
         /// Occurs when the selected items collection changes.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Occurs when the selected items collection changes.")]
         public event EventHandler SelectionChanged;
+
         /// <summary>
         /// Occurs after an item thumbnail is cached.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Occurs after an item thumbnail is cached.")]
         public event ThumbnailCachedEventHandler ThumbnailCached;
+
         /// <summary>
         /// Occurs before an item thumbnail is cached.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Occurs before an item thumbnail is cached.")]
         public event ThumbnailCachingEventHandler ThumbnailCaching;
+
         /// <summary>
         /// Occurs after the item collection is changed.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Occurs after the item collection is changed.")]
         public event ItemCollectionChangedEventHandler ItemCollectionChanged;
+
         /// <summary>
         /// Occurs after the pane is resized.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs after the pane is resized.")]
         public event PaneResizedEventHandler PaneResized;
+
         /// <summary>
         /// Occurs while the pane is being resized.
         /// </summary>
         [Category("Action"), Browsable(true), Description("Occurs while the pane is being resized.")]
         public event PaneResizingEventHandler PaneResizing;
-        #endregion
+
+        #endregion Public Events
     }
 }

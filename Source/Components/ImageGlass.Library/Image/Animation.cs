@@ -23,8 +23,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Library.Image {
-    public class Animation {
+namespace ImageGlass.Library.Image
+{
+    public class Animation
+    {
         private Bitmap _img;
         private bool _isAnimating = false;
         private int _i;
@@ -39,7 +41,8 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="animationFile">File name</param>
         /// <param name="destinationFolder">Output folder</param>
-        public void ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback) {
+        public void ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback)
+        {
             //initiate class
 
             _isAnimating = false;
@@ -47,7 +50,8 @@ namespace ImageGlass.Library.Image {
             _desFolder = destinationFolder;
             _extractFinished = callback;
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 _img = new Bitmap(animationFile);
                 _i = 1;
 
@@ -59,13 +63,14 @@ namespace ImageGlass.Library.Image {
         /// <summary>
         /// This method begins the animation.
         /// </summary>
-        private void AnimateImage() {
-            if (!_isAnimating) {
+        private void AnimateImage()
+        {
+            if (!_isAnimating)
+            {
                 //Begin the animation only once.
                 ImageAnimator.Animate(_img, new EventHandler(SaveFrames));
                 _isAnimating = true;
             }
-
         }
 
         /// <summary>
@@ -73,14 +78,16 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveFrames(object sender, EventArgs e) {
+        private void SaveFrames(object sender, EventArgs e)
+        {
             if (!_isAnimating) return;
 
             var frameCount = System.Drawing.Image.FromFile(_filename).GetFrameCount(FrameDimension.Time);
             var numberIndex = frameCount.ToString().Length;
 
             // Check current frame
-            if (_i > frameCount) {
+            if (_i > frameCount)
+            {
                 _isAnimating = false;
                 ImageAnimator.StopAnimate(_img, null);
 
@@ -108,11 +115,6 @@ namespace ImageGlass.Library.Image {
 
             //go to next frame
             _i += 1;
-
         }
-
     }
-
-
-
 }

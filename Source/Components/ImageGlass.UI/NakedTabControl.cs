@@ -20,14 +20,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI {
-    public class NakedTabControl: TabControl {
-        public NakedTabControl() {
+namespace ImageGlass.UI
+{
+    public class NakedTabControl : TabControl
+    {
+        public NakedTabControl()
+        {
             // hide the one-line navigation buttons
             if (!this.DesignMode) this.Multiline = true;
         }
 
-        protected override void WndProc(ref Message m) {
+        protected override void WndProc(ref Message m)
+        {
             // removed tab border
             if (m.Msg == 0x1328 && !this.DesignMode)
                 m.Result = new IntPtr(1);

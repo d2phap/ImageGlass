@@ -4,6 +4,7 @@ using System.ComponentModel;
 namespace ImageGlass.ImageListView
 {
     #region Event Delegates
+
     /// <summary>
     /// Represents the method that will handle the RunWorkerCompleted event.
     /// </summary>
@@ -11,6 +12,7 @@ namespace ImageGlass.ImageListView
     /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void RunQueuedWorkerCompletedEventHandler(object sender, QueuedWorkerCompletedEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle the DoWork event.
     /// </summary>
@@ -18,9 +20,11 @@ namespace ImageGlass.ImageListView
     /// <param name="e">An <see cref="QueuedWorkerDoWorkEventArgs"/> that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void QueuedWorkerDoWorkEventHandler(object sender, QueuedWorkerDoWorkEventArgs e);
-    #endregion
+
+    #endregion Event Delegates
 
     #region Event Arguments
+
     /// <summary>
     /// Represents the event arguments of the RunWorkerCompleted event.
     /// </summary>
@@ -30,6 +34,7 @@ namespace ImageGlass.ImageListView
         /// Gets a value that represents the result of an asynchronous operation.
         /// </summary>
         public object Result { get; private set; }
+
         /// <summary>
         /// Gets the priority of this item.
         /// </summary>
@@ -50,6 +55,7 @@ namespace ImageGlass.ImageListView
             Priority = priority;
         }
     }
+
     /// <summary>
     /// Represents the event arguments of the RunWorkerCompleted event.
     /// </summary>
@@ -71,5 +77,6 @@ namespace ImageGlass.ImageListView
             Priority = priority;
         }
     }
-    #endregion
+
+    #endregion Event Arguments
 }

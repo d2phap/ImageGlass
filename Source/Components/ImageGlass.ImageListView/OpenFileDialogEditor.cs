@@ -16,9 +16,9 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
-using System.ComponentModel;
 
 namespace ImageGlass.ImageListView
 {
@@ -28,6 +28,7 @@ namespace ImageGlass.ImageListView
     internal class OpenFileDialogEditor : UITypeEditor
     {
         #region UITypeEditor Overrides
+
         /// <summary>
         /// Gets the edit style.
         /// </summary>
@@ -73,6 +74,7 @@ namespace ImageGlass.ImageListView
 
             return base.EditValue(provider, value);
         }
-        #endregion
+
+        #endregion UITypeEditor Overrides
     }
 }

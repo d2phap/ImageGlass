@@ -16,10 +16,10 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Globalization;
 using System.ComponentModel;
-using System.Reflection;
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
 
 namespace ImageGlass.ImageListView
 {
@@ -29,8 +29,9 @@ namespace ImageGlass.ImageListView
     internal class ImageListViewColorTypeConverter : ExpandableObjectConverter
     {
         #region TypeConverter Overrides
+
         /// <summary>
-        /// Returns whether this converter can convert the 
+        /// Returns whether this converter can convert the
         /// object to the specified type, using the specified context.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -45,8 +46,9 @@ namespace ImageGlass.ImageListView
 
             return base.CanConvertTo(context, destinationType);
         }
+
         /// <summary>
-        /// Returns whether this converter can convert an object of the given type 
+        /// Returns whether this converter can convert an object of the given type
         /// to the type of this converter, using the specified context.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -59,8 +61,9 @@ namespace ImageGlass.ImageListView
 
             return base.CanConvertFrom(context, sourceType);
         }
+
         /// <summary>
-        /// Converts the given value object to the specified type, 
+        /// Converts the given value object to the specified type,
         /// using the specified context and culture information.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -88,8 +91,9 @@ namespace ImageGlass.ImageListView
 
             return base.ConvertTo(context, culture, value, destinationType);
         }
+
         /// <summary>
-        /// Converts the given object to the type of this converter, 
+        /// Converts the given object to the type of this converter,
         /// using the specified context and culture information.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -105,6 +109,7 @@ namespace ImageGlass.ImageListView
 
             return base.ConvertFrom(context, culture, value);
         }
-        #endregion
+
+        #endregion TypeConverter Overrides
     }
 }

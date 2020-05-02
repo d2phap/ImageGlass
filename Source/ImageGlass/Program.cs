@@ -28,8 +28,10 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ImageGlass {
-    static class Program {
+namespace ImageGlass
+{
+    internal static class Program
+    {
         private static readonly string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
@@ -38,10 +40,11 @@ namespace ImageGlass {
 
         // Issue #360: IG periodically searching for dismounted device
         [DllImport("kernel32.dll")]
-        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+        private static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
-        public enum ErrorModes: uint {
+        public enum ErrorModes : uint
+        {
             SYSTEM_DEFAULT = 0x0,
             SEM_FAILCRITICALERRORS = 0x0001,
             SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
@@ -53,7 +56,8 @@ namespace ImageGlass {
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        private static void Main()
+        {
             // Issue #360: IG periodically searching for dismounted device
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
@@ -71,14 +75,17 @@ namespace ImageGlass {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             #region Check config file compatibility
-            if (!Configs.IsCompatible) {
+
+            if (!Configs.IsCompatible)
+            {
                 var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
                 var result = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if (result == DialogResult.Yes) {
-                    try {
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
                         Process.Start($"https://imageglass.org/docs/app-configs?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=incompatible_configs");
                     }
                     catch { }
@@ -86,71 +93,80 @@ namespace ImageGlass {
                     return;
                 }
             }
-            #endregion
 
+            #endregion Check config file compatibility
 
             #region Check First-launch Configs
-            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
-                using (var p = new Process()) {
-                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                    p.StartInfo.Arguments = "firstlaunch";
 
-                    try {
-                        p.Start();
-                    }
-                    catch { }
+            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION)
+            {
+                using var p = new Process();
+                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                p.StartInfo.Arguments = "firstlaunch";
+                try
+                {
+                    p.Start();
                 }
-
+                catch { }
                 Application.Exit();
                 return;
             }
-            #endregion
 
+            #endregion Check First-launch Configs
 
             #region Auto check for update
-            if (Configs.AutoUpdate != "0") {
+
+            if (Configs.AutoUpdate != "0")
+            {
                 var lastUpdate = DateTime.Now;
 
-                if (DateTime.TryParseExact(Configs.AutoUpdate, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate)) {
+                if (DateTime.TryParseExact(Configs.AutoUpdate, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate))
+                {
                     // Check for update every 3 days
-                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3) {
+                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3)
+                    {
                         CheckForUpdate(useAutoCheck: true);
                     }
                 }
-                else {
+                else
+                {
                     CheckForUpdate(useAutoCheck: true);
                 }
             }
-            #endregion
 
+            #endregion Auto check for update
 
             #region Multi instances
+
             // check if allows multi instances
-            if (Configs.IsAllowMultiInstances) {
+            if (Configs.IsAllowMultiInstances)
+            {
                 Application.Run(formMain = new frmMain());
             }
-            else {
+            else
+            {
                 var guid = new Guid(appGuid);
 
                 // single instance is required
-                using (SingleInstance singleInstance = new SingleInstance(guid)) {
-                    if (singleInstance.IsFirstInstance) {
-                        singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
-                        singleInstance.ListenForArgumentsFromSuccessiveInstances();
+                using var singleInstance = new SingleInstance(guid);
+                if (singleInstance.IsFirstInstance)
+                {
+                    singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
+                    singleInstance.ListenForArgumentsFromSuccessiveInstances();
 
-                        Application.Run(formMain = new frmMain());
-                    }
-                    else {
-                        singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
-                    }
+                    Application.Run(formMain = new frmMain());
+                }
+                else
+                {
+                    singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
-            #endregion
 
+            #endregion Multi instances
         }
 
-
-        private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
+        private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e)
+        {
             if (formMain == null)
                 return;
 
@@ -177,13 +193,14 @@ namespace ImageGlass {
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
         }
 
-
         /// <summary>
         /// Check for updatae
         /// </summary>
         /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
-        public static void CheckForUpdate(bool useAutoCheck = false) {
-            Task.Run(() => {
+        public static void CheckForUpdate(bool useAutoCheck = false)
+        {
+            Task.Run(() =>
+            {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
@@ -198,6 +215,5 @@ namespace ImageGlass {
                 Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
             });
         }
-
     }
 }

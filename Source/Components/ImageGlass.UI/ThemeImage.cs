@@ -21,10 +21,11 @@ using ImageGlass.Base;
 using ImageGlass.Heart;
 using System.Drawing;
 
-namespace ImageGlass.UI {
-    public class ThemeImage {
+namespace ImageGlass.UI
+{
+    public class ThemeImage
+    {
         private int _height = Constants.TOOLBAR_ICON_HEIGHT;
-
 
         public Bitmap Image { get; set; } = null;
 
@@ -33,11 +34,11 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Sets the height of icon image. Gets the height with DPI correction.
         /// </summary>
-        public int Height {
+        public int Height
+        {
             get => GetCorrectHeight(_height);
             set => _height = value;
         }
-
 
         /// <summary>
         /// Icon image
@@ -49,7 +50,8 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="filename">Filename</param>
         /// <param name="height">Height of the icon</param>
-        public ThemeImage(string filename, int height = Constants.TOOLBAR_ICON_HEIGHT) {
+        public ThemeImage(string filename, int height = Constants.TOOLBAR_ICON_HEIGHT)
+        {
             Height = height;
             Filename = filename;
 
@@ -57,8 +59,8 @@ namespace ImageGlass.UI {
             Refresh();
         }
 
-
-        private int GetCorrectHeight(int height) {
+        private int GetCorrectHeight(int height)
+        {
             // Get Scaling factor
             var scaleFactor = DPIScaling.GetDPIScaleFactor();
             var iconHeight = (int)(height * scaleFactor);
@@ -66,32 +68,32 @@ namespace ImageGlass.UI {
             return iconHeight;
         }
 
-
         /// <summary>
         /// Reload theme image
         /// </summary>
-        public void Refresh() {
+        public void Refresh()
+        {
             if (string.IsNullOrWhiteSpace(Filename))
                 return;
 
-            try {
+            try
+            {
                 Image = Photo.Load(Filename, new Size(Height, Height)).Image;
             }
             catch { }
         }
 
-
         /// <summary>
         /// Get the height of toolbar icon after applying DPI calculation
         /// </summary>
         /// <returns></returns>
-        public static int GetCorrectBaseIconHeight() {
+        public static int GetCorrectBaseIconHeight()
+        {
             // Get Scaling factor
             var scaleFactor = DPIScaling.GetDPIScaleFactor();
             var iconHeight = (int)(Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
 
             return iconHeight;
         }
-
     }
 }

@@ -16,9 +16,9 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Collections;
 
 namespace ImageGlass.ImageListView
 {
@@ -30,23 +30,28 @@ namespace ImageGlass.ImageListView
         public class ImageListViewColumnHeaderCollection : IList<ImageListViewColumnHeader>, ICollection, IList, IEnumerable
         {
             #region Member Variables
+
             private ImageListView mImageListView;
             private List<ImageListViewColumnHeader> mItems;
             private List<ImageListViewColumnHeader> mDisplayedItems;
             internal bool updateDisplayList;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets the number of columns in the collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the number of columns in the collection.")]
             public int Count { get { return mItems.Count; } }
+
             /// <summary>
             /// Gets the ImageListView owning this collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
             public ImageListView ImageListView { get { return mImageListView; } }
+
             /// <summary>
             /// Gets the column at the specified index within the collection.
             /// </summary>
@@ -81,6 +86,7 @@ namespace ImageGlass.ImageListView
                     updateDisplayList = true;
                 }
             }
+
             /// <summary>
             /// Gets the column with the specified type within the collection.
             /// </summary>
@@ -97,6 +103,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("Unknown column type.", "type");
                 }
             }
+
             /// <summary>
             /// Gets a value indicating whether the Collection is read-only.
             /// </summary>
@@ -105,9 +112,11 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
-            #endregion
+
+            #endregion Properties
 
             #region Constructors
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeaderCollection class.
             /// </summary>
@@ -118,9 +127,11 @@ namespace ImageGlass.ImageListView
                 mItems = new List<ImageListViewColumnHeader>();
                 updateDisplayList = true;
             }
-            #endregion
+
+            #endregion Constructors
 
             #region Instance Methods
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -142,6 +153,7 @@ namespace ImageGlass.ImageListView
 
                 updateDisplayList = true;
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -152,6 +164,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(new ImageListViewColumnHeader(type, text, width));
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -161,6 +174,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(new ImageListViewColumnHeader(type, text));
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -170,6 +184,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(new ImageListViewColumnHeader(type, width));
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -178,6 +193,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(new ImageListViewColumnHeader(type));
             }
+
             /// <summary>
             /// Adds a range of items to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -196,6 +212,7 @@ namespace ImageGlass.ImageListView
                     mImageListView.ResumePaint();
                 }
             }
+
             /// <summary>
             /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -206,6 +223,7 @@ namespace ImageGlass.ImageListView
                     mImageListView.Items.RemoveAllCustomColumns();
                 updateDisplayList = true;
             }
+
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
             /// </summary>
@@ -217,6 +235,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.Contains(item);
             }
+
             /// <summary>
             /// Returns an enumerator to use to iterate through columns.
             /// </summary>
@@ -227,6 +246,7 @@ namespace ImageGlass.ImageListView
                     yield return column;
                 yield break;
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
             /// </summary>
@@ -238,6 +258,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
             /// </summary>
@@ -264,6 +285,7 @@ namespace ImageGlass.ImageListView
 
                 updateDisplayList = true;
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -283,6 +305,7 @@ namespace ImageGlass.ImageListView
                 updateDisplayList = true;
                 return exists;
             }
+
             /// <summary>
             /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
             /// </summary>
@@ -299,9 +322,11 @@ namespace ImageGlass.ImageListView
                 }
                 updateDisplayList = true;
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Helper Methods
+
             /// <summary>
             /// Determines whether the collection has the given column type.
             /// </summary>
@@ -316,6 +341,7 @@ namespace ImageGlass.ImageListView
 
                 return false;
             }
+
             /// <summary>
             /// Gets the columns as diplayed on the UI.
             /// </summary>
@@ -336,6 +362,7 @@ namespace ImageGlass.ImageListView
                 updateDisplayList = false;
                 return mDisplayedItems;
             }
+
             /// <summary>
             /// Compares the columns by their display index.
             /// </summary>
@@ -348,9 +375,11 @@ namespace ImageGlass.ImageListView
                 else
                     return 0;
             }
-            #endregion
+
+            #endregion Helper Methods
 
             #region Unsupported Interface
+
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
@@ -358,6 +387,7 @@ namespace ImageGlass.ImageListView
             {
                 return GetEnumerator();
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.ICollection"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -369,6 +399,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An array of ImageListViewColumnHeader is required.", "array");
                 mItems.CopyTo((ImageListViewColumnHeader[])array, index);
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -378,6 +409,7 @@ namespace ImageGlass.ImageListView
             {
                 mItems.CopyTo(array, arrayIndex);
             }
+
             /// <summary>
             /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection"/> is synchronized (thread safe).
             /// </summary>
@@ -385,6 +417,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
             /// </summary>
@@ -392,6 +425,7 @@ namespace ImageGlass.ImageListView
             {
                 get { throw new NotImplementedException(); }
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -403,6 +437,7 @@ namespace ImageGlass.ImageListView
                 Add(item);
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.IList"/> contains a specific value.
             /// </summary>
@@ -412,6 +447,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewColumnHeader is required.", "value");
                 return mItems.Contains((ImageListViewColumnHeader)value);
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -421,6 +457,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewColumnHeader is required.", "value");
                 return IndexOf((ImageListViewColumnHeader)value);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.IList"/> at the specified index.
             /// </summary>
@@ -430,6 +467,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewColumnHeader is required.", "value");
                 Insert(index, (ImageListViewColumnHeader)value);
             }
+
             /// <summary>
             /// Gets a value indicating whether the <see cref="T:System.Collections.IList"/> has a fixed size.
             /// </summary>
@@ -437,6 +475,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -446,6 +485,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewColumnHeader is required.", "value");
                 Remove((ImageListViewColumnHeader)value);
             }
+
             /// <summary>
             /// Gets or sets the <see cref="System.Object"/> at the specified index.
             /// </summary>
@@ -463,7 +503,8 @@ namespace ImageGlass.ImageListView
                     updateDisplayList = true;
                 }
             }
-            #endregion
+
+            #endregion Unsupported Interface
         }
     }
 }

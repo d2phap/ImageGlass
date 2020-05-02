@@ -20,13 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 
-namespace ImageGlass.Library {
-    public enum LanguageItemState {
+namespace ImageGlass.Library
+{
+    public enum LanguageItemState
+    {
         Inactive = 0,
         Active = 1
     }
 
-    public class LanguageItem<K, V>: Dictionary<K, V> {
+    public class LanguageItem<K, V> : Dictionary<K, V>
+    {
         /// <summary>
         /// ImageGlass version that supported
         /// </summary>
@@ -45,11 +48,11 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Language text object
         /// </summary>
-        public LanguageItem() {
+        public LanguageItem()
+        {
             Version = new Version("3.5.0.0");
             State = LanguageItemState.Inactive;
             Remarks = string.Empty;
         }
     }
-
 }

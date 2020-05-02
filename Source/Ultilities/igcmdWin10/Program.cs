@@ -16,22 +16,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System;
 using System.Threading.Tasks;
 
 /// <summary>
 /// Application to perform Windows 8/10 specific operations.
 /// These require using Windows 8/10 DLLs which aren't available
-/// on Windows 7. [... and would cause igcmd to crash on Win7 if 
+/// on Windows 7. [... and would cause igcmd to crash on Win7 if
 /// the references were added to that project]
 /// </summary>
-namespace igcmdWin10 {
-    class Program {
+namespace igcmdWin10
+{
+    internal class Program
+    {
         [STAThread]
-        static int Main(string[] args) {
+        private static int Main(string[] args)
+        {
             string topcmd = args[0].ToLower().Trim();
 
-            if (topcmd == "setlockimage") {
+            if (topcmd == "setlockimage")
+            {
                 var task = SetLockScreenImageAsync(args);
                 task.Wait();
 
@@ -41,18 +46,17 @@ namespace igcmdWin10 {
             return 0;
         }
 
-
         /// <summary>
         /// Set lock screen image
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        internal static async Task<int> SetLockScreenImageAsync(string[] args) {
+        internal static async Task<int> SetLockScreenImageAsync(string[] args)
+        {
             string imgPath = args[1];
             var result = await LockScreenImage.SetAsync(imgPath);
 
             return result;
         }
-
     }
 }

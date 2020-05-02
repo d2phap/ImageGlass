@@ -11,12 +11,13 @@ namespace ImageGlass.ImageListView
     public static class ImageListViewItemAdaptors
     {
         #region FileSystemAdaptor
+
         /// <summary>
         /// Represents a file system adaptor.
         /// </summary>
         public class FileSystemAdaptor : ImageListView.ImageListViewItemAdaptor
         {
-		    // [IG_CHANGE] use a cache for commonly repeated strings
+            // [IG_CHANGE] use a cache for commonly repeated strings
             private static StringCache _stringCache = new StringCache();
 
             private bool disposed;
@@ -43,7 +44,7 @@ namespace ImageGlass.ImageListView
                 if (disposed)
                     return null;
 
-				// [IG_CHANGE]
+                // [IG_CHANGE]
                 // Issue #530: thumbnails not built if long file path
                 string filename = Heart.Helpers.PrefixLongPath((string)key);
                 if (File.Exists(filename))
@@ -51,6 +52,7 @@ namespace ImageGlass.ImageListView
                 else
                     return null;
             }
+
             /// <summary>
             /// Returns the path to the source image for use in drag operations.
             /// </summary>
@@ -64,6 +66,7 @@ namespace ImageGlass.ImageListView
                 string filename = (string)key;
                 return filename;
             }
+
             /// <summary>
             /// Returns the details for the given item.
             /// </summary>
@@ -86,7 +89,7 @@ namespace ImageGlass.ImageListView
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateAccessed, string.Empty, info.LastAccessTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.DateModified, string.Empty, info.LastWriteTime));
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FileSize, string.Empty, info.Length));
-					// [IG_CHANGE] use string cache
+                    // [IG_CHANGE] use string cache
                     details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
 
                     // Get metadata
@@ -110,6 +113,7 @@ namespace ImageGlass.ImageListView
 
                 return details.ToArray();
             }
+
             /// <summary>
             /// Performs application-defined tasks associated with freeing,
             /// releasing, or resetting unmanaged resources.
@@ -119,9 +123,11 @@ namespace ImageGlass.ImageListView
                 disposed = true;
             }
         }
-        #endregion
+
+        #endregion FileSystemAdaptor
 
         #region URIAdaptor
+
         /// <summary>
         /// Represents a URI adaptor.
         /// </summary>
@@ -171,6 +177,7 @@ namespace ImageGlass.ImageListView
                     return null;
                 }
             }
+
             /// <summary>
             /// Returns the path to the source image for use in drag operations.
             /// </summary>
@@ -196,6 +203,7 @@ namespace ImageGlass.ImageListView
                     return null;
                 }
             }
+
             /// <summary>
             /// Returns the details for the given item.
             /// </summary>
@@ -214,6 +222,7 @@ namespace ImageGlass.ImageListView
 
                 return details.ToArray();
             }
+
             /// <summary>
             /// Performs application-defined tasks associated with freeing,
             /// releasing, or resetting unmanaged resources.
@@ -223,6 +232,7 @@ namespace ImageGlass.ImageListView
                 disposed = true;
             }
         }
-        #endregion
+
+        #endregion URIAdaptor
     }
 }

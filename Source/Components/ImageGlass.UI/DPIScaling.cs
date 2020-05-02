@@ -16,28 +16,31 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI {
-    public static class DPIScaling {
+namespace ImageGlass.UI
+{
+    public static class DPIScaling
+    {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
+        private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
 
         [DllImport("gdi32.dll")]
-        static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
+        private static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetDC(IntPtr hWnd);
+        private static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        static extern void ReleaseDC(IntPtr hWnd);
+        private static extern void ReleaseDC(IntPtr hWnd);
 
-
-        private enum DeviceCaps {
+        private enum DeviceCaps
+        {
             /// <summary>
             /// Logical pixels inch in X
             /// </summary>
@@ -59,19 +62,16 @@ namespace ImageGlass.UI {
             DESKTOPHORZRES = 118
         }
 
-
         public const int WM_DPICHANGED = 0x02E0;
         public const int DPI_DEFAULT = 96;
-
-
 
         /// <summary>
         /// Gets, sets current DPI scaling value
         /// </summary>
         public static int CurrentDPI { get; set; } = DPI_DEFAULT;
 
-
-        public static short LOWORD(int number) {
+        public static short LOWORD(int number)
+        {
             return (short)number;
         }
 
@@ -80,7 +80,8 @@ namespace ImageGlass.UI {
         /// NOTE: the this.DeviceDpi property is not accurate
         /// </summary>
         /// <returns></returns>
-        public static int GetSystemDpi() {
+        public static int GetSystemDpi()
+        {
             IntPtr hdc = GetDC(IntPtr.Zero);
 
             var val = GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
@@ -93,7 +94,8 @@ namespace ImageGlass.UI {
         /// Get DPI Scale factor
         /// </summary>
         /// <returns></returns>
-        public static double GetDPIScaleFactor() {
+        public static double GetDPIScaleFactor()
+        {
             return (double)CurrentDPI / DPI_DEFAULT;
         }
 
@@ -102,7 +104,8 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static double Transform(double num) {
+        public static double Transform(double num)
+        {
             return num * GetDPIScaleFactor();
         }
 
@@ -111,17 +114,18 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static int Transform(int num) {
+        public static int Transform(int num)
+        {
             return (int)Math.Round(num * GetDPIScaleFactor());
         }
-
 
         /// <summary>
         /// Apply DPI scale factor and transform toolbar
         /// </summary>
         /// <param name="toolbar">The toolbar to update</param>
         /// <param name="baseHeight">The base height of toolbar</param>
-        public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight) {
+        public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight)
+        {
             // Update size of toolbar
             toolbar.Height = Transform(baseHeight);
 
@@ -129,12 +133,14 @@ namespace ImageGlass.UI {
             int newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
 
             // Update toolbar items size of Tool bar buttons
-            foreach (var item in toolbar.Items.OfType<ToolStripButton>()) {
+            foreach (var item in toolbar.Items.OfType<ToolStripButton>())
+            {
                 item.Size = new Size(newBtnHeight, newBtnHeight);
             }
 
             // Update toolbar items size of Tool bar menu buttons
-            foreach (var item in toolbar.Items.OfType<ToolStripDropDownButton>()) {
+            foreach (var item in toolbar.Items.OfType<ToolStripDropDownButton>())
+            {
                 item.Size = new Size(newBtnHeight, newBtnHeight);
             }
 
@@ -142,7 +148,8 @@ namespace ImageGlass.UI {
             var hIcon = ThemeImage.GetCorrectBaseIconHeight();
 
             // Tool bar separators
-            foreach (var item in toolbar.Items.OfType<ToolStripSeparator>()) {
+            foreach (var item in toolbar.Items.OfType<ToolStripSeparator>())
+            {
                 item.Size = new Size(5, (int)(hIcon * 1.2));
                 item.Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0);
             }

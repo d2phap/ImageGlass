@@ -28,8 +28,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ImageGlass.UI {
-    public class Theme {
+namespace ImageGlass.UI
+{
+    public class Theme
+    {
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -47,8 +49,7 @@ namespace ImageGlass.UI {
         /// </summary>
         public bool IsValid { get; internal set; }
 
-        #endregion
-
+        #endregion PUBLIC PROPERTIES
 
         #region THEME NODE PROPERTIES
 
@@ -93,8 +94,8 @@ namespace ImageGlass.UI {
         /// Minimum version of this theme work with
         /// </summary>
         public string Compatibility { get; set; } = string.Empty;
-        #endregion
 
+        #endregion <INFO> node
 
         #region <MAIN> node
 
@@ -133,26 +134,22 @@ namespace ImageGlass.UI {
         /// </summary>
         public Color TextInfoColor { get; set; } = Color.Black;
 
-
         /// <summary>
         /// Menu background color
         /// </summary>
         public Color MenuBackgroundColor { get; set; } = Color.White;
-
 
         /// <summary>
         /// Menu text color
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
 
-
         /// <summary>
         /// The multiplier which impacts the size of the navigation arrows.
         /// </summary>
         public double NavArrowMultiplier { get; set; } = 2.0;
 
-        #endregion
-
+        #endregion <MAIN> node
 
         #region <TOOLBAR_ICON> node
 
@@ -160,10 +157,11 @@ namespace ImageGlass.UI {
         /// Toolbar Icon collection for the theme
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
-        #endregion
 
+        #endregion <TOOLBAR_ICON> node
 
         #region Navigation arrows
+
         /// <summary>
         /// Gets, sets the navigation left arrow
         /// </summary>
@@ -174,21 +172,18 @@ namespace ImageGlass.UI {
         /// </summary>
         public Image NavArrowRight { get; set; } = null;
 
-        #endregion
+        #endregion Navigation arrows
 
-        #endregion
-
-
+        #endregion THEME NODE PROPERTIES
 
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        public Theme(string themeFolderPath = "") {
+        public Theme(string themeFolderPath = "")
+        {
             this.IsValid = LoadTheme(themeFolderPath);
         }
-
-
 
         #region PUBLIC CLASS FUNCS
 
@@ -200,8 +195,10 @@ namespace ImageGlass.UI {
         /// <param name="attribname">name of theme attribute</param>
         /// <param name="iconHeight">optional target height/width</param>
         /// <returns></returns>
-        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0) {
-            try {
+        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0)
+        {
+            try
+            {
                 var attrib = n.GetAttribute(attribname);
 
                 if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
@@ -209,23 +206,24 @@ namespace ImageGlass.UI {
 
                 var imgFile = Path.Combine(dir, attrib);
 
-
-                if (iconHeight > 0) {
+                if (iconHeight > 0)
+                {
                     return new ThemeImage(imgFile, iconHeight);
                 }
 
                 return new ThemeImage(imgFile);
             }
-            catch {
+            catch
+            {
                 return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
             }
         }
 
-
         /// <summary>
         /// Reload the image icons to adapt DPI changes
         /// </summary>
-        public void ReloadIcons() {
+        public void ReloadIcons()
+        {
             ToolbarIcons.ViewPreviousImage.Refresh();
             ToolbarIcons.ViewNextImage.Refresh();
             ToolbarIcons.RotateLeft.Refresh();
@@ -261,7 +259,6 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewFirstImage.Refresh();
             ToolbarIcons.ViewLastImage.Refresh();
 
-
             #region Naviagtion arrows (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
@@ -269,21 +266,22 @@ namespace ImageGlass.UI {
             NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
             NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
 
-            #endregion
+            #endregion Naviagtion arrows (derived from toolbar)
         }
 
-
         /// <summary>
-        /// Read theme data from theme configuration file (Version 1.5+). 
+        /// Read theme data from theme configuration file (Version 1.5+).
         /// Return TRUE if successful, FALSE if the theme format is invalid
         /// </summary>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
         /// <param name="startUpDir">The absolute startup folder of ImageGlass</param>
         /// <returns></returns>
-        public bool LoadTheme(string themeFolderPath) {
+        public bool LoadTheme(string themeFolderPath)
+        {
             var configFilePath = Path.Combine(themeFolderPath, "config.xml");
 
-            if (!File.Exists(configFilePath)) {
+            if (!File.Exists(configFilePath))
+            {
                 configFilePath = App.StartUpDir(Dir.DefaultTheme, "config.xml");
             }
 
@@ -298,17 +296,19 @@ namespace ImageGlass.UI {
             XmlElement nType = null;
             XmlElement n = null;
 
-            try {
+            try
+            {
                 //Load theme version 1.5+ as default
                 nType = (XmlElement)root.SelectNodes("Theme")[0]; //<Theme>
                 n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
             }
-            catch {
+            catch
+            {
                 this.IsValid = false;
             }
 
-
             #region Theme <Info>
+
             try { Name = n.GetAttribute("name"); }
             catch { };
             try { Version = n.GetAttribute("version"); }
@@ -325,10 +325,11 @@ namespace ImageGlass.UI {
             catch { };
             try { Compatibility = n.GetAttribute("compatibility"); }
             catch { };
-            #endregion
 
+            #endregion Theme <Info>
 
             #region Theme <main>
+
             PreviewImage = LoadThemeImage(dir, n, "preview");
 
             n = (XmlElement)nType.SelectNodes("main")[0]; //<main>
@@ -361,12 +362,13 @@ namespace ImageGlass.UI {
             if (color != Color.Transparent)
                 MenuTextColor = color;
 
-
             // For 7.6: add ability to control the size of the navigation arrows
             // Minimum value is 1.0, default is 2.0.
-            try {
+            try
+            {
                 var colorString = n.GetAttribute("navarrowsize");
-                if (!string.IsNullOrWhiteSpace(colorString)) {
+                if (!string.IsNullOrWhiteSpace(colorString))
+                {
                     if (!double.TryParse(colorString, out var val))
                         val = 2.0;
                     val = Math.Max(val, 1.0);
@@ -374,12 +376,12 @@ namespace ImageGlass.UI {
                     NavArrowMultiplier = val;
                 }
             }
-            catch (Exception ex) { };
+            catch { };
 
-            #endregion
-
+            #endregion Theme <main>
 
             #region Theme <toolbar_icon>
+
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
 
             ToolbarIcons.ViewPreviousImage = LoadThemeImage(dir, n, "back");
@@ -416,8 +418,8 @@ namespace ImageGlass.UI {
             ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu");
             ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "gofirst");
             ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast");
-            #endregion
 
+            #endregion Theme <toolbar_icon>
 
             #region Arrow cursors (derived from toolbar)
 
@@ -426,26 +428,28 @@ namespace ImageGlass.UI {
             NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
             NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
 
-            #endregion
-
+            #endregion Arrow cursors (derived from toolbar)
 
             this.IsValid = true;
             return this.IsValid;
 
-
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
-                try {
+            Color FetchColorAttribute(XmlElement xmlElement, string attribute)
+            {
+                try
+                {
                     var colorString = xmlElement.GetAttribute(attribute);
 
-                    if (IsValidHex(colorString)) {
+                    if (IsValidHex(colorString))
+                    {
                         return ConvertHexStringToColor(colorString, true);
                     }
 
                     return Color.FromArgb(255, Color.FromArgb(int.Parse(colorString)));
                 }
-                catch {
+                catch
+                {
                     // ignored
                 }
 
@@ -453,13 +457,12 @@ namespace ImageGlass.UI {
             }
         }
 
-
-
         /// <summary>
         /// Save as the new theme config file, compatible with v5.0+
         /// </summary>
         /// <param name="dir"></param>
-        public void SaveAsThemeConfigs(string dir) {
+        public void SaveAsThemeConfigs(string dir)
+        {
             Compatibility = "5.0";
 
             XmlDocument doc = new XmlDocument();
@@ -533,54 +536,60 @@ namespace ImageGlass.UI {
             doc.AppendChild(root);
 
             //create temp directory of theme
-            if (Directory.Exists(dir)) {
+            if (Directory.Exists(dir))
+            {
                 Directory.CreateDirectory(dir);
             }
 
             doc.Save(Path.Combine(dir, "config.xml")); //save file
         }
 
-
-        #endregion
-
-
+        #endregion PUBLIC CLASS FUNCS
 
         #region PRIVATE STATIC FUNCS
+
         private static ThemeInstallingResult _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
-        private static ThemeInstallingResult ExtractTheme(string themePath, string dir) {
+        private static ThemeInstallingResult ExtractTheme(string themePath, string dir)
+        {
             _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
-            try {
-                using (ZipFile z = new ZipFile(themePath, Encoding.UTF8)) {
+            try
+            {
+                using (ZipFile z = new ZipFile(themePath, Encoding.UTF8))
+                {
                     z.ExtractProgress += new EventHandler<ExtractProgressEventArgs>(z_ExtractProgress);
                     z.ZipError += new EventHandler<ZipErrorEventArgs>(z_ZipError);
                     z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
                 }
             }
-            catch {
+            catch
+            {
                 _extractThemeResult = ThemeInstallingResult.ERROR;
             }
 
-            while (_extractThemeResult == ThemeInstallingResult.UNKNOWN) {
+            while (_extractThemeResult == ThemeInstallingResult.UNKNOWN)
+            {
                 Thread.Sleep(20);
             }
 
             return _extractThemeResult;
         }
 
-        private static void z_ZipError(object sender, ZipErrorEventArgs e) {
+        private static void z_ZipError(object sender, ZipErrorEventArgs e)
+        {
             _extractThemeResult = ThemeInstallingResult.ERROR;
         }
 
-        private static void z_ExtractProgress(object sender, ExtractProgressEventArgs e) {
-            if (e.EntriesExtracted == e.EntriesTotal) {
+        private static void z_ExtractProgress(object sender, ExtractProgressEventArgs e)
+        {
+            if (e.EntriesExtracted == e.EntriesTotal)
+            {
                 _extractThemeResult = ThemeInstallingResult.SUCCESS;
             }
         }
-        #endregion
 
-
+        #endregion PRIVATE STATIC FUNCS
 
         #region PUBLIC STATIC FUNCS
 
@@ -589,8 +598,10 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="themePath">Full path of *.igtheme</param>
         /// <returns></returns>
-        public static ThemeInstallingResult InstallTheme(string themePath) {
-            if (!File.Exists(themePath)) {
+        public static ThemeInstallingResult InstallTheme(string themePath)
+        {
+            if (!File.Exists(themePath))
+            {
                 return ThemeInstallingResult.ERROR;
             }
 
@@ -600,32 +611,35 @@ namespace ImageGlass.UI {
             return ExtractTheme(themePath, themeFolder);
         }
 
-
         /// <summary>
         /// Uninstall ImageGlass theme pack
         /// </summary>
         /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
-        public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
+        public static ThemeUninstallingResult UninstallTheme(string themeFolderName)
+        {
             string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "config.xml");
 
-            if (File.Exists(fullConfigPath)) {
+            if (File.Exists(fullConfigPath))
+            {
                 string dir = Path.GetDirectoryName(fullConfigPath);
 
-                try {
+                try
+                {
                     Directory.Delete(dir, true);
                 }
-                catch {
+                catch
+                {
                     return ThemeUninstallingResult.ERROR;
                 }
             }
-            else {
+            else
+            {
                 return ThemeUninstallingResult.ERROR_THEME_NOT_FOUND;
             }
 
             return ThemeUninstallingResult.SUCCESS;
         }
-
 
         /// <summary>
         /// Pack the theme folder to *.igtheme file
@@ -633,8 +647,10 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderPath">The absolute path of theme folder</param>
         /// <param name="outputThemeFile">Output *.igtheme file</param>
         /// <returns></returns>
-        public static ThemePackingResult PackTheme(string themeFolderPath, string outputThemeFile) {
-            if (!Directory.Exists(themeFolderPath)) {
+        public static ThemePackingResult PackTheme(string themeFolderPath, string outputThemeFile)
+        {
+            if (!Directory.Exists(themeFolderPath))
+            {
                 return ThemePackingResult.ERROR;
             }
 
@@ -644,54 +660,62 @@ namespace ImageGlass.UI {
             th.SaveAsThemeConfigs(themeFolderPath);
 
             //if file exist, rename & backup
-            if (File.Exists(outputThemeFile)) {
+            if (File.Exists(outputThemeFile))
+            {
                 File.Move(outputThemeFile, outputThemeFile + ".old");
             }
 
-            try {
-                using (ZipFile z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
+            try
+            {
+                using (ZipFile z = new ZipFile(outputThemeFile, Encoding.UTF8))
+                {
                     z.AddDirectory(themeFolderPath, th.Name);
                     z.Save();
                 };
             }
-            catch (Exception ex) {
+            catch
+            {
                 // restore backup file
-                if (File.Exists(outputThemeFile + ".old")) {
+                if (File.Exists(outputThemeFile + ".old"))
+                {
                     File.Move(outputThemeFile + ".old", outputThemeFile);
                 }
 
                 return ThemePackingResult.ERROR;
             }
 
-            if (File.Exists(outputThemeFile + ".old")) {
+            if (File.Exists(outputThemeFile + ".old"))
+            {
                 File.Delete(outputThemeFile + ".old");
             }
 
             return ThemePackingResult.SUCCESS;
         }
 
-
         /// <summary>
         /// Invert the color to black or white color
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static Color InvertBlackAndWhiteColor(Color c) {
-            if (c.GetBrightness() > 0.5) {
+        public static Color InvertBlackAndWhiteColor(Color c)
+        {
+            if (c.GetBrightness() > 0.5)
+            {
                 return Color.Black;
             }
 
             return Color.White;
         }
 
-
         /// <summary>
         /// Convert Color to CMYK
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static int[] ConvertColorToCMYK(Color c) {
-            if (c.R == 0 && c.G == 0 && c.B == 0) {
+        public static int[] ConvertColorToCMYK(Color c)
+        {
+            if (c.R == 0 && c.G == 0 && c.B == 0)
+            {
                 return new[] { 0, 0, 0, 1 };
             }
 
@@ -708,13 +732,13 @@ namespace ImageGlass.UI {
             };
         }
 
-
         /// <summary>
         /// Convert Color to HSLA
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static float[] ConvertColorToHSLA(Color c) {
+        public static float[] ConvertColorToHSLA(Color c)
+        {
             float h = (float)Math.Round(c.GetHue());
             float s = (float)Math.Round(c.GetSaturation() * 100);
             float l = (float)Math.Round(c.GetBrightness() * 100);
@@ -723,15 +747,16 @@ namespace ImageGlass.UI {
             return new[] { h, s, l, a };
         }
 
-
         /// <summary>
         /// Convert Color to HEX (with alpha)
         /// </summary>
         /// <param name="c"></param>
         /// <param name="skipAlpha"></param>
         /// <returns></returns>
-        public static string ConvertColorToHEX(Color c, bool @skipAlpha = false) {
-            if (skipAlpha) {
+        public static string ConvertColorToHEX(Color c, bool @skipAlpha = false)
+        {
+            if (skipAlpha)
+            {
                 return string.Format("#{0:X2}{1:X2}{2:X2}", c.R, c.G, c.B);
             }
 
@@ -743,7 +768,8 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        public static Color ConvertHexStringToColor(string hex, bool @skipAlpha = false) {
+        public static Color ConvertHexStringToColor(string hex, bool @skipAlpha = false)
+        {
             //Remove # if present
             if (hex.IndexOf('#') != -1)
                 hex = hex.Replace("#", "");
@@ -753,55 +779,59 @@ namespace ImageGlass.UI {
             int blue = 0;
             int alpha = 255;
 
-            if (hex.Length == 8) {
+            if (hex.Length == 8)
+            {
                 //#RRGGBBAA
                 red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
                 green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
                 blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
                 alpha = int.Parse(hex.Substring(6, 2), NumberStyles.AllowHexSpecifier);
             }
-            else if (hex.Length == 6) {
+            else if (hex.Length == 6)
+            {
                 //#RRGGBB
                 red = int.Parse(hex.Substring(0, 2), NumberStyles.AllowHexSpecifier);
                 green = int.Parse(hex.Substring(2, 2), NumberStyles.AllowHexSpecifier);
                 blue = int.Parse(hex.Substring(4, 2), NumberStyles.AllowHexSpecifier);
             }
-            else if (hex.Length == 4) {
+            else if (hex.Length == 4)
+            {
                 //#RGBA
                 red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
                 green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
                 blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
                 alpha = int.Parse($"{hex[3]}{hex[3]}", NumberStyles.AllowHexSpecifier);
             }
-            else if (hex.Length == 3) {
+            else if (hex.Length == 3)
+            {
                 //#RGB
                 red = int.Parse($"{hex[0]}{hex[0]}", NumberStyles.AllowHexSpecifier);
                 green = int.Parse($"{hex[1]}{hex[1]}", NumberStyles.AllowHexSpecifier);
                 blue = int.Parse($"{hex[2]}{hex[2]}", NumberStyles.AllowHexSpecifier);
             }
 
-            if (skipAlpha) {
+            if (skipAlpha)
+            {
                 alpha = 255;
             }
 
             return Color.FromArgb(alpha, red, green, blue);
         }
 
-
         /// <summary>
         /// Validate if Hex string is a valid color
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        public static bool IsValidHex(string hex) {
-            if (hex.StartsWith("#")) {
+        public static bool IsValidHex(string hex)
+        {
+            if (hex.StartsWith("#"))
+            {
                 return hex.Length == 9 || hex.Length == 7 || hex.Length == 5 || hex.Length == 4;
             }
 
             return false;
         }
-
-
 
         /// <summary>
         /// Makes the color lighter by the given factor (0 = no change, 1 = white).
@@ -809,13 +839,13 @@ namespace ImageGlass.UI {
         /// <param name="color">The color to make lighter.</param>
         /// <param name="factor">The factor to make the color lighter (0 = no change, 1 = white).</param>
         /// <returns>The lighter color.</returns>
-        public static Color LightenColor(Color color, float factor) {
+        public static Color LightenColor(Color color, float factor)
+        {
             float min = 0.001f;
             float max = 1.999f;
 
             return ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }
-
 
         /// <summary>
         /// Makes the color darker by the given factor (0 = no change, 1 = black).
@@ -823,13 +853,13 @@ namespace ImageGlass.UI {
         /// <param name="color">The color to make darker.</param>
         /// <param name="factor">The factor to make the color darker (0 = no change, 1 = black).</param>
         /// <returns>The darker color.</returns>
-        public static Color DarkenColor(Color color, float factor) {
+        public static Color DarkenColor(Color color, float factor)
+        {
             float min = -0.5f;
             float max = 1f;
 
             return ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }
-
 
         /// <summary>
         /// Lightness of the color between black (-1) and white (+1).
@@ -837,18 +867,17 @@ namespace ImageGlass.UI {
         /// <param name="color">The color to change the lightness.</param>
         /// <param name="factor">The factor (-1 = black ... +1 = white) to change the lightness.</param>
         /// <returns>The color with the changed lightness.</returns>
-        public static Color LightnessColor(Color color, float factor) {
+        public static Color LightnessColor(Color color, float factor)
+        {
             factor = MinMax(factor, -1f, 1f);
             return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);
         }
 
-
-
-        private static float MinMax(float value, float min, float max) {
+        private static float MinMax(float value, float min, float max)
+        {
             return Math.Min(Math.Max(value, min), max);
         }
 
-
-        #endregion
+        #endregion PUBLIC STATIC FUNCS
     }
 }

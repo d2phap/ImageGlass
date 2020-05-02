@@ -22,28 +22,34 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.Image {
-    public class DesktopWallapaper {
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
+namespace ImageGlass.Library.Image
+{
+    public class DesktopWallapaper
+    {
+        private const int SPI_SETDESKWALLPAPER = 20;
+        private const int SPIF_UPDATEINIFILE = 0x01;
+        private const int SPIF_SENDWININICHANGE = 0x02;
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-        public enum Style: int {
+        public enum Style : int
+        {
             /// <summary>
             /// Current windows wallpaper style
             /// </summary>
             Current = -1,
+
             /// <summary>
             /// 0
             /// </summary>
             Centered = 0,
+
             /// <summary>
             /// 1
             /// </summary>
             Stretched = 1,
+
             /// <summary>
             /// 2
             /// </summary>
@@ -55,7 +61,8 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="uri">Image filename</param>
         /// <param name="style">Style of wallpaper</param>
-        public static void Set(Uri uri, Style style) {
+        public static void Set(Uri uri, Style style)
+        {
             Stream s = new System.Net.WebClient().OpenRead(uri.ToString());
 
             System.Drawing.Image img = System.Drawing.Image.FromStream(s);
@@ -67,8 +74,10 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="img">Image data</param>
         /// <param name="style">Style of wallpaper</param>
-        public static void Set(System.Drawing.Image img, Style style) {
-            try {
+        public static void Set(System.Drawing.Image img, Style style)
+        {
+            try
+            {
                 string tempPath = Path.Combine(Path.GetTempPath(), "imageglass.jpg");
                 img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
@@ -76,17 +85,20 @@ namespace ImageGlass.Library.Image {
                 if (key == null)
                     return;
 
-                if (style == Style.Stretched) {
+                if (style == Style.Stretched)
+                {
                     key.SetValue(@"WallpaperStyle", "2");
                     key.SetValue(@"TileWallpaper", "0");
                 }
 
-                if (style == Style.Centered) {
+                if (style == Style.Centered)
+                {
                     key.SetValue(@"WallpaperStyle", "1");
                     key.SetValue(@"TileWallpaper", "0");
                 }
 
-                if (style == Style.Tiled) {
+                if (style == Style.Tiled)
+                {
                     key.SetValue(@"WallpaperStyle", "1");
                     key.SetValue(@"TileWallpaper", "1");
                 }
@@ -96,8 +108,9 @@ namespace ImageGlass.Library.Image {
             catch (Exception) { }
         }
 
-        public enum Result {
-            Success=0, // Wallpaper successfully set
+        public enum Result
+        {
+            Success = 0, // Wallpaper successfully set
             PrivsFail, // Wallpaper failure due to privileges - can re-attempt with Admin privs.
             Fail       // Wallpaper failure - no point in re-attempting
         }
@@ -108,36 +121,45 @@ namespace ImageGlass.Library.Image {
         /// <param name="path">File system path to the image</param>
         /// <param name="style">Style of wallpaper</param>
         /// <returns>Success/failure indication.</returns>
-        public static Result Set(string path, Style style) {
+        public static Result Set(string path, Style style)
+        {
             //System.Diagnostics.Debugger.Break();
 
             // TODO use ImageMagick to load image
             var tempPath = Path.Combine(Path.GetTempPath(), "imageglass.bmp");
-            try {
-                using (var img = System.Drawing.Image.FromFile(path)) {
+            try
+            {
+                using (var img = System.Drawing.Image.FromFile(path))
+                {
                     // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
                     img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
                 }
             }
-            catch {
+            catch
+            {
                 // Couldn't open/save image file: Fail, and don't re-try
                 return Result.Fail;
             }
 
-            try {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true)) {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true))
+                {
                     if (key == null)
                         return Result.Fail;
 
                     string tileVal = "0"; // default not-tiled
                     string winStyle = "1"; // default centered
-                    switch (style) {
+                    switch (style)
+                    {
                         case Style.Tiled:
                             tileVal = "1";
                             break;
+
                         case Style.Stretched:
                             winStyle = "2";
                             break;
+
                         case Style.Current:
                             tileVal = (string)key.GetValue("TileWallpaper");
                             winStyle = (string)key.GetValue("WallpaperStyle");
@@ -149,7 +171,8 @@ namespace ImageGlass.Library.Image {
                 }
                 SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 if (ex is System.Security.SecurityException ||
                     ex is UnauthorizedAccessException)
                     return Result.PrivsFail;

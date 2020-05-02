@@ -25,18 +25,22 @@ namespace ImageGlass.ImageListView
         public class HitInfo
         {
             #region Properties
+
             /// <summary>
             /// Gets whether an item is under the hit point.
             /// </summary>
             public bool ItemHit { get { return ItemIndex != -1; } }
+
             /// <summary>
             /// Gets whether an item checkbox is under the hit point.
             /// </summary>
             public bool CheckBoxHit { get; private set; }
+
             /// <summary>
             /// Gets whether a column is under the hit point.
             /// </summary>
             public bool ColumnHit { get { return Column != null; } }
+
             /// <summary>
             /// Gets whether a column separator is under the hit point.
             /// </summary>
@@ -46,18 +50,22 @@ namespace ImageGlass.ImageListView
             /// Gets the index of the item under the hit point.
             /// </summary>
             public int ItemIndex { get; private set; }
+
             /// <summary>
             /// Gets the index of the group header under the hit point.
             /// </summary>
             public ImageListViewGroup Group { get; private set; }
+
             /// <summary>
             /// Gets the index of the column under the hit point.
             /// </summary>
             public ImageListViewColumnHeader Column { get; private set; }
+
             /// <summary>
             /// Gets the index of the column separator under the hit point.
             /// </summary>
             public ImageListViewColumnHeader ColumnSeparator { get; private set; }
+
             /// <summary>
             /// Gets whether the hit point is over the pane border.
             /// </summary>
@@ -76,17 +84,21 @@ namespace ImageGlass.ImageListView
             /// Gets whether the hit point is inside the item area.
             /// </summary>
             public bool InItemArea { get; private set; }
+
             /// <summary>
             /// Gets whether the hit point is inside the column header area.
             /// </summary>
             public bool InHeaderArea { get; private set; }
+
             /// <summary>
             /// Gets whether the hit point is inside the left-pane area.
             /// </summary>
             public bool InPaneArea { get; private set; }
-            #endregion
+
+            #endregion Properties
 
             #region Constructor
+
             /// <summary>
             /// Initializes a new instance of the HitInfo class.
             /// </summary>
@@ -117,6 +129,7 @@ namespace ImageGlass.ImageListView
                 InPaneArea = inPaneArea;
                 PaneBorder = paneBorder;
             }
+
             /// <summary>
             /// Initializes a new instance of the HitInfo class.
             /// Used when the control registered an item hit.
@@ -129,6 +142,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the HitInfo class.
             /// Used when the control registered a column hit.
@@ -139,6 +153,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the HitInfo class.
             /// Used when the control registered a column hit.
@@ -150,18 +165,20 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the HitInfo class.
             /// Used when the control registered a hit in pane area.
             /// </summary>
-            /// <param name="paneBorder">True if the hit point is over the left-pane 
+            /// <param name="paneBorder">True if the hit point is over the left-pane
             /// border, false otherwise.</param>
             internal HitInfo(bool paneBorder)
                 : this(-1, false, null, null, null, -1, paneBorder, false, false, true)
             {
                 ;
             }
-            #endregion
+
+            #endregion Constructor
         }
     }
 }

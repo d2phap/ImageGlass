@@ -16,15 +16,15 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Windows.Forms;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-
+using System.Windows.Forms;
 
 namespace ImageGlass.ImageListView
 {
     #region Event Delegates
+
     /// <summary>
     /// Represents the method that will handle the CacheError event.
     /// </summary>
@@ -32,105 +32,121 @@ namespace ImageGlass.ImageListView
     /// <param name="e">A CacheErrorEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void CacheErrorEventHandler(object sender, CacheErrorEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the DropFiles event. 
+    /// Represents the method that will handle the DropFiles event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A DropFileEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void DropFilesEventHandler(object sender, DropFileEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ColumnClick event. 
+    /// Represents the method that will handle the ColumnClick event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ColumnClickEventHandler(object sender, ColumnClickEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ColumnHover event. 
+    /// Represents the method that will handle the ColumnHover event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ColumnHoverEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ColumnHoverEventHandler(object sender, ColumnHoverEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ColumnWidthChanged event. 
+    /// Represents the method that will handle the ColumnWidthChanged event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ColumnEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ColumnWidthChangedEventHandler(object sender, ColumnEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ItemClick event. 
+    /// Represents the method that will handle the ItemClick event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ItemCheckBoxClick event. 
+    /// Represents the method that will handle the ItemCheckBoxClick event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ItemCheckBoxClickEventHandler(object sender, ItemEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ItemHover event. 
+    /// Represents the method that will handle the ItemHover event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemHoverEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ItemHoverEventHandler(object sender, ItemHoverEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ItemDoubleClick event. 
+    /// Represents the method that will handle the ItemDoubleClick event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ItemDoubleClickEventHandler(object sender, ItemClickEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ThumbnailCaching event. 
+    /// Represents the method that will handle the ThumbnailCaching event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ThumbnailCachingEventHandler(object sender, ThumbnailCachingEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the ThumbnailCached event. 
+    /// Represents the method that will handle the ThumbnailCached event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ThumbnailCachedEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ThumbnailCachedEventHandler(object sender, ThumbnailCachedEventArgs e);
+
     /// <summary>
     /// Refreshes the owner control.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal delegate void RefreshDelegateInternal();
+
     /// <summary>
-    /// Represents the method that will handle the ItemCollectionChanged event. 
+    /// Represents the method that will handle the ItemCollectionChanged event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A ItemCollectionChangedEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollectionChangedEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the PaneResized event. 
+    /// Represents the method that will handle the PaneResized event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A PaneResizedEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void PaneResizedEventHandler(object sender, PaneResizedEventArgs e);
+
     /// <summary>
-    /// Represents the method that will handle the PaneResizing event. 
+    /// Represents the method that will handle the PaneResizing event.
     /// </summary>
     /// <param name="sender">The ImageListView object that is the source of the event.</param>
     /// <param name="e">A PaneResizingEventArgs that contains event data.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate void PaneResizingEventHandler(object sender, PaneResizingEventArgs e);
-    #endregion
+
+    #endregion Event Delegates
 
     #region Event Arguments
+
     /// <summary>
     /// Represents the event arguments for errors during cache operations.
     /// </summary>
@@ -142,10 +158,12 @@ namespace ImageGlass.ImageListView
         /// This parameter can be null.
         /// </summary>
         public ImageListViewItem Item { get; private set; }
+
         /// <summary>
         /// Gets a value indicating which error occurred during an asynchronous operation.
         /// </summary>
         public Exception Error { get; private set; }
+
         /// <summary>
         /// Gets the thread raising the error.
         /// </summary>
@@ -164,6 +182,7 @@ namespace ImageGlass.ImageListView
             CacheThread = cacheThread;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for column related events.
     /// </summary>
@@ -176,11 +195,13 @@ namespace ImageGlass.ImageListView
         /// Otherwise, the control will not process the dropped files.
         /// </summary>
         public bool Cancel { get; set; }
+
         /// <summary>
         /// Gets the position of the insertion caret.
         /// This determines where the new items will be inserted.
         /// </summary>
         public int Index { get; private set; }
+
         /// <summary>
         /// Gets the array of filenames droppped on the control.
         /// </summary>
@@ -198,6 +219,7 @@ namespace ImageGlass.ImageListView
             FileNames = fileNames;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for column related events.
     /// </summary>
@@ -218,6 +240,7 @@ namespace ImageGlass.ImageListView
             Column = column;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for column click related events.
     /// </summary>
@@ -228,18 +251,22 @@ namespace ImageGlass.ImageListView
         /// Gets the ImageListViewColumnHeader that is the target of the event.
         /// </summary>
         public ImageListView.ImageListViewColumnHeader Column { get; private set; }
+
         /// <summary>
         /// Gets the coordinates of the cursor.
         /// </summary>
         public Point Location { get; private set; }
+
         /// <summary>
         /// Gets the x-coordinates of the cursor.
         /// </summary>
         public int X { get { return Location.X; } }
+
         /// <summary>
         /// Gets the y-coordinates of the cursor.
         /// </summary>
         public int Y { get { return Location.Y; } }
+
         /// <summary>
         /// Gets the state of the mouse buttons.
         /// </summary>
@@ -250,7 +277,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="column">The column that is the target of this event.</param>
         /// <param name="location">The location of the mouse.</param>
-        /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values 
+        /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values
         /// indicating which mouse button was pressed.</param>
         public ColumnClickEventArgs(ImageListView.ImageListViewColumnHeader column, Point location, MouseButtons buttons)
         {
@@ -259,6 +286,7 @@ namespace ImageGlass.ImageListView
             Buttons = buttons;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for column hover related events.
     /// </summary>
@@ -270,6 +298,7 @@ namespace ImageGlass.ImageListView
         /// Returns null if there was no previously hovered column.
         /// </summary>
         public ImageListView.ImageListViewColumnHeader PreviousColumn { get; private set; }
+
         /// <summary>
         /// Gets the currently hovered ImageListViewColumnHeader.
         /// Returns null if there is no hovered column.
@@ -287,6 +316,7 @@ namespace ImageGlass.ImageListView
             PreviousColumn = previousColumn;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for item related events.
     /// </summary>
@@ -307,6 +337,7 @@ namespace ImageGlass.ImageListView
             Item = item;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for item click related events.
     /// </summary>
@@ -317,6 +348,7 @@ namespace ImageGlass.ImageListView
         /// Gets the ImageListViewItem that is the target of the event.
         /// </summary>
         public ImageListViewItem Item { get; private set; }
+
         /// <summary>
         /// Gets the index of the sub item under the hit point.
         /// The index returned is the 0-based index of the column
@@ -325,18 +357,22 @@ namespace ImageGlass.ImageListView
         /// Returns -1 if the hit point is not over a sub item.
         /// </summary>
         public int SubItemIndex { get; private set; }
+
         /// <summary>
         /// Gets the coordinates of the cursor.
         /// </summary>
         public Point Location { get; private set; }
+
         /// <summary>
         /// Gets the x-coordinates of the cursor.
         /// </summary>
         public int X { get { return Location.X; } }
+
         /// <summary>
         /// Gets the y-coordinates of the cursor.
         /// </summary>
         public int Y { get { return Location.Y; } }
+
         /// <summary>
         /// Gets the state of the mouse buttons.
         /// </summary>
@@ -348,7 +384,7 @@ namespace ImageGlass.ImageListView
         /// <param name="item">The item that is the target of this event.</param>
         /// <param name="subItemIndex">Gets the index of the sub item under the hit point.</param>
         /// <param name="location">The location of the mouse.</param>
-        /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values 
+        /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values
         /// indicating which mouse button was pressed.</param>
         public ItemClickEventArgs(ImageListViewItem item, int subItemIndex, Point location, MouseButtons buttons)
         {
@@ -358,6 +394,7 @@ namespace ImageGlass.ImageListView
             Buttons = buttons;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for item hover related events.
     /// </summary>
@@ -369,11 +406,13 @@ namespace ImageGlass.ImageListView
         /// Returns null if there was no previously hovered item.
         /// </summary>
         public ImageListViewItem PreviousItem { get; private set; }
+
         /// <summary>
         /// Gets the currently hovered ImageListViewItem.
         /// Returns null if there is no hovered item.
         /// </summary>
         public ImageListViewItem Item { get; private set; }
+
         /// <summary>
         /// Gets the index of the sub item that was previously hovered.
         /// The index returned is the 0-based index of the column
@@ -382,6 +421,7 @@ namespace ImageGlass.ImageListView
         /// Returns -1 if the hit point is not over a sub item.
         /// </summary>
         public int PreviousSubItemIndex { get; private set; }
+
         /// <summary>
         /// Gets the index of the hovered sub item.
         /// The index returned is the 0-based index of the column
@@ -407,6 +447,7 @@ namespace ImageGlass.ImageListView
             PreviousSubItemIndex = previousSubItemIndex;
         }
     }
+
     /// <summary>
     /// Represents the event arguments related to control layout.
     /// </summary>
@@ -427,6 +468,7 @@ namespace ImageGlass.ImageListView
             ItemAreaBounds = itemAreaBounds;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for the thumbnail caching event.
     /// </summary>
@@ -437,6 +479,7 @@ namespace ImageGlass.ImageListView
         /// Gets the ImageListViewItem that is the target of the event.
         /// </summary>
         public ImageListViewItem Item { get; private set; }
+
         /// <summary>
         /// Gets the size of the thumbnail request.
         /// </summary>
@@ -453,6 +496,7 @@ namespace ImageGlass.ImageListView
             Size = size;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for the thumbnail cached event.
     /// </summary>
@@ -463,14 +507,17 @@ namespace ImageGlass.ImageListView
         /// Gets the ImageListViewItem that is the target of the event.
         /// </summary>
         public ImageListViewItem Item { get; private set; }
+
         /// <summary>
         /// Gets the size of the thumbnail request.
         /// </summary>
         public Size Size { get; private set; }
+
         /// <summary>
         /// Gets the cached thumbnail image.
         /// </summary>
         public Image Thumbnail { get; private set; }
+
         /// <summary>
         /// Gets whether the cached image is a thumbnail image or
         /// a large image for gallery or pane views.
@@ -493,6 +540,7 @@ namespace ImageGlass.ImageListView
             IsThumbnail = thumbnailImage;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for the pane resized event.
     /// </summary>
@@ -534,6 +582,7 @@ namespace ImageGlass.ImageListView
             PaneWidth = paneWidth;
         }
     }
+
     /// <summary>
     /// Represents the event arguments for item collection related events.
     /// </summary>
@@ -544,6 +593,7 @@ namespace ImageGlass.ImageListView
         /// Gets the type of action causing the change.
         /// </summary>
         public CollectionChangeAction Action { get; private set; }
+
         /// <summary>
         /// Gets the ImageListViewItem that is the target of the event.
         /// </summary>
@@ -561,5 +611,6 @@ namespace ImageGlass.ImageListView
             Item = item;
         }
     }
-    #endregion
+
+    #endregion Event Arguments
 }

@@ -17,20 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 using ImageMagick;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace ImageGlass.Heart {
-    public class Helpers {
-
+namespace ImageGlass.Heart
+{
+    public class Helpers
+    {
         /// <summary>
         /// Get built-in color profiles
         /// </summary>
         /// <returns></returns>
-        public static string[] GetBuiltInColorProfiles() {
+        public static string[] GetBuiltInColorProfiles()
+        {
             return new string[]
             {
                 "AdobeRGB1998",
@@ -42,26 +43,30 @@ namespace ImageGlass.Heart {
             };
         }
 
-
         /// <summary>
         /// Get the correct color profile name
         /// </summary>
         /// <param name="name">Name or Full path of color profile</param>
         /// <returns></returns>
-        public static string GetCorrectColorProfileName(string name) {
+        public static string GetCorrectColorProfileName(string name)
+        {
             var profileName = "";
 
-            if (File.Exists(name)) {
+            if (File.Exists(name))
+            {
                 return name;
             }
-            else {
+            else
+            {
                 var builtInProfiles = GetBuiltInColorProfiles();
                 var result = builtInProfiles.FirstOrDefault(i => i.ToUpperInvariant() == name.ToUpperInvariant());
 
-                if (result != null) {
+                if (result != null)
+                {
                     profileName = result;
                 }
-                else {
+                else
+                {
                     return string.Empty;
                 }
             }
@@ -69,27 +74,31 @@ namespace ImageGlass.Heart {
             return profileName;
         }
 
-
-
         /// <summary>
         /// Get ColorProfile
         /// </summary>
         /// <param name="name">Name or Full path of color profile</param>
         /// <returns></returns>
-        public static ColorProfile GetColorProfile(string name) {
-            if (File.Exists(name)) {
+        public static ColorProfile GetColorProfile(string name)
+        {
+            if (File.Exists(name))
+            {
                 return new ColorProfile(name);
             }
-            else {
+            else
+            {
                 // get all profile names in Magick.NET
                 var profiles = typeof(ColorProfile).GetProperties();
                 var result = profiles.FirstOrDefault(i => i.Name.ToUpperInvariant() == name.ToUpperInvariant());
 
-                if (result != null) {
-                    try {
+                if (result != null)
+                {
+                    try
+                    {
                         return (ColorProfile)result.GetValue(result);
                     }
-                    catch (Exception) {
+                    catch (Exception)
+                    {
                         return null;
                     }
                 }
@@ -98,16 +107,15 @@ namespace ImageGlass.Heart {
             return null;
         }
 
-
-
         /// <summary>
-        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
         /// <param name="orientationFlag">Orientation Flag</param>
         /// <returns></returns>
-        public static int GetOrientationDegree(int orientationFlag) {
+        public static int GetOrientationDegree(int orientationFlag)
+        {
             if (orientationFlag == 1)
                 return 0;
             else if (orientationFlag == 2)
@@ -128,14 +136,14 @@ namespace ImageGlass.Heart {
             return 0;
         }
 
-
         private static string LONG_PATH_PREFIX = @"\\?\";
 
         /// <summary>
         /// Fallout from Issue #530. To handle a long path name (i.e. a file path
         /// longer than MAX_PATH), a magic prefix is sometimes necessary.
         /// </summary>
-        public static string PrefixLongPath(string path) {
+        public static string PrefixLongPath(string path)
+        {
             if (path.Length > 255 && !path.StartsWith(LONG_PATH_PREFIX))
                 return LONG_PATH_PREFIX + path;
             return path;
@@ -146,11 +154,11 @@ namespace ImageGlass.Heart {
         /// fail if provided a prefixed file path. In this case, strip the prefix
         /// (see PrefixLongPath above).
         /// </summary>
-        public static string DePrefixLongPath(string path) {
+        public static string DePrefixLongPath(string path)
+        {
             if (path.StartsWith(LONG_PATH_PREFIX))
                 return path.Substring(LONG_PATH_PREFIX.Length);
             return path;
         }
-
     }
 }

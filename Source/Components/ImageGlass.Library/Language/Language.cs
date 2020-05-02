@@ -21,8 +21,10 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ImageGlass.Library {
-    public class Language {
+namespace ImageGlass.Library
+{
+    public class Language
+    {
         private string _langCode;
         private string _langName;
         private string _author;
@@ -35,22 +37,26 @@ namespace ImageGlass.Library {
         private LanguageItem<string, string> _Items;
 
         #region Properties
+
         /// <summary>
         /// Get, set code of language
         /// </summary>
-        public string LangCode {
+        public string LangCode
+        {
             get { return _langCode; }
             set { _langCode = value; }
         }
 
         //Get, set name of language
-        public string LangName {
+        public string LangName
+        {
             get { return _langName; }
             set { _langName = value; }
         }
 
         //Get, set author
-        public string Author {
+        public string Author
+        {
             get { return _author; }
             set { _author = value; }
         }
@@ -58,7 +64,8 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Get, set description
         /// </summary>
-        public string Description {
+        public string Description
+        {
             get { return _description; }
             set { _description = value; }
         }
@@ -66,7 +73,8 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Get, set language file path
         /// </summary>
-        public string FileName {
+        public string FileName
+        {
             get { return _fileName; }
             set { _fileName = value; }
         }
@@ -74,7 +82,8 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Get, set list of language string
         /// </summary>
-        public LanguageItem<string, string> Items {
+        public LanguageItem<string, string> Items
+        {
             get { return _Items; }
             set { _Items = value; }
         }
@@ -82,7 +91,8 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Gets, sets minimum version of ImageGlass that compatible with.
         /// </summary>
-        public string MinVersion {
+        public string MinVersion
+        {
             get { return _minVersion; }
             set { _minVersion = value; }
         }
@@ -90,17 +100,19 @@ namespace ImageGlass.Library {
         /// <summary>
         /// Gets, sets the value that indicates right-to-left layout style
         /// </summary>
-        public RightToLeft IsRightToLeftLayout {
+        public RightToLeft IsRightToLeftLayout
+        {
             get { return _isRightToLeftLayout; }
             set { _isRightToLeftLayout = value; }
         }
-        #endregion
 
+        #endregion Properties
 
         /// <summary>
         /// Set default values of Language
         /// </summary>
-        public Language() {
+        public Language()
+        {
             _langCode = "en-US";
             _langName = "Local name of the language";
             _author = "ImageGlass community";
@@ -113,30 +125,29 @@ namespace ImageGlass.Library {
             InitDefaultLanguageDictionary();
         }
 
-
-
         /// <summary>
         /// Set values of Language
         /// </summary>
         /// <param name="fileName">*.igLang path</param>
         /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
-        public Language(string fileName, string dirPath = "") {
+        public Language(string fileName, string dirPath = "")
+        {
             _Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
             _fileName = Path.Combine(dirPath, fileName);
 
-            if (File.Exists(_fileName)) {
+            if (File.Exists(_fileName))
+            {
                 ReadLanguageFile();
             }
         }
 
-
-
         /// <summary>
         /// Read language strings from file (new format)
         /// </summary>
-        public void ReadLanguageFile() {
+        public void ReadLanguageFile()
+        {
             XmlDocument doc = new XmlDocument();
             doc.Load(_fileName);
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
@@ -159,25 +170,26 @@ namespace ImageGlass.Library {
             //Get all lang items
             XmlNodeList nLangList = nContent.SelectNodes("Item");//<Item>
 
-            foreach (var item in nLangList) {
+            foreach (var item in nLangList)
+            {
                 XmlElement nItem = (XmlElement)item;
                 string _key = nItem.GetAttribute("key");
                 string _value = nItem.GetAttribute("value").Replace("\\n", "\n");
 
-                try {
+                try
+                {
                     Items[_key] = _value;
                 }
                 catch { }
             }
         }
 
-
-
         /// <summary>
         /// Export all language strings to xml file
         /// </summary>
         /// <param name="filename"></param>
-        public void ExportLanguageToXML(string filename) {
+        public void ExportLanguageToXML(string filename)
+        {
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
             XmlElement nType = doc.CreateElement("Language");// <Language>
@@ -192,7 +204,8 @@ namespace ImageGlass.Library {
             nType.AppendChild(nInfo);// <Info />
 
             XmlElement nContent = doc.CreateElement("Content");// <Content>
-            foreach (var item in Items) {
+            foreach (var item in Items)
+            {
                 XmlElement n = doc.CreateElement("Item"); // <Item>
                 n.SetAttribute("key", item.Key);
                 n.SetAttribute("value", item.Value);
@@ -206,20 +219,19 @@ namespace ImageGlass.Library {
             doc.Save(filename);
         }
 
-
-
         /// <summary>
         /// This is default language of ImageGlass
         /// </summary>
-        private void InitDefaultLanguageDictionary() {
+        private void InitDefaultLanguageDictionary()
+        {
             Items.Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
-
 
             #region frmMain
 
             #region Main menu
 
             #region File
+
             Items.Add("frmMain.mnuMainFile", "File"); //v7.0
             Items.Add("frmMain.mnuMainOpenFile", "Open file…"); //v3.0
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
@@ -232,10 +244,11 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuOpenWith", "Open with…"); //v7.6
             Items.Add("frmMain.mnuMainEditImage", "Edit image {0}…"); //v3.0, updated 4.0
             Items.Add("frmMain.mnuMainPrint", "Print…"); //v3.0
-            #endregion
 
+            #endregion File
 
             #region Navigation
+
             Items.Add("frmMain.mnuMainNavigation", "Navigation"); //v3.0
             Items.Add("frmMain.mnuMainViewNext", "View next image"); //v3.0
             Items.Add("frmMain.mnuMainViewNext.Shortcut", "Right Arrow / PageDown"); //v6.0
@@ -250,10 +263,11 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainPrevPage", "View previous page"); //v7.5
             Items.Add("frmMain.mnuMainFirstPage", "View the first page"); //v7.5
             Items.Add("frmMain.mnuMainLastPage", "View the last page"); //v7.5
-            #endregion
 
+            #endregion Navigation
 
             #region Zoom
+
             Items.Add("frmMain.mnuMainZoom", "Zoom"); //v7.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
@@ -264,10 +278,11 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainAutoZoom", "Auto zoom"); //v5.5
             Items.Add("frmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
             Items.Add("frmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
-            #endregion
 
+            #endregion Zoom
 
             #region Image
+
             Items.Add("frmMain.mnuMainImage", "Image"); //v7.0
             Items.Add("frmMain.mnuMainChannels", "View channels"); //v7.0
             Items.Add("frmMain.mnuMainChannels._All", "All"); //v7.0
@@ -289,56 +304,58 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
             Items.Add("frmMain.mnuMainImageLocation", "Open image location"); //v3.0
             Items.Add("frmMain.mnuMainImageProperties", "Image properties"); //v3.0
-            #endregion
 
+            #endregion Image
 
             #region Clipboard
+
             Items.Add("frmMain.mnuMainClipboard", "Clipboard"); //v3.0
             Items.Add("frmMain.mnuMainCopy", "Copy"); //v3.0
             Items.Add("frmMain.mnuMainCopyImageData", "Copy image data"); //v5.0
             Items.Add("frmMain.mnuMainCut", "Cut"); //v3.0
             Items.Add("frmMain.mnuMainCopyImagePath", "Copy image path"); //v3.0
             Items.Add("frmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
-            #endregion
 
+            #endregion Clipboard
 
             Items.Add("frmMain.mnuWindowFit", "Window fit"); //v7.5
             Items.Add("frmMain.mnuMainFullScreen", "Full screen"); //v3.0
             Items.Add("frmMain.mnuFrameless", "Frameless"); //v7.5
 
-
             #region Slideshow
+
             Items.Add("frmMain.mnuMainSlideShow", "Slideshow"); //v3.0
             Items.Add("frmMain.mnuMainSlideShowStart", "Start slideshow"); //v3.0
             Items.Add("frmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v3.0
             Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
-            #endregion
 
+            #endregion Slideshow
 
             Items.Add("frmMain.mnuMainShare", "Share…"); //v3.0
 
-
             #region Layout
+
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
             Items.Add("frmMain.mnuMainToolbar", "Toolbar"); //v3.0
             Items.Add("frmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
             Items.Add("frmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
             Items.Add("frmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
-            #endregion
 
+            #endregion Layout
 
             #region Tools
+
             Items.Add("frmMain.mnuMainTools", "Tools"); //v3.0
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
             Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // v7.5
             Items.Add("frmMain.mnuMainCrop", "Cropping"); // v7.6
-            #endregion
 
+            #endregion Tools
 
             Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
 
-
             #region Help
+
             Items.Add("frmMain.mnuMainHelp", "Help"); //v7.0
             Items.Add("frmMain.mnuMainAbout", "About"); //v3.0
             Items.Add("frmMain.mnuMainFirstLaunch", "First-launch configurations…"); //v5.0
@@ -346,14 +363,14 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue…"); //v3.0
 
-
             Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
-            #endregion
 
-            #endregion
+            #endregion Help
 
+            #endregion Main menu
 
             #region Form message texts
+
             Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");// v2.0 beta, updated 4.0
             Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");// v4.5
             Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); // v3.0
@@ -392,12 +409,13 @@ namespace ImageGlass.Library {
 
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
-            #endregion
 
-            #endregion
+            #endregion Form message texts
 
+            #endregion frmMain
 
             #region frmAbout
+
             Items.Add("frmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0
             Items.Add("frmAbout.lblInfo", "Information");
             Items.Add("frmAbout.lblComponent", "Components");
@@ -408,18 +426,19 @@ namespace ImageGlass.Library {
             Items.Add("frmAbout.lnkCheckUpdate", "» Check for update…");
             Items.Add("frmAbout._Text", "About");
             Items.Add("frmAbout._PortableText", "[Portable]"); //v4.0
-            #endregion
 
+            #endregion frmAbout
 
             #region frmSetting
+
             Items.Add("frmSetting._Text", "Settings");
 
             Items.Add("frmSetting.btnSave", "Save"); //v4.1
             Items.Add("frmSetting.btnCancel", "Cancel"); //v4.1
             Items.Add("frmSetting.btnApply", "Apply"); //v4.1
 
-
             #region Tab names
+
             Items.Add("frmSetting.lblGeneral", "General");
             Items.Add("frmSetting.lblImage", "Image"); //v4.0
             Items.Add("frmSetting.lblEdit", "Edit"); //v6.0
@@ -428,20 +447,22 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblLanguage", "Language");
             Items.Add("frmSetting.lblTheme", "Theme"); //v5.0
             Items.Add("frmSetting.lblKeyboard", "Keyboard"); // v7.0
-            #endregion
 
+            #endregion Tab names
 
             #region TAB General
+
             #region Start up
+
             Items.Add("frmSetting.lblHeadStartup", "Start up"); //v4.0
             Items.Add("frmSetting.chkWelcomePicture", "Show welcome picture");
             Items.Add("frmSetting.chkLastSeenImage", "Open last seen image"); //v6.0
             Items.Add("frmSetting.chkShowToolBar", "Show toolbar when starting up"); //v4.0
 
-            #endregion
-
+            #endregion Start up
 
             #region Configuration dir
+
             //Items.Add("frmSetting.lblHeadPortableMode", "Portable mode"); //v4.0, removed 5.5.x
 
             //Items.Add("frmSetting.chkPortableMode", "Enable Portable mode"); //remove v4.0
@@ -449,10 +470,11 @@ namespace ImageGlass.Library {
             //Items.Add("frmSetting.chkPortableMode._Disabled", "Portable mode is disabled on the installed folder:\r\n{0}"); //v4.5, removed 5.5.x
 
             Items.Add("frmSetting.lblHeadConfigDir", "Configuration directory"); // 5.5.x
-            #endregion
 
+            #endregion Configuration dir
 
             #region Viewer
+
             Items.Add("frmSetting.lblHeadViewer", "Viewer"); // v7.6
             Items.Add("frmSetting.chkShowScrollbar", "Display viewer scrollbars"); //v4.1
             Items.Add("frmSetting.chkShowNavButtons", "Display navigation arrow buttons"); //v6.0
@@ -461,10 +483,11 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkUseTouchGesture", "Enable touch gesture support"); // v7.6
             Items.Add("frmSetting.lblBackGroundColor", "Background color");
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
-            #endregion
 
+            #endregion Viewer
 
             #region Others
+
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
@@ -472,13 +495,15 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
             Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
             Items.Add("frmSetting.chkShowToast", "Show toast message"); //v7.5
-            
-            #endregion
-            #endregion
 
+            #endregion Others
+
+            #endregion TAB General
 
             #region TAB Image
+
             #region Image loading
+
             Items.Add("frmSetting.lblHeadImageLoading", "Image loading"); //v4.0
             Items.Add("frmSetting.chkFindChildFolder", "Find images in child folder");
             Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
@@ -499,10 +524,11 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V7.0
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
-            #endregion
 
+            #endregion Image loading
 
             #region Color Management
+
             Items.Add("frmSetting.lblColorManagement", "Color management"); //v6.0
             Items.Add("frmSetting.chkApplyColorProfile", "Apply also for images without embedded color profile"); //v6.0
             Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
@@ -510,10 +536,10 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
             Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom…"); //v6.0
 
-            #endregion
-
+            #endregion Color Management
 
             #region Mouse wheel actions
+
             Items.Add("frmSetting.lblHeadMouseWheelActions", "Mouse wheel actions");
             Items.Add("frmSetting.lblMouseWheel", "Mouse wheel");
             Items.Add("frmSetting.lblMouseWheelAlt", "Mouse wheel + Alt");
@@ -524,10 +550,11 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.cmbMouseWheel._ScrollVertically", "Scroll vertically");
             Items.Add("frmSetting.cmbMouseWheel._ScrollHorizontally", "Scroll horizontally");
             Items.Add("frmSetting.cmbMouseWheel._BrowseImages", "Previous/next image");
-            #endregion
 
+            #endregion Mouse wheel actions
 
             #region Zooming
+
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
             //Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
@@ -537,33 +564,34 @@ namespace ImageGlass.Library {
 
             Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v7.0
             Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v7.0
-            #endregion
 
+            #endregion Zooming
 
             #region Thumbnail bar
+
             Items.Add("frmSetting.lblHeadThumbnailBar", "Thumbnail bar"); //v4.0
             Items.Add("frmSetting.chkThumbnailVertical", "Show thumbnails on right side");
             Items.Add("frmSetting.chkShowThumbnailScrollbar", "Show thumbnails scroll bar"); //v5.5
             //Items.Add("frmSetting.lblGeneral_MaxFileSize", "Maximum thumbnail file size (MB)"); //removed v5.0
             Items.Add("frmSetting.lblGeneral_ThumbnailSize", "Thumbnail dimension (pixel)"); // v3.0
-            #endregion
 
+            #endregion Thumbnail bar
 
             #region Slideshow
+
             Items.Add("frmSetting.lblHeadSlideshow", "Slideshow"); // v4.0
             Items.Add("frmSetting.chkLoopSlideshow", "Loop back slideshow to the first image when reaching the end of the list"); // v2.0 final
             Items.Add("frmSetting.chkShowSlideshowCountdown", "Show slideshow countdown"); // v7.5
             Items.Add("frmSetting.chkRandomSlideshowInterval", "Use random interval"); // v7.6
             Items.Add("frmSetting.lblSlideshowInterval", "Slideshow interval: {0}");
             Items.Add("frmSetting.lblSlideshowIntervalTo", "to"); // v7.6
-            #endregion
 
+            #endregion Slideshow
 
-
-            #endregion
-
+            #endregion TAB Image
 
             #region TAB Edit
+
             //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
@@ -577,10 +605,11 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lvImageEditing.clnAppArguments", "App arguments"); //v4.0
 
             Items.Add("frmSetting.chkSaveModifyDate", "Preserve the image's Modify Date on save"); //v5.5
-            #endregion
 
+            #endregion TAB Edit
 
             #region TAB File Associations
+
             Items.Add("frmSetting.lblSupportedExtension", "Supported formats: {0}"); // v3.0, updated v4.0
             Items.Add("frmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
 
@@ -591,10 +620,11 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting._RegisterWebToApp_Error", "Unable to register Web-to-App linking"); // 7.0
             Items.Add("frmSetting._RegisterAppExtensions_Error", "Unable to register file extensions for ImageGlass app"); // 6.0
             Items.Add("frmSetting._RegisterAppExtensions_Success", "All file extensions are registered successfully! To set ImageGlass as Default photo viewer, please open Windows Settings > Default Apps, and manually select ImageGlass app under Photo Viewer section."); // 6.0
-            #endregion
 
+            #endregion TAB File Associations
 
             #region TAB Toolbar
+
             Items.Add("frmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
             Items.Add("frmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
             Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
@@ -610,20 +640,22 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
 
             Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
-            #endregion
 
+            #endregion TAB Toolbar
 
             #region TAB Tools
+
             Items.Add("frmSetting.chkColorUseRGBA", "Use RGBA format"); //v5.0
             Items.Add("frmSetting.chkColorUseHEXA", "Use HEX with alpha format"); //v5.0
             Items.Add("frmSetting.chkColorUseHSLA", "Use HSLA format"); //v5.0
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
             Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
-            #endregion
 
+            #endregion TAB Tools
 
             #region TAB Language
+
             Items.Add("frmSetting.lblLanguageText", "Installed languages");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
@@ -632,8 +664,8 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lnkCreateNew", "> Create new language pack…");
             Items.Add("frmSetting.lnkEdit", "> Edit selected language pack…");
             Items.Add("frmSetting.lnkGetMoreLanguage", "> Get more language packs…");
-            #endregion
 
+            #endregion TAB Language
 
             #region TAB Theme
 
@@ -662,10 +694,10 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.btnThemeApply._Success", "The selected theme was applied successfully!"); //v5.0
             Items.Add("frmSetting.btnThemeApply._Error", "Unable to apply the selected theme."); //v5.0
 
-            #endregion
-
+            #endregion TAB Theme
 
             #region TAB Keyboard
+
             Items.Add("frmSetting.btnKeyReset", "Reset to default"); // v7.0
             Items.Add("frmSetting.lblKeysSpaceBack", "Space / Backspace"); // v7.0
             Items.Add("frmSetting.lblKeysPageUpDown", "PageUp / PageDown"); // v7.0
@@ -673,27 +705,30 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblKeysLeftRight", "Left / Right arrows"); // v7.0
 
             #region Actions Combo Values
+
             Items.Add("frmSetting.KeyActions._PrevNextImage", "Previous / Next Image"); // v7.0
             Items.Add("frmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v7.0
             Items.Add("frmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
             Items.Add("frmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
             Items.Add("frmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v7.0
             Items.Add("frmSetting.KeyActions._DoNothing", "Do nothing"); // v7.0
-            #endregion
 
-            #endregion
+            #endregion Actions Combo Values
 
-            #endregion
+            #endregion TAB Keyboard
 
+            #endregion frmSetting
 
             #region frmAddNewFormat
+
             Items.Add("frmAddNewFormat.lblFileExtension", "File extension"); // 4.0
             Items.Add("frmAddNewFormat.btnOK", "OK"); // 4.0
             Items.Add("frmAddNewFormat.btnClose", "Close"); // 4.0
-            #endregion
 
+            #endregion frmAddNewFormat
 
             #region frmEditApp
+
             Items.Add("frmEditApp.lblFileExtension", "File extension"); // 4.0
             Items.Add("frmEditApp.lblAppName", "App name"); // 4.0
             Items.Add("frmEditApp.lblAppPath", "App path"); // 4.0
@@ -702,10 +737,11 @@ namespace ImageGlass.Library {
             Items.Add("frmEditApp.btnOK", "OK"); // 4.0
             Items.Add("frmEditApp.btnClose", "Close"); // 4.0
             Items.Add("frmEditApp.lblPreviewLabel", "Preview"); // 5.0
-            #endregion
 
+            #endregion frmEditApp
 
             #region frmFirstLaunch
+
             Items.Add("frmFirstLaunch._Text", "First-Launch Configurations"); //v5.0
             Items.Add("frmFirstLaunch._ConfirmCloseProcess", "ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"); //v7.5
             Items.Add("frmFirstLaunch.lblStepNumber", "Step {0}/{1}"); //v5.0
@@ -720,10 +756,11 @@ namespace ImageGlass.Library {
             Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
             Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
-            #endregion
 
+            #endregion frmFirstLaunch
 
             #region frmCrop
+
             Items.Add("frmCrop.lblWidth", "Width:"); //v7.6
             Items.Add("frmCrop.lblHeight", "Height:"); //v7.6
             Items.Add("frmCrop.btnSave", "Save"); //v7.6
@@ -731,7 +768,7 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
             Items.Add("frmCrop.btnClear", "Clear"); //v7.6
 
-            #endregion
+            #endregion frmCrop
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+
 //using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -30,7 +31,7 @@ namespace ImageGlass
 
         private BorderStyle _borderStyle;
 
-        #endregion
+        #endregion Instance Fields
 
         #region Events
 
@@ -40,7 +41,7 @@ namespace ImageGlass
         [Category("Property Changed")]
         public event EventHandler BorderStyleChanged;
 
-        #endregion
+        #endregion Events
 
         #region Overridden Properties
 
@@ -60,6 +61,7 @@ namespace ImageGlass
                     case BorderStyle.FixedSingle:
                         createParams.Style |= NativeMethods.WS_BORDER;
                         break;
+
                     case BorderStyle.Fixed3D:
                         createParams.ExStyle |= NativeMethods.WS_EX_CLIENTEDGE;
                         break;
@@ -69,7 +71,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Overridden Properties
 
         #region Public Properties
 
@@ -100,7 +102,7 @@ namespace ImageGlass
             get { return Animator.CanAnimate(Image); }
         }
 
-        #endregion
+        #endregion Public Properties
 
         #region Protected Members
 
@@ -124,7 +126,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Protected Members
 
         #region Constants
 
@@ -134,7 +136,7 @@ namespace ImageGlass
 
         private const int SelectionDeadZone = 5;
 
-        #endregion
+        #endregion Constants
 
         #region Instance Fields
 
@@ -224,7 +226,7 @@ namespace ImageGlass
 
         private ImageBoxZoomLevelCollection _zoomLevels;
 
-        #endregion
+        #endregion Instance Fields
 
         #region Public Constructors
 
@@ -236,7 +238,7 @@ namespace ImageGlass
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // [IG_CHANGE] double click event
-            // Enable 
+            // Enable
             //SetStyle(ControlStyles.StandardDoubleClick, false);
 
             //[IG_CHANGE]
@@ -290,7 +292,7 @@ namespace ImageGlass
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
-        #endregion
+        #endregion Public Constructors
 
         #region Events
 
@@ -540,7 +542,7 @@ namespace ImageGlass
         [Category("Action")]
         public event EventHandler<ImageBoxZoomEventArgs> Zoomed;
 
-        #endregion
+        #endregion Events
 
         #region Public Class Members
 
@@ -634,7 +636,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Public Class Members
 
         #region Overridden Properties
 
@@ -721,7 +723,7 @@ namespace ImageGlass
             set { base.BackgroundImageLayout = value; }
         }
 
-        #endregion
+        #endregion Overridden Properties
 
         #region Overridden Methods
 
@@ -1100,7 +1102,7 @@ namespace ImageGlass
             Invalidate();
         }
 
-        #endregion
+        #endregion Overridden Methods
 
         #region Public Properties
 
@@ -1145,13 +1147,15 @@ namespace ImageGlass
             }
         }
 
-
         /// <summary>
         /// [IG_CHANGE] Handles animating gif images
         /// </summary>
-        public GifAnimator Animator {
-            set {
-                if (Image != null && IsAnimating) {
+        public GifAnimator Animator
+        {
+            set
+            {
+                if (Image != null && IsAnimating)
+                {
                     StopAnimating();
                 }
                 _animator = value;
@@ -1927,7 +1931,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Public Properties
 
         #region Protected Properties
 
@@ -1993,7 +1997,7 @@ namespace ImageGlass
         /// <value><c>true</c> if the drag operation was cancelled; otherwise, <c>false</c>.</value>
         protected bool WasDragCancelled { get; set; }
 
-        #endregion
+        #endregion Protected Properties
 
         #region Public Members
 
@@ -2014,7 +2018,7 @@ namespace ImageGlass
         }
 
         /// <summary>
-        /// Stop animating 
+        /// Stop animating
         /// </summary>
         public void StopAnimating()
         {
@@ -2895,6 +2899,7 @@ namespace ImageGlass
         {
             PerformZoomOut(ImageBoxActionSources.Unknown, preservePosition);
         }
+
         /// <summary>
         ///   Zooms to the maximum size for displaying the entire image within the bounds of the control.
         /// </summary>
@@ -2947,7 +2952,7 @@ namespace ImageGlass
                 double aspectRatio;
 
                 innerRectangle = GetInsideViewPort(true);
-                
+
                 if (ViewSize.Width <= innerRectangle.Width && ViewSize.Height <= innerRectangle.Height)
                 {
                     zoom = 100.0;
@@ -2981,8 +2986,6 @@ namespace ImageGlass
                 Zoom = zoom;
             }
         }
-
-
 
         /// <summary>
         ///   Adjusts the view port to fit the given region
@@ -3051,7 +3054,7 @@ namespace ImageGlass
             return value;
         }
 
-        #endregion
+        #endregion Public Members
 
         #region Protected Members
 
@@ -3267,9 +3270,9 @@ namespace ImageGlass
                     alpha = feather - ((feather / glowSize) * i);
 
                     using (Pen pen = new Pen(Color.FromArgb(alpha, ImageBorderColor), i)
-                                     {
-                                         LineJoin = LineJoin.Round
-                                     })
+                    {
+                        LineJoin = LineJoin.Round
+                    })
                     {
                         g.DrawPath(pen, path);
                     }
@@ -3359,6 +3362,7 @@ namespace ImageGlass
                     case ImageBoxBorderStyle.FixedSingleDropShadow:
                         DrawDropShadow(graphics, viewPort);
                         break;
+
                     case ImageBoxBorderStyle.FixedSingleGlowShadow:
                         DrawGlowShadow(graphics, viewPort);
                         break;
@@ -3479,11 +3483,13 @@ namespace ImageGlass
                 case ContentAlignment.BottomLeft:
                     flags |= TextFormatFlags.Left;
                     break;
+
                 case ContentAlignment.TopRight:
                 case ContentAlignment.MiddleRight:
                 case ContentAlignment.BottomRight:
                     flags |= TextFormatFlags.Right;
                     break;
+
                 default:
                     flags |= TextFormatFlags.HorizontalCenter;
                     break;
@@ -3496,11 +3502,13 @@ namespace ImageGlass
                 case ContentAlignment.TopRight:
                     flags |= TextFormatFlags.Top;
                     break;
+
                 case ContentAlignment.BottomCenter:
                 case ContentAlignment.BottomLeft:
                 case ContentAlignment.BottomRight:
                     flags |= TextFormatFlags.Bottom;
                     break;
+
                 default:
                     flags |= TextFormatFlags.VerticalCenter;
                     break;
@@ -3524,38 +3532,47 @@ namespace ImageGlass
                         x = bounds.Left + padding.Left;
                         y = bounds.Top + padding.Top;
                         break;
+
                     case ContentAlignment.TopCenter:
                         x = bounds.Left + padding.Left + (((bounds.Width - width) / 2) - padding.Right);
                         y = bounds.Top + padding.Top;
                         break;
+
                     case ContentAlignment.TopRight:
                         x = bounds.Right - (padding.Right + width);
                         y = bounds.Top + padding.Top;
                         break;
+
                     case ContentAlignment.MiddleLeft:
                         x = bounds.Left + padding.Left;
                         y = bounds.Top + padding.Top + ((bounds.Height - height) / 2);
                         break;
+
                     case ContentAlignment.MiddleCenter:
                         x = bounds.Left + padding.Left + (((bounds.Width - width) / 2) - padding.Right);
                         y = bounds.Top + padding.Top + ((bounds.Height - height) / 2);
                         break;
+
                     case ContentAlignment.MiddleRight:
                         x = bounds.Right - (padding.Right + width);
                         y = bounds.Top + padding.Top + ((bounds.Height - height) / 2);
                         break;
+
                     case ContentAlignment.BottomLeft:
                         x = bounds.Left + padding.Left;
                         y = bounds.Bottom - (padding.Bottom + height);
                         break;
+
                     case ContentAlignment.BottomCenter:
                         x = bounds.Left + padding.Left + (((bounds.Width - width) / 2) - padding.Right);
                         y = bounds.Bottom - (padding.Bottom + height);
                         break;
+
                     case ContentAlignment.BottomRight:
                         x = bounds.Right - (padding.Right + width);
                         y = bounds.Bottom - (padding.Bottom + height);
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException("textAlign");
                 }
@@ -3602,9 +3619,9 @@ namespace ImageGlass
                 offsetY = Math.Abs(AutoScrollPosition.Y) % pixelSize;
 
                 using (Pen pen = new Pen(PixelGridColor)
-                                 {
-                                     DashStyle = DashStyle.Dot
-                                 })
+                {
+                    DashStyle = DashStyle.Dot
+                })
                 {
                     for (float x = viewport.Left + pixelSize - offsetX; x < viewport.Right; x += pixelSize)
                     {
@@ -3621,7 +3638,6 @@ namespace ImageGlass
             }
         }
 
-
         /// <summary>
         ///   [IG_CHANGE] Draws the selection region.
         /// </summary>
@@ -3633,8 +3649,8 @@ namespace ImageGlass
             var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
             var selectionRec = GetOffsetRectangle(SelectionRegion);
 
-
             #region draw inverted selection region
+
             var clip = new Region(drawableRegion);
 
             // invert the selection
@@ -3651,10 +3667,11 @@ namespace ImageGlass
                 e.Graphics.FillRectangle(brush, drawableRegion);
             }
             e.Graphics.ResetClip();
-            #endregion
 
+            #endregion draw inverted selection region
 
             #region draw selection border and grid
+
             e.Graphics.SetClip(drawableRegion);
 
             // draw border, ignore alpha value
@@ -3672,9 +3689,9 @@ namespace ImageGlass
                 for (int i = 1; i < 3; i++)
                 {
                     e.Graphics.DrawLine(pen,
-                        selectionRec.X + (i*width3),
+                        selectionRec.X + (i * width3),
                         selectionRec.Y,
-                        selectionRec.X + (i*width3),
+                        selectionRec.X + (i * width3),
                         selectionRec.Y + selectionRec.Height);
 
                     e.Graphics.DrawLine(pen,
@@ -3686,8 +3703,8 @@ namespace ImageGlass
             }
 
             e.Graphics.ResetClip();
-            #endregion
 
+            #endregion draw selection border and grid
         }
 
         /// <summary>
@@ -3729,6 +3746,7 @@ namespace ImageGlass
                 case ImageBoxBorderStyle.FixedSingleDropShadow:
                     offset = (DropShadowSize + 1);
                     break;
+
                 default:
                     offset = 0;
                     break;
@@ -4018,7 +4036,6 @@ namespace ImageGlass
                 handler(this, e);
             }
         }
-        
 
         /// <summary>
         ///   Raises the <see cref="ImageChanged" /> event.
@@ -4141,12 +4158,15 @@ namespace ImageGlass
                 case ImageBoxScrollBarStyle.Auto:
                     result = visible;
                     break;
+
                 case ImageBoxScrollBarStyle.Show:
                     result = true;
                     break;
+
                 case ImageBoxScrollBarStyle.Hide:
                     result = false;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException("style", style, null);
             }
@@ -4916,7 +4936,7 @@ namespace ImageGlass
             OnScroll(new ScrollEventArgs(ScrollEventType.EndScroll, 0));
         }
 
-        #endregion
+        #endregion Protected Members
 
         #region Private Members
 
@@ -5058,15 +5078,19 @@ namespace ImageGlass
                 case ImageBoxZoomActions.None:
                     result = Zoom;
                     break;
+
                 case ImageBoxZoomActions.ZoomIn:
                     result = ZoomLevels.NextZoom((int)Zoom);
                     break;
+
                 case ImageBoxZoomActions.ZoomOut:
                     result = ZoomLevels.PreviousZoom((int)Zoom);
                     break;
+
                 case ImageBoxZoomActions.ActualSize:
                     result = 100;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException("action");
             }
@@ -5113,7 +5137,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Private Members
 
         private bool _allowUnfocusedMouseWheel;
 
@@ -5162,7 +5186,6 @@ namespace ImageGlass
             if (handler != null)
                 handler(this, e);
         }
-
 
         /// <summary>
         ///   Occurs when the AutoScrollPosition property value changes. [IG_CHANGE] This is new event
@@ -5242,7 +5265,6 @@ namespace ImageGlass
         {
             UpdateScrollPosition(new Point(_hScrollBar.Value, _vScrollBar.Value));
         }
-
 
         /// <summary>
         ///   Occurs when the user or code scrolls through the client area.
@@ -5357,7 +5379,5 @@ namespace ImageGlass
                 handler(this, e);
             }
         }
-
-
     }
 }

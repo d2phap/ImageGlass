@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 using ImageMagick;
 using System.Drawing;
 
-namespace ImageGlass.Heart {
-    public class ImgData {
+namespace ImageGlass.Heart
+{
+    public class ImgData
+    {
         public Bitmap Image { get; set; } = null;
         public IExifProfile Exif { get; set; } = null;
         public IColorProfile ColorProfile { get; set; } = null;

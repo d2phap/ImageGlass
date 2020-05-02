@@ -27,6 +27,7 @@ namespace ImageGlass.ImageListView
     internal class ImageListViewLayoutManager
     {
         #region Member Variables
+
         private Rectangle mClientArea;
         private ImageListView mImageListView;
         private Rectangle mItemAreaBounds;
@@ -60,58 +61,73 @@ namespace ImageGlass.ImageListView
 
         // Size required to display all items (i.e. scroll range)
         private int totalWidth;
+
         private int totalHeight;
-        #endregion
+
+        #endregion Member Variables
 
         #region Properties
+
         /// <summary>
         /// Gets the bounds of the entire client area.
         /// </summary>
         public Rectangle ClientArea { get { return mClientArea; } }
+
         /// <summary>
         /// Gets the owner image list view.
         /// </summary>
         public ImageListView ImageListView { get { return mImageListView; } }
+
         /// <summary>
         /// Gets the extends of the item area.
         /// </summary>
         public Rectangle ItemAreaBounds { get { return mItemAreaBounds; } }
+
         /// <summary>
         /// Gets the extents of the column header area.
         /// </summary>
         public Rectangle ColumnHeaderBounds { get { return mColumnHeaderBounds; } }
+
         /// <summary>
         /// Gets the items size.
         /// </summary>
         public Size ItemSize { get { return mItemSize; } }
+
         /// <summary>
         /// Gets the items size including the margin around the item.
         /// </summary>
         public Size ItemSizeWithMargin { get { return mItemSizeWithMargin; } }
+
         /// <summary>
         /// Gets the maximum number of columns that can be displayed.
         /// </summary>
         public int Cols { get { return mDisplayedCols; } }
+
         /// <summary>
         /// Gets the maximum number of rows that can be displayed.
         /// </summary>
         public int Rows { get { return mDisplayedRows; } }
+
         /// <summary>
         /// Gets the index of the first partially visible item.
         /// </summary>
         public int FirstPartiallyVisible { get { return mFirstPartiallyVisible; } }
+
         /// <summary>
         /// Gets the index of the last partially visible item.
         /// </summary>
         public int LastPartiallyVisible { get { return mLastPartiallyVisible; } }
+
         /// <summary>
         /// Gets the index of the first fully visible item.
         /// </summary>
         public int FirstVisible { get { return mFirstVisible; } }
+
         /// <summary>
         /// Gets the index of the last fully visible item.
         /// </summary>
         public int LastVisible { get { return mLastVisible; } }
+
         /// <summary>
         /// Determines whether an update is required.
         /// </summary>
@@ -149,9 +165,11 @@ namespace ImageGlass.ImageListView
                     return false;
             }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the ImageListViewLayoutManager class.
         /// </summary>
@@ -166,9 +184,11 @@ namespace ImageGlass.ImageListView
 
             Update();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Instance Methods
+
         /// <summary>
         /// Determines whether the item with the given guid is
         /// (partially) visible.
@@ -178,6 +198,7 @@ namespace ImageGlass.ImageListView
         {
             return cachedVisibleItems.ContainsKey(guid);
         }
+
         /// <summary>
         /// Returns the bounds of the item with the specified index.
         /// </summary>
@@ -223,8 +244,9 @@ namespace ImageGlass.ImageListView
 
             return new Rectangle(location, mItemSize);
         }
+
         /// <summary>
-        /// Returns the bounds of the item with the specified index, 
+        /// Returns the bounds of the item with the specified index,
         /// including the margin around the item.
         /// </summary>
         public Rectangle GetItemBoundsWithMargin(int itemIndex)
@@ -233,6 +255,7 @@ namespace ImageGlass.ImageListView
             rec.Inflate(cachedItemMargin.Width / 2, cachedItemMargin.Height / 2);
             return rec;
         }
+
         /// <summary>
         /// Returns the item checkbox bounds.
         /// This method assumes a checkbox icon size of 16x16
@@ -256,6 +279,7 @@ namespace ImageGlass.ImageListView
 
             return bounds;
         }
+
         /// <summary>
         /// Returns the item icon bounds.
         /// This method assumes an icon size of 16x16
@@ -281,6 +305,7 @@ namespace ImageGlass.ImageListView
 
             return bounds;
         }
+
         /// <summary>
         /// Returns the bounds of a widget.
         /// Used to calculate the bounds of checkboxes and icons.
@@ -315,6 +340,7 @@ namespace ImageGlass.ImageListView
 
             return new Rectangle(x, y, size.Width, size.Height);
         }
+
         /// <summary>
         /// Recalculates the control layout.
         /// </summary>
@@ -322,6 +348,7 @@ namespace ImageGlass.ImageListView
         {
             Update(false);
         }
+
         /// <summary>
         /// Recalculates the control layout.
         /// <param name="forceUpdate">true to force an update; otherwise false.</param>
@@ -397,8 +424,9 @@ namespace ImageGlass.ImageListView
             if (viewChanged)
                 Update();
         }
+
         /// <summary>
-        /// Calculates the maximum number of rows and columns 
+        /// Calculates the maximum number of rows and columns
         /// that can be fully displayed.
         /// </summary>
         private void CalculateGrid()
@@ -427,6 +455,7 @@ namespace ImageGlass.ImageListView
             totalWidth = mItemCols * mItemSizeWithMargin.Width;
             totalHeight = mItemRows * mItemSizeWithMargin.Height;
         }
+
         /// <summary>
         /// Calculates the item area.
         /// </summary>
@@ -485,6 +514,7 @@ namespace ImageGlass.ImageListView
 
             return (mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0);
         }
+
         /// <summary>
         /// Shows or hides the scroll bars.
         /// Returns true if the layout needs to be recalculated; otherwise false.
@@ -521,6 +551,7 @@ namespace ImageGlass.ImageListView
             // Determine if the layout needs to be recalculated
             return (hScrollChanged || vScrollChanged);
         }
+
         /// <summary>
         /// Updates scroll bar parameters.
         /// </summary>
@@ -598,6 +629,7 @@ namespace ImageGlass.ImageListView
             mImageListView.vScrollBar.Top = 0;
             mImageListView.vScrollBar.Height = mImageListView.ClientRectangle.Height - (mImageListView.hScrollBar.Visible ? mImageListView.hScrollBar.Height : 0);
         }
+
         /// <summary>
         /// Updates the dictionary of visible items.
         /// </summary>
@@ -692,6 +724,7 @@ namespace ImageGlass.ImageListView
             // Current item state processed
             mImageListView.Items.collectionModified = false;
         }
+
         /// <summary>
         /// Updates the group display properties.
         /// </summary>
@@ -769,6 +802,7 @@ namespace ImageGlass.ImageListView
             // Groups processed
             mImageListView.groups.collectionModified = false;
         }
-        #endregion
+
+        #endregion Instance Methods
     }
 }

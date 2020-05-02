@@ -23,16 +23,20 @@ using System.IO;
 using System.Net;
 using System.Xml;
 
-namespace ImageGlass.Services {
-    public class Update {
+namespace ImageGlass.Services
+{
+    public class Update
+    {
         private InfoUpdate _info;
         private bool _isError;
 
         #region Properties
+
         /// <summary>
         /// Get / set information of info update
         /// </summary>
-        public InfoUpdate Info {
+        public InfoUpdate Info
+        {
             get { return _info; }
             set { _info = value; }
         }
@@ -40,15 +44,18 @@ namespace ImageGlass.Services {
         /// <summary>
         /// Gets value if checking for update is error
         /// </summary>
-        public bool IsError {
+        public bool IsError
+        {
             get { return _isError; }
         }
-        #endregion
+
+        #endregion Properties
 
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
-        public Update(Uri link, string savedPath) {
+        public Update(Uri link, string savedPath)
+        {
             _info = new InfoUpdate();
 
             //Get information update pack
@@ -58,11 +65,11 @@ namespace ImageGlass.Services {
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
-        public Update() {
+        public Update()
+        {
             _isError = true;
             _info = new InfoUpdate();
         }
-
 
         /// <summary>
         /// Get update data from server
@@ -70,15 +77,17 @@ namespace ImageGlass.Services {
         /// <param name="link"></param>
         /// <param name="savedPath"></param>
         /// <returns></returns>
-        private bool GetUpdateConfig(Uri link, string savedPath) {
+        private bool GetUpdateConfig(Uri link, string savedPath)
+        {
             //Get config file
-            try {
+            try
+            {
                 if (File.Exists(savedPath)) { File.Delete(savedPath); }
 
                 System.Net.WebClient w = new WebClient();
                 w.DownloadFile(link, savedPath);
             }
-            catch (Exception ex) { return false; }
+            catch { return false; }
 
             //return FALSE if config file is not exist
             if (!File.Exists(savedPath)) { return false; }
@@ -88,7 +97,8 @@ namespace ImageGlass.Services {
                 return false;
 
             //error on downloading
-            if (_info.NewVersion.ToString() == "1.0.0.0") {
+            if (_info.NewVersion.ToString() == "1.0.0.0")
+            {
                 return false;
             }
 
@@ -100,11 +110,14 @@ namespace ImageGlass.Services {
         /// </summary>
         /// <param name="xmlFilename"></param>
         /// <returns>false on load failure</returns>
-        public bool LoadUpdateConfig(string xmlFilename) {
-            try {
+        public bool LoadUpdateConfig(string xmlFilename)
+        {
+            try
+            {
                 XmlDocument xmlDoc = new XmlDocument();
                 // Issue #520: the xml document was locked somehow. Open it read-only to prevent lock issues
-                using (Stream s = File.OpenRead(xmlFilename)) {
+                using (Stream s = File.OpenRead(xmlFilename))
+                {
                     xmlDoc.Load(s);
                 }
                 XmlElement root = xmlDoc.DocumentElement;// <ImageGlass>
@@ -121,12 +134,12 @@ namespace ImageGlass.Services {
                 _info.Decription = n.GetAttribute("decription");
                 return true;
             }
-            catch (Exception ex) {
+            catch
+            {
                 // access error; corrupted file
                 return false;
             }
         }
-
 
         /// <summary>
         /// Load current ImageGlass.exe file and compare to the latest version.
@@ -134,41 +147,42 @@ namespace ImageGlass.Services {
         /// </summary>
         /// <param name="exePath"></param>
         /// <returns></returns>
-        public bool CheckForUpdate(string exePath) {
+        public bool CheckForUpdate(string exePath)
+        {
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
             Version currentVersion = new Version(fv.FileVersion);
 
             // Version = [Major.Minor.Build.Revision]
 
             // [6.1.12.3] > [5.1.12.3]
-            if (Info.NewVersion.Major > currentVersion.Major) {
+            if (Info.NewVersion.Major > currentVersion.Major)
+            {
                 return true;
             }
             // [6.1.12.3] > [6.0.12.3]
             else if (Info.NewVersion.Major == currentVersion.Major &&
-                Info.NewVersion.Minor > currentVersion.Minor) {
+                Info.NewVersion.Minor > currentVersion.Minor)
+            {
                 return true;
             }
             // [6.1.12.3] > [6.1.10.3]
             else if (Info.NewVersion.Major == currentVersion.Major &&
                 Info.NewVersion.Minor == currentVersion.Minor &&
-                Info.NewVersion.Build > currentVersion.Build) {
+                Info.NewVersion.Build > currentVersion.Build)
+            {
                 return true;
             }
             // [6.1.12.3] > [6.1.12.0]
             else if (Info.NewVersion.Major == currentVersion.Major &&
                 Info.NewVersion.Minor == currentVersion.Minor &&
                 Info.NewVersion.Build == currentVersion.Build &&
-                Info.NewVersion.Revision > currentVersion.Revision) {
+                Info.NewVersion.Revision > currentVersion.Revision)
+            {
                 return true;
             }
-
 
             //default don't need to update
             return false;
         }
-
-
     }
-
 }

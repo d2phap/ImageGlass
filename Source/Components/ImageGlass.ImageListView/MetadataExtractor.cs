@@ -22,8 +22,11 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+
 #if USEWIC
+
 using System.Windows.Media.Imaging;
+
 #endif
 
 namespace ImageGlass.ImageListView
@@ -36,6 +39,7 @@ namespace ImageGlass.ImageListView
     internal class MetadataExtractor
     {
         #region Exif Tag IDs
+
         private const int TagImageDescription = 0x010E;
         private const int TagEquipmentModel = 0x0110;
         private const int TagDateTimeOriginal = 0x9003;
@@ -50,10 +54,13 @@ namespace ImageGlass.ImageListView
         private const int TagEquipmentManufacturer = 0x010F;
         private const int TagFocalLength = 0x920A;
         private const int TagSoftware = 0x0131;
-        #endregion
+
+        #endregion Exif Tag IDs
 
 #if USEWIC
+
         #region WIC Metadata Paths
+
         private static readonly string[] WICPathImageDescription = new string[] { "/app1/ifd/{ushort=40095}", "/app1/ifd/{ushort=270}" };
         private static readonly string[] WICPathCopyright = new string[] { "/app1/ifd/{ushort=33432}", "/app13/irb/8bimiptc/iptc/copyright notice", "/xmp/<xmpalt>dc:rights", "/xmp/dc:rights" };
         private static readonly string[] WICPathComment = new string[] { "/app1/ifd/{ushort=40092}", "/app1/ifd/{ushort=37510}", "/xmp/<xmpalt>exif:UserComment" };
@@ -68,10 +75,13 @@ namespace ImageGlass.ImageListView
         private static readonly string[] WICPathFNumber = new string[] { "/app1/ifd/exif/{ushort=33437}", "/xmp/exif:FNumber" };
         private static readonly string[] WICPathISOSpeed = new string[] { "/app1/ifd/exif/{ushort=34855}", "/xmp/<xmpseq>exif:ISOSpeedRatings", "/xmp/exif:ISOSpeed" };
         private static readonly string[] WICPathFocalLength = new string[] { "/app1/ifd/exif/{ushort=37386}", "/xmp/exif:FocalLength" };
-        #endregion
+
+        #endregion WIC Metadata Paths
+
 #endif
 
         #region Exif Format Conversion
+
         /// <summary>
         /// Converts the given Exif data to an ASCII encoded string.
         /// </summary>
@@ -85,6 +95,7 @@ namespace ImageGlass.ImageListView
             str = str.Trim(new char[] { '\0' });
             return str;
         }
+
         /// <summary>
         /// Converts the given Exif data to DateTime.
         /// </summary>
@@ -93,6 +104,7 @@ namespace ImageGlass.ImageListView
         {
             return ExifDateTime(ExifAscii(value));
         }
+
         /// <summary>
         /// Converts the given Exif data to DateTime.
         /// Value must be formatted as yyyy:MM:dd HH:mm:ss.
@@ -119,6 +131,7 @@ namespace ImageGlass.ImageListView
                 return DateTime.MinValue;
             }
         }
+
         /// <summary>
         /// Converts the given Exif data to an 16-bit unsigned integer.
         /// The value must have 2 bytes.
@@ -128,6 +141,7 @@ namespace ImageGlass.ImageListView
         {
             return BitConverter.ToUInt16(value, 0);
         }
+
         /// <summary>
         /// Converts the given Exif data to an 32-bit unsigned integer.
         /// The value must have 4 bytes.
@@ -137,6 +151,7 @@ namespace ImageGlass.ImageListView
         {
             return BitConverter.ToUInt32(value, 0);
         }
+
         /// <summary>
         /// Converts the given Exif data to an 32-bit signed integer.
         /// The value must have 4 bytes.
@@ -146,6 +161,7 @@ namespace ImageGlass.ImageListView
         {
             return BitConverter.ToInt32(value, 0);
         }
+
         /// <summary>
         /// Converts the given Exif data to an unsigned rational value
         /// represented as a string.
@@ -157,6 +173,7 @@ namespace ImageGlass.ImageListView
             return BitConverter.ToUInt32(value, 0).ToString() + "/" +
                     BitConverter.ToUInt32(value, 4).ToString();
         }
+
         /// <summary>
         /// Converts the given Exif data to a signed rational value
         /// represented as a string.
@@ -168,6 +185,7 @@ namespace ImageGlass.ImageListView
             return BitConverter.ToInt32(value, 0).ToString() + "/" +
                     BitConverter.ToInt32(value, 4).ToString();
         }
+
         /// <summary>
         /// Converts the given Exif data to a double number.
         /// The value must have 8 bytes.
@@ -182,87 +200,108 @@ namespace ImageGlass.ImageListView
             else
                 return num / (double)den;
         }
-        #endregion
+
+        #endregion Exif Format Conversion
 
         #region Metadata properties
+
         /// <summary>
         /// Error.
         /// </summary>
         public Exception Error = null;
+
         /// <summary>
         /// Image width.
         /// </summary>
         public int Width = 0;
+
         /// <summary>
         /// Image height.
         /// </summary>
         public int Height = 0;
+
         /// <summary>
         /// Horizontal DPI.
         /// </summary>
         public double DPIX = 0.0;
+
         /// <summary>
         /// Vertical DPI.
         /// </summary>
         public double DPIY = 0.0;
+
         /// <summary>
         /// Date taken.
         /// </summary>
         public DateTime DateTaken = DateTime.MinValue;
+
         /// <summary>
         /// Image description (null = not available).
         /// </summary>
         public string ImageDescription = null;
+
         /// <summary>
         /// Camera manufacturer (null = not available).
         /// </summary>
         public string EquipmentManufacturer = null;
+
         /// <summary>
         /// Camera model (null = not available).
         /// </summary>
         public string EquipmentModel = null;
+
         /// <summary>
         /// Image creator (null = not available).
         /// </summary>
         public string Artist = null;
+
         /// <summary>
         /// Iso speed rating.
         /// </summary>
         public int ISOSpeed = 0;
+
         /// <summary>
         /// Exposure time.
         /// </summary>
         public double ExposureTime = 0.0;
+
         /// <summary>
         /// F number.
         /// </summary>
         public double FNumber = 0.0;
+
         /// <summary>
         /// Copyright information (null = not available).
         /// </summary>
         public string Copyright = null;
+
         /// <summary>
         /// Rating value between 0-99.
         /// </summary>
         public int Rating = 0;
+
         /// <summary>
         /// User comment (null = not available).
         /// </summary>
         public string Comment = null;
+
         /// <summary>
         /// Software used (null = not available).
         /// </summary>
         public string Software = null;
+
         /// <summary>
         /// Focal length.
         /// </summary>
         public double FocalLength = 0.0;
-        #endregion
+
+        #endregion Metadata properties
 
         #region Helper Methods
+
         /// <summary>
         /// Inits metadata via WIC/WPF (.NET 3.0).
-        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method. 
+        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method.
         /// </summary>
         /// <param name="path">Filepath of image</param>
         private void InitViaWpf(string path)
@@ -301,7 +340,9 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
 #if USEWIC
+
         /// <summary>
         /// Inits metadata via WIC/WPF (.NET 3.0).
         /// </summary>
@@ -317,7 +358,9 @@ namespace ImageGlass.ImageListView
             if (data != null)
                 InitViaWpf(data);
         }
+
 #endif
+
         /// <summary>
         /// Open image and read metadata (.NET 2.0).
         /// </summary>
@@ -338,6 +381,7 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Read metadata using .NET 2.0 methods.
         /// </summary>
@@ -366,6 +410,7 @@ namespace ImageGlass.ImageListView
                                 ImageDescription = str;
                             }
                             break;
+
                         case TagArtist:
                             str = ExifAscii(prop.Value).Trim();
                             if (str != String.Empty)
@@ -373,6 +418,7 @@ namespace ImageGlass.ImageListView
                                 Artist = str;
                             }
                             break;
+
                         case TagEquipmentManufacturer:
                             str = ExifAscii(prop.Value).Trim();
                             if (str != String.Empty)
@@ -380,6 +426,7 @@ namespace ImageGlass.ImageListView
                                 EquipmentManufacturer = str;
                             }
                             break;
+
                         case TagEquipmentModel:
                             str = ExifAscii(prop.Value).Trim();
                             if (str != String.Empty)
@@ -387,6 +434,7 @@ namespace ImageGlass.ImageListView
                                 EquipmentModel = str;
                             }
                             break;
+
                         case TagDateTimeOriginal:
                             dateTime = ExifDateTime(prop.Value);
                             if (dateTime != DateTime.MinValue)
@@ -394,6 +442,7 @@ namespace ImageGlass.ImageListView
                                 DateTaken = dateTime;
                             }
                             break;
+
                         case TagExposureTime:
                             if (prop.Value.Length == 8)
                             {
@@ -404,6 +453,7 @@ namespace ImageGlass.ImageListView
                                 }
                             }
                             break;
+
                         case TagFNumber:
                             if (prop.Value.Length == 8)
                             {
@@ -414,6 +464,7 @@ namespace ImageGlass.ImageListView
                                 }
                             }
                             break;
+
                         case TagISOSpeed:
                             if (prop.Value.Length == 2)
                             {
@@ -424,6 +475,7 @@ namespace ImageGlass.ImageListView
                                 }
                             }
                             break;
+
                         case TagCopyright:
                             str = ExifAscii(prop.Value);
                             if (str != String.Empty)
@@ -431,6 +483,7 @@ namespace ImageGlass.ImageListView
                                 Copyright = str;
                             }
                             break;
+
                         case TagRating:
                             if (Rating == 0 && prop.Value.Length == 2)
                             {
@@ -447,6 +500,7 @@ namespace ImageGlass.ImageListView
                                     Rating = 99;
                             }
                             break;
+
                         case TagRatingPercent:
                             if (prop.Value.Length == 2)
                             {
@@ -454,6 +508,7 @@ namespace ImageGlass.ImageListView
                                 Rating = iVal;
                             }
                             break;
+
                         case TagUserComment:
                             str = ExifAscii(prop.Value);
                             if (str != String.Empty)
@@ -461,6 +516,7 @@ namespace ImageGlass.ImageListView
                                 Comment = str;
                             }
                             break;
+
                         case TagSoftware:
                             str = ExifAscii(prop.Value).Trim();
                             if (str != String.Empty)
@@ -468,6 +524,7 @@ namespace ImageGlass.ImageListView
                                 Software = str;
                             }
                             break;
+
                         case TagFocalLength:
                             if (prop.Value.Length == 8)
                             {
@@ -484,6 +541,7 @@ namespace ImageGlass.ImageListView
         }
 
 #if USEWIC
+
         /// <summary>
         /// Read metadata via WIC/WPF.
         /// </summary>
@@ -594,6 +652,7 @@ namespace ImageGlass.ImageListView
             if (val != null)
                 FocalLength = ExifDouble(BitConverter.GetBytes((ulong)val));
         }
+
         /// <summary>
         /// [PHAP] Returns the metadata for the given query.
         /// </summary>
@@ -617,7 +676,9 @@ namespace ImageGlass.ImageListView
             }
             return null;
         }
+
 #endif
+
         /// <summary>
         /// Convert FileTime to DateTime.
         /// </summary>
@@ -628,9 +689,11 @@ namespace ImageGlass.ImageListView
             long longTime = (((long)ft.dwHighDateTime) << 32) | ((uint)ft.dwLowDateTime);
             return DateTime.FromFileTimeUtc(longTime); // using UTC???
         }
-        #endregion
+
+        #endregion Helper Methods
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the MetadataExtractor class.
         /// </summary>
@@ -638,23 +701,26 @@ namespace ImageGlass.ImageListView
         {
             ;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Public Methods
+
         /// <summary>
         /// Creates an instance of the MetadataExtractor class.
         /// Reads metadata via WIC/WPF (.NET 3.0).
-        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method. 
+        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method.
         /// </summary>
         /// <param name="path">Filepath of image</param>
         public static MetadataExtractor FromFile(string path)
         {
             return MetadataExtractor.FromFile(path, true);
         }
+
         /// <summary>
         /// Creates an instance of the MetadataExtractor class.
         /// Reads metadata via WIC/WPF (.NET 3.0).
-        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method. 
+        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method.
         /// </summary>
         /// <param name="path">Filepath of image</param>
         /// <param name="useWic">true to use Windows Imaging Component; otherwise false.</param>
@@ -671,11 +737,13 @@ namespace ImageGlass.ImageListView
 #endif
             return metadata;
         }
+
 #if USEWIC
+
         /// <summary>
         /// Creates an instance of the MetadataExtractor class.
         /// Reads metadata via WIC/WPF (.NET 3.0).
-        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method. 
+        /// If WIC lacks a metadata reader for this image type then fall back to .NET 2.0 method.
         /// </summary>
         /// <param name="frameWpf">Opened WPF image</param>
         public static MetadataExtractor FromBitmap(BitmapFrame frameWpf)
@@ -684,7 +752,9 @@ namespace ImageGlass.ImageListView
             metadata.InitViaWpf(frameWpf);
             return metadata;
         }
+
 #endif
-        #endregion
+
+        #endregion Public Methods
     }
 }

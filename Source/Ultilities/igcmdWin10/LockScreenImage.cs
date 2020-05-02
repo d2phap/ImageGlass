@@ -16,33 +16,39 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System.UserProfile;
 
-namespace igcmdWin10 {
+namespace igcmdWin10
+{
     /// <summary>
     /// Set the Lock Screen image from an image path
     /// </summary>
-    public class LockScreenImage {
-        public static async Task<int> SetAsync(string path) {
+    public class LockScreenImage
+    {
+        public static async Task<int> SetAsync(string path)
+        {
             //System.Diagnostics.Debugger.Break();
 
             var folder = Path.GetDirectoryName(path);
             var file = Path.GetFileName(path);
 
-            try {
+            try
+            {
                 StorageFolder sf = await StorageFolder.GetFolderFromPathAsync(folder);
                 StorageFile imgFile = await sf.GetFileAsync(file);
 
-                using (var stream = await imgFile.OpenAsync(FileAccessMode.Read)) {
+                using (var stream = await imgFile.OpenAsync(FileAccessMode.Read))
+                {
                     await LockScreen.SetImageStreamAsync(stream);
                 }
-
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return 1;
             }
 

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Text;
+using System.Threading;
 
 namespace ImageGlass.ImageListView
 {
     /// <summary>
-    /// Represents a collection of items on disk that can be read 
+    /// Represents a collection of items on disk that can be read
     /// and written by multiple threads.
     /// </summary>
     internal class DiskCache : IDisposable
     {
         #region Enums
+
         /// <summary>
         /// Represents the synchronization behaviour.
         /// </summary>
@@ -24,22 +25,27 @@ namespace ImageGlass.ImageListView
             /// Both reads and writes may result in cache misses.
             /// </summary>
             SyncNone = 0,
+
             /// <summary>
             /// Cache reads are synchronized.
             /// </summary>
             SyncReads = 1,
+
             /// <summary>
             /// Cache writes are synchronized.
             /// </summary>
             SyncWrites = 2,
+
             /// <summary>
             /// Both cache reads and writes are synchronized.
             /// </summary>
             SnycAll = SyncReads | SyncWrites
         }
-        #endregion
+
+        #endregion Enums
 
         #region Member Variables
+
         private string mFileName;
         private long mSize;
         private SyncBehavior mSyncBehavior;
@@ -50,9 +56,11 @@ namespace ImageGlass.ImageListView
 
         private readonly object lockObject;
         private long writeOffset;
-        #endregion
+
+        #endregion Member Variables
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the cache file name.
         /// </summary>
@@ -72,13 +80,16 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the maximum size of the cache file in bytes.
         /// </summary>
         public long Size { get { return mSize; } set { mSize = value; } }
-        #endregion
+
+        #endregion Properties
 
         #region CacheItem class
+
         /// <summary>
         /// Represents an item in the cache.
         /// </summary>
@@ -88,10 +99,12 @@ namespace ImageGlass.ImageListView
             /// Gets the item identifier.
             /// </summary>
             public string ID { get; private set; }
+
             /// <summary>
             /// Gets the offset to the item in the cache file.
             /// </summary>
             public long Offset { get; private set; }
+
             /// <summary>
             /// Gets the size of item data in bytes.
             /// </summary>
@@ -121,9 +134,11 @@ namespace ImageGlass.ImageListView
                 ;
             }
         }
-        #endregion
+
+        #endregion CacheItem class
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DiskCache"/> class.
         /// </summary>
@@ -182,11 +197,13 @@ namespace ImageGlass.ImageListView
         {
             ;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Instance Methods
+
         /// <summary>
-        /// Performs application-defined tasks associated with 
+        /// Performs application-defined tasks associated with
         /// freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
@@ -245,7 +262,7 @@ namespace ImageGlass.ImageListView
         /// Reads an item from the cache.
         /// </summary>
         /// <param name="id">Item identifier.</param>
-        /// <param name="data">When this function returns, <paramref name="data"/> 
+        /// <param name="data">When this function returns, <paramref name="data"/>
         /// will hold item data.</param>
         /// <returns>True if the item was read; otherwise false.</returns>
         public bool Read(string id, Stream data)
@@ -332,7 +349,7 @@ namespace ImageGlass.ImageListView
         /// Reads an item from the cache.
         /// </summary>
         /// <param name="id">Item identifier.</param>
-        /// <param name="data">When this function returns, <paramref name="data"/> 
+        /// <param name="data">When this function returns, <paramref name="data"/>
         /// will hold item data.</param>
         /// <returns>True if the item was read; otherwise false.</returns>
         public bool Read(string id, byte[] data)
@@ -349,7 +366,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Writes an item to the cache.
         /// </summary>
-        /// <param name="id">Item identifier. If an item with this identifier already 
+        /// <param name="id">Item identifier. If an item with this identifier already
         /// exists, it will be overwritten.</param>
         /// <param name="data">Item data.</param>
         /// <returns>True if the item was written; otherwise false.</returns>
@@ -410,7 +427,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Writes an item to the cache.
         /// </summary>
-        /// <param name="id">Item identifier. If an item with this identifier already 
+        /// <param name="id">Item identifier. If an item with this identifier already
         /// exists, it will be overwritten.</param>
         /// <param name="data">Item data.</param>
         /// <returns>True if the item was written; otherwise false.</returns>
@@ -424,6 +441,7 @@ namespace ImageGlass.ImageListView
                 return Write(id, dataStream);
             }
         }
+
         /// <summary>
         /// Converts the given string to an item key.
         /// </summary>
@@ -437,6 +455,7 @@ namespace ImageGlass.ImageListView
                 key = key + new string(' ', mKeySize - key.Length);
             return key;
         }
-        #endregion
+
+        #endregion Instance Methods
     }
 }

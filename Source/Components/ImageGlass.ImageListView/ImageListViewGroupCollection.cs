@@ -16,9 +16,9 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Collections;
 
 namespace ImageGlass.ImageListView
 {
@@ -30,22 +30,27 @@ namespace ImageGlass.ImageListView
         internal class ImageListViewGroupCollection : IList<ImageListViewGroup>, ICollection, IList, IEnumerable
         {
             #region Member Variables
+
             private ImageListView mImageListView;
             private List<ImageListViewGroup> mItems;
             internal bool collectionModified;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets the number of groups in the collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the number of groups in the collection.")]
             public int Count { get { return mItems.Count; } }
+
             /// <summary>
             /// Gets the ImageListView owning this collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
             public ImageListView ImageListView { get { return mImageListView; } }
+
             /// <summary>
             /// Gets or sets the group at the specified index within the collection.
             /// </summary>
@@ -62,6 +67,7 @@ namespace ImageGlass.ImageListView
                     collectionModified = true;
                 }
             }
+
             /// <summary>
             /// Gets the group with the specified name within the collection.
             /// </summary>
@@ -75,6 +81,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("Unknown group name.", "name");
                 }
             }
+
             /// <summary>
             /// Gets a value indicating whether the Collection is read-only.
             /// </summary>
@@ -83,9 +90,11 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
-            #endregion
+
+            #endregion Properties
 
             #region Constructor
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewGroup class.
             /// </summary>
@@ -96,9 +105,11 @@ namespace ImageGlass.ImageListView
                 mItems = new List<ImageListViewGroup>();
                 collectionModified = true;
             }
-            #endregion
+
+            #endregion Constructor
 
             #region Instance Methods
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -115,6 +126,7 @@ namespace ImageGlass.ImageListView
 
                 collectionModified = true;
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -135,6 +147,7 @@ namespace ImageGlass.ImageListView
 
                 collectionModified = true;
             }
+
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
             /// </summary>
@@ -146,6 +159,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.Contains(item);
             }
+
             /// <summary>
             /// Returns an enumerator to use to iterate through columns.
             /// </summary>
@@ -156,6 +170,7 @@ namespace ImageGlass.ImageListView
                     yield return group;
                 yield break;
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
             /// </summary>
@@ -167,6 +182,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
             /// </summary>
@@ -184,6 +200,7 @@ namespace ImageGlass.ImageListView
 
                 collectionModified = true;
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -197,6 +214,7 @@ namespace ImageGlass.ImageListView
                 collectionModified = true;
                 return ret;
             }
+
             /// <summary>
             /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
             /// </summary>
@@ -206,6 +224,7 @@ namespace ImageGlass.ImageListView
                 mItems.RemoveAt(index);
                 collectionModified = true;
             }
+
             /// <summary>
             /// Determines whether the collection has the group with the given name.
             /// </summary>
@@ -217,6 +236,7 @@ namespace ImageGlass.ImageListView
 
                 return false;
             }
+
             /// <summary>
             /// Gets the list of visible groups.
             /// </summary>
@@ -230,9 +250,11 @@ namespace ImageGlass.ImageListView
                 }
                 return visible;
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Unsupported Interface
+
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
@@ -240,6 +262,7 @@ namespace ImageGlass.ImageListView
             {
                 return GetEnumerator();
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.ICollection"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -251,6 +274,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An array of ImageListViewGroup is required.", "array");
                 mItems.CopyTo((ImageListViewGroup[])array, index);
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -260,6 +284,7 @@ namespace ImageGlass.ImageListView
             {
                 mItems.CopyTo(array, arrayIndex);
             }
+
             /// <summary>
             /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection"/> is synchronized (thread safe).
             /// </summary>
@@ -267,6 +292,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
             /// </summary>
@@ -274,6 +300,7 @@ namespace ImageGlass.ImageListView
             {
                 get { throw new NotImplementedException(); }
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -285,6 +312,7 @@ namespace ImageGlass.ImageListView
                 Add(item);
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.IList"/> contains a specific value.
             /// </summary>
@@ -294,6 +322,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 return mItems.Contains((ImageListViewGroup)value);
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -303,6 +332,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 return IndexOf((ImageListViewGroup)value);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.IList"/> at the specified index.
             /// </summary>
@@ -312,6 +342,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 Insert(index, (ImageListViewGroup)value);
             }
+
             /// <summary>
             /// Gets a value indicating whether the <see cref="T:System.Collections.IList"/> has a fixed size.
             /// </summary>
@@ -319,6 +350,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -328,6 +360,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 Remove((ImageListViewGroup)value);
             }
+
             /// <summary>
             /// Gets or sets the <see cref="System.Object"/> at the specified index.
             /// </summary>
@@ -345,7 +378,8 @@ namespace ImageGlass.ImageListView
                     collectionModified = true;
                 }
             }
-            #endregion
+
+            #endregion Unsupported Interface
         }
     }
 }

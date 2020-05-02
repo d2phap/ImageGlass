@@ -16,8 +16,8 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -31,30 +31,38 @@ namespace ImageGlass.ImageListView
         public class ImageListViewGroup : IEnumerable<ImageListViewItem>, IEnumerable, IComparable<ImageListViewGroup>
         {
             #region Member Variables
+
             internal ImageListView mImageListView;
             internal ImageListViewGroupCollection owner;
             private bool mCollapsed;
+
             // Layout variables
             internal int itemCols;
+
             internal int itemRows;
             internal Rectangle itemBounds;
             internal Rectangle headerBounds;
             internal bool isVisible;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets the name of the group.
             /// </summary>
             public string Name { get; private set; }
+
             /// <summary>
             /// Gets the index of the first item.
             /// </summary>
             public int FirstItemIndex { get; internal set; }
+
             /// <summary>
             /// Gets the index of the last item.
             /// </summary>
             public int LastItemIndex { get; internal set; }
+
             /// <summary>
             /// Gets or sets whether the group is collapsed.
             /// </summary>
@@ -76,13 +84,16 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Gets the item count.
             /// </summary>
             public int ItemCount { get { return LastItemIndex - FirstItemIndex + 1; } }
-            #endregion
+
+            #endregion Properties
 
             #region Constructor
+
             /// <summary>
             /// Initializes a new instance of the <see cref="ImageListViewGroup"/>  class.
             /// </summary>
@@ -98,9 +109,11 @@ namespace ImageGlass.ImageListView
                 FirstItemIndex = firstItemIndex;
                 LastItemIndex = lastItemIndex;
             }
-            #endregion
+
+            #endregion Constructor
 
             #region Instance Methods
+
             /// <summary>
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
@@ -113,6 +126,7 @@ namespace ImageGlass.ImageListView
                     yield return mImageListView.Items[i];
                 yield break;
             }
+
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
@@ -123,6 +137,7 @@ namespace ImageGlass.ImageListView
             {
                 return GetEnumerator();
             }
+
             /// <summary>
             /// Compares the current object with another object of the same type.
             /// </summary>
@@ -142,9 +157,11 @@ namespace ImageGlass.ImageListView
             {
                 return string.Compare(Name, other.Name);
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Helper Methods
+
             /// <summary>
             /// Determines which items in the group intersect with the given
             /// selection rectangle.
@@ -196,7 +213,8 @@ namespace ImageGlass.ImageListView
                 }
                 return items;
             }
-            #endregion
+
+            #endregion Helper Methods
         }
     }
 }

@@ -16,13 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System;
 
-namespace ImageGlass.Base {
+namespace ImageGlass.Base
+{
     /// <summary>
     /// Contains the information of the editing associated app
     /// </summary>
-    public class EditApp {
+    public class EditApp
+    {
         /// <summary>
         /// Gets, sets extension. Ex: .png
         /// </summary>
@@ -43,17 +46,16 @@ namespace ImageGlass.Base {
         /// </summary>
         public string AppArguments { get; set; }
 
-
         /// <summary>
         /// Gets the macro string
         /// </summary>
         public static string FileMacro { get; } = "<file>";
 
-
         /// <summary>
         /// Initial Image Editing App
         /// </summary>
-        public EditApp() {
+        public EditApp()
+        {
             Extension = string.Empty;
             AppName = string.Empty;
             AppPath = string.Empty;
@@ -66,7 +68,8 @@ namespace ImageGlass.Base {
         /// <param name="extension">Extension. Ex: .png</param>
         /// <param name="appName">Friendly app name.</param>
         /// <param name="appPath">Full path and arguments of app. Ex: C:\app\app.exe --help</param>
-        public EditApp(string extension, string appName, string appPath, string arguments = "") {
+        public EditApp(string extension, string appName, string appPath, string arguments = "")
+        {
             Extension = extension.ToLower();
             AppName = appName;
             AppPath = appPath;
@@ -78,10 +81,12 @@ namespace ImageGlass.Base {
         /// Throw InvalidCastException if @mixString is invalid
         /// </summary>
         /// <param name="mixString">EditApp string. Ex: .jpg|MS Paint|C:\app\mspaint.exe</param>
-        public EditApp(string mixString) {
+        public EditApp(string mixString)
+        {
             var itemArray = mixString.Split("|".ToCharArray());
 
-            if (itemArray.Length != 4) {
+            if (itemArray.Length != 4)
+            {
                 throw new InvalidCastException("Invalid EditApp string format.");
             }
 
@@ -95,7 +100,8 @@ namespace ImageGlass.Base {
         /// Convert ImageEditingAssociation object to string.
         /// </summary>
         /// <returns>ImageEditingAssociation string</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"{Extension}|{AppName}|{AppPath}|{AppArguments}";
         }
     }

@@ -22,7 +22,7 @@ Author: Kevin Routley - August 2019
 /********************************************
  * Windows functions and structures required
  * to handle touch support (WM_GESTURE).
- * 
+ *
  * Based on the Microsoft documentation and the
  * Windows 7 Sample: MTGestures
  ********************************************/
@@ -33,12 +33,15 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.Library.WinAPI {
-    public static class Touch {
+namespace ImageGlass.Library.WinAPI
+{
+    public static class Touch
+    {
         public const int WM_GESTURE = 0x0119;
         public const int WM_GESTURENOTIFY = 0x011A;
 
-        public enum Action {
+        public enum Action
+        {
             None,
             SwipeLeft,
             SwipeRight,
@@ -51,6 +54,7 @@ namespace ImageGlass.Library.WinAPI {
         }
 
         #region P/Invoke functions
+
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetGestureConfig(IntPtr hWnd, int dwReserved, int cIDs, ref GESTURECONFIG pGestureConfig, int cbSize);
@@ -58,12 +62,14 @@ namespace ImageGlass.Library.WinAPI {
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetGestureInfo(IntPtr hGestureInfo, ref GESTUREINFO pGestureInfo);
-        #endregion
 
+        #endregion P/Invoke functions
 
         #region Windows Structures
+
         [StructLayout(LayoutKind.Sequential)]
-        private struct GESTURECONFIG {
+        private struct GESTURECONFIG
+        {
             public int dwID; // gesture ID
             public int dwWant; // settings related to gesture ID that are to be
 
@@ -78,24 +84,28 @@ namespace ImageGlass.Library.WinAPI {
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct POINTS {
+        private struct POINTS
+        {
             public short x;
             public short y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct GESTUREINFO {
+        private struct GESTUREINFO
+        {
             public int cbSize; // size, in bytes, of this structure
 
             // (including variable length Args
             // field)
             public int dwFlags; // see GF_* flags
+
             public int dwID; // gesture ID, see GID_* defines
             public IntPtr hwndTarget; // handle to window targeted by this
 
             // gesture
             [MarshalAs(UnmanagedType.Struct)]
             internal POINTS ptsLocation; // current location of this gesture
+
             public int dwInstanceID; // internally used
             public int dwSequenceID; // internally used
             public Int64 ullArguments; // arguments for gestures whose
@@ -109,15 +119,16 @@ namespace ImageGlass.Library.WinAPI {
 
             #endregion Other
         }
-        #endregion
 
+        #endregion Windows Structures
 
         #region State
+
         private static GESTURECONFIG TouchConfig = new GESTURECONFIG
         {
             dwID = 0,
             dwWant = 1,
-            dwBlock=0
+            dwBlock = 0
         };
 
         private static readonly int ConfigSize = Marshal.SizeOf(new GESTURECONFIG());
@@ -134,14 +145,15 @@ namespace ImageGlass.Library.WinAPI {
         private static Form _touchForm;
         private static int _iArgs;
 
-        #endregion
-
+        #endregion State
 
         #region Constants
+
         private const Int64 ULL_ARGUMENTS_BIT_MASK = 0x00000000FFFFFFFF;
 
         // Gesture message ids
         private const int GID_BEGIN = 1;
+
         private const int GID_END = 2;
         private const int GID_ZOOM = 3;
         private const int GID_PAN = 4;
@@ -149,10 +161,11 @@ namespace ImageGlass.Library.WinAPI {
 
         // Gesture info ids
         private const int GF_BEGIN = 1;
+
         private const int GF_INERTIA = 2;
         private const int GF_END = 4;
-        #endregion
 
+        #endregion Constants
 
         /// <summary>
         /// The point at which the Zoom action is taking place.
@@ -162,16 +175,15 @@ namespace ImageGlass.Library.WinAPI {
 
         /// <summary>
         /// The 'size' of the zoom/pinch action. Essentially,
-        /// the number of zoom steps to take. 
+        /// the number of zoom steps to take.
         /// NOTE: valid *only* when action is zoom/pinch
         /// </summary>
         public static int ZoomFactor { get; private set; }
 
-        private static double ArgToRadians(long arg) {
+        private static double ArgToRadians(long arg)
+        {
             return ((arg / 65535.0) * 4.0 * Math.PI) - 2.0 * Math.PI;
         }
-
-
 
         /// <summary>
         /// Let Windows know we are accepting any and all WM_GESTURE
@@ -179,7 +191,8 @@ namespace ImageGlass.Library.WinAPI {
         /// </summary>
         /// <param name="form">the main form</param>
         /// <returns>false if something failed</returns>
-        public static bool AcceptTouch(Form form) {
+        public static bool AcceptTouch(Form form)
+        {
             App.LogIt("WM_GESTURENOTIFY");
             _touchForm = form;
             return SetGestureConfig(form.Handle, 0, 1, ref TouchConfig, ConfigSize);
@@ -194,18 +207,22 @@ namespace ImageGlass.Library.WinAPI {
         /// <param name="m">the message</param>
         /// <param name="act">the resulting touch action</param>
         /// <returns></returns>
-        public static bool DecodeTouch(Message m, out Action act) {
+        public static bool DecodeTouch(Message m, out Action act)
+        {
             act = Action.None;
 
-            if (!GetGestureInfo(m.LParam, ref gi)) {
+            if (!GetGestureInfo(m.LParam, ref gi))
+            {
                 return false;
             }
 
-            switch ((int)m.WParam) {
+            switch ((int)m.WParam)
+            {
                 case GID_END:
-                    // Empirically I found this is the 'best' way to handle 
+                    // Empirically I found this is the 'best' way to handle
                     // swipe end, instead of GF_END under GID_PAN.
-                    if (_isSwipe) {
+                    if (_isSwipe)
+                    {
                         _isSwipe = false;
                         _ptSecond.X = gi.ptsLocation.x;
                         _ptSecond.Y = gi.ptsLocation.y;
@@ -216,13 +233,15 @@ namespace ImageGlass.Library.WinAPI {
                         int dVert = (_ptSecond.Y - _ptFirst.Y);
                         int dHorz = (_ptSecond.X - _ptFirst.X);
 
-                        if (Math.Abs(dVert) > Math.Abs(dHorz)) {
+                        if (Math.Abs(dVert) > Math.Abs(dHorz))
+                        {
                             if (dVert > 0)
                                 act = Action.SwipeDown;
                             else
                                 act = Action.SwipeUp;
                         }
-                        else {
+                        else
+                        {
                             if (dHorz > 0)
                                 act = Action.SwipeRight;
                             else
@@ -230,11 +249,14 @@ namespace ImageGlass.Library.WinAPI {
                         }
                     }
                     break;
+
                 case GID_ROTATE:
-                    switch (gi.dwFlags) {
+                    switch (gi.dwFlags)
+                    {
                         case GF_BEGIN:
                             App.LogIt("GID_ROTATE.GF_BEG");
                             break;
+
                         case GF_END:
                             double rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
                             App.LogIt(string.Format("GID_ROTATE.GF_END ({0})", rads));
@@ -246,8 +268,10 @@ namespace ImageGlass.Library.WinAPI {
                             break;
                     }
                     break;
+
                 case GID_PAN:
-                    if (gi.dwFlags == GF_BEGIN) {
+                    if (gi.dwFlags == GF_BEGIN)
+                    {
                         _ptFirst.X = gi.ptsLocation.x;
                         _ptFirst.Y = gi.ptsLocation.y;
                         _ptFirst = _touchForm.PointToClient(_ptFirst);
@@ -255,8 +279,10 @@ namespace ImageGlass.Library.WinAPI {
                         _isSwipe = true;
                     }
                     break;
+
                 case GID_ZOOM:
-                    if (gi.dwFlags == GF_BEGIN) {
+                    if (gi.dwFlags == GF_BEGIN)
+                    {
                         // The zoom center and factor are derived from the first and last data points
                         _ptFirst.X = gi.ptsLocation.x;
                         _ptFirst.Y = gi.ptsLocation.y;
@@ -265,7 +291,8 @@ namespace ImageGlass.Library.WinAPI {
 
                         App.LogIt(string.Format("GID_ZOOM.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y));
                     }
-                    if (gi.dwFlags == GF_END) {
+                    if (gi.dwFlags == GF_END)
+                    {
                         _ptSecond.X = gi.ptsLocation.x;
                         _ptSecond.Y = gi.ptsLocation.y;
                         _ptSecond = _touchForm.PointToClient(_ptSecond);
@@ -274,7 +301,7 @@ namespace ImageGlass.Library.WinAPI {
                         ZoomLocation = new Point((_ptFirst.X + _ptSecond.X) / 2,
                                                  (_ptFirst.Y + _ptSecond.Y) / 2);
 
-                        // This is the size of the spread/pinch. The direction 
+                        // This is the size of the spread/pinch. The direction
                         // dictates whether this is a spread or a pinch; the
                         // size indicates the magnitude.
                         var factor = (double)(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK) / _iArgs;
@@ -293,6 +320,7 @@ namespace ImageGlass.Library.WinAPI {
                         App.LogIt($"GID_ZOOM.GF_END ({factor}:{ZoomFactor})");
                     }
                     break;
+
                 default:
                     App.LogIt("GID_?");
                     break;
@@ -300,6 +328,5 @@ namespace ImageGlass.Library.WinAPI {
 
             return true;
         }
-
     }
 }

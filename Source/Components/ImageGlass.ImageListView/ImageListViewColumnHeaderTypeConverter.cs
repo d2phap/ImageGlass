@@ -16,10 +16,10 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Globalization;
 using System.ComponentModel;
-using System.Reflection;
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
 
 namespace ImageGlass.ImageListView
 {
@@ -29,8 +29,9 @@ namespace ImageGlass.ImageListView
     internal class ImageListViewColumnHeaderTypeConverter : TypeConverter
     {
         #region TypeConverter Overrides
+
         /// <summary>
-        /// Returns whether this converter can convert the 
+        /// Returns whether this converter can convert the
         /// object to the specified type, using the specified context.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -43,8 +44,9 @@ namespace ImageGlass.ImageListView
 
             return base.CanConvertTo(context, destinationType);
         }
+
         /// <summary>
-        /// Converts the given value object to the specified type, 
+        /// Converts the given value object to the specified type,
         /// using the specified context and culture information.
         /// </summary>
         /// <param name="context">Format context.</param>
@@ -65,10 +67,10 @@ namespace ImageGlass.ImageListView
                     if (text == column.DefaultText)
                         text = string.Empty;
 
-                    ConstructorInfo consInfo = typeof(ImageListView.ImageListViewColumnHeader).GetConstructor(new Type[] { 
+                    ConstructorInfo consInfo = typeof(ImageListView.ImageListViewColumnHeader).GetConstructor(new Type[] {
                             typeof(ColumnType), typeof(string), typeof(int), typeof(int), typeof(bool)
                         });
-                    return new InstanceDescriptor(consInfo, new object[] { 
+                    return new InstanceDescriptor(consInfo, new object[] {
                         column.Type, text, column.Width, column.DisplayIndex, column.Visible
                     });
                 }
@@ -76,6 +78,7 @@ namespace ImageGlass.ImageListView
 
             return base.ConvertTo(context, culture, value, destinationType);
         }
-        #endregion
+
+        #endregion TypeConverter Overrides
     }
 }

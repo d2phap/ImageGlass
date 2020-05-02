@@ -18,9 +18,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 namespace ImageGlass.ImageListView
@@ -33,64 +33,80 @@ namespace ImageGlass.ImageListView
         public class ImageListViewRenderer : IDisposable
         {
             #region Constants
+
             /// <summary>
             /// Represents the time in milliseconds after which the control deems to be needing a refresh.
             /// </summary>
             internal const int LazyRefreshInterval = 100;
-            #endregion
+
+            #endregion Constants
 
             #region Member Variables
+
             private BufferedGraphics bufferGraphics;
             private bool disposed;
             private bool creatingGraphics;
             private DateTime lastRenderTime;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets the ImageListView owning this item.
             /// </summary>
             public ImageListView ImageListView { get; internal set; }
+
             /// <summary>
-            /// Gets or sets whether the graphics is clipped to the bounds of 
+            /// Gets or sets whether the graphics is clipped to the bounds of
             /// drawing elements.
             /// </summary>
             public bool Clip { get; set; }
+
             /// <summary>
             /// Gets or sets the order by which items are drawn.
             /// </summary>
             public ItemDrawOrder ItemDrawOrder { get; set; }
+
             /// <summary>
             /// Gets or sets whether items are drawn before of after headers and the gallery images.
             /// </summary>
             public bool ItemsDrawnFirst { get; set; }
+
             /// <summary>
             /// Gets the rectangle bounding the client area of the control without the scroll bars.
             /// </summary>
             public Rectangle ClientBounds { get { return ImageListView.layoutManager.ClientArea; } }
+
             /// <summary>
             /// Gets the rectangle bounding the item display area.
             /// </summary>
             public Rectangle ItemAreaBounds { get { return ImageListView.layoutManager.ItemAreaBounds; } }
+
             /// <summary>
             /// Gets the rectangle bounding the column headers.
             /// </summary>
             public Rectangle ColumnHeaderBounds { get { return ImageListView.layoutManager.ColumnHeaderBounds; } }
+
             /// <summary>
             /// Gets a value indicating whether this renderer can apply custom colors.
             /// </summary>
             public virtual bool CanApplyColors { get { return true; } }
+
             /// <summary>
             /// Gets whether the lazy refresh interval is exceeded.
             /// </summary>
             internal bool LazyRefreshIntervalExceeded { get { return ((int)(DateTime.Now - lastRenderTime).TotalMilliseconds > LazyRefreshInterval); } }
+
             /// <summary>
             /// Gets a list of color themes preferred by this renderer.
             /// </summary>
             public virtual ImageListViewColor[] PreferredColors { get { return null; } }
-            #endregion
+
+            #endregion Properties
 
             #region Constructor
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewRenderer class.
             /// </summary>
@@ -103,9 +119,11 @@ namespace ImageGlass.ImageListView
                 ItemDrawOrder = ItemDrawOrder.ItemIndex;
                 lastRenderTime = DateTime.MinValue;
             }
-            #endregion
+
+            #endregion Constructor
 
             #region DrawItemParams
+
             /// <summary>
             /// Represents the paramaters required to draw an item.
             /// </summary>
@@ -122,9 +140,11 @@ namespace ImageGlass.ImageListView
                     Bounds = bounds;
                 }
             }
-            #endregion
+
+            #endregion DrawItemParams
 
             #region ItemDrawOrderComparer
+
             /// <summary>
             /// Compares items by the draw order.
             /// </summary>
@@ -142,7 +162,7 @@ namespace ImageGlass.ImageListView
                 /// </summary>
                 /// <param name="param1">First item to compare.</param>
                 /// <param name="param2">Second item to compare.</param>
-                /// <returns>1 if the first item should be drawn first, 
+                /// <returns>1 if the first item should be drawn first,
                 /// -1 if the second item should be drawn first,
                 /// 0 if the two items can be drawn in any order.</returns>
                 public int Compare(DrawItemParams param1, DrawItemParams param2)
@@ -238,6 +258,7 @@ namespace ImageGlass.ImageListView
                     else
                         return 0;
                 }
+
                 /// <summary>
                 /// Compares items by their zorder property.
                 /// </summary>
@@ -250,6 +271,7 @@ namespace ImageGlass.ImageListView
                     else
                         return 0;
                 }
+
                 /// <summary>
                 /// Compares items by their neutral state.
                 /// </summary>
@@ -262,6 +284,7 @@ namespace ImageGlass.ImageListView
                     else
                         return 0;
                 }
+
                 /// <summary>
                 /// Compares items by their selected state.
                 /// </summary>
@@ -276,6 +299,7 @@ namespace ImageGlass.ImageListView
                     else
                         return 0;
                 }
+
                 /// <summary>
                 /// Compares items by their hovered state.
                 /// </summary>
@@ -288,6 +312,7 @@ namespace ImageGlass.ImageListView
                     else
                         return 0;
                 }
+
                 /// <summary>
                 /// Compares items by their focused state.
                 /// </summary>
@@ -301,9 +326,11 @@ namespace ImageGlass.ImageListView
                         return 0;
                 }
             }
-            #endregion
+
+            #endregion ItemDrawOrderComparer
 
             #region Instance Methods
+
             /// <summary>
             /// Reads and returns the image for the given item.
             /// </summary>
@@ -324,9 +351,11 @@ namespace ImageGlass.ImageListView
 
                 return img;
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Internal Methods
+
             /// <summary>
             /// Renders the border of the control.
             /// </summary>
@@ -337,6 +366,7 @@ namespace ImageGlass.ImageListView
                 g.ResetClip();
                 DrawBorder(g, new Rectangle(0, 0, ImageListView.Width, ImageListView.Height));
             }
+
             /// <summary>
             /// Renders the background of the control.
             /// </summary>
@@ -347,6 +377,7 @@ namespace ImageGlass.ImageListView
                 g.SetClip(ImageListView.layoutManager.ClientArea);
                 DrawBackground(g, ImageListView.layoutManager.ClientArea);
             }
+
             /// <summary>
             /// Renders the group header.
             /// </summary>
@@ -377,6 +408,7 @@ namespace ImageGlass.ImageListView
                         DrawGroupHeader(g, group.Name, group.headerBounds);
                 }
             }
+
             /// <summary>
             /// Renders the column header.
             /// </summary>
@@ -445,6 +477,7 @@ namespace ImageGlass.ImageListView
                     DrawColumnExtender(g, extender);
                 }
             }
+
             /// <summary>
             /// Renders the large gallery image.
             /// </summary>
@@ -479,6 +512,7 @@ namespace ImageGlass.ImageListView
 
                 DrawGalleryImage(g, item, image, bounds);
             }
+
             /// <summary>
             /// Renders the pane.
             /// </summary>
@@ -513,6 +547,7 @@ namespace ImageGlass.ImageListView
 
                 DrawPane(g, item, image, bounds);
             }
+
             /// <summary>
             /// Renders the items.
             /// </summary>
@@ -630,6 +665,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Renders the overlay.
             /// </summary>
@@ -639,6 +675,7 @@ namespace ImageGlass.ImageListView
                 g.SetClip(ImageListView.layoutManager.ClientArea);
                 DrawOverlay(g, ImageListView.layoutManager.ClientArea);
             }
+
             /// <summary>
             /// Renders the drag-drop insertion caret.
             /// </summary>
@@ -670,6 +707,7 @@ namespace ImageGlass.ImageListView
                     g.SetClip(ImageListView.layoutManager.ClientArea);
                 DrawInsertionCaret(g, bounds);
             }
+
             /// <summary>
             /// Renders the selection rectangle.
             /// </summary>
@@ -693,6 +731,7 @@ namespace ImageGlass.ImageListView
                     DrawSelectionRectangle(g, sel);
                 }
             }
+
             /// <summary>
             /// Renders the area between scrollbars.
             /// </summary>
@@ -707,6 +746,7 @@ namespace ImageGlass.ImageListView
                 g.SetClip(filler);
                 g.FillRectangle(SystemBrushes.Control, filler);
             }
+
             /// <summary>
             /// Renders the control.
             /// </summary>
@@ -775,6 +815,7 @@ namespace ImageGlass.ImageListView
                 // Draw on to the control
                 bufferGraphics.Render(graphics);
             }
+
             /// <summary>
             /// Loads and returns the large gallery image for the given item.
             /// </summary>
@@ -792,6 +833,7 @@ namespace ImageGlass.ImageListView
 
                 return img;
             }
+
             /// <summary>
             /// Clears the graphics buffer objects.
             /// </summary>
@@ -801,8 +843,9 @@ namespace ImageGlass.ImageListView
                     bufferGraphics.Dispose();
                 bufferGraphics = null;
             }
+
             /// <summary>
-            /// Destroys the current buffer and creates a new buffered graphics 
+            /// Destroys the current buffer and creates a new buffered graphics
             /// sized to the client area of the owner control.
             /// </summary>
             /// <param name="graphics">The Graphics to match the pixel format to.</param>
@@ -832,6 +875,7 @@ namespace ImageGlass.ImageListView
 
                 return true;
             }
+
             /// <summary>
             /// Releases buffered graphics objects.
             /// </summary>
@@ -845,7 +889,9 @@ namespace ImageGlass.ImageListView
                     GC.SuppressFinalize(this);
                 }
             }
+
 #if DEBUG
+
             /// <summary>
             /// Releases unmanaged resources and performs other cleanup operations before the
             /// ImageListViewRenderer is reclaimed by garbage collection.
@@ -855,10 +901,13 @@ namespace ImageGlass.ImageListView
                 System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
                 Dispose();
             }
+
 #endif
-            #endregion
+
+            #endregion Internal Methods
 
             #region Virtual Methods
+
             /// <summary>
             /// Initializes the System.Drawing.Graphics used to draw
             /// control elements.
@@ -869,6 +918,7 @@ namespace ImageGlass.ImageListView
                 g.PixelOffsetMode = PixelOffsetMode.None;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             }
+
             /// <summary>
             /// Returns the height of group headers.
             /// </summary>
@@ -879,6 +929,7 @@ namespace ImageGlass.ImageListView
                 else
                     return System.Math.Max(ImageListView.GroupHeaderFont.Height + 8, 24);
             }
+
             /// <summary>
             /// Returns the height of column headers.
             /// </summary>
@@ -890,6 +941,7 @@ namespace ImageGlass.ImageListView
                 else
                     return System.Math.Max(ImageListView.ColumnHeaderFont.Height + 4, 24);
             }
+
             /// <summary>
             /// Returns the spacing between items for the given view mode.
             /// </summary>
@@ -902,6 +954,7 @@ namespace ImageGlass.ImageListView
                 else
                     return new Size(4, 4);
             }
+
             /// <summary>
             /// Returns item size for the given view mode.
             /// </summary>
@@ -932,6 +985,7 @@ namespace ImageGlass.ImageListView
 
                 return itemSize;
             }
+
             /// <summary>
             /// Draws the border of the control.
             /// </summary>
@@ -945,6 +999,7 @@ namespace ImageGlass.ImageListView
                     ControlPaint.DrawBorder3D(g, bounds, style);
                 }
             }
+
             /// <summary>
             /// Draws the background of the control.
             /// </summary>
@@ -997,6 +1052,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the selection rectangle.
             /// </summary>
@@ -1011,6 +1067,7 @@ namespace ImageGlass.ImageListView
                     g.DrawRectangle(pen, selection);
                 }
             }
+
             /// <summary>
             /// Draws the specified item on the given graphics.
             /// </summary>
@@ -1145,7 +1202,7 @@ namespace ImageGlass.ImageListView
                         x += column.Width;
                     }
 
-                    // Separators 
+                    // Separators
                     if (!ImageListView.GroupsVisible)
                     {
                         x = bounds.Left - 1;
@@ -1287,13 +1344,14 @@ namespace ImageGlass.ImageListView
                     ControlPaint.DrawFocusRectangle(g, bounds);
                 }
             }
+
             /// <summary>
             /// Draws the overlay graphics for the specified sub item on the given graphics.
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="state">The current view state of item.</param>
-            /// <param name="subItemIndex">The index of the sub item. The index returned is the 0-based index of the 
+            /// <param name="subItemIndex">The index of the sub item. The index returned is the 0-based index of the
             /// column as displayed on the screen, considering column visibility and display indices.
             /// Returns -1 if the hit point is not over a sub item.</param>
             /// <param name="subItemHovered">true if the mouse cursor is over the sub item; otherwise false.</param>
@@ -1302,6 +1360,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Draws the checkbox icon for the specified item on the given graphics.
             /// </summary>
@@ -1320,6 +1379,7 @@ namespace ImageGlass.ImageListView
                     state = item.Checked ? CheckBoxState.CheckedDisabled : CheckBoxState.UncheckedDisabled;
                 CheckBoxRenderer.DrawCheckBox(g, Point.Round(pt), state);
             }
+
             /// <summary>
             /// Draws the file icon for the specified item on the given graphics.
             /// </summary>
@@ -1338,6 +1398,7 @@ namespace ImageGlass.ImageListView
                     g.DrawImage(icon, pt.X, pt.Y);
                 }
             }
+
             /// <summary>
             /// Draws the group headers.
             /// </summary>
@@ -1369,6 +1430,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the column headers.
             /// </summary>
@@ -1439,6 +1501,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Draws the left pane in Pane view mode.
             /// </summary>
@@ -1546,6 +1609,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// [PHAP - Hide preview image] Draws the large preview image of the focused item in Gallery mode.
             /// </summary>
@@ -1574,6 +1638,7 @@ namespace ImageGlass.ImageListView
                 //    }
                 //}
             }
+
             /// <summary>
             /// Draws the extender after the last column.
             /// </summary>
@@ -1597,6 +1662,7 @@ namespace ImageGlass.ImageListView
                     g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
                 }
             }
+
             /// <summary>
             /// Draws the insertion caret for drag and drop operations.
             /// </summary>
@@ -1609,6 +1675,7 @@ namespace ImageGlass.ImageListView
                     g.FillRectangle(b, bounds);
                 }
             }
+
             /// <summary>
             /// Draws an overlay image over the client area.
             /// </summary>
@@ -1618,6 +1685,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Releases managed resources.
             /// </summary>
@@ -1625,6 +1693,7 @@ namespace ImageGlass.ImageListView
             {
                 ((IDisposable)this).Dispose();
             }
+
             /// <summary>
             /// Sets the layout of the control.
             /// </summary>
@@ -1633,7 +1702,8 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
-            #endregion
+
+            #endregion Virtual Methods
         }
     }
 }

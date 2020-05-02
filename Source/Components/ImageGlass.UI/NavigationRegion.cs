@@ -19,9 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Drawing;
 
-namespace ImageGlass.UI {
-
-    public enum NavigationRegionType {
+namespace ImageGlass.UI
+{
+    public enum NavigationRegionType
+    {
         Unknown,
         Left,
         Right,
@@ -30,7 +31,8 @@ namespace ImageGlass.UI {
     /// <summary>
     /// Represent a navigation region
     /// </summary>
-    public class NavigationRegion {
+    public class NavigationRegion
+    {
         /// <summary>
         /// Type of navigation region
         /// </summary>

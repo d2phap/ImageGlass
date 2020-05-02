@@ -24,47 +24,51 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace igcmd {
-    public static class Core {
-
+namespace igcmd
+{
+    public static class Core
+    {
         /// <summary>
         /// Check for update
         /// </summary>
-        public static bool AutoUpdate() {
+        public static bool AutoUpdate()
+        {
             // Issue #520: intercept any possible exception and fail quietly
-            try {
+            try
+            {
                 Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
                 var updateXML = App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
                 var up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
 
-                if (File.Exists(updateXML)) {
+                if (File.Exists(updateXML))
+                {
                     File.Delete(updateXML);
                 }
 
                 if (!up.IsError &&
                     up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")) &&
-                    up.Info.VersionType.ToLower() == "stable") {
-                    using (var f = new frmCheckForUpdate()) {
+                    up.Info.VersionType.ToLower() == "stable")
+                {
+                    using (var f = new frmCheckForUpdate())
+                    {
                         f.ShowDialog();
                     }
                 }
             }
             catch { }
 
-
             return Configs.IsNewVersionAvailable;
         }
-
 
         /// <summary>
         /// Check for update
         /// </summary>
-        public static bool CheckForUpdate() {
+        public static bool CheckForUpdate()
+        {
             Application.Run(new frmCheckForUpdate());
 
             return Configs.IsNewVersionAvailable;
         }
-
     }
 }

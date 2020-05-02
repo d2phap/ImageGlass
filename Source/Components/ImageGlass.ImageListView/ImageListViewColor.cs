@@ -17,11 +17,11 @@
 //
 // Theme support coded by Robby
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System;
 using System.Reflection;
-using System.Collections.Generic;
 
 namespace ImageGlass.ImageListView
 {
@@ -32,59 +32,68 @@ namespace ImageGlass.ImageListView
     public class ImageListViewColor
     {
         #region Member Variables
+
         // control background color
-        Color mControlBackColor;
-        Color mDisabledBackColor;
+        private Color mControlBackColor;
+
+        private Color mDisabledBackColor;
 
         // item colors
-        Color mBackColor;
-        Color mBorderColor;
-        Color mUnFocusedColor1;
-        Color mUnFocusedColor2;
-        Color mUnFocusedBorderColor;
-        Color mUnFocusedForeColor;
-        Color mForeColor;
-        Color mHoverColor1;
-        Color mHoverColor2;
-        Color mHoverBorderColor;
-        Color mInsertionCaretColor;
-        Color mSelectedColor1;
-        Color mSelectedColor2;
-        Color mSelectedBorderColor;
-        Color mSelectedForeColor;
-        Color mDisabledColor1;
-        Color mDisabledColor2;
-        Color mDisabledBorderColor;
-        Color mDisabledForeColor;
+        private Color mBackColor;
+
+        private Color mBorderColor;
+        private Color mUnFocusedColor1;
+        private Color mUnFocusedColor2;
+        private Color mUnFocusedBorderColor;
+        private Color mUnFocusedForeColor;
+        private Color mForeColor;
+        private Color mHoverColor1;
+        private Color mHoverColor2;
+        private Color mHoverBorderColor;
+        private Color mInsertionCaretColor;
+        private Color mSelectedColor1;
+        private Color mSelectedColor2;
+        private Color mSelectedBorderColor;
+        private Color mSelectedForeColor;
+        private Color mDisabledColor1;
+        private Color mDisabledColor2;
+        private Color mDisabledBorderColor;
+        private Color mDisabledForeColor;
 
         // thumbnail & pane
-        Color mImageInnerBorderColor;
-        Color mImageOuterBorderColor;
+        private Color mImageInnerBorderColor;
+
+        private Color mImageOuterBorderColor;
 
         // details view
-        Color mCellForeColor;
-        Color mColumnHeaderBackColor1;
-        Color mColumnHeaderBackColor2;
-        Color mColumnHeaderForeColor;
-        Color mColumnHeaderHoverColor1;
-        Color mColumnHeaderHoverColor2;
-        Color mColumnSelectColor;
-        Color mColumnSeparatorColor;
-        Color mAlternateBackColor;
-        Color mAlternateCellForeColor;
+        private Color mCellForeColor;
+
+        private Color mColumnHeaderBackColor1;
+        private Color mColumnHeaderBackColor2;
+        private Color mColumnHeaderForeColor;
+        private Color mColumnHeaderHoverColor1;
+        private Color mColumnHeaderHoverColor2;
+        private Color mColumnSelectColor;
+        private Color mColumnSeparatorColor;
+        private Color mAlternateBackColor;
+        private Color mAlternateCellForeColor;
 
         // pane
-        Color mPaneBackColor;
-        Color mPaneSeparatorColor;
-        Color mPaneLabelColor;
+        private Color mPaneBackColor;
+
+        private Color mPaneSeparatorColor;
+        private Color mPaneLabelColor;
 
         // selection rectangle
-        Color mSelectionRectangleColor1;
-        Color mSelectionRectangleColor2;
-        Color mSelectionRectangleBorderColor;
-        #endregion
+        private Color mSelectionRectangleColor1;
+
+        private Color mSelectionRectangleColor2;
+        private Color mSelectionRectangleBorderColor;
+
+        #endregion Member Variables
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the background color of the ImageListView control.
         /// </summary>
@@ -95,6 +104,7 @@ namespace ImageGlass.ImageListView
             get { return mControlBackColor; }
             set { mControlBackColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color of the ImageListView control in its disabled state.
         /// </summary>
@@ -105,6 +115,7 @@ namespace ImageGlass.ImageListView
             get { return mDisabledBackColor; }
             set { mDisabledBackColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color of the ImageListViewItem.
         /// </summary>
@@ -115,6 +126,7 @@ namespace ImageGlass.ImageListView
             get { return mBackColor; }
             set { mBackColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color of alternating cells in Details View.
         /// </summary>
@@ -125,6 +137,7 @@ namespace ImageGlass.ImageListView
             get { return mAlternateBackColor; }
             set { mAlternateBackColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the border color of the ImageListViewItem.
         /// </summary>
@@ -135,6 +148,7 @@ namespace ImageGlass.ImageListView
             get { return mBorderColor; }
             set { mBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the foreground color of the ImageListViewItem.
         /// </summary>
@@ -145,6 +159,7 @@ namespace ImageGlass.ImageListView
             get { return mForeColor; }
             set { mForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color1 of the ImageListViewItem if the control is not focused.
         /// </summary>
@@ -155,6 +170,7 @@ namespace ImageGlass.ImageListView
             get { return mUnFocusedColor1; }
             set { mUnFocusedColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color2 of the ImageListViewItem if the control is not focused.
         /// </summary>
@@ -165,6 +181,7 @@ namespace ImageGlass.ImageListView
             get { return mUnFocusedColor2; }
             set { mUnFocusedColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the border color of the ImageListViewItem if the control is not focused.
         /// </summary>
@@ -175,6 +192,7 @@ namespace ImageGlass.ImageListView
             get { return mUnFocusedBorderColor; }
             set { mUnFocusedBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the fore color of the ImageListViewItem if the control is not focused.
         /// </summary>
@@ -185,6 +203,7 @@ namespace ImageGlass.ImageListView
             get { return mUnFocusedForeColor; }
             set { mUnFocusedForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color1 if the ImageListViewItem is hovered.
         /// </summary>
@@ -195,6 +214,7 @@ namespace ImageGlass.ImageListView
             get { return mHoverColor1; }
             set { mHoverColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color2 if the ImageListViewItem is hovered.
         /// </summary>
@@ -205,6 +225,7 @@ namespace ImageGlass.ImageListView
             get { return mHoverColor2; }
             set { mHoverColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the border color of the ImageListViewItem if the item is hovered.
         /// </summary>
@@ -215,6 +236,7 @@ namespace ImageGlass.ImageListView
             get { return mHoverBorderColor; }
             set { mHoverBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the color of the insertion caret.
         /// </summary>
@@ -225,6 +247,7 @@ namespace ImageGlass.ImageListView
             get { return mInsertionCaretColor; }
             set { mInsertionCaretColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color1 if the ImageListViewItem is selected.
         /// </summary>
@@ -235,6 +258,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectedColor1; }
             set { mSelectedColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color2 if the ImageListViewItem is selected.
         /// </summary>
@@ -245,6 +269,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectedColor2; }
             set { mSelectedColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the border color of the ImageListViewItem if the item is selected.
         /// </summary>
@@ -255,6 +280,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectedBorderColor; }
             set { mSelectedBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the fore color of the ImageListViewItem if the item is selected.
         /// </summary>
@@ -265,6 +291,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectedForeColor; }
             set { mSelectedForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color1 if the ImageListViewItem is disabled.
         /// </summary>
@@ -275,6 +302,7 @@ namespace ImageGlass.ImageListView
             get { return mDisabledColor1; }
             set { mDisabledColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color2 if the ImageListViewItem is disabled.
         /// </summary>
@@ -285,6 +313,7 @@ namespace ImageGlass.ImageListView
             get { return mDisabledColor2; }
             set { mDisabledColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the border color of the ImageListViewItem if the item is disabled.
         /// </summary>
@@ -295,6 +324,7 @@ namespace ImageGlass.ImageListView
             get { return mDisabledBorderColor; }
             set { mDisabledBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the fore color of the ImageListViewItem if the item is disabled.
         /// </summary>
@@ -305,6 +335,7 @@ namespace ImageGlass.ImageListView
             get { return mDisabledForeColor; }
             set { mDisabledForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color1 of the column header.
         /// </summary>
@@ -315,6 +346,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnHeaderBackColor1; }
             set { mColumnHeaderBackColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background gradient color2 of the column header.
         /// </summary>
@@ -325,6 +357,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnHeaderBackColor2; }
             set { mColumnHeaderBackColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background hover gradient color1 of the column header.
         /// </summary>
@@ -335,6 +368,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnHeaderHoverColor1; }
             set { mColumnHeaderHoverColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background hover gradient color2 of the column header.
         /// </summary>
@@ -345,6 +379,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnHeaderHoverColor2; }
             set { mColumnHeaderHoverColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the cells foreground color of the column header text.
         /// </summary>
@@ -355,6 +390,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnHeaderForeColor; }
             set { mColumnHeaderForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the cells background color if column is selected in Details View.
         /// </summary>
@@ -365,6 +401,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnSelectColor; }
             set { mColumnSelectColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the color of the separator in Details View.
         /// </summary>
@@ -375,6 +412,7 @@ namespace ImageGlass.ImageListView
             get { return mColumnSeparatorColor; }
             set { mColumnSeparatorColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the foreground color of the cell text in Details View.
         /// </summary>
@@ -385,6 +423,7 @@ namespace ImageGlass.ImageListView
             get { return mCellForeColor; }
             set { mCellForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the foreground color of alternating cells text in Details View.
         /// </summary>
@@ -395,6 +434,7 @@ namespace ImageGlass.ImageListView
             get { return mAlternateCellForeColor; }
             set { mAlternateCellForeColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color of the image pane.
         /// </summary>
@@ -405,6 +445,7 @@ namespace ImageGlass.ImageListView
             get { return mPaneBackColor; }
             set { mPaneBackColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the separator line color between image pane and thumbnail view.
         /// </summary>
@@ -415,6 +456,7 @@ namespace ImageGlass.ImageListView
             get { return mPaneSeparatorColor; }
             set { mPaneSeparatorColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the color of labels in pane view.
         /// </summary>
@@ -425,6 +467,7 @@ namespace ImageGlass.ImageListView
             get { return mPaneLabelColor; }
             set { mPaneLabelColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the image inner border color for thumbnails and pane.
         /// </summary>
@@ -435,6 +478,7 @@ namespace ImageGlass.ImageListView
             get { return mImageInnerBorderColor; }
             set { mImageInnerBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the image outer border color for thumbnails and pane.
         /// </summary>
@@ -445,6 +489,7 @@ namespace ImageGlass.ImageListView
             get { return mImageOuterBorderColor; }
             set { mImageOuterBorderColor = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color1 of the selection rectangle.
         /// </summary>
@@ -455,6 +500,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectionRectangleColor1; }
             set { mSelectionRectangleColor1 = value; }
         }
+
         /// <summary>
         /// Gets or sets the background color2 of the selection rectangle.
         /// </summary>
@@ -465,6 +511,7 @@ namespace ImageGlass.ImageListView
             get { return mSelectionRectangleColor2; }
             set { mSelectionRectangleColor2 = value; }
         }
+
         /// <summary>
         /// Gets or sets the color of the selection rectangle border.
         /// </summary>
@@ -475,9 +522,11 @@ namespace ImageGlass.ImageListView
             get { return mSelectionRectangleBorderColor; }
             set { mSelectionRectangleBorderColor = value; }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the ImageListViewColor class.
         /// </summary>
@@ -589,9 +638,11 @@ namespace ImageGlass.ImageListView
                 throw new ArgumentException("Invalid string format", "definition");
             }
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Instance Methods
+
         /// <summary>
         /// Copies color values from the given object.
         /// </summary>
@@ -608,17 +659,21 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
-        #endregion
+
+        #endregion Instance Methods
 
         #region Static Members
+
         /// <summary>
         /// Represents the default color theme.
         /// </summary>
         public static ImageListViewColor Default { get { return ImageListViewColor.GetDefaultTheme(); } }
+
         /// <summary>
         /// Represents the noir color theme.
         /// </summary>
         public static ImageListViewColor Noir { get { return ImageListViewColor.GetNoirTheme(); } }
+
         /// <summary>
         /// Represents the mandarin color theme.
         /// </summary>
@@ -631,6 +686,7 @@ namespace ImageGlass.ImageListView
         {
             return new ImageListViewColor();
         }
+
         /// <summary>
         /// Sets the color palette to mandarin colors.
         /// </summary>
@@ -696,6 +752,7 @@ namespace ImageGlass.ImageListView
 
             return c;
         }
+
         /// <summary>
         /// Sets the color palette to noir colors.
         /// </summary>
@@ -762,15 +819,17 @@ namespace ImageGlass.ImageListView
 
             return c;
         }
-        #endregion
+
+        #endregion Static Members
 
         #region System.Object Overrides
+
         /// <summary>
-        /// Determines whether all color values of the specified 
+        /// Determines whether all color values of the specified
         /// ImageListViewColor are equal to this instance.
         /// </summary>
         /// <param name="obj">The object to compare with this instance.</param>
-        /// <returns>true if the two instances have the same color values; 
+        /// <returns>true if the two instances have the same color values;
         /// otherwise false.</returns>
         public override bool Equals(object obj)
         {
@@ -795,12 +854,13 @@ namespace ImageGlass.ImageListView
 
             return true;
         }
+
         /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in 
-        /// hashing algorithms and data structures like a hash table. 
+        /// A hash code for this instance, suitable for use in
+        /// hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -863,6 +923,7 @@ namespace ImageGlass.ImageListView
 
             return string.Join("; ", lines.ToArray());
         }
-        #endregion
+
+        #endregion System.Object Overrides
     }
 }

@@ -22,17 +22,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections; // required for NumericComparer : IComparer only
 
-namespace ImageGlass.Library.Comparer {
+namespace ImageGlass.Library.Comparer
+{
+    public class NumericComparer : IComparer
+    {
+        public NumericComparer()
+        {
+        }
 
-    public class NumericComparer: IComparer {
-        public NumericComparer() { }
-
-        public int Compare(object x, object y) {
-            if ((x is string) && (y is string)) {
+        public int Compare(object x, object y)
+        {
+            if ((x is string) && (y is string))
+            {
                 return StringLogicalComparer.Compare((string)x, (string)y);
             }
             return -1;
         }
     }//EOC
-
 }

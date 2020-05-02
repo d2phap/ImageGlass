@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -25,35 +24,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 
-namespace ImageGlass {
+namespace ImageGlass
+{
     /// <summary>
     /// This is a wrapper for the original System.Drawing animator. See <see cref="ImageAnimator"/>.
     /// </summary>
-    public class DefaultGifAnimator : GifAnimator {
-
+    public class DefaultGifAnimator : GifAnimator
+    {
         /// <summary>
         /// Updates the time frame for this image.
         /// </summary>
         /// <param name="image"></param>
-        public void UpdateFrames(Image image) {
+        public void UpdateFrames(Image image)
+        {
             ImageAnimator.UpdateFrames(image);
         }
 
         /// <summary>
-        /// Stops updating frames for the given image. 
+        /// Stops updating frames for the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="eventHandler"></param>
-        public void StopAnimate(Image image, EventHandler eventHandler) {
+        public void StopAnimate(Image image, EventHandler eventHandler)
+        {
             ImageAnimator.StopAnimate(image, eventHandler);
         }
 
         /// <summary>
-        /// Animates the given image. 
+        /// Animates the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="eventHandler"></param>
-        public void Animate(Image image, EventHandler eventHandler) {
+        public void Animate(Image image, EventHandler eventHandler)
+        {
             ImageAnimator.Animate(image, eventHandler);
         }
 
@@ -62,7 +65,8 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        public bool CanAnimate(Image image) {
+        public bool CanAnimate(Image image)
+        {
             return ImageAnimator.CanAnimate(image);
         }
     }

@@ -20,17 +20,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 
-namespace ImageGlass.Library.Comparer {
-    public class DictionaryEntryComparer: IComparer {
+namespace ImageGlass.Library.Comparer
+{
+    public class DictionaryEntryComparer : IComparer
+    {
         private IComparer nc = null;
 
-        public DictionaryEntryComparer(IComparer nc) {
+        public DictionaryEntryComparer(IComparer nc)
+        {
             if (nc == null) throw new Exception("Null IComparer");
             this.nc = nc;
         }
 
-        public int Compare(object x, object y) {
-            if ((x is DictionaryEntry) && (y is DictionaryEntry)) {
+        public int Compare(object x, object y)
+        {
+            if ((x is DictionaryEntry) && (y is DictionaryEntry))
+            {
                 return nc.Compare(((DictionaryEntry)x).Key, ((DictionaryEntry)y).Key);
             }
             return -1;

@@ -23,9 +23,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
-namespace ImageGlass.Heart {
-    public class Img: IDisposable {
-
+namespace ImageGlass.Heart
+{
+    public class Img : IDisposable
+    {
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -33,67 +34,59 @@ namespace ImageGlass.Heart {
         /// </summary>
         public Exception Error { get; private set; } = null;
 
-
         /// <summary>
         /// Gets the value indicates that image loading is done
         /// </summary>
         public bool IsDone { get; private set; } = false;
-
 
         /// <summary>
         /// Gets, sets filename of Img
         /// </summary>
         public string Filename { get; set; } = string.Empty;
 
-
         /// <summary>
         /// Gets, sets Bitmap data
         /// </summary>
         public Bitmap Image { get; set; } = null;
-
 
         /// <summary>
         /// Gets, sets number of image pages
         /// </summary>
         public int PageCount { get; private set; } = 0;
 
-
         /// <summary>
         /// Gets, sets the active page index
         /// </summary>
         public int ActivePageIndex { get; private set; } = 0;
-
 
         /// <summary>
         /// Gets the Exif profile of image
         /// </summary>
         public IExifProfile Exif { get; protected set; } = null;
 
-
         /// <summary>
         /// Gets the color profile of image
         /// </summary>
         public IColorProfile ColorProfile { get; protected set; } = null;
 
-        #endregion
-
-
+        #endregion PUBLIC PROPERTIES
 
         /// <summary>
         /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
-        public Img(string filename) {
+        public Img(string filename)
+        {
             this.Filename = filename;
         }
-
 
         #region PUBLIC FUNCTIONS
 
         /// <summary>
         /// Release all resources of Img
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             this.IsDone = false;
             this.Error = null;
             this.PageCount = 0;
@@ -101,11 +94,11 @@ namespace ImageGlass.Heart {
             this.Exif = null;
             this.ColorProfile = null;
 
-            if (this.Image != null) {
+            if (this.Image != null)
+            {
                 this.Image.Dispose();
             }
         }
-
 
         /// <summary>
         /// Load the image
@@ -115,14 +108,16 @@ namespace ImageGlass.Heart {
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false) {
+        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false)
+        {
             // reset done status
             this.IsDone = false;
 
             // reset error
             this.Error = null;
 
-            try {
+            try
+            {
                 // load image data
                 var data = await Photo.LoadAsync(
                     filename: this.Filename,
@@ -137,23 +132,22 @@ namespace ImageGlass.Heart {
                 this.Exif = data.Exif;
                 this.ColorProfile = data.ColorProfile;
 
-                if (this.Image != null) {
+                if (this.Image != null)
+                {
                     // Get page count
                     var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
                     this.PageCount = this.Image.GetFrameCount(dim);
                 }
-                
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 // save the error
                 this.Error = ex;
             }
 
-
             // done loading
             this.IsDone = true;
         }
-
 
         /// <summary>
         /// Get thumbnail
@@ -161,16 +155,17 @@ namespace ImageGlass.Heart {
         /// <param name="size">A custom size of thumbnail</param>
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true) {
+        public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true)
+        {
             return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
         }
-
 
         /// <summary>
         /// Sets active page index
         /// </summary>
         /// <param name="index">Page index</param>
-        public void SetActivePage(int index) {
+        public void SetActivePage(int index)
+        {
             if (this.Image == null) return;
 
             // Check if page index is greater than upper limit
@@ -188,17 +183,16 @@ namespace ImageGlass.Heart {
             this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
         }
 
-
         /// <summary>
         /// Save image pages to files
         /// </summary>
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
-        public async Task SaveImagePages(string destFolder) {
+        public async Task SaveImagePages(string destFolder)
+        {
             await Photo.SavePagesAsync(this.Filename, destFolder);
         }
 
-        #endregion
-
+        #endregion PUBLIC FUNCTIONS
     }
 }

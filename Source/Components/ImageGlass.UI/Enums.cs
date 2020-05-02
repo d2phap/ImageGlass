@@ -17,25 +17,30 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.UI {
-    public enum ThemeUninstallingResult {
+namespace ImageGlass.UI
+{
+    public enum ThemeUninstallingResult
+    {
         SUCCESS = 0,
         ERROR = 1,
         ERROR_THEME_NOT_FOUND = 2
     }
 
-    public enum ThemeInstallingResult {
+    public enum ThemeInstallingResult
+    {
         UNKNOWN = -1,
         SUCCESS = 0,
         ERROR = 1
     }
 
-    public enum ThemePackingResult {
+    public enum ThemePackingResult
+    {
         SUCCESS = 0,
         ERROR = 1
     }
 
-    public enum ToolbarAlignment {
+    public enum ToolbarAlignment
+    {
         LEFT = 0,
         CENTER = 1,
     }

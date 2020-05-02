@@ -75,7 +75,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         public StringCache()
         {
-            //int numProcs = Environment.ProcessorCount; 
+            //int numProcs = Environment.ProcessorCount;
             _stringCache = new ConcurrentDictionary<char[], string>(new TagComparer());
         }
 

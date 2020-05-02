@@ -14,7 +14,6 @@ Issues solved:
 2. The tooltip would "flash" when the user re-visited the button. Namely,
    the initial delay time for the tooltip was too low.
 
-
 Part of
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2020 DUONG DIEU PHAP
@@ -39,11 +38,13 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI {
-    public class ToolStripToolTip: ToolStrip {
-        ToolStripItem mouseOverItem = null;
-        Point mouseOverPoint;
-        Timer timer;
+namespace ImageGlass.UI
+{
+    public class ToolStripToolTip : ToolStrip
+    {
+        private ToolStripItem mouseOverItem = null;
+        private Point mouseOverPoint;
+        private Timer timer;
         private ToolTip _tooltip;
         public int ToolTipInterval = 4000;
         public string ToolTipText;
@@ -51,9 +52,12 @@ namespace ImageGlass.UI {
 
         private ToolbarAlignment _alignment = ToolbarAlignment.LEFT;
 
-        private ToolTip Tooltip {
-            get {
-                if (_tooltip == null) {
+        private ToolTip Tooltip
+        {
+            get
+            {
+                if (_tooltip == null)
+                {
                     _tooltip = new ToolTip();
                     Tooltip.AutomaticDelay = 2000;
                     Tooltip.InitialDelay = 2000;
@@ -65,22 +69,26 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Gets, sets items alignment
         /// </summary>
-        public ToolbarAlignment Alignment {
+        public ToolbarAlignment Alignment
+        {
             get => _alignment;
-            set {
+            set
+            {
                 this._alignment = value;
 
                 this.UpdateAlignment();
             }
         }
 
-
         #region Protected methods
-        protected override void OnMouseMove(MouseEventArgs mea) {
+
+        protected override void OnMouseMove(MouseEventArgs mea)
+        {
             base.OnMouseMove(mea);
             ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
             if (mouseOverItem != newMouseOverItem ||
-                (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height))) {
+                (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height)))
+            {
                 mouseOverItem = newMouseOverItem;
                 mouseOverPoint = mea.Location;
                 Tooltip.Hide(this);
@@ -89,20 +97,24 @@ namespace ImageGlass.UI {
             }
         }
 
-        protected override void OnMouseClick(MouseEventArgs e) {
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
             base.OnMouseClick(e);
             ToolStripItem newMouseOverItem = this.GetItemAt(e.Location);
-            if (newMouseOverItem != null) {
+            if (newMouseOverItem != null)
+            {
                 Tooltip.Hide(this);
             }
         }
 
-        protected override void OnMouseUp(MouseEventArgs mea) {
+        protected override void OnMouseUp(MouseEventArgs mea)
+        {
             base.OnMouseUp(mea);
             ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
         }
 
-        protected override void OnMouseLeave(EventArgs e) {
+        protected override void OnMouseLeave(EventArgs e)
+        {
             base.OnMouseLeave(e);
             timer.Stop();
             Tooltip.Hide(this);
@@ -110,24 +122,30 @@ namespace ImageGlass.UI {
             mouseOverItem = null;
         }
 
-        private void timer_Tick(object sender, EventArgs e) {
+        private void timer_Tick(object sender, EventArgs e)
+        {
             timer.Stop();
-            try {
+            try
+            {
                 Point currentMouseOverPoint;
                 if (ToolTipShowUp)
                     currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y - Cursor.Current.Size.Height + Cursor.Current.HotSpot.Y));
                 else
                     currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y + Cursor.Current.Size.Height - Cursor.Current.HotSpot.Y));
 
-                if (mouseOverItem == null) {
-                    if (ToolTipText != null && ToolTipText.Length > 0) {
+                if (mouseOverItem == null)
+                {
+                    if (ToolTipText != null && ToolTipText.Length > 0)
+                    {
                         Tooltip.Show(ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
                     }
                 }
                 else if ((!(mouseOverItem is ToolStripDropDownButton) && !(mouseOverItem is ToolStripSplitButton)) ||
                     ((mouseOverItem is ToolStripDropDownButton) && !((ToolStripDropDownButton)mouseOverItem).DropDown.Visible) ||
-                    (((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible))) {
-                    if (mouseOverItem.ToolTipText != null && mouseOverItem.ToolTipText.Length > 0 && Tooltip != null) {
+                    (((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible)))
+                {
+                    if (mouseOverItem.ToolTipText != null && mouseOverItem.ToolTipText.Length > 0 && Tooltip != null)
+                    {
                         Tooltip.Show(mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
                     }
                 }
@@ -135,57 +153,60 @@ namespace ImageGlass.UI {
             catch { }
         }
 
-
-        protected override void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing)
+        {
             base.Dispose(disposing);
-            if (disposing) {
+            if (disposing)
+            {
                 timer.Dispose();
                 Tooltip.Dispose();
             }
         }
 
-        #endregion
+        #endregion Protected methods
 
-
-        protected override void OnSizeChanged(EventArgs e) {
+        protected override void OnSizeChanged(EventArgs e)
+        {
             base.OnSizeChanged(e);
             this.UpdateAlignment();
         }
 
-
-        public ToolStripToolTip() : base() {
+        public ToolStripToolTip() : base()
+        {
             ShowItemToolTips = false;
-            timer = new Timer {
+            timer = new Timer
+            {
                 Enabled = false,
                 Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
             };
             timer.Tick += new EventHandler(timer_Tick);
         }
 
-
         /// <summary>
         /// Update the alignment if toolstrip items
         /// </summary>
-        public void UpdateAlignment() {
+        public void UpdateAlignment()
+        {
             if (this.Items.Count == 0) return;
-
 
             var firstBtn = this.Items[0];
             var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
 
-
             // reset the alignment to left
             firstBtn.Margin = defaultMargin;
 
-
-            if (this.Alignment == ToolbarAlignment.CENTER) {
+            if (this.Alignment == ToolbarAlignment.CENTER)
+            {
                 // get the correct content width, excluding the sticky right items
                 var toolbarContentWidth = 0;
-                foreach (ToolStripItem item in this.Items) {
-                    if (item.Alignment == ToolStripItemAlignment.Right) {
+                foreach (ToolStripItem item in this.Items)
+                {
+                    if (item.Alignment == ToolStripItemAlignment.Right)
+                    {
                         toolbarContentWidth += item.Width * 2;
                     }
-                    else {
+                    else
+                    {
                         toolbarContentWidth += item.Width;
                     }
 
@@ -195,14 +216,15 @@ namespace ImageGlass.UI {
 
                 // if the content cannot fit the toolbar size:
                 // (toolbarContentWidth > toolMain.Size.Width)
-                if (this.OverflowButton.Visible) {
+                if (this.OverflowButton.Visible)
+                {
                     // align left
                     firstBtn.Margin = defaultMargin;
                 }
-                else {
+                else
+                {
                     // the default margin (left alignment)
                     var margin = defaultMargin;
-
 
                     // get the gap of content width and toolbar width
                     int gap = Math.Abs(this.Width - toolbarContentWidth);

@@ -16,12 +16,12 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Collections;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace ImageGlass.ImageListView
 {
@@ -33,14 +33,17 @@ namespace ImageGlass.ImageListView
         public class ImageListViewItemCollection : IList<ImageListViewItem>, ICollection, IList, IEnumerable
         {
             #region Member Variables
+
             private List<ImageListViewItem> mItems;
             internal ImageListView mImageListView;
             private ImageListViewItem mFocused;
             private Dictionary<Guid, ImageListViewItem> lookUp;
             internal bool collectionModified;
-            #endregion
+
+            #endregion Member Variables
 
             #region Constructors
+
             /// <summary>
             /// Initializes a new instance of the <see cref="ImageListViewItemCollection"/>  class.
             /// </summary>
@@ -53,9 +56,11 @@ namespace ImageGlass.ImageListView
                 mImageListView = owner;
                 collectionModified = true;
             }
-            #endregion
+
+            #endregion Constructors
 
             #region Properties
+
             /// <summary>
             /// Gets the number of elements contained in the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -63,6 +68,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return mItems.Count; }
             }
+
             /// <summary>
             /// Gets a value indicating whether the <see cref="ImageListViewItemCollection"/> is read-only.
             /// </summary>
@@ -70,6 +76,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Gets or sets the focused item.
             /// </summary>
@@ -88,11 +95,13 @@ namespace ImageGlass.ImageListView
                         mImageListView.Refresh();
                 }
             }
+
             /// <summary>
             /// Gets the <see cref="ImageListView"/> owning this collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
             public ImageListView ImageListView { get { return mImageListView; } }
+
             /// <summary>
             /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
             /// </summary>
@@ -138,6 +147,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Gets the <see cref="ImageListViewItem"/> with the specified Guid.
             /// </summary>
@@ -149,9 +159,11 @@ namespace ImageGlass.ImageListView
                     return lookUp[guid];
                 }
             }
-            #endregion
+
+            #endregion Properties
 
             #region Instance Methods
+
             /// <summary>
             /// [PHAP] Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -172,9 +184,9 @@ namespace ImageGlass.ImageListView
                     {
                         mImageListView.Refresh();
                     }
-                        
                 }
             }
+
             /// <summary>
             /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -183,6 +195,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(item, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -194,6 +207,7 @@ namespace ImageGlass.ImageListView
                 item.clonedThumbnail = initialThumbnail;
                 Add(item, adaptor);
             }
+
             /// <summary>
             /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -203,6 +217,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(item, initialThumbnail, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -211,6 +226,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(filename, null);
             }
+
             /// <summary>
             /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -223,6 +239,7 @@ namespace ImageGlass.ImageListView
                 item.clonedThumbnail = initialThumbnail;
                 Add(item);
             }
+
             /// <summary>
             /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -233,6 +250,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(key, text, null, adaptor);
             }
+
             /// <summary>
             /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -242,6 +260,7 @@ namespace ImageGlass.ImageListView
             {
                 Add(key, text, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -255,6 +274,7 @@ namespace ImageGlass.ImageListView
                 item.clonedThumbnail = initialThumbnail;
                 Add(item, adaptor);
             }
+
             /// <summary>
             /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -265,10 +285,11 @@ namespace ImageGlass.ImageListView
             {
                 Add(key, text, initialThumbnail, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="items">An array of <see cref="ImageListViewItem"/> 
+            /// <param name="items">An array of <see cref="ImageListViewItem"/>
             /// to add to the <see cref="ImageListViewItemCollection"/>.</param>
             /// <param name="adaptor">The adaptor associated with this item.</param>
             public void AddRange(ImageListViewItem[] items, ImageListView.ImageListViewItemAdaptor adaptor)
@@ -285,15 +306,17 @@ namespace ImageGlass.ImageListView
                     mImageListView.ResumePaint();
                 }
             }
+
             /// <summary>
             /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="items">An array of <see cref="ImageListViewItem"/> 
+            /// <param name="items">An array of <see cref="ImageListViewItem"/>
             /// to add to the <see cref="ImageListViewItemCollection"/>.</param>
             public void AddRange(ImageListViewItem[] items)
             {
                 AddRange(items, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -309,6 +332,7 @@ namespace ImageGlass.ImageListView
 
                 AddRange(items);
             }
+
             /// <summary>
             /// Removes all items from the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
@@ -317,7 +341,7 @@ namespace ImageGlass.ImageListView
                 mItems.Clear();
 
                 mFocused = null;
-                
+
                 // [IG_CHANGE] clear does not deallocate memory
                 //lookUp.Clear();
                 lookUp = new Dictionary<Guid, ImageListViewItem>();
@@ -339,36 +363,39 @@ namespace ImageGlass.ImageListView
                 // Raise the clear event
                 mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Refresh, null));
             }
+
             /// <summary>
-            /// Determines whether the <see cref="ImageListViewItemCollection"/> 
+            /// Determines whether the <see cref="ImageListViewItemCollection"/>
             /// contains a specific value.
             /// </summary>
-            /// <param name="item">The object to locate in the 
+            /// <param name="item">The object to locate in the
             /// <see cref="ImageListViewItemCollection"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> is found in the 
+            /// true if <paramref name="item"/> is found in the
             /// <see cref="ImageListViewItemCollection"/>; otherwise, false.
             /// </returns>
             public bool Contains(ImageListViewItem item)
             {
                 return mItems.Contains(item);
             }
+
             /// <summary>
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> 
+            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/>
             /// that can be used to iterate through the collection.
             /// </returns>
             public IEnumerator<ImageListViewItem> GetEnumerator()
             {
                 return mItems.GetEnumerator();
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to
             /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
             /// <param name="adaptor">The adaptor associated with this item.</param>
             public void Insert(int index, ImageListViewItem item, ImageListView.ImageListViewItemAdaptor adaptor)
@@ -382,16 +409,18 @@ namespace ImageGlass.ImageListView
                     mImageListView.Refresh();
                 }
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to
             /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
             public void Insert(int index, ImageListViewItem item)
             {
                 Insert(index, item, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -401,6 +430,7 @@ namespace ImageGlass.ImageListView
             {
                 Insert(index, new ImageListViewItem(filename));
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -413,6 +443,7 @@ namespace ImageGlass.ImageListView
                 item.clonedThumbnail = initialThumbnail;
                 Insert(index, item);
             }
+
             /// <summary>
             /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -424,6 +455,7 @@ namespace ImageGlass.ImageListView
             {
                 Insert(index, key, text, null, adaptor);
             }
+
             /// <summary>
             /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -434,6 +466,7 @@ namespace ImageGlass.ImageListView
             {
                 Insert(index, key, text, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
             /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -448,6 +481,7 @@ namespace ImageGlass.ImageListView
                 item.clonedThumbnail = initialThumbnail;
                 Insert(index, item, adaptor);
             }
+
             /// <summary>
             /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
@@ -459,16 +493,17 @@ namespace ImageGlass.ImageListView
             {
                 Insert(index, key, text, initialThumbnail, mImageListView.defaultAdaptor);
             }
+
             /// <summary>
-            /// Removes the first occurrence of a specific object 
+            /// Removes the first occurrence of a specific object
             /// from the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to remove 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to remove
             /// from the <see cref="ImageListViewItemCollection"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> was successfully removed from the 
-            /// <see cref="ImageListViewItemCollection"/>; otherwise, false. This method also 
-            /// returns false if <paramref name="item"/> is not found in the original 
+            /// true if <paramref name="item"/> was successfully removed from the
+            /// <see cref="ImageListViewItemCollection"/>; otherwise, false. This method also
+            /// returns false if <paramref name="item"/> is not found in the original
             /// <see cref="ImageListViewItemCollection"/>.
             /// </returns>
             public bool Remove(ImageListViewItem item)
@@ -484,6 +519,7 @@ namespace ImageGlass.ImageListView
 
                 return ret;
             }
+
             /// <summary>
             /// Removes the <see cref="ImageListViewItem"/> at the specified index.
             /// </summary>
@@ -492,9 +528,11 @@ namespace ImageGlass.ImageListView
             {
                 Remove(mItems[index]);
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Helper Methods
+
             /// <summary>
             /// Adds the (empty) subitem to each item for the given custom column.
             /// </summary>
@@ -504,6 +542,7 @@ namespace ImageGlass.ImageListView
                 foreach (ImageListViewItem item in mItems)
                     item.AddSubItemText(guid);
             }
+
             /// <summary>
             /// Determines whether the collection contains the given key.
             /// </summary>
@@ -513,18 +552,20 @@ namespace ImageGlass.ImageListView
             {
                 return lookUp.ContainsKey(guid);
             }
+
             /// <summary>
             /// Gets the value associated with the specified key.
             /// </summary>
             /// <param name="guid">The key of the item.</param>
-            /// <param name="item">the value associated with the specified key, 
-            /// if the key is found; otherwise, the default value for the type 
+            /// <param name="item">the value associated with the specified key,
+            /// if the key is found; otherwise, the default value for the type
             /// of the value parameter. This parameter is passed uninitialized.</param>
             /// <returns>true if the collection contains the given key; otherwise false.</returns>
             internal bool TryGetValue(Guid guid, out ImageListViewItem item)
             {
                 return lookUp.TryGetValue(guid, out item);
             }
+
             /// <summary>
             /// Removes the subitem of each item for the given custom column.
             /// </summary>
@@ -534,6 +575,7 @@ namespace ImageGlass.ImageListView
                 foreach (ImageListViewItem item in mItems)
                     item.RemoveSubItemText(guid);
             }
+
             /// <summary>
             /// Removes the subitem of each item for the given custom column.
             /// </summary>
@@ -542,6 +584,7 @@ namespace ImageGlass.ImageListView
                 foreach (ImageListViewItem item in mItems)
                     item.RemoveAllSubItemTexts();
             }
+
             /// <summary>
             /// Adds the given item without raising a selection changed event.
             /// </summary>
@@ -552,6 +595,7 @@ namespace ImageGlass.ImageListView
             {
                 return InsertInternal(-1, item, adaptor);
             }
+
             /// <summary>
             /// Inserts the given item without raising a selection changed event.
             /// </summary>
@@ -638,6 +682,7 @@ namespace ImageGlass.ImageListView
 
                 return true;
             }
+
             /// <summary>
             /// Removes the given item without raising a selection changed event.
             /// </summary>
@@ -646,6 +691,7 @@ namespace ImageGlass.ImageListView
             {
                 RemoveInternal(item, true);
             }
+
             /// <summary>
             /// Removes the given item without raising a selection changed event.
             /// </summary>
@@ -676,6 +722,7 @@ namespace ImageGlass.ImageListView
 
                 return ret;
             }
+
             /// <summary>
             /// Returns the index of the specified item.
             /// </summary>
@@ -683,6 +730,7 @@ namespace ImageGlass.ImageListView
             {
                 return item.Index;
             }
+
             /// <summary>
             /// Returns the index of the item with the specified Guid.
             /// </summary>
@@ -693,6 +741,7 @@ namespace ImageGlass.ImageListView
                     return item.Index;
                 return -1;
             }
+
             /// <summary>
             /// Sorts the items by the sort order and sort column of the owner.
             /// </summary>
@@ -748,6 +797,7 @@ namespace ImageGlass.ImageListView
                 mImageListView.Cursor = cursor;
                 collectionModified = true;
             }
+
             /// <summary>
             /// Updates groups after adding or removing an item. This just updates
             /// the count of items in groups, it DOES NOT re-sort the items.
@@ -811,9 +861,11 @@ namespace ImageGlass.ImageListView
                 foreach (ImageListView.ImageListViewGroup group in emptyGroups)
                     mImageListView.groups.Remove(group);
             }
-            #endregion
+
+            #endregion Helper Methods
 
             #region ImageListViewItemComparer
+
             /// <summary>
             /// Compares items by the sort order and sort column of the owner.
             /// </summary>
@@ -904,76 +956,99 @@ namespace ImageGlass.ImageListView
                                 case ColumnType.DateAccessed:
                                     result = DateTime.Compare(x.DateAccessed, y.DateAccessed);
                                     break;
+
                                 case ColumnType.DateCreated:
                                     result = DateTime.Compare(x.DateCreated, y.DateCreated);
                                     break;
+
                                 case ColumnType.DateModified:
                                     result = DateTime.Compare(x.DateModified, y.DateModified);
                                     break;
+
                                 case ColumnType.Dimensions:
                                     long ax = x.Dimensions.Width * x.Dimensions.Height;
                                     long ay = y.Dimensions.Width * y.Dimensions.Height;
                                     result = (ax < ay ? -1 : (ax > ay ? 1 : 0));
                                     break;
+
                                 case ColumnType.FileName:
                                     result = CompareStrings(x.FileName, y.FileName, natural);
                                     break;
+
                                 case ColumnType.FilePath:
                                     result = CompareStrings(x.FilePath, y.FilePath, natural);
                                     break;
+
                                 case ColumnType.FileSize:
                                     result = (x.FileSize < y.FileSize ? -1 : (x.FileSize > y.FileSize ? 1 : 0));
                                     break;
+
                                 case ColumnType.FileType:
                                     result = CompareStrings(x.FileType, y.FileType, natural);
                                     break;
+
                                 case ColumnType.Name:
                                     result = CompareStrings(x.Text, y.Text, natural);
                                     break;
+
                                 case ColumnType.Resolution:
                                     float rx = x.Resolution.Width * x.Resolution.Height;
                                     float ry = y.Resolution.Width * y.Resolution.Height;
                                     result = (rx < ry ? -1 : (rx > ry ? 1 : 0));
                                     break;
+
                                 case ColumnType.ImageDescription:
                                     result = CompareStrings(x.ImageDescription, y.ImageDescription, natural);
                                     break;
+
                                 case ColumnType.EquipmentModel:
                                     result = CompareStrings(x.EquipmentModel, y.EquipmentModel, natural);
                                     break;
+
                                 case ColumnType.DateTaken:
                                     result = DateTime.Compare(x.DateTaken, y.DateTaken);
                                     break;
+
                                 case ColumnType.Artist:
                                     result = CompareStrings(x.Artist, y.Artist, natural);
                                     break;
+
                                 case ColumnType.Copyright:
                                     result = CompareStrings(x.Copyright, y.Copyright, natural);
                                     break;
+
                                 case ColumnType.ExposureTime:
                                     result = (x.ExposureTime < y.ExposureTime ? -1 : (x.ExposureTime > y.ExposureTime ? 1 : 0));
                                     break;
+
                                 case ColumnType.FNumber:
                                     result = (x.FNumber < y.FNumber ? -1 : (x.FNumber > y.FNumber ? 1 : 0));
                                     break;
+
                                 case ColumnType.ISOSpeed:
                                     result = (x.ISOSpeed < y.ISOSpeed ? -1 : (x.ISOSpeed > y.ISOSpeed ? 1 : 0));
                                     break;
+
                                 case ColumnType.UserComment:
                                     result = CompareStrings(x.UserComment, y.UserComment, natural);
                                     break;
+
                                 case ColumnType.Rating:
                                     result = (x.Rating < y.Rating ? -1 : (x.Rating > y.Rating ? 1 : 0));
                                     break;
+
                                 case ColumnType.Software:
                                     result = CompareStrings(x.Software, y.Software, natural);
                                     break;
+
                                 case ColumnType.FocalLength:
                                     result = (x.FocalLength < y.FocalLength ? -1 : (x.FocalLength > y.FocalLength ? 1 : 0));
                                     break;
+
                                 case ColumnType.Custom:
                                     result = CompareStrings(x.GetSubItemText(mSortColumn.Guid), y.GetSubItemText(mSortColumn.Guid), natural);
                                     break;
+
                                 default:
                                     result = 0;
                                     break;
@@ -984,9 +1059,11 @@ namespace ImageGlass.ImageListView
                     return sign * result;
                 }
             }
-            #endregion
+
+            #endregion ImageListViewItemComparer
 
             #region Unsupported Interface
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -994,6 +1071,7 @@ namespace ImageGlass.ImageListView
             {
                 mItems.CopyTo(array, arrayIndex);
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
             /// </summary>
@@ -1002,6 +1080,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.ICollection"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -1011,6 +1090,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An array of ImageListViewItem is required.", "array");
                 mItems.CopyTo((ImageListViewItem[])array, index);
             }
+
             /// <summary>
             /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -1018,6 +1098,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return mItems.Count; }
             }
+
             /// <summary>
             /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection"/> is synchronized (thread safe).
             /// </summary>
@@ -1025,6 +1106,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
             /// </summary>
@@ -1032,6 +1114,7 @@ namespace ImageGlass.ImageListView
             {
                 get { throw new NotSupportedException(); }
             }
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -1043,6 +1126,7 @@ namespace ImageGlass.ImageListView
                 Add(item);
                 return mItems.IndexOf(item);
             }
+
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.IList"/> contains a specific value.
             /// </summary>
@@ -1052,6 +1136,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewItem is required.", "value");
                 return mItems.Contains((ImageListViewItem)value);
             }
+
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
@@ -1062,6 +1147,7 @@ namespace ImageGlass.ImageListView
             {
                 return mItems.GetEnumerator();
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -1071,6 +1157,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewItem is required.", "value");
                 return IndexOf((ImageListViewItem)value);
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.IList"/> at the specified index.
             /// </summary>
@@ -1080,6 +1167,7 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("An object of type ImageListViewItem is required.", "value");
                 Insert(index, (ImageListViewItem)value);
             }
+
             /// <summary>
             /// Gets a value indicating whether the <see cref="T:System.Collections.IList"/> has a fixed size.
             /// </summary>
@@ -1087,6 +1175,7 @@ namespace ImageGlass.ImageListView
             {
                 get { return false; }
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList"/>.
             /// </summary>
@@ -1097,6 +1186,7 @@ namespace ImageGlass.ImageListView
                 ImageListViewItem item = (ImageListViewItem)value;
                 Remove(item);
             }
+
             /// <summary>
             /// Gets or sets the <see cref="System.Object"/> at the specified index.
             /// </summary>
@@ -1113,7 +1203,8 @@ namespace ImageGlass.ImageListView
                     this[index] = (ImageListViewItem)value;
                 }
             }
-            #endregion
+
+            #endregion Unsupported Interface
         }
     }
 }

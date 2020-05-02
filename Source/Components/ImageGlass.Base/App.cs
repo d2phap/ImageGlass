@@ -24,36 +24,35 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ImageGlass.Base {
+namespace ImageGlass.Base
+{
     /// <summary>
     /// The base information of ImageGlass app
     /// </summary>
-    public static class App {
-        
+    public static class App
+    {
         /// <summary>
         /// Gets the application executable path
         /// </summary>
         public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
-
 
         /// <summary>
         /// Gets the application version
         /// </summary>
         public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion; }
 
-
         /// <summary>
         /// Gets value of Portable mode if the startup dir is writable
         /// </summary>
         public static bool IsPortable => Helpers.CheckPathWritable(PathType.Dir, StartUpDir());
-
 
         /// <summary>
         /// Get the path based on the startup folder of ImageGlass.
         /// </summary>
         /// <param name="paths"></param>
         /// <returns></returns>
-        public static string StartUpDir(params string[] paths) {
+        public static string StartUpDir(params string[] paths)
+        {
             var path = Application.StartupPath;
 
             var newPaths = paths.ToList();
@@ -62,7 +61,6 @@ namespace ImageGlass.Base {
             return Path.Combine(newPaths.ToArray());
         }
 
-
         /// <summary>
         /// Returns the path based on the configuration folder of ImageGlass.
         /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
@@ -70,11 +68,13 @@ namespace ImageGlass.Base {
         /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="paths"></param>
         /// <returns></returns>
-        public static string ConfigDir(PathType type, params string[] paths) {
+        public static string ConfigDir(PathType type, params string[] paths)
+        {
             // use StartUp dir if it's writable
             var startUpDir = StartUpDir(paths);
 
-            if (Helpers.CheckPathWritable(type, startUpDir)) {
+            if (Helpers.CheckPathWritable(type, startUpDir))
+            {
                 return startUpDir;
             }
 
@@ -88,18 +88,19 @@ namespace ImageGlass.Base {
             return igAppDataDir;
         }
 
-
         /// <summary>
         /// Parse string to absolute path
         /// </summary>
         /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
         /// <returns></returns>
-        public static string ToAbsolutePath(string inputPath) {
+        public static string ToAbsolutePath(string inputPath)
+        {
             var path = inputPath;
             var protocol = Constants.URI_SCHEME + ":";
 
             // If inputPath is URI Scheme
-            if (path.StartsWith(protocol)) {
+            if (path.StartsWith(protocol))
+            {
                 // Retrieve the real path
                 path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
             }
@@ -110,38 +111,42 @@ namespace ImageGlass.Base {
             return path;
         }
 
-
         /// <summary>
         /// Center the given form to the current screen.
-        /// Note***: The method Form.CenterToScreen() contains a bug: 
+        /// Note***: The method Form.CenterToScreen() contains a bug:
         /// https://stackoverflow.com/a/6837499/2856887
         /// </summary>
         /// <param name="form">The form to center</param>
-        public static void CenterFormToScreen(Form form) {
+        public static void CenterFormToScreen(Form form)
+        {
             var screen = Screen.FromControl(form);
 
             var workingArea = screen.WorkingArea;
-            form.Location = new Point() {
+            form.Location = new Point()
+            {
                 X = Math.Max(workingArea.X, workingArea.X + (workingArea.Width - form.Width) / 2),
                 Y = Math.Max(workingArea.Y, workingArea.Y + (workingArea.Height - form.Height) / 2)
             };
         }
 
-
         /// <summary>
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static void LogIt(string msg) {
+        public static void LogIt(string msg)
+        {
 #if DEBUG
-            try {
+            try
+            {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);
-                if (!Directory.Exists(tempDir)) {
+                if (!Directory.Exists(tempDir))
+                {
                     Directory.CreateDirectory(tempDir);
                 }
                 var path = Path.Combine(tempDir, "iglog.log");
 
-                using (TextWriter tw = new StreamWriter(path, append: true)) {
+                using (TextWriter tw = new StreamWriter(path, append: true))
+                {
                     tw.WriteLine(msg);
                     tw.Flush();
                     tw.Close();
@@ -150,6 +155,5 @@ namespace ImageGlass.Base {
             catch { }
 #endif
         }
-
     }
 }

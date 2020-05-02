@@ -22,24 +22,24 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass.Library.WinAPI {
+namespace ImageGlass.Library.WinAPI
+{
     /// <summary>
     /// Make the frameless form movable when dragging itself or its controls
     /// </summary>
-    public class MovableForm {
+    public class MovableForm
+    {
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
 
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
-
-
         private Form _form;
         private bool _isKeyDown = true;
-
 
         #region Public props
 
@@ -63,25 +63,24 @@ namespace ImageGlass.Library.WinAPI {
         /// </summary>
         public HashSet<string> FreeMoveControlNames { get; set; } = new HashSet<string>();
 
-        #endregion
-
-
+        #endregion Public props
 
         /// <summary>
         /// Initialize the MovableForm
         /// </summary>
         /// <param name="form">The form to make it movable</param>
-        public MovableForm(Form form) {
+        public MovableForm(Form form)
+        {
             _form = form;
         }
-
 
         #region Public methods
 
         /// <summary>
         /// Enable moving ability on this form
         /// </summary>
-        public void Enable() {
+        public void Enable()
+        {
             _isKeyDown = this.Key == Keys.None;
 
             _form.KeyDown += this.Form_KeyDown;
@@ -93,10 +92,12 @@ namespace ImageGlass.Library.WinAPI {
         /// Enable moving ability on the given controls
         /// </summary>
         /// <param name="controls"></param>
-        public void Enable(params Control[] controls) {
+        public void Enable(params Control[] controls)
+        {
             _isKeyDown = this.Key == Keys.None;
 
-            foreach (var item in controls) {
+            foreach (var item in controls)
+            {
                 item.MouseDown += Event_MouseDown;
             }
         }
@@ -104,58 +105,63 @@ namespace ImageGlass.Library.WinAPI {
         /// <summary>
         /// Disable moving ability on this form
         /// </summary>
-        public void Disable() {
+        public void Disable()
+        {
             _form.KeyDown -= Form_KeyDown;
             _form.KeyUp -= Form_KeyUp;
             _form.MouseDown -= Event_MouseDown;
         }
 
-
         /// <summary>
         /// Disable moving ability on the given controls
         /// </summary>
         /// <param name="controls"></param>
-        public void Disable(params Control[] controls) {
-            foreach (var item in controls) {
+        public void Disable(params Control[] controls)
+        {
+            foreach (var item in controls)
+            {
                 item.MouseDown -= Event_MouseDown;
             }
         }
 
-        #endregion
-
+        #endregion Public methods
 
         #region Events: Frameless form moving
 
-        private void Form_KeyDown(object sender, KeyEventArgs e) {
-            if (this.Key == Keys.None) {
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.Key == Keys.None)
+            {
                 _isKeyDown = true;
             }
-            else {
+            else
+            {
                 _isKeyDown = e.KeyData == this.Key;
             }
         }
 
-        private void Form_KeyUp(object sender, KeyEventArgs e) {
+        private void Form_KeyUp(object sender, KeyEventArgs e)
+        {
             _isKeyDown = this.Key == Keys.None;
         }
 
-        private void Event_MouseDown(object sender, MouseEventArgs e) {
+        private void Event_MouseDown(object sender, MouseEventArgs e)
+        {
             // check if 'sender' can move without keydown event
-            var control = (Control) sender;
+            var control = (Control)sender;
             var isFreeMove = this.FreeMoveControlNames.Count > 0
                 && this.FreeMoveControlNames.Contains(control.Name);
-
 
             if (e.Clicks == 1
                 && e.Button == this.MouseButton
                 && this.IsAllowMoving
-                && (_isKeyDown || isFreeMove)) {
+                && (_isKeyDown || isFreeMove))
+            {
                 ReleaseCapture();
                 SendMessage(_form.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        #endregion
 
-
+        #endregion Events: Frameless form moving
     }
 }

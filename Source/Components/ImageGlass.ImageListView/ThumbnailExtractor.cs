@@ -22,10 +22,13 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+
 #if USEWIC
+
 using System.Runtime.ExceptionServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 #endif
 
 namespace ImageGlass.ImageListView
@@ -36,17 +39,24 @@ namespace ImageGlass.ImageListView
     internal static class ThumbnailExtractor
     {
         #region Exif Tag IDs
+
         private const int TagThumbnailData = 0x501B;
         private const int TagOrientation = 0x0112;
-        #endregion
+
+        #endregion Exif Tag IDs
 
 #if USEWIC
+
         #region WIC Metadata Paths
+
         private static readonly string[] WICPathOrientation = new string[] { "/app1/ifd/{ushort=274}", "/xmp/tiff:Orientation" };
-        #endregion
+
+        #endregion WIC Metadata Paths
+
 #endif
 
         #region Public Methods
+
         /// <summary>
         /// Creates a thumbnail from the given image.
         /// </summary>
@@ -120,6 +130,7 @@ namespace ImageGlass.ImageListView
                     useExifOrientation ? GetRotation(image) : 0);
             }
         }
+
         /// <summary>
         /// Creates a thumbnail from the given image file.
         /// </summary>
@@ -133,10 +144,11 @@ namespace ImageGlass.ImageListView
         /// <param name="useExifOrientation">true to automatically rotate images based on Exif orientation; otherwise false.</param>
         /// <param name="useWIC">true to use Windows Imaging Component; otherwise false.</param>
         /// <returns>The thumbnail image from the given file or null if an error occurs.</returns>
-#if USEWIC        
+#if USEWIC
+
         // KBR 20190729 BitmapFrame.Create will throw an AccessViolation exception which is treated
         // as a corrupted state (and IG shutdown) _unless_ this decorator is added
-        [HandleProcessCorruptedStateExceptions] 
+        [HandleProcessCorruptedStateExceptions]
 #endif
         public static Image FromFile(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation, bool useWIC)
         {
@@ -182,9 +194,11 @@ namespace ImageGlass.ImageListView
                     useExifOrientation ? GetRotation(filename) : 0);
             }
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Helper Methods
+
         /// <summary>
         /// Creates a thumbnail from the given image.
         /// </summary>
@@ -223,6 +237,7 @@ namespace ImageGlass.ImageListView
 
             return thumb;
         }
+
         /// <summary>
         /// [IGChange] Creates a thumbnail from the given image file.
         /// </summary>
@@ -256,9 +271,11 @@ namespace ImageGlass.ImageListView
 
             return thumb;
         }
+
 #if USEWIC
+
         /// <summary>
-        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
@@ -300,6 +317,7 @@ namespace ImageGlass.ImageListView
 
             return 0;
         }
+
         /// <summary>
         /// Returns the metadata for the given query.
         /// </summary>
@@ -316,6 +334,7 @@ namespace ImageGlass.ImageListView
             }
             return null;
         }
+
         /// <summary>
         /// Creates a  thumbnail from the given bitmap.
         /// </summary>
@@ -534,9 +553,11 @@ namespace ImageGlass.ImageListView
 
             return bmp;
         }
+
 #endif
+
         /// <summary>
-        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
@@ -576,8 +597,9 @@ namespace ImageGlass.ImageListView
 
             return 0;
         }
+
         /// <summary>
-        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
@@ -655,6 +677,7 @@ namespace ImageGlass.ImageListView
 
             return thumb;
         }
-        #endregion
+
+        #endregion Helper Methods
     }
 }

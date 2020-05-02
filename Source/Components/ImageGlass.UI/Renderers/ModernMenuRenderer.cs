@@ -20,22 +20,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI.Renderers {
-    public class ModernMenuRenderer: ToolStripProfessionalRenderer {
+namespace ImageGlass.UI.Renderers
+{
+    public class ModernMenuRenderer : ToolStripProfessionalRenderer
+    {
         public Color ThemeBackgroundColor { get; set; } = Color.White;
         public Color ThemeTextColor { get; set; } = Color.White;
 
-        public ModernMenuRenderer(Color backgroundColor, Color textColor) : base(new ModernColors()) {
+        public ModernMenuRenderer(Color backgroundColor, Color textColor) : base(new ModernColors())
+        {
             this.ThemeBackgroundColor = backgroundColor;
             this.ThemeTextColor = textColor;
         }
 
-        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e) {
-            if (e.Item.Enabled) {
+        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        {
+            if (e.Item.Enabled)
+            {
                 e.TextColor = this.ThemeTextColor;
                 base.OnRenderItemText(e);
             }
-            else {
+            else
+            {
                 // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
                 //e.Item.Enabled = true;
 
@@ -48,7 +54,6 @@ namespace ImageGlass.UI.Renderers {
                     e.TextColor = Theme.LightenColor(this.ThemeBackgroundColor, 0.5f);
                 }
 
-
                 base.OnRenderItemText(e);
 
                 // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
@@ -56,11 +61,14 @@ namespace ImageGlass.UI.Renderers {
             }
         }
 
-        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e) {
-            if (e.Vertical || (e.Item as ToolStripSeparator) == null) {
+        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+        {
+            if (e.Vertical || (e.Item as ToolStripSeparator) == null)
+            {
                 base.OnRenderSeparator(e);
             }
-            else {
+            else
+            {
                 var tsBounds = new Rectangle(Point.Empty, e.Item.Size);
 
                 var lineY = tsBounds.Bottom - (tsBounds.Height / 2);
@@ -83,12 +91,13 @@ namespace ImageGlass.UI.Renderers {
             }
         }
 
-        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e) {
-            if (e.ToolStrip is ToolStripDropDown) {
+        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+        {
+            if (e.ToolStrip is ToolStripDropDown)
+            {
                 // draw background
                 using (var brush = new SolidBrush(this.ThemeBackgroundColor)) // KBR 20181231 fix handle leak
                     e.Graphics.FillRectangle(brush, e.AffectedBounds);
-
 
                 // draw border
                 using (var pen = new Pen(Color.Black)) // KBR 20181231 fix handle leak
@@ -109,7 +118,8 @@ namespace ImageGlass.UI.Renderers {
             base.OnRenderToolStripBackground(e);
         }
 
-        protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
+        protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+        {
             using (Pen pen = new Pen(this.ThemeTextColor, 1)) // KBR 20181231 fix handle leak
             {
                 e.Graphics.DrawLine(pen,
@@ -126,7 +136,8 @@ namespace ImageGlass.UI.Renderers {
             }
         }
 
-        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
+        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
+        {
             using (Pen pen = new Pen(this.ThemeTextColor, 2)) // KBR 20181231 fix handle leak
             {
                 e.Graphics.DrawLine(pen,
@@ -142,70 +153,102 @@ namespace ImageGlass.UI.Renderers {
                     3 * e.Item.Height / 10);
             }
         }
-
     }
 
-
-
-    public class ModernColors: ProfessionalColorTable {
-        public override Color MenuItemSelected {
-            get {
+    public class ModernColors : ProfessionalColorTable
+    {
+        public override Color MenuItemSelected
+        {
+            get
+            {
                 return Color.FromArgb(35, 0, 0, 0);
             }
         }
-        public override Color MenuBorder {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color MenuItemBorder {
-            get {
+
+        public override Color MenuBorder
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
 
-        public override Color ImageMarginGradientBegin {
-            get {
+        public override Color MenuItemBorder
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color ImageMarginGradientMiddle {
-            get {
+
+        public override Color ImageMarginGradientBegin
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color ImageMarginGradientEnd {
-            get {
+
+        public override Color ImageMarginGradientMiddle
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color SeparatorDark {
-            get {
+
+        public override Color ImageMarginGradientEnd
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color SeparatorLight {
-            get {
+
+        public override Color SeparatorDark
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color CheckBackground {
-            get {
+
+        public override Color SeparatorLight
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color CheckPressedBackground {
-            get {
+
+        public override Color CheckBackground
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color CheckSelectedBackground {
-            get {
+
+        public override Color CheckPressedBackground
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }
-        public override Color ButtonSelectedBorder {
-            get {
+
+        public override Color CheckSelectedBackground
+        {
+            get
+            {
+                return Color.Transparent;
+            }
+        }
+
+        public override Color ButtonSelectedBorder
+        {
+            get
+            {
                 return Color.Transparent;
             }
         }

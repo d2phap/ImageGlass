@@ -21,37 +21,38 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace ImageGlass.UI.ToolForms {
+namespace ImageGlass.UI.ToolForms
+{
     /// <summary>
     /// Manager for multiple ToolForms
     /// </summary>
-    public class ToolFormManager {
+    public class ToolFormManager
+    {
         /// <summary>
         /// The list of ToolForms to manage
         /// </summary>
         private static List<ToolForm> _formList = new List<ToolForm>();
 
-
         /// <summary>
         /// Add a new ToolForm to the manager
         /// </summary>
         /// <param name="client">A ToolForm</param>
-        public void Add(ToolForm client) {
+        public void Add(ToolForm client)
+        {
             _formList.Add(client);
         }
-
 
         /// <summary>
         /// How many pixels to leave between snapped forms (top/bottom)
         /// </summary>
-        const int MARGIN = 10;
-
+        private const int MARGIN = 10;
 
         /// <summary>
         /// Snap the provided ToolForm to the "nearest" Toolform in the list
         /// </summary>
         /// <param name="formToSnap">Another ToolForm</param>
-        public void SnapToNearest(ToolForm formToSnap) {
+        public void SnapToNearest(ToolForm formToSnap)
+        {
             // NOTE: merely finds the "other" form
             // TODO: when more than 2 toolforms possible, this needs to find the "nearest"
             var destForm = _formList.FirstOrDefault(x => x != formToSnap);
@@ -59,11 +60,13 @@ namespace ImageGlass.UI.ToolForms {
                 return;
 
             // snap to top/bottom as appropriate
-            if (destForm.Top > formToSnap.Bottom - MARGIN) {
+            if (destForm.Top > formToSnap.Bottom - MARGIN)
+            {
                 // snapping form ABOVE other form
                 formToSnap.Top = destForm.Top - formToSnap.Height - MARGIN;
             }
-            else {
+            else
+            {
                 // snapping form BELOW or OVERLAP other form
                 if (destForm.Bottom + MARGIN < formToSnap.Top ||
                     formToSnap.Top < destForm.Bottom + MARGIN)
@@ -71,26 +74,29 @@ namespace ImageGlass.UI.ToolForms {
             }
 
             // snap to left/right edge as appropriate
-            if (destForm.Left < formToSnap.Left) {
+            if (destForm.Left < formToSnap.Left)
+            {
                 // snapping form to the RIGHT or OVERLAP other form
                 formToSnap.Left = destForm.Right - formToSnap.Width;
             }
-            else {
+            else
+            {
                 // snapping form to the LEFT of other form
                 formToSnap.Left = destForm.Left;
             }
         }
-
 
         /// <summary>
         /// Move all ToolForms together (preserving relative positions)
         /// </summary>
         /// <param name="lastLoc">Last location</param>
         /// <param name="currLoc">Current location</param>
-        public void MoveSnappedTools(Point lastLoc, Point currLoc) {
+        public void MoveSnappedTools(Point lastLoc, Point currLoc)
+        {
             // TODO: if more than 2 toolforms possible, may wish to mark a set as 'snapped' instead of ALL
 
-            foreach (var toolForm in _formList) {
+            foreach (var toolForm in _formList)
+            {
                 Point delta = new Point(toolForm.Location.X - lastLoc.X, toolForm.Location.Y - lastLoc.Y);
                 toolForm.Location = new Point(delta.X + currLoc.X,
                     delta.Y + currLoc.Y);

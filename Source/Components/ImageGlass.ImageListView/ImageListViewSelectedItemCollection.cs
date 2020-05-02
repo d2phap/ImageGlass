@@ -16,9 +16,9 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Collections;
 
 namespace ImageGlass.ImageListView
 {
@@ -30,10 +30,13 @@ namespace ImageGlass.ImageListView
         public class ImageListViewSelectedItemCollection : IList<ImageListViewItem>
         {
             #region Member Variables
+
             internal ImageListView mImageListView;
-            #endregion
+
+            #endregion Member Variables
 
             #region Constructors
+
             /// <summary>
             /// Initializes a new instance of the <see cref="ImageListViewSelectedItemCollection"/> class.
             /// </summary>
@@ -42,9 +45,11 @@ namespace ImageGlass.ImageListView
             {
                 mImageListView = owner;
             }
-            #endregion
+
+            #endregion Constructors
 
             #region Properties
+
             /// <summary>
             /// Gets the number of elements contained in the <see cref="ImageListViewSelectedItemCollection"/>.
             /// </summary>
@@ -59,15 +64,18 @@ namespace ImageGlass.ImageListView
                     return count;
                 }
             }            /// <summary>
-            /// Gets a value indicating whether the <see cref="ImageListViewSelectedItemCollection"/> is read-only.
-            /// </summary>
+
+                         /// Gets a value indicating whether the <see cref="ImageListViewSelectedItemCollection"/> is read-only.
+                         /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets a value indicating whether the collection is read-only.")]
             public bool IsReadOnly { get { return true; } }
+
             /// <summary>
             /// Gets the <see cref="ImageListView"/> owning this collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
             public ImageListView ImageListView { get { return mImageListView; } }
+
             /// <summary>
             /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
             /// </summary>
@@ -86,9 +94,11 @@ namespace ImageGlass.ImageListView
                     throw new ArgumentException("No item with the given index exists.", "index");
                 }
             }
-            #endregion
+
+            #endregion Properties
 
             #region Instance Methods
+
             /// <summary>
             /// Determines whether the <see cref="ImageListViewSelectedItemCollection"/> contains a specific value.
             /// </summary>
@@ -100,6 +110,7 @@ namespace ImageGlass.ImageListView
             {
                 return (item.Selected && item.Enabled && mImageListView.Items.Contains(item));
             }
+
             /// <summary>
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
@@ -110,9 +121,11 @@ namespace ImageGlass.ImageListView
             {
                 return new ImageListViewSelectedItemEnumerator(mImageListView.mItems);
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Helper Methods
+
             /// <summary>
             /// Removes all items from the collection.
             /// </summary>
@@ -120,6 +133,7 @@ namespace ImageGlass.ImageListView
             {
                 Clear(true);
             }
+
             /// <summary>
             /// Removes all items from the collection.
             /// </summary>
@@ -130,9 +144,11 @@ namespace ImageGlass.ImageListView
                 if (raiseEvent && mImageListView != null)
                     mImageListView.OnSelectionChangedInternal();
             }
-            #endregion
+
+            #endregion Helper Methods
 
             #region Unsupported Interface
+
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -141,6 +157,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -148,6 +165,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
             /// </summary>
@@ -157,6 +175,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
             /// </summary>
@@ -169,6 +188,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
             /// </summary>
@@ -178,6 +198,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
@@ -189,6 +210,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
             /// </summary>
@@ -197,6 +219,7 @@ namespace ImageGlass.ImageListView
             {
                 throw new NotSupportedException();
             }
+
             /// <summary>
             /// Gets or sets the item at the specified index.
             /// </summary>
@@ -211,6 +234,7 @@ namespace ImageGlass.ImageListView
                     throw new NotSupportedException();
                 }
             }
+
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
@@ -221,30 +245,37 @@ namespace ImageGlass.ImageListView
             {
                 return GetEnumerator();
             }
-            #endregion
+
+            #endregion Unsupported Interface
 
             #region Internal Classes
+
             /// <summary>
             /// Represents an enumerator to walk though the selected items.
             /// </summary>
             internal class ImageListViewSelectedItemEnumerator : IEnumerator<ImageListViewItem>
             {
                 #region Member Variables
+
                 private ImageListViewItemCollection owner;
                 private int current;
                 private Guid lastItem;
-                #endregion
+
+                #endregion Member Variables
 
                 #region Constructor
+
                 public ImageListViewSelectedItemEnumerator(ImageListViewItemCollection collection)
                 {
                     owner = collection;
                     current = -1;
                     lastItem = Guid.Empty;
                 }
-                #endregion
+
+                #endregion Constructor
 
                 #region Properties
+
                 /// <summary>
                 /// Gets the element in the collection at the current position of the enumerator.
                 /// </summary>
@@ -257,6 +288,7 @@ namespace ImageGlass.ImageListView
                         return owner[current];
                     }
                 }
+
                 /// <summary>
                 /// Gets the element in the collection at the current position of the enumerator.
                 /// </summary>
@@ -264,9 +296,11 @@ namespace ImageGlass.ImageListView
                 {
                     get { return Current; }
                 }
-                #endregion
+
+                #endregion Properties
 
                 #region Instance Methods
+
                 /// <summary>
                 /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
                 /// </summary>
@@ -274,6 +308,7 @@ namespace ImageGlass.ImageListView
                 {
                     ;
                 }
+
                 /// <summary>
                 /// Advances the enumerator to the next element of the collection.
                 /// </summary>
@@ -288,8 +323,8 @@ namespace ImageGlass.ImageListView
 
                     // Move to the next item if:
                     // 1. We are before the first item. - OR -
-                    // 2. The current item is the same as the one we enumerated before. 
-                    //    The current item may have differed if the user for example 
+                    // 2. The current item is the same as the one we enumerated before.
+                    //    The current item may have differed if the user for example
                     //    removed the current item between MoveNext calls. - OR -
                     // 3. The current item is not selected.
                     // 3. The current item is not enabled.
@@ -310,6 +345,7 @@ namespace ImageGlass.ImageListView
                     lastItem = owner[current].Guid;
                     return true;
                 }
+
                 /// <summary>
                 /// Sets the enumerator to its initial position, which is before the first element in the collection.
                 /// </summary>
@@ -318,9 +354,11 @@ namespace ImageGlass.ImageListView
                     current = -1;
                     lastItem = Guid.Empty;
                 }
-                #endregion
+
+                #endregion Instance Methods
             }
-            #endregion
+
+            #endregion Internal Classes
         }
     }
 }

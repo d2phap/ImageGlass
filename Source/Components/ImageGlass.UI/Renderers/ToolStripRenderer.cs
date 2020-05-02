@@ -16,36 +16,40 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass.UI.Renderers {
-    public class ToolStripRenderer: ToolStripSystemRenderer {
+namespace ImageGlass.UI.Renderers
+{
+    public class ToolStripRenderer : ToolStripSystemRenderer
+    {
         public Color ThemeBackgroundColor { get; set; } = Color.White;
         public Color ThemeTextColor { get; set; } = Color.Black;
 
-        public ToolStripRenderer(Color backgroundColor, Color textColor) {
+        public ToolStripRenderer(Color backgroundColor, Color textColor)
+        {
             this.ThemeBackgroundColor = backgroundColor;
             this.ThemeTextColor = textColor;
         }
 
-
-        protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) {
+        protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+        {
             // Disable the base() method here to remove unwanted border of toolbar
             // base.OnRenderToolStripBorder(e);
         }
 
-
-        protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e) {
-
+        protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e)
+        {
             #region Draw Background
+
             var space = 0.12f;
             var btn = (ToolStripOverflowButton)e.Item;
             var brushBg = new SolidBrush(Color.Black);
 
-
             // hover/selected state
-            if (btn.Selected) {
+            if (btn.Selected)
+            {
                 brushBg = new SolidBrush(Theme.LightenColor(this.ThemeBackgroundColor, 0.15f));
 
                 e.Graphics.FillRectangle(brushBg,
@@ -57,7 +61,8 @@ namespace ImageGlass.UI.Renderers {
                     )
                 );
             }
-            else if (btn.DropDown.Visible) {
+            else if (btn.DropDown.Visible)
+            {
                 brushBg = new SolidBrush(Theme.DarkenColor(this.ThemeBackgroundColor, 0.15f));
 
                 e.Graphics.FillRectangle(brushBg,
@@ -71,10 +76,11 @@ namespace ImageGlass.UI.Renderers {
             }
 
             brushBg.Dispose();
-            #endregion
 
+            #endregion Draw Background
 
             #region Draw "..."
+
             var brushFont = new SolidBrush(this.ThemeTextColor);
             var font = new Font(FontFamily.GenericSerif, 10, FontStyle.Bold);
             var fontSize = e.Graphics.MeasureString("…", font);
@@ -88,8 +94,8 @@ namespace ImageGlass.UI.Renderers {
 
             font.Dispose();
             brushFont.Dispose();
-            #endregion
 
+            #endregion Draw "..."
         }
     }
 }

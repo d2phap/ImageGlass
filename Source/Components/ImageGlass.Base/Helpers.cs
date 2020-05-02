@@ -23,28 +23,35 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace ImageGlass.Base {
+namespace ImageGlass.Base
+{
     /// <summary>
     /// The helper functions used globally
     /// </summary>
-    public static class Helpers {
+    public static class Helpers
+    {
         /// <summary>
-        /// Check if the given path (file or directory) is writable. 
+        /// Check if the given path (file or directory) is writable.
         /// </summary>
         /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="path">Full path of file or directory</param>
         /// <returns></returns>
-        public static bool CheckPathWritable(PathType type, string path) {
-            try {
+        public static bool CheckPathWritable(PathType type, string path)
+        {
+            try
+            {
                 // If path is file
-                if (type == PathType.File) {
+                if (type == PathType.File)
+                {
                     using (File.OpenWrite(path)) { }
                 }
                 // if path is directory
-                else {
+                else
+                {
                     var isDirExist = Directory.Exists(path);
 
-                    if (!isDirExist) {
+                    if (!isDirExist)
+                    {
                         Directory.CreateDirectory(path);
                     }
 
@@ -53,19 +60,19 @@ namespace ImageGlass.Base {
                     using (File.Create(sampleFile)) { }
                     File.Delete(sampleFile);
 
-                    if (!isDirExist) {
+                    if (!isDirExist)
+                    {
                         Directory.Delete(path, true);
                     }
                 }
 
-
                 return true;
             }
-            catch {
+            catch
+            {
                 return false;
             }
         }
-
 
         /// <summary>
         /// Convert string to int array, where numbers are separated by semicolons
@@ -74,39 +81,42 @@ namespace ImageGlass.Base {
         /// <param name="unsignedOnly">whether negative numbers are allowed</param>
         /// <param name="distinct">whether repitition of values is allowed</param>
         /// <returns></returns>
-        public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false) {
-            var args = str.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false)
+        {
+            var args = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
-            foreach (var item in args) {
+            foreach (var item in args)
+            {
                 // Issue #677 : don't throw exception if we encounter invalid number, e.g. the comma-separated zoom values from pre-V7.5
                 if (!int.TryParse(item, System.Globalization.NumberStyles.Integer, Constants.NumberFormat, out var num))
                     continue;
 
-                if (unsignedOnly && num < 0) {
+                if (unsignedOnly && num < 0)
+                {
                     continue;
                 }
 
                 numbers.Add(num);
             }
 
-            if (distinct) {
+            if (distinct)
+            {
                 numbers = numbers.Distinct().ToList();
             }
 
             return numbers.ToArray();
         }
 
-
         /// <summary>
         /// Convert int array to semi-colon delimited string
         /// </summary>
         /// <param name="array">Input int array</param>
         /// <returns></returns>
-        public static string IntArrayToString(int[] array) {
+        public static string IntArrayToString(int[] array)
+        {
             return string.Join(";", array);
         }
-
 
         /// <summary>
         /// Convert string to Rectangle - input string must have four integer values
@@ -114,33 +124,36 @@ namespace ImageGlass.Base {
         /// </summary>
         /// <param name="str">Input string. E.g. "12; 40; 50; 60"</param>
         /// <returns></returns>
-        public static Rectangle StringToRect(string str) {
+        public static Rectangle StringToRect(string str)
+        {
             var args = StringToIntArray(str);
 
-            if (args.Length == 4) {
+            if (args.Length == 4)
+            {
                 return new Rectangle(args[0], args[1], args[2], args[3]);
             }
 
             return new Rectangle();
         }
 
-
         /// <summary>
         /// Convert Rectangle to String
         /// </summary>
         /// <param name="rc"></param>
         /// <returns></returns>
-        public static string RectToString(Rectangle rc) {
+        public static string RectToString(Rectangle rc)
+        {
             return rc.Left + ";" + rc.Top + ";" + rc.Width + ";" + rc.Height;
         }
 
-        public static bool IsVisibleOnAnyScreen(Rectangle rect) {
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens) {
+        public static bool IsVisibleOnAnyScreen(Rectangle rect)
+        {
+            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
+            {
                 if (screen.WorkingArea.IntersectsWith(rect))
                     return true;
             }
             return false;
         }
-
     }
 }

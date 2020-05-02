@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -25,13 +24,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.Library.WinAPI {
+namespace ImageGlass.Library.WinAPI
+{
     /// <summary>
-    /// Used to make requests for obtaining and setting timer resolution. 
+    /// Used to make requests for obtaining and setting timer resolution.
     /// This is a global request shared by all processes on the computer. All
     /// requests are revoked when this process ends.
     /// </summary>
-    public static class TimerAPI {
+    public static class TimerAPI
+    {
         // locks ourCurRequests
         //
         private static readonly object ourLock;
@@ -50,12 +51,14 @@ namespace ImageGlass.Library.WinAPI {
         private static readonly List<int> ourCurRequests;
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct TIMECAPS {
+        private struct TIMECAPS
+        {
             public int periodMin;
             public int periodMax;
         }
 
-        static TimerAPI() {
+        static TimerAPI()
+        {
             ourLock = new object();
 
             TIMECAPS tc = new TIMECAPS();
@@ -71,12 +74,14 @@ namespace ImageGlass.Library.WinAPI {
         /// <param name="timeInMilliseconds"> the time in milliseconds </param>
         /// <returns> true if we succesfully acquired a clock of
         /// the given rate, otherwise returns false. </returns>
-        public static bool TimeBeginPeriod(int timeInMilliseconds) {
+        public static bool TimeBeginPeriod(int timeInMilliseconds)
+        {
             if (timeInMilliseconds < ourMinPeriod || timeInMilliseconds > ourMaxPeriod)
                 return false;
 
             bool successfullyRequestedPeriod;
-            lock (ourLock) {
+            lock (ourLock)
+            {
                 successfullyRequestedPeriod = timeBeginPeriod(timeInMilliseconds) == 0;
                 if (successfullyRequestedPeriod)
                     ourCurRequests.Add(timeInMilliseconds);
@@ -90,9 +95,11 @@ namespace ImageGlass.Library.WinAPI {
         /// </summary>
         /// <param name="timeInMilliseconds"> the time in milliseconds </param>
         /// <returns>true if we revoked a previous request, otherwise returns false</returns>
-        public static bool TimeEndPeriod(int timeInMilliseconds) {
+        public static bool TimeEndPeriod(int timeInMilliseconds)
+        {
             bool successfullyEndedPeriod;
-            lock (ourLock) {
+            lock (ourLock)
+            {
                 successfullyEndedPeriod = ourCurRequests.Remove(timeInMilliseconds) && timeEndPeriod(timeInMilliseconds) == 0;
             }
 
@@ -103,9 +110,11 @@ namespace ImageGlass.Library.WinAPI {
         /// Determines whether the current rate has already been requested.
         /// </summary>
         /// <param name="timeInMilliseconds"> the time in milliseconds </param>
-        public static bool HasRequestedRateAlready(int timeInMilliseconds) {
+        public static bool HasRequestedRateAlready(int timeInMilliseconds)
+        {
             bool hasRequestedAlready;
-            lock (ourLock) {
+            lock (ourLock)
+            {
                 hasRequestedAlready = ourCurRequests.Contains(timeInMilliseconds);
             }
 
@@ -116,9 +125,11 @@ namespace ImageGlass.Library.WinAPI {
         /// Determines whether a rate at least as fast as the given has been requested
         /// </summary>
         /// <param name="timeInMilliseconds">the time in milliseconds</param>
-        public static bool HasRequestedRateAtLeastAsFastAs(int timeInMilliseconds) {
+        public static bool HasRequestedRateAtLeastAsFastAs(int timeInMilliseconds)
+        {
             bool result;
-            lock (ourLock) {
+            lock (ourLock)
+            {
                 result = ourCurRequests.Exists(elt => elt <= timeInMilliseconds);
             }
 

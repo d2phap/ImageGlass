@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace ImageGlass.ImageListView
 {
@@ -32,6 +32,7 @@ namespace ImageGlass.ImageListView
     internal class ImageListViewCacheThumbnail : IDisposable
     {
         #region Member Variables
+
         private QueuedBackgroundWorker bw;
         private SynchronizationContext context;
         private SendOrPostCallback checkProcessingCallback;
@@ -50,27 +51,33 @@ namespace ImageGlass.ImageListView
         private List<Guid> removedItems;
 
         private bool disposed;
-        #endregion
+
+        #endregion Member Variables
 
         #region RequestType Enum
+
         private enum RequestType
         {
             /// <summary>
             /// This is a thumbnail request.
             /// </summary>
             Thumbnail,
+
             /// <summary>
             /// This is a large image request for use in Gallery or Pane view modes.
             /// </summary>
             Gallery,
+
             /// <summary>
             /// This is a renderer request.
             /// </summary>
             Renderer
         }
-        #endregion
+
+        #endregion RequestType Enum
 
         #region CacheRequest Class
+
         /// <summary>
         /// Represents a cache request.
         /// </summary>
@@ -80,30 +87,37 @@ namespace ImageGlass.ImageListView
             /// Gets the guid of the item.
             /// </summary>
             public Guid Guid { get; private set; }
+
             /// <summary>
             /// Gets the adaptor of this item.
             /// </summary>
             public ImageListView.ImageListViewItemAdaptor Adaptor { get; private set; }
+
             /// <summary>
             /// Gets the public key for the virtual item.
             /// </summary>
             public object VirtualItemKey { get; private set; }
+
             /// <summary>
             /// Gets the size of the requested thumbnail.
             /// </summary>
             public Size Size { get; private set; }
+
             /// <summary>
             /// Gets embedded thumbnail extraction behavior.
             /// </summary>
             public UseEmbeddedThumbnails UseEmbeddedThumbnails { get; private set; }
+
             /// <summary>
             /// Gets Exif rotation behavior.
             /// </summary>
             public bool AutoRotate { get; private set; }
+
             /// <summary>
             /// Gets whether Windows Imaging Component will be used.
             /// </summary>
             public bool UseWIC { get; private set; }
+
             /// <summary>
             /// Gets the type of this request.
             /// </summary>
@@ -141,9 +155,11 @@ namespace ImageGlass.ImageListView
                 return "CacheRequest (" + VirtualItemKey.ToString() + ")";
             }
         }
-        #endregion
+
+        #endregion CacheRequest Class
 
         #region CacheItem Class
+
         /// <summary>
         /// Represents an item in the thumbnail cache.
         /// </summary>
@@ -155,26 +171,32 @@ namespace ImageGlass.ImageListView
             /// Gets the guid of the item.
             /// </summary>
             public Guid Guid { get; private set; }
+
             /// <summary>
             /// Gets the size of the requested thumbnail.
             /// </summary>
             public Size Size { get; private set; }
+
             /// <summary>
             /// Gets the cached image.
             /// </summary>
             public Image Image { get; private set; }
+
             /// <summary>
             /// Gets or sets the state of the cache item.
             /// </summary>
             public CacheState State { get; set; }
+
             /// <summary>
             /// Gets embedded thumbnail extraction behavior.
             /// </summary>
             public UseEmbeddedThumbnails UseEmbeddedThumbnails { get; private set; }
+
             /// <summary>
             /// Gets Exif rotation behavior.
             /// </summary>
             public bool AutoRotate { get; private set; }
+
             /// <summary>
             /// Gets whether Windows Imaging Component will be used.
             /// </summary>
@@ -204,7 +226,7 @@ namespace ImageGlass.ImageListView
             }
 
             /// <summary>
-            /// Performs application-defined tasks associated with 
+            /// Performs application-defined tasks associated with
             /// freeing, releasing, or resetting unmanaged resources.
             /// </summary>
             public void Dispose()
@@ -221,7 +243,9 @@ namespace ImageGlass.ImageListView
                     GC.SuppressFinalize(this);
                 }
             }
+
 #if DEBUG
+
             /// <summary>
             /// Releases unmanaged resources and performs other cleanup operations before the
             /// class is reclaimed by garbage collection.
@@ -232,11 +256,14 @@ namespace ImageGlass.ImageListView
                     System.Diagnostics.Debug.Print("Finalizer of {0} called for non-empty cache item.", GetType());
                 Dispose();
             }
+
 #endif
         }
-        #endregion
+
+        #endregion CacheItem Class
 
         #region CanContinueProcessingEventArgs
+
         /// <summary>
         /// Represents the event arguments for the <see cref="CanContinueProcessing"/> callback.
         /// </summary>
@@ -246,6 +273,7 @@ namespace ImageGlass.ImageListView
             /// Gets the request.
             /// </summary>
             public CacheRequest Request { get; private set; }
+
             /// <summary>
             /// Gets whether this item should be processed.
             /// </summary>
@@ -261,34 +289,42 @@ namespace ImageGlass.ImageListView
                 ContinueProcessing = true;
             }
         }
-        #endregion
+
+        #endregion CanContinueProcessingEventArgs
 
         #region Properties
+
         /// <summary>
         /// Determines whether the cache manager retries loading items on errors.
         /// </summary>
         public bool RetryOnError { get; internal set; }
+
         /// <summary>
         /// Gets or sets the cache mode.
         /// </summary>
         public CacheMode CacheMode { get; internal set; }
+
         /// <summary>
         /// Gets or sets the cache limit as count of items.
         /// </summary>
         public int CacheLimitAsItemCount { get; internal set; }
+
         /// <summary>
         /// Gets or sets the cache limit as allocated memory in MB.
         /// </summary>
         public long CacheLimitAsMemory { get; internal set; }
+
         /// <summary>
         /// Gets the approximate amount of memory used by the cache.
         /// </summary>
         public long MemoryUsed { get; private set; }
+
         /// <summary>
         /// Gets the approximate amount of memory used by removed items in the cache.
         /// This memory can be reclaimed by calling <see cref="Purge()"/>.
         /// </summary>
         public long MemoryUsedByRemoved { get; private set; }
+
         /// <summary>
         /// Returns the count of items in the cache.
         /// </summary>
@@ -296,9 +332,11 @@ namespace ImageGlass.ImageListView
         {
             get { return thumbCache.Count; }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageListViewCacheThumbnail"/> class.
         /// </summary>
@@ -336,9 +374,11 @@ namespace ImageGlass.ImageListView
 
             disposed = false;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Context Callbacks
+
         /// <summary>
         /// Determines if the item should be processed.
         /// </summary>
@@ -350,6 +390,7 @@ namespace ImageGlass.ImageListView
             context.Send(checkProcessingCallback, arg);
             return arg.ContinueProcessing;
         }
+
         /// <summary>
         /// Determines if the item should be processed.
         /// </summary>
@@ -392,16 +433,18 @@ namespace ImageGlass.ImageListView
 
             arg.ContinueProcessing = canProcess;
         }
-        #endregion
+
+        #endregion Context Callbacks
 
         #region QueuedBackgroundWorker Events
+
         /// <summary>
         /// Handles the RunWorkerCompleted event of the queued background worker.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerCompletedEventArgs"/> 
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerCompletedEventArgs"/>
         /// instance containing the event data.</param>
-        void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
+        private void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
         {
             CacheRequest request = e.UserState as CacheRequest;
             CacheItem result = e.Result as CacheItem;
@@ -473,13 +516,14 @@ namespace ImageGlass.ImageListView
             if (e.Error != null && mImageListView != null)
                 mImageListView.OnCacheErrorInternal(result.Guid, e.Error, CacheThread.Thumbnail);
         }
+
         /// <summary>
         /// Handles the DoWork event of the queued background worker.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
+        /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance
         /// containing the event data.</param>
-        void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
+        private void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
         {
             CacheRequest request = e.Argument as CacheRequest;
 
@@ -534,23 +578,27 @@ namespace ImageGlass.ImageListView
 
             e.Result = result;
         }
-        #endregion
+
+        #endregion QueuedBackgroundWorker Events
 
         #region Instance Methods
+
         /// <summary>
-        /// Pauses the cache threads. 
+        /// Pauses the cache threads.
         /// </summary>
         public void Pause()
         {
             bw.Pause();
         }
+
         /// <summary>
-        /// Resumes the cache threads. 
+        /// Resumes the cache threads.
         /// </summary>
         public void Resume()
         {
             bw.Resume();
         }
+
         /// <summary>
         /// Starts editing an item. While items are edited,
         /// the cache thread will not work on them to prevent collisions.
@@ -563,6 +611,7 @@ namespace ImageGlass.ImageListView
                 editCache.Add(guid, false);
             }
         }
+
         /// <summary>
         /// Ends editing an item. After this call, item
         /// image will be continued to be fetched by the thread.
@@ -572,6 +621,7 @@ namespace ImageGlass.ImageListView
         {
             editCache.Remove(guid);
         }
+
         /// <summary>
         /// Rebuilds the thumbnail cache.
         /// Old thumbnails will be kept until they are overwritten
@@ -582,6 +632,7 @@ namespace ImageGlass.ImageListView
             foreach (CacheItem item in thumbCache.Values)
                 item.State = CacheState.Unknown;
         }
+
         /// <summary>
         /// Clears the thumbnail cache.
         /// </summary>
@@ -594,7 +645,7 @@ namespace ImageGlass.ImageListView
                     item.Dispose();
                 }
             }
-                
+
             thumbCache.Clear();
 
             if (rendererItem != null)
@@ -609,6 +660,7 @@ namespace ImageGlass.ImageListView
             processing.Clear();
             processingRendererItem = Guid.Empty;
         }
+
         /// <summary>
         /// Removes the given item from the cache.
         /// </summary>
@@ -617,6 +669,7 @@ namespace ImageGlass.ImageListView
         {
             Remove(guid, false);
         }
+
         /// <summary>
         /// Removes the given item from the cache.
         /// </summary>
@@ -643,6 +696,7 @@ namespace ImageGlass.ImageListView
                 Purge();
             }
         }
+
         /// <summary>
         /// Purges removed items from the cache.
         /// </summary>
@@ -668,6 +722,7 @@ namespace ImageGlass.ImageListView
                 MemoryUsedByRemoved = 0;
             }
         }
+
         /// <summary>
         /// Purges removed items from the cache automatically
         /// depending on memory usage.
@@ -676,6 +731,7 @@ namespace ImageGlass.ImageListView
         {
             Purge(false);
         }
+
         /// <summary>
         /// Purges invisible items from the cache.
         /// </summary>
@@ -703,6 +759,7 @@ namespace ImageGlass.ImageListView
 
             Purge(force);
         }
+
         /// <summary>
         /// Determines if removed items need to be purged. Removed items are purged
         /// if they take up more than 25% of the cache limit.
@@ -712,6 +769,7 @@ namespace ImageGlass.ImageListView
         {
             return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory / 4) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount / 4));
         }
+
         /// <summary>
         /// Determines if the cache limit is exceeded.
         /// </summary>
@@ -720,6 +778,7 @@ namespace ImageGlass.ImageListView
         {
             return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount));
         }
+
         /// <summary>
         /// Returns the memory usage of an image.
         /// </summary>
@@ -732,6 +791,7 @@ namespace ImageGlass.ImageListView
             else
                 return 0;
         }
+
         /// <summary>
         /// Returns the memory usage of an image in of given dimensions.
         /// The value is calculated aproximately as (Width * Height * BitsPerPixel / 8)
@@ -743,6 +803,7 @@ namespace ImageGlass.ImageListView
         {
             return width * height * 24 / 8;
         }
+
         /// <summary>
         /// Adds a virtual item to the cache queue.
         /// </summary>
@@ -766,6 +827,7 @@ namespace ImageGlass.ImageListView
             // Add to cache queue
             RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC, RequestType.Thumbnail));
         }
+
         /// <summary>
         /// Adds a virtual item to the cache.
         /// </summary>
@@ -808,6 +870,7 @@ namespace ImageGlass.ImageListView
                 mImageListView.Refresh();
             }
         }
+
         /// <summary>
         /// Adds the virtual item image to the gallery cache queue.
         /// </summary>
@@ -827,6 +890,7 @@ namespace ImageGlass.ImageListView
             // Add to cache queue
             RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC, RequestType.Gallery), 2);
         }
+
         /// <summary>
         /// Adds the virtual item image to the renderer cache queue.
         /// </summary>
@@ -846,6 +910,7 @@ namespace ImageGlass.ImageListView
             // Add to cache queue
             RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC, RequestType.Renderer), 1);
         }
+
         /// <summary>
         /// Gets the image from the renderer cache. If the image is not cached,
         /// null will be returned.
@@ -862,6 +927,7 @@ namespace ImageGlass.ImageListView
             else
                 return null;
         }
+
         /// <summary>
         /// Gets the image from the gallery cache. If the image is not cached,
         /// null will be returned.
@@ -878,6 +944,7 @@ namespace ImageGlass.ImageListView
             else
                 return null;
         }
+
         /// <summary>
         /// Gets the image from the thumbnail cache. If the image is not cached,
         /// null will be returned.
@@ -909,6 +976,7 @@ namespace ImageGlass.ImageListView
                 return null;
             }
         }
+
         /// <summary>
         /// Gets the cache state of the specified item.
         /// </summary>
@@ -925,6 +993,7 @@ namespace ImageGlass.ImageListView
 
             return CacheState.Unknown;
         }
+
         /// <summary>
         /// Returns a key for an item based on its guid, size and other
         /// properties.
@@ -958,12 +1027,14 @@ namespace ImageGlass.ImageListView
                 }
             }
         }
-        #endregion
+
+        #endregion Instance Methods
 
         #region RunWorker
+
         /// <summary>
-        /// Pushes the given item to the worker queue. Items with high priority are renderer 
-        /// or gallery items, ie. large images in gallery and pane views and images requested 
+        /// Pushes the given item to the worker queue. Items with high priority are renderer
+        /// or gallery items, ie. large images in gallery and pane views and images requested
         /// by custom renderers. Items with 0 priority are regular thumbnails.
         /// </summary>
         /// <param name="item">The item to add to the worker queue.</param>
@@ -1010,6 +1081,7 @@ namespace ImageGlass.ImageListView
             // Add the item to the queue for processing
             bw.RunWorkerAsync(item, priority, item.RequestType != RequestType.Thumbnail);
         }
+
         /// <summary>
         /// Pushes the given item to the worker queue.
         /// </summary>
@@ -1018,9 +1090,11 @@ namespace ImageGlass.ImageListView
         {
             RunWorker(item, 0);
         }
-        #endregion
+
+        #endregion RunWorker
 
         #region Dispose
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing,
         /// releasing, or resetting unmanaged resources.
@@ -1040,7 +1114,9 @@ namespace ImageGlass.ImageListView
                 GC.SuppressFinalize(this);
             }
         }
+
 #if DEBUG
+
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
         /// ImageListViewCacheManager is reclaimed by garbage collection.
@@ -1050,7 +1126,9 @@ namespace ImageGlass.ImageListView
             System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
             Dispose();
         }
+
 #endif
-        #endregion
+
+        #endregion Dispose
     }
 }

@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImageGlass</RootNamespace>
     <AssemblyName>ImageGlass</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>icon256.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -136,7 +136,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -167,8 +167,8 @@
     <Reference Include="FileWatcherEx, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FileWatcherEx.1.3.0\lib\net45\FileWatcherEx.dll</HintPath>
     </Reference>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.16.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.16.0\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.16.1.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.16.1\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -182,7 +182,7 @@
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAbout.designer.cs">
+    <Compile Include="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="frmAddNewFormat.cs">
@@ -387,7 +387,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets" Condition="Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

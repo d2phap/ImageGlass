@@ -17,8 +17,8 @@
 
 using System;
 using System.Drawing;
-using System.IO;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Text;
 
 namespace ImageGlass.ImageListView
@@ -29,6 +29,7 @@ namespace ImageGlass.ImageListView
     public static class Utility
     {
         #region Text Utilities
+
         /// <summary>
         /// Formats the given file size as a human readable string.
         /// </summary>
@@ -49,9 +50,11 @@ namespace ImageGlass.ImageListView
 
             return string.Format("{0} {1}", Math.Round(sized, 2), units[i]);
         }
-        #endregion
+
+        #endregion Text Utilities
 
         #region Group Formating
+
         /// <summary>
         /// Formats the given date as a human readable string. For use with
         /// grouping with past dates.
@@ -135,6 +138,7 @@ namespace ImageGlass.ImageListView
 
             return Tuple.Create(order, txt);
         }
+
         /// <summary>
         /// Formats the given file size as a human readable string. For use in grouping.
         /// </summary>
@@ -180,6 +184,7 @@ namespace ImageGlass.ImageListView
             }
             return Tuple.Create(order, txt);
         }
+
         /// <summary>
         /// Formats the given image size as a human readable string.
         /// </summary>
@@ -215,6 +220,7 @@ namespace ImageGlass.ImageListView
             }
             return Tuple.Create(order, txt);
         }
+
         /// <summary>
         /// Formats the given text for display in grouping. Currently returns
         /// the first letter of the text.
@@ -226,9 +232,11 @@ namespace ImageGlass.ImageListView
             char order = txt[0];
             return Tuple.Create((int)order, txt);
         }
-        #endregion
+
+        #endregion Group Formating
 
         #region Graphics Utilities
+
         /// <summary>
         /// Checks the stream header if it matches with
         /// any of the supported image file types.
@@ -239,7 +247,7 @@ namespace ImageGlass.ImageListView
         internal static bool IsImage(Stream stream)
         {
             // Sniff some bytes from the start of the stream
-            // and check against magic numbers of supported 
+            // and check against magic numbers of supported
             // image file formats
             byte[] header = new byte[10];
             stream.Seek(0, SeekOrigin.Begin);
@@ -303,6 +311,7 @@ namespace ImageGlass.ImageListView
 
             return false;
         }
+
         /// <summary>
         /// Draws the given caption and text inside the given rectangle.
         /// </summary>
@@ -333,6 +342,7 @@ namespace ImageGlass.ImageListView
                 return y;
             }
         }
+
         /// <summary>
         /// Gets the scaled size of an image required to fit
         /// in to the given size keeping the image aspect ratio.
@@ -348,6 +358,7 @@ namespace ImageGlass.ImageListView
             int height = (int)System.Math.Round((float)image.Height / f);
             return new Size(width, height);
         }
+
         /// <summary>
         /// Gets the bounding rectangle of an image required to fit
         /// in to the given rectangle keeping the image aspect ratio.
@@ -369,6 +380,7 @@ namespace ImageGlass.ImageListView
 
             return new Rectangle(x, y, scaled.Width, scaled.Height);
         }
+
         /// <summary>
         /// Gets the bounding rectangle of an image required to fit
         /// in to the given rectangle keeping the image aspect ratio.
@@ -381,6 +393,7 @@ namespace ImageGlass.ImageListView
         {
             return GetSizedImageBounds(image, fit, 50.0f, 50.0f);
         }
+
         /// <summary>
         /// Gets a path representing a rounded rectangle.
         /// </summary>
@@ -401,6 +414,7 @@ namespace ImageGlass.ImageListView
                 path.AddArc(x, y, 2 * radius, 2 * radius, 180.0f, 90.0f);
             return path;
         }
+
         /// <summary>
         /// Fills the interior of a rounded rectangle.
         /// </summary>
@@ -418,6 +432,7 @@ namespace ImageGlass.ImageListView
                 graphics.FillPath(brush, path);
             }
         }
+
         /// <summary>
         /// Fills the interior of a rounded rectangle.
         /// </summary>
@@ -432,6 +447,7 @@ namespace ImageGlass.ImageListView
         {
             FillRoundedRectangle(graphics, brush, (int)x, (int)y, (int)width, (int)height, (int)radius);
         }
+
         /// <summary>
         /// Fills the interior of a rounded rectangle.
         /// </summary>
@@ -443,6 +459,7 @@ namespace ImageGlass.ImageListView
         {
             FillRoundedRectangle(graphics, brush, rect.Left, rect.Top, rect.Width, rect.Height, radius);
         }
+
         /// <summary>
         /// Fills the interior of a rounded rectangle.
         /// </summary>
@@ -454,6 +471,7 @@ namespace ImageGlass.ImageListView
         {
             FillRoundedRectangle(graphics, brush, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
         }
+
         /// <summary>
         /// Draws the outline of a rounded rectangle.
         /// </summary>
@@ -471,6 +489,7 @@ namespace ImageGlass.ImageListView
                 graphics.DrawPath(pen, path);
             }
         }
+
         /// <summary>
         /// Draws the outline of a rounded rectangle.
         /// </summary>
@@ -485,6 +504,7 @@ namespace ImageGlass.ImageListView
         {
             DrawRoundedRectangle(graphics, pen, (int)x, (int)y, (int)width, (int)height, (int)radius);
         }
+
         /// <summary>
         /// Draws the outline of a rounded rectangle.
         /// </summary>
@@ -496,6 +516,7 @@ namespace ImageGlass.ImageListView
         {
             DrawRoundedRectangle(graphics, pen, rect.Left, rect.Top, rect.Width, rect.Height, radius);
         }
+
         /// <summary>
         /// Draws the outline of a rounded rectangle.
         /// </summary>
@@ -507,9 +528,11 @@ namespace ImageGlass.ImageListView
         {
             DrawRoundedRectangle(graphics, pen, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
         }
-        #endregion
+
+        #endregion Graphics Utilities
 
         #region Tuples
+
         /// <summary>
         /// Represents a factory class for creating tuples.
         /// </summary>
@@ -527,6 +550,7 @@ namespace ImageGlass.ImageListView
             {
                 return new Tuple<T1>(item1);
             }
+
             /// <summary>
             /// Creates a new 2-tuple.
             /// </summary>
@@ -541,6 +565,7 @@ namespace ImageGlass.ImageListView
             {
                 return new Tuple<T1, T2>(item1, item2);
             }
+
             /// <summary>
             /// Creates a new 3-tuple.
             /// </summary>
@@ -558,6 +583,7 @@ namespace ImageGlass.ImageListView
                 return new Tuple<T1, T2, T3>(item1, item2, item3);
             }
         }
+
         /// <summary>
         /// Represents a tuple with one element.
         /// </summary>
@@ -580,6 +606,7 @@ namespace ImageGlass.ImageListView
                 mItem1 = item1;
             }
         }
+
         /// <summary>
         /// Represents a tuple with two elements.
         /// </summary>
@@ -605,6 +632,7 @@ namespace ImageGlass.ImageListView
                 mItem2 = item2;
             }
         }
+
         /// <summary>
         /// Represents a tuple with three elements.
         /// </summary>
@@ -632,6 +660,7 @@ namespace ImageGlass.ImageListView
                 mItem3 = item3;
             }
         }
-        #endregion
+
+        #endregion Tuples
     }
 }

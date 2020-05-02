@@ -16,9 +16,9 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Resources;
+using System.Windows.Forms;
 
 namespace ImageGlass.ImageListView
 {
@@ -31,6 +31,7 @@ namespace ImageGlass.ImageListView
         public class ImageListViewColumnHeader : ICloneable
         {
             #region Member Variables
+
             private Guid mGuid;
             private int mDisplayIndex;
             internal ImageListView mImageListView;
@@ -40,14 +41,17 @@ namespace ImageGlass.ImageListView
             private int mWidth;
 
             internal ImageListViewColumnHeaderCollection owner;
-            #endregion
+
+            #endregion Member Variables
 
             #region Properties
+
             /// <summary>
             /// Gets the unique identifier for this item.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the unique identifier for this item.")]
             internal Guid Guid { get { return mGuid; } private set { mGuid = value; } }
+
             /// <summary>
             /// Gets the default header text for this column type.
             /// </summary>
@@ -59,6 +63,7 @@ namespace ImageGlass.ImageListView
                     return GetDefaultText(mType);
                 }
             }
+
             /// <summary>
             /// Gets or sets the display order of the column.
             /// </summary>
@@ -83,11 +88,13 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Gets the ImageListView owning this item.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this item.")]
             public ImageListView ImageListView { get { return mImageListView; } }
+
             /// <summary>
             /// Gets or sets the column header text.
             /// </summary>
@@ -108,6 +115,7 @@ namespace ImageGlass.ImageListView
                         mImageListView.Refresh();
                 }
             }
+
             /// <summary>
             /// Gets or sets the type of information displayed by the column.
             /// </summary>
@@ -139,6 +147,7 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
+
             /// <summary>
             /// Gets or sets a value indicating whether the control is displayed.
             /// </summary>
@@ -160,6 +169,7 @@ namespace ImageGlass.ImageListView
                         mImageListView.Refresh();
                 }
             }
+
             /// <summary>
             /// Gets or sets the column width.
             /// </summary>
@@ -177,18 +187,21 @@ namespace ImageGlass.ImageListView
                         mImageListView.Refresh();
                 }
             }
-            #endregion
+
+            #endregion Properties
 
             #region Custom Property Serializers
+
             /// <summary>
             /// Determines if the column text should be serialized.
             /// </summary>
-            /// <returns>true if the designer should serialize 
+            /// <returns>true if the designer should serialize
             /// the property; otherwise false.</returns>
             public bool ShouldSerializeText()
             {
                 return Text != DefaultText;
             }
+
             /// <summary>
             /// Resets the column text to its default value.
             /// </summary>
@@ -196,9 +209,11 @@ namespace ImageGlass.ImageListView
             {
                 Text = DefaultText;
             }
-            #endregion
+
+            #endregion Custom Property Serializers
 
             #region Constructors
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -218,6 +233,7 @@ namespace ImageGlass.ImageListView
                 mVisible = visible;
                 mDisplayIndex = displayIndex;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -230,6 +246,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -241,6 +258,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -252,6 +270,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -262,6 +281,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -272,6 +292,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -281,6 +302,7 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
@@ -289,9 +311,11 @@ namespace ImageGlass.ImageListView
             {
                 ;
             }
-            #endregion
+
+            #endregion Constructors
 
             #region Instance Methods
+
             /// <summary>
             /// Resizes the width of the column based on the length of the column content.
             /// </summary>
@@ -337,6 +361,7 @@ namespace ImageGlass.ImageListView
                 Width = width + 8;
                 mImageListView.Refresh();
             }
+
             /// <summary>
             /// Returns a <see cref="System.String"/> that represents this instance.
             /// </summary>
@@ -347,9 +372,11 @@ namespace ImageGlass.ImageListView
             {
                 return mType.ToString();
             }
-            #endregion
+
+            #endregion Instance Methods
 
             #region Helper Methods
+
             /// <summary>
             /// Gets the default column header text for the given column type.
             /// </summary>
@@ -359,9 +386,11 @@ namespace ImageGlass.ImageListView
                 ResourceManager manager = new ResourceManager("ImageGlass.ImageListView.ImageListViewResources", GetType().Assembly);
                 return manager.GetString(type.ToString());
             }
-            #endregion
+
+            #endregion Helper Methods
 
             #region ICloneable Members
+
             /// <summary>
             /// Creates a new object that is a copy of the current instance.
             /// </summary>
@@ -380,7 +409,8 @@ namespace ImageGlass.ImageListView
 
                 return column;
             }
-            #endregion
+
+            #endregion ICloneable Members
         }
     }
 }

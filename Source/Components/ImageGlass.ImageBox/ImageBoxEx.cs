@@ -23,8 +23,7 @@ namespace ImageGlass
         private Size _maximumSelectionSize;
         private Size _minimumSelectionSize;
 
-        #endregion
-
+        #endregion Instance Fields
 
         #region Public Constructors
 
@@ -36,8 +35,7 @@ namespace ImageGlass
             this.PositionDragHandles();
         }
 
-        #endregion
-
+        #endregion Public Constructors
 
         #region Events
 
@@ -71,8 +69,7 @@ namespace ImageGlass
         [Category("Action")]
         public event CancelEventHandler SelectionResizing;
 
-        #endregion
-
+        #endregion Events
 
         #region Overridden Methods
 
@@ -101,7 +98,6 @@ namespace ImageGlass
 
             base.OnMouseDown(e);
         }
-
 
         /// <summary>
         ///   Raises the <see cref="System.Windows.Forms.Control.MouseMove" /> event.
@@ -263,7 +259,6 @@ namespace ImageGlass
             this.PositionDragHandles();
         }
 
-
         /// <summary>
         ///   Raises the <see cref="ImageBox.AutoScrollPositionChanged" /> event. [IG_CHANGE] This is new event.
         /// </summary>
@@ -309,8 +304,7 @@ namespace ImageGlass
             return result;
         }
 
-        #endregion
-
+        #endregion Overridden Methods
 
         #region Public Properties
 
@@ -379,16 +373,15 @@ namespace ImageGlass
         [Browsable(false)]
         public RectangleF PreviousSelectionRegion { get; protected set; }
 
-        #endregion
-
+        #endregion Public Properties
 
         #region Protected Properties
 
         protected Point DragOrigin { get; set; }
         protected Point DragOriginOffset { get; set; }
         protected DragHandleAnchor ResizeAnchor { get; set; }
-        #endregion
 
+        #endregion Protected Properties
 
         #region Public Members
 
@@ -418,8 +411,7 @@ namespace ImageGlass
             }
         }
 
-        #endregion
-
+        #endregion Public Members
 
         #region Protected Members
 
@@ -538,8 +530,7 @@ namespace ImageGlass
             handler?.Invoke(this, e);
         }
 
-        #endregion
-
+        #endregion Protected Members
 
         #region Private Members
 
@@ -603,7 +594,6 @@ namespace ImageGlass
             var offsetY = viewport.Top + this.Padding.Top + this.AutoScrollPosition.Y;
             var halfDragHandleSize = this.DragHandleSize / 2;
 
-
             // selection factors
             var left = (int)(this.SelectionRegion.Left * this.ZoomFactor) + offsetX;
             var top = (int)(this.SelectionRegion.Top * this.ZoomFactor) + offsetY;
@@ -611,7 +601,6 @@ namespace ImageGlass
             var bottom = top + (int)(this.SelectionRegion.Height * this.ZoomFactor);
             var halfWidth = (int)(this.SelectionRegion.Width * this.ZoomFactor) / 2;
             var halfHeight = (int)(this.SelectionRegion.Height * this.ZoomFactor) / 2;
-
 
             this.DragHandles[DragHandleAnchor.TopLeft].Bounds = new Rectangle(
                 left - this.DragHandleSize,
@@ -804,18 +793,22 @@ namespace ImageGlass
                         case DragHandleAnchor.BottomRight:
                             cursor = Cursors.SizeNWSE;
                             break;
+
                         case DragHandleAnchor.TopCenter:
                         case DragHandleAnchor.BottomCenter:
                             cursor = Cursors.SizeNS;
                             break;
+
                         case DragHandleAnchor.TopRight:
                         case DragHandleAnchor.BottomLeft:
                             cursor = Cursors.SizeNESW;
                             break;
+
                         case DragHandleAnchor.MiddleLeft:
                         case DragHandleAnchor.MiddleRight:
                             cursor = Cursors.SizeWE;
                             break;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -852,6 +845,6 @@ namespace ImageGlass
             }
         }
 
-        #endregion
+        #endregion Private Members
     }
 }

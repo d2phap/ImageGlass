@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -28,7 +27,7 @@ using System.Drawing;
 namespace ImageGlass
 {
     /// <summary>
-    /// Used to animate gifs. 
+    /// Used to animate gifs.
     /// </summary>
     public interface GifAnimator
     {
@@ -38,12 +37,12 @@ namespace ImageGlass
         void UpdateFrames(Image image);
 
         /// <summary>
-        /// Stops updating frames for the given image. 
+        /// Stops updating frames for the given image.
         /// </summary>
         void StopAnimate(Image image, EventHandler eventHandler);
 
         /// <summary>
-        /// Animates the given image. 
+        /// Animates the given image.
         /// </summary>
         void Animate(Image image, EventHandler onFrameChangedHandler);
 
