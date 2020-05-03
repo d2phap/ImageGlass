@@ -35,29 +35,30 @@ namespace igtasks
         /// </summary>
         public static void InstallLanguagePacks()
         {
-            OpenFileDialog o = new OpenFileDialog
+            using (var o = new OpenFileDialog
             {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang",
                 Multiselect = true
-            };
-
-            if (o.ShowDialog() == DialogResult.OK)
+            })
             {
-                // create directory if not exist
-                if (!Directory.Exists(App.StartUpDir(Dir.Languages)))
+                if (o.ShowDialog() == DialogResult.OK)
                 {
-                    Directory.CreateDirectory(App.StartUpDir(Dir.Languages));
-                }
-
-                foreach (string f in o.FileNames)
-                {
-                    try
+                    // create directory if not exist
+                    if (!Directory.Exists(App.StartUpDir(Dir.Languages)))
                     {
-                        File.Copy(f, App.StartUpDir(Dir.Languages, Path.GetFileName(f)));
+                        Directory.CreateDirectory(App.StartUpDir(Dir.Languages));
                     }
-                    catch (Exception ex)
+
+                    foreach (string f in o.FileNames)
                     {
-                        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        try
+                        {
+                            File.Copy(f, App.StartUpDir(Dir.Languages, Path.GetFileName(f)));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -68,27 +69,30 @@ namespace igtasks
         /// </summary>
         public static void CreateNewLanguagePacks()
         {
-            SaveFileDialog s = new SaveFileDialog
+            using (var s = new SaveFileDialog
             {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang"
-            };
-
-            if (s.ShowDialog() == DialogResult.OK)
+            })
             {
-                Language l = new Language();
-                l.ExportLanguageToXML(s.FileName);
+                if (s.ShowDialog() == DialogResult.OK)
+                {
+                    var l = new Language();
+                    l.ExportLanguageToXML(s.FileName);
 
-                try
-                {
-                    Process p = new Process();
-                    p.StartInfo.ErrorDialog = true;
-                    p.StartInfo.FileName = "notepad.exe";
-                    p.StartInfo.Arguments = "\"" + s.FileName + "\"";
-                    p.Start();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        using (var p = new Process())
+                        {
+                            p.StartInfo.ErrorDialog = true;
+                            p.StartInfo.FileName = "notepad.exe";
+                            p.StartInfo.Arguments = "\"" + s.FileName + "\"";
+                            p.Start();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -100,11 +104,13 @@ namespace igtasks
         {
             try
             {
-                Process p = new Process();
-                p.StartInfo.ErrorDialog = true;
-                p.StartInfo.FileName = "notepad.exe";
-                p.StartInfo.Arguments = "\"" + filename + "\"";
-                p.Start();
+                using (var p = new Process())
+                {
+                    p.StartInfo.ErrorDialog = true;
+                    p.StartInfo.FileName = "notepad.exe";
+                    p.StartInfo.Arguments = "\"" + filename + "\"";
+                    p.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -120,7 +126,7 @@ namespace igtasks
         /// <returns>0 = SUCCESS; 1 = ERROR</returns>
         public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false)
         {
-            RegistryHelper reg = new RegistryHelper
+            var reg = new RegistryHelper
             {
                 ShowError = true,
                 BaseRegistryKey = Registry.LocalMachine,
@@ -250,7 +256,7 @@ namespace igtasks
         {
             string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
 
-            RegistryHelper reg = new RegistryHelper
+            var reg = new RegistryHelper
             {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,
@@ -271,7 +277,7 @@ namespace igtasks
             DeleteURIScheme();
 
             string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
-            RegistryHelper reg = new RegistryHelper
+            var reg = new RegistryHelper
             {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,

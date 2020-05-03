@@ -33,7 +33,7 @@ namespace igcmd
     public partial class frmCheckForUpdate : Form
     {
         private Update up = new Update();
-        private string UpdateInfoFile { get => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml"); }
+        private string UpdateInfoFile => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
 
         public frmCheckForUpdate()
         {
@@ -50,7 +50,7 @@ namespace igcmd
                 File.Delete(UpdateInfoFile);
             }
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (up.IsError)
             {

@@ -97,7 +97,7 @@ namespace ImageGlass.UI.ToolForms
 
             foreach (var toolForm in _formList)
             {
-                Point delta = new Point(toolForm.Location.X - lastLoc.X, toolForm.Location.Y - lastLoc.Y);
+                var delta = new Point(toolForm.Location.X - lastLoc.X, toolForm.Location.Y - lastLoc.Y);
                 toolForm.Location = new Point(delta.X + currLoc.X,
                     delta.Y + currLoc.Y);
                 toolForm.Update();

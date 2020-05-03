@@ -28,6 +28,7 @@ namespace ImageGlass.Library
         Active = 1
     }
 
+    [Serializable]
     public class LanguageItem<K, V> : Dictionary<K, V>
     {
         /// <summary>

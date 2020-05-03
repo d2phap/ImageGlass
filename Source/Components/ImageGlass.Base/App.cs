@@ -34,12 +34,12 @@ namespace ImageGlass.Base
         /// <summary>
         /// Gets the application executable path
         /// </summary>
-        public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
+        public static string IGExePath => StartUpDir("ImageGlass.exe");
 
         /// <summary>
         /// Gets the application version
         /// </summary>
-        public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion; }
+        public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion;
 
         /// <summary>
         /// Gets value of Portable mode if the startup dir is writable

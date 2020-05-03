@@ -126,6 +126,8 @@ namespace ImageGlass.Library.Image
 
                 case 20:
                     return new ArgumentException("Gdiplus Property Not Supported Error");
+                default:
+                    break;
             }
 
             return new ExternalException("Gdiplus Unknown Error", -2147418113);

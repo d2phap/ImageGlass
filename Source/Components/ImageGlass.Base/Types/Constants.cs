@@ -52,13 +52,10 @@ namespace ImageGlass.Base
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
-        public static NumberFormatInfo NumberFormat
+        public static NumberFormatInfo NumberFormat => new NumberFormatInfo
         {
-            get => new NumberFormatInfo
-            {
-                NegativeSign = "-"
-            };
-        }
+            NegativeSign = "-"
+        };
 
         /// <summary>
         /// Gets the default set of keycombo actions

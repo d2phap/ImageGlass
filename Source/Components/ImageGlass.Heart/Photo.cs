@@ -346,7 +346,6 @@ namespace ImageGlass.Heart
                 var ms = new MemoryStream();
                 fs.CopyTo(ms);
                 ms.Position = 0;
-
                 return new Bitmap(ms, true);
             }
         }
@@ -595,7 +594,7 @@ namespace ImageGlass.Heart
                 using (var sw = new StreamWriter(destFilename))
                 {
                     await sw.WriteAsync(header + base64);
-                    sw.Flush();
+                    await sw.FlushAsync();
                     sw.Close();
                 }
 
@@ -633,7 +632,7 @@ namespace ImageGlass.Heart
                 using (var sw = new StreamWriter(destFilename))
                 {
                     await sw.WriteAsync(header + base64);
-                    sw.Flush();
+                    await sw.FlushAsync();
                     sw.Close();
                 }
             }

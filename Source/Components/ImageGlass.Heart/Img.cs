@@ -179,8 +179,7 @@ namespace ImageGlass.Heart
             this.ActivePageIndex = index;
 
             // Set active page index
-            FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-            this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
+            this.Image.SelectActiveFrame(new FrameDimension(Image.FrameDimensionsList[0]), this.ActivePageIndex);
         }
 
         /// <summary>

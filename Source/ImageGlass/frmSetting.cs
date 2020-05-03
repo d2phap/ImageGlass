@@ -422,6 +422,8 @@ namespace ImageGlass
                 case nameof(lblKeyboard):
                     tab1.SelectedTab = tabKeyboard;
                     break;
+                default:
+                    break;
             }
         }
 

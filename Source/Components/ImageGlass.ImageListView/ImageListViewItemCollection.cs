@@ -152,13 +152,7 @@ namespace ImageGlass.ImageListView
             /// Gets the <see cref="ImageListViewItem"/> with the specified Guid.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets or sets the item with the specified Guid.")]
-            internal ImageListViewItem this[Guid guid]
-            {
-                get
-                {
-                    return lookUp[guid];
-                }
-            }
+            internal ImageListViewItem this[Guid guid] => lookUp[guid];
 
             #endregion Properties
 

@@ -45,10 +45,7 @@ namespace ImageGlass
             get { return _items.Count; }
         }
 
-        public DragHandle this[DragHandleAnchor index]
-        {
-            get { return _items[index]; }
-        }
+        public DragHandle this[DragHandleAnchor index] => _items[index];
 
         #endregion Public Properties
 

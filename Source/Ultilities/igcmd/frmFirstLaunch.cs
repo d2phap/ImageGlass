@@ -261,9 +261,11 @@ namespace igcmd
         /// </summary>
         private void LaunchImageGlass()
         {
-            Process p = new Process();
-            p.StartInfo.FileName = Path.Combine(App.IGExePath);
-            p.Start();
+            using (var p = new Process())
+            {
+                p.StartInfo.FileName = Path.Combine(App.IGExePath);
+                p.Start();
+            }
         }
 
         /// <summary>
