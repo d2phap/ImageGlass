@@ -3816,19 +3816,18 @@ namespace ImageGlass {
 
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
-            //if (e.Button != MouseButtons.Left) return; // <-- this results in inputs getting eaten if they aren't left click
             switch (e.Button) {
-                case MouseButtons.Middle: //Reset zoom mode
+                case MouseButtons.Middle:
                     ApplyZoomMode(Configs.ZoomMode);
                     break;
 
                 case MouseButtons.XButton1:
                     mnuMainViewPrevious_Click(null, null);
-                    return;
+                    break;
 
                 case MouseButtons.XButton2:
                     mnuMainViewNext_Click(null, null);
-                    return;
+                    break;
 
                 case MouseButtons.Left:
                     // check double-click in Navigation regions
@@ -3858,6 +3857,7 @@ namespace ImageGlass {
                     break;
             }
         }
+
 
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
             #region Navigation regions
