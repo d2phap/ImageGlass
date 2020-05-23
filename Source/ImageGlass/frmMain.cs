@@ -3817,10 +3817,6 @@ namespace ImageGlass {
 
         private void picMain_MouseDoubleClick(object sender, MouseEventArgs e) {
             switch (e.Button) {
-                case MouseButtons.Middle:
-                    ApplyZoomMode(Configs.ZoomMode);
-                    break;
-
                 case MouseButtons.XButton1:
                     mnuMainViewPrevious_Click(null, null);
                     break;
