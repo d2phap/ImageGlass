@@ -14,11 +14,11 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 ## Download & Screen shots
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.5.1.1%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.6.4.30%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/7.5_1.jpg" alt="ImageGlass 7.5.1.1" width="640">
+<img src="https://imageglass.org/upload/photo/release/7.6_1.jpg" alt="ImageGlass 7.6.4.301" width="640">
 </a><br/>
 
 
