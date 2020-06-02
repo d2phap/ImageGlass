@@ -268,7 +268,7 @@ namespace igcmd {
 
             if (Directory.Exists(themeFolder)) {
                 foreach (string d in Directory.GetDirectories(themeFolder)) {
-                    string configFile = Path.Combine(d, "config.xml");
+                    string configFile = Path.Combine(d, "igtheme.xml");
 
                     if (File.Exists(configFile)) {
                         var th = new Theme(d);

@@ -38,7 +38,7 @@ namespace ImageGlass.UI {
         public string FolderName { get; internal set; }
 
         /// <summary>
-        /// Get theme config file path (config.xml)
+        /// Get theme config file path (igtheme.xml)
         /// </summary>
         public string ConfigFilePath { get; internal set; }
 
@@ -281,10 +281,10 @@ namespace ImageGlass.UI {
         /// <param name="startUpDir">The absolute startup folder of ImageGlass</param>
         /// <returns></returns>
         public bool LoadTheme(string themeFolderPath) {
-            var configFilePath = Path.Combine(themeFolderPath, "config.xml");
+            var configFilePath = Path.Combine(themeFolderPath, "igtheme.xml");
 
             if (!File.Exists(configFilePath)) {
-                configFilePath = App.StartUpDir(Dir.DefaultTheme, "config.xml");
+                configFilePath = App.StartUpDir(Dir.DefaultTheme, "igtheme.xml");
             }
 
             this.ConfigFilePath = configFilePath;
@@ -537,7 +537,7 @@ namespace ImageGlass.UI {
                 Directory.CreateDirectory(dir);
             }
 
-            doc.Save(Path.Combine(dir, "config.xml")); //save file
+            doc.Save(Path.Combine(dir, "igtheme.xml")); //save file
         }
 
 
@@ -607,7 +607,7 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
-            string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "config.xml");
+            string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
 
             if (File.Exists(fullConfigPath)) {
                 string dir = Path.GetDirectoryName(fullConfigPath);

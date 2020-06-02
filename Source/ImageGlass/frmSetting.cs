@@ -1496,7 +1496,7 @@ namespace ImageGlass {
 
                 await Task.Run(() => {
                     foreach (string d in Directory.GetDirectories(themeFolder)) {
-                        string configFile = Path.Combine(d, "config.xml");
+                        string configFile = Path.Combine(d, "igtheme.xml");
 
                         if (File.Exists(configFile)) {
                             Theme th = new Theme(d);
@@ -1642,10 +1642,10 @@ namespace ImageGlass {
 
                 if (s.ShowDialog() == DialogResult.OK) {
                     var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, "config.xml");
+                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, "igtheme.xml");
 
                     if (!File.Exists(configFilePath)) {
-                        configFilePath = App.StartUpDir(@"DefaultTheme\config.xml");
+                        configFilePath = App.StartUpDir(@"DefaultTheme\igtheme.xml");
                     }
 
                     var themeDir = Path.GetDirectoryName(configFilePath);
