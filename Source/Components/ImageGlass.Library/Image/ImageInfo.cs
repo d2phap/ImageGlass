@@ -59,7 +59,7 @@ namespace ImageGlass.Library.Image {
         public static void DisplayFileProperties(string fileName, IntPtr hwnd) {
             const int SEE_MASK_INVOKEIDLIST = 0xc;
             const int SW_SHOW = 5;
-            SHELLEXECUTEINFO shInfo = new SHELLEXECUTEINFO();
+            var shInfo = new SHELLEXECUTEINFO();
 
             shInfo.cbSize = Marshal.SizeOf(shInfo);
             shInfo.lpFile = fileName;
@@ -126,7 +126,7 @@ namespace ImageGlass.Library.Image {
                 double mod = 1024;
                 string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
-                FileInfo fi = new FileInfo(filename);
+                var fi = new FileInfo(filename);
                 double sized = fi.Length * 1.0f;
                 int i;
 
@@ -155,7 +155,7 @@ namespace ImageGlass.Library.Image {
                     }
                 }
                 else {
-                    Icon ico = new Icon(filename);
+                    var ico = new Icon(filename);
                     //get Width x Height
                     return Convert.ToString(ico.Width) + " x " + Convert.ToString(ico.Height);
                 }
@@ -186,14 +186,17 @@ namespace ImageGlass.Library.Image {
                         v = Math.Round((double)img.VerticalResolution, 2);
                     }
                 }
-                else {
-                    Icon ico = new Icon(filename);
+                else
+                {
+                    using (var ico = new Icon(filename))
+                    {
 
-                    //get HorizontalResolution 
-                    h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
+                        //get HorizontalResolution 
+                        h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
 
-                    //get VerticalResolution
-                    v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
+                        //get VerticalResolution
+                        v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
+                    }
                 }
 
                 return string.Format("{0} x {1}", h, v);
@@ -210,7 +213,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetCreateTime(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
 
             //get Create Time
             return fi.CreationTime;
@@ -222,7 +225,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetLastAccess(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
             //get Create Time
             return fi.LastAccessTime;
         }
@@ -233,7 +236,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetWriteTime(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
 
             return fi.LastWriteTime;
         }

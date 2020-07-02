@@ -262,7 +262,7 @@ namespace ImageGlass {
 
 
             // track paths loaded to prevent duplicates
-            HashSet<string> pathsLoaded = new HashSet<string>();
+            var pathsLoaded = new HashSet<string>();
             bool firstPath = true;
 
 
@@ -580,8 +580,10 @@ namespace ImageGlass {
             thumbnailBar.ThumbnailSize = new Size((int)Configs.ThumbnailDimension, (int)Configs.ThumbnailDimension);
 
             for (int i = 0; i < Local.ImageList.Length; i++) {
-                ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(Local.ImageList.GetFileName(i));
-                lvi.Tag = Local.ImageList.GetFileName(i);
+                var lvi = new ImageListView.ImageListViewItem(Local.ImageList.GetFileName(i))
+                {
+                    Tag = Local.ImageList.GetFileName(i)
+                };
 
                 thumbnailBar.Items.Add(lvi);
             }
@@ -1841,12 +1843,15 @@ namespace ImageGlass {
         /// <summary>
         /// Cut multiple files
         /// </summary>
-        private void CutMultiFiles() {
+        private async void CutMultiFiles()
+        {
             // get filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
-            try {
-                if (Local.ImageError != null || !File.Exists(filename)) {
+            try
+            {
+                if (Local.ImageError != null || !File.Exists(filename))
+                {
                     return;
                 }
             }
@@ -1857,34 +1862,35 @@ namespace ImageGlass {
             var fileList = new List<string>();
             fileList.AddRange(Local.StringClipboard);
 
-            for (int i = 0; i < fileList.Count; i++) {
-                if (!File.Exists(fileList[i])) {
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                if (!File.Exists(fileList[i]))
+                {
                     Local.StringClipboard.Remove(fileList[i]);
                 }
             }
 
 
             // exit if duplicated filename
-            if (Local.StringClipboard.IndexOf(filename) == -1) {
+            if (Local.StringClipboard.IndexOf(filename) == -1)
+            {
                 // add filename to clipboard
                 Local.StringClipboard.Add(filename);
             }
 
 
             var moveEffect = new byte[] { 2, 0, 0, 0 };
-            var dropEffect = new MemoryStream();
-            dropEffect.Write(moveEffect, 0, moveEffect.Length);
-
-            var fileDropList = new StringCollection();
-            fileDropList.AddRange(Local.StringClipboard.ToArray());
-
-            var data = new DataObject();
-            data.SetFileDropList(fileDropList);
-            data.SetData("Preferred DropEffect", dropEffect);
-
-
-            Clipboard.Clear();
-            Clipboard.SetDataObject(data, true);
+            using (var dropEffect = new MemoryStream())
+            {
+                await dropEffect.WriteAsync(moveEffect, 0, moveEffect.Length);
+                var fileDropList = new StringCollection();
+                fileDropList.AddRange(Local.StringClipboard.ToArray());
+                var data = new DataObject();
+                data.SetFileDropList(fileDropList);
+                data.SetData("Preferred DropEffect", dropEffect);
+                Clipboard.Clear();
+                Clipboard.SetDataObject(data, true);
+            }
 
             ShowToastMsg(
                 string.Format(Configs.Language.Items[$"{Name}._CutFileText"],
@@ -3066,7 +3072,7 @@ namespace ImageGlass {
             LoadFromParams(Environment.GetCommandLineArgs());
 
             // Start thread to watching deleted files
-            System.Threading.Thread thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
+            var thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
             {
                 Priority = System.Threading.ThreadPriority.BelowNormal,
                 IsBackground = true
@@ -3645,7 +3651,7 @@ namespace ImageGlass {
             Local.ImageList.Add(newFilename);
 
             //Add the new image to thumbnail bar
-            ImageListView.ImageListViewItem lvi = new ImageListView.ImageListViewItem(newFilename)
+            var lvi = new ImageListView.ImageListViewItem(newFilename)
             {
                 Tag = newFilename
             };
@@ -4773,7 +4779,7 @@ namespace ImageGlass {
             if (!(sender as ToolStripMenuItem).Enabled || Local.ImageError != null)
                 return;
 
-            using (FolderBrowserDialog fb = new FolderBrowserDialog() {
+            using (var fb = new FolderBrowserDialog() {
                 Description = Configs.Language.Items[$"{Name}._ExtractPageText"],
                 ShowNewFolderButton = true
             }) {
@@ -4798,7 +4804,7 @@ namespace ImageGlass {
                     // save the current image data to temp file
                     var imgFile = SaveTemporaryMemoryData();
 
-                    using (Process p = new Process()) {
+                    using (var p = new Process()) {
                         var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
 
                         // Issue #326: first attempt to set wallpaper w/o privs. 
@@ -5118,13 +5124,13 @@ namespace ImageGlass {
         }
 
         private void mnuMainAbout_Click(object sender, EventArgs e) {
-            frmAbout f = new frmAbout();
+            var f = new frmAbout();
             f.TopMost = this.TopMost;
             f.ShowDialog();
         }
 
         private void mnuMainFirstLaunch_Click(object sender, EventArgs e) {
-            Process p = new Process();
+            var p = new Process();
             p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
             p.StartInfo.Arguments = "firstlaunch";
 

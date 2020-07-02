@@ -22,18 +22,13 @@ using System.IO;
 
 namespace ImageGlass.Library.Comparer {
     public class FileLogicalComparer {
-        private ArrayList _files = null;
-
-        public ArrayList Files {
-            get { return _files; }
-            set { _files = value; }
-        }
+        public ArrayList Files { get; set; } = null;
 
         #region Local Functions
         public void AddFile(string file) {
             if (file == null) return;
-            if (_files == null) _files = new ArrayList();
-            _files.Add(new DictionaryEntry(Path.GetFileName(file), file));
+            if (Files == null) Files = new ArrayList();
+            Files.Add(new DictionaryEntry(Path.GetFileName(file), file));
         }
 
 
@@ -45,10 +40,10 @@ namespace ImageGlass.Library.Comparer {
         }
 
         public ArrayList GetSorted() {
-            if (_files != null) {
-                _files.Sort(new DictionaryEntryComparer(new NumericComparer()));
+            if (Files != null) {
+                Files.Sort(new DictionaryEntryComparer(new NumericComparer()));
             }
-            return _files;
+            return Files;
         }
         #endregion
 
@@ -61,7 +56,7 @@ namespace ImageGlass.Library.Comparer {
         public static string[] Sort(string[] stringArray) {
             if (stringArray == null) return null;
 
-            FileLogicalComparer fc = new FileLogicalComparer();
+            var fc = new FileLogicalComparer();
             fc.AddFiles(stringArray);
             ArrayList ds = fc.GetSorted();
 

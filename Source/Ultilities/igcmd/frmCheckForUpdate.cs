@@ -118,7 +118,7 @@ namespace igcmd {
 
         private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start(up.Info.Decription + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(up.Info.Description + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch {
                 MessageBox.Show("Check your Internet connection!");

@@ -476,7 +476,8 @@ namespace ImageGlass.Heart {
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
         public static void Save(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100) {
-            using (var imgM = new MagickImage(srcBitmap)) {
+            using (var imgM = new MagickImage()) {
+                imgM.Read(srcBitmap);
                 imgM.Quality = quality;
 
                 if (format != (int)MagickFormat.Unknown) {
@@ -548,7 +549,7 @@ namespace ImageGlass.Heart {
 
                 using (var sw = new StreamWriter(destFilename)) {
                     await sw.WriteAsync(header + base64);
-                    sw.Flush();
+                    await sw.FlushAsync();
                     sw.Close();
                 }
 
@@ -584,7 +585,7 @@ namespace ImageGlass.Heart {
                 
                 using (var sw = new StreamWriter(destFilename)) {
                     await sw.WriteAsync(header + base64);
-                    sw.Flush();
+                    await sw.FlushAsync();
                     sw.Close();
                 }
             }
@@ -627,7 +628,8 @@ namespace ImageGlass.Heart {
             Bitmap bitmap = null;
 
             await Task.Run(() => {
-                using (var imgM = new MagickImage(srcBitmap)) {
+                using (var imgM = new MagickImage()) {
+                    imgM.Read(srcBitmap);
                     imgM.Rotate(degrees);
                     imgM.Quality = 100;
 
@@ -672,7 +674,8 @@ namespace ImageGlass.Heart {
             Bitmap bitmap = null;
 
             await Task.Run(() => {
-                using (var imgM = new MagickImage(srcBitmap)) {
+                using (var imgM = new MagickImage()) {
+                    imgM.Read(srcBitmap);
                     bitmap = Flip(imgM, isHorzontal);
                 }
             });

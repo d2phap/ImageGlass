@@ -74,7 +74,7 @@ namespace ImageGlass.ImageListView
         private object mVirtualItemKey;
         internal ImageListView.ImageListViewItemAdaptor mAdaptor;
         // Used for custom columns
-        private Dictionary<Guid, string> subItems;
+        private readonly Dictionary<Guid, string> subItems;
         // Used for cloned items
         internal Image clonedThumbnail;
         // Group info
@@ -672,7 +672,7 @@ namespace ImageGlass.ImageListView
             switch (type)
             {
                 case ColumnType.Custom:
-                    throw new ArgumentException("Column type is ambiguous. You must access custom columns by index.", "type");
+                    throw new ArgumentException("Column type is ambiguous. You must access custom columns by index.", nameof(type));
                 case ColumnType.Name:
                     return Text;
                 case ColumnType.FileName:
@@ -782,7 +782,7 @@ namespace ImageGlass.ImageListView
                     else
                         return mFocalLength.ToString("f1");
                 default:
-                    throw new ArgumentException("Unknown column type", "type");
+                    throw new ArgumentException("Unknown column type", nameof(type));
             }
         }
         /// <summary>
@@ -1173,42 +1173,43 @@ namespace ImageGlass.ImageListView
         /// </returns>
         public object Clone()
         {
-            ImageListViewItem item = new ImageListViewItem();
+            ImageListViewItem item = new ImageListViewItem
+            {
+                mText = mText,
 
-            item.mText = mText;
+                // File info
+                extension = extension,
+                mDateAccessed = mDateAccessed,
+                mDateCreated = mDateCreated,
+                mDateModified = mDateModified,
+                mFileType = mFileType,
+                mFileName = mFileName,
+                mFilePath = mFilePath,
+                mFileSize = mFileSize,
 
-            // File info
-            item.extension = extension;
-            item.mDateAccessed = mDateAccessed;
-            item.mDateCreated = mDateCreated;
-            item.mDateModified = mDateModified;
-            item.mFileType = mFileType;
-            item.mFileName = mFileName;
-            item.mFilePath = mFilePath;
-            item.mFileSize = mFileSize;
+                // Image info
+                mDimensions = mDimensions,
+                mResolution = mResolution,
 
-            // Image info
-            item.mDimensions = mDimensions;
-            item.mResolution = mResolution;
+                // Exif tags
+                mImageDescription = mImageDescription,
+                mEquipmentModel = mEquipmentModel,
+                mDateTaken = mDateTaken,
+                mArtist = mArtist,
+                mCopyright = mCopyright,
+                mExposureTime = mExposureTime,
+                mFNumber = mFNumber,
+                mISOSpeed = mISOSpeed,
+                mUserComment = mUserComment,
+                mRating = mRating,
+                mStarRating = mStarRating,
+                mSoftware = mSoftware,
+                mFocalLength = mFocalLength,
 
-            // Exif tags
-            item.mImageDescription = mImageDescription;
-            item.mEquipmentModel = mEquipmentModel;
-            item.mDateTaken = mDateTaken;
-            item.mArtist = mArtist;
-            item.mCopyright = mCopyright;
-            item.mExposureTime = mExposureTime;
-            item.mFNumber = mFNumber;
-            item.mISOSpeed = mISOSpeed;
-            item.mUserComment = mUserComment;
-            item.mRating = mRating;
-            item.mStarRating = mStarRating;
-            item.mSoftware = mSoftware;
-            item.mFocalLength = mFocalLength;
-
-            // Virtual item properties
-            item.mAdaptor = mAdaptor;
-            item.mVirtualItemKey = mVirtualItemKey;
+                // Virtual item properties
+                mAdaptor = mAdaptor,
+                mVirtualItemKey = mVirtualItemKey
+            };
 
             // Sub items
             foreach (KeyValuePair<Guid, string> kv in subItems)

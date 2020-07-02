@@ -44,13 +44,13 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Check if the config file is compatible with this ImageGlass version or not.
         /// </summary>
-        public static bool IsCompatible { get => Source.IsCompatible; }
+        public static bool IsCompatible => Source.IsCompatible;
 
 
 
         #region Public configs
 
-        #region Boolean items
+        #region bool items
         /// <summary>
         /// Gets, sets value of slideshow state
         /// </summary>
@@ -575,7 +575,7 @@ namespace ImageGlass.Settings {
 
 
             // load configs to public properties
-            #region Boolean items
+            #region bool items
 
             IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
@@ -796,7 +796,7 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static void Write() {
             // save public properties to configs
-            #region Boolean items
+            #region bool items
 
             Set(nameof(IsSlideshow), IsSlideshow);
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);

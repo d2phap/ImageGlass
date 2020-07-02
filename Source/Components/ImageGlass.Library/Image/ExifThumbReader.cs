@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Library.Image {
     /// <summary>
@@ -24,30 +25,25 @@ namespace ImageGlass.Library.Image {
         private static extern int GdipDisposeImage(IntPtr image);
 
 
-
-
-
         // EXIT tag value for thumbnail data. Value specified by EXIF standard
         private static int THUMBNAIL_DATA = 0x501B;
 
         /// <summary>
         /// Reads the thumbnail in the given image. If no thumbnail is found, returns null
         /// </summary>
-        public static System.Drawing.Image ReadThumb(string imagePath) {
+        public static async Task<System.Drawing.Image> ReadThumb(string imagePath) {
             const int GDI_ERR_PROP_NOT_FOUND = 19;  // Property not found error
             const int GDI_ERR_OUT_OF_MEMORY = 3;
 
             IntPtr hImage = IntPtr.Zero;
             IntPtr buffer = IntPtr.Zero;    // Holds the thumbnail data
-            int ret;
-            ret = GdipLoadImageFromFile(imagePath, out hImage);
+            int ret = GdipLoadImageFromFile(imagePath, out hImage);
 
             try {
                 if (ret != 0)
                     throw createException(ret);
 
-                int propSize;
-                ret = GdipGetPropertyItemSize(hImage, THUMBNAIL_DATA, out propSize);
+                ret = GdipGetPropertyItemSize(hImage, THUMBNAIL_DATA, out int propSize);
                 // Image has no thumbnail data in it. Return null
                 if (ret == GDI_ERR_PROP_NOT_FOUND)
                     return null;
@@ -66,7 +62,7 @@ namespace ImageGlass.Library.Image {
 
                 // buffer has the thumbnail data. Now we have to convert it to
                 // an Image
-                return convertFromMemory(buffer);
+                return await convertFromMemory(buffer);
             }
 
             finally {
@@ -123,7 +119,8 @@ namespace ImageGlass.Library.Image {
         /// Converts the IntPtr buffer to a property item and then converts its 
         /// value to a Drawing.Image item
         /// </summary>
-        private static System.Drawing.Image convertFromMemory(IntPtr thumbData) {
+        private static async Task<System.Drawing.Image> convertFromMemory(IntPtr thumbData)
+        {
             propertyItemInternal prop =
                 (propertyItemInternal)Marshal.PtrToStructure
                 (thumbData, typeof(propertyItemInternal));
@@ -131,10 +128,11 @@ namespace ImageGlass.Library.Image {
             // The image data is in the form of a byte array. Write all 
             // the bytes to a stream and create a new image from that stream
             byte[] imageBytes = prop.Value;
-            MemoryStream stream = new MemoryStream(imageBytes.Length);
-            stream.Write(imageBytes, 0, imageBytes.Length);
-
-            return System.Drawing.Image.FromStream(stream);
+            using (var stream = new MemoryStream(imageBytes.Length))
+            {
+                await stream.WriteAsync(imageBytes, 0, imageBytes.Length);
+                return System.Drawing.Image.FromStream(stream);
+            }
         }
 
         /// <summary>

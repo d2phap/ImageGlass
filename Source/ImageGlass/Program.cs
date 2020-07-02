@@ -30,7 +30,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     static class Program {
-        private static readonly string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        private const string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
         [DllImport("user32.dll")]
@@ -133,16 +133,17 @@ namespace ImageGlass {
                 var guid = new Guid(appGuid);
 
                 // single instance is required
-                using (SingleInstance singleInstance = new SingleInstance(guid)) {
-                    if (singleInstance.IsFirstInstance) {
-                        singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
-                        singleInstance.ListenForArgumentsFromSuccessiveInstances();
+                using var singleInstance = new SingleInstance(guid);
+                if (singleInstance.IsFirstInstance)
+                {
+                    singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
+                    singleInstance.ListenForArgumentsFromSuccessiveInstances();
 
-                        Application.Run(formMain = new frmMain());
-                    }
-                    else {
-                        singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
-                    }
+                    Application.Run(formMain = new frmMain());
+                }
+                else
+                {
+                    singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
             #endregion

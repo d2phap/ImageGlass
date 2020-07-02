@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Heart;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace ImageGlass.UI {
     public class ThemeImage {
@@ -75,7 +76,7 @@ namespace ImageGlass.UI {
                 return;
 
             try {
-                Image = Photo.Load(Filename, new Size(Height, Height)).Image;
+                Image = (Photo.Load(Filename, new Size(Height, Height))).Image;
             }
             catch { }
         }

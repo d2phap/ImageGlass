@@ -71,9 +71,7 @@ namespace ImageGlass.Library.WinAPI {
         /// Initialize the MovableForm
         /// </summary>
         /// <param name="form">The form to make it movable</param>
-        public MovableForm(Form form) {
-            _form = form;
-        }
+        public MovableForm(Form form) => _form = form;
 
 
         #region Public methods

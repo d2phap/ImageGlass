@@ -27,9 +27,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmAbout: Form {
-        public frmAbout() {
-            InitializeComponent();
-        }
+        public frmAbout() => InitializeComponent();
 
         private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 198, 203, 204);
         private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 145, 150, 153);

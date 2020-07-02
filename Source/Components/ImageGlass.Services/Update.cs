@@ -25,42 +25,34 @@ using System.Xml;
 
 namespace ImageGlass.Services {
     public class Update {
-        private InfoUpdate _info;
-        private bool _isError;
-
         #region Properties
         /// <summary>
         /// Get / set information of info update
         /// </summary>
-        public InfoUpdate Info {
-            get { return _info; }
-            set { _info = value; }
-        }
+        public InfoUpdate Info { get; set; }
 
         /// <summary>
         /// Gets value if checking for update is error
         /// </summary>
-        public bool IsError {
-            get { return _isError; }
-        }
+        public bool IsError { get; }
         #endregion
 
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
         public Update(Uri link, string savedPath) {
-            _info = new InfoUpdate();
+            Info = new InfoUpdate();
 
             //Get information update pack
-            _isError = !GetUpdateConfig(link, savedPath);
+            IsError = !GetUpdateConfig(link, savedPath);
         }
 
         /// <summary>
         /// Provides structure, method of Update
         /// </summary>
         public Update() {
-            _isError = true;
-            _info = new InfoUpdate();
+            IsError = true;
+            Info = new InfoUpdate();
         }
 
 
@@ -75,10 +67,10 @@ namespace ImageGlass.Services {
             try {
                 if (File.Exists(savedPath)) { File.Delete(savedPath); }
 
-                System.Net.WebClient w = new WebClient();
+                var w = new WebClient();
                 w.DownloadFile(link, savedPath);
             }
-            catch (Exception ex) { return false; }
+            catch (Exception) { return false; }
 
             //return FALSE if config file is not exist
             if (!File.Exists(savedPath)) { return false; }
@@ -88,7 +80,7 @@ namespace ImageGlass.Services {
                 return false;
 
             //error on downloading
-            if (_info.NewVersion.ToString() == "1.0.0.0") {
+            if (Info.NewVersion.ToString() == "1.0.0.0") {
                 return false;
             }
 
@@ -102,7 +94,7 @@ namespace ImageGlass.Services {
         /// <returns>false on load failure</returns>
         public bool LoadUpdateConfig(string xmlFilename) {
             try {
-                XmlDocument xmlDoc = new XmlDocument();
+                var xmlDoc = new XmlDocument();
                 // Issue #520: the xml document was locked somehow. Open it read-only to prevent lock issues
                 using (Stream s = File.OpenRead(xmlFilename)) {
                     xmlDoc.Load(s);
@@ -112,16 +104,17 @@ namespace ImageGlass.Services {
                 XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
                 //Get <Info> Attributes
-                _info.NewVersion = new Version(n.GetAttribute("newVersion"));
-                _info.VersionType = n.GetAttribute("versionType");
-                _info.Level = n.GetAttribute("level");
-                _info.Link = new Uri(n.GetAttribute("link"));
-                _info.Size = n.GetAttribute("size");
-                _info.PublishDate = DateTime.Parse(n.GetAttribute("pubDate"));
-                _info.Decription = n.GetAttribute("decription");
+                Info.NewVersion = new Version(n.GetAttribute("newVersion"));
+                Info.VersionType = n.GetAttribute("versionType");
+                Info.Level = n.GetAttribute("level");
+                Info.Link = new Uri(n.GetAttribute("link"));
+                Info.Size = n.GetAttribute("size");
+                Info.PublishDate = DateTime.Parse(n.GetAttribute("pubDate"));
+                Info.Description = n.GetAttribute("description");
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception)
+            {
                 // access error; corrupted file
                 return false;
             }
@@ -136,7 +129,7 @@ namespace ImageGlass.Services {
         /// <returns></returns>
         public bool CheckForUpdate(string exePath) {
             FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
-            Version currentVersion = new Version(fv.FileVersion);
+            var currentVersion = new Version(fv.FileVersion);
 
             // Version = [Major.Minor.Build.Revision]
 

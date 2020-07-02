@@ -1499,7 +1499,7 @@ namespace ImageGlass {
                         string configFile = Path.Combine(d, "config.xml");
 
                         if (File.Exists(configFile)) {
-                            Theme th = new Theme(d);
+                            var th = new Theme(d);
 
                             //invalid theme
                             if (!th.IsValid) {
@@ -1591,7 +1591,7 @@ namespace ImageGlass {
 
 
         private void btnThemeInstall_Click(object sender, EventArgs e) {
-            OpenFileDialog o = new OpenFileDialog();
+            var o = new OpenFileDialog();
             o.Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*";
 
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName)) {

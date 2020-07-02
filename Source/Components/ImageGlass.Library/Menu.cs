@@ -30,7 +30,7 @@ namespace ImageGlass.Library {
         /// <param name="mnu">ToolStripMenuItem</param>
         /// <returns></returns>
         public static ToolStripMenuItem Clone(ToolStripMenuItem mnu) {
-            ToolStripMenuItem m = new ToolStripMenuItem();
+            var m = new ToolStripMenuItem();
 
             //clone all events
             var eventsField = typeof(Component).GetField("events", BindingFlags.NonPublic | BindingFlags.Instance);
